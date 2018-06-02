@@ -1,0 +1,286 @@
+<?php
+
+if (!function_exists('ec_get_template')):
+
+    /**
+     * Get template part.
+     * @param string $templateName Name of the template to get.
+     * @return mixed
+     */
+    function ec_get_template($templateName)
+    {
+        ob_start();
+        include ANY_COMMENT_ABSPATH . "templates/$templateName.php";
+        $content = ob_get_contents();
+        ob_end_clean();
+        return $content;
+    }
+endif;
+
+
+if (!function_exists('anycomment_send_comment')):
+    /**
+     * Display main send comment box.
+     */
+    function anycomment_send_comment()
+    {
+        echo ec_get_template('send-comment');
+    }
+
+    add_action('anycomment_send_comment', 'anycomment_send_comment');
+endif;
+
+if (!function_exists('anycomment_logged_in_as')):
+    /**
+     * Display log in part inside of send comment box.
+     */
+    function anycomment_logged_in_as()
+    {
+        echo ec_get_template('send-comment-logged-in-as');
+    }
+
+    add_action('anycomment_logged_in_as', 'anycomment_logged_in_as');
+endif;
+
+if (!function_exists('anycomment_login_with')):
+    /**
+     * Display list of available login methods.
+     * @param string $redirectUrl Redirect link after successful/failed authentication.
+     * @return string|null HTML formatted list of social links.
+     */
+    function anycomment_login_with($redirectUrl = null)
+    {
+        $socials = [
+            'vk' => [
+                'url' => rest_url("anycomment/v1/auth/vk?redirect=$redirectUrl"),
+                'label' => __('VK', "anycomment"),
+            ],
+            'twitter' => [
+                'url' => rest_url("anycomment/v1/auth/twitter?redirect=$redirectUrl"),
+                'label' => __('Twitter', "anycomment")
+            ],
+            'facebook' => [
+                'url' => rest_url("anycomment/v1/auth/facebook?redirect=$redirectUrl"),
+                'label' => __('Facebook', "anycomment")
+            ],
+            'Google' => [
+                'url' => rest_url("anycomment/v1/auth/google?redirect=$redirectUrl"),
+                'label' => __('Google+', "anycomment")
+            ],
+        ];
+
+        if (count($socials) <= 0) {
+            return null;
+        }
+
+        ?>
+        <ul class="<?= AnyComment()->classPrefix() ?>login-with-list">
+            <?php
+            foreach ($socials as $key => $social): ?>
+                <li><a href="<?= $social['url'] ?>"
+                       class="<?= AnyComment()->classPrefix() ?>login-with-list-<?= $key ?>"><?= $social['label'] ?></a>
+                </li>
+            <?php
+            endforeach;
+            ?>
+        </ul>
+        <?php
+    }
+
+    add_action('anycomment_login_with', 'anycomment_login_with');
+endif;
+
+
+if (!function_exists('anycomment_notifications')):
+    /**
+     * Display element to display success or fail alerts.
+     */
+    function anycomment_notifications()
+    {
+        ?>
+        <div id="<?= AnyComment()->classPrefix() ?>notifications" style="display: none;"></div>
+        <?php
+    }
+
+    add_action('anycomment_notifications', 'anycomment_notifications');
+endif;
+
+if (!function_exists('anycomment_load_comments')):
+    /**
+     * Display main element to load comments.
+     */
+    function anycomment_load_comments()
+    {
+        ?>
+        <div id="<?= AnyComment()->classPrefix() ?>loader" class="<?= AnyComment()->classPrefix() ?>loader-wrapper"
+             style="display: none">
+            <div class="<?= AnyComment()->classPrefix() ?>loader">
+                <div class="<?= AnyComment()->classPrefix() ?>loader-rect1"></div>
+                <div class="<?= AnyComment()->classPrefix() ?>loader-rect2"></div>
+                <div class="<?= AnyComment()->classPrefix() ?>loader-rect3"></div>
+                <div class="<?= AnyComment()->classPrefix() ?>loader-rect4"></div>
+                <div class="<?= AnyComment()->classPrefix() ?>loader-rect5"></div>
+            </div>
+        </div>
+        <ul id="<?= AnyComment()->classPrefix() ?>load-container" class="<?= AnyComment()->classPrefix() ?>list"></ul>
+
+        <?php
+    }
+
+    add_action('anycomment_load_comments', 'anycomment_load_comments');
+endif;
+
+if (!function_exists('anycomment_author')):
+    /**
+     * Display author of the comment part.
+     * @param array $comment
+     */
+    function anycomment_author($comment)
+    {
+        $authorUrl = !empty($url = $comment->comment_author_url) ? $url : null;
+        $authorName = !empty($author = $comment->comment_author) ? $author : __('Unknown', "anycomment");
+        ?>
+        <div class="comment-single-author" data-authod-id="<?= $comment->user_id ?>">
+            <?php if (($avatarUrl = AnyComment()->auth->get_avatar_url())): ?>
+                <img src="<?= $avatarUrl ?>" alt="<?= $authorName ?>">
+            <?php endif; ?>
+            <?php if ($authorUrl !== null): ?>
+                <a href="<?= $authorUrl ?>" target="_blank" rel="nofollow"><?= $authorName ?></a>
+            <?php else: ?>
+                <?= $authorName ?>
+            <?php endif; ?>
+        </div>
+        <?php
+    }
+
+    add_action('anycomment_author', 'anycomment_author');
+endif;
+
+if (!function_exists('anycomment_comment_text')):
+    /**
+     * Display comment text part.
+     * @param array $comment
+     */
+    function anycomment_comment_text($comment)
+    {
+        ?>
+        <div class="comment-single-text">
+            <p><?= $comment->comment_content ?></p>
+        </div>
+        <?php
+    }
+
+    add_action('anycomment_comment_text', 'anycomment_comment_text');
+endif;
+
+if (!function_exists('anycomment_load_more')):
+    /**
+     * Load more button.
+     */
+    function anycomment_load_more()
+    {
+        ?>
+        <div class="comment-single-load-more"
+             onclick="return loadNext();"><?= __("Load more", "anycomment") ?></div>
+        <?php
+    }
+
+    add_action('anycomment_load_more', 'anycomment_load_more');
+endif;
+
+
+if (!function_exists('anycomment_actions_part')):
+    /**
+     * Display actions part.
+     * @param array $comment
+     */
+    function anycomment_actions_part($comment)
+    {
+        ?>
+        <?php
+        $parentReplyBoxId = uniqid(sprintf('%s', $comment->comment_ID));
+        ?>
+
+        <div class="comment-single-actions">
+            <a href="javascript:void(0)" data-reply-to="<?= $comment->comment_ID ?>"
+               onclick="replyComment(this, '<?= $parentReplyBoxId ?>', <?= $comment->comment_ID ?>)"
+               class="<?= AnyComment()->classPrefix() ?>btn"><?= __('Reply', "anycomment") ?></a>
+        </div>
+
+
+        <div class="comment-single-reply-box" data-reply-box-id=""
+             style="display: none;">
+            <textarea name="easy-reply-box" class="comment-single-reply-box-textarea"
+                      id="<?= $parentReplyBoxId ?>"></textarea>
+            <a href="javascript:void(0)"
+               onclick="return sendComment(this, '<?= $parentReplyBoxId ?>', <?= $comment->comment_ID ?>)"
+               class="<?= AnyComment()->classPrefix() ?>btn"><?= __('Send', "anycomment") ?></a>
+        </div>
+        <?php
+    }
+
+    add_action('anycomment_actions_part', 'anycomment_actions_part');
+endif;
+
+
+if (!function_exists('anycomment_comment')):
+    /**
+     * Display single comment.
+     * @param array $comment
+     */
+    function anycomment_comment($comment)
+    {
+        ?>
+        <li data-comment-id="<?= $comment->comment_ID ?>" class="comment-single">
+
+            <?php do_action('anycomment_author', $comment) ?>
+
+            <?php do_action('anycomment_comment_text', $comment) ?>
+
+            <?php do_action('anycomment_actions_part', $comment) ?>
+
+            <?php if (($childComments = AnyComment()->render->get_child_comments($comment->comment_ID)) !== null): ?>
+                <div class="comment-single-replies">
+                    <ul class="<?= AnyComment()->classPrefix() ?>list <?= AnyComment()->classPrefix() ?>list-child">
+                        <?php foreach ($childComments as $childComment): ?>
+                            <?php do_action('anycomment_comment', $childComment) ?>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            <?php endif; ?>
+        </li>
+        <?php
+    }
+
+    add_action('anycomment_comment', 'anycomment_comment');
+endif;
+
+if (!function_exists('anycomment_comments')):
+    /**
+     * Display all comments.
+     * @param int $postId Post id.
+     * @param int $limit Maximum number of comments to load.
+     */
+    function anycomment_comments($postId, $limit = 20)
+    {
+        if (($comments = AnyComment()->render->get_comments($postId, $limit)) !== null):
+            foreach ($comments as $key => $comment):
+                do_action('anycomment_comment', $comment);
+            endforeach;
+            do_action('anycomment_load_more');
+        else:
+            ?>
+            <ul>
+                <li class="comment-single comment-no-comments">
+                    <?= __('No comments to display', "anycomment") ?>
+                </li>
+            </ul>
+        <?php
+        endif;
+    }
+
+    add_action('anycomment_comments', 'anycomment_comments');
+endif;
+
+
+
