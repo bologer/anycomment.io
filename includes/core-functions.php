@@ -131,6 +131,26 @@ if (!function_exists('anycomment_load_comments')):
     add_action('anycomment_load_comments', 'anycomment_load_comments');
 endif;
 
+if (!function_exists('anycomment_avatar')):
+    /**
+     * Display author's avatar as comment part.
+     * @param array $comment
+     */
+    function anycomment_avatar($comment)
+    {
+        ?>
+        <div class="comment-single-avatar" data-authod-id="<?= $comment->user_id ?>">
+            <?php if (($avatarUrl = AnyComment()->auth->get_avatar_url()) || ($avatarUrl = get_avatar_url($comment->user_id))): ?>
+                <div class="comment-single-avatar__img" style="background-image: url('<?= $avatarUrl ?>');"></div>
+            <?php endif; ?>
+        </div>
+        <?php
+    }
+
+    add_action('anycomment_avatar', 'anycomment_avatar');
+endif;
+
+
 if (!function_exists('anycomment_author')):
     /**
      * Display author of the comment part.
@@ -138,40 +158,40 @@ if (!function_exists('anycomment_author')):
      */
     function anycomment_author($comment)
     {
-        $authorUrl = !empty($url = $comment->comment_author_url) ? $url : null;
         $authorName = !empty($author = $comment->comment_author) ? $author : __('Unknown', "anycomment");
         ?>
-        <div class="comment-single-author" data-authod-id="<?= $comment->user_id ?>">
-            <?php if (($avatarUrl = AnyComment()->auth->get_avatar_url())): ?>
-                <img src="<?= $avatarUrl ?>" alt="<?= $authorName ?>">
-            <?php endif; ?>
-            <?php if ($authorUrl !== null): ?>
-                <a href="<?= $authorUrl ?>" target="_blank" rel="nofollow"><?= $authorName ?></a>
-            <?php else: ?>
-                <?= $authorName ?>
-            <?php endif; ?>
-        </div>
+        <header class="comment-single-body-header" data-authod-id="<?= $comment->user_id ?>">
+            <div class="comment-single-body-header__author"><?= $authorName ?></div>
+            <time class="comment-single-body-header__date timeago-date-time"
+                  datetime="<?= $comment->comment_date ?>"></time>
+        </header>
         <?php
     }
 
     add_action('anycomment_author', 'anycomment_author');
 endif;
 
-if (!function_exists('anycomment_comment_text')):
+if (!function_exists('anycomment_comment_body')):
     /**
      * Display comment text part.
      * @param array $comment
      */
-    function anycomment_comment_text($comment)
+    function anycomment_comment_body($comment)
     {
         ?>
-        <div class="comment-single-text">
-            <p><?= $comment->comment_content ?></p>
+        <div class="comment-single-body">
+            <?php do_action('anycomment_author', $comment) ?>
+
+            <div class="comment-single-body__text">
+                <p><?= $comment->comment_content ?></p>
+            </div>
+
+            <?php do_action('anycomment_actions_part', $comment) ?>
         </div>
         <?php
     }
 
-    add_action('anycomment_comment_text', 'anycomment_comment_text');
+    add_action('anycomment_comment_body', 'anycomment_comment_body');
 endif;
 
 if (!function_exists('anycomment_load_more')):
@@ -202,21 +222,13 @@ if (!function_exists('anycomment_actions_part')):
         $parentReplyBoxId = uniqid(sprintf('%s', $comment->comment_ID));
         ?>
 
-        <div class="comment-single-actions">
-            <a href="javascript:void(0)" data-reply-to="<?= $comment->comment_ID ?>"
-               onclick="replyComment(this, '<?= $parentReplyBoxId ?>', <?= $comment->comment_ID ?>)"
-               class="<?= AnyComment()->classPrefix() ?>btn"><?= __('Reply', "anycomment") ?></a>
-        </div>
-
-
-        <div class="comment-single-reply-box" data-reply-box-id=""
-             style="display: none;">
-            <textarea name="easy-reply-box" class="comment-single-reply-box-textarea"
-                      id="<?= $parentReplyBoxId ?>"></textarea>
-            <a href="javascript:void(0)"
-               onclick="return sendComment(this, '<?= $parentReplyBoxId ?>', <?= $comment->comment_ID ?>)"
-               class="<?= AnyComment()->classPrefix() ?>btn"><?= __('Send', "anycomment") ?></a>
-        </div>
+        <footer class="comment-single-body__actions">
+            <ul>
+                <li><a href="javascript:void(0)" data-reply-to="<?= $comment->comment_ID ?>"
+                       onclick="replyComment(this, '<?= $parentReplyBoxId ?>', <?= $comment->comment_ID ?>)"><?= __('Reply', "anycomment") ?></a>
+                </li>
+            </ul>
+        </footer>
         <?php
     }
 
@@ -234,11 +246,9 @@ if (!function_exists('anycomment_comment')):
         ?>
         <li data-comment-id="<?= $comment->comment_ID ?>" class="comment-single">
 
-            <?php do_action('anycomment_author', $comment) ?>
+            <?php do_action('anycomment_avatar', $comment) ?>
 
-            <?php do_action('anycomment_comment_text', $comment) ?>
-
-            <?php do_action('anycomment_actions_part', $comment) ?>
+            <?php do_action('anycomment_comment_body', $comment) ?>
 
             <?php if (($childComments = AnyComment()->render->get_child_comments($comment->comment_ID)) !== null): ?>
                 <div class="comment-single-replies">
