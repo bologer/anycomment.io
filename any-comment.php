@@ -65,6 +65,16 @@ if (!class_exists('AnyComment')) :
          */
         private static $_instance = null;
 
+
+        /**
+         * Post ID when available.
+         * @var null|WP_Post
+         */
+        public $currentPost = null;
+
+        /**
+         * AnyComment constructor.
+         */
         public function __construct()
         {
             $this->init();
@@ -244,6 +254,30 @@ if (!class_exists('AnyComment')) :
                 'error' => $error,
                 'time' => time()
             ]);
+        }
+
+        /**
+         * Set post object by having post.
+         * @param int $postId
+         */
+        public function setCurrentPost($postId = null)
+        {
+            if ($postId === null) {
+                $this->currentPost = get_post();
+            } else {
+                if (($post = get_post($postId)) !== null) {
+                    $this->currentPost = $post;
+                }
+            }
+        }
+
+        /**
+         * Post when available.
+         * @return null|WP_Post
+         */
+        public function getCurrentPost()
+        {
+            return $this->currentPost;
         }
     }
 endif;

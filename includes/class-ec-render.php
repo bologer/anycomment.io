@@ -21,8 +21,6 @@ if (!class_exists('AC_Render')) :
 
             add_action('wp_ajax_add_comment', [$this, 'add_comment']);
             add_action('wp_ajax_nopriv_add_comment', [$this, 'add_comment']);
-
-            add_action('wp_enqueue_scripts', [$this, 'assets_load']);
         }
 
         /**
@@ -34,14 +32,15 @@ if (!class_exists('AC_Render')) :
             $iframeSrc = add_query_arg([
                 'action' => 'iframe_comments',
                 'postId' => get_the_ID(),
+                'redirect' => get_permalink(),
                 'nonce' => wp_create_nonce('iframe_comments'),
             ], admin_url('admin-ajax.php'));
             $style = [
-                'width' => '100% !important',
+                'width' => '1px !important',
                 'min-width' => '100% !important',
                 'border' => 'medium none !important',
                 'overflow' => 'hidden !important',
-                'height' => '700px'
+                'height' => '1px'
             ];
 
             $styles = null;

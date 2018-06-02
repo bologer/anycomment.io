@@ -15,7 +15,7 @@
         <?php do_action('anycomment_logged_in_as') ?>
 
         <?php if (!is_user_logged_in()): ?>
-            <?php do_action('anycomment_login_with', get_permalink()) ?>
+            <?php do_action('anycomment_login_with', get_permalink(AnyComment()->getCurrentPost()->ID)) ?>
         <?php endif; ?>
     </div>
 </div>

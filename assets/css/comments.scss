@@ -7,7 +7,6 @@ $font-family: Verdana, Arial, sans-serif;
   position: relative;
 }
 
-
 .anycomment-login-with-list {
   list-style: none;
   margin: 0 0 10px;
@@ -65,6 +64,7 @@ $font-family: Verdana, Arial, sans-serif;
 .anycomment-list {
   list-style: none;
   margin: 0;
+  padding: 0;
 
   &-child {
     margin-left: 30px;

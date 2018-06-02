@@ -7,6 +7,7 @@ if (!defined('ABSPATH')) {
 }
 
 $postId = sanitize_text_field($_GET['postId']);
+AnyComment()->setCurrentPost($postId);
 
 if (post_password_required($postId) || !comments_open($postId)) {
     return;

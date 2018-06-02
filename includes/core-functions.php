@@ -78,6 +78,7 @@ if (!function_exists('anycomment_login_with')):
             <?php
             foreach ($socials as $key => $social): ?>
                 <li><a href="<?= $social['url'] ?>"
+                       target="_parent"
                        class="<?= AnyComment()->classPrefix() ?>login-with-list-<?= $key ?>"><?= $social['label'] ?></a>
                 </li>
             <?php

@@ -38,7 +38,8 @@
 
 .anycomment-list {
   list-style: none;
-  margin: 0; }
+  margin: 0;
+  padding: 0; }
   .anycomment-list-child {
     margin-left: 30px; }
   .anycomment-list .comment-single {
