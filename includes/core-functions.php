@@ -139,8 +139,8 @@ if (!function_exists('anycomment_avatar')):
     function anycomment_avatar($comment)
     {
         ?>
-        <div class="comment-single-avatar" data-authod-id="<?= $comment->user_id ?>">
-            <?php if (($avatarUrl = AnyComment()->auth->get_avatar_url()) || ($avatarUrl = get_avatar_url($comment->user_id))): ?>
+        <div class="comment-single-avatar" data-author-id="<?= $comment->user_id ?>">
+            <?php if (($avatarUrl = AnyComment()->auth->get_user_avatar($comment->user_id))): ?>
                 <div class="comment-single-avatar__img" style="background-image: url('<?= $avatarUrl ?>');"></div>
             <?php endif; ?>
         </div>
@@ -160,7 +160,7 @@ if (!function_exists('anycomment_author')):
     {
         $authorName = !empty($author = $comment->comment_author) ? $author : __('Unknown', "anycomment");
         ?>
-        <header class="comment-single-body-header" data-authod-id="<?= $comment->user_id ?>">
+        <header class="comment-single-body-header" data-author-id="<?= $comment->user_id ?>">
             <div class="comment-single-body-header__author"><?= $authorName ?></div>
             <time class="comment-single-body-header__date timeago-date-time"
                   datetime="<?= $comment->comment_date ?>"></time>
@@ -225,7 +225,7 @@ if (!function_exists('anycomment_actions_part')):
         <footer class="comment-single-body__actions">
             <ul>
                 <li><a href="javascript:void(0)" data-reply-to="<?= $comment->comment_ID ?>"
-                       onclick="replyComment(this, '<?= $parentReplyBoxId ?>', <?= $comment->comment_ID ?>)"><?= __('Reply', "anycomment") ?></a>
+                       onclick="return replyComment(this, <?= $comment->comment_ID ?>)"><?= __('Reply', "anycomment") ?></a>
                 </li>
             </ul>
         </footer>

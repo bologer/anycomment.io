@@ -21,9 +21,9 @@ $classPrefix = AnyComment()->classPrefix();
 
 <link rel="stylesheet" href="<?= AnyComment()->plugin_url() ?>/assets/css/comments.css">
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700&amp;subset=cyrillic" rel="stylesheet">
-<script src="<?= AnyComment()->plugin_url() ?>/assets/js/timeago.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.6.1/iframeResizer.contentWindow.min.js"></script>
+<script src="<?= AnyComment()->plugin_url() ?>/assets/js/timeago.min.js"></script>
 
 <div id="<?= $classPrefix ?>comments" class="<?= $classPrefix ?>comments-area comments-area" data-origin-limit="20"
      data-current-limit="20">
@@ -65,58 +65,91 @@ $classPrefix = AnyComment()->classPrefix();
         loadComments(currentLimit);
     }
 
-    // Reply to some comment
-    function replyComment(el, textareaId, commentId) {
-        if (!textareaId || !commentId) {
+    function getForm() {
+        return jQuery('#send-comment-form') || '';
+    }
+
+
+    function getCommentField() {
+        let form = getForm();
+
+        if (!form) {
             return;
         }
 
-        let textarea = jQuery('#' + textareaId);
-        let replyBox = textarea.closest('[data-reply-box-id]');
+        return form.find('[name="comment"]') || '';
+    }
 
-        replyBox.slideDown(200, function () {
-            textarea.focus();
-        });
+    // Reply to some comment
+    function replyComment(el, replyTo) {
+        if (!replyTo) {
+            return;
+        }
+
+        let form = getForm();
+
+        if (!form) {
+            return;
+        }
+
+        let commentField = form.find('[name="comment"]') || '';
+        let replyToField = form.find('[name="reply_to"]') || '';
+
+        if (!commentField || !replyToField) {
+            return;
+        }
+
+        replyToField.val(replyTo);
+        commentField.focus();
+
+        return false;
     }
 
     // Genetic send comment function
-    function sendComment(el, textId, commentId, hideReplyBox = true) {
-        let textarea = jQuery('#' + textId);
+    function sendComment(el, formId) {
 
-        if (!textarea) {
+        let form = jQuery(formId) || '';
+
+        if (!form) {
             return;
         }
 
-        let text = textarea.val().trim() || '';
+        let commentField = form.find('[name="comment"]') || '';
+        let postIdField = form.find('[name="post_id"]') || '';
+        let actionField = form.find('[name="action"]') || '';
+        let nonceField = form.find('[name="nonce"]') || '';
 
-        if (!text) {
+        if (!commentField || !postIdField || !actionField || !nonceField) {
             return;
+        }
+
+        let commentText = commentField.val().trim() || '';
+
+        if (!commentText) {
+            return null;
         }
 
         showLoader();
 
-        jQuery.post('<?= AnyComment()->ajax_url() ?>', {
-            action: 'add_comment',
-            _wpnonce: '<?= wp_create_nonce("add-comment-nonce") ?>',
-            postId: '<?= $postId ?>',
-            commentId: commentId,
-            text: text
-        }, function (data) {
-            if (data.success) {
-                if (hideReplyBox) {
-                    textarea.closest('[data-reply-box-id]').hide();
-                }
+        let data = form.serialize();
+
+        jQuery.post('<?= AnyComment()->ajax_url() ?>', data, function (response) {
+            if (response.success) {
+                commentField.val('');
                 loadComments();
             } else {
-                addError(data.error);
+                addError(response.error);
                 hideLoader();
             }
-
-            textarea.val('');
-            textarea.focus();
+            commentField.focus();
         }, 'json');
+
+        return false;
     }
 
+    /**
+     * Display loader.
+     */
     function showLoader() {
         let loader = getLoader();
         if (!loader) {
@@ -130,6 +163,9 @@ $classPrefix = AnyComment()->classPrefix();
         let loaderHtml = loader.show();
     }
 
+    /**
+     * Hide loader.
+     */
     function hideLoader() {
         let loader = getLoader();
         if (!loader) {
@@ -143,6 +179,9 @@ $classPrefix = AnyComment()->classPrefix();
         let loaderHtml = loader.hide();
     }
 
+    /**
+     * Get loader.
+     */
     function getLoader() {
         return jQuery('#<?= AnyComment()->classPrefix()?>loader');
     }

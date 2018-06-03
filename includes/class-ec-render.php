@@ -157,18 +157,18 @@ if (!class_exists('AC_Render')) :
          */
         public function add_comment()
         {
-            check_ajax_referer('add-comment-nonce');
+            check_ajax_referer('add-comment-nonce', 'nonce');
 
-            $parentCommentId = trim(sanitize_text_field($_POST['commentId']));
-            $text = trim(sanitize_text_field($_POST['text']));
-            $postId = trim(sanitize_text_field($_POST['postId']));
+            $parentCommentId = trim(sanitize_text_field($_POST['reply_to']));
+            $comment = trim(sanitize_text_field($_POST['comment']));
+            $postId = trim(sanitize_text_field($_POST['post_id']));
 
-            if (empty($text) || empty($postId)) {
+            if (empty($comment) || empty($postId)) {
                 echo AnyComment()->json_error(__("Wrong params passed", "anycomment"));
                 wp_die();
             }
 
-            $args['comment_content'] = $text;
+            $args['comment_content'] = $comment;
             $args['comment_post_ID'] = $postId;
 
             if (!empty($parentCommentId) && ($comment = get_comment($parentCommentId)) instanceof WP_Comment) {
@@ -211,7 +211,7 @@ if (!class_exists('AC_Render')) :
                 'commentId' => $newCommentId,
                 'parentCommentId' => $parentCommentId,
                 'blag' => $args,
-                'commentText' => $text,
+                'commentText' => $comment,
             ]);
             wp_die();
         }
