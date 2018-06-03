@@ -138,11 +138,10 @@ if (!class_exists('AC_SocialAuth')) :
          * Process Twitter authorization.
          * @param WP_REST_Request $request
          * @param null $redirect
-         * @return WP_Error
          */
         private function process_auth_twitter(WP_REST_Request $request, $redirect = null)
         {
-            if ($request->get_param('oauth_token') === null && $request->get_param('oauth_verifier')) {
+            if ($request->get_param('oauth_token') === null && $request->get_param('oauth_verifier') === null) {
                 $twitter_rest_url = static::get_callback_url(self::SOCIAL_TWITTER, $redirect);
 
                 try {
@@ -174,6 +173,13 @@ if (!class_exists('AC_SocialAuth')) :
                      * string(10) "ateshabaev"
                      * }
                      */
+                    $this->auth_twitter = new \Abraham\TwitterOAuth\TwitterOAuth(
+                        AC_SocialSettingPage::getTwitterConsumerKey(),
+                        AC_SocialSettingPage::getTwitterConsumerSecret(),
+                        $oauthToken,
+                        $oauthVerifier
+                    );
+
                     $access_token = $this->auth_twitter->oauth("oauth/access_token", ["oauth_verifier" => $oauthVerifier]);
                 } catch (\Abraham\TwitterOAuth\TwitterOAuthException $exception) {
                     wp_redirect($redirect);
@@ -189,21 +195,32 @@ if (!class_exists('AC_SocialAuth')) :
 
                 $user = $this->auth_twitter->get('account/verify_credentials', ['tweet_mode' => 'extended', 'include_entities' => 'true']);
 
-                $newUserId = $this->insert_user([
-                    'user_login' => $vkUser['user_id'],
-                    'user_email' => $vkUser['email'],
-                    'display_name' => trim($vkUser['first_name'] . ' ' . $vkUser['last_name']),
-                    'user_nicename' => empty($vkUser['first_name']) ? $vkUser['user_id'] : $vkUser['first_name'],
-                    'user_url' => 'https://vk.com/id' . $vkUser['user_id']
-                ], [
-                    'anycomment_social' => self::SOCIAL_VK,
-                    'anycomment_social_avatar' => $vkUser['photo_50'],
-                    'anycomment_social_vk_access_token' => $vkUser['access_token'],
-                    'anycomment_social_vk_expires_in' => $vkUser['expires_in'],
-                    'anycomment_social_vk_photo50' => $vkUser['photo_50'],
-                    'anycomment_social_vk_photo100' => $vkUser['photo_100'],
-                    'anycomment_social_vk_sex' => $vkUser['sex'],
-                ]);
+                if (!is_object($user)) {
+                    wp_redirect($redirect);
+                    exit();
+                }
+
+                $this->auth_or_create_user(
+                    'user_login',
+                    $user->id,
+                    [
+                        'user_login' => $user->screen_name,
+                        'user_email' => $user->email,
+                        'display_name' => $user->name,
+                        'user_nicename' => $user->name,
+                    ],
+                    [
+                        'anycomment_social' => self::SOCIAL_TWITTER,
+                        // Margin to get bigger size avatar
+                        // https://developer.twitter.com/en/docs/accounts-and-users/manage-account-settings/api-reference/get-account-verify_credentials.html
+                        'anycomment_social_avatar' => str_replace($user->profile_image_url_https, '_normal.jpg', '_bigger.jpg'),
+                        'anycomment_social_twitter_oauth_token' => $access_token['oauth_token'],
+                        'anycomment_social_twitter_oauth_token_secret' => $access_token['oauth_token_secret'],
+                    ]
+                );
+
+                wp_redirect($redirect);
+                exit();
             }
         }
 
@@ -270,8 +287,6 @@ if (!class_exists('AC_SocialAuth')) :
                         'anycomment_social_avatar' => $vkUser['photo_50'],
                         'anycomment_social_vk_access_token' => $vkUser['access_token'],
                         'anycomment_social_vk_expires_in' => $vkUser['expires_in'],
-                        'anycomment_social_vk_photo50' => $vkUser['photo_50'],
-                        'anycomment_social_vk_photo100' => $vkUser['photo_100'],
                         'anycomment_social_vk_sex' => $vkUser['sex'],
                     ]
                 );
