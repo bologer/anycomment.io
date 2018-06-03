@@ -97,10 +97,10 @@ if (!class_exists('AC_Render')) :
          * @param int $limit Limit number of comments to load.
          * @return array|null NULL when there are no comments for post.
          */
-        public function get_comments($postId = null, $limit = 20)
+        public function get_comments($postId = null, $limit = null)
         {
-            if (empty($limit) || (int)$limit < 20) {
-                $limit = 20;
+            if ($limit === null || empty($limit) || (int)$limit < 10) {
+                $limit = 10;
             }
 
             $comments = get_comments([

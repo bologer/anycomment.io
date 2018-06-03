@@ -213,7 +213,7 @@ if (!class_exists('AC_SocialAuth')) :
                         'anycomment_social' => self::SOCIAL_TWITTER,
                         // Margin to get bigger size avatar
                         // https://developer.twitter.com/en/docs/accounts-and-users/manage-account-settings/api-reference/get-account-verify_credentials.html
-                        'anycomment_social_avatar' => str_replace($user->profile_image_url_https, '_normal.jpg', '_bigger.jpg'),
+                        'anycomment_social_avatar' => str_replace('_normal.jpg', '_bigger.jpg', $user->profile_image_url_https),
                         'anycomment_social_twitter_oauth_token' => $access_token['oauth_token'],
                         'anycomment_social_twitter_oauth_token_secret' => $access_token['oauth_token_secret'],
                     ]

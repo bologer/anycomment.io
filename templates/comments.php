@@ -27,7 +27,6 @@ $classPrefix = AnyComment()->classPrefix();
 
 <div id="<?= $classPrefix ?>comments" class="<?= $classPrefix ?>comments-area comments-area" data-origin-limit="20"
      data-current-limit="20">
-    <h2><?= __('Comments', 'anycomment') ?></h2>
     <?php do_action('anycomment_send_comment') ?>
     <?php do_action('anycomment_notifications') ?>
     <?php do_action('anycomment_load_comments') ?>
@@ -35,7 +34,7 @@ $classPrefix = AnyComment()->classPrefix();
 
 <script>
     // Load generic comments template
-    function loadComments(limit) {
+    function loadComments(limit = null) {
         showLoader();
 
         jQuery.post('<?= AnyComment()->ajax_url() ?>', {
@@ -53,16 +52,13 @@ $classPrefix = AnyComment()->classPrefix();
     }
 
     function loadNext() {
-        let root = jQuery('#<?= $classPrefix ?>comments');
-        let originLimit = root.data('origin-limit') || 20;
-        let currentLimit = root.data('current-limit') || 20;
+        let newLimit = parseInt(jQuery('#<?= $classPrefix ?>comments').attr('data-current-limit')) + 10;
 
-        if (originLimit === currentLimit) {
-            currentLimit += 10;
-            root.attr('data-current-limit', currentLimit);
-        }
+        console.log('Current limit: ' + newLimit);
 
-        loadComments(currentLimit);
+        root.attr('data-current-limit', newLimit);
+
+        loadComments(newLimit);
     }
 
     function getForm() {
@@ -214,7 +210,6 @@ $classPrefix = AnyComment()->classPrefix();
         notifications.html(alert);
         notifications.slideDown(300);
     }
-
 
     loadComments();
 

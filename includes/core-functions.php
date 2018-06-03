@@ -272,7 +272,7 @@ if (!function_exists('anycomment_comments')):
      * @param int $postId Post id.
      * @param int $limit Maximum number of comments to load.
      */
-    function anycomment_comments($postId, $limit = 20)
+    function anycomment_comments($postId, $limit = null)
     {
         if (($comments = AnyComment()->render->get_comments($postId, $limit)) !== null):
             foreach ($comments as $key => $comment):
@@ -290,7 +290,7 @@ if (!function_exists('anycomment_comments')):
         endif;
     }
 
-    add_action('anycomment_comments', 'anycomment_comments');
+    add_action('anycomment_comments', 'anycomment_comments', 10, 2);
 endif;
 
 
