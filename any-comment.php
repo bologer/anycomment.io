@@ -209,6 +209,9 @@ if (!class_exists('AnyComment')) :
             // Twitter
             include_once(ANY_COMMENT_ABSPATH . 'includes/api/twitter/autoload.php');
 
+            // Facebook
+            include_once(ANY_COMMENT_ABSPATH . 'includes/api/facebook/src/Facebook/autoload.php');
+
             /**
              * Admin related
              */

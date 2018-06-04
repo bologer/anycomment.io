@@ -22,7 +22,7 @@ if (!class_exists('AC_SocialSettingPage')) :
          */
         const OPTION_VK_TOGGLE = 'social_vk_toggle_field';
         const OPTION_VK_APP_ID = 'social_vk_app_id_field';
-        const OPTION_VK_SECRET_FIELD = 'social_vk_app_secret_field';
+        const OPTION_VK_SECRET = 'social_vk_app_secret_field';
 
         /**
          * Twitter options
@@ -30,6 +30,13 @@ if (!class_exists('AC_SocialSettingPage')) :
         const OPTION_TWITTER_TOGGLE = 'social_twitter_toggle_field';
         const OPTION_TWITTER_CONSUMER_KEY = 'social_twitter_consumer_key_field';
         const OPTION_TWITTER_CONSUMER_SECRET = 'social_twitter_consumer_secret_field';
+
+        /**
+         * Facebook Options
+         */
+        const OPTION_FACEBOOK_TOGGLE = 'social_facebook_toggle_field';
+        const OPTION_FACEBOOK_APP_ID = 'social_facebook_app_id_field';
+        const OPTION_FACEBOOK_APP_SECRET = 'social_facebook_app_secret_field';
 
 
         /**
@@ -81,7 +88,7 @@ if (!class_exists('AC_SocialSettingPage')) :
                 __('VK', "anycomment"),
                 function () {
                     ?>
-                    <p><?= __('VK social settings', "anycomment") ?></p>
+                    <p><?= __('VK settings regarding authorization.', "anycomment") ?></p>
                     <?php
                 },
                 self::PAGE_SLUG
@@ -104,7 +111,7 @@ if (!class_exists('AC_SocialSettingPage')) :
                         'description' => __('Enter app id. Can be found in <a href="https://vk.com/apps?act=manage" target="_blank">apps</a> page', "anycomment")
                     ],
                     [
-                        'id' => self::OPTION_VK_SECRET_FIELD,
+                        'id' => self::OPTION_VK_SECRET,
                         'title' => __('Secure key', "anycomment"),
                         'callback' => 'input_text',
                         'description' => __('Enter secure key. Can be found in <a href="https://vk.com/apps?act=manage" target="_blank">apps</a> page', "anycomment")
@@ -120,7 +127,7 @@ if (!class_exists('AC_SocialSettingPage')) :
                 __('Twitter', "anycomment"),
                 function () {
                     ?>
-                    <p><?= __('Twitter social settings', "anycomment") ?></p>
+                    <p><?= __('Twitter settings regarding authorization.', "anycomment") ?></p>
                     <?php
                 },
                 self::PAGE_SLUG
@@ -147,6 +154,45 @@ if (!class_exists('AC_SocialSettingPage')) :
                         'title' => __('Consumer Secret', "anycomment"),
                         'callback' => 'input_text',
                         'description' => __('Enter consumer secret. Can be found in the list of <a href="https://apps.twitter.com/" target="_blank">apps</a>', "anycomment")
+                    ]
+                ]
+            );
+
+            /**
+             * Facebook
+             */
+            add_settings_section(
+                'section_facebook',
+                __('Facebook', "anycomment"),
+                function () {
+                    ?>
+                    <p><?= __('Facebook settings regarding authorization.', "anycomment") ?></p>
+                    <?php
+                },
+                self::PAGE_SLUG
+            );
+
+            $this->render_fields(
+                self::PAGE_SLUG,
+                'section_facebook',
+                [
+                    [
+                        'id' => self::OPTION_FACEBOOK_TOGGLE,
+                        'title' => __('Enable', "anycomment"),
+                        'callback' => 'input_checkbox',
+                        'description' => __('Allow to authorize via Facebook', "anycomment")
+                    ],
+                    [
+                        'id' => self::OPTION_FACEBOOK_APP_ID,
+                        'title' => __('App ID', "anycomment"),
+                        'callback' => 'input_text',
+                        'description' => __('Enter app id. Can be found in the list of <a href="https://developers.facebook.com/apps/" target="_blank">apps</a>', "anycomment")
+                    ],
+                    [
+                        'id' => self::OPTION_FACEBOOK_APP_SECRET,
+                        'title' => __('App Secret', "anycomment"),
+                        'callback' => 'input_text',
+                        'description' => __('Enter app secret. Can be found in the list of <a href="https://developers.facebook.com/apps/" target="_blank">apps</a>', "anycomment")
                     ]
                 ]
             );
@@ -296,7 +342,7 @@ if (!class_exists('AC_SocialSettingPage')) :
          */
         public static function getVkSecureKey()
         {
-            return static::getOption(self::OPTION_VK_SECRET_FIELD);
+            return static::getOption(self::OPTION_VK_SECRET);
         }
 
 
@@ -325,6 +371,33 @@ if (!class_exists('AC_SocialSettingPage')) :
         public static function getTwitterConsumerSecret()
         {
             return static::getOption(self::OPTION_TWITTER_CONSUMER_SECRET);
+        }
+
+        /**
+         * Check whether Facebook social is on.
+         * @return bool
+         */
+        public static function isFbOn()
+        {
+            return static::getOption(self::OPTION_FACEBOOK_TOGGLE) !== null;
+        }
+
+        /**
+         * Get Facebook App ID.
+         * @return int|null
+         */
+        public static function getFbAppId()
+        {
+            return static::getOption(self::OPTION_FACEBOOK_APP_ID);
+        }
+
+        /**
+         * Get Facebook Secure key.
+         * @return string|null
+         */
+        public static function getFbAppSecret()
+        {
+            return static::getOption(self::OPTION_FACEBOOK_APP_SECRET);
         }
     }
 endif;

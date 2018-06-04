@@ -51,6 +51,7 @@ $classPrefix = AnyComment()->classPrefix();
         });
     }
 
+    // Load next comments if available
     function loadNext() {
         let newLimit = parseInt(jQuery('#<?= $classPrefix ?>comments').attr('data-current-limit')) + 10;
 

@@ -21,6 +21,10 @@ if (!class_exists('AC_SocialAuth')) :
          * @var \VK\VK
          */
         private $auth_vk;
+
+        /**
+         * @var \Facebook\Facebook
+         */
         private $auth_facebook;
 
         /**
@@ -60,6 +64,21 @@ if (!class_exists('AC_SocialAuth')) :
                 ($consumerKey = AC_SocialSettingPage::getTwitterConsumerKey()) !== null &&
                 ($consumerSecret = AC_SocialSettingPage::getTwitterConsumerSecret()) !== null)
                 $this->auth_twitter = new \Abraham\TwitterOAuth\TwitterOAuth($consumerKey, $consumerSecret);
+
+
+            if (AC_SocialSettingPage::isFbOn() &&
+                ($appId = AC_SocialSettingPage::getFbAppId()) !== null &&
+                ($appSecret = AC_SocialSettingPage::getFbAppSecret()) !== null) {
+                try {
+                    $this->auth_facebook = new Facebook\Facebook([
+                        'app_id' => $appId,
+                        'app_secret' => $appSecret,
+                        'default_graph_version' => 'v2.10',
+                    ]);
+                } catch (\Facebook\Exceptions\FacebookSDKException $e) {
+
+                }
+            }
         }
 
         /**
@@ -89,7 +108,6 @@ if (!class_exists('AC_SocialAuth')) :
         /**
          * Main method to process social-like request to authentication, etc.
          * @param WP_REST_Request $request
-         * @return WP_Error
          */
         public function process_socials(WP_REST_Request $request)
         {
@@ -103,7 +121,7 @@ if (!class_exists('AC_SocialAuth')) :
 
             if (is_user_logged_in()) {
                 wp_redirect($redirect);
-                wp_die();
+                exit();
             }
 
             switch ($social):
@@ -111,6 +129,7 @@ if (!class_exists('AC_SocialAuth')) :
                     return $this->process_auth_vk($request, $redirect);
                     break;
                 case self::SOCIAL_FACEBOOK:
+                    return $this->process_auth_facebook($request, $redirect);
                     break;
                 case self::SOCIAL_TWITTER:
                     return $this->process_auth_twitter($request, $redirect);
@@ -119,7 +138,7 @@ if (!class_exists('AC_SocialAuth')) :
                     break;
                 default:
                     wp_redirect($redirect);
-                    wp_die();
+                    exit();
             endswitch;
         }
 
@@ -133,6 +152,42 @@ if (!class_exists('AC_SocialAuth')) :
         {
             return rest_url(static::get_rest_namespace() . "/auth/" . $social_type . '?redirect=' . $redirect);
         }
+
+        /**
+         * Process Facebook authorization.
+         * @param WP_REST_Request $request
+         * @param null $redirect
+         */
+        private function process_auth_facebook(WP_REST_Request $request, $redirect = null)
+        {
+
+            $helper = $this->auth_facebook->getRedirectLoginHelper();
+            $facebook_rest_url = static::get_callback_url(self::SOCIAL_FACEBOOK, $redirect);
+
+            if ($request->get_param('code') === null) {
+                $loginUrl = $helper->getLoginUrl($facebook_rest_url, ['email']);
+                wp_redirect($loginUrl);
+                exit();
+            } else {
+
+                try {
+                    $accessToken = $helper->getAccessToken($facebook_rest_url);
+                } catch (Facebook\Exceptions\FacebookResponseException $e) {
+
+                } catch (Facebook\Exceptions\FacebookSDKException $e) {
+
+                }
+
+                if (!isset($accessToken)) {
+                    wp_redirect($redirect);
+                    wp_die();
+                }
+
+
+                var_dump($accessToken);
+            }
+        }
+
 
         /**
          * Process Twitter authorization.
@@ -232,9 +287,8 @@ if (!class_exists('AC_SocialAuth')) :
          */
         private function process_auth_vk(WP_REST_Request $request, $redirect = null)
         {
-            $vk_rest_url = static::get_callback_url(self::SOCIAL_VK, $redirect);
-
             if ($request->get_param('code') === null) {
+                $vk_rest_url = static::get_callback_url(self::SOCIAL_VK, $redirect);
                 $url = $this->auth_vk->getAuthorizeURL('email', $vk_rest_url);
                 wp_redirect($url);
                 exit();
