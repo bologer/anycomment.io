@@ -114,10 +114,10 @@ if (!class_exists('AC_SocialAuth')) :
             $redirect = $request->get_param('redirect');
             $social = $request->get_param('social');
 
-            if (empty($redirect)) {
-                wp_redirect('/');
-                wp_die();
-            }
+//            if (empty($redirect)) {
+//                wp_redirect('/');
+//                wp_die();
+//            }
 
             if (is_user_logged_in()) {
                 wp_redirect($redirect);
@@ -145,12 +145,17 @@ if (!class_exists('AC_SocialAuth')) :
         /**
          * Get REST url + redirect url with it.
          * @param string $social_type URL type, e.g. vk
-         * @param string $redirect Redirect URL where to send back user.
+         * @param string|null $redirect Redirect URL where to send back user.
          * @return string
          */
-        public static function get_callback_url($social_type, $redirect)
+        public static function get_callback_url($social_type, $redirect = null)
         {
-            return rest_url(static::get_rest_namespace() . "/auth/" . $social_type . '?redirect=' . $redirect);
+            $url = static::get_rest_namespace() . "/auth/" . $social_type;
+
+            if ($redirect !== null) {
+                $url .= "?redirect=$redirect";
+            }
+            return rest_url($url);
         }
 
         /**
@@ -158,11 +163,14 @@ if (!class_exists('AC_SocialAuth')) :
          * @param WP_REST_Request $request
          * @param null $redirect
          */
-        private function process_auth_facebook(WP_REST_Request $request, $redirect = null)
+        private function process_auth_facebook(WP_REST_Request $request, $redirect = null, $cookie_redirect = 'post_redirect')
         {
-
             $helper = $this->auth_facebook->getRedirectLoginHelper();
-            $facebook_rest_url = static::get_callback_url(self::SOCIAL_FACEBOOK, $redirect);
+            $facebook_rest_url = static::get_callback_url(self::SOCIAL_FACEBOOK);
+
+            if ($redirect !== null) {
+                setcookie($cookie_redirect, $redirect, time() + 3600);
+            }
 
             if ($request->get_param('code') === null) {
                 $loginUrl = $helper->getLoginUrl($facebook_rest_url, ['email']);
@@ -170,21 +178,47 @@ if (!class_exists('AC_SocialAuth')) :
                 exit();
             } else {
 
+                $redirect = $_COOKIE[$cookie_redirect];
+
+                $helper->getPersistentDataHandler()->set('state', $_GET['state']);
+
                 try {
-                    $accessToken = $helper->getAccessToken($facebook_rest_url);
-                } catch (Facebook\Exceptions\FacebookResponseException $e) {
-
+                    $accessToken = $helper->getAccessToken();
                 } catch (Facebook\Exceptions\FacebookSDKException $e) {
-
-                }
-
-                if (!isset($accessToken)) {
                     wp_redirect($redirect);
-                    wp_die();
+                    exit;
                 }
 
+                if (!isset($accessToken) || empty($accessToken)) {
+                    wp_redirect($redirect);
+                    exit;
+                }
 
-                var_dump($accessToken);
+                try {
+                    $response = $this->auth_facebook->get('/me?fields=id,first_name,last_name,picture', $accessToken);
+
+                    $user = $response->getGraphUser();
+                } catch (\Facebook\Exceptions\FacebookSDKException $exception) {
+                    wp_redirect($redirect);
+                    exit();
+                }
+
+                $this->auth_or_create_user(
+                    'user_login',
+                    $user->getId(),
+                    [
+                        'user_login' => $user->getId(),
+                        'display_name' => $user->getFirstName() . ' ' . $user->getLastName(),
+                        'user_nicename' => $user->getFirstName(),
+                    ],
+                    [
+                        'anycomment_social' => self::SOCIAL_FACEBOOK,
+                        'anycomment_social_avatar' => $user->getPicture()->getUrl(),
+                    ]
+                );
+
+                wp_redirect($redirect);
+                exit();
             }
         }
 
@@ -259,7 +293,7 @@ if (!class_exists('AC_SocialAuth')) :
                     'user_login',
                     $user->id,
                     [
-                        'user_login' => $user->screen_name,
+                        'user_login' => $user->id,
                         'user_email' => $user->email,
                         'display_name' => $user->name,
                         'user_nicename' => $user->name,
