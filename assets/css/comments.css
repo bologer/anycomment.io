@@ -399,6 +399,22 @@ body {
     -ms-border-radius: 24px;
     border-radius: 24px; }
 
+.main-footer {
+  margin-top: 50px;
+  padding-top: 18px;
+  text-align: right;
+  font-size: 12px;
+  border-top: 2px solid #e4e2e7; }
+  .main-footer, .main-footer a {
+    color: #cccccd; }
+  .main-footer a:hover,
+  .main-footer a:focus,
+  .main-footer a:active {
+    color: #333333; }
+  .main-footer img {
+    margin-right: 6px;
+    vertical-align: middle; }
+
 #anycomment-comments {
   position: relative;
   padding: 44px; }

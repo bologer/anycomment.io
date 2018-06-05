@@ -16,7 +16,7 @@ TBD
 TBD
 
 == Todo ==
-* Authorize and ability to leave comment via VK, Twitter, Facebook, Google
+* Add Google authorization
 * Customization options to set custom styles
 * Load comments when user scrolls to it
 * Auto-update comments on new comments
@@ -26,6 +26,7 @@ TBD
 == Changelog ==
 = 0.0.1 =
 * Release Date - TBD
-* Authorize via VK
+* Options to specify API data for social authorization: Vk, Twitter, Facebook
+* Authorize via VK, Twitter, Facebook
 * enhancement: add comments with AJAX, no need to refresh the page
 * enhancement: ability to reply to nested comments up to 2 levels

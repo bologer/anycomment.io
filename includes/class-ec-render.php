@@ -159,26 +159,36 @@ if (!class_exists('AC_Render')) :
         {
             check_ajax_referer('add-comment-nonce', 'nonce');
 
-            $parentCommentId = trim(sanitize_text_field($_POST['reply_to']));
+            $comment_parent_id = trim(sanitize_text_field($_POST['reply_to']));
             $comment = trim(sanitize_text_field($_POST['comment']));
-            $postId = trim(sanitize_text_field($_POST['post_id']));
+            $post_id = trim(sanitize_text_field($_POST['post_id']));
 
-            if (empty($comment) || empty($postId)) {
+            if (empty($comment) || empty($post_id)) {
                 echo AnyComment()->json_error(__("Wrong params passed", "anycomment"));
                 wp_die();
             }
 
-            $args['comment_content'] = $comment;
-            $args['comment_post_ID'] = $postId;
+            if (get_post($post_id) === null) {
+                echo AnyComment()->json_error(__("No such post", "anycomment"));
+                wp_die();
+            }
 
-            if (!empty($parentCommentId) && ($comment = get_comment($parentCommentId)) instanceof WP_Comment) {
+            $args['comment_content'] = $comment;
+            $args['comment_post_ID'] = $post_id;
+
+            if (($comment = get_comment($comment_parent_id)) instanceof WP_Comment) {
                 // Check that comment belongs to the current post
-                if ($comment->comment_post_ID != $postId) {
+                if ($comment->comment_post_ID != $post_id) {
                     echo AnyComment()->json_error(__('Reply comment does not belong to the post', "anycomment"));
                     wp_die();
                 }
 
-                $args['comment_parent'] = $parentCommentId;
+                if ($comment->comment_parent > 0) {
+                    echo AnyComment()->json_error(__('Reply comment can be max 2nd level', "anycomment"));
+                    wp_die();
+                }
+
+                $args['comment_parent'] = $comment_parent_id;
             }
 
             // Process logged in user
@@ -201,19 +211,28 @@ if (!class_exists('AC_Render')) :
             }
 
 
-            if (!($newCommentId = wp_insert_comment($args))) {
+            if (!($new_comment_id = wp_insert_comment($args))) {
                 echo AnyComment()->json_error(__("Failed to add comment. Please, try again.", "anycomment"));
                 wp_die();
             }
 
-            wp_notify_postauthor($newCommentId);
+            wp_notify_postauthor($new_comment_id);
+
             echo AnyComment()->json_success([
-                'commentId' => $newCommentId,
-                'parentCommentId' => $parentCommentId,
-                'blag' => $args,
-                'commentText' => $comment,
+                'commentId' => $new_comment_id,
+                'comment_count_text' => $this->get_comment_count($post_id)
             ]);
             wp_die();
+        }
+
+        /**
+         * Get comment count.
+         * @param int $post_id Post ID.
+         * @return string
+         */
+        public function get_comment_count($post_id)
+        {
+            return sprintf(__('%s Comments', 'anycomment'), get_comments_number($post_id));
         }
     }
 endif;

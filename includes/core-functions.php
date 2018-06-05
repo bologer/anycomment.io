@@ -294,4 +294,38 @@ if (!function_exists('anycomment_comments')):
 endif;
 
 
+if (!function_exists('anycomment_get_comment_count_text')):
+    /**
+     * Display comment count text.
+     * @param int $postId Post id.
+     */
+    function anycomment_get_comment_count_text($post_id)
+    {
+        echo AnyComment()->render->get_comment_count($post_id);
+    }
+
+    add_action('anycomment_get_comment_count_text', 'anycomment_get_comment_count_text');
+endif;
+
+if (!function_exists('anycomment_footer')):
+    /**
+     * Display footer part.
+     */
+    function anycomment_footer()
+    {
+        ?>
+        <footer class="main-footer">
+            <img src="<?= AnyComment()->plugin_url() . '/assets/img/mini-logo.svg' ?>"
+                 alt="AnyComment"> <a href="https://anycomment.io" target="_blank"><?= __('Add Anycomment to your site', 'anycomment') ?></a>
+        </footer>
+        <?php
+    }
+
+    add_action('anycomment_footer', 'anycomment_footer');
+endif;
+
+
+
+
+
 

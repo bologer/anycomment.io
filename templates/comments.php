@@ -25,11 +25,12 @@ $classPrefix = AnyComment()->classPrefix();
 <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.6.1/iframeResizer.contentWindow.min.js"></script>
 <script src="<?= AnyComment()->plugin_url() ?>/assets/js/timeago.min.js"></script>
 
-<div id="<?= $classPrefix ?>comments" class="<?= $classPrefix ?>comments-area comments-area" data-origin-limit="20"
+<div id="<?= $classPrefix ?>comments" data-origin-limit="20"
      data-current-limit="20">
     <?php do_action('anycomment_send_comment') ?>
     <?php do_action('anycomment_notifications') ?>
     <?php do_action('anycomment_load_comments') ?>
+    <?php do_action('anycomment_footer') ?>
 </div>
 
 <script>
@@ -53,9 +54,8 @@ $classPrefix = AnyComment()->classPrefix();
 
     // Load next comments if available
     function loadNext() {
-        let newLimit = parseInt(jQuery('#<?= $classPrefix ?>comments').attr('data-current-limit')) + 10;
-
-        console.log('Current limit: ' + newLimit);
+        let root = jQuery('#<?= $classPrefix ?>comments');
+        let newLimit = parseInt(root.attr('data-current-limit')) + 10;
 
         root.attr('data-current-limit', newLimit);
 
@@ -115,6 +115,7 @@ $classPrefix = AnyComment()->classPrefix();
         let postIdField = form.find('[name="post_id"]') || '';
         let actionField = form.find('[name="action"]') || '';
         let nonceField = form.find('[name="nonce"]') || '';
+        let commentCountEl = jQuery('#comment-count') || '';
 
         if (!commentField || !postIdField || !actionField || !nonceField) {
             return;
@@ -130,12 +131,17 @@ $classPrefix = AnyComment()->classPrefix();
 
         let data = form.serialize();
 
-        jQuery.post('<?= AnyComment()->ajax_url() ?>', data, function (response) {
-            if (response.success) {
+        jQuery.post('<?= AnyComment()->ajax_url() ?>', data, function (data) {
+            if (data.success) {
+                let response = JSON.parse(data.response);
+                if (commentCountEl) {
+                    commentCountEl.text(response.comment_count_text);
+                }
+
                 commentField.val('');
                 loadComments();
             } else {
-                addError(response.error);
+                addError(data.response.error);
                 hideLoader();
             }
             commentField.focus();

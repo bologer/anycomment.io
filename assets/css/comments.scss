@@ -149,6 +149,31 @@ body {
   }
 }
 
+// Footer
+.main-footer {
+  margin-top: 50px;
+  padding-top: 18px;
+  text-align: right;
+  font-size: $font-size - 3;
+  border-top: 2px solid #e4e2e7;
+
+  &, a {
+    color: #cccccd;
+  }
+
+  a:hover,
+  a:focus,
+  a:active {
+    color: $comment-color;
+  }
+
+  img {
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+}
+
+// Main
 #anycomment-comments {
   position: relative;
   padding: 44px;
