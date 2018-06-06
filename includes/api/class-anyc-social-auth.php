@@ -12,7 +12,8 @@ if (!class_exists('AC_SocialAuth')) :
         const SOCIAL_VK = 'vk';
         const SOCIAL_FACEBOOK = 'facebook';
         const SOCIAL_TWITTER = 'twitter';
-        const SOCIAL_GOOGLE_PLUS = 'google+';
+        const SOCIAL_GOOGLE = 'google';
+        const SOCIAL_OK = 'odnoklasniki';
 
         const META_SOCIAL_TYPE = 'anycomment_social';
         const META_SOCIAL_AVATAR = 'anycomment_social_avatar';
@@ -134,7 +135,7 @@ if (!class_exists('AC_SocialAuth')) :
                 case self::SOCIAL_TWITTER:
                     return $this->process_auth_twitter($request, $redirect);
                     break;
-                case self::SOCIAL_GOOGLE_PLUS:
+                case self::SOCIAL_GOOGLE:
                     break;
                 default:
                     wp_redirect($redirect);
@@ -203,8 +204,8 @@ if (!class_exists('AC_SocialAuth')) :
                     exit();
                 }
 
-                $this->auth_or_create_user(
-                    'user_login',
+                $this->auth_user(
+                    'login',
                     $user->getId(),
                     [
                         'user_login' => $user->getId(),
@@ -289,15 +290,21 @@ if (!class_exists('AC_SocialAuth')) :
                     exit();
                 }
 
-                $this->auth_or_create_user(
-                    'user_login',
-                    $user->id,
-                    [
-                        'user_login' => $user->id,
-                        'user_email' => $user->email,
-                        'display_name' => $user->name,
-                        'user_nicename' => $user->name,
-                    ],
+                $fields = [];
+                $fields['id'] = $user->id;
+
+                if (isset($user->email)) {
+                    $fields['user_email'] = $user->email;
+                }
+
+                $fields['display_name'] = $user->name;
+                $fields['user_nicename'] = $user->name;
+
+
+                $this->auth_user(
+                    'login',
+                    $user->id_str,
+                    $fields,
                     [
                         'anycomment_social' => self::SOCIAL_TWITTER,
                         // Margin to get bigger size avatar
@@ -321,8 +328,9 @@ if (!class_exists('AC_SocialAuth')) :
          */
         private function process_auth_vk(WP_REST_Request $request, $redirect = null)
         {
+            $vk_rest_url = static::get_callback_url(self::SOCIAL_VK, $redirect);
+
             if ($request->get_param('code') === null) {
-                $vk_rest_url = static::get_callback_url(self::SOCIAL_VK, $redirect);
                 $url = $this->auth_vk->getAuthorizeURL('email', $vk_rest_url);
                 wp_redirect($url);
                 exit();
@@ -360,7 +368,7 @@ if (!class_exists('AC_SocialAuth')) :
 
                 $vkUser = array_merge($access_token, $user_info['response'][0]);
 
-                $this->auth_or_create_user(
+                $this->auth_user(
                     'email',
                     $vkUser['email'],
                     [
@@ -387,24 +395,24 @@ if (!class_exists('AC_SocialAuth')) :
         /**
          * Authenticate user with additional check whether such
          * user already exists or not. When user does not exist,
-         * it create such. When exists, uses existing information.
+         * it create it. When exists, uses existing information to authorize.
          *
-         * @see get_user_by() for more information about $field and value fields.
+         * @see get_user_by() for more information about $field and $value fields.
          *
          * @param string $field Field name to be used to check existance of such user.
          * @param string $value Value of the $field to be checked for.
          * @param array $userdata User data to be created for user, when does not exist.
-         * @param array $user_meta Uset meta data to be create for user, when does not exist.
+         * @param array $usermeta User meta data to be create for user, when does not exist.
          * @return bool
          */
-        public function auth_or_create_user($field, $value, array $userdata, array $user_meta)
+        public function auth_user($field, $value, array $userdata, array $usermeta)
         {
             wp_clear_auth_cookie();
 
             $user = get_user_by($field, $value);
 
             if ($user === false) {
-                $newUserId = $this->insert_user($userdata, $user_meta);
+                $newUserId = $this->insert_user($userdata, $usermeta);
 
                 if (!$newUserId) {
                     return false;
@@ -492,7 +500,7 @@ if (!class_exists('AC_SocialAuth')) :
          * @param int $user_id User ID to be searched for.
          * @return mixed|null
          */
-        public function get_user_avatar($user_id)
+        public function get_user_avatar_url($user_id)
         {
             $avatarUrl = get_user_meta($user_id, self::META_SOCIAL_AVATAR, true);
 
@@ -500,9 +508,7 @@ if (!class_exists('AC_SocialAuth')) :
                 return $avatarUrl;
             }
 
-            if (empty($avatarUrl)) {
-                $avatarUrl = get_avatar_url($user_id);
-            }
+            $avatarUrl = AnyComment()->plugin_url() . '/assets/img/no-avatar.svg';
 
             return !$avatarUrl ? $avatarUrl : null;
         }

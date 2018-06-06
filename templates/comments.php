@@ -26,7 +26,8 @@ $classPrefix = AnyComment()->classPrefix();
 <script src="<?= AnyComment()->plugin_url() ?>/assets/js/timeago.min.js"></script>
 
 <div id="<?= $classPrefix ?>comments" data-origin-limit="20"
-     data-current-limit="20">
+     data-current-limit="20"
+     data-guest="<?= !is_user_logged_in() ? "1" : "0" ?>">
     <?php do_action('anycomment_send_comment') ?>
     <?php do_action('anycomment_notifications') ?>
     <?php do_action('anycomment_load_comments') ?>
@@ -54,12 +55,17 @@ $classPrefix = AnyComment()->classPrefix();
 
     // Load next comments if available
     function loadNext() {
-        let root = jQuery('#<?= $classPrefix ?>comments');
+        let root = getRoot();
         let newLimit = parseInt(root.attr('data-current-limit')) + 10;
 
         root.attr('data-current-limit', newLimit);
 
         loadComments(newLimit);
+    }
+
+    // Get root object
+    function getRoot() {
+        return jQuery('#<?= $classPrefix ?>comments') || '';
     }
 
     function getForm() {
@@ -77,15 +83,40 @@ $classPrefix = AnyComment()->classPrefix();
         return form.find('[name="comment"]') || '';
     }
 
+    function checkOverlay() {
+        let root = getRoot();
+        let isGuest = root.data('guest');
+        let guestOverlay = jQuery('#auth-required');
+
+        if (isGuest) {
+            guestOverlay.hide();
+            guestOverlay.fadeIn(300, function () {
+                jQuery(this).hide();
+                jQuery(this).show();
+            });
+
+            return true;
+        }
+
+        return false;
+    }
+
     // Reply to some comment
     function replyComment(el, replyTo) {
+
         if (!replyTo) {
             return;
         }
 
         let form = getForm();
 
+
         if (!form) {
+            return;
+        }
+
+
+        if (checkOverlay()) {
             return;
         }
 
@@ -115,6 +146,7 @@ $classPrefix = AnyComment()->classPrefix();
         let postIdField = form.find('[name="post_id"]') || '';
         let actionField = form.find('[name="action"]') || '';
         let nonceField = form.find('[name="nonce"]') || '';
+        let replyToField = form.find('[name="reply_to"]') || '';
         let commentCountEl = jQuery('#comment-count') || '';
 
         if (!commentField || !postIdField || !actionField || !nonceField) {
@@ -138,6 +170,7 @@ $classPrefix = AnyComment()->classPrefix();
                     commentCountEl.text(response.comment_count_text);
                 }
 
+                replyToField.val('');
                 commentField.val('');
                 loadComments();
             } else {
@@ -219,6 +252,7 @@ $classPrefix = AnyComment()->classPrefix();
     }
 
     loadComments();
+
 
     let timeagoInstance = timeago();
     let nodes = document.querySelectorAll('.timeago-date-time');

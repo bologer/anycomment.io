@@ -51,20 +51,20 @@ if (!function_exists('anycomment_login_with')):
     function anycomment_login_with($redirectUrl = null)
     {
         $socials = [
-            'vk' => [
-                'url' => rest_url("anycomment/v1/auth/vk?redirect=$redirectUrl"),
+            AC_SocialAuth::SOCIAL_VK => [
+                'url' => AC_SocialAuth::get_callback_url(AC_SocialAuth::SOCIAL_VK, $redirectUrl),
                 'label' => __('VK', "anycomment"),
             ],
-            'twitter' => [
-                'url' => rest_url("anycomment/v1/auth/twitter?redirect=$redirectUrl"),
+            AC_SocialAuth::SOCIAL_TWITTER => [
+                'url' => AC_SocialAuth::get_callback_url(AC_SocialAuth::SOCIAL_TWITTER, $redirectUrl),
                 'label' => __('Twitter', "anycomment")
             ],
-            'facebook' => [
-                'url' => rest_url("anycomment/v1/auth/facebook?redirect=$redirectUrl"),
+            AC_SocialAuth::SOCIAL_FACEBOOK => [
+                'url' => AC_SocialAuth::get_callback_url(AC_SocialAuth::SOCIAL_FACEBOOK, $redirectUrl),
                 'label' => __('Facebook', "anycomment")
             ],
-            'Google' => [
-                'url' => rest_url("anycomment/v1/auth/google?redirect=$redirectUrl"),
+            AC_SocialAuth::SOCIAL_GOOGLE => [
+                'url' => AC_SocialAuth::get_callback_url(AC_SocialAuth::SOCIAL_GOOGLE, $redirectUrl),
                 'label' => __('Google+', "anycomment")
             ],
         ];
@@ -73,19 +73,16 @@ if (!function_exists('anycomment_login_with')):
             return null;
         }
 
-        ?>
-        <ul class="<?= AnyComment()->classPrefix() ?>login-with-list">
-            <?php
-            foreach ($socials as $key => $social): ?>
-                <li><a href="<?= $social['url'] ?>"
-                       target="_parent"
-                       class="<?= AnyComment()->classPrefix() ?>login-with-list-<?= $key ?>"><?= $social['label'] ?></a>
-                </li>
-            <?php
-            endforeach;
-            ?>
-        </ul>
+        foreach ($socials as $key => $social): ?>
+            <li><a href="<?= $social['url'] ?>"
+                   target="_parent"
+                   title="<?= $social['label'] ?>"
+                   class="<?= AnyComment()->classPrefix() ?>login-with-list-<?= $key ?>"><img
+                            src="<?= AnyComment()->plugin_url() ?>/assets/img/social-auth-<?= $key ?>.svg"
+                            alt="<?= $social['label'] ?>"></a>
+            </li>
         <?php
+        endforeach;
     }
 
     add_action('anycomment_login_with', 'anycomment_login_with');
@@ -134,13 +131,13 @@ endif;
 if (!function_exists('anycomment_avatar')):
     /**
      * Display author's avatar as comment part.
-     * @param array $comment
+     * @param WP_Comment $comment
      */
     function anycomment_avatar($comment)
     {
         ?>
         <div class="comment-single-avatar" data-author-id="<?= $comment->user_id ?>">
-            <?php if (($avatarUrl = AnyComment()->auth->get_user_avatar($comment->user_id))): ?>
+            <?php if (($avatarUrl = AnyComment()->auth->get_user_avatar_url($comment->user_id))): ?>
                 <div class="comment-single-avatar__img" style="background-image: url('<?= $avatarUrl ?>');"></div>
             <?php endif; ?>
         </div>
@@ -154,14 +151,29 @@ endif;
 if (!function_exists('anycomment_author')):
     /**
      * Display author of the comment part.
-     * @param array $comment
+     * @param WP_Comment $comment
+     * @param WP_Comment|null $parentComment Parent comment
      */
-    function anycomment_author($comment)
+    function anycomment_author($comment, $parentComment = null)
     {
-        $authorName = !empty($author = $comment->comment_author) ? $author : __('Unknown', "anycomment");
+        $authorName = '' != $comment->comment_author ? $comment->comment_author : __('Unknown', "anycomment");
+
+        if ($comment->comment_parent != 0) {
+            $parentComment = get_comment($comment->comment_parent);
+            $parentAuthor = $parentComment->comment_author != '' ? $comment->comment_author : __('Unknown', "anycomment");
+        }
+
         ?>
         <header class="comment-single-body-header" data-author-id="<?= $comment->user_id ?>">
-            <div class="comment-single-body-header__author"><?= $authorName ?></div>
+            <?php if (!isset($parentComment)): ?>
+                <div class="comment-single-body-header__author"><?= $authorName ?></div>
+            <?php else: ?>
+                <div class="comment-single-body-header__author">
+                    <span class="comment-single-body-header__author-replied"><?= sprintf('@%s', $authorName) ?></span>
+                    <span class="comment-single-body-header__author-answered"><?= __(' answered ', "anycomemnt") ?></span>
+                    <span class="comment-single-body-header__author-parent-author"><?= $parentAuthor ?></span>
+                </div>
+            <?php endif; ?>
             <time class="comment-single-body-header__date timeago-date-time"
                   datetime="<?= $comment->comment_date ?>"></time>
         </header>
@@ -174,7 +186,7 @@ endif;
 if (!function_exists('anycomment_comment_body')):
     /**
      * Display comment text part.
-     * @param array $comment
+     * @param WP_Comment $comment
      */
     function anycomment_comment_body($comment)
     {
@@ -213,7 +225,7 @@ endif;
 if (!function_exists('anycomment_actions_part')):
     /**
      * Display actions part.
-     * @param array $comment
+     * @param WP_Comment $comment
      */
     function anycomment_actions_part($comment)
     {
@@ -239,7 +251,7 @@ endif;
 if (!function_exists('anycomment_comment')):
     /**
      * Display single comment.
-     * @param array $comment
+     * @param WP_Comment $comment
      */
     function anycomment_comment($comment)
     {
@@ -316,7 +328,8 @@ if (!function_exists('anycomment_footer')):
         ?>
         <footer class="main-footer">
             <img src="<?= AnyComment()->plugin_url() . '/assets/img/mini-logo.svg' ?>"
-                 alt="AnyComment"> <a href="https://anycomment.io" target="_blank"><?= __('Add Anycomment to your site', 'anycomment') ?></a>
+                 alt="AnyComment"> <a href="https://anycomment.io"
+                                      target="_blank"><?= __('Add Anycomment to your site', 'anycomment') ?></a>
         </footer>
         <?php
     }

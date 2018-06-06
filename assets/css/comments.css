@@ -358,6 +358,29 @@ body {
     -moz-border-radius: 4px;
     -ms-border-radius: 4px;
     border-radius: 4px; }
+    .send-comment-body-outliner__auth {
+      background-color: rgba(255, 255, 255, 0.75);
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 4;
+      width: 100%;
+      height: 100%; }
+      .send-comment-body-outliner__auth-header {
+        color: #333333;
+        font-size: 18px;
+        margin-right: 21px; }
+      .send-comment-body-outliner__auth ul {
+        list-style: none;
+        padding: 0;
+        display: table;
+        margin: 17px auto; }
+        .send-comment-body-outliner__auth ul li {
+          display: inline-block;
+          vertical-align: middle;
+          margin-right: 6px; }
+          .send-comment-body-outliner__auth ul li:last-of-type {
+            margin-right: 0; }
     .send-comment-body-outliner__logo {
       position: absolute;
       left: 33px;
@@ -449,6 +472,10 @@ body {
         font-size: 14px;
         display: block;
         margin-bottom: 2px; }
+        .anycomment-list .comment-single-body-header__author-replied, .anycomment-list .comment-single-body-header__author-parent-author {
+          color: #3658f7; }
+        .anycomment-list .comment-single-body-header__author-answered {
+          color: #a7b4ba; }
       .anycomment-list .comment-single-body-header__date {
         color: #b6c1c6;
         font-size: 14px; }
