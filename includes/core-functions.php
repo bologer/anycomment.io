@@ -137,7 +137,7 @@ if (!function_exists('anycomment_avatar')):
     {
         ?>
         <div class="comment-single-avatar" data-author-id="<?= $comment->user_id ?>">
-            <?php if (($avatarUrl = AnyComment()->auth->get_user_avatar_url($comment->user_id))): ?>
+            <?php if (($avatarUrl = AnyComment()->auth->get_user_avatar_url($comment->user_id)) ): ?>
                 <div class="comment-single-avatar__img" style="background-image: url('<?= $avatarUrl ?>');"></div>
             <?php endif; ?>
         </div>

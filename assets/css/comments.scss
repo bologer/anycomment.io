@@ -43,7 +43,7 @@ body {
 .send-comment.send-comment-authorized {
   .send-comment-body {
     &-outliner {
-      height: 96px;
+      min-height: 96px;
       &__avatar {
         position: absolute;
         top: 18px;
@@ -159,7 +159,7 @@ body {
         max-height: 300px !important;
         height: 64px;
         position: relative;
-        padding: 22px 10px 5px 89px;
+        padding: 26px 10px 5px 89px;
         z-index: 1;
       }
     }

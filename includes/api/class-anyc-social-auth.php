@@ -510,7 +510,7 @@ if (!class_exists('AC_SocialAuth')) :
 
             $avatarUrl = AnyComment()->plugin_url() . '/assets/img/no-avatar.svg';
 
-            return !$avatarUrl ? $avatarUrl : null;
+            return $avatarUrl;
         }
     }
 endif;
