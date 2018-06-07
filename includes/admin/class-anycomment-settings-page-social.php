@@ -38,6 +38,13 @@ if (!class_exists('AC_SocialSettingPage')) :
         const OPTION_FACEBOOK_APP_ID = 'social_facebook_app_id_field';
         const OPTION_FACEBOOK_APP_SECRET = 'social_facebook_app_secret_field';
 
+        /**
+         * Google Options
+         */
+        const OPTION_GOOGLE_TOGGLE = 'social_google_toggle_field';
+        const OPTION_GOOGLE_CLIENT_ID = 'social_google_client_id_field';
+        const OPTION_GOOGLE_SECRET = 'social_google_secret_field';
+
 
         /**
          * @var array List of available options.
@@ -88,7 +95,7 @@ if (!class_exists('AC_SocialSettingPage')) :
                 __('VK', "anycomment"),
                 function () {
                     ?>
-                    <p><?= __('VK settings regarding authorization.', "anycomment") ?></p>
+                    <p><?= __('VK authorization settings.', "anycomment") ?></p>
                     <?php
                 },
                 self::PAGE_SLUG
@@ -102,19 +109,19 @@ if (!class_exists('AC_SocialSettingPage')) :
                         'id' => self::OPTION_VK_TOGGLE,
                         'title' => __('Enable', "anycomment"),
                         'callback' => 'input_checkbox',
-                        'description' => esc_html(__('Allow to authorize via VK', "anycomment"))
+                        'description' => esc_html(__('Allow VK authorization', "anycomment"))
                     ],
                     [
                         'id' => self::OPTION_VK_APP_ID,
                         'title' => __('Application ID', "anycomment"),
                         'callback' => 'input_text',
-                        'description' => __('Enter app id. Can be found in <a href="https://vk.com/apps?act=manage" target="_blank">apps</a> page', "anycomment")
+                        'description' => sprintf(__('Enter app id. Can be found in <a href="%s" target="_blank">apps</a> page', "anycomment"), 'https://vk.com/apps?act=manage')
                     ],
                     [
                         'id' => self::OPTION_VK_SECRET,
                         'title' => __('Secure key', "anycomment"),
                         'callback' => 'input_text',
-                        'description' => __('Enter secure key. Can be found in <a href="https://vk.com/apps?act=manage" target="_blank">apps</a> page', "anycomment")
+                        'description' => sprintf(__('Enter secure key. Can be found in <a href="%s" target="_blank">apps</a> page', "anycomment"), 'https://vk.com/apps?act=manage')
                     ]
                 ]
             );
@@ -127,7 +134,7 @@ if (!class_exists('AC_SocialSettingPage')) :
                 __('Twitter', "anycomment"),
                 function () {
                     ?>
-                    <p><?= __('Twitter settings regarding authorization.', "anycomment") ?></p>
+                    <p><?= __('Twitter authorization settings.', "anycomment") ?></p>
                     <?php
                 },
                 self::PAGE_SLUG
@@ -147,13 +154,13 @@ if (!class_exists('AC_SocialSettingPage')) :
                         'id' => self::OPTION_TWITTER_CONSUMER_KEY,
                         'title' => __('Consumer Key', "anycomment"),
                         'callback' => 'input_text',
-                        'description' => __('Enter consumer key. Can be found in the list of <a href="https://apps.twitter.com/" target="_blank">apps</a>', "anycomment")
+                        'description' => sprintf(__('Enter consumer key. Can be found in the list of <a href="%s" target="_blank">apps</a>', "anycomment"), 'https://apps.twitter.com/')
                     ],
                     [
                         'id' => self::OPTION_TWITTER_CONSUMER_SECRET,
                         'title' => __('Consumer Secret', "anycomment"),
                         'callback' => 'input_text',
-                        'description' => __('Enter consumer secret. Can be found in the list of <a href="https://apps.twitter.com/" target="_blank">apps</a>', "anycomment")
+                        'description' => sprintf(__('Enter consumer secret. Can be found in the list of <a href="%s" target="_blank">apps</a>', "anycomment"), 'https://apps.twitter.com/')
                     ]
                 ]
             );
@@ -166,7 +173,7 @@ if (!class_exists('AC_SocialSettingPage')) :
                 __('Facebook', "anycomment"),
                 function () {
                     ?>
-                    <p><?= __('Facebook settings regarding authorization.', "anycomment") ?></p>
+                    <p><?= __('Facebook authorization settings.', "anycomment") ?></p>
                     <?php
                 },
                 self::PAGE_SLUG
@@ -186,13 +193,52 @@ if (!class_exists('AC_SocialSettingPage')) :
                         'id' => self::OPTION_FACEBOOK_APP_ID,
                         'title' => __('App ID', "anycomment"),
                         'callback' => 'input_text',
-                        'description' => __('Enter app id. Can be found in the list of <a href="https://developers.facebook.com/apps/" target="_blank">apps</a>', "anycomment")
+                        'description' => sprintf(__('Enter app id. Can be found in the list of <a href="%s" target="_blank">apps</a>', "anycomment"), 'https://developers.facebook.com/apps/')
                     ],
                     [
                         'id' => self::OPTION_FACEBOOK_APP_SECRET,
                         'title' => __('App Secret', "anycomment"),
                         'callback' => 'input_text',
-                        'description' => __('Enter app secret. Can be found in the list of <a href="https://developers.facebook.com/apps/" target="_blank">apps</a>', "anycomment")
+                        'description' => sprintf(__('Enter app secret. Can be found in the list of <a href="%" target="_blank">apps</a>', "anycomment"), 'https://developers.facebook.com/apps/')
+                    ]
+                ]
+            );
+
+            /**
+             * Facebook
+             */
+            add_settings_section(
+                'section_google',
+                __('Google', "anycomment"),
+                function () {
+                    ?>
+                    <p><?= __('Google authorization settings.', "anycomment") ?></p>
+                    <?php
+                },
+                self::PAGE_SLUG
+            );
+
+            $this->render_fields(
+                self::PAGE_SLUG,
+                'section_google',
+                [
+                    [
+                        'id' => self::OPTION_GOOGLE_TOGGLE,
+                        'title' => __('Enable', "anycomment"),
+                        'callback' => 'input_checkbox',
+                        'description' => __('Allow Google authorization', "anycomment")
+                    ],
+                    [
+                        'id' => self::OPTION_GOOGLE_CLIENT_ID,
+                        'title' => __('Client ID', "anycomment"),
+                        'callback' => 'input_text',
+                        'description' => sprintf(__('Enter client id. Can be found in the list of <a href="%s" target="_blank">apps</a>', "anycomment"), 'https://console.developers.google.com/apis/credentials')
+                    ],
+                    [
+                        'id' => self::OPTION_GOOGLE_SECRET,
+                        'title' => __('Client Secret', "anycomment"),
+                        'callback' => 'input_text',
+                        'description' => sprintf(__('Enter client secret. Can be found in the list of <a href="%s" target="_blank">apps</a>', "anycomment"), 'https://console.developers.google.com/apis/credentials')
                     ]
                 ]
             );

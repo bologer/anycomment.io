@@ -318,6 +318,34 @@ body {
   -ms-border-radius: 50%;
   border-radius: 50%; }
 
+.btn {
+  font-size: 15px;
+  font-weight: normal;
+  text-align: center;
+  color: #ffffff;
+  padding: 0 50px;
+  line-height: 48px;
+  background-color: #53af4a;
+  display: inline-block;
+  vertical-align: middle;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  white-space: nowrap;
+  -webkit-border-radius: 24px;
+  -moz-border-radius: 24px;
+  -ms-border-radius: 24px;
+  border-radius: 24px; }
+  .btn:hover, .btn:active, .btn:focus {
+    background-color: #4f9f49; }
+
 .send-comment.send-comment-authorized .send-comment-body-outliner {
   min-height: 96px; }
   .send-comment.send-comment-authorized .send-comment-body-outliner__avatar {
@@ -405,22 +433,7 @@ body {
       padding: 26px 10px 5px 89px;
       z-index: 1; }
   .send-comment-body__btn {
-    font-size: 15px;
-    font-weight: normal;
-    text-align: center;
-    color: #ffffff;
-    padding: 0 50px;
-    line-height: 48px;
-    background-color: #53af4a;
-    display: inline-block;
-    float: right;
-    border: 0;
-    outline: 0;
-    cursor: pointer;
-    -webkit-border-radius: 24px;
-    -moz-border-radius: 24px;
-    -ms-border-radius: 24px;
-    border-radius: 24px; }
+    float: right; }
 
 .main-footer {
   margin-top: 50px;
@@ -503,10 +516,14 @@ body {
             .anycomment-list .comment-single-body__actions ul li a {
               font-size: 14px;
               color: #b6c1c6; }
+              .anycomment-list .comment-single-body__actions ul li a:hover, .anycomment-list .comment-single-body__actions ul li a:active, .anycomment-list .comment-single-body__actions ul li a:focus {
+                color: #a6b0b4; }
   .anycomment-list-child {
     margin-left: 90px; }
     .anycomment-list-child .comment-single-body {
       padding-left: 66px; }
+  .anycomment-list .comment-single-load-more {
+    text-align: center; }
 
 .anycomment-loader-wrapper {
   width: 100%;

@@ -83,7 +83,7 @@ $classPrefix = AnyComment()->classPrefix();
         return form.find('[name="comment"]') || '';
     }
 
-    function checkOverlay() {
+    function checkAuthorization() {
         let root = getRoot();
         let isGuest = root.data('guest');
         let guestOverlay = jQuery('#auth-required');
@@ -102,7 +102,7 @@ $classPrefix = AnyComment()->classPrefix();
     }
 
     // Reply to some comment
-    function replyComment(el, replyTo) {
+    function replyComment(el, replyTo, replyToName) {
 
         if (!replyTo) {
             return;
@@ -116,15 +116,21 @@ $classPrefix = AnyComment()->classPrefix();
         }
 
 
-        if (checkOverlay()) {
+        if (checkAuthorization()) {
             return;
         }
 
         let commentField = form.find('[name="comment"]') || '';
         let replyToField = form.find('[name="reply_to"]') || '';
 
+
         if (!commentField || !replyToField) {
             return;
+        }
+
+        if (replyToName) {
+            let replyToPlaceholderText = commentField.data('reply-name').replace('{name}', replyToName);
+            commentField.attr('placeholder', replyToPlaceholderText);
         }
 
         replyToField.val(replyTo);
@@ -172,6 +178,7 @@ $classPrefix = AnyComment()->classPrefix();
 
                 replyToField.val('');
                 commentField.val('');
+                commentField.attr('placeholder', commentField.data('original-placeholder'));
                 loadComments();
             } else {
                 addError(data.response.error);

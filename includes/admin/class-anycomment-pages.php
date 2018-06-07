@@ -51,7 +51,7 @@ if (!class_exists('AC_AdminPages')) :
                 'manage_options',
                 'anycomments-dashboard',
                 [$this, 'page_dashboard'],
-                ''
+                AnyComment()->plugin_url() . '/assets/img/admin-menu-logo.svg'
             );
         }
 

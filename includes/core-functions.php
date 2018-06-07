@@ -137,7 +137,7 @@ if (!function_exists('anycomment_avatar')):
     {
         ?>
         <div class="comment-single-avatar" data-author-id="<?= $comment->user_id ?>">
-            <?php if (($avatarUrl = AnyComment()->auth->get_user_avatar_url($comment->user_id)) ): ?>
+            <?php if (($avatarUrl = AnyComment()->auth->get_user_avatar_url($comment->user_id))): ?>
                 <div class="comment-single-avatar__img" style="background-image: url('<?= $avatarUrl ?>');"></div>
             <?php endif; ?>
         </div>
@@ -213,8 +213,10 @@ if (!function_exists('anycomment_load_more')):
     function anycomment_load_more()
     {
         ?>
-        <div class="comment-single-load-more"
-             onclick="return loadNext();"><?= __("Load more", "anycomment") ?></div>
+        <div class="comment-single-load-more">
+            <a href="javascript:void()" onclick="return loadNext();"
+               class="btn"><?= __("Load more", "anycomment") ?></a>
+        </div>
         <?php
     }
 
@@ -230,14 +232,10 @@ if (!function_exists('anycomment_actions_part')):
     function anycomment_actions_part($comment)
     {
         ?>
-        <?php
-        $parentReplyBoxId = uniqid(sprintf('%s', $comment->comment_ID));
-        ?>
-
         <footer class="comment-single-body__actions">
             <ul>
                 <li><a href="javascript:void(0)" data-reply-to="<?= $comment->comment_ID ?>"
-                       onclick="return replyComment(this, <?= $comment->comment_ID ?>)"><?= __('Reply', "anycomment") ?></a>
+                       onclick="return replyComment(this, <?= $comment->comment_ID ?>, '<?= $comment->comment_author ?>')"><?= __('Reply', "anycomment") ?></a>
                 </li>
             </ul>
         </footer>

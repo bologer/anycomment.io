@@ -206,11 +206,11 @@ if (!class_exists('AnyComment')) :
             include_once(ANY_COMMENT_ABSPATH . 'includes/api/vk/src/VK/VK.php');
             include_once(ANY_COMMENT_ABSPATH . 'includes/api/vk/src/VK/VKException.php');
 
-            // Twitter
-            include_once(ANY_COMMENT_ABSPATH . 'includes/api/twitter/autoload.php');
 
-            // Facebook
-            include_once(ANY_COMMENT_ABSPATH . 'includes/api/facebook/src/Facebook/autoload.php');
+            include_once(ANY_COMMENT_ABSPATH . 'includes/api/twitter/autoload.php'); //// Twitter
+            include_once(ANY_COMMENT_ABSPATH . 'includes/api/facebook/src/Facebook/autoload.php'); // Facebook
+            include_once(ANY_COMMENT_ABSPATH . 'includes/api/google/vendor/autoload.php'); // Google
+
 
             /**
              * Admin related

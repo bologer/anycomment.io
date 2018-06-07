@@ -25,7 +25,9 @@ $post = AnyComment()->getCurrentPost();
                 <?php endif; ?>
                 <textarea name="comment" required="required" class="send-comment-body-outliner__textfield"
                           placeholder="<?= __("Add comment...", "anycomment") ?>"
-                          onclick="return checkOverlay()" <?= (!is_user_logged_in() ? "readonly" : "") ?>></textarea>
+                          data-original-placeholder="<?= __("Add comment...", "anycomment") ?>"
+                          data-reply-name="<?= __("Reply to {name}...", "anycomment") ?>"
+                          onclick="return checkAuthorization()" <?= (!is_user_logged_in() ? "readonly" : "") ?>></textarea>
 
                 <?php if (!is_user_logged_in()): ?>
                     <div class="send-comment-body-outliner__auth" id="auth-required" style="display: none;">
@@ -38,7 +40,7 @@ $post = AnyComment()->getCurrentPost();
             </div>
 
             <?php if (is_user_logged_in()): ?>
-                <button class="<?= AnyComment()->classPrefix() ?>btn send-comment-body__btn"><?= __('Send', "anycomment") ?></button>
+                <button class="btn send-comment-body__btn"><?= __('Send', "anycomment") ?></button>
                 <input type="hidden" name="reply_to">
                 <input type="hidden" name="post_id" value="<?= $post->ID ?>">
                 <input type="hidden" name="nonce" value="<?= wp_create_nonce("add-comment-nonce") ?>">
