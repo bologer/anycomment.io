@@ -8,9 +8,19 @@ $post = AnyComment()->getCurrentPost();
 
 <div class="send-comment <?= (is_user_logged_in() ? 'send-comment-authorized' : '') ?>">
     <div class="send-comment-supheader">
-        <span class="send-comment-supheader__count"
-              id="comment-count"><?php do_action('anycomment_get_comment_count_text', $post->ID) ?></span>
-        <span class="send-comment-supheader__dropdown"><?= __('Sort By', 'anycomment') ?></span>
+        <div class="send-comment-supheader__count"
+             id="comment-count"><?php do_action('anycomment_get_comment_count_text', $post->ID) ?></div>
+        <div class="send-comment-supheader__dropdown">
+            <div class="send-comment-supheader__dropdown-header" onclick="return jQuery('#sort-dropdown').toggle();">
+                <?= __('Sort By', 'anycomment') ?>
+            </div>
+            <div class="send-comment-supheader__dropdown-list" style="display: none" id="sort-dropdown">
+                <ul>
+                    <li onclick="return commentSort('newest')"><?= __('Newest', 'anycomment') ?></li>
+                    <li onclick="return commentSort('oldest')"><?= __('Oldest', 'anycomment') ?></li>
+                </ul>
+            </div>
+        </div>
     </div>
     <div class="send-comment-body">
         <form method="POST" id="send-comment-form" onsubmit="sendComment(this, '#send-comment-form'); return false;">

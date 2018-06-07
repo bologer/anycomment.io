@@ -83,6 +83,10 @@ $classPrefix = AnyComment()->classPrefix();
         return form.find('[name="comment"]') || '';
     }
 
+    function commentSort() {
+        loadComments();
+    }
+
     function checkAuthorization() {
         let root = getRoot();
         let isGuest = root.data('guest');

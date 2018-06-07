@@ -11,6 +11,8 @@ $child-avatar-size: 48px;
 $btn-primary-color: #53af4a;
 $btn-primary-active-color: #4f9f49;
 
+$global-radius: 4px;
+
 @mixin border-radius($radius) {
   -webkit-border-radius: $radius;
   -moz-border-radius: $radius;
@@ -116,6 +118,67 @@ body {
     &__dropdown {
       float: right;
       color: #cccccd;
+
+      &-header {
+        cursor: pointer;
+        position: relative;
+        padding-right: 15px;
+
+        &:hover {
+          color: $comment-color;
+        }
+
+        &:hover::after {
+          border-top: 5px solid $comment-color;
+        }
+
+        &::after {
+          content: '';
+          position: absolute;
+          right: 0;
+          width: 0;
+          height: 0;
+          border-left: 5px solid transparent;
+          border-right: 5px solid transparent;
+          border-top: 5px solid $semi-hidden-color;
+          top: 5px;
+        }
+      }
+
+      &-header,
+      &-list {
+        font-size: $font-size;
+      }
+
+      &-list {
+        position: absolute;
+        top: 20px;
+        right: 0;
+        z-index: 2;
+        border: 1px solid #aab4b7;
+        background-color: #fff;
+        padding: 7px 10px;
+        @include border-radius($global-radius);
+
+        ul {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+
+          li {
+            margin-bottom: 2px;
+            cursor: pointer;
+
+            &:hover {
+              color: $comment-color;
+            }
+
+            &:last-of-type {
+              margin-bottom: 0;
+            }
+          }
+        }
+      }
     }
   }
 
@@ -127,14 +190,14 @@ body {
     }
 
     &-outliner {
-      border: 2px solid #b6c1c6;
+      border: 2px solid $semi-hidden-color;
       min-height: 64px;
       position: relative;
       overflow: hidden;
       max-height: 300px;
       background-color: #fff;
       margin-bottom: 16px;
-      @include border-radius(4px);
+      @include border-radius($global-radius);
 
       &__auth {
         background-color: rgba(255, 255, 255, 0.75);
@@ -292,7 +355,7 @@ body {
         }
 
         &__date {
-          color: #b6c1c6;
+          color: $semi-hidden-color;
           font-size: $font-size - 1;
         }
       }
