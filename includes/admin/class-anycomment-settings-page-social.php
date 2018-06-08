@@ -445,6 +445,33 @@ if (!class_exists('AC_SocialSettingPage')) :
         {
             return static::getOption(self::OPTION_FACEBOOK_APP_SECRET);
         }
+
+        /**
+         * Check whether Google social is on.
+         * @return bool
+         */
+        public static function isGoogleOn()
+        {
+            return static::getOption(self::OPTION_GOOGLE_TOGGLE) !== null;
+        }
+
+        /**
+         * Get Google Client ID.
+         * @return int|null
+         */
+        public static function getGoogleClientId()
+        {
+            return static::getOption(self::OPTION_GOOGLE_CLIENT_ID);
+        }
+
+        /**
+         * Get Google secret key.
+         * @return string|null
+         */
+        public static function getGoogleSecret()
+        {
+            return static::getOption(self::OPTION_GOOGLE_SECRET);
+        }
     }
 endif;
 

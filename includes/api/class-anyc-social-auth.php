@@ -32,7 +32,11 @@ if (!class_exists('AC_SocialAuth')) :
          * @var \Abraham\TwitterOAuth\TwitterOAuth
          */
         private $auth_twitter;
-        private $auth_google_plus;
+
+        /**
+         * @var Google_Client
+         */
+        private $auth_google;
 
         protected static $rest_prefix = 'anycomment';
         protected static $rest_version = 'v1';
@@ -79,6 +83,14 @@ if (!class_exists('AC_SocialAuth')) :
                 } catch (\Facebook\Exceptions\FacebookSDKException $e) {
 
                 }
+            }
+
+            if (AC_SocialSettingPage::isGoogleOn() &&
+                ($clientId = AC_SocialSettingPage::getGoogleClientId()) !== null &&
+                ($clientSecretKey = AC_SocialSettingPage::getGoogleSecret()) !== null) {
+                $this->auth_google = new Google_Client();
+                $this->auth_google->setClientId($clientId);
+                $this->auth_google->setClientSecret($clientSecretKey);
             }
         }
 
@@ -136,6 +148,7 @@ if (!class_exists('AC_SocialAuth')) :
                     return $this->process_auth_twitter($request, $redirect);
                     break;
                 case self::SOCIAL_GOOGLE:
+                    return $this->process_auth_google($request, $redirect);
                     break;
                 default:
                     wp_redirect($redirect);
@@ -157,6 +170,80 @@ if (!class_exists('AC_SocialAuth')) :
                 $url .= "?redirect=$redirect";
             }
             return rest_url($url);
+        }
+
+        /**
+         * Process Google authorization.
+         * @param WP_REST_Request $request
+         * @param null $redirect
+         */
+        private function process_auth_google(WP_REST_Request $request, $redirect = null, $cookie_redirect = 'post_redirect')
+        {
+            $google_rest_url = static::get_callback_url(self::SOCIAL_GOOGLE);
+
+
+            if ($redirect !== null) {
+                setcookie($cookie_redirect, $redirect, time() + 3600);
+            }
+
+            $client = $this->auth_google;
+            $client->setRedirectUri($google_rest_url);
+
+            if ($request->get_param('code') === null) {
+                wp_redirect($client->createAuthUrl([
+                    Google_Service_Plus::PLUS_ME,
+                    Google_Service_Plus::USERINFO_EMAIL,
+                    Google_Service_Plus::USERINFO_PROFILE
+                ]));
+                exit();
+            } else {
+
+                $redirect = $_COOKIE[$cookie_redirect];
+
+                $client->setRedirectUri($google_rest_url);
+                $client->fetchAccessTokenWithAuthCode($request->get_param('code'));
+
+                $googlePlus = new Google_Service_Plus($client);
+
+                $user = $googlePlus->people->get('me');
+
+                if (!$user instanceof Google_Service_Plus_Person) {
+                    wp_redirect($redirect);
+                    exit();
+                }
+
+                $email = isset($user->getEmails()[0]) && !empty($user->getEmails()[0]->getValue()) ?
+                    $user->getEmails()[0]->getValue() :
+                    null;
+
+                $userdata = [
+                    'user_login' => $user->getId(),
+                    'display_name' => $user->getDisplayName(),
+                    'user_nicename' => $user->getNickname() !== null ? $user->getNickname() : $user->getName()->getGivenName(),
+                    'user_url' => $user->getUrl()
+                ];
+
+
+                if ($email !== null) {
+                    $userdata['user_email'] = $email;
+                }
+
+                $searchBy = $email !== null ? 'email' : 'login';
+                $searchValue = $email !== null ? $email : $user->getId();
+
+                $this->auth_user(
+                    $searchBy,
+                    $searchValue,
+                    $userdata,
+                    [
+                        'anycomment_social' => self::SOCIAL_GOOGLE,
+                        'anycomment_social_avatar' => $user->getImage()->getUrl(),
+                    ]
+                );
+
+                wp_redirect($redirect);
+                exit();
+            }
         }
 
         /**
@@ -421,6 +508,7 @@ if (!class_exists('AC_SocialAuth')) :
                 $userId = $newUserId;
             } else {
                 $userId = $user->ID;
+                $this->update_user_meta($user->ID, $usermeta);
             }
 
             wp_clear_auth_cookie();
@@ -444,7 +532,7 @@ if (!class_exists('AC_SocialAuth')) :
          * @see wp_insert_user() for how `$userdata` param is being processed.
          * @see add_user_meta() for how `$usermeta` param is being processed.
          */
-        public function insert_user(array $userdata, array $usermeta)
+        public function insert_user($userdata, $usermeta)
         {
             if (!isset($userdata['userpass'])) {
                 // Generate some random password for user
@@ -474,6 +562,36 @@ if (!class_exists('AC_SocialAuth')) :
         }
 
         /**
+         * Update user meta by ID.
+         *
+         * @see update_user_meta() when meta does not exist, it will be added. See for more info.
+         *
+         * @param int $user_id User's ID.
+         * @param array $usermeta List of user meta to be updated.
+         * @return bool
+         */
+        public function update_user_meta($user_id, $usermeta)
+        {
+            if (!get_user_by('id', $user_id) || !is_array($usermeta) || !empty($usermeta)) {
+                return false;
+            }
+
+            $metaUpdateCount = 0;
+            foreach ($usermeta as $key => $value) {
+                if (update_user_meta($user_id, $key, $value)) {
+                    $metaUpdateCount++;
+                }
+            }
+
+            // If number of inserted metas is less then was requested to add
+            if ($metaUpdateCount < count($usermeta)) {
+                return false;
+            }
+
+            return true;
+        }
+
+        /**
          * Get current user avatar URL.
          *
          * @return string|null NULL returned when user does not have any avatar.
@@ -485,7 +603,7 @@ if (!class_exists('AC_SocialAuth')) :
                 $avatarUrl = get_user_meta($user->ID, self::META_SOCIAL_AVATAR, true);
 
                 if (empty($avatarUrl)) {
-                    return null;
+                    return AnyComment()->plugin_url() . '/assets/img/no-avatar.svg';
                 }
 
                 return $avatarUrl;
