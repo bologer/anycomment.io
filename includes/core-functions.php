@@ -138,7 +138,11 @@ if (!function_exists('anycomment_avatar')):
         ?>
         <div class="comment-single-avatar" data-author-id="<?= $comment->user_id ?>">
             <?php if (($avatarUrl = AnyComment()->auth->get_user_avatar_url($comment->user_id))): ?>
-                <div class="comment-single-avatar__img" style="background-image: url('<?= $avatarUrl ?>');"></div>
+                <div class="comment-single-avatar__img" style="background-image: url('<?= $avatarUrl ?>');">
+                    <?php if ($social = get_user_meta($comment->user_id, 'anycomment_social', true)): ?>
+                        <span class="comment-single-avatar__img-auth-type <?= $social ?>"></span>
+                    <?php endif; ?>
+                </div>
             <?php endif; ?>
         </div>
         <?php
@@ -160,7 +164,7 @@ if (!function_exists('anycomment_author')):
 
         if ($comment->comment_parent != 0) {
             $parentComment = get_comment($comment->comment_parent);
-            $parentAuthor = $parentComment->comment_author != '' ? $comment->comment_author : __('Unknown', "anycomment");
+            $parentAuthor = $parentComment->comment_author != '' ? $parentComment->comment_author : __('Unknown', "anycomment");
         }
 
         ?>

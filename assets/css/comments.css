@@ -517,10 +517,29 @@ body {
       left: 0;
       top: 0; }
       .anycomment-list .comment-single-avatar__img {
+        position: relative;
         -webkit-border-radius: 50%;
         -moz-border-radius: 50%;
         -ms-border-radius: 50%;
         border-radius: 50%; }
+        .anycomment-list .comment-single-avatar__img-auth-type {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          width: 7px;
+          height: 7px;
+          background-size: cover;
+          background-repeat: no-repeat; }
+        .anycomment-list .comment-single-avatar__img-auth-type.vk {
+          background-image: url("../img/social-auth-mini-vk.svg"); }
+        .anycomment-list .comment-single-avatar__img-auth-type.facebook {
+          background-image: url("../img/social-auth-mini-facebook.svg"); }
+        .anycomment-list .comment-single-avatar__img-auth-type.twitter {
+          background-image: url("../img/social-auth-mini-twitter.svg"); }
+        .anycomment-list .comment-single-avatar__img-auth-type.google {
+          background-image: url("../img/social-auth-mini-google.svg"); }
+        .anycomment-list .comment-single-avatar__img-auth-type.odnoklassniki {
+          background-image: url("../img/social-auth-mini-odnoklassniki.svg"); }
     .anycomment-list .comment-single-body {
       padding-left: 90px; }
       .anycomment-list .comment-single-body-header__author {

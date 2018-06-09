@@ -328,8 +328,39 @@ body {
       }
 
       &__img {
+        position: relative;
         @extend %author-avatar;
         @include border-radius(50%);
+
+        &-auth-type {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          width: 7px;
+          height: 7px;
+          background-size: cover;
+          background-repeat: no-repeat;
+        }
+
+        &-auth-type.vk {
+          background-image: url('../img/social-auth-mini-vk.svg');
+        }
+
+        &-auth-type.facebook {
+          background-image: url('../img/social-auth-mini-facebook.svg');
+        }
+
+        &-auth-type.twitter {
+          background-image: url('../img/social-auth-mini-twitter.svg');
+        }
+
+        &-auth-type.google {
+          background-image: url('../img/social-auth-mini-google.svg');
+        }
+
+        &-auth-type.odnoklassniki {
+          background-image: url('../img/social-auth-mini-odnoklassniki.svg');
+        }
       }
     }
 
