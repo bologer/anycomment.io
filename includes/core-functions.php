@@ -341,6 +341,63 @@ if (!function_exists('anycomment_footer')):
 endif;
 
 
+if (!function_exists('anycomment_iframe')):
+    /**
+     * Display footer part.
+     */
+    function anycomment_iframe()
+    {
+        $iframeSrc = add_query_arg([
+            'action' => 'iframe_comments',
+            'postId' => get_the_ID(),
+            'redirect' => get_permalink(),
+            'nonce' => wp_create_nonce('iframe_comments'),
+        ], admin_url('admin-ajax.php'));
+        $style = [
+            'width' => '1px !important',
+            'min-width' => '100% !important',
+            'border' => 'medium none !important',
+            'overflow' => 'hidden !important',
+            'height' => '1px'
+        ];
+
+        $styles = null;
+        foreach ($style as $name => $value) {
+            $styles .= "$name: $value;";
+        }
+
+        $randIframeId = uniqid(time() . '-');
+
+
+        $html = <<<EOT
+<iframe id="$randIframeId"
+        allowtransparency="true"
+        scrolling="no"
+        tabindex="0"
+        title="AnyComment"
+        src="$iframeSrc"
+        frameborder="0"
+        style="$styles"></iframe>
+<script>
+
+    jQuery(document).ready(function ($) {
+        $('#$randIframeId').iFrameResize({
+            log: false,
+            autoResize: true,
+            enablePublicMethods: false,
+            enableInPageLinks: true,
+        });
+    });
+</script>
+EOT;
+        echo $html;
+    }
+
+    add_action('anycomment_iframe', 'anycomment_iframe');
+endif;
+
+
+
 
 
 

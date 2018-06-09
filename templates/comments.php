@@ -14,16 +14,13 @@ if (post_password_required($postId) || !comments_open($postId)) {
 }
 
 $classPrefix = AnyComment()->classPrefix();
-
-//$const = get_defined_constants(true);
-//var_dump($const['user']);
 ?>
 
-<link rel="stylesheet" href="<?= AnyComment()->plugin_url() ?>/assets/css/comments.css?v=">
+<link rel="stylesheet" href="<?= AnyComment()->plugin_url() ?>/assets/css/comments.css?v=<?= AnyComment()->version ?>">
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700&amp;subset=cyrillic" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.6.1/iframeResizer.contentWindow.min.js"></script>
-<script src="<?= AnyComment()->plugin_url() ?>/assets/js/timeago.min.js"></script>
+<script src="<?= AnyComment()->plugin_url() ?>/assets/js/timeago.min.js?v=<?= AnyComment()->version ?>"></script>
 
 <div id="<?= $classPrefix ?>comments" data-origin-limit="20"
      data-current-limit="20"

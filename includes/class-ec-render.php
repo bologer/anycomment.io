@@ -29,56 +29,14 @@ if (!class_exists('AC_Render')) :
          */
         public function render_iframe()
         {
-            $iframeSrc = add_query_arg([
-                'action' => 'iframe_comments',
-                'postId' => get_the_ID(),
-                'redirect' => get_permalink(),
-                'nonce' => wp_create_nonce('iframe_comments'),
-            ], admin_url('admin-ajax.php'));
-            $style = [
-                'width' => '1px !important',
-                'min-width' => '100% !important',
-                'border' => 'medium none !important',
-                'overflow' => 'hidden !important',
-                'height' => '1px'
-            ];
-
-            $styles = null;
-            foreach ($style as $name => $value) {
-                $styles .= "$name: $value;";
-            }
-
             wp_enqueue_script(
                 'anycomment-iframeResizer',
                 'https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.6.1/iframeResizer.min.js',
                 [],
                 1.0
             );
-
-            $randIframeId = uniqid(time() . '-');
-            ?>
-
-            <iframe id="<?= $randIframeId ?>"
-                    allowtransparency="true"
-                    scrolling="no"
-                    tabindex="0"
-                    title="AnyComment"
-                    src="<?= $iframeSrc ?>"
-                    frameborder="0"
-                    style="<?= $styles ?>"></iframe>
-            <script>
-
-                jQuery(document).ready(function ($) {
-                    $('#<?= $randIframeId ?>').iFrameResize({
-                        log: false,
-                        autoResize: true,
-                        enablePublicMethods: false,
-                        enableInPageLinks: true,
-                    });
-                });
-            </script>
-            <?php
-            return;
+            
+            return ANY_COMMENT_ABSPATH . 'templates/iframe.php';
         }
 
         public function iframe_comments()
