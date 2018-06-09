@@ -148,7 +148,7 @@ if (!class_exists('AC_SocialSettingPage')) :
                         'id' => self::OPTION_TWITTER_TOGGLE,
                         'title' => __('Enable', "anycomment"),
                         'callback' => 'input_checkbox',
-                        'description' => __('Allow to authorize via Twitter', "anycomment")
+                        'description' => __('Allow Twitter authorization', "anycomment")
                     ],
                     [
                         'id' => self::OPTION_TWITTER_CONSUMER_KEY,
@@ -187,7 +187,7 @@ if (!class_exists('AC_SocialSettingPage')) :
                         'id' => self::OPTION_FACEBOOK_TOGGLE,
                         'title' => __('Enable', "anycomment"),
                         'callback' => 'input_checkbox',
-                        'description' => __('Allow to authorize via Facebook', "anycomment")
+                        'description' => __('Allow Facebook authorization', "anycomment")
                     ],
                     [
                         'id' => self::OPTION_FACEBOOK_APP_ID,
@@ -205,7 +205,7 @@ if (!class_exists('AC_SocialSettingPage')) :
             );
 
             /**
-             * Facebook
+             * Google
              */
             add_settings_section(
                 'section_google',
@@ -321,6 +321,7 @@ if (!class_exists('AC_SocialSettingPage')) :
             ?>
             <div class="wrap">
                 <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+                <p><?= __('On this page you may configure social authorization. If social is disabled, users will be unable to login with it.', 'anycomment') ?></p>
                 <form action="options.php" method="post">
                     <?php
                     settings_fields(self::OPTION_GROUP);

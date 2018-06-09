@@ -221,18 +221,26 @@ endif;
 if (!function_exists('anycomment_load_more')):
     /**
      * Load more button.
+     * @param int $post_id Post ID to count comments.
+     * @param int|null $limit Limit of current comments. When NULL specified, default value would be used.
+     * @return string|null
      */
-    function anycomment_load_more()
+    function anycomment_load_more($post_id, $limit = null)
     {
+        $comments = wp_count_comments($post_id);
+
+        if ($comments->approved <= AC_Render::LIMIT || $limit !== null && $limit >= $comments->approved) {
+            return null;
+        }
         ?>
         <div class="comment-single-load-more">
-            <a href="javascript:void()" onclick="return loadNext();"
-               class="btn"><?= __("Load more", "anycomment") ?></a>
+            <span onclick="return loadNext();"
+                  class="btn"><?= __("Load more", "anycomment") ?></span>
         </div>
         <?php
     }
 
-    add_action('anycomment_load_more', 'anycomment_load_more');
+    add_action('anycomment_load_more', 'anycomment_load_more', 10, 2);
 endif;
 
 
@@ -295,13 +303,16 @@ if (!function_exists('anycomment_comments')):
      * @param int|null $limit Maximum number of comments to load.
      * @param string|null $sort How to sort. Default: 'new'
      */
-    function anycomment_comments($postId, $limit = null, $sort = null)
+    function anycomment_comments($post_id, $limit = null, $sort = null)
     {
-        if (($comments = AnyComment()->render->get_comments($postId, $limit, $sort)) !== null):
+        $limit = empty($limit) ? null : $limit;
+        $sort = empty($sort) ? null : $sort;
+
+        if (($comments = AnyComment()->render->get_comments($post_id, $limit, $sort)) !== null):
             foreach ($comments as $key => $comment):
                 do_action('anycomment_comment', $comment);
             endforeach;
-            do_action('anycomment_load_more');
+            do_action('anycomment_load_more', $post_id, $limit);
         else:
             ?>
             <ul>

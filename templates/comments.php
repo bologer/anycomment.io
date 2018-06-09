@@ -22,9 +22,9 @@ $classPrefix = AnyComment()->classPrefix();
 <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.6.1/iframeResizer.contentWindow.min.js"></script>
 <script src="<?= AnyComment()->plugin_url() ?>/assets/js/timeago.min.js?v=<?= AnyComment()->version ?>"></script>
 
-<div id="<?= $classPrefix ?>comments" data-origin-limit="20"
-     data-current-limit="20"
-     data-sort="new"
+<div id="<?= $classPrefix ?>comments" data-origin-limit="<?= AC_Render::LIMIT ?>"
+     data-current-limit="<?= AC_Render::LIMIT ?>"
+     data-sort="<?= AC_Render::SORT_NEW ?>"
      data-guest="<?= !is_user_logged_in() ? "1" : "0" ?>">
     <?php do_action('anycomment_send_comment') ?>
     <?php do_action('anycomment_notifications') ?>
@@ -34,12 +34,19 @@ $classPrefix = AnyComment()->classPrefix();
 
 <script>
     // Load generic comments template
-    function loadComments(options) {
+    function loadComments(options = {}) {
         showLoader();
 
 
-        let limit = (!options || options.limit) || null,
-            sort = (!options || options.sort) || null;
+        let limit = null,
+            sort = null;
+
+        console.log(options);
+
+        if (options !== {}) {
+            limit = 'limit' in options ? options.limit : null;
+            sort = 'sort' in options ? options.sort : null;
+        }
 
         jQuery.post('<?= AnyComment()->ajax_url() ?>', {
             action: 'render_comments',

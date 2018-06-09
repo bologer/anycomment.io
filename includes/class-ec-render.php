@@ -9,6 +9,24 @@ if (!class_exists('AC_Render')) :
      */
     class AC_Render
     {
+        /**
+         * Default comment limit.
+         */
+        const LIMIT = 20;
+
+        /**
+         * Sort old.
+         */
+        const SORT_OLD = 'old';
+
+        /**
+         * Sort new.
+         */
+        const SORT_NEW = 'new';
+
+        /**
+         * AC_Render constructor.
+         */
         public function __construct()
         {
             add_filter('comments_template', [$this, 'render_iframe']);
@@ -58,20 +76,21 @@ if (!class_exists('AC_Render')) :
          */
         public function get_comments($postId = null, $limit = null, $sort = null)
         {
-            if ($limit === null || empty($limit) || (int)$limit < 10) {
-                $limit = 10;
+            if ($limit === null || empty($limit) || (int)$limit < self::LIMIT) {
+                $limit = self::LIMIT;
             }
 
-            if ($sort === null || ($sort !== 'new' && $sort !== 'old')) {
-                $sort = 'new';
+            if ($sort === null || ($sort !== self::SORT_NEW && $sort !== self::SORT_OLD)) {
+                $sort = self::SORT_NEW;
             }
 
             $options = [
                 'post_id' => $postId === null ? get_the_ID() : $postId,
                 'parent' => 0,
+                'comment_status' => 1,
                 'number' => $limit,
                 'orderby' => 'comment_ID',
-                'order' => $sort === 'new' ? 'DESC' : 'ASC'
+                'order' => $sort === self::SORT_NEW ? 'DESC' : 'ASC'
             ];
 
             $comments = get_comments($options);
