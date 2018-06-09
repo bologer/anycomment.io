@@ -95,19 +95,28 @@ if (!class_exists('AC_Render')) :
          * Get comments.
          * @param null|int $postId Post ID to check comments for. Avoid then get_the_ID() will be used to get id.
          * @param int $limit Limit number of comments to load.
+         * @param string $sort Sorting type. New or old. Default is new.
          * @return array|null NULL when there are no comments for post.
          */
-        public function get_comments($postId = null, $limit = null)
+        public function get_comments($postId = null, $limit = null, $sort = null)
         {
             if ($limit === null || empty($limit) || (int)$limit < 10) {
                 $limit = 10;
             }
 
-            $comments = get_comments([
+            if ($sort === null || ($sort !== 'new' && $sort !== 'old')) {
+                $sort = 'new';
+            }
+
+            $options = [
                 'post_id' => $postId === null ? get_the_ID() : $postId,
                 'parent' => 0,
                 'number' => $limit,
-            ]);
+                'orderby' => 'comment_ID',
+                'order' => $sort === 'new' ? 'DESC' : 'ASC'
+            ];
+
+            $comments = get_comments($options);
 
             return count($comments) > 0 ? $comments : null;
         }
@@ -137,6 +146,7 @@ if (!class_exists('AC_Render')) :
             check_ajax_referer('load-comments-nonce');
             $postId = sanitize_text_field($_POST['postId']);
             $limit = sanitize_text_field($_POST['limit']);
+            $sort = sanitize_text_field($_POST['sort']);
 
             if (empty($postId)) {
                 echo AnyComment()->json_error(__("No post ID specified", 'anycomment'));
@@ -148,7 +158,7 @@ if (!class_exists('AC_Render')) :
                 wp_die();
             }
 
-            do_action('anycomment_comments', $postId, $limit);
+            do_action('anycomment_comments', $postId, $limit, $sort);
             wp_die();
         }
 
@@ -159,9 +169,9 @@ if (!class_exists('AC_Render')) :
         {
             check_ajax_referer('add-comment-nonce', 'nonce');
 
-            $comment_parent_id = trim(sanitize_text_field($_POST['reply_to']));
-            $comment = trim(sanitize_text_field($_POST['comment']));
-            $post_id = trim(sanitize_text_field($_POST['post_id']));
+            $comment_parent_id = sanitize_text_field($_POST['reply_to']);
+            $comment = sanitize_text_field($_POST['comment']);
+            $post_id = sanitize_text_field($_POST['post_id']);
 
             if (empty($comment) || empty($post_id)) {
                 echo AnyComment()->json_error(__("Wrong params passed", "anycomment"));

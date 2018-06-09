@@ -27,6 +27,7 @@ $classPrefix = AnyComment()->classPrefix();
 
 <div id="<?= $classPrefix ?>comments" data-origin-limit="20"
      data-current-limit="20"
+     data-sort="new"
      data-guest="<?= !is_user_logged_in() ? "1" : "0" ?>">
     <?php do_action('anycomment_send_comment') ?>
     <?php do_action('anycomment_notifications') ?>
@@ -36,14 +37,19 @@ $classPrefix = AnyComment()->classPrefix();
 
 <script>
     // Load generic comments template
-    function loadComments(limit = null) {
+    function loadComments(options) {
         showLoader();
+
+
+        let limit = (!options || options.limit) || null,
+            sort = (!options || options.sort) || null;
 
         jQuery.post('<?= AnyComment()->ajax_url() ?>', {
             action: 'render_comments',
             _wpnonce: '<?= wp_create_nonce("load-comments-nonce") ?>',
             postId: '<?= $postId ?>',
-            limit: limit
+            limit: limit,
+            sort: sort
         }).done(function (data) {
             jQuery('#<?= $classPrefix ?>load-container').html(data);
         }).fail(function () {
@@ -60,7 +66,7 @@ $classPrefix = AnyComment()->classPrefix();
 
         root.attr('data-current-limit', newLimit);
 
-        loadComments(newLimit);
+        loadComments({limit: newLimit});
     }
 
     // Get root object
@@ -83,8 +89,8 @@ $classPrefix = AnyComment()->classPrefix();
         return form.find('[name="comment"]') || '';
     }
 
-    function commentSort() {
-        loadComments();
+    function commentSort(type) {
+        loadComments({sort: type});
     }
 
     function checkAuthorization() {

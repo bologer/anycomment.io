@@ -280,11 +280,12 @@ if (!function_exists('anycomment_comments')):
     /**
      * Display all comments.
      * @param int $postId Post id.
-     * @param int $limit Maximum number of comments to load.
+     * @param int|null $limit Maximum number of comments to load.
+     * @param string|null $sort How to sort. Default: 'new'
      */
-    function anycomment_comments($postId, $limit = null)
+    function anycomment_comments($postId, $limit = null, $sort = null)
     {
-        if (($comments = AnyComment()->render->get_comments($postId, $limit)) !== null):
+        if (($comments = AnyComment()->render->get_comments($postId, $limit, $sort)) !== null):
             foreach ($comments as $key => $comment):
                 do_action('anycomment_comment', $comment);
             endforeach;
@@ -300,7 +301,7 @@ if (!function_exists('anycomment_comments')):
         endif;
     }
 
-    add_action('anycomment_comments', 'anycomment_comments', 10, 2);
+    add_action('anycomment_comments', 'anycomment_comments', 10, 3);
 endif;
 
 

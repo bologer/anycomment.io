@@ -16,8 +16,8 @@ $post = AnyComment()->getCurrentPost();
             </div>
             <div class="send-comment-supheader__dropdown-list" style="display: none" id="sort-dropdown">
                 <ul>
-                    <li onclick="return commentSort('newest')"><?= __('Newest', 'anycomment') ?></li>
-                    <li onclick="return commentSort('oldest')"><?= __('Oldest', 'anycomment') ?></li>
+                    <li onclick="return commentSort('new')"><?= __('Newest', 'anycomment') ?></li>
+                    <li onclick="return commentSort('old')"><?= __('Oldest', 'anycomment') ?></li>
                 </ul>
             </div>
         </div>
