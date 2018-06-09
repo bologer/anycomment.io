@@ -613,6 +613,16 @@ if (!class_exists('AC_SocialAuth')) :
         }
 
         /**
+         * Get user social type.
+         * @param int $user_id User ID to be checked social type for.
+         * @return mixed
+         */
+        public static function get_user_social_type($user_id)
+        {
+            return get_user_meta($user_id, 'anycomment_social', true);
+        }
+
+        /**
          * Get user avatar by user id.
          *
          * @param int $user_id User ID to be searched for.
