@@ -309,10 +309,6 @@ if (!class_exists('AC_SocialSettingPage')) :
                 return;
             }
 
-            var_dump(static::getOptions());
-
-            // add error/update messages
-
             // check if the user have submitted the settings
             // wordpress will add the "settings-updated" $_GET parameter to the url
             if (isset($_GET['settings-updated'])) {

@@ -35,7 +35,7 @@ if (!class_exists('AC_Render')) :
                 [],
                 1.0
             );
-            
+
             return ANY_COMMENT_ABSPATH . 'templates/iframe.php';
         }
 

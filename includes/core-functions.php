@@ -54,18 +54,22 @@ if (!function_exists('anycomment_login_with')):
             AC_SocialAuth::SOCIAL_VK => [
                 'url' => AC_SocialAuth::get_callback_url(AC_SocialAuth::SOCIAL_VK, $redirectUrl),
                 'label' => __('VK', "anycomment"),
+                'visible' => AC_SocialSettingPage::isVkOn()
             ],
             AC_SocialAuth::SOCIAL_TWITTER => [
                 'url' => AC_SocialAuth::get_callback_url(AC_SocialAuth::SOCIAL_TWITTER, $redirectUrl),
-                'label' => __('Twitter', "anycomment")
+                'label' => __('Twitter', "anycomment"),
+                'visible' => AC_SocialSettingPage::isTwitterOn()
             ],
             AC_SocialAuth::SOCIAL_FACEBOOK => [
                 'url' => AC_SocialAuth::get_callback_url(AC_SocialAuth::SOCIAL_FACEBOOK, $redirectUrl),
-                'label' => __('Facebook', "anycomment")
+                'label' => __('Facebook', "anycomment"),
+                'visible' => AC_SocialSettingPage::isFbOn()
             ],
             AC_SocialAuth::SOCIAL_GOOGLE => [
                 'url' => AC_SocialAuth::get_callback_url(AC_SocialAuth::SOCIAL_GOOGLE, $redirectUrl),
-                'label' => __('Google+', "anycomment")
+                'label' => __('Google+', "anycomment"),
+                'visible' => AC_SocialSettingPage::isGoogleOn()
             ],
         ];
 
@@ -73,7 +77,11 @@ if (!function_exists('anycomment_login_with')):
             return null;
         }
 
-        foreach ($socials as $key => $social): ?>
+        foreach ($socials as $key => $social):
+            if (!$social['visible']) {
+                continue;
+            }
+            ?>
             <li><a href="<?= $social['url'] ?>"
                    target="_parent"
                    title="<?= $social['label'] ?>"

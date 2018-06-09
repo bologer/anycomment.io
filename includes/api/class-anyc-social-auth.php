@@ -121,16 +121,17 @@ if (!class_exists('AC_SocialAuth')) :
         /**
          * Main method to process social-like request to authentication, etc.
          * @param WP_REST_Request $request
+         * @return mixed
          */
         public function process_socials(WP_REST_Request $request)
         {
             $redirect = $request->get_param('redirect');
             $social = $request->get_param('social');
 
-//            if (empty($redirect)) {
-//                wp_redirect('/');
-//                wp_die();
-//            }
+            if (empty($redirect)) {
+                wp_redirect('/');
+                exit();
+            }
 
             if (is_user_logged_in()) {
                 wp_redirect($redirect);
@@ -139,21 +140,22 @@ if (!class_exists('AC_SocialAuth')) :
 
             switch ($social):
                 case self::SOCIAL_VK:
-                    return $this->process_auth_vk($request, $redirect);
+                    $this->process_auth_vk($request, $redirect);
                     break;
                 case self::SOCIAL_FACEBOOK:
-                    return $this->process_auth_facebook($request, $redirect);
+                    $this->process_auth_facebook($request, $redirect);
                     break;
                 case self::SOCIAL_TWITTER:
-                    return $this->process_auth_twitter($request, $redirect);
+                    $this->process_auth_twitter($request, $redirect);
                     break;
                 case self::SOCIAL_GOOGLE:
-                    return $this->process_auth_google($request, $redirect);
+                    $this->process_auth_google($request, $redirect);
                     break;
                 default:
-                    wp_redirect($redirect);
-                    exit();
             endswitch;
+
+            wp_redirect($redirect);
+            exit();
         }
 
         /**
@@ -328,7 +330,6 @@ if (!class_exists('AC_SocialAuth')) :
                     exit();
                 }
 
-
                 $url = $this->auth_twitter->url('oauth/authorize', ['oauth_token' => $request_token['oauth_token']]);
 
                 wp_redirect($url);
@@ -338,18 +339,6 @@ if (!class_exists('AC_SocialAuth')) :
                 $oauthVerifier = $request->get_param('oauth_verifier');
 
                 try {
-                    /**
-                     * array(4) {
-                     * ["oauth_token"]=>
-                     * string(50) "1-3O8NhgskfKJrlre63EvdEY20rBRbpaQ76uY0pZBt"
-                     * ["oauth_token_secret"]=>
-                     * string(45) "v1kQlVOKTSz46xqSE5cvigKYR58PbocCq1jEM4pZ8P5WWH"
-                     * ["user_id"]=>
-                     * string(9) "614735741"
-                     * ["screen_name"]=>
-                     * string(10) "ateshabaev"
-                     * }
-                     */
                     $this->auth_twitter = new \Abraham\TwitterOAuth\TwitterOAuth(
                         AC_SocialSettingPage::getTwitterConsumerKey(),
                         AC_SocialSettingPage::getTwitterConsumerSecret(),
@@ -411,7 +400,6 @@ if (!class_exists('AC_SocialAuth')) :
          * Process VK authorization.
          * @param WP_REST_Request $request
          * @param null $redirect
-         * @return WP_Error
          */
         private function process_auth_vk(WP_REST_Request $request, $redirect = null)
         {
@@ -423,19 +411,6 @@ if (!class_exists('AC_SocialAuth')) :
                 exit();
             } else {
                 try {
-                    /**
-                     * Response example:
-                     * array(4) {
-                     * ["access_token"]=>
-                     * string(85) ""
-                     * ["expires_in"]=>
-                     * int(86399)
-                     * ["user_id"]=>
-                     * int(138463530)
-                     * ["email"]=>
-                     * string(20) "email@example.com"
-                     * }
-                     */
                     $access_token = $this->auth_vk->getAccessToken($request->get_param('code'), $vk_rest_url);
                 } catch (\VK\VKException $exception) {
                     wp_redirect($redirect);

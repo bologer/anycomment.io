@@ -198,25 +198,36 @@ if (!class_exists('AnyComment')) :
             include_once(ANY_COMMENT_ABSPATH . 'includes/core-functions.php');
             include_once(ANY_COMMENT_ABSPATH . 'includes/api/class-anyc-social-auth.php');
 
-
-            /**
-             * Authentication social libraries
-             */
-            // VK
-            include_once(ANY_COMMENT_ABSPATH . 'includes/api/vk/src/VK/VK.php');
-            include_once(ANY_COMMENT_ABSPATH . 'includes/api/vk/src/VK/VKException.php');
-
-
-            include_once(ANY_COMMENT_ABSPATH . 'includes/api/twitter/autoload.php'); //// Twitter
-            include_once(ANY_COMMENT_ABSPATH . 'includes/api/facebook/src/Facebook/autoload.php'); // Facebook
-            include_once(ANY_COMMENT_ABSPATH . 'includes/api/google/vendor/autoload.php'); // Google
-
-
             /**
              * Admin related
              */
             include_once(ANY_COMMENT_ABSPATH . 'includes/admin/class-anycomment-pages.php');
             include_once(ANY_COMMENT_ABSPATH . 'includes/admin/class-anycomment-settings-page-social.php');
+
+
+            /**
+             * Authentication social libraries
+             */
+
+            if (AC_SocialSettingPage::isVkOn()) {
+                // VK
+                include_once(ANY_COMMENT_ABSPATH . 'includes/api/vk/src/VK/VK.php');
+                include_once(ANY_COMMENT_ABSPATH . 'includes/api/vk/src/VK/VKException.php');
+            }
+
+
+            if (AC_SocialSettingPage::isTwitterOn()) {
+                include_once(ANY_COMMENT_ABSPATH . 'includes/api/twitter/autoload.php'); //// Twitter
+            }
+
+            if (AC_SocialSettingPage::isFbOn()) {
+                include_once(ANY_COMMENT_ABSPATH . 'includes/api/facebook/src/Facebook/autoload.php'); // Facebook
+            }
+
+            if (AC_SocialSettingPage::isGoogleOn()) {
+                include_once(ANY_COMMENT_ABSPATH . 'includes/api/google/vendor/autoload.php'); // Google
+            }
+
 
             $this->render = new AC_Render();
             $this->admin_pages = new AC_AdminPages();
