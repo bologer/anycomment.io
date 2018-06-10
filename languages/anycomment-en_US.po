@@ -1,0 +1,178 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: AnyComment\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-06-02 05:18+0000\n"
+"PO-Revision-Date: 2018-06-02 05:18+0000\n"
+"Last-Translator: Саша Тешабаев <sasha.tesh@gmail.com>\n"
+"Language-Team: \n"
+"Language: en_US\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/"
+
+#: includes/admin/class-anycomment-settings-page-social.php:122
+msgid "Allow to authorize via Twitter"
+msgstr ""
+
+#: includes/admin/class-anycomment-settings-page-social.php:83
+msgid "Allow to authorize via VK"
+msgstr ""
+
+#. Name of the plugin
+#: includes/admin/class-anycomment-pages.php:49
+#: includes/admin/class-anycomment-pages.php:50
+msgid "AnyComment"
+msgstr ""
+
+#. Description of the plugin
+msgid "AnyComment is an advanced commenting system for WordPress."
+msgstr ""
+
+#: includes/admin/class-anycomment-settings-page-social.php:87
+msgid "Application ID"
+msgstr ""
+
+#. Author of the plugin
+msgid "Bologer"
+msgstr ""
+
+#: iframe.php:7 templates/comments.php:27
+msgid "Comments"
+msgstr ""
+
+#: includes/admin/class-anycomment-settings-page-social.php:126
+msgid "Consumer Key"
+msgstr ""
+
+#: includes/admin/class-anycomment-settings-page-social.php:132
+msgid "Consumer Secret"
+msgstr ""
+
+#: includes/admin/class-anycomment-settings-page-social.php:81
+#: includes/admin/class-anycomment-settings-page-social.php:120
+msgid "Enable"
+msgstr ""
+
+#: includes/admin/class-anycomment-settings-page-social.php:89
+msgid ""
+"Enter app id. Can be found in <a href=\"https://vk.com/apps?act=manage\" "
+"target=\"_blank\">apps</a> page"
+msgstr ""
+
+#: includes/admin/class-anycomment-settings-page-social.php:128
+msgid ""
+"Enter consumer key. Can be found in the list of <a href=\"https://apps."
+"twitter.com/\" target=\"_blank\">apps</a>"
+msgstr ""
+
+#: includes/admin/class-anycomment-settings-page-social.php:134
+msgid ""
+"Enter consumer secret. Can be found in the list of <a href=\"https://apps."
+"twitter.com/\" target=\"_blank\">apps</a>"
+msgstr ""
+
+#: includes/admin/class-anycomment-settings-page-social.php:95
+msgid ""
+"Enter secure key. Can be found in <a href=\"https://vk.com/apps?act=manage\" "
+"target=\"_blank\">apps</a> page"
+msgstr ""
+
+#: includes/core-functions.php:64
+msgid "Facebook"
+msgstr ""
+
+#: includes/class-ec-render.php:200
+msgid "Failed to add comment. Please, try again."
+msgstr ""
+
+#: includes/core-functions.php:68
+msgid "Google+"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "http://bologer.ru"
+msgstr ""
+
+#. URI of the plugin
+msgid "https://anycomment.io"
+msgstr ""
+
+#: templates/send-comment-logged-in-as.php:11
+#, php-format
+msgid "Logged in as %s"
+msgstr ""
+
+#: templates/send-comment-logged-in-as.php:12
+msgid "Logout"
+msgstr ""
+
+#: includes/core-functions.php:257
+msgid "No comments to display"
+msgstr ""
+
+#: includes/class-ec-render.php:137
+msgid "No post ID specified"
+msgstr ""
+
+#: includes/core-functions.php:191
+msgid "Reply"
+msgstr ""
+
+#: includes/class-ec-render.php:172
+msgid "Reply comment does not belong to the post"
+msgstr ""
+
+#: includes/admin/class-anycomment-settings-page-social.php:219
+msgid "Save"
+msgstr ""
+
+#: includes/admin/class-anycomment-settings-page-social.php:93
+msgid "Secure key"
+msgstr ""
+
+#: templates/send-comment.php:13 includes/core-functions.php:201
+msgid "Send"
+msgstr ""
+
+#: includes/admin/class-anycomment-settings-page-social.php:207
+msgid "Settings Saved"
+msgstr ""
+
+#: includes/admin/class-anycomment-settings-page-social.php:49
+#: includes/admin/class-anycomment-settings-page-social.php:50
+msgid "Social Settings"
+msgstr ""
+
+#: includes/core-functions.php:60
+#: includes/admin/class-anycomment-settings-page-social.php:105
+msgid "Twitter"
+msgstr ""
+
+#: includes/admin/class-anycomment-settings-page-social.php:108
+msgid "Twitter social settings"
+msgstr ""
+
+#: includes/class-ec-render.php:142
+#, php-format
+msgid "Unable to find post with ID #%s"
+msgstr ""
+
+#: includes/core-functions.php:141
+msgid "Unknown"
+msgstr ""
+
+#: includes/core-functions.php:56
+#: includes/admin/class-anycomment-settings-page-social.php:66
+msgid "VK"
+msgstr ""
+
+#: includes/admin/class-anycomment-settings-page-social.php:69
+msgid "VK social settings"
+msgstr ""
+
+#: includes/class-ec-render.php:162
+msgid "Wrong params passed"
+msgstr ""

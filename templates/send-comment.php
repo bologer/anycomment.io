@@ -42,7 +42,7 @@ $post = AnyComment()->getCurrentPost();
                 <?php if (!is_user_logged_in()): ?>
                     <div class="send-comment-body-outliner__auth" id="auth-required" style="display: none;">
                         <ul>
-                            <li class="send-comment-body-outliner__auth-header"><?= __('Quick Login') ?></li>
+                            <li class="send-comment-body-outliner__auth-header"><?= __('Quick Login', 'anycomment') ?></li>
                             <?php do_action('anycomment_login_with', get_permalink(AnyComment()->getCurrentPost()->ID)) ?>
                         </ul>
                     </div>

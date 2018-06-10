@@ -4,7 +4,7 @@
 - Enter "Website address", and "Base domain" 
 
 
-#### When Create Website 
+#### When Application Created 
 Once your website was added:
 - Go to [My Apps Page](https://vk.com/apps?act=manage)
 - Find you website
@@ -13,5 +13,5 @@ Once your website was added:
 - Copy "Application ID" and "Security key", you will need it to enter in widget settings
 
 
-#### Add "Application ID" and "Security key" in Plugin
-TBD
+#### In Admin Panel
+- Add copied "Application ID" and "Security key" in Plugin

@@ -96,6 +96,14 @@ if (!class_exists('AC_SocialSettingPage')) :
                 function () {
                     ?>
                     <p><?= __('VK authorization settings.', "anycomment") ?></p>
+
+                    <table class="form-table">
+                        <tr>
+                            <th><label for="vk-callback"><?= __('Callback URL', 'anycomment') ?></label></th>
+                            <td><input type="text" id="vk-callback" onclick="this.select()" readonly="readonly"
+                                       value="<?= AC_SocialAuth::get_vk_callback() ?>"></td>
+                        </tr>
+                    </table>
                     <?php
                 },
                 self::PAGE_SLUG
@@ -135,6 +143,13 @@ if (!class_exists('AC_SocialSettingPage')) :
                 function () {
                     ?>
                     <p><?= __('Twitter authorization settings.', "anycomment") ?></p>
+                    <table class="form-table">
+                        <tr>
+                            <th><label for="twitter-callback"><?= __('Callback URL', 'anycomment') ?></label></th>
+                            <td><input type="text" id="twitter-callback" onclick="this.select()" readonly="readonly"
+                                       value="<?= AC_SocialAuth::get_twitter_callback() ?>"></td>
+                        </tr>
+                    </table>
                     <?php
                 },
                 self::PAGE_SLUG
@@ -174,6 +189,13 @@ if (!class_exists('AC_SocialSettingPage')) :
                 function () {
                     ?>
                     <p><?= __('Facebook authorization settings.', "anycomment") ?></p>
+                    <table class="form-table">
+                        <tr>
+                            <th><label for="facebook-callback"><?= __('Callback URL', 'anycomment') ?></label></th>
+                            <td><input type="text" id="facebook-callback" onclick="this.select()" readonly="readonly"
+                                       value="<?= AC_SocialAuth::get_facebook_callback() ?>"></td>
+                        </tr>
+                    </table>
                     <?php
                 },
                 self::PAGE_SLUG
@@ -213,6 +235,13 @@ if (!class_exists('AC_SocialSettingPage')) :
                 function () {
                     ?>
                     <p><?= __('Google authorization settings.', "anycomment") ?></p>
+                    <table class="form-table">
+                        <tr>
+                            <th><label for="google-callback"><?= __('Callback URL', 'anycomment') ?></label></th>
+                            <td><input type="text" id="google-callback" onclick="this.select()" readonly="readonly"
+                                       value="<?= AC_SocialAuth::get_google_callback() ?>"></td>
+                        </tr>
+                    </table>
                     <?php
                 },
                 self::PAGE_SLUG

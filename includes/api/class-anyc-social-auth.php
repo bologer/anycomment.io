@@ -159,6 +159,46 @@ if (!class_exists('AC_SocialAuth')) :
         }
 
         /**
+         * Get vk callback URL.
+         * @param null|string $redirect Redirect URL added to the link.
+         * @return string
+         */
+        public static function get_vk_callback($redirect = null)
+        {
+            return static::get_callback_url(self::SOCIAL_VK, $redirect);
+        }
+
+        /**
+         * Get Google callback URL.
+         * @param null|string $redirect Redirect URL added to the link.
+         * @return string
+         */
+        public static function get_google_callback($redirect = null)
+        {
+            return static::get_callback_url(self::SOCIAL_GOOGLE, $redirect);
+        }
+
+        /**
+         * Get Facebook callback URL.
+         * @param null|string $redirect Redirect URL added to the link.
+         * @return string
+         */
+        public static function get_facebook_callback($redirect = null)
+        {
+            return static::get_callback_url(self::SOCIAL_FACEBOOK, $redirect);
+        }
+
+        /**
+         * Get Twitter callback URL.
+         * @param null|string $redirect Redirect URL added to the link.
+         * @return string
+         */
+        public static function get_twitter_callback($redirect = null)
+        {
+            return static::get_callback_url(self::SOCIAL_TWITTER, $redirect);
+        }
+
+        /**
          * Get REST url + redirect url with it.
          * @param string $social_type URL type, e.g. vk
          * @param string|null $redirect Redirect URL where to send back user.
@@ -177,11 +217,12 @@ if (!class_exists('AC_SocialAuth')) :
         /**
          * Process Google authorization.
          * @param WP_REST_Request $request
-         * @param null $redirect
+         * @param null|string $redirect URL to redirect on success or failure of authentication.
+         * @param string $cookie_redirect Cookie used to keep redirect URL.
          */
         private function process_auth_google(WP_REST_Request $request, $redirect = null, $cookie_redirect = 'post_redirect')
         {
-            $google_rest_url = static::get_callback_url(self::SOCIAL_GOOGLE);
+            $google_rest_url = static::get_google_callback();
 
 
             if ($redirect !== null) {
@@ -250,13 +291,15 @@ if (!class_exists('AC_SocialAuth')) :
 
         /**
          * Process Facebook authorization.
+         *
          * @param WP_REST_Request $request
-         * @param null $redirect
+         * @param null|string $redirect URL to redirect on success or failure of authentication.
+         * @param string $cookie_redirect Cookie used to keeps redirect URL.
          */
         private function process_auth_facebook(WP_REST_Request $request, $redirect = null, $cookie_redirect = 'post_redirect')
         {
             $helper = $this->auth_facebook->getRedirectLoginHelper();
-            $facebook_rest_url = static::get_callback_url(self::SOCIAL_FACEBOOK);
+            $facebook_rest_url = static::get_facebook_callback();
 
             if ($redirect !== null) {
                 setcookie($cookie_redirect, $redirect, time() + 3600);
@@ -315,13 +358,14 @@ if (!class_exists('AC_SocialAuth')) :
 
         /**
          * Process Twitter authorization.
+         *
          * @param WP_REST_Request $request
-         * @param null $redirect
+         * @param string|null $redirect URL to redirect on success or failure of authentication.
          */
         private function process_auth_twitter(WP_REST_Request $request, $redirect = null)
         {
             if ($request->get_param('oauth_token') === null && $request->get_param('oauth_verifier') === null) {
-                $twitter_rest_url = static::get_callback_url(self::SOCIAL_TWITTER, $redirect);
+                $twitter_rest_url = static::get_twitter_callback($redirect);
 
                 try {
                     $request_token = $this->auth_twitter->oauth('oauth/request_token', ['oauth_callback' => $twitter_rest_url]);
@@ -348,6 +392,7 @@ if (!class_exists('AC_SocialAuth')) :
 
                     $access_token = $this->auth_twitter->oauth("oauth/access_token", ["oauth_verifier" => $oauthVerifier]);
                 } catch (\Abraham\TwitterOAuth\TwitterOAuthException $exception) {
+
                     wp_redirect($redirect);
                     exit();
                 }
@@ -373,9 +418,9 @@ if (!class_exists('AC_SocialAuth')) :
                     $fields['user_email'] = $user->email;
                 }
 
+                $fields['user_login'] = $user->id_str;
                 $fields['display_name'] = $user->name;
                 $fields['user_nicename'] = $user->name;
-
 
                 $this->auth_user(
                     'login',
@@ -398,12 +443,13 @@ if (!class_exists('AC_SocialAuth')) :
 
         /**
          * Process VK authorization.
+         *
          * @param WP_REST_Request $request
-         * @param null $redirect
+         * @param null|string $redirect URL to redirect on success or failure of authentication.
          */
         private function process_auth_vk(WP_REST_Request $request, $redirect = null)
         {
-            $vk_rest_url = static::get_callback_url(self::SOCIAL_VK, $redirect);
+            $vk_rest_url = static::get_vk_callback($redirect);
 
             if ($request->get_param('code') === null) {
                 $url = $this->auth_vk->getAuthorizeURL('email', $vk_rest_url);
