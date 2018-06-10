@@ -27,6 +27,7 @@ TBD
 = 0.0.1 =
 * Release Date - TBD
 * Options to specify API data for social authorization: Vk, Twitter, Facebook
+* Integrated with [WP User Avatar](https://wordpress.org/plugins/wp-user-avatar/)
 * Authorize via VK, Twitter, Facebook
 * enhancement: add comments with AJAX, no need to refresh the page
 * enhancement: ability to reply to nested comments up to 2 levels
