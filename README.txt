@@ -16,7 +16,6 @@ TBD
 TBD
 
 == Todo ==
-* Add Google authorization
 * Customization options to set custom styles
 * Load comments when user scrolls to it
 * Auto-update comments on new comments
@@ -26,8 +25,10 @@ TBD
 == Changelog ==
 = 0.0.1 =
 * Release Date - TBD
-* Options to specify API data for social authorization: Vk, Twitter, Facebook
+* Options to specify API details (secrets, etc) for social authorization: Vk, Twitter, Facebook, Google
 * Integrated with [WP User Avatar](https://wordpress.org/plugins/wp-user-avatar/)
-* Authorize via VK, Twitter, Facebook
-* enhancement: add comments with AJAX, no need to refresh the page
-* enhancement: ability to reply to nested comments up to 2 levels
+* Authorize via VK, Twitter, Facebook, Google
+* enh: comment count at the top updated automatically when new comment added
+* enh: add comments with AJAX, no need to refresh the page
+* enh: ability to reply to nested comments up to 2 levels
+* enh: when all socials disabled, libraries not loaded and they are not shown to end user
