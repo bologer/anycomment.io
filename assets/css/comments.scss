@@ -293,7 +293,7 @@ body {
 // Main
 #anycomment-comments {
   position: relative;
-  padding: 44px;
+  padding: 44px 10px;
 }
 
 // Comments list
@@ -387,7 +387,7 @@ body {
 
         &__date {
           color: $semi-hidden-color;
-          font-size: $font-size - 1;
+          font-size: $font-size - 2;
         }
       }
 

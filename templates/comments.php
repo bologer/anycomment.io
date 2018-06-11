@@ -56,6 +56,7 @@ $classPrefix = AnyComment()->classPrefix();
             sort: sort
         }).done(function (data) {
             jQuery('#<?= $classPrefix ?>load-container').html(data);
+            loadTime();
         }).fail(function () {
             console.log('Unable to get most recent comments');
         }).always(function () {
@@ -274,9 +275,14 @@ $classPrefix = AnyComment()->classPrefix();
 
     loadComments();
 
-
-    let timeagoInstance = timeago();
-    let nodes = document.querySelectorAll('.timeago-date-time');
-    // use render method to render nodes in real time
-    timeagoInstance.render(nodes);
+    // Load time
+    function loadTime() {
+        let i = setInterval(function () {
+            if (('timeago' in window)) {
+                timeago().render(jQuery('.timeago-date-time'));
+                //{defaultLocale: '<?= get_locale() ?>'}
+                clearInterval(i);
+            }
+        }, 1000);
+    }
 </script>

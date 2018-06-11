@@ -496,7 +496,7 @@ body {
 
 #anycomment-comments {
   position: relative;
-  padding: 44px; }
+  padding: 44px 10px; }
 
 .anycomment-list {
   list-style: none;
@@ -553,7 +553,7 @@ body {
           color: #a7b4ba; }
       .anycomment-list .comment-single-body-header__date {
         color: #b6c1c6;
-        font-size: 14px; }
+        font-size: 13px; }
       .anycomment-list .comment-single-body__text {
         width: 100%;
         margin: 5px 0; }
