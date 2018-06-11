@@ -74,7 +74,7 @@ if (!class_exists('AC_SocialSettingPage')) :
         public function init_submenu()
         {
             add_submenu_page(
-                'anycomments-dashboard',
+                'anycomment-dashboard',
                 __('Social Settings', "anycomment"),
                 __('Social Settings', "anycomment"),
                 'manage_options',

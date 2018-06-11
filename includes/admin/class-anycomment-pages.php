@@ -49,7 +49,7 @@ if (!class_exists('AC_AdminPages')) :
                 __('AnyComment', "anycomment"),
                 __('AnyComment', "anycomment"),
                 'manage_options',
-                'anycomments-dashboard',
+                'anycomment-dashboard',
                 [$this, 'page_dashboard'],
                 AnyComment()->plugin_url() . '/assets/img/admin-menu-logo.svg'
             );
@@ -57,7 +57,11 @@ if (!class_exists('AC_AdminPages')) :
 
         public function page_dashboard()
         {
-            echo '123';
+            wp_enqueue_style('anycomment-admin-styles', AnyComment()->plugin_url() . '/assets/css/admin.css', [], AnyComment()->version);
+            wp_enqueue_style('anycomment-admin-roboto-font', 'https://fonts.googleapis.com/css?family=Roboto:300,400,700&amp;subset=cyrillic');
+            wp_enqueue_script('anycomment-admin-chartjs', 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js');
+
+            echo ec_get_template('admin/dashboard');
         }
     }
 endif;

@@ -60,6 +60,11 @@ if (!class_exists('AnyComment')) :
         public $admin_pages = null;
 
         /**
+         * @var null|AC_Statistics
+         */
+        public $statistics = null;
+
+        /**
          * Instance of EasyComment.
          * @var null|AnyComment
          */
@@ -201,6 +206,7 @@ if (!class_exists('AnyComment')) :
             /**
              * Admin related
              */
+            include_once(ANY_COMMENT_ABSPATH . 'includes/admin/class-statistics.php');
             include_once(ANY_COMMENT_ABSPATH . 'includes/admin/class-anycomment-pages.php');
             include_once(ANY_COMMENT_ABSPATH . 'includes/admin/class-anycomment-settings-page-social.php');
 
@@ -232,6 +238,7 @@ if (!class_exists('AnyComment')) :
             $this->render = new AC_Render();
             $this->admin_pages = new AC_AdminPages();
             $this->auth = new AC_SocialAuth();
+            $this->statistics = new AC_Statistics();
         }
 
         /**
