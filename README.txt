@@ -1,7 +1,7 @@
 === AnyComment ===
 Tags: anycomment, anycomment.io
 Requires at least: 3.7
-Tested up to: 4.9.1
+Tested up to: 4.9.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/
 
