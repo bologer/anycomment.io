@@ -203,8 +203,6 @@ if (!class_exists('AC_Render')) :
                 wp_die();
             }
 
-            wp_notify_postauthor($new_comment_id);
-
             echo AnyComment()->json_success([
                 'commentId' => $new_comment_id,
                 'comment_count_text' => $this->get_comment_count($post_id)
