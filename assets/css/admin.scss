@@ -20,7 +20,26 @@ $separator-color: #d8d8d8;
 .anycomment-dashboard {
   font-family: $font-family;
   background-color: #fff;
+  font-weight: 300;
   @include border-radius(16px);
+
+  &__container,
+  &__sidebar {
+    display: inline-block;
+    float: left;
+  }
+
+  &__container {
+    width: 75%;
+    padding: 37px 0 37px 37px;
+  }
+
+  &__sidebar {
+    padding: 37px;
+    width: 25%;
+    @include border-radius(0 16px 16px 0);
+    background-color: #282828;
+  }
 
   a {
     color: $font-color;
@@ -115,6 +134,16 @@ $separator-color: #d8d8d8;
         border-right: 2px solid $separator-color;
       }
 
+      &-comments {
+        span:first-child {
+          color: #ec4568;
+        }
+      }
+
+      &-commentators {
+        color: #53146c;
+      }
+
       &-center {
         display: table;
         margin: 0 auto;
@@ -137,7 +166,6 @@ $separator-color: #d8d8d8;
           &:first-child {
             font-size: 86px;
             font-weight: 300;
-            color: #53146c;
             margin-bottom: 50px;
           }
 
@@ -153,6 +181,16 @@ $separator-color: #d8d8d8;
   &__statistics {
     width: 100%;
 
+    h2 {
+      font-size: $font-size + 10;
+      font-weight: 300;
+      color: $font-color;
+      width: 100%;
+      margin: 45px 0;
+      padding: 0;
+      text-align: left;
+    }
+
     &-graph,
     &-userlist {
       display: inline-block;
@@ -160,30 +198,48 @@ $separator-color: #d8d8d8;
     }
 
     &-graph {
-      width: 80%;
+      width: 70%;
+      border-right: 2px solid $separator-color;
+      padding-right: 37px;
     }
 
     &-userlist {
-      width: 20%;
+      width: 30%;
+      padding-left: 37px;
+
+      &-counter {
+        float: right;
+        margin-top: 20px;
+      }
+
+      &-avatar {
+        background-size: cover;
+        background-position: center;
+        width: 64px;
+        height: 64px;
+        display: inline-block;
+        margin-right: 19px;
+        vertical-align: middle;
+        @include border-radius(50%);
+      }
+
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+          margin-bottom: 20px;
+          font-size: $font-size + 5;
+          font-weight: 300;
+          text-align: left;
+
+          &:last-of-type {
+            margin-bottom: 0;
+          }
+        }
+      }
     }
-  }
-
-  &__container,
-  &__sidebar {
-    display: inline-block;
-    float: left;
-  }
-
-  &__container {
-    width: 80%;
-    padding: 37px 0 37px 37px;
-  }
-
-  &__sidebar {
-    padding: 37px;
-    width: 20%;
-    @include border-radius(0 16px 16px 0);
-    background-color: #282828;
   }
 }
 

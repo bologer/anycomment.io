@@ -33,7 +33,7 @@ $active_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'anycomm
 
 
             <div class="anycomment-dashboard__splitter">
-                <div class="anycomment-dashboard__splitter-half commentators">
+                <div class="anycomment-dashboard__splitter-half anycomment-dashboard__splitter-half-commentators">
                     <div class="anycomment-dashboard__splitter-half-center">
                         <img src="<?= AnyComment()->plugin_url() . '/assets/img/dashboard-users.svg' ?>"
                              alt="<?= __('Commentators', 'anycomment') ?>">
@@ -44,10 +44,10 @@ $active_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'anycomm
                         </div>
                     </div>
                 </div>
-                <div class="anycomment-dashboard__splitter-half comments">
+                <div class="anycomment-dashboard__splitter-half anycomment-dashboard__splitter-half-comments">
                     <div class="anycomment-dashboard__splitter-half-center">
                         <img src="<?= AnyComment()->plugin_url() . '/assets/img/dashboard-comments.svg' ?>"
-                             alt="<?= __('All comments', 'anycomment') ?>">
+                             alt="<?= __('All Comments', 'anycomment') ?>">
                         <div class="anycomment-dashboard__splitter-half-description">
                             <span><?= AnyComment()->statistics->getApprovedCommentCount() ?></span>
                             <span><?= __('All Comments', 'anycomment') ?></span>
@@ -61,7 +61,11 @@ $active_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'anycomm
             <div class="anycomment-dashboard__statistics">
                 <div class="anycomment-dashboard__statistics-graph">
                     <h2><?= __('Overal Statistics', 'anycomment') ?></h2>
-                    <?php $data = AnyComment()->statistics->getCommentData(); ?>
+                    <?php
+
+                    $comments = AnyComment()->statistics->getCommentData();
+                    $users = AnyComment()->statistics->get_commentor_data();
+                    ?>
                     <canvas id="anycomment-dashboard-chart"></canvas>
 
                     <script>
@@ -74,25 +78,33 @@ $active_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'anycomm
                                 let c = new Chart(document.getElementById("anycomment-dashboard-chart").getContext('2d'), {
                                     type: 'line',
                                     data: {
-                                        labels: <?= $data['label'] ?>,
-                                        datasets: [{
-                                            label: '<?= __('Comment count', 'anycomment') ?>',
-                                            data: <?= $data['data'] ?>,
-                                            fill: false,
-                                            borderColor: '#ec4568',
-                                            borderWidth: 5,
-                                            lineTension: 0,
-                                            borderJoinStyle: 'miter',
-                                            pointRadius: 0,
-                                            pointHitRadius: 30,
-                                        }]
+                                        labels: <?= $comments['label'] ?>,
+                                        datasets: [
+                                            {
+                                                label: '<?= __('Comments', 'anycomment') ?>',
+                                                data: <?= $comments['data'] ?>,
+                                                fill: false,
+                                                borderColor: '#f1b927',
+                                                borderWidth: 5,
+                                                lineTension: 0,
+                                                borderJoinStyle: 'miter',
+                                                pointRadius: 0,
+                                                pointHitRadius: 30,
+                                            },
+                                            {
+                                                label: '<?= __('Users', 'anycomment') ?>',
+                                                data: <?= $users['data'] ?>,
+                                                fill: false,
+                                                borderColor: '#ec4568',
+                                                borderWidth: 5,
+                                                lineTension: 0,
+                                                borderJoinStyle: 'miter',
+                                                pointRadius: 0,
+                                                pointHitRadius: 30,
+                                            },
+                                        ]
                                     },
                                     options: {
-                                        tooltips: {
-                                            borderColor: false,
-                                            cornerRadius: 8,
-                                            backgroundColor: '#ec4568'
-                                        },
                                         layout: {
                                             padding: {
                                                 left: 10,
@@ -123,7 +135,20 @@ $active_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'anycomm
                     </script>
                 </div>
                 <div class="anycomment-dashboard__statistics-userlist">
-
+                    <h2><?= __('Most Active Users', 'anycomment') ?></h2>
+                    <?php if (!empty($users = AnyComment()->statistics->get_most_active_users())): ?>
+                        <ul>
+                            <?php foreach ($users as $user): ?>
+                                <li>
+                                    <span class="anycomment-dashboard__statistics-userlist-avatar" style="background-image:url('<?= AnyComment()->auth->get_user_avatar_url($user->user_id) ?>')"></span>
+                                    <?= $user->name ?>
+                                    <span class="anycomment-dashboard__statistics-userlist-counter"><?= $user->comment_count ?></span>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php else: ?>
+                        <p><?= __('No users yet', 'anycomment') ?></p>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
