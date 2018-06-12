@@ -146,6 +146,13 @@ if (!class_exists('AC_Render')) :
         {
             check_ajax_referer('add-comment-nonce', 'nonce');
 
+            $user = wp_get_current_user();
+
+            if (!$user instanceof WP_User) {
+                echo AnyComment()->json_error(__("Login to add a comment", "anycomment"));
+                wp_die();
+            }
+
             $comment_parent_id = sanitize_text_field($_POST['reply_to']);
             $comment = sanitize_text_field($_POST['comment']);
             $post_id = sanitize_text_field($_POST['post_id']);
@@ -178,24 +185,19 @@ if (!class_exists('AC_Render')) :
                 $args['comment_parent'] = $comment_parent_id;
             }
 
-            // Process logged in user
-            if (($user = wp_get_current_user()) instanceof WP_User) {
-                $args['user_id'] = $user->ID;
+            $args['user_id'] = $user->ID;
 
 
-                if (!empty($displayName = $user->display_name)) {
-                    $args['comment_author'] = trim($displayName);
-                }
-
-                // Email
-                if (!empty($email = $user->user_email)) {
-                    $args['comment_author_email'] = $email;
-                }
-
-                $args['comment_approved'] = 1;
-            } else {
-                $args['comment_approved'] = 0;
+            if (!empty($displayName = $user->display_name)) {
+                $args['comment_author'] = trim($displayName);
             }
+
+            // Email
+            if (!empty($email = $user->user_email)) {
+                $args['comment_author_email'] = $email;
+            }
+
+            $args['comment_approved'] = 1;
 
 
             if (!($new_comment_id = wp_insert_comment($args))) {
