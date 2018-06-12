@@ -39,7 +39,7 @@ $active_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'anycomm
                              alt="<?= __('Commentators', 'anycomment') ?>">
 
                         <div class="anycomment-dashboard__splitter-half-description">
-                            <span><?= AnyComment()->statistics->getCommentorCount() ?></span>
+                            <span><?= AnyComment()->statistics->get_commentor_count() ?></span>
                             <span><?= __('Commentators', 'anycomment') ?></span>
                         </div>
                     </div>
@@ -49,7 +49,7 @@ $active_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'anycomm
                         <img src="<?= AnyComment()->plugin_url() . '/assets/img/dashboard-comments.svg' ?>"
                              alt="<?= __('All Comments', 'anycomment') ?>">
                         <div class="anycomment-dashboard__splitter-half-description">
-                            <span><?= AnyComment()->statistics->getApprovedCommentCount() ?></span>
+                            <span><?= AnyComment()->statistics->get_approved_comment_count() ?></span>
                             <span><?= __('All Comments', 'anycomment') ?></span>
                         </div>
                     </div>
@@ -63,7 +63,7 @@ $active_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'anycomm
                     <h2><?= __('Overal Statistics', 'anycomment') ?></h2>
                     <?php
 
-                    $comments = AnyComment()->statistics->getCommentData();
+                    $comments = AnyComment()->statistics->get_comment_data();
                     $users = AnyComment()->statistics->get_commentor_data();
                     ?>
                     <canvas id="anycomment-dashboard-chart"></canvas>
@@ -75,6 +75,9 @@ $active_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'anycomm
                                 Chart.defaults.global.defaultFontColor = '#c8c8c8';
                                 Chart.defaults.global.defaultFontFamily = 'Roboto, Verdana, sans-serif';
                                 Chart.defaults.global.defaultFontSize = 18;
+
+                                // legend
+                                Chart.defaults.global.legend.position = 'bottom'
                                 let c = new Chart(document.getElementById("anycomment-dashboard-chart").getContext('2d'), {
                                     type: 'line',
                                     data: {

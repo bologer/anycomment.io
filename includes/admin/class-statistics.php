@@ -19,27 +19,38 @@ if (!class_exists('AC_Statistics')) :
 
 
         /**
-         * Get number of users in the system.
+         * Get number of active commentors in the system.
+         *
          * @return int
          */
-        public function getCommentorCount()
+        public function get_commentor_count()
         {
             global $wpdb;
 
-            return $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->users");
+            return $wpdb->get_var("SELECT COUNT(DISTINCT comments.user_id) AS count 
+FROM $wpdb->comments AS comments 
+RIGHT JOIN $wpdb->users AS users ON users.ID = comments.user_id
+HAVING count >= 1");
         }
 
         /**
          * Get approved comment count.
+         *
          * @return int
          */
-        public function getApprovedCommentCount()
+        public function get_approved_comment_count()
         {
             global $wpdb;
 
             return $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->comments WHERE `comment_approved`=1");
         }
 
+        /**
+         * Get most active users. Most commenting ones.
+         *
+         * @param int $limit Number of comments to limit result.
+         * @return array|null|object
+         */
         public function get_most_active_users($limit = 6)
         {
             global $wpdb;
@@ -51,11 +62,14 @@ GROUP BY user_id
 ORDER BY comment_count DESC 
 LIMIT $limit";
 
-//            var_dump($query);
             return $wpdb->get_results($query);
         }
 
-        public function getCommentData()
+        /**
+         * Collects number of comments added per each day.
+         * @return array
+         */
+        public function get_comment_data()
         {
             global $wpdb;
 
@@ -68,27 +82,34 @@ ORDER BY day ASC";
             return static::prepare_data($query);
         }
 
+        /**
+         * Collects number of active users per each day
+         * that were actively commenting.
+         * @return array
+         */
         public function get_commentor_data()
         {
             global $wpdb;
 
-            $query = "SELECT COUNT(ID) as count, DATE_FORMAT(user_registered, '%d') as day 
-FROM $wpdb->users 
-WHERE MONTH(user_registered) = MONTH(NOW())
-GROUP BY DAY(user_registered) 
+            $query = "SELECT COUNT(DISTINCT comments.user_id) as count, DATE_FORMAT(comments.comment_date, '%M %d') as day 
+FROM $wpdb->comments  AS comments
+LEFT JOIN $wpdb->users AS users ON users.ID = comments.user_id
+WHERE MONTH(comments.comment_date) = MONTH(NOW())
+GROUP BY day
 ORDER BY day ASC";
 
-            return static::prepare_data($query, $type = 'month');
+            return static::prepare_data($query);
         }
 
         /**
          * Prepare data to be displayed in a chart.
          * @param string $query Query to be executed.
+         * @param string $type Type of date. Default: month
          * @return array See description below:
          * - label - list of labels
          * - data - list of data for labels
          */
-        public static function prepare_data($query)
+        public static function prepare_data($query, $type = 'month')
         {
             global $wpdb;
 
@@ -105,9 +126,9 @@ ORDER BY day ASC";
             // Default get number of days in a month
             $symbol = 't';
 
-            if ($type = 'month') {
+            if ($type == 'month') {
                 $symbol = 't';
-            } elseif ($type = 'year') {
+            } elseif ($type == 'year') {
                 $symbol = 'z';
             }
 
