@@ -48,7 +48,7 @@ if (!class_exists('AC_Statistics')) :
 FROM $wpdb->comments 
 WHERE MONTH(comment_date) = MONTH(NOW())
 GROUP BY DAY(comment_date) 
-ORDER BY day DESC";
+ORDER BY day ASC";
 
             $res = $wpdb->get_results($query);
 

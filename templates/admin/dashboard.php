@@ -60,6 +60,7 @@ $active_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'anycomm
 
             <div class="anycomment-dashboard__statistics">
                 <div class="anycomment-dashboard__statistics-graph">
+                    <h2><?= __('Overal Statistics', 'anycomment') ?></h2>
                     <?php $data = AnyComment()->statistics->getCommentData(); ?>
                     <canvas id="anycomment-dashboard-chart"></canvas>
 
@@ -77,16 +78,34 @@ $active_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'anycomm
                                         datasets: [{
                                             label: '<?= __('Comment count', 'anycomment') ?>',
                                             data: <?= $data['data'] ?>,
+                                            fill: false,
                                             borderColor: '#ec4568',
                                             borderWidth: 5,
                                             lineTension: 0,
                                             borderJoinStyle: 'miter',
                                             pointRadius: 0,
-                                            pointHitRadius: 30
+                                            pointHitRadius: 30,
                                         }]
                                     },
                                     options: {
+                                        tooltips: {
+                                            borderColor: false,
+                                            cornerRadius: 8,
+                                            backgroundColor: '#ec4568'
+                                        },
+                                        layout: {
+                                            padding: {
+                                                left: 10,
+                                                right: 10,
+                                                top: 0,
+                                                bottom: 0
+                                            }
+                                        },
                                         scales: {
+                                            xAxes: [{
+                                                display: false,
+                                                gridLines: '#f1f1f1'
+                                            }],
                                             yAxes: [{
                                                 ticks: {
                                                     beginAtZero: true
