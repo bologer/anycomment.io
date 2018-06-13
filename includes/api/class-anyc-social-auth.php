@@ -279,10 +279,7 @@ if (!class_exists('AC_SocialAuth')) :
                     $searchBy,
                     $searchValue,
                     $userdata,
-                    [
-                        'anycomment_social' => self::SOCIAL_GOOGLE,
-                        'anycomment_social_avatar' => $user->getImage()->getUrl(),
-                    ]
+                    ['anycomment_social_avatar' => $user->getImage()->getUrl()]
                 );
 
                 wp_redirect($redirect);
@@ -346,10 +343,7 @@ if (!class_exists('AC_SocialAuth')) :
                         'display_name' => $user->getFirstName() . ' ' . $user->getLastName(),
                         'user_nicename' => $user->getFirstName(),
                     ],
-                    [
-                        'anycomment_social' => self::SOCIAL_FACEBOOK,
-                        'anycomment_social_avatar' => $user->getPicture()->getUrl(),
-                    ]
+                    ['anycomment_social_avatar' => $user->getPicture()->getUrl()]
                 );
 
                 wp_redirect($redirect);
@@ -429,14 +423,9 @@ if (!class_exists('AC_SocialAuth')) :
                     'login',
                     $user->id_str,
                     $fields,
-                    [
-                        'anycomment_social' => self::SOCIAL_TWITTER,
-                        // Margin to get bigger size avatar
-                        // https://developer.twitter.com/en/docs/accounts-and-users/manage-account-settings/api-reference/get-account-verify_credentials.html
-                        'anycomment_social_avatar' => str_replace('_normal.jpg', '_bigger.jpg', $user->profile_image_url_https),
-                        'anycomment_social_twitter_oauth_token' => $access_token['oauth_token'],
-                        'anycomment_social_twitter_oauth_token_secret' => $access_token['oauth_token_secret'],
-                    ]
+                    // Margin to get bigger size avatar
+                    // https://developer.twitter.com/en/docs/accounts-and-users/manage-account-settings/api-reference/get-account-verify_credentials.html
+                    ['anycomment_social_avatar' => str_replace('_normal.jpg', '_bigger.jpg', $user->profile_image_url_https)]
                 );
 
                 wp_redirect($redirect);
@@ -479,6 +468,11 @@ if (!class_exists('AC_SocialAuth')) :
 
                 $vkUser = array_merge($access_token, $user_info['response'][0]);
 
+                if (empty($vkUser)) {
+                    wp_redirect($redirect);
+                    exit();
+                }
+
                 $searchField = isset($vkUser['email']) ? 'email' : 'login';
                 $searchValue = isset($vkUser['email']) ? $vkUser['email'] : $vkUser['user_id'];
 
@@ -494,7 +488,6 @@ if (!class_exists('AC_SocialAuth')) :
                         'user_url' => 'https://vk.com/id' . $vkUser['user_id']
                     ],
                     [
-                        'anycomment_social' => self::SOCIAL_VK,
                         'anycomment_social_avatar' => $vkUser['photo_50'],
                         'anycomment_social_vk_sex' => $vkUser['sex'],
                     ]
@@ -513,7 +506,7 @@ if (!class_exists('AC_SocialAuth')) :
          * @see AC_SocialAuth::get_user_by() for more information about $field and $value fields.
          *
          * @param string $social Social type. e.g. twitter.
-         * @param string $field Field name to be used to check existance of such user.
+         * @param string $field Field name to be used to check existence of such user.
          * @param string $value Value of the $field to be checked for.
          * @param array $user_data User data to be created for user, when does not exist.
          * @param array $user_meta User meta data to be create for user, when does not exist.
@@ -531,6 +524,11 @@ if (!class_exists('AC_SocialAuth')) :
 
             if (isset($user_data['user_login'])) {
                 $user_data['user_login'] = sprintf('%s_%s', $social, $user_data['user_login']);
+            }
+
+            // Preset social type as it is passed anyways in the method
+            if (!isset($user_meta[self::META_SOCIAL_TYPE])) {
+                $user_meta[self::META_SOCIAL_TYPE] = $social;
             }
 
             $user = $this->get_user_by($social, $field, $value);
