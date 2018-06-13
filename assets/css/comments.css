@@ -553,7 +553,10 @@ body {
           color: #a7b4ba; }
       .anycomment-list .comment-single-body-header__date {
         color: #b6c1c6;
-        font-size: 13px; }
+        font-size: 13px;
+        min-height: 17px;
+        line-height: 17px;
+        display: block; }
       .anycomment-list .comment-single-body__text {
         width: 100%;
         margin: 5px 0; }
