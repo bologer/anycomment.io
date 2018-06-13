@@ -121,6 +121,7 @@ if (!class_exists('AC_Render')) :
         public function render_comments()
         {
             check_ajax_referer('load-comments-nonce');
+
             $postId = sanitize_text_field($_POST['postId']);
             $limit = sanitize_text_field($_POST['limit']);
             $sort = sanitize_text_field($_POST['sort']);
