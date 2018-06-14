@@ -227,9 +227,9 @@ if (!function_exists('anycomment_load_more')):
      */
     function anycomment_load_more($post_id, $limit = null)
     {
-        $comments = wp_count_comments($post_id);
+        $commentCount = get_comments(['post_id' => $post_id, 'parent' => 0, 'count' => true]);
 
-        if ($comments->approved <= AC_Render::LIMIT || $limit !== null && $limit >= $comments->approved) {
+        if ($commentCount <= AC_Render::LIMIT || $limit !== null && $limit >= $commentCount) {
             return null;
         }
         ?>
