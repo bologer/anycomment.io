@@ -28,6 +28,7 @@ TBD
 * Options to specify API details (secrets, etc) for social authorization: Vk, Twitter, Facebook, Google
 * Integrated with [WP User Avatar](https://wordpress.org/plugins/wp-user-avatar/)
 * Authorize via VK, Twitter, Facebook, Google
+* enh: date when comment is left is based on website's language. List of supported languages can be seen [here](https://github.com/hustcc/timeago.js/tree/master/src/lang)
 * enh: comment count at the top updated automatically when new comment added
 * enh: add comments with AJAX, no need to refresh the page
 * enh: ability to reply to nested comments up to 2 levels
