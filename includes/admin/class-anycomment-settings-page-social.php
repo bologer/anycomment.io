@@ -8,14 +8,24 @@ if (!class_exists('AC_SocialSettingPage')) :
     /**
      * AnyCommentAdminPages helps to process website authentication.
      */
-    class AC_SocialSettingPage
+    class AC_SocialSettingPage extends AC_Options
     {
-        const OPTION_GROUP = 'anycomment-social-group';
-        const OPTION_NAME = 'anycomment-social';
-
-        const PAGE_SLUG = 'anycomments-settings-social';
-
-        const ALERT_KEY = 'social-settings-messages';
+        /**
+         * @inheritdoc
+         */
+        protected $option_group = 'anycomment-social-group';
+        /**
+         * @inheritdoc
+         */
+        protected $option_name = 'anycomment-social';
+        /**
+         * @inheritdoc
+         */
+        protected $page_slug = 'anycomments-settings-social';
+        /**
+         * @inheritdoc
+         */
+        protected $alert_key = 'social-settings-messages';
 
         /**
          * VK Options
@@ -47,12 +57,7 @@ if (!class_exists('AC_SocialSettingPage')) :
 
 
         /**
-         * @var array List of available options.
-         */
-        public static $options = null;
-
-        /**
-         * AnyCommentAdminPages constructor.
+         * AC_SocialSettingPage constructor.
          */
         public function __construct()
         {
@@ -64,12 +69,12 @@ if (!class_exists('AC_SocialSettingPage')) :
          */
         private function init_hooks()
         {
-            add_action('admin_init', [$this, 'init_settings']);
             add_action('admin_menu', [$this, 'init_submenu']);
+            add_action('admin_init', [$this, 'init_settings']);
         }
 
         /**
-         * Init admin menu.
+         * {@inheritdoc}
          */
         public function init_submenu()
         {
@@ -78,14 +83,17 @@ if (!class_exists('AC_SocialSettingPage')) :
                 __('Social Settings', "anycomment"),
                 __('Social Settings', "anycomment"),
                 'manage_options',
-                self::PAGE_SLUG,
+                $this->page_slug,
                 [$this, 'page_html']
             );
         }
 
+        /**
+         * {@inheritdoc}
+         */
         public function init_settings()
         {
-            register_setting(self::OPTION_GROUP, self::OPTION_NAME);
+            register_setting($this->option_group, $this->option_name);
 
             /**
              * VK
@@ -106,11 +114,11 @@ if (!class_exists('AC_SocialSettingPage')) :
                     </table>
                     <?php
                 },
-                self::PAGE_SLUG
+                $this->page_slug
             );
 
             $this->render_fields(
-                self::PAGE_SLUG,
+                $this->page_slug,
                 'section_vk',
                 [
                     [
@@ -152,11 +160,11 @@ if (!class_exists('AC_SocialSettingPage')) :
                     </table>
                     <?php
                 },
-                self::PAGE_SLUG
+                $this->page_slug
             );
 
             $this->render_fields(
-                self::PAGE_SLUG,
+                $this->page_slug,
                 'section_twitter',
                 [
                     [
@@ -198,11 +206,11 @@ if (!class_exists('AC_SocialSettingPage')) :
                     </table>
                     <?php
                 },
-                self::PAGE_SLUG
+                $this->page_slug
             );
 
             $this->render_fields(
-                self::PAGE_SLUG,
+                $this->page_slug,
                 'section_facebook',
                 [
                     [
@@ -244,11 +252,11 @@ if (!class_exists('AC_SocialSettingPage')) :
                     </table>
                     <?php
                 },
-                self::PAGE_SLUG
+                $this->page_slug
             );
 
             $this->render_fields(
-                self::PAGE_SLUG,
+                $this->page_slug,
                 'section_google',
                 [
                     [
@@ -274,129 +282,12 @@ if (!class_exists('AC_SocialSettingPage')) :
         }
 
         /**
-         *
-         * @param $page
-         * @param $section_id
-         * @param array $fields
-         */
-        public function render_fields($page, $section_id, array $fields)
-        {
-            foreach ($fields as $field) {
-
-                $args = isset($field['args']) ? $field['args'] : [];
-
-                if (!isset($args['label_for'])) {
-                    $args['label_for'] = $field['id'];
-                }
-
-                if (!isset($args['description'])) {
-                    $args['description'] = $field['description'];
-                }
-
-                add_settings_field(
-                    $field['id'],
-                    $field['title'],
-                    [$this, $field['callback']],
-                    $page,
-                    $section_id,
-                    $args
-                );
-            }
-        }
-
-        public function input_checkbox($args)
-        {
-            ?>
-            <input type="checkbox" id="<?= esc_attr($args['label_for']); ?>"
-                   name="<?= self::OPTION_NAME ?>[<?= esc_attr($args['label_for']); ?>]" <?= $this->getOption($args['label_for']) !== null ? 'checked="checked"' : '' ?>>
-            <?php if (isset($args['description'])): ?>
-            <p class="description"><?= $args['description'] ?></p>
-        <?php endif; ?>
-            <?php
-        }
-
-        public function input_text($args)
-        {
-            ?>
-            <input type="text" id="<?= esc_attr($args['label_for']); ?>"
-                   name="<?= self::OPTION_NAME ?>[<?= esc_attr($args['label_for']); ?>]"
-                   value="<?= $this->getOption($args['label_for']) ?>">
-            <?php if (isset($args['description'])): ?>
-            <p class="description"><?= $args['description'] ?></p>
-        <?php endif; ?>
-            <?php
-        }
-
-        /**
-         * top level menu:
-         * callback functions
-         */
-        public function page_html()
-        {
-            // check user capabilities
-            if (!current_user_can('manage_options')) {
-                return;
-            }
-
-            // check if the user have submitted the settings
-            // wordpress will add the "settings-updated" $_GET parameter to the url
-            if (isset($_GET['settings-updated'])) {
-                // add settings saved message with the class of "updated"
-                add_settings_error(self::ALERT_KEY, 'wporg_message', __('Settings Saved', 'anycomment'), 'updated');
-            }
-
-            // show error/update messages
-            settings_errors(self::ALERT_KEY);
-            ?>
-            <div class="wrap">
-                <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
-                <p><?= __('On this page you may configure social authorization. If social is disabled, users will be unable to login with it.', 'anycomment') ?></p>
-                <form action="options.php" method="post">
-                    <?php
-                    settings_fields(self::OPTION_GROUP);
-                    do_settings_sections(self::PAGE_SLUG);
-                    submit_button(__('Save', 'anycomment'));
-                    ?>
-                </form>
-            </div>
-            <?php
-        }
-
-        /**
-         * Get single option.
-         * @param string $name Options name to search for.
-         * @return mixed|null
-         */
-        public static function getOption($name)
-        {
-            $options = static::getOptions();
-
-            $optionValue = isset($options[$name]) ? trim($options[$name]) : null;
-
-            return !empty($optionValue) ? $optionValue : null;
-        }
-
-        /**
-         * Get list of social options.
-         * @return array|null
-         */
-        public static function getOptions()
-        {
-            if (self::$options === null) {
-                self::$options = get_option(self::OPTION_NAME, null);
-            }
-
-
-            return self::$options;
-        }
-
-        /**
          * Check whether VK social is on.
          * @return bool
          */
         public static function isVkOn()
         {
-            return static::getOption(self::OPTION_VK_TOGGLE) !== null;
+            return static::instance()->getOption(self::OPTION_VK_TOGGLE) !== null;
         }
 
         /**
@@ -405,7 +296,7 @@ if (!class_exists('AC_SocialSettingPage')) :
          */
         public static function getVkAppId()
         {
-            return static::getOption(self::OPTION_VK_APP_ID);
+            return static::instance()->getOption(self::OPTION_VK_APP_ID);
         }
 
         /**
@@ -414,7 +305,7 @@ if (!class_exists('AC_SocialSettingPage')) :
          */
         public static function getVkSecureKey()
         {
-            return static::getOption(self::OPTION_VK_SECRET);
+            return static::instance()->getOption(self::OPTION_VK_SECRET);
         }
 
 
@@ -424,7 +315,7 @@ if (!class_exists('AC_SocialSettingPage')) :
          */
         public static function isTwitterOn()
         {
-            return static::getOption(self::OPTION_TWITTER_TOGGLE) !== null;
+            return static::instance()->getOption(self::OPTION_TWITTER_TOGGLE) !== null;
         }
 
         /**
@@ -433,7 +324,7 @@ if (!class_exists('AC_SocialSettingPage')) :
          */
         public static function getTwitterConsumerKey()
         {
-            return static::getOption(self::OPTION_TWITTER_CONSUMER_KEY);
+            return static::instance()->getOption(self::OPTION_TWITTER_CONSUMER_KEY);
         }
 
         /**
@@ -442,7 +333,7 @@ if (!class_exists('AC_SocialSettingPage')) :
          */
         public static function getTwitterConsumerSecret()
         {
-            return static::getOption(self::OPTION_TWITTER_CONSUMER_SECRET);
+            return static::instance()->getOption(self::OPTION_TWITTER_CONSUMER_SECRET);
         }
 
         /**
@@ -451,7 +342,7 @@ if (!class_exists('AC_SocialSettingPage')) :
          */
         public static function isFbOn()
         {
-            return static::getOption(self::OPTION_FACEBOOK_TOGGLE) !== null;
+            return static::instance()->getOption(self::OPTION_FACEBOOK_TOGGLE) !== null;
         }
 
         /**
@@ -460,7 +351,7 @@ if (!class_exists('AC_SocialSettingPage')) :
          */
         public static function getFbAppId()
         {
-            return static::getOption(self::OPTION_FACEBOOK_APP_ID);
+            return static::instance()->getOption(self::OPTION_FACEBOOK_APP_ID);
         }
 
         /**
@@ -469,7 +360,7 @@ if (!class_exists('AC_SocialSettingPage')) :
          */
         public static function getFbAppSecret()
         {
-            return static::getOption(self::OPTION_FACEBOOK_APP_SECRET);
+            return static::instance()->getOption(self::OPTION_FACEBOOK_APP_SECRET);
         }
 
         /**
@@ -478,7 +369,7 @@ if (!class_exists('AC_SocialSettingPage')) :
          */
         public static function isGoogleOn()
         {
-            return static::getOption(self::OPTION_GOOGLE_TOGGLE) !== null;
+            return static::instance()->getOption(self::OPTION_GOOGLE_TOGGLE) !== null;
         }
 
         /**
@@ -487,7 +378,7 @@ if (!class_exists('AC_SocialSettingPage')) :
          */
         public static function getGoogleClientId()
         {
-            return static::getOption(self::OPTION_GOOGLE_CLIENT_ID);
+            return static::instance()->getOption(self::OPTION_GOOGLE_CLIENT_ID);
         }
 
         /**
@@ -496,7 +387,7 @@ if (!class_exists('AC_SocialSettingPage')) :
          */
         public static function getGoogleSecret()
         {
-            return static::getOption(self::OPTION_GOOGLE_SECRET);
+            return static::instance()->getOption(self::OPTION_GOOGLE_SECRET);
         }
     }
 endif;

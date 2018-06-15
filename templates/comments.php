@@ -15,14 +15,23 @@ if (post_password_required($postId) || !comments_open($postId)) {
 
 $classPrefix = AnyComment()->classPrefix();
 ?>
+<!DOCTYPE html>
+<html lang="<?= get_locale() ?>">
+<head>
+    <link rel="stylesheet"
+          href="<?= AnyComment()->plugin_url() ?>/assets/css/theme-dark.css?v=<?= AnyComment()->version ?>">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700&amp;subset=cyrillic" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.6.1/iframeResizer.contentWindow.min.js"></script>
+    <script src="<?= AnyComment()->plugin_url() ?>/assets/js/luxon.min.js?v=<?= AnyComment()->version ?>"></script>
+    <script src="<?= AnyComment()->plugin_url() ?>/assets/js/moment-with-locales.min.js?v=<?= AnyComment()->version ?>"></script>
+</head>
+<body>
 
-<link rel="stylesheet" href="<?= AnyComment()->plugin_url() ?>/assets/css/comments.css?v=<?= AnyComment()->version ?>">
-<link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700&amp;subset=cyrillic" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.6.1/iframeResizer.contentWindow.min.js"></script>
-<script src="<?= AnyComment()->plugin_url() ?>/assets/js/timeago.min.js?v=<?= AnyComment()->version ?>"></script>
 
-<div id="<?= $classPrefix ?>comments" data-origin-limit="<?= AC_Render::LIMIT ?>"
+<div id="<?= $classPrefix ?>comments"
+     class="<?= $classPrefix ?>comments-dark"
+     data-origin-limit="<?= AC_Render::LIMIT ?>"
      data-current-limit="<?= AC_Render::LIMIT ?>"
      data-sort="<?= AC_Render::SORT_NEW ?>"
      data-guest="<?= !is_user_logged_in() ? "1" : "0" ?>">
@@ -276,13 +285,28 @@ $classPrefix = AnyComment()->classPrefix();
     loadComments();
 
     // Load time
-    function loadTime() {
-        let i = setInterval(function () {
-            if (('timeago' in window)) {
-                timeago().render(jQuery('.timeago-date-time'));
-                //{defaultLocale: '<?= get_locale() ?>'}
-                clearInterval(i);
-            }
-        }, 1000);
+    function loadTime(lang = '<?= get_locale() ?>') {
+        //let i = setInterval(function () {
+        //    if (('luxon' in window)) {
+        //        jQuery('.timeago-date-time').each(function (i, e) {
+        //            let dt = luxon.DateTime.locale();
+        //
+        //            dt.setTimeZone('<?//= get_option('timezone_string') ?>//');
+        //            dt.setLocal(lang);
+        //            //$(e).attr('datetime')
+        //                {
+        //                local: lang,
+        //                zone:
+        //            });
+        //
+        //            console.log(time);
+        //
+        //            $(e).html(time.fromNow());
+        //        });
+        //        clearInterval(i);
+        //    }
+        //}, 1000);
     }
 </script>
+</body>
+</html>

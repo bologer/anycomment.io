@@ -207,6 +207,7 @@ if (!class_exists('AnyComment')) :
              * Admin related
              */
             include_once(ANY_COMMENT_ABSPATH . 'includes/admin/class-statistics.php');
+            include_once(ANY_COMMENT_ABSPATH . 'includes/admin/class-anycomment-options.php');
             include_once(ANY_COMMENT_ABSPATH . 'includes/admin/class-anycomment-pages.php');
             include_once(ANY_COMMENT_ABSPATH . 'includes/admin/class-anycomment-settings-page-social.php');
 

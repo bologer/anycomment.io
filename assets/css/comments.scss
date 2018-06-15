@@ -1,6 +1,3 @@
-$primary-color: #3658f7;
-$semi-hidden-color: #b6c1c6;
-$comment-color: #333333;
 $font-size: 15px;
 $comment-border: 0px solid transparent;
 $font-family: 'Noto-Sans', sans-serif;
@@ -112,24 +109,25 @@ body {
     }
 
     &__count {
-      color: #696969;
+      color: $comment-color;
     }
 
     &__dropdown {
       float: right;
-      color: #cccccd;
+      color: #000;
 
       &-header {
         cursor: pointer;
         position: relative;
         padding-right: 15px;
+        color: $dropdown-header-color;
 
         &:hover {
-          color: $comment-color;
+          color: lighten($dropdown-header-color, 5%);
         }
 
         &:hover::after {
-          border-top: 5px solid $comment-color;
+          border-top: 5px solid lighten($dropdown-header-color, 5%);
         }
 
         &::after {
@@ -140,7 +138,7 @@ body {
           height: 0;
           border-left: 5px solid transparent;
           border-right: 5px solid transparent;
-          border-top: 5px solid $semi-hidden-color;
+          border-top: 5px solid $dropdown-header-color;
           top: 5px;
         }
       }
@@ -170,7 +168,7 @@ body {
             cursor: pointer;
 
             &:hover {
-              color: $comment-color;
+              color: $dropdown-item-color;
             }
 
             &:last-of-type {
