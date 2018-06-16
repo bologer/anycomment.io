@@ -16,7 +16,7 @@ if (!class_exists('AC_AdminPages')) :
         public $page_options_social;
 
         /**
-         * @var AC_GenericSettingPage
+         * @var AC_GenericSettings
          */
         public $page_options_general;
 
@@ -35,7 +35,7 @@ if (!class_exists('AC_AdminPages')) :
         private function init()
         {
             $this->page_options_social = new AC_SocialSettings();
-            $this->page_options_general = new AC_GenericSettingPage();
+            $this->page_options_general = new AC_GenericSettings();
         }
 
         /**

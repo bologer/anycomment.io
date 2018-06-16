@@ -33,7 +33,7 @@ if (!class_exists('AC_Options')) :
         /**
          * @var AC_Options Instance of current object.
          */
-        private static $instance;
+        private static $_instances;
 
         /**
          * @var array List of available options.
@@ -202,13 +202,19 @@ if (!class_exists('AC_Options')) :
             return $this->options;
         }
 
+        /**
+         * Get instance of currently running class.
+         * @return self
+         */
         public static function instance()
         {
-            if (self::$instance === null) {
-                self::$instance = new AC_Options();
+            $className = get_called_class();
+
+            if (!isset(self::$_instances[$className])) {
+                self::$_instances[$className] = new $className(false);
             }
 
-            return self::$instance;
+            return self::$_instances[$className];
         }
     }
 endif;

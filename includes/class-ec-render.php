@@ -29,16 +29,18 @@ if (!class_exists('AC_Render')) :
          */
         public function __construct()
         {
-            add_filter('comments_template', [$this, 'render_iframe']);
+            if (AC_GenericSettings::isEnabled()) {
+                add_filter('comments_template', [$this, 'render_iframe']);
 
-            add_action('wp_ajax_iframe_comments', [$this, 'iframe_comments']);
-            add_action('wp_ajax_nopriv_iframe_comments', [$this, 'iframe_comments']);
+                add_action('wp_ajax_iframe_comments', [$this, 'iframe_comments']);
+                add_action('wp_ajax_nopriv_iframe_comments', [$this, 'iframe_comments']);
 
-            add_action('wp_ajax_render_comments', [$this, 'render_comments']);
-            add_action('wp_ajax_nopriv_render_comments', [$this, 'render_comments']);
+                add_action('wp_ajax_render_comments', [$this, 'render_comments']);
+                add_action('wp_ajax_nopriv_render_comments', [$this, 'render_comments']);
 
-            add_action('wp_ajax_add_comment', [$this, 'add_comment']);
-            add_action('wp_ajax_nopriv_add_comment', [$this, 'add_comment']);
+                add_action('wp_ajax_add_comment', [$this, 'add_comment']);
+                add_action('wp_ajax_nopriv_add_comment', [$this, 'add_comment']);
+            }
         }
 
         /**

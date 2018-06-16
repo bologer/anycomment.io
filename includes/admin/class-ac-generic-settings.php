@@ -4,11 +4,11 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 
-if (!class_exists('AC_GenericSettingPage')) :
+if (!class_exists('AC_GenericSettings')) :
     /**
      * AC_AdminSettingPage helps to process generic plugin settings.
      */
-    class AC_GenericSettingPage extends AC_Options
+    class AC_GenericSettings extends AC_Options
     {
         /**
          * @inheritdoc
@@ -21,19 +21,25 @@ if (!class_exists('AC_GenericSettingPage')) :
         /**
          * @inheritdoc
          */
-        protected $page_slug = 'anycomments-settings';
+        protected $page_slug = 'anycomment-settings';
 
 
-        const OPTION_GENERIC_THEME_TOGGLE = 'option_theme_toggle';
-        const OPTION_GENERIC_PLUGIN_TOGGLE = 'option_plguin_toggle';
+        const OPTION_THEME_TOGGLE = 'option_theme_toggle';
+        const OPTION_PLUGIN_TOGGLE = 'option_plugin_toggle';
+
+        const THEME_DARK = 'dark';
+        const THEME_LIGHT = 'light';
 
         /**
          * AnyCommentAdminPages constructor.
+         * @param bool $init if required to init the modle.
          */
-        public function __construct()
+        public function __construct($init = true)
         {
             parent::__construct();
-            $this->init_hooks();
+            if ($init) {
+                $this->init_hooks();
+            }
         }
 
         /**
@@ -79,25 +85,53 @@ if (!class_exists('AC_GenericSettingPage')) :
                 'section_generic',
                 [
                     [
-                        'id' => self::OPTION_GENERIC_PLUGIN_TOGGLE,
+                        'id' => self::OPTION_PLUGIN_TOGGLE,
                         'title' => __('Enable Comments', "anycomment"),
                         'callback' => 'input_checkbox',
                         'description' => esc_html(__('Visible plugin or not. When off default comments of your website will be shown instead. Could be useful to configure comments first and then enable this option.', "anycomment"))
                     ],
                     [
-                        'id' => self::OPTION_GENERIC_THEME_TOGGLE,
+                        'id' => self::OPTION_THEME_TOGGLE,
                         'title' => __('Theme', "anycomment"),
                         'callback' => 'input_select',
                         'args' => [
                             'options' => [
-                                'light' => __('Light', 'anycomment'),
-                                'dark' => __('Dark', 'anycomment'),
+                                self::THEME_DARK => __('Dark', 'anycomment'),
+                                self::THEME_LIGHT => __('Light', 'anycomment'),
                             ]
                         ],
                         'description' => esc_html(__('Choose theme of the comments.', "anycomment"))
                     ],
                 ]
             );
+        }
+
+        /**
+         * Check whether plugin is enabled or not.
+         *
+         * @return bool
+         */
+        public static function isEnabled()
+        {
+            return static::instance()->getOption(self::OPTION_PLUGIN_TOGGLE) !== null;
+        }
+
+        /**
+         * Get currently chosen theme.
+         * When value store is not matching any of the existing
+         * themes -> returns `dark` as default.
+         *
+         * @return string|null
+         */
+        public static function getTheme()
+        {
+            $value = static::instance()->getOption(self::OPTION_THEME_TOGGLE);
+
+            if ($value === null || $value !== self::THEME_DARK && $value !== self::THEME_LIGHT) {
+                return self::THEME_DARK;
+            }
+
+            return $value;
         }
     }
 endif;

@@ -19,7 +19,7 @@ $classPrefix = AnyComment()->classPrefix();
 <html lang="<?= get_locale() ?>">
 <head>
     <link rel="stylesheet"
-          href="<?= AnyComment()->plugin_url() ?>/assets/css/theme-light.css?v=<?= AnyComment()->version ?>">
+          href="<?= AnyComment()->plugin_url() ?>/assets/css/theme-<?= AC_GenericSettings::getTheme() ?>.css?v=<?= AnyComment()->version ?>">
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700&amp;subset=cyrillic" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.6.1/iframeResizer.contentWindow.min.js"></script>

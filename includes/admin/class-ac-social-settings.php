@@ -21,7 +21,7 @@ if (!class_exists('AC_SocialSettings')) :
         /**
          * @inheritdoc
          */
-        protected $page_slug = 'anycomments-settings-social';
+        protected $page_slug = 'anycomment-settings-social';
 
         /**
          * VK Options
@@ -54,11 +54,15 @@ if (!class_exists('AC_SocialSettings')) :
 
         /**
          * AC_SocialSettingPage constructor.
+         *
+         * @param bool $init If required to init the model.
          */
-        public function __construct()
+        public function __construct($init = true)
         {
             parent::__construct();
-            $this->init_hooks();
+            if ($init) {
+                $this->init_hooks();
+            }
         }
 
         /**
