@@ -310,6 +310,3 @@ function AnyComment()
 }
 
 AnyComment();
-
-
-var_dump(get_defined_constants());

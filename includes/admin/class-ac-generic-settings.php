@@ -25,6 +25,7 @@ if (!class_exists('AC_GenericSettingPage')) :
 
 
         const OPTION_GENERIC_THEME_TOGGLE = 'option_theme_toggle';
+        const OPTION_GENERIC_PLUGIN_TOGGLE = 'option_plguin_toggle';
 
         /**
          * AnyCommentAdminPages constructor.
@@ -75,13 +76,25 @@ if (!class_exists('AC_GenericSettingPage')) :
 
             $this->render_fields(
                 $this->page_slug,
-                'section_vk',
+                'section_generic',
                 [
+                    [
+                        'id' => self::OPTION_GENERIC_PLUGIN_TOGGLE,
+                        'title' => __('Enable Comments', "anycomment"),
+                        'callback' => 'input_checkbox',
+                        'description' => esc_html(__('Visible plugin or not. When off default comments of your website will be shown instead. Could be useful to configure comments first and then enable this option.', "anycomment"))
+                    ],
                     [
                         'id' => self::OPTION_GENERIC_THEME_TOGGLE,
                         'title' => __('Theme', "anycomment"),
-                        'callback' => 'input_checkbox',
-                        'description' => esc_html(__('Comments theme.', "anycomment"))
+                        'callback' => 'input_select',
+                        'args' => [
+                            'options' => [
+                                'light' => __('Light', 'anycomment'),
+                                'dark' => __('Dark', 'anycomment'),
+                            ]
+                        ],
+                        'description' => esc_html(__('Choose theme of the comments.', "anycomment"))
                     ],
                 ]
             );

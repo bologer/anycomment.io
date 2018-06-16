@@ -76,6 +76,10 @@ if (!class_exists('AC_Options')) :
                     $args['description'] = $field['description'];
                 }
 
+                if (isset($field['options'])) {
+                    $args['options'] = $field['options'];
+                }
+
                 add_settings_field(
                     $field['id'],
                     $field['title'],
@@ -85,6 +89,30 @@ if (!class_exists('AC_Options')) :
                     $args
                 );
             }
+        }
+
+        /**
+         * Helper to render select.
+         * @param array $args List of passed arguments.
+         */
+        public function input_select($args)
+        {
+            ?>
+            <select name="<?= $this->option_name ?>[<?= esc_attr($args['label_for']); ?>]"
+                    id="<?= esc_attr($args['label_for']); ?>">
+                <?php
+                $options = $args['options'];
+
+                if (isset($options)):
+                    foreach ($options as $key => $value):
+                        ?>
+                        <option value="<?= $key ?>" <?= isset($this->getOptions()[$args['label_for']]) ? (selected($this->getOption($args['label_for']), $key, false)) : (''); ?>><?= $value ?></option>
+                    <?php
+                    endforeach;
+                endif; ?>
+            </select>
+            <p class="description"><?= $args['description'] ?></p>
+            <?php
         }
 
         /**
