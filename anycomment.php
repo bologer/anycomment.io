@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Plugin Name: AnyComment
  * Plugin URI: https://anycomment.io
@@ -206,32 +205,33 @@ if (!class_exists('AnyComment')) :
             /**
              * Admin related
              */
-            include_once(ANY_COMMENT_ABSPATH . 'includes/admin/class-statistics.php');
-            include_once(ANY_COMMENT_ABSPATH . 'includes/admin/class-anycomment-options.php');
-            include_once(ANY_COMMENT_ABSPATH . 'includes/admin/class-anycomment-pages.php');
-            include_once(ANY_COMMENT_ABSPATH . 'includes/admin/class-anycomment-settings-page-social.php');
+            include_once(ANY_COMMENT_ABSPATH . 'includes/admin/class-ac-statistics.php');
+            include_once(ANY_COMMENT_ABSPATH . 'includes/admin/class-ac-options.php');
+            include_once(ANY_COMMENT_ABSPATH . 'includes/admin/class-ac-pages.php');
+            include_once(ANY_COMMENT_ABSPATH . 'includes/admin/class-ac-generic-settings.php');
+            include_once(ANY_COMMENT_ABSPATH . 'includes/admin/class-ac-social-settings.php');
 
 
             /**
              * Authentication social libraries
              */
 
-            if (AC_SocialSettingPage::isVkOn()) {
+            if (AC_SocialSettings::isVkOn()) {
                 // VK
                 include_once(ANY_COMMENT_ABSPATH . 'includes/api/vk/src/VK/VK.php');
                 include_once(ANY_COMMENT_ABSPATH . 'includes/api/vk/src/VK/VKException.php');
             }
 
 
-            if (AC_SocialSettingPage::isTwitterOn()) {
+            if (AC_SocialSettings::isTwitterOn()) {
                 include_once(ANY_COMMENT_ABSPATH . 'includes/api/twitter/autoload.php'); //// Twitter
             }
 
-            if (AC_SocialSettingPage::isFbOn()) {
+            if (AC_SocialSettings::isFbOn()) {
                 include_once(ANY_COMMENT_ABSPATH . 'includes/api/facebook/src/Facebook/autoload.php'); // Facebook
             }
 
-            if (AC_SocialSettingPage::isGoogleOn()) {
+            if (AC_SocialSettings::isGoogleOn()) {
                 include_once(ANY_COMMENT_ABSPATH . 'includes/api/google/vendor/autoload.php'); // Google
             }
 
@@ -310,3 +310,6 @@ function AnyComment()
 }
 
 AnyComment();
+
+
+var_dump(get_defined_constants());

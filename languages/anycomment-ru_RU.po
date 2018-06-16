@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-10 09:04+0000\n"
-"PO-Revision-Date: 2018-06-10 09:05+0000\n"
+"POT-Creation-Date: 2018-06-12 05:56+0000\n"
+"PO-Revision-Date: 2018-06-12 05:58+0000\n"
 "Last-Translator: Саша Тешабаев <sasha.tesh@gmail.com>\n"
 "Language-Team: Русский\n"
 "Language: ru_RU\n"
@@ -123,6 +123,57 @@ msgstr "Пока еще не было комментариев"
 #: includes/core-functions.php:354
 msgid "Add Anycomment to your site"
 msgstr "Добавить AnyComment на свой сайт"
+
+#: templates/admin/dashboard.php:7 templates/admin/dashboard.php:27
+msgid "Dashboard"
+msgstr "Консоль"
+
+#. Name of the plugin
+#: templates/admin/dashboard.php:14 templates/admin/dashboard.php:15
+#: includes/admin/class-anycomment-pages.php:49
+#: includes/admin/class-anycomment-pages.php:50
+msgid "AnyComment"
+msgstr "AnyComment"
+
+#: templates/admin/dashboard.php:19
+msgid "Official Website"
+msgstr "Официальный сайт"
+
+#: templates/admin/dashboard.php:28
+msgid "Social"
+msgstr "Соц. сети"
+
+#: templates/admin/dashboard.php:29
+msgid "Settings"
+msgstr "Настройки"
+
+#: templates/admin/dashboard.php:39 templates/admin/dashboard.php:43
+msgid "Commentators"
+msgstr "Комментаторы"
+
+#: templates/admin/dashboard.php:50 templates/admin/dashboard.php:53
+msgid "All Comments"
+msgstr "Все комментарии"
+
+#: templates/admin/dashboard.php:63
+msgid "Overal Statistics"
+msgstr "Общая статистика"
+
+#: templates/admin/dashboard.php:84
+msgid "Comments"
+msgstr "Комментарии"
+
+#: templates/admin/dashboard.php:95
+msgid "Users"
+msgstr "Пользователи"
+
+#: templates/admin/dashboard.php:143
+msgid "Most Active Users"
+msgstr "Активные пользователи"
+
+#: templates/admin/dashboard.php:155
+msgid "No users yet"
+msgstr "Данные пока что отсутствуют"
 
 #: includes/admin/class-anycomment-settings-page-social.php:78
 #: includes/admin/class-anycomment-settings-page-social.php:79
@@ -292,12 +343,6 @@ msgstr ""
 #: includes/admin/class-anycomment-settings-page-social.php:358
 msgid "Save"
 msgstr "Сохранить"
-
-#. Name of the plugin
-#: includes/admin/class-anycomment-pages.php:49
-#: includes/admin/class-anycomment-pages.php:50
-msgid "AnyComment"
-msgstr "AnyComment"
 
 #. Description of the plugin
 msgid "AnyComment is an advanced commenting system for WordPress."

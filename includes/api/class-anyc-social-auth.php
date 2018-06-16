@@ -55,9 +55,9 @@ if (!class_exists('AC_SocialAuth')) :
          */
         public function init_socials()
         {
-            if (AC_SocialSettingPage::isVkOn() &&
-                ($appId = AC_SocialSettingPage::getVkAppId()) !== null &&
-                ($secureKey = AC_SocialSettingPage::getVkSecureKey()) !== null) {
+            if (AC_SocialSettings::isVkOn() &&
+                ($appId = AC_SocialSettings::getVkAppId()) !== null &&
+                ($secureKey = AC_SocialSettings::getVkSecureKey()) !== null) {
                 try {
                     $this->auth_vk = new \VK\VK($appId, $secureKey);
                 } catch (\VK\VKException $exception) {
@@ -65,15 +65,15 @@ if (!class_exists('AC_SocialAuth')) :
                 }
             }
 
-            if (AC_SocialSettingPage::isTwitterOn() &&
-                ($consumerKey = AC_SocialSettingPage::getTwitterConsumerKey()) !== null &&
-                ($consumerSecret = AC_SocialSettingPage::getTwitterConsumerSecret()) !== null)
+            if (AC_SocialSettings::isTwitterOn() &&
+                ($consumerKey = AC_SocialSettings::getTwitterConsumerKey()) !== null &&
+                ($consumerSecret = AC_SocialSettings::getTwitterConsumerSecret()) !== null)
                 $this->auth_twitter = new \Abraham\TwitterOAuth\TwitterOAuth($consumerKey, $consumerSecret);
 
 
-            if (AC_SocialSettingPage::isFbOn() &&
-                ($appId = AC_SocialSettingPage::getFbAppId()) !== null &&
-                ($appSecret = AC_SocialSettingPage::getFbAppSecret()) !== null) {
+            if (AC_SocialSettings::isFbOn() &&
+                ($appId = AC_SocialSettings::getFbAppId()) !== null &&
+                ($appSecret = AC_SocialSettings::getFbAppSecret()) !== null) {
                 try {
                     $this->auth_facebook = new Facebook\Facebook([
                         'app_id' => $appId,
@@ -85,9 +85,9 @@ if (!class_exists('AC_SocialAuth')) :
                 }
             }
 
-            if (AC_SocialSettingPage::isGoogleOn() &&
-                ($clientId = AC_SocialSettingPage::getGoogleClientId()) !== null &&
-                ($clientSecretKey = AC_SocialSettingPage::getGoogleSecret()) !== null) {
+            if (AC_SocialSettings::isGoogleOn() &&
+                ($clientId = AC_SocialSettings::getGoogleClientId()) !== null &&
+                ($clientSecretKey = AC_SocialSettings::getGoogleSecret()) !== null) {
                 $this->auth_google = new Google_Client();
                 $this->auth_google->setClientId($clientId);
                 $this->auth_google->setClientSecret($clientSecretKey);
@@ -380,8 +380,8 @@ if (!class_exists('AC_SocialAuth')) :
 
                 try {
                     $this->auth_twitter = new \Abraham\TwitterOAuth\TwitterOAuth(
-                        AC_SocialSettingPage::getTwitterConsumerKey(),
-                        AC_SocialSettingPage::getTwitterConsumerSecret(),
+                        AC_SocialSettings::getTwitterConsumerKey(),
+                        AC_SocialSettings::getTwitterConsumerSecret(),
                         $oauthToken,
                         $oauthVerifier
                     );
@@ -394,8 +394,8 @@ if (!class_exists('AC_SocialAuth')) :
                 }
 
                 $this->auth_twitter = new \Abraham\TwitterOAuth\TwitterOAuth(
-                    AC_SocialSettingPage::getTwitterConsumerKey(),
-                    AC_SocialSettingPage::getTwitterConsumerSecret(),
+                    AC_SocialSettings::getTwitterConsumerKey(),
+                    AC_SocialSettings::getTwitterConsumerSecret(),
                     $access_token['oauth_token'],
                     $access_token['oauth_token_secret']
                 );

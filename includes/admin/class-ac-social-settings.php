@@ -4,11 +4,11 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 
-if (!class_exists('AC_SocialSettingPage')) :
+if (!class_exists('AC_SocialSettings')) :
     /**
      * AnyCommentAdminPages helps to process website authentication.
      */
-    class AC_SocialSettingPage extends AC_Options
+    class AC_SocialSettings extends AC_Options
     {
         /**
          * @inheritdoc
@@ -22,10 +22,6 @@ if (!class_exists('AC_SocialSettingPage')) :
          * @inheritdoc
          */
         protected $page_slug = 'anycomments-settings-social';
-        /**
-         * @inheritdoc
-         */
-        protected $alert_key = 'social-settings-messages';
 
         /**
          * VK Options
@@ -61,6 +57,7 @@ if (!class_exists('AC_SocialSettingPage')) :
          */
         public function __construct()
         {
+            parent::__construct();
             $this->init_hooks();
         }
 
@@ -93,8 +90,6 @@ if (!class_exists('AC_SocialSettingPage')) :
          */
         public function init_settings()
         {
-            register_setting($this->option_group, $this->option_name);
-
             /**
              * VK
              */

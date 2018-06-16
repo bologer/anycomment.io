@@ -4,12 +4,21 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 
-if (!class_exists('AC_AdminSettingPage')) :
+if (!class_exists('AC_AdminPages')) :
     /**
-     * AC_AdminSettingPage helps to process generic plugin settings.
+     * AnyCommentAdminPages helps to process website authentication.
      */
-    class AC_AdminSettingPage
+    class AC_AdminPages
     {
+        /**
+         * @var AC_SocialSettings
+         */
+        public $page_options_social;
+
+        /**
+         * @var AC_GenericSettingPage
+         */
+        public $page_options_general;
 
         /**
          * AnyCommentAdminPages constructor.
@@ -25,7 +34,8 @@ if (!class_exists('AC_AdminSettingPage')) :
          */
         private function init()
         {
-
+            $this->page_options_social = new AC_SocialSettings();
+            $this->page_options_general = new AC_GenericSettingPage();
         }
 
         /**

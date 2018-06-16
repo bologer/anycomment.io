@@ -4,17 +4,31 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 
-if (!class_exists('AC_SocialSettingPage')) :
+if (!class_exists('AC_Options')) :
     /**
      * AnyCommentAdminPages helps to process website authentication.
      */
     class AC_Options
     {
+        /**
+         * @var string Options group.
+         */
         protected $option_group;
+
+        /**
+         * @var string Option name.
+         */
         protected $option_name;
 
+        /**
+         * @var string Page slug.
+         */
         protected $page_slug;
-        protected $alert_key;
+
+        /**
+         * @var string Key used to display option alers.
+         */
+        protected $alert_key = 'anycomment-options-alert';
 
         /**
          * @var AC_Options Instance of current object.
@@ -25,6 +39,22 @@ if (!class_exists('AC_SocialSettingPage')) :
          * @var array List of available options.
          */
         public $options = null;
+
+        /**
+         * AC_Options constructor.
+         */
+        public function __construct()
+        {
+            add_action('init', [$this, 'init']);
+        }
+
+        /**
+         * Init class.
+         */
+        public function init()
+        {
+            register_setting($this->option_group, $this->option_name);
+        }
 
         /**
          *
