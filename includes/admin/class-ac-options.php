@@ -31,6 +31,11 @@ if (!class_exists('AC_Options')) :
         protected $alert_key = 'anycomment-options-alert';
 
         /**
+         * @var array Default options. When options specified in this list do not exist in the form options, default ones will be used instead.
+         */
+        protected $default_options;
+
+        /**
          * @var AC_Options Instance of current object.
          */
         private static $_instances;
@@ -197,6 +202,10 @@ if (!class_exists('AC_Options')) :
         {
             if ($this->options === null) {
                 $this->options = get_option($this->option_name, null);
+            }
+
+            if (!empty($this->default_options)) {
+                $this->options = wp_parse_args($this->options, $this->default_options);
             }
 
             return $this->options;

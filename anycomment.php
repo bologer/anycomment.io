@@ -198,9 +198,9 @@ if (!class_exists('AnyComment')) :
             /**
              * Class autoloader.
              */
-            include_once(ANY_COMMENT_ABSPATH . 'includes/class-ec-render.php');
-            include_once(ANY_COMMENT_ABSPATH . 'includes/core-functions.php');
-            include_once(ANY_COMMENT_ABSPATH . 'includes/api/class-anyc-social-auth.php');
+            include_once(ANY_COMMENT_ABSPATH . 'includes/class-ac-render.php');
+            include_once(ANY_COMMENT_ABSPATH . 'includes/ac-core-functions.php');
+            include_once(ANY_COMMENT_ABSPATH . 'includes/class-ac-social-auth.php');
 
             /**
              * Admin related

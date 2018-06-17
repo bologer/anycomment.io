@@ -10,6 +10,13 @@ if (!class_exists('AC_GenericSettings')) :
      */
     class AC_GenericSettings extends AC_Options
     {
+        const OPTION_THEME = 'option_theme_toggle';
+        const OPTION_PLUGIN_TOGGLE = 'option_plugin_toggle';
+        const OPTION_COPYRIGHT_TOGGLE = 'option_copyright_toggle';
+
+        const THEME_DARK = 'dark';
+        const THEME_LIGHT = 'light';
+
         /**
          * @inheritdoc
          */
@@ -23,12 +30,14 @@ if (!class_exists('AC_GenericSettings')) :
          */
         protected $page_slug = 'anycomment-settings';
 
+        /**
+         * @inheritdoc
+         */
+        protected $default_options = [
+            self::OPTION_THEME => self::THEME_DARK,
+            self::OPTION_COPYRIGHT_TOGGLE => 'on'
+        ];
 
-        const OPTION_THEME_TOGGLE = 'option_theme_toggle';
-        const OPTION_PLUGIN_TOGGLE = 'option_plugin_toggle';
-
-        const THEME_DARK = 'dark';
-        const THEME_LIGHT = 'light';
 
         /**
          * AnyCommentAdminPages constructor.
@@ -91,7 +100,7 @@ if (!class_exists('AC_GenericSettings')) :
                         'description' => esc_html(__('Visible plugin or not. When off default comments of your website will be shown instead. Could be useful to configure comments first and then enable this option.', "anycomment"))
                     ],
                     [
-                        'id' => self::OPTION_THEME_TOGGLE,
+                        'id' => self::OPTION_THEME,
                         'title' => __('Theme', "anycomment"),
                         'callback' => 'input_select',
                         'args' => [
@@ -101,6 +110,12 @@ if (!class_exists('AC_GenericSettings')) :
                             ]
                         ],
                         'description' => esc_html(__('Choose theme of the comments.', "anycomment"))
+                    ],
+                    [
+                        'id' => self::OPTION_COPYRIGHT_TOGGLE,
+                        'title' => __('Thanks', "anycomment"),
+                        'callback' => 'input_checkbox',
+                        'description' => esc_html(__('Show AnyComment\'s link in the footer of comments. Copyright helps to bring awareness of such plugin and bring people to allow us to understand that it is a wanted product and give more often updated.', "anycomment"))
                     ],
                 ]
             );
@@ -125,13 +140,23 @@ if (!class_exists('AC_GenericSettings')) :
          */
         public static function getTheme()
         {
-            $value = static::instance()->getOption(self::OPTION_THEME_TOGGLE);
+            $value = static::instance()->getOption(self::OPTION_THEME);
 
             if ($value === null || $value !== self::THEME_DARK && $value !== self::THEME_LIGHT) {
                 return self::THEME_DARK;
             }
 
             return $value;
+        }
+
+        /**
+         * Check whether copyright should on or not.
+         *
+         * @return bool
+         */
+        public static function isCopyrightOn()
+        {
+            return static::instance()->getOption(self::OPTION_COPYRIGHT_TOGGLE) !== null;
         }
     }
 endif;

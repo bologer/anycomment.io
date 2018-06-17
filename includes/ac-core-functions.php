@@ -347,6 +347,9 @@ if (!function_exists('anycomment_footer')):
      */
     function anycomment_footer()
     {
+        if (!AC_GenericSettings::isCopyrightOn()) {
+            return null;
+        }
         ?>
         <footer class="main-footer">
             <img src="<?= AnyComment()->plugin_url() . '/assets/img/mini-logo.svg' ?>"
