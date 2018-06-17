@@ -1,30 +1,73 @@
 === AnyComment ===
-Tags: anycomment, anycomment.io
+Tags: anycomment, comments, comment moderation, anycomment.io
 Requires at least: 3.7
 Tested up to: 4.9.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/
 
-TBD
+AnyComment allows you to have a better commenting experience in WordPress.
 
 == Description ==
 
-TBD
+Are you tired of connecting different third part commenting system to your website or having the default ones?
+
+AnyComment is here to help you - it is a better commenting system in WordPress.
+
+No dependency on third party services, all comments store in your own database.
+
+You may connect your favorite social networks.
+
+Dark for light background websites, where as light for dark background ones.
+
+AnyComment stands for simplicity, so default comment have very simple UI, it will up to you what you add to it.
+
+Ps. Comment will be actively supported and maintained. We would like to have your opinions on what is good and what could be improved. Thank you for sharing love with us!
+
+
+Major features of AnyComment include:
+* Social network authorization via Facebook, VK, Twitter or Google
+* Currently translated in two languages: English, Russian
+* Suitable for dark & light themes (on your choice)
+* Blazing-fast AJAX way of sending comments
+* Simple & informative dashboard with graphs to display number of comments over number of active user per certain period & most active commenting users
+* Comments do no inherit any of the currently active theme styles. Meaning that comments will not be broken by styles you have.
+* Integration with [WP User Avatar](https://wordpress.org/plugins/wp-user-avatar/), to specify customized avatars
+
+Todo features:
+* Option: customization of comment styles
+* Option: add option to specify default number of comments loaded
+* Option: add option to specify number of comments loaded per page
+* Option: add option to load comments when user scrolls to it, save some loading time
+* Option: add option to define whether new comments will be added automatically or will be required to be moderated first
+* Option: add option to allow guests to leave comments
+* Option: Auto-update comments on new comments
+* Support more languages
+* Code highlighting
+* Markdown support
+* Integration of: Akismet Anti-Spam and Google's reCaptcha
+* Integration of more social networks: Dribble, Github, etc
+* More widgets to be added on the page (sidebar, custom pages, etc)
+* Special moderator panel integrated into custom AnyComment pages (for easy comment moderation)
+* More statistics and analytics regarding comments...
+* And a lot more...
 
 == Installation ==
 
-TBD
+* Upload files into the `/wp-content/plugins/anycomment/` directory OR install via WordPress directly
+* Install & activate from `Plugins` section in admin panel
+* Register you website in the API of social networks to get API secrets
+* Specify required API details in special social network settings
+* Try it out!
+* Go to some post and try to authorize using any of the enabled social networks and leave a comment!
 
-== Todo ==
-* Customization options to set custom styles
-* Load comments when user scrolls to it
-* Auto-update comments on new comments
-* Code highlighting
-* Markdown support
+== Frequently Asked Questions ==
+
+= Facebook asks me =
 
 == Changelog ==
+
 = 0.0.1 =
-* Release Date - TBD
+* First release
 * Options to specify API details (secrets, etc) for social authorization: Vk, Twitter, Facebook, Google
 * Integrated with [WP User Avatar](https://wordpress.org/plugins/wp-user-avatar/)
 * Authorize via VK, Twitter, Facebook, Google
