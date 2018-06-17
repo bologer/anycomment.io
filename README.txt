@@ -51,8 +51,10 @@ Todo features:
 * More statistics and analytics regarding comments...
 * And a lot more...
 
-== Installation ==
 
+== Frequently Asked Questions ==
+
+= Installation & Instructions =
 * Upload files into the `/wp-content/plugins/anycomment/` directory OR install via WordPress directly
 * Install & activate from `Plugins` section in admin panel
 * Register you website in the API of social networks to get API secrets
@@ -60,9 +62,19 @@ Todo features:
 * Try it out!
 * Go to some post and try to authorize using any of the enabled social networks and leave a comment!
 
-== Frequently Asked Questions ==
+= Why Facebook wants Privacy Policy URL? =
 
-= Facebook asks me =
+This is now only facebook, but Twitter and Facebook.
+
+After [General Data Protection Regulation](https://en.wikipedia.org/wiki/General_Data_Protection_Regulation) (GDPR) regulation was made it is not required to have a link to Privacy Policy.
+
+Currently known problem is that it is NOT possible to start using Facebook API (only in test mode), until you specify `Privacy Policy URL` in their settings.
+
+Twitter is not that strict, and only does not provide email of the user when he is logged in.
+
+Current workaround is to copy some of the Privacy Policy from another website, correct it to you own, have public URL to it and specify it on Facebook.
+
+A bit later, on AnyComment website, we will have Privacy Policy template, which you may use to correct to your own and enable API easily.
 
 == Changelog ==
 
