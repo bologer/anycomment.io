@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-12 05:56+0000\n"
-"PO-Revision-Date: 2018-06-12 05:58+0000\n"
+"POT-Creation-Date: 2018-06-17 09:55+0000\n"
+"PO-Revision-Date: 2018-06-17 10:00+0000\n"
 "Last-Translator: Саша Тешабаев <sasha.tesh@gmail.com>\n"
 "Language-Team: Русский\n"
 "Language: ru_RU\n"
@@ -51,78 +51,82 @@ msgstr "Быстрый вход"
 msgid "Send"
 msgstr "Отправить"
 
-#: includes/class-ec-render.php:129
-msgid "No post ID specified"
-msgstr ""
-
-#: includes/class-ec-render.php:134
-#, php-format
-msgid "Unable to find post with ID #%s"
-msgstr ""
-
-#: includes/class-ec-render.php:154
-msgid "Wrong params passed"
-msgstr ""
-
-#: includes/class-ec-render.php:159
-msgid "No such post"
-msgstr ""
-
-#: includes/class-ec-render.php:169
-msgid "Reply comment does not belong to the post"
-msgstr ""
-
-#: includes/class-ec-render.php:174
-msgid "Reply comment can be max 2nd level"
-msgstr ""
-
-#: includes/class-ec-render.php:202
-msgid "Failed to add comment. Please, try again."
-msgstr ""
-
-#: includes/class-ec-render.php:222
-#, php-format
-msgid "%s Comments"
-msgstr "%s комментариев"
-
-#: includes/core-functions.php:56
-#: includes/admin/class-anycomment-settings-page-social.php:95
+#: includes/ac-core-functions.php:56
+#: includes/admin/class-ac-social-settings.php:102
 msgid "VK"
 msgstr "ВК"
 
-#: includes/core-functions.php:61
-#: includes/admin/class-anycomment-settings-page-social.php:142
+#: includes/ac-core-functions.php:61
+#: includes/admin/class-ac-social-settings.php:149
 msgid "Twitter"
 msgstr "Твиттер"
 
-#: includes/core-functions.php:66
-#: includes/admin/class-anycomment-settings-page-social.php:188
+#: includes/ac-core-functions.php:66
+#: includes/admin/class-ac-social-settings.php:195
 msgid "Facebook"
 msgstr "Facebook"
 
-#: includes/core-functions.php:71
+#: includes/ac-core-functions.php:71
 msgid "Google+"
 msgstr "Google"
 
-#: includes/core-functions.php:171 includes/core-functions.php:175
+#: includes/ac-core-functions.php:171 includes/ac-core-functions.php:175
 msgid "Unknown"
 msgstr "Аноним"
 
-#: includes/core-functions.php:238
+#: includes/ac-core-functions.php:238
 msgid "Load more"
 msgstr "Загрузить еще"
 
-#: includes/core-functions.php:258
+#: includes/ac-core-functions.php:258
 msgid "Reply"
 msgstr "Ответить"
 
-#: includes/core-functions.php:320
+#: includes/ac-core-functions.php:320
 msgid "No comments to display"
 msgstr "Пока еще не было комментариев"
 
-#: includes/core-functions.php:354
+#: includes/ac-core-functions.php:357
 msgid "Add Anycomment to your site"
 msgstr "Добавить AnyComment на свой сайт"
+
+#: includes/class-ac-render.php:132
+msgid "No post ID specified"
+msgstr "Не указано ID поста"
+
+#: includes/class-ac-render.php:137
+#, php-format
+msgid "Unable to find post with ID #%s"
+msgstr "Не возможно найти пост с ID #%s"
+
+#: includes/class-ac-render.php:155
+msgid "Login to add a comment"
+msgstr "Авторизуйтесь, чтобы добавить комментарий"
+
+#: includes/class-ac-render.php:164
+msgid "Wrong params passed"
+msgstr "Переданы неправильные параметры"
+
+#: includes/class-ac-render.php:169
+msgid "No such post"
+msgstr "Такой пост не существует"
+
+#: includes/class-ac-render.php:179
+msgid "Reply comment does not belong to the post"
+msgstr "Комментарий на который вы ответили не относится не к какому посту"
+
+#: includes/class-ac-render.php:184
+msgid "Reply comment can be max 2nd level"
+msgstr ""
+
+#: includes/class-ac-render.php:207
+msgid "Failed to add comment. Please, try again."
+msgstr "Ошибка добавления комментария. Пожалуйста попробуй чуть позже. "
+
+#: includes/class-ac-render.php:225
+#, php-format
+msgid "%s Comments"
+msgstr "%s комментариев"
 
 #: templates/admin/dashboard.php:7 templates/admin/dashboard.php:27
 msgid "Dashboard"
@@ -130,8 +134,7 @@ msgstr "Консоль"
 
 #. Name of the plugin
 #: templates/admin/dashboard.php:14 templates/admin/dashboard.php:15
-#: includes/admin/class-anycomment-pages.php:49
-#: includes/admin/class-anycomment-pages.php:50
+#: includes/admin/class-ac-pages.php:55 includes/admin/class-ac-pages.php:56
 msgid "AnyComment"
 msgstr "AnyComment"
 
@@ -144,6 +147,8 @@ msgid "Social"
 msgstr "Соц. сети"
 
 #: templates/admin/dashboard.php:29
+#: includes/admin/class-ac-generic-settings.php:70
+#: includes/admin/class-ac-generic-settings.php:71
 msgid "Settings"
 msgstr "Настройки"
 
@@ -159,54 +164,114 @@ msgstr "Все комментарии"
 msgid "Overal Statistics"
 msgstr "Общая статистика"
 
-#: templates/admin/dashboard.php:84
+#: templates/admin/dashboard.php:87
 msgid "Comments"
 msgstr "Комментарии"
 
-#: templates/admin/dashboard.php:95
+#: templates/admin/dashboard.php:98
 msgid "Users"
 msgstr "Пользователи"
 
-#: templates/admin/dashboard.php:143
+#: templates/admin/dashboard.php:141
 msgid "Most Active Users"
 msgstr "Активные пользователи"
 
-#: templates/admin/dashboard.php:155
+#: templates/admin/dashboard.php:153
 msgid "No users yet"
 msgstr "Данные пока что отсутствуют"
 
-#: includes/admin/class-anycomment-settings-page-social.php:78
-#: includes/admin/class-anycomment-settings-page-social.php:79
+#: includes/admin/class-ac-options.php:165
+msgid "Settings Saved"
+msgstr "Настройки сохранены"
+
+#: includes/admin/class-ac-options.php:176
+msgid "Save"
+msgstr "Сохранить"
+
+#: includes/admin/class-ac-generic-settings.php:85
+msgid "Generic"
+msgstr "Общие"
+
+#: includes/admin/class-ac-generic-settings.php:87
+msgid "Generic settings."
+msgstr "Общение настройки."
+
+#: includes/admin/class-ac-generic-settings.php:98
+msgid "Enable Comments"
+msgstr "Включить комментарии"
+
+#: includes/admin/class-ac-generic-settings.php:100
+msgid ""
+"Visible plugin or not. When off default comments of your website will be "
+"shown instead. Could be useful to configure comments first and then enable "
+"this option."
+msgstr ""
+"Видны комментарии или нет. Если нет, то комментарии которые у вас по "
+"умолчанию будут видны вместе AnyComment. Это может использоваться во время "
+"настройки плагина, чтобы не сбивать текущую активность на сайте."
+
+#: includes/admin/class-ac-generic-settings.php:104
+msgid "Theme"
+msgstr "Тема"
+
+#: includes/admin/class-ac-generic-settings.php:108
+msgid "Dark"
+msgstr "Темная (для светлых сайтов)"
+
+#: includes/admin/class-ac-generic-settings.php:109
+msgid "Light"
+msgstr "Светлая (для темных сайтов)"
+
+#: includes/admin/class-ac-generic-settings.php:112
+msgid "Choose theme of the comments."
+msgstr "Выберите тему для комментариев."
+
+#: includes/admin/class-ac-generic-settings.php:116
+msgid "Thanks"
+msgstr "Спасибо"
+
+#: includes/admin/class-ac-generic-settings.php:118
+msgid ""
+"Show AnyComment's link in the footer of comments. Copyright helps to bring "
+"awareness of such plugin and bring people to allow us to understand that it "
+"is a wanted product and give more often updated."
+msgstr ""
+"Показать ссылку на AnyComment's в подвале комментариев.  Копирайт помогает "
+"нам информировать о плагине и поддерживать дальнейшую разработку и "
+"усовершенствования."
+
+#: includes/admin/class-ac-social-settings.php:84
+#: includes/admin/class-ac-social-settings.php:85
 msgid "Social Settings"
 msgstr "Настройки соц-сетей"
 
-#: includes/admin/class-anycomment-settings-page-social.php:98
+#: includes/admin/class-ac-social-settings.php:105
 msgid "VK authorization settings."
 msgstr "ВК авторизация."
 
-#: includes/admin/class-anycomment-settings-page-social.php:102
-#: includes/admin/class-anycomment-settings-page-social.php:148
-#: includes/admin/class-anycomment-settings-page-social.php:194
-#: includes/admin/class-anycomment-settings-page-social.php:240
+#: includes/admin/class-ac-social-settings.php:109
+#: includes/admin/class-ac-social-settings.php:155
+#: includes/admin/class-ac-social-settings.php:201
+#: includes/admin/class-ac-social-settings.php:247
 msgid "Callback URL"
 msgstr "Callback URL"
 
-#: includes/admin/class-anycomment-settings-page-social.php:118
-#: includes/admin/class-anycomment-settings-page-social.php:164
-#: includes/admin/class-anycomment-settings-page-social.php:210
-#: includes/admin/class-anycomment-settings-page-social.php:256
+#: includes/admin/class-ac-social-settings.php:125
+#: includes/admin/class-ac-social-settings.php:171
+#: includes/admin/class-ac-social-settings.php:217
+#: includes/admin/class-ac-social-settings.php:263
 msgid "Enable"
 msgstr "Включить"
 
-#: includes/admin/class-anycomment-settings-page-social.php:120
+#: includes/admin/class-ac-social-settings.php:127
 msgid "Allow VK authorization"
 msgstr "Разрешить ВК авторизацию."
 
-#: includes/admin/class-anycomment-settings-page-social.php:124
+#: includes/admin/class-ac-social-settings.php:131
 msgid "Application ID"
 msgstr "ID приложения"
 
-#: includes/admin/class-anycomment-settings-page-social.php:126
+#: includes/admin/class-ac-social-settings.php:133
 #, php-format
 msgid ""
 "Enter app id. Can be found in <a href=\"%s\" target=\"_blank\">apps</a> page"
@@ -214,11 +279,11 @@ msgstr ""
 "Введите ID приложения. Его вы можете найти на странице <a href=\"%s\" "
 "target=\"_blank\">\"Мои приложения\"</a>."
 
-#: includes/admin/class-anycomment-settings-page-social.php:130
+#: includes/admin/class-ac-social-settings.php:137
 msgid "Secure key"
 msgstr "Защищённый ключ"
 
-#: includes/admin/class-anycomment-settings-page-social.php:132
+#: includes/admin/class-ac-social-settings.php:139
 #, php-format
 msgid ""
 "Enter secure key. Can be found in <a href=\"%s\" target=\"_blank\">apps</a> "
@@ -227,19 +292,19 @@ msgstr ""
 "Введите защищенный ключ. Его вы можете найти на странице <a href=\"%s\" "
 "target=\"_blank\">\"Мои приложения\"</a>."
 
-#: includes/admin/class-anycomment-settings-page-social.php:145
+#: includes/admin/class-ac-social-settings.php:152
 msgid "Twitter authorization settings."
 msgstr "Твиттер авторизация."
 
-#: includes/admin/class-anycomment-settings-page-social.php:166
+#: includes/admin/class-ac-social-settings.php:173
 msgid "Allow Twitter authorization"
 msgstr "Разрешить Твиттер авторизацию."
 
-#: includes/admin/class-anycomment-settings-page-social.php:170
+#: includes/admin/class-ac-social-settings.php:177
 msgid "Consumer Key"
 msgstr "Consumer Key"
 
-#: includes/admin/class-anycomment-settings-page-social.php:172
+#: includes/admin/class-ac-social-settings.php:179
 #, php-format
 msgid ""
 "Enter consumer key. Can be found in the list of <a href=\"%s\" "
@@ -248,11 +313,11 @@ msgstr ""
 "Введите consumer key. Мы можете найти его на странице  <a href=\"%s\" "
 "target=\"_blank\">ваших приложений</a>.\n"
 
-#: includes/admin/class-anycomment-settings-page-social.php:176
+#: includes/admin/class-ac-social-settings.php:183
 msgid "Consumer Secret"
 msgstr "Consumer Secret"
 
-#: includes/admin/class-anycomment-settings-page-social.php:178
+#: includes/admin/class-ac-social-settings.php:185
 #, php-format
 msgid ""
 "Enter consumer secret. Can be found in the list of <a href=\"%s\" "
@@ -261,19 +326,19 @@ msgstr ""
 "Введите consumer secret. Мы можете найти его на странице  <a href=\"%s\" "
 "target=\"_blank\">ваших приложений</a>.\n"
 
-#: includes/admin/class-anycomment-settings-page-social.php:191
+#: includes/admin/class-ac-social-settings.php:198
 msgid "Facebook authorization settings."
 msgstr "Facebook авторизация."
 
-#: includes/admin/class-anycomment-settings-page-social.php:212
+#: includes/admin/class-ac-social-settings.php:219
 msgid "Allow Facebook authorization"
 msgstr "Разрешить Facebook авторизацию."
 
-#: includes/admin/class-anycomment-settings-page-social.php:216
+#: includes/admin/class-ac-social-settings.php:223
 msgid "App ID"
 msgstr "Идентификатор приложения"
 
-#: includes/admin/class-anycomment-settings-page-social.php:218
+#: includes/admin/class-ac-social-settings.php:225
 #, php-format
 msgid ""
 "Enter app id. Can be found in the list of <a href=\"%s\" target=\"_blank\">"
@@ -282,11 +347,11 @@ msgstr ""
 "Введите идентификатор приложения. Может быть найдено на странице <a "
 "href=\"%s\" target=\"_blank\">моих приложений</a>"
 
-#: includes/admin/class-anycomment-settings-page-social.php:222
+#: includes/admin/class-ac-social-settings.php:229
 msgid "App Secret"
 msgstr "Секрет приложения"
 
-#: includes/admin/class-anycomment-settings-page-social.php:224
+#: includes/admin/class-ac-social-settings.php:231
 msgid ""
 "Enter app secret. Can be found in the list of <a href=\"%\" "
 "target=\"_blank\">apps</a>"
@@ -294,55 +359,43 @@ msgstr ""
 "Введите секрет приложения. Может быть найдено на странице <a href=\"%s\" "
 "target=\"_blank\">моих приложений</a>"
 
-#: includes/admin/class-anycomment-settings-page-social.php:234
+#: includes/admin/class-ac-social-settings.php:241
 msgid "Google"
 msgstr "Google"
 
-#: includes/admin/class-anycomment-settings-page-social.php:237
+#: includes/admin/class-ac-social-settings.php:244
 msgid "Google authorization settings."
 msgstr "Google авторизация."
 
-#: includes/admin/class-anycomment-settings-page-social.php:258
+#: includes/admin/class-ac-social-settings.php:265
 msgid "Allow Google authorization"
 msgstr "Разрешить Google авторизацию."
 
-#: includes/admin/class-anycomment-settings-page-social.php:262
+#: includes/admin/class-ac-social-settings.php:269
 msgid "Client ID"
-msgstr ""
+msgstr "ID клиента"
 
-#: includes/admin/class-anycomment-settings-page-social.php:264
+#: includes/admin/class-ac-social-settings.php:271
 #, php-format
 msgid ""
 "Enter client id. Can be found in the list of <a href=\"%s\" "
 "target=\"_blank\">apps</a>"
 msgstr ""
+"Введите ID клиента. Может быть найдено в списке ваших <a href=\"%s\" "
+"target=\"_blank\">приложений</a>"
 
-#: includes/admin/class-anycomment-settings-page-social.php:268
+#: includes/admin/class-ac-social-settings.php:275
 msgid "Client Secret"
-msgstr ""
+msgstr "Секретный ключ"
 
-#: includes/admin/class-anycomment-settings-page-social.php:270
+#: includes/admin/class-ac-social-settings.php:277
 #, php-format
 msgid ""
 "Enter client secret. Can be found in the list of <a href=\"%s\" "
 "target=\"_blank\">apps</a>"
 msgstr ""
-
-#: includes/admin/class-anycomment-settings-page-social.php:345
-msgid "Settings Saved"
-msgstr "Настройки сохранены"
-
-#: includes/admin/class-anycomment-settings-page-social.php:353
-msgid ""
-"On this page you may configure social authorization. If social is disabled, "
-"users will be unable to login with it."
-msgstr ""
-"На этой странице вы можете настроить авторизацию через социальные сети. Если "
-"социальная сеть отключена, пользователи не смогу авторизоваться через нее."
-
-#: includes/admin/class-anycomment-settings-page-social.php:358
-msgid "Save"
-msgstr "Сохранить"
+"Введите секретный ключ.  Может быть найдено в списке ваших <a href=\"%s\" "
+"target=\"_blank\">приложений</a>"
 
 #. Description of the plugin
 msgid "AnyComment is an advanced commenting system for WordPress."

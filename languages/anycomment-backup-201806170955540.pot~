@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-17 09:55+0000\n"
+"POT-Creation-Date: 2018-06-17 09:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -229,9 +229,9 @@ msgstr ""
 
 #: includes/admin/class-ac-generic-settings.php:118
 msgid ""
-"Show AnyComment's link in the footer of comments. Copyright helps to bring "
-"awareness of such plugin and bring people to allow us to understand that it "
-"is a wanted product and give more often updated."
+"Hide AnyComment's link from comments. Copyright helps to bring awareness of "
+"such plugin and bring people to allow us to understand that it is a wanted "
+"product and give more often updated."
 msgstr ""
 
 #: includes/admin/class-ac-social-settings.php:84
