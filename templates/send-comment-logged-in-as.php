@@ -2,6 +2,9 @@
 /**
  * Template is used to render "logged in as" part inside of send comment box.
  */
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
 return;
 ?>
 

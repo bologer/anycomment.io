@@ -2,6 +2,9 @@
 /**
  * Template is used to render send comment box.
  */
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
 
 $post = AnyComment()->getCurrentPost();
 ?>

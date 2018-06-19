@@ -3,6 +3,7 @@
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
+
 if (!class_exists('AC_Render')) :
     /**
      * AnyCommentRender helps to render comments on client side.

@@ -1,4 +1,7 @@
 <?php
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
 
 $active_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'anycomment-dashboard';
 ?>
