@@ -532,7 +532,7 @@ body {
           background-size: cover;
           background-repeat: no-repeat; }
         .anycomment-list .comment-single-avatar__img-auth-type.vk {
-          background-image: url("../img/social-auth-mini-vk.svg"); }
+          background-image: url("../img/social-auth-mini-vkontakte.svg"); }
         .anycomment-list .comment-single-avatar__img-auth-type.facebook {
           background-image: url("../img/social-auth-mini-facebook.svg"); }
         .anycomment-list .comment-single-avatar__img-auth-type.twitter {
@@ -648,5 +648,3 @@ body {
   display: block;
   height: 0;
   clear: both; }
-
-/*# sourceMappingURL=theme-light.css.map */
