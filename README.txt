@@ -19,7 +19,7 @@ You may connect your favorite social networks.
 
 Dark for light background websites, where as light for dark background ones.
 
-AnyComment stands for simplicity, so default comment have very simple UI, it will up to you what you add to it.
+AnyComment stands for simplicity, so default comment have very simple user interface, it is up to you what features to have.
 
 Ps. Comment will be actively supported and maintained. We would like to have your opinions on what is good and what could be improved. Thank you for sharing love with us!
 
@@ -74,7 +74,7 @@ Twitter is not that strict, and only does not provide email of the user when he 
 
 Current workaround is to copy some of the Privacy Policy from another website, correct it to you own, have public URL to it and specify it on Facebook.
 
-A bit later, on AnyComment website, we will have Privacy Policy template, which you may use to correct to your own and enable API easily.
+On the next release, special options will be enabled on plugin to have Privacy Policy URL out of the box! :)
 
 == Changelog ==
 
