@@ -10,11 +10,23 @@ if (!class_exists('AC_SocialAuth')) :
      */
     class AC_SocialAuth
     {
+        /**
+         * Different social types.
+         * Used for routing, images, etc.
+         */
         const SOCIAL_VK = 'vk';
         const SOCIAL_FACEBOOK = 'facebook';
         const SOCIAL_TWITTER = 'twitter';
         const SOCIAL_GOOGLE = 'google';
         const SOCIAL_OK = 'odnoklasniki';
+
+        /**
+         * Different providers.
+         */
+        const PROVIDER_GOOGLE = 'Google';
+        const PROVIDER_FACEBOOK = 'Facebook';
+        const PROVIDER_TWITTER = 'Twitter';
+        const PROVIDER_VKONTAKTE = 'Vkontakte';
 
         const META_SOCIAL_TYPE = 'anycomment_social';
         const META_SOCIAL_AVATAR = 'anycomment_social_avatar';
@@ -35,9 +47,9 @@ if (!class_exists('AC_SocialAuth')) :
         private $auth_twitter;
 
         /**
-         * @var Google_Client
+         * @var \Hybridauth\Hybridauth
          */
-        private $auth_google;
+        private $auth;
 
         protected static $rest_prefix = 'anycomment';
         protected static $rest_version = 'v1';
@@ -70,29 +82,6 @@ if (!class_exists('AC_SocialAuth')) :
                 ($consumerKey = AC_SocialSettings::getTwitterConsumerKey()) !== null &&
                 ($consumerSecret = AC_SocialSettings::getTwitterConsumerSecret()) !== null)
                 $this->auth_twitter = new \Abraham\TwitterOAuth\TwitterOAuth($consumerKey, $consumerSecret);
-
-
-            if (AC_SocialSettings::isFbOn() &&
-                ($appId = AC_SocialSettings::getFbAppId()) !== null &&
-                ($appSecret = AC_SocialSettings::getFbAppSecret()) !== null) {
-                try {
-                    $this->auth_facebook = new Facebook\Facebook([
-                        'app_id' => $appId,
-                        'app_secret' => $appSecret,
-                        'default_graph_version' => 'v2.10',
-                    ]);
-                } catch (\Facebook\Exceptions\FacebookSDKException $e) {
-
-                }
-            }
-
-            if (AC_SocialSettings::isGoogleOn() &&
-                ($clientId = AC_SocialSettings::getGoogleClientId()) !== null &&
-                ($clientSecretKey = AC_SocialSettings::getGoogleSecret()) !== null) {
-                $this->auth_google = new Google_Client();
-                $this->auth_google->setClientId($clientId);
-                $this->auth_google->setClientSecret($clientSecretKey);
-            }
         }
 
         /**
@@ -129,15 +118,15 @@ if (!class_exists('AC_SocialAuth')) :
             $redirect = $request->get_param('redirect');
             $social = $request->get_param('social');
 
-            if (empty($redirect)) {
-                wp_redirect('/');
-                exit();
-            }
-
             if (is_user_logged_in()) {
                 wp_redirect($redirect);
                 exit();
             }
+
+            $this->prepare_auth();
+
+
+            session_start();
 
             switch ($social):
                 case self::SOCIAL_VK:
@@ -155,8 +144,44 @@ if (!class_exists('AC_SocialAuth')) :
                 default:
             endswitch;
 
+            session_destroy();
+
             wp_redirect($redirect);
             exit();
+        }
+
+        private function prepare_auth()
+        {
+            $config = [
+                'providers' => [
+                    self::PROVIDER_VKONTAKTE => [
+                        'enabled' => AC_SocialSettings::isVkOn(),
+                        'keys' => ['id' => AC_SocialSettings::getVkAppId(), 'secret' => AC_SocialSettings::getVkSecureKey()],
+                        'callback' => static::get_vk_callback(),
+                    ],
+                    self::PROVIDER_GOOGLE => [
+                        'enabled' => AC_SocialSettings::isGoogleOn(),
+                        'keys' => ['id' => AC_SocialSettings::getGoogleClientId(), 'secret' => AC_SocialSettings::getGoogleSecret()],
+                        'scope' => 'profile https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.profile.emails.read',
+                        'callback' => static::get_google_callback(),
+                    ],
+                    self::PROVIDER_FACEBOOK => [
+                        'enabled' => AC_SocialSettings::isFbOn(),
+                        'keys' => ['id' => AC_SocialSettings::getFbAppId(), 'secret' => AC_SocialSettings::getFbAppSecret()],
+                        'callback' => static::get_facebook_callback(),
+                    ],
+                    self::PROVIDER_TWITTER => [
+                        'enabled' => AC_SocialSettings::isTwitterOn(),
+                        'keys' => ['key' => '', 'secret' => ''],
+                        'callback' => static::get_twitter_callback(),
+                    ]
+                ],
+            ];
+
+            try {
+                $this->auth = new \Hybridauth\Hybridauth($config);
+            } catch (\Exception $exception) {
+            }
         }
 
         /**
@@ -223,48 +248,37 @@ if (!class_exists('AC_SocialAuth')) :
          */
         private function process_auth_google(WP_REST_Request $request, $redirect = null, $cookie_redirect = 'post_redirect')
         {
-            $google_rest_url = static::get_google_callback();
-
-
             if ($redirect !== null) {
                 setcookie($cookie_redirect, $redirect, time() + 3600);
             }
 
-            $client = $this->auth_google;
-            $client->setRedirectUri($google_rest_url);
+            try {
+                $adapter = $this->auth->authenticate('Google');
 
-            if ($request->get_param('code') === null) {
-                wp_redirect($client->createAuthUrl([
-                    Google_Service_Plus::PLUS_ME,
-                    Google_Service_Plus::USERINFO_EMAIL,
-                    Google_Service_Plus::USERINFO_PROFILE
-                ]));
-                exit();
-            } else {
+                $tokens = $adapter->getAccessToken();
 
-                $redirect = $_COOKIE[$cookie_redirect];
+                /**
+                 * @var $user \Hybridauth\User\Profile
+                 */
+                $user = $adapter->getUserProfile();
 
-                $client->setRedirectUri($google_rest_url);
-                $client->fetchAccessTokenWithAuthCode($request->get_param('code'));
+                $redirect = isset($_COOKIE[$cookie_redirect]) ? $_COOKIE[$cookie_redirect] : '/';
 
-                $googlePlus = new Google_Service_Plus($client);
 
-                $user = $googlePlus->people->get('me');
-
-                if (!$user instanceof Google_Service_Plus_Person) {
+                if (!$user instanceof \Hybridauth\User\Profile) {
                     wp_redirect($redirect);
                     exit();
                 }
 
-                $email = isset($user->getEmails()[0]) && !empty($user->getEmails()[0]->getValue()) ?
-                    $user->getEmails()[0]->getValue() :
+                $email = isset($user->email) && !empty($user->email) ?
+                    $user->email :
                     null;
 
                 $userdata = [
-                    'user_login' => $user->getId(),
-                    'display_name' => $user->getDisplayName(),
-                    'user_nicename' => $user->getNickname() !== null ? $user->getNickname() : $user->getName()->getGivenName(),
-                    'user_url' => $user->getUrl()
+                    'user_login' => $user->identifier,
+                    'display_name' => $user->displayName,
+                    'user_nicename' => $user->firstName,
+                    'user_url' => $user->profileURL
                 ];
 
 
@@ -275,17 +289,20 @@ if (!class_exists('AC_SocialAuth')) :
                 $searchBy = $email !== null ? 'email' : 'login';
                 $searchValue = $email !== null ? $email : $userdata['user_login'];
 
-                $this->auth_user(
+                $res = $this->auth_user(
                     self::SOCIAL_GOOGLE,
                     $searchBy,
                     $searchValue,
                     $userdata,
-                    ['anycomment_social_avatar' => $user->getImage()->getUrl()]
+                    ['anycomment_social_avatar' => $user->photoURL]
                 );
-
-                wp_redirect($redirect);
-                exit();
+            } catch (Exception $e) {
+                echo $e->getMessage();
+                die();
             }
+
+            wp_redirect($redirect);
+            exit();
         }
 
         /**
@@ -297,7 +314,6 @@ if (!class_exists('AC_SocialAuth')) :
          */
         private function process_auth_facebook(WP_REST_Request $request, $redirect = null, $cookie_redirect = 'post_redirect')
         {
-            $helper = $this->auth_facebook->getRedirectLoginHelper();
             $facebook_rest_url = static::get_facebook_callback();
 
             if ($redirect !== null) {
