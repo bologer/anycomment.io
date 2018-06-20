@@ -14,37 +14,14 @@ if (!class_exists('AC_SocialAuth')) :
          * Different social types.
          * Used for routing, images, etc.
          */
-        const SOCIAL_VK = 'vk';
+        const SOCIAL_VKONTAKTE = 'vkontakte';
         const SOCIAL_FACEBOOK = 'facebook';
         const SOCIAL_TWITTER = 'twitter';
         const SOCIAL_GOOGLE = 'google';
-        const SOCIAL_OK = 'odnoklasniki';
-
-        /**
-         * Different providers.
-         */
-        const PROVIDER_GOOGLE = 'Google';
-        const PROVIDER_FACEBOOK = 'Facebook';
-        const PROVIDER_TWITTER = 'Twitter';
-        const PROVIDER_VKONTAKTE = 'Vkontakte';
+        const SOCIAL_ODNOKLASSNIKI = 'odnoklassniki';
 
         const META_SOCIAL_TYPE = 'anycomment_social';
         const META_SOCIAL_AVATAR = 'anycomment_social_avatar';
-
-        /**
-         * @var \VK\VK
-         */
-        private $auth_vk;
-
-        /**
-         * @var \Facebook\Facebook
-         */
-        private $auth_facebook;
-
-        /**
-         * @var \Abraham\TwitterOAuth\TwitterOAuth
-         */
-        private $auth_twitter;
 
         /**
          * @var \Hybridauth\Hybridauth
@@ -59,29 +36,7 @@ if (!class_exists('AC_SocialAuth')) :
          */
         public function __construct()
         {
-            $this->init_socials();
             $this->init_rest_route();
-        }
-
-        /**
-         * Init socials with secrets and app IDs.
-         */
-        public function init_socials()
-        {
-            if (AC_SocialSettings::isVkOn() &&
-                ($appId = AC_SocialSettings::getVkAppId()) !== null &&
-                ($secureKey = AC_SocialSettings::getVkSecureKey()) !== null) {
-                try {
-                    $this->auth_vk = new \VK\VK($appId, $secureKey);
-                } catch (\VK\VKException $exception) {
-
-                }
-            }
-
-            if (AC_SocialSettings::isTwitterOn() &&
-                ($consumerKey = AC_SocialSettings::getTwitterConsumerKey()) !== null &&
-                ($consumerSecret = AC_SocialSettings::getTwitterConsumerSecret()) !== null)
-                $this->auth_twitter = new \Abraham\TwitterOAuth\TwitterOAuth($consumerKey, $consumerSecret);
         }
 
         /**
@@ -117,71 +72,100 @@ if (!class_exists('AC_SocialAuth')) :
         {
             $redirect = $request->get_param('redirect');
             $social = $request->get_param('social');
+            $cookie_redirect = 'post_redirect';
 
-            if (is_user_logged_in()) {
+            if (!static::social_exists($social) || is_user_logged_in()) {
                 wp_redirect($redirect);
                 exit();
             }
 
-            $this->prepare_auth();
+            if ($redirect !== null) {
+                setcookie($cookie_redirect, $redirect, time() + 3600);
+            } else {
+                $redirect = isset($_COOKIE[$cookie_redirect]) ? $_COOKIE[$cookie_redirect] : '/';
+            }
+
+            try {
+                $adapter = $this->prepare_auth()
+                    ->authenticate(ucfirst($social));
+            } catch (\Throwable $exception) {
+                wp_redirect($redirect);
+                exit();
+            }
+
+            $tokens = $adapter->getAccessToken();
+
+            $user = $adapter->getUserProfile();
 
 
-            session_start();
+            if (!$user instanceof \Hybridauth\User\Profile) {
+                wp_redirect($redirect);
+                exit();
+            }
 
-            switch ($social):
-                case self::SOCIAL_VK:
-                    $this->process_auth_vk($request, $redirect);
-                    break;
-                case self::SOCIAL_FACEBOOK:
-                    $this->process_auth_facebook($request, $redirect);
-                    break;
-                case self::SOCIAL_TWITTER:
-                    $this->process_auth_twitter($request, $redirect);
-                    break;
-                case self::SOCIAL_GOOGLE:
-                    $this->process_auth_google($request, $redirect);
-                    break;
-                default:
-            endswitch;
 
-            session_destroy();
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
+
+            $this->process_authentication($user, $social);
+
+            if (session_status() == PHP_SESSION_ACTIVE) {
+                session_destroy();
+            }
 
             wp_redirect($redirect);
             exit();
         }
 
+        /**
+         * Check whether social exists or not.
+         *
+         * @param string $social Social name. Example: vkontakte. Name will be uppercased.
+         * @return bool
+         */
+        public static function social_exists($social)
+        {
+            return constant(sprintf('self::SOCIAL_%s', strtoupper($social))) !== null;
+        }
+
+        /**
+         * Prepare authentication.
+         * @throws \Hybridauth\Exception\InvalidArgumentException on failure.
+         * @return \Hybridauth\Hybridauth
+         */
         private function prepare_auth()
         {
             $config = [
                 'providers' => [
-                    self::PROVIDER_VKONTAKTE => [
+                    self::SOCIAL_VKONTAKTE => [
                         'enabled' => AC_SocialSettings::isVkOn(),
                         'keys' => ['id' => AC_SocialSettings::getVkAppId(), 'secret' => AC_SocialSettings::getVkSecureKey()],
                         'callback' => static::get_vk_callback(),
                     ],
-                    self::PROVIDER_GOOGLE => [
+                    self::SOCIAL_GOOGLE => [
                         'enabled' => AC_SocialSettings::isGoogleOn(),
                         'keys' => ['id' => AC_SocialSettings::getGoogleClientId(), 'secret' => AC_SocialSettings::getGoogleSecret()],
                         'scope' => 'profile https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.profile.emails.read',
                         'callback' => static::get_google_callback(),
                     ],
-                    self::PROVIDER_FACEBOOK => [
+                    self::SOCIAL_FACEBOOK => [
                         'enabled' => AC_SocialSettings::isFbOn(),
+                        'scope' => 'email, public_profile',
                         'keys' => ['id' => AC_SocialSettings::getFbAppId(), 'secret' => AC_SocialSettings::getFbAppSecret()],
                         'callback' => static::get_facebook_callback(),
                     ],
-                    self::PROVIDER_TWITTER => [
+                    self::SOCIAL_TWITTER => [
                         'enabled' => AC_SocialSettings::isTwitterOn(),
-                        'keys' => ['key' => '', 'secret' => ''],
+                        'keys' => ['key' => AC_SocialSettings::getTwitterConsumerKey(), 'secret' => AC_SocialSettings::getTwitterConsumerSecret()],
                         'callback' => static::get_twitter_callback(),
                     ]
                 ],
             ];
 
-            try {
-                $this->auth = new \Hybridauth\Hybridauth($config);
-            } catch (\Exception $exception) {
-            }
+            $this->auth = new \Hybridauth\Hybridauth($config);
+
+            return $this->auth;
         }
 
         /**
@@ -191,7 +175,7 @@ if (!class_exists('AC_SocialAuth')) :
          */
         public static function get_vk_callback($redirect = null)
         {
-            return static::get_callback_url(self::SOCIAL_VK, $redirect);
+            return static::get_callback_url(self::SOCIAL_VKONTAKTE, $redirect);
         }
 
         /**
@@ -242,277 +226,37 @@ if (!class_exists('AC_SocialAuth')) :
 
         /**
          * Process Google authorization.
-         * @param WP_REST_Request $request
-         * @param null|string $redirect URL to redirect on success or failure of authentication.
-         * @param string $cookie_redirect Cookie used to keep redirect URL.
+         * @param \Hybridauth\User\Profile $user User to be processed.
+         * @param string $social Social name.
+         * @return bool False on failure.
          */
-        private function process_auth_google(WP_REST_Request $request, $redirect = null, $cookie_redirect = 'post_redirect')
+        private function process_authentication(Hybridauth\User\Profile $user, $social)
         {
-            if ($redirect !== null) {
-                setcookie($cookie_redirect, $redirect, time() + 3600);
+            $email = isset($user->email) && !empty($user->email) ?
+                $user->email :
+                null;
+
+            $userdata = [
+                'user_login' => $user->identifier,
+                'display_name' => $user->displayName,
+                'user_nicename' => $user->firstName,
+                'user_url' => $user->profileURL
+            ];
+
+            if ($email !== null) {
+                $userdata['user_email'] = $email;
             }
 
-            try {
-                $adapter = $this->auth->authenticate('Google');
+            $searchBy = $email !== null ? 'email' : 'login';
+            $searchValue = $email !== null ? $email : $userdata['user_login'];
 
-                $tokens = $adapter->getAccessToken();
-
-                /**
-                 * @var $user \Hybridauth\User\Profile
-                 */
-                $user = $adapter->getUserProfile();
-
-                $redirect = isset($_COOKIE[$cookie_redirect]) ? $_COOKIE[$cookie_redirect] : '/';
-
-
-                if (!$user instanceof \Hybridauth\User\Profile) {
-                    wp_redirect($redirect);
-                    exit();
-                }
-
-                $email = isset($user->email) && !empty($user->email) ?
-                    $user->email :
-                    null;
-
-                $userdata = [
-                    'user_login' => $user->identifier,
-                    'display_name' => $user->displayName,
-                    'user_nicename' => $user->firstName,
-                    'user_url' => $user->profileURL
-                ];
-
-
-                if ($email !== null) {
-                    $userdata['user_email'] = $email;
-                }
-
-                $searchBy = $email !== null ? 'email' : 'login';
-                $searchValue = $email !== null ? $email : $userdata['user_login'];
-
-                $res = $this->auth_user(
-                    self::SOCIAL_GOOGLE,
-                    $searchBy,
-                    $searchValue,
-                    $userdata,
-                    ['anycomment_social_avatar' => $user->photoURL]
-                );
-            } catch (Exception $e) {
-                echo $e->getMessage();
-                die();
-            }
-
-            wp_redirect($redirect);
-            exit();
-        }
-
-        /**
-         * Process Facebook authorization.
-         *
-         * @param WP_REST_Request $request
-         * @param null|string $redirect URL to redirect on success or failure of authentication.
-         * @param string $cookie_redirect Cookie used to keeps redirect URL.
-         */
-        private function process_auth_facebook(WP_REST_Request $request, $redirect = null, $cookie_redirect = 'post_redirect')
-        {
-            $facebook_rest_url = static::get_facebook_callback();
-
-            if ($redirect !== null) {
-                setcookie($cookie_redirect, $redirect, time() + 3600);
-            }
-
-            if ($request->get_param('code') === null) {
-                $loginUrl = $helper->getLoginUrl($facebook_rest_url, ['email']);
-                wp_redirect($loginUrl);
-                exit();
-            } else {
-
-                $redirect = $_COOKIE[$cookie_redirect];
-
-                $helper->getPersistentDataHandler()->set('state', $_GET['state']);
-
-                try {
-                    $accessToken = $helper->getAccessToken();
-                } catch (Facebook\Exceptions\FacebookSDKException $e) {
-                    wp_redirect($redirect);
-                    exit;
-                }
-
-                if (!isset($accessToken) || empty($accessToken)) {
-                    wp_redirect($redirect);
-                    exit;
-                }
-
-                try {
-                    $response = $this->auth_facebook->get('/me?fields=id,first_name,last_name,picture', $accessToken);
-
-                    $user = $response->getGraphUser();
-                } catch (\Facebook\Exceptions\FacebookSDKException $exception) {
-                    wp_redirect($redirect);
-                    exit();
-                }
-
-                $this->auth_user(
-                    self::SOCIAL_FACEBOOK,
-                    'login',
-                    $user->getId(),
-                    [
-                        'user_login' => $user->getId(),
-                        'display_name' => $user->getFirstName() . ' ' . $user->getLastName(),
-                        'user_nicename' => $user->getFirstName(),
-                    ],
-                    ['anycomment_social_avatar' => $user->getPicture()->getUrl()]
-                );
-
-                wp_redirect($redirect);
-                exit();
-            }
-        }
-
-
-        /**
-         * Process Twitter authorization.
-         *
-         * @param WP_REST_Request $request
-         * @param string|null $redirect URL to redirect on success or failure of authentication.
-         */
-        private function process_auth_twitter(WP_REST_Request $request, $redirect = null)
-        {
-            if ($request->get_param('oauth_token') === null && $request->get_param('oauth_verifier') === null) {
-                $twitter_rest_url = static::get_twitter_callback($redirect);
-
-                try {
-                    $request_token = $this->auth_twitter->oauth('oauth/request_token', ['oauth_callback' => $twitter_rest_url]);
-                } catch (\Abraham\TwitterOAuth\TwitterOAuthException $exception) {
-                    wp_redirect($redirect);
-                    exit();
-                }
-
-                $url = $this->auth_twitter->url('oauth/authorize', ['oauth_token' => $request_token['oauth_token']]);
-
-                wp_redirect($url);
-                exit();
-            } else {
-                $oauthToken = $request->get_param('oauth_token');
-                $oauthVerifier = $request->get_param('oauth_verifier');
-
-                try {
-                    $this->auth_twitter = new \Abraham\TwitterOAuth\TwitterOAuth(
-                        AC_SocialSettings::getTwitterConsumerKey(),
-                        AC_SocialSettings::getTwitterConsumerSecret(),
-                        $oauthToken,
-                        $oauthVerifier
-                    );
-
-                    $access_token = $this->auth_twitter->oauth("oauth/access_token", ["oauth_verifier" => $oauthVerifier]);
-                } catch (\Abraham\TwitterOAuth\TwitterOAuthException $exception) {
-
-                    wp_redirect($redirect);
-                    exit();
-                }
-
-                $this->auth_twitter = new \Abraham\TwitterOAuth\TwitterOAuth(
-                    AC_SocialSettings::getTwitterConsumerKey(),
-                    AC_SocialSettings::getTwitterConsumerSecret(),
-                    $access_token['oauth_token'],
-                    $access_token['oauth_token_secret']
-                );
-
-                $user = $this->auth_twitter->get('account/verify_credentials', ['tweet_mode' => 'extended', 'include_entities' => 'true']);
-
-                if (!is_object($user)) {
-                    wp_redirect($redirect);
-                    exit();
-                }
-
-                $fields = [];
-                $fields['id'] = $user->id;
-
-                if (isset($user->email)) {
-                    $fields['user_email'] = $user->email;
-                }
-
-                $fields['user_login'] = $user->id_str;
-                $fields['display_name'] = $user->name;
-                $fields['user_nicename'] = $user->name;
-
-                $this->auth_user(
-                    self::SOCIAL_TWITTER,
-                    'login',
-                    $user->id_str,
-                    $fields,
-                    // Margin to get bigger size avatar
-                    // https://developer.twitter.com/en/docs/accounts-and-users/manage-account-settings/api-reference/get-account-verify_credentials.html
-                    ['anycomment_social_avatar' => str_replace('_normal.jpg', '_bigger.jpg', $user->profile_image_url_https)]
-                );
-
-                wp_redirect($redirect);
-                exit();
-            }
-        }
-
-        /**
-         * Process VK authorization.
-         *
-         * @param WP_REST_Request $request
-         * @param null|string $redirect URL to redirect on success or failure of authentication.
-         */
-        private function process_auth_vk(WP_REST_Request $request, $redirect = null)
-        {
-            $vk_rest_url = static::get_vk_callback($redirect);
-
-            if ($request->get_param('code') === null) {
-                $url = $this->auth_vk->getAuthorizeURL('email', $vk_rest_url);
-                wp_redirect($url);
-                exit();
-            } else {
-                try {
-                    $access_token = $this->auth_vk->getAccessToken($request->get_param('code'), $vk_rest_url);
-                } catch (\VK\VKException $exception) {
-                    wp_redirect($redirect);
-                    exit();
-                }
-
-                $user_info = $this->auth_vk->api('users.get', [
-                    'user_id' => $access_token['user_id'],
-                    'fields' => 'first_name,last_name,deactivated,sex,photo_50,photo_100',
-                    'v' => 5.78
-                ]);
-
-                if (!isset($user_info['response'])) {
-                    wp_redirect($redirect);
-                    exit();
-                }
-
-                $vkUser = array_merge($access_token, $user_info['response'][0]);
-
-                if (empty($vkUser)) {
-                    wp_redirect($redirect);
-                    exit();
-                }
-
-                $searchField = isset($vkUser['email']) ? 'email' : 'login';
-                $searchValue = isset($vkUser['email']) ? $vkUser['email'] : $vkUser['user_id'];
-
-                $this->auth_user(
-                    self::SOCIAL_VK,
-                    $searchField,
-                    $searchValue,
-                    [
-                        'user_login' => $vkUser['user_id'],
-                        'user_email' => $vkUser['email'],
-                        'display_name' => trim($vkUser['first_name'] . ' ' . $vkUser['last_name']),
-                        'user_nicename' => empty($vkUser['first_name']) ? $vkUser['user_id'] : $vkUser['first_name'],
-                        'user_url' => 'https://vk.com/id' . $vkUser['user_id']
-                    ],
-                    [
-                        'anycomment_social_avatar' => $vkUser['photo_50'],
-                        'anycomment_social_vk_sex' => $vkUser['sex'],
-                    ]
-                );
-
-                wp_redirect($redirect);
-                exit();
-            }
+            return $this->auth_user(
+                $social,
+                $searchBy,
+                $searchValue,
+                $userdata,
+                ['anycomment_social_avatar' => $user->photoURL]
+            );
         }
 
         /**

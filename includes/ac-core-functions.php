@@ -54,8 +54,8 @@ if (!function_exists('anycomment_login_with')):
     function anycomment_login_with($redirectUrl = null)
     {
         $socials = [
-            AC_SocialAuth::SOCIAL_VK => [
-                'url' => AC_SocialAuth::get_callback_url(AC_SocialAuth::SOCIAL_VK, $redirectUrl),
+            AC_SocialAuth::SOCIAL_VKONTAKTE => [
+                'url' => AC_SocialAuth::get_callback_url(AC_SocialAuth::SOCIAL_VKONTAKTE, $redirectUrl),
                 'label' => __('VK', "anycomment"),
                 'visible' => AC_SocialSettings::isVkOn()
             ],

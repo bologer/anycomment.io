@@ -212,9 +212,6 @@ if (!class_exists('AnyComment')) :
             include_once(ANY_COMMENT_ABSPATH . 'includes/admin/class-ac-social-settings.php');
 
 
-
-            include_once(ANY_COMMENT_ABSPATH . 'includes/hybridauth/src/autoload.php');
-
             /**
              * Authentication social libraries
              */
@@ -234,6 +231,9 @@ if (!class_exists('AnyComment')) :
                 include_once(ANY_COMMENT_ABSPATH . 'includes/api/facebook/src/Facebook/autoload.php'); // Facebook
             }
 
+            if (!class_exists('Hybridauth')) {
+                include_once(ANY_COMMENT_ABSPATH . 'includes/hybridauth/src/autoload.php');
+            }
 
             $this->render = new AC_Render();
             $this->admin_pages = new AC_AdminPages();
