@@ -212,25 +212,6 @@ if (!class_exists('AnyComment')) :
             include_once(ANY_COMMENT_ABSPATH . 'includes/admin/class-ac-social-settings.php');
 
 
-            /**
-             * Authentication social libraries
-             */
-
-            if (AC_SocialSettings::isVkOn()) {
-                // VK
-                include_once(ANY_COMMENT_ABSPATH . 'includes/api/vk/src/VK/VK.php');
-                include_once(ANY_COMMENT_ABSPATH . 'includes/api/vk/src/VK/VKException.php');
-            }
-
-
-            if (AC_SocialSettings::isTwitterOn()) {
-                include_once(ANY_COMMENT_ABSPATH . 'includes/api/twitter/autoload.php'); //// Twitter
-            }
-
-            if (AC_SocialSettings::isFbOn()) {
-                include_once(ANY_COMMENT_ABSPATH . 'includes/api/facebook/src/Facebook/autoload.php'); // Facebook
-            }
-
             if (!class_exists('Hybridauth')) {
                 include_once(ANY_COMMENT_ABSPATH . 'includes/hybridauth/src/autoload.php');
             }
