@@ -212,6 +212,9 @@ if (!class_exists('AnyComment')) :
             include_once(ANY_COMMENT_ABSPATH . 'includes/admin/class-ac-social-settings.php');
 
 
+
+            include_once(ANY_COMMENT_ABSPATH . 'includes/hybridauth/src/autoload.php');
+
             /**
              * Authentication social libraries
              */
@@ -229,10 +232,6 @@ if (!class_exists('AnyComment')) :
 
             if (AC_SocialSettings::isFbOn()) {
                 include_once(ANY_COMMENT_ABSPATH . 'includes/api/facebook/src/Facebook/autoload.php'); // Facebook
-            }
-
-            if (AC_SocialSettings::isGoogleOn()) {
-                include_once(ANY_COMMENT_ABSPATH . 'includes/api/google/vendor/autoload.php'); // Google
             }
 
 
