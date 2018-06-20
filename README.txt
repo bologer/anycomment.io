@@ -79,7 +79,7 @@ A bit later, on AnyComment website, we will have Privacy Policy template, which 
 == Changelog ==
 
 = 0.0.1 =
-* Release Date – 21 June, 2018
+* Release Date – June 21, 2018
 * Options to specify API details (secrets, etc) for social authorization: Vk, Twitter, Facebook, Google
 * Integrated with [WP User Avatar](https://wordpress.org/plugins/wp-user-avatar/)
 * Authorize via VK, Twitter, Facebook, Google
