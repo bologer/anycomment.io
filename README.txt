@@ -1,7 +1,9 @@
 === AnyComment ===
+Contributors: ateshabaev
 Tags: anycomment, comments, comment moderation, anycomment.io
-Requires at least: 3.7
+Requires at least: 4.7
 Tested up to: 4.9.6
+Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/
 
@@ -22,6 +24,10 @@ Dark for light background websites, where as light for dark background ones.
 AnyComment stands for simplicity, so default comment have very simple user interface, it is up to you what features to have.
 
 Ps. Comment will be actively supported and maintained. We would like to have your opinions on what is good and what could be improved. Thank you for sharing love with us!
+
+= Can I contribute? =
+
+Yes! Join our [GitHub repository](https://github.com/bologer/anycomment.io) :)
 
 
 Major features of AnyComment include:
@@ -51,6 +57,11 @@ Todo features:
 * More statistics and analytics regarding comments...
 * And a lot more...
 
+== Screenshots ==
+
+1. For light-colored websites.
+2. For dark-colored websites.
+3. Main plugin dashboard.
 
 == Frequently Asked Questions ==
 
