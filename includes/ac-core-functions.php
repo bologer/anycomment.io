@@ -74,6 +74,11 @@ if (!function_exists('anycomment_login_with')):
                 'label' => __('Google+', "anycomment"),
                 'visible' => AC_SocialSettings::isGoogleOn()
             ],
+            AC_SocialAuth::SOCIAL_GITHUB => [
+                'url' => AC_SocialAuth::get_callback_url(AC_SocialAuth::SOCIAL_GITHUB, $redirectUrl),
+                'label' => __('Github', "anycomment"),
+                'visible' => AC_SocialSettings::isGithubOn()
+            ],
         ];
 
         if (count($socials) <= 0) {

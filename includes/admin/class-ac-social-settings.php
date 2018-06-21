@@ -51,6 +51,13 @@ if (!class_exists('AC_SocialSettings')) :
         const OPTION_GOOGLE_CLIENT_ID = 'social_google_client_id_field';
         const OPTION_GOOGLE_SECRET = 'social_google_secret_field';
 
+        /**
+         * Github Options
+         */
+        const OPTION_GITHUB_TOGGLE = 'social_github_toggle_field';
+        const OPTION_GITHUB_CLIENT_ID = 'social_github_app_id_field';
+        const OPTION_GITHUB_SECRET = 'social_github_app_secret_field';
+
 
         /**
          * AC_SocialSettingPage constructor.
@@ -278,6 +285,52 @@ if (!class_exists('AC_SocialSettings')) :
                     ]
                 ]
             );
+
+            /**
+             * Google
+             */
+            add_settings_section(
+                'section_github',
+                __('Github', "anycomment"),
+                function () {
+                    ?>
+                    <p><?= __('Github authorization settings.', "anycomment") ?></p>
+                    <table class="form-table">
+                        <tr>
+                            <th><label for="github-callback"><?= __('Callback URL', 'anycomment') ?></label></th>
+                            <td><input type="text" id="github-callback" onclick="this.select()" readonly="readonly"
+                                       value="<?= AC_SocialAuth::get_github_callback() ?>"></td>
+                        </tr>
+                    </table>
+                    <?php
+                },
+                $this->page_slug
+            );
+
+            $this->render_fields(
+                $this->page_slug,
+                'section_github',
+                [
+                    [
+                        'id' => self::OPTION_GITHUB_TOGGLE,
+                        'title' => __('Enable', "anycomment"),
+                        'callback' => 'input_checkbox',
+                        'description' => __('Allow GitHub authorization', "anycomment")
+                    ],
+                    [
+                        'id' => self::OPTION_GITHUB_CLIENT_ID,
+                        'title' => __('Client ID', "anycomment"),
+                        'callback' => 'input_text',
+                        'description' => sprintf(__('Enter client id. Can be found in the list of <a href="%s" target="_blank">apps</a>', "anycomment"), 'https://github.com/settings/developers')
+                    ],
+                    [
+                        'id' => self::OPTION_GITHUB_SECRET,
+                        'title' => __('Client Secret', "anycomment"),
+                        'callback' => 'input_text',
+                        'description' => sprintf(__('Enter client secret. Can be found in the list of <a href="%s" target="_blank">apps</a>', "anycomment"), 'https://github.com/settings/developers')
+                    ]
+                ]
+            );
         }
 
         /**
@@ -307,6 +360,32 @@ if (!class_exists('AC_SocialSettings')) :
             return static::instance()->getOption(self::OPTION_VK_SECRET);
         }
 
+        /**
+         * Check whether GitHub social is on.
+         * @return bool
+         */
+        public static function isGithubOn()
+        {
+            return static::instance()->getOption(self::OPTION_GITHUB_TOGGLE) !== null;
+        }
+
+        /**
+         * Get GitHub client ID.
+         * @return int|null
+         */
+        public static function getGithubClientId()
+        {
+            return static::instance()->getOption(self::OPTION_GITHUB_CLIENT_ID);
+        }
+
+        /**
+         * Get GitHub secret key.
+         * @return string|null
+         */
+        public static function getGithubSecretKey()
+        {
+            return static::instance()->getOption(self::OPTION_GITHUB_SECRET);
+        }
 
         /**
          * Check whether Twitter is on.

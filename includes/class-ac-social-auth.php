@@ -18,6 +18,7 @@ if (!class_exists('AC_SocialAuth')) :
         const SOCIAL_FACEBOOK = 'facebook';
         const SOCIAL_TWITTER = 'twitter';
         const SOCIAL_GOOGLE = 'google';
+        const SOCIAL_GITHUB = 'github';
         const SOCIAL_ODNOKLASSNIKI = 'odnoklassniki';
 
         const META_SOCIAL_TYPE = 'anycomment_social';
@@ -159,6 +160,10 @@ if (!class_exists('AC_SocialAuth')) :
                         'enabled' => AC_SocialSettings::isTwitterOn(),
                         'keys' => ['key' => AC_SocialSettings::getTwitterConsumerKey(), 'secret' => AC_SocialSettings::getTwitterConsumerSecret()],
                         'callback' => static::get_twitter_callback(),
+                    ],
+                    self::SOCIAL_GITHUB => [
+                        'enabled' => AC_SocialSettings::isGithubOn(),
+                        'keys' => ['id' => AC_SocialSettings::getGithubClientId(), 'secret' => AC_SocialSettings::getGithubSecretKey()]
                     ]
                 ],
             ];
@@ -186,6 +191,16 @@ if (!class_exists('AC_SocialAuth')) :
         public static function get_google_callback($redirect = null)
         {
             return static::get_callback_url(self::SOCIAL_GOOGLE, $redirect);
+        }
+
+        /**
+         * Get Github callback URL.
+         * @param null|string $redirect Redirect URL added to the link.
+         * @return string
+         */
+        public static function get_github_callback($redirect = null)
+        {
+            return static::get_callback_url(self::SOCIAL_GITHUB, $redirect);
         }
 
         /**

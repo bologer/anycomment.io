@@ -89,7 +89,11 @@ On the next release, special options will be enabled on plugin to have Privacy P
 
 == Changelog ==
 
-= 0.0.1 = 21.06.2018
+= 0.0.2 - 21.06.2018 =
+* Added Authorization via Github, Odnoklassniki
+
+
+= 0.0.1 =
 * First Release
 * Options to specify API details (secrets, etc) for social authorization: Vk, Twitter, Facebook, Google
 * Integrated with [WP User Avatar](https://wordpress.org/plugins/wp-user-avatar/)
