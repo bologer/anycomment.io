@@ -4,11 +4,11 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 
-if (!class_exists('AC_SocialSettings')) :
+if (!class_exists('AnyCommentSocialSettings')) :
     /**
      * AnyCommentAdminPages helps to process website authentication.
      */
-    class AC_SocialSettings extends AC_Options
+    class AnyCommentSocialSettings extends AnyCommentOptions
     {
         /**
          * @inheritdoc
@@ -115,7 +115,7 @@ if (!class_exists('AC_SocialSettings')) :
                         <tr>
                             <th><label for="vk-callback"><?= __('Callback URL', 'anycomment') ?></label></th>
                             <td><input type="text" id="vk-callback" onclick="this.select()" readonly="readonly"
-                                       value="<?= AC_SocialAuth::get_vk_callback() ?>"></td>
+                                       value="<?= AnyCommentSocialAuth::get_vk_callback() ?>"></td>
                         </tr>
                     </table>
                     <?php
@@ -161,7 +161,7 @@ if (!class_exists('AC_SocialSettings')) :
                         <tr>
                             <th><label for="twitter-callback"><?= __('Callback URL', 'anycomment') ?></label></th>
                             <td><input type="text" id="twitter-callback" onclick="this.select()" readonly="readonly"
-                                       value="<?= AC_SocialAuth::get_twitter_callback() ?>"></td>
+                                       value="<?= AnyCommentSocialAuth::get_twitter_callback() ?>"></td>
                         </tr>
                     </table>
                     <?php
@@ -207,7 +207,7 @@ if (!class_exists('AC_SocialSettings')) :
                         <tr>
                             <th><label for="facebook-callback"><?= __('Callback URL', 'anycomment') ?></label></th>
                             <td><input type="text" id="facebook-callback" onclick="this.select()" readonly="readonly"
-                                       value="<?= AC_SocialAuth::get_facebook_callback() ?>"></td>
+                                       value="<?= AnyCommentSocialAuth::get_facebook_callback() ?>"></td>
                         </tr>
                     </table>
                     <?php
@@ -253,7 +253,7 @@ if (!class_exists('AC_SocialSettings')) :
                         <tr>
                             <th><label for="google-callback"><?= __('Callback URL', 'anycomment') ?></label></th>
                             <td><input type="text" id="google-callback" onclick="this.select()" readonly="readonly"
-                                       value="<?= AC_SocialAuth::get_google_callback() ?>"></td>
+                                       value="<?= AnyCommentSocialAuth::get_google_callback() ?>"></td>
                         </tr>
                     </table>
                     <?php
@@ -287,7 +287,7 @@ if (!class_exists('AC_SocialSettings')) :
             );
 
             /**
-             * Google
+             * GitHub
              */
             add_settings_section(
                 'section_github',
@@ -299,38 +299,40 @@ if (!class_exists('AC_SocialSettings')) :
                         <tr>
                             <th><label for="github-callback"><?= __('Callback URL', 'anycomment') ?></label></th>
                             <td><input type="text" id="github-callback" onclick="this.select()" readonly="readonly"
-                                       value="<?= AC_SocialAuth::get_github_callback() ?>"></td>
+                                       value="<?= AnyCommentSocialAuth::get_github_callback() ?>"></td>
                         </tr>
                     </table>
+
+                    <p>This feature is under development...</p>
                     <?php
                 },
                 $this->page_slug
             );
 
-            $this->render_fields(
-                $this->page_slug,
-                'section_github',
-                [
-                    [
-                        'id' => self::OPTION_GITHUB_TOGGLE,
-                        'title' => __('Enable', "anycomment"),
-                        'callback' => 'input_checkbox',
-                        'description' => __('Allow GitHub authorization', "anycomment")
-                    ],
-                    [
-                        'id' => self::OPTION_GITHUB_CLIENT_ID,
-                        'title' => __('Client ID', "anycomment"),
-                        'callback' => 'input_text',
-                        'description' => sprintf(__('Enter client id. Can be found in the list of <a href="%s" target="_blank">apps</a>', "anycomment"), 'https://github.com/settings/developers')
-                    ],
-                    [
-                        'id' => self::OPTION_GITHUB_SECRET,
-                        'title' => __('Client Secret', "anycomment"),
-                        'callback' => 'input_text',
-                        'description' => sprintf(__('Enter client secret. Can be found in the list of <a href="%s" target="_blank">apps</a>', "anycomment"), 'https://github.com/settings/developers')
-                    ]
-                ]
-            );
+//            $this->render_fields(
+//                $this->page_slug,
+//                'section_github',
+//                [
+//                    [
+//                        'id' => self::OPTION_GITHUB_TOGGLE,
+//                        'title' => __('Enable', "anycomment"),
+//                        'callback' => 'input_checkbox',
+//                        'description' => __('Allow GitHub authorization', "anycomment")
+//                    ],
+//                    [
+//                        'id' => self::OPTION_GITHUB_CLIENT_ID,
+//                        'title' => __('Client ID', "anycomment"),
+//                        'callback' => 'input_text',
+//                        'description' => sprintf(__('Enter client id. Can be found in the list of <a href="%s" target="_blank">apps</a>', "anycomment"), 'https://github.com/settings/developers')
+//                    ],
+//                    [
+//                        'id' => self::OPTION_GITHUB_SECRET,
+//                        'title' => __('Client Secret', "anycomment"),
+//                        'callback' => 'input_text',
+//                        'description' => sprintf(__('Enter client secret. Can be found in the list of <a href="%s" target="_blank">apps</a>', "anycomment"), 'https://github.com/settings/developers')
+//                    ]
+//                ]
+//            );
         }
 
         /**

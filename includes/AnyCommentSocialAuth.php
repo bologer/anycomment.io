@@ -4,11 +4,11 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 
-if (!class_exists('AC_SocialAuth')) :
+if (!class_exists('AnyCommentSocialAuth')) :
     /**
      * AC_SocialAuth helps to process website authentication.
      */
-    class AC_SocialAuth
+    class AnyCommentSocialAuth
     {
         /**
          * Different social types.
@@ -140,30 +140,30 @@ if (!class_exists('AC_SocialAuth')) :
             $config = [
                 'providers' => [
                     self::SOCIAL_VKONTAKTE => [
-                        'enabled' => AC_SocialSettings::isVkOn(),
-                        'keys' => ['id' => AC_SocialSettings::getVkAppId(), 'secret' => AC_SocialSettings::getVkSecureKey()],
+                        'enabled' => AnyCommentSocialSettings::isVkOn(),
+                        'keys' => ['id' => AnyCommentSocialSettings::getVkAppId(), 'secret' => AnyCommentSocialSettings::getVkSecureKey()],
                         'callback' => static::get_vk_callback(),
                     ],
                     self::SOCIAL_GOOGLE => [
-                        'enabled' => AC_SocialSettings::isGoogleOn(),
-                        'keys' => ['id' => AC_SocialSettings::getGoogleClientId(), 'secret' => AC_SocialSettings::getGoogleSecret()],
+                        'enabled' => AnyCommentSocialSettings::isGoogleOn(),
+                        'keys' => ['id' => AnyCommentSocialSettings::getGoogleClientId(), 'secret' => AnyCommentSocialSettings::getGoogleSecret()],
                         'scope' => 'profile https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.profile.emails.read',
                         'callback' => static::get_google_callback(),
                     ],
                     self::SOCIAL_FACEBOOK => [
-                        'enabled' => AC_SocialSettings::isFbOn(),
+                        'enabled' => AnyCommentSocialSettings::isFbOn(),
                         'scope' => 'email, public_profile',
-                        'keys' => ['id' => AC_SocialSettings::getFbAppId(), 'secret' => AC_SocialSettings::getFbAppSecret()],
+                        'keys' => ['id' => AnyCommentSocialSettings::getFbAppId(), 'secret' => AnyCommentSocialSettings::getFbAppSecret()],
                         'callback' => static::get_facebook_callback(),
                     ],
                     self::SOCIAL_TWITTER => [
-                        'enabled' => AC_SocialSettings::isTwitterOn(),
-                        'keys' => ['key' => AC_SocialSettings::getTwitterConsumerKey(), 'secret' => AC_SocialSettings::getTwitterConsumerSecret()],
+                        'enabled' => AnyCommentSocialSettings::isTwitterOn(),
+                        'keys' => ['key' => AnyCommentSocialSettings::getTwitterConsumerKey(), 'secret' => AnyCommentSocialSettings::getTwitterConsumerSecret()],
                         'callback' => static::get_twitter_callback(),
                     ],
                     self::SOCIAL_GITHUB => [
-                        'enabled' => AC_SocialSettings::isGithubOn(),
-                        'keys' => ['id' => AC_SocialSettings::getGithubClientId(), 'secret' => AC_SocialSettings::getGithubSecretKey()]
+                        'enabled' => AnyCommentSocialSettings::isGithubOn(),
+                        'keys' => ['id' => AnyCommentSocialSettings::getGithubClientId(), 'secret' => AnyCommentSocialSettings::getGithubSecretKey()]
                     ]
                 ],
             ];
@@ -279,7 +279,7 @@ if (!class_exists('AC_SocialAuth')) :
          * user already exists or not. When user does not exist,
          * it create it. When exists, uses existing information to authorize.
          *
-         * @see AC_SocialAuth::get_user_by() for more information about $field and $value fields.
+         * @see AnyCommentSocialAuth::get_user_by() for more information about $field and $value fields.
          *
          * @param string $social Social type. e.g. twitter.
          * @param string $field Field name to be used to check existence of such user.

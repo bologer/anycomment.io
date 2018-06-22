@@ -13,33 +13,34 @@ if (post_password_required($postId) || !comments_open($postId)) {
     return;
 }
 
+wp_enqueue_script('anycomment-iframe-jquery', AnyComment()->plugin_url() . '/assets/js/jquery-3.3.1.min.js', [], AnyComment()->version);
+wp_enqueue_script('anycomment-iframe-iframeResizer-contentWindow', AnyComment()->plugin_url() . '/assets/js/iframeResizer.contentWindow.min.js', [], AnyComment()->version);
+wp_enqueue_script('anycomment-iframe-timeago', AnyComment()->plugin_url() . '/assets/js/timeago.min.js', [], AnyComment()->version);
+wp_enqueue_script('anycomment-iframe-timeago-locales', AnyComment()->plugin_url() . '/assets/js/timeago.locales.min.js', [], AnyComment()->version);
+
 $classPrefix = AnyComment()->classPrefix();
 ?>
 <!DOCTYPE html>
 <html lang="<?= get_locale() ?>">
 <head>
     <link rel="stylesheet"
-          href="<?= AnyComment()->plugin_url() ?>/assets/css/theme-<?= AC_GenericSettings::getTheme() ?>.css?v=<?= AnyComment()->version ?>">
+          href="<?= AnyComment()->plugin_url() ?>/assets/css/theme-<?= AnyCommentGenericSettings::getTheme() ?>.css?v=<?= AnyComment()->version ?>">
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700&amp;subset=cyrillic" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.6.1/iframeResizer.contentWindow.min.js"></script>
-    <script src="<?= AnyComment()->plugin_url() ?>/assets/js/timeago.min.js?v=<?= AnyComment()->version ?>"></script>
-    <script src="<?= AnyComment()->plugin_url() ?>/assets/js/timeago.locales.min.js?v=<?= AnyComment()->version ?>"></script>
 </head>
 <body>
-
-
 <div id="<?= $classPrefix ?>comments"
      class="<?= $classPrefix ?>comments-dark"
-     data-origin-limit="<?= AC_Render::LIMIT ?>"
-     data-current-limit="<?= AC_Render::LIMIT ?>"
-     data-sort="<?= AC_Render::SORT_NEW ?>"
+     data-origin-limit="<?= AnyCommentRender::LIMIT ?>"
+     data-current-limit="<?= AnyCommentRender::LIMIT ?>"
+     data-sort="<?= AnyCommentRender::SORT_NEW ?>"
      data-guest="<?= !is_user_logged_in() ? "1" : "0" ?>">
     <?php do_action('anycomment_send_comment') ?>
     <?php do_action('anycomment_notifications') ?>
     <?php do_action('anycomment_load_comments') ?>
     <?php do_action('anycomment_footer') ?>
 </div>
+
+<?php wp_footer(); ?>
 
 <script>
     // Load generic comments template
@@ -295,5 +296,6 @@ $classPrefix = AnyComment()->classPrefix();
         }, 1000);
     }
 </script>
+
 </body>
 </html>

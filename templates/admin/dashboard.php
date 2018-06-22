@@ -136,7 +136,7 @@ $active_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'anycomm
                                 clearInterval(chart);
                             }
 
-                            c.canvas.parentNode.style.height = '128px';
+                            // c.canvas.parentNode.style.height = '128px';
                         }, 1000);
                     </script>
                 </div>

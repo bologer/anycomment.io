@@ -4,11 +4,11 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 
-if (!class_exists('AC_Render')) :
+if (!class_exists('AnyCommentRender')) :
     /**
      * AnyCommentRender helps to render comments on client side.
      */
-    class AC_Render
+    class AnyCommentRender
     {
         /**
          * Default comment limit.
@@ -30,7 +30,7 @@ if (!class_exists('AC_Render')) :
          */
         public function __construct()
         {
-            if (AC_GenericSettings::isEnabled()) {
+            if (AnyCommentGenericSettings::isEnabled()) {
                 add_filter('comments_template', [$this, 'render_iframe']);
 
                 add_action('wp_ajax_iframe_comments', [$this, 'iframe_comments']);
@@ -52,7 +52,7 @@ if (!class_exists('AC_Render')) :
         {
             wp_enqueue_script(
                 'anycomment-iframeResizer',
-                'https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.6.1/iframeResizer.min.js',
+                AnyComment()->plugin_url() . '/assets/js/iframeResizer.min.js',
                 [],
                 1.0
             );

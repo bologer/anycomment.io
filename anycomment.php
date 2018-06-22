@@ -38,12 +38,12 @@ if (!class_exists('AnyComment')) :
         /**
          * Instance of render class.
          *
-         * @var null|AC_Render
+         * @var null|AnyCommentRender
          */
         public $render = null;
 
         /**
-         * @var null|AC_SocialAuth
+         * @var null|AnyCommentSocialAuth
          */
         public $auth = null;
 
@@ -54,12 +54,12 @@ if (!class_exists('AnyComment')) :
         public $classPrefix = 'anycomment-';
 
         /**
-         * @var null|AC_AdminPages
+         * @var null|AnyCommentAdminPages
          */
         public $admin_pages = null;
 
         /**
-         * @var null|AC_Statistics
+         * @var null|AnyCommentStatistics
          */
         public $statistics = null;
 
@@ -198,28 +198,28 @@ if (!class_exists('AnyComment')) :
             /**
              * Class autoloader.
              */
-            include_once(ANY_COMMENT_ABSPATH . 'includes/class-ac-render.php');
+            include_once(ANY_COMMENT_ABSPATH . 'includes/AnyCommentRender.php');
             include_once(ANY_COMMENT_ABSPATH . 'includes/ac-core-functions.php');
-            include_once(ANY_COMMENT_ABSPATH . 'includes/class-ac-social-auth.php');
+            include_once(ANY_COMMENT_ABSPATH . 'includes/AnyCommentSocialAuth.php');
 
             /**
              * Admin related
              */
-            include_once(ANY_COMMENT_ABSPATH . 'includes/admin/class-ac-statistics.php');
-            include_once(ANY_COMMENT_ABSPATH . 'includes/admin/class-ac-options.php');
-            include_once(ANY_COMMENT_ABSPATH . 'includes/admin/class-ac-pages.php');
-            include_once(ANY_COMMENT_ABSPATH . 'includes/admin/class-ac-generic-settings.php');
-            include_once(ANY_COMMENT_ABSPATH . 'includes/admin/class-ac-social-settings.php');
+            include_once(ANY_COMMENT_ABSPATH . 'includes/admin/AnyCommentStatistics.php');
+            include_once(ANY_COMMENT_ABSPATH . 'includes/admin/AnyCommentOptions.php');
+            include_once(ANY_COMMENT_ABSPATH . 'includes/admin/AnyCommentAdminPages.php');
+            include_once(ANY_COMMENT_ABSPATH . 'includes/admin/AnyCommentGenericSettings.php');
+            include_once(ANY_COMMENT_ABSPATH . 'includes/admin/AnyCommentSocialSettings.php');
 
 
             if (!class_exists('Hybridauth')) {
                 include_once(ANY_COMMENT_ABSPATH . 'includes/hybridauth/src/autoload.php');
             }
 
-            $this->render = new AC_Render();
-            $this->admin_pages = new AC_AdminPages();
-            $this->auth = new AC_SocialAuth();
-            $this->statistics = new AC_Statistics();
+            $this->render = new AnyCommentRender();
+            $this->admin_pages = new AnyCommentAdminPages();
+            $this->auth = new AnyCommentSocialAuth();
+            $this->statistics = new AnyCommentStatistics();
         }
 
         /**

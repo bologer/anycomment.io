@@ -4,20 +4,12 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 
-if (!class_exists('AC_Statistics')) :
+if (!class_exists('AnyCommentStatistics')) :
     /**
      * AC_Statistics helps to process statistics.
      */
-    class AC_Statistics
+    class AnyCommentStatistics
     {
-        /**
-         * AC_Statistics constructor.
-         */
-        public function __construct()
-        {
-        }
-
-
         /**
          * Get number of active commentors in the system.
          *

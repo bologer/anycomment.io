@@ -4,11 +4,11 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 
-if (!class_exists('AC_GenericSettings')) :
+if (!class_exists('AnyCommentGenericSettings')) :
     /**
      * AC_AdminSettingPage helps to process generic plugin settings.
      */
-    class AC_GenericSettings extends AC_Options
+    class AnyCommentGenericSettings extends AnyCommentOptions
     {
         const OPTION_THEME = 'option_theme_toggle';
         const OPTION_PLUGIN_TOGGLE = 'option_plugin_toggle';

@@ -4,11 +4,11 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 
-if (!class_exists('AC_Options')) :
+if (!class_exists('AnyCommentOptions')) :
     /**
      * AnyCommentAdminPages helps to process website authentication.
      */
-    class AC_Options
+    class AnyCommentOptions
     {
         /**
          * @var string Options group.
@@ -36,7 +36,7 @@ if (!class_exists('AC_Options')) :
         protected $default_options;
 
         /**
-         * @var AC_Options Instance of current object.
+         * @var AnyCommentOptions Instance of current object.
          */
         private static $_instances;
 
