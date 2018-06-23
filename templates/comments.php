@@ -270,17 +270,47 @@ $classPrefix = AnyComment()->classPrefix();
         addAlert('success', message);
     }
 
+    /**
+     * Add new alert by specifying type and message.
+     * @param type Type of the alert.
+     * @param message Message of the alert.
+     */
     function addAlert(type, message) {
         if (!type || !message || (type !== 'success' && type !== 'error')) {
             return;
         }
 
-        let alert = '<p class="{class}">{text}</p>'
-            .replace('{class}', '<?= $classPrefix ?>-notification-' + type)
+        let alert = '<li class="{class}" onclick="cleanAlerts()">{text}</li>'
+            .replace('{class}', 'alert ' + type)
             .replace('{text}', message);
-        let notifications = jQuery('#<?= $classPrefix ?>-notifications');
-        notifications.html(alert);
-        notifications.slideDown(300);
+        let notifications = jQuery('#notifications');
+
+        let isOpen = notifications.length;
+
+        let isEmpty = notifications.html().trim() === '';
+
+        let htmlContent = isEmpty ? alert : notifications.html() + alert;
+
+        if (isOpen) {
+            notifications.slideUp(300, function () {
+                notifications.html(htmlContent);
+            });
+            notifications.slideDown(300);
+        } else {
+            notifications.slideDown(300);
+            notifications.html(htmlContent);
+        }
+    }
+
+    /**
+     * Clean alerts.
+     */
+    function cleanAlerts() {
+        let notifications = jQuery('#notifications');
+
+        notifications.slideUp(300, function () {
+            jQuery(this).html('');
+        });
     }
 
     loadComments();

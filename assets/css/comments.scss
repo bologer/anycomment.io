@@ -19,6 +19,8 @@ $global-radius: 4px;
 
 @import "normalizer";
 
+@import "alerts";
+
 body {
   font-family: $font-family;
   a {

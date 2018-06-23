@@ -106,7 +106,7 @@ add_action('anycomment_login_with', 'anycomment_login_with');
 function anycomment_notifications()
 {
     ?>
-    <div id="<?= AnyComment()->classPrefix() ?>notifications" style="display: none;"></div>
+    <ul id="notifications" class="notifications" style="display: none;"></ul>
     <?php
 }
 

@@ -297,6 +297,25 @@ template {
 [hidden] {
   display: none; }
 
+.notifications {
+  padding: 0;
+  margin: 10px 0 50px 0;
+  list-style: none; }
+  .notifications li {
+    margin-bottom: 5px; }
+    .notifications li:last-of-type {
+      margin-bottom: 0; }
+  .notifications .alert {
+    padding: 10px;
+    font-size: 15px; }
+  .notifications .alert.error {
+    background-color: #f29595;
+    color: #955656;
+    border-radius: 2px; }
+  .notifications .alert.success {
+    background-color: #53af4a;
+    color: #fff; }
+
 body {
   font-family: "Noto-Sans", sans-serif; }
   body a {

@@ -1,0 +1,28 @@
+.notifications {
+  padding: 0;
+  margin: 10px 0 50px 0;
+  list-style: none;
+
+  li {
+    margin-bottom: 5px;
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+
+  .alert {
+    padding: 10px;
+    font-size: 15px;
+  }
+
+  .alert.error {
+    background-color: #f29595;
+    color: #955656;
+    border-radius: 2px;
+  }
+
+  .alert.success {
+    background-color: #53af4a;
+    color: #fff;
+  }
+}
