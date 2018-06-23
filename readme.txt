@@ -90,7 +90,7 @@ On the next release, special options will be enabled on plugin to have Privacy P
 == Changelog ==
 
 = 0.0.2 =
-* Added GitHub authorization
+* Added authorization via GitHub & Odnoklassniki
 * Fix - comment text box was overflowing on long texts, #22
 
 = 0.0.1 - 24.06.2018 =
