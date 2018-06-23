@@ -60,6 +60,11 @@ if (!class_exists('AnyCommentRender')) :
             return ANY_COMMENT_ABSPATH . 'templates/iframe.php';
         }
 
+        /**
+         * Render comments inside of the iframe.
+         *
+         * Should be requested by AJAX.
+         */
         public function iframe_comments()
         {
             if (!wp_verify_nonce($_GET['nonce'], 'iframe_comments')) {
@@ -67,6 +72,11 @@ if (!class_exists('AnyCommentRender')) :
             }
 
             include ANY_COMMENT_ABSPATH . 'templates/comments.php';
+
+            if (AnyComment()->errors->hasErrors()) {
+                AnyComment()->errors->cleanErrors();
+            }
+
             die();
         }
 

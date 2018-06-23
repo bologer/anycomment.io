@@ -102,6 +102,7 @@ if (!class_exists('AnyCommentSocialAuth')) :
                 $this->prepare_auth();
                 $adapter = $this->authenticate($social);
             } catch (\Exception $exception) {
+                AnyComment()->errors->addError(__('Unable to authorize, please try again later', 'anycomment'));
                 wp_redirect($redirect);
                 exit();
             }

@@ -315,6 +315,7 @@ $classPrefix = AnyComment()->classPrefix();
 
     loadComments();
 
+
     // Load time
     function loadTime(lang = '<?= get_locale() ?>') {
         let i = setInterval(function () {
@@ -327,5 +328,28 @@ $classPrefix = AnyComment()->classPrefix();
     }
 </script>
 
+
+<?php if (AnyComment()->errors->hasErrors()): ?>
+    <script>
+        /**
+         * Display error messages form cookies. After errors display
+         * they will be automatically deleted.
+         * @returns {boolean}
+         */
+        function displayCookieErrors() {
+            let errors = JSON.parse('<?= AnyComment()->errors->getErrors() ?>');
+
+            if (!errors) {
+                return false;
+            }
+
+            errors.forEach(function (element) {
+                addError(element);
+            });
+        }
+
+        displayCookieErrors();
+    </script>
+<?php endif; ?>
 </body>
 </html>

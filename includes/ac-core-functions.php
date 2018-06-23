@@ -370,6 +370,13 @@ function anycomment_iframe()
 
     $randIframeId = uniqid(time() . '-');
 
+    $options = [
+        'log' => false,
+        'enablePublicMethods' => false,
+        'enableInPageLinks' => true,
+    ];
+
+    $jsonOptions = json_encode($options);
 
     $html = <<<EOT
 <iframe id="$randIframeId"
@@ -380,18 +387,30 @@ function anycomment_iframe()
         src="$iframeSrc"
         frameborder="0"
         style="$styles"></iframe>
+       
 <script>
-
     jQuery(document).ready(function ($) {
-        $('#$randIframeId').iFrameResize({
-            log: false,
-            autoResize: true,
-            enablePublicMethods: false,
-            enableInPageLinks: true,
-        });
+        $('#$randIframeId').iFrameResize($jsonOptions);
     });
 </script>
 EOT;
+
+    if (AnyComment()->errors->hasErrors()) {
+        $html .= <<<EOT
+<script>
+function scrollToIframe() {
+   jQuery(window).on('load', function() {
+       jQuery('html, body').animate({
+            scrollTop: jQuery('#$randIframeId').offset().top
+        }, 500); 
+       });
+   }
+   
+   scrollToIframe();
+</script>
+EOT;
+    }
+
     echo $html;
 }
 
