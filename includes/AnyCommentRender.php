@@ -181,10 +181,10 @@ if (!class_exists('AnyCommentRender')) :
                     wp_die();
                 }
 
-                if ($comment->comment_parent > 0) {
-                    echo AnyComment()->json_error(__('Reply comment can be max 2nd level', "anycomment"));
-                    wp_die();
-                }
+//                if ($comment->comment_parent > 0) {
+//                    echo AnyComment()->json_error(__('Reply comment can be max 2nd level', "anycomment"));
+//                    wp_die();
+//                }
 
                 $args['comment_parent'] = $comment_parent_id;
             }
