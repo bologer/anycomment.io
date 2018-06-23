@@ -101,7 +101,7 @@ if (!class_exists('AnyCommentSocialAuth')) :
             try {
                 $this->prepare_auth();
                 $adapter = $this->authenticate($social);
-            } catch (\Throwable $exception) {
+            } catch (\Exception $exception) {
                 wp_redirect($redirect);
                 exit();
             }
@@ -195,6 +195,15 @@ if (!class_exists('AnyCommentSocialAuth')) :
                         'enabled' => AnyCommentSocialSettings::isGithubOn(),
                         'keys' => ['id' => AnyCommentSocialSettings::getGithubClientId(), 'secret' => AnyCommentSocialSettings::getGithubSecretKey()],
                         'callback' => static::get_github_callback(),
+                    ],
+                    self::PROVIDERS[self::SOCIAL_ODNOKLASSNIKI] => [
+                        'enabled' => AnyCommentSocialSettings::isOkOn(),
+                        'keys' => [
+                            'id' => AnyCommentSocialSettings::getOkAppId(),
+                            'key' => AnyCommentSocialSettings::getOkAppKey(),
+                            'secret' => AnyCommentSocialSettings::getOkAppSecret()
+                        ],
+                        'callback' => static::get_ok_callback(),
                     ]
                 ],
             ];
@@ -228,6 +237,16 @@ if (!class_exists('AnyCommentSocialAuth')) :
         public static function get_vk_callback($redirect = null)
         {
             return static::get_callback_url(self::SOCIAL_VKONTAKTE, $redirect);
+        }
+
+        /**
+         * Get ok callback URL.
+         * @param null|string $redirect Redirect URL added to the link.
+         * @return string
+         */
+        public static function get_ok_callback($redirect = null)
+        {
+            return static::get_callback_url(self::SOCIAL_ODNOKLASSNIKI, $redirect);
         }
 
         /**

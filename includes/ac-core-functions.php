@@ -46,29 +46,34 @@ function anycomment_login_with($redirectUrl = null)
 {
     $socials = [
         AnyCommentSocialAuth::SOCIAL_VKONTAKTE => [
-            'url' => AnyCommentSocialAuth::get_callback_url(AnyCommentSocialAuth::SOCIAL_VKONTAKTE, $redirectUrl),
+            'url' => AnyCommentSocialAuth::get_vk_callback($redirectUrl),
             'label' => __('VK', "anycomment"),
             'visible' => AnyCommentSocialSettings::isVkOn()
         ],
         AnyCommentSocialAuth::SOCIAL_TWITTER => [
-            'url' => AnyCommentSocialAuth::get_callback_url(AnyCommentSocialAuth::SOCIAL_TWITTER, $redirectUrl),
+            'url' => AnyCommentSocialAuth::get_twitter_callback($redirectUrl),
             'label' => __('Twitter', "anycomment"),
             'visible' => AnyCommentSocialSettings::isTwitterOn()
         ],
         AnyCommentSocialAuth::SOCIAL_FACEBOOK => [
-            'url' => AnyCommentSocialAuth::get_callback_url(AnyCommentSocialAuth::SOCIAL_FACEBOOK, $redirectUrl),
+            'url' => AnyCommentSocialAuth::get_facebook_callback($redirectUrl),
             'label' => __('Facebook', "anycomment"),
             'visible' => AnyCommentSocialSettings::isFbOn()
         ],
         AnyCommentSocialAuth::SOCIAL_GOOGLE => [
-            'url' => AnyCommentSocialAuth::get_callback_url(AnyCommentSocialAuth::SOCIAL_GOOGLE, $redirectUrl),
-            'label' => __('Google+', "anycomment"),
+            'url' => AnyCommentSocialAuth::get_google_callback($redirectUrl),
+            'label' => __('Google', "anycomment"),
             'visible' => AnyCommentSocialSettings::isGoogleOn()
         ],
         AnyCommentSocialAuth::SOCIAL_GITHUB => [
-            'url' => AnyCommentSocialAuth::get_callback_url(AnyCommentSocialAuth::SOCIAL_GITHUB, $redirectUrl),
+            'url' => AnyCommentSocialAuth::get_github_callback($redirectUrl),
             'label' => __('Github', "anycomment"),
             'visible' => AnyCommentSocialSettings::isGithubOn()
+        ],
+        AnyCommentSocialAuth::SOCIAL_ODNOKLASSNIKI => [
+            'url' => AnyCommentSocialAuth::get_ok_callback($redirectUrl),
+            'label' => __('Odnoklassniki', "anycomment"),
+            'visible' => AnyCommentSocialSettings::isOkOn()
         ],
     ];
 

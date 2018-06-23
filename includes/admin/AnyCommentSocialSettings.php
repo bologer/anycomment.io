@@ -58,6 +58,14 @@ if (!class_exists('AnyCommentSocialSettings')) :
         const OPTION_GITHUB_CLIENT_ID = 'social_github_app_id_field';
         const OPTION_GITHUB_SECRET = 'social_github_app_secret_field';
 
+        /**
+         * Odnoklassniki Options
+         */
+        const OPTION_OK_TOGGLE = 'social_odnoklassniki_toggle_field';
+        const OPTION_OK_APP_ID = 'social_odnoklassniki_app_id_field';
+        const OPTION_OK_APP_KEY = 'social_odnoklassniki_app_key_field';
+        const OPTION_OK_APP_SECRET = 'social_odnoklassniki_app_secret_field';
+
 
         /**
          * AC_SocialSettingPage constructor.
@@ -331,10 +339,64 @@ if (!class_exists('AnyCommentSocialSettings')) :
                     ]
                 ]
             );
+
+            /**
+             * GitHub
+             */
+            add_settings_section(
+                'section_odnoklassniki',
+                __('Odnoklassniki', "anycomment"),
+                function () {
+                    ?>
+                    <p><?= __('Odnoklassniki authorization settings.', "anycomment") ?></p>
+                    <table class="form-table">
+                        <tr>
+                            <th><label for="odnoklassniki-callback"><?= __('Callback URL', 'anycomment') ?></label></th>
+                            <td><input type="text" id="odnoklassniki-callback" onclick="this.select()"
+                                       readonly="readonly"
+                                       value="<?= AnyCommentSocialAuth::get_ok_callback() ?>"></td>
+                        </tr>
+                    </table>
+                    <?php
+                },
+                $this->page_slug
+            );
+
+            $this->render_fields(
+                $this->page_slug,
+                'section_odnoklassniki',
+                [
+                    [
+                        'id' => self::OPTION_OK_TOGGLE,
+                        'title' => __('Enable', "anycomment"),
+                        'callback' => 'input_checkbox',
+                        'description' => __('Allow Odnoklassniki authorization', "anycomment")
+                    ],
+                    [
+                        'id' => self::OPTION_OK_APP_ID,
+                        'title' => __('App ID', "anycomment"),
+                        'callback' => 'input_text',
+                        'description' => __('Enter app id. Can be found in the email sent to you by Odnoklassniki', "anycomment"),
+                    ],
+                    [
+                        'id' => self::OPTION_OK_APP_KEY,
+                        'title' => __('App Key', "anycomment"),
+                        'callback' => 'input_text',
+                        'description' => __('Enter app key. Can be found in the email sent to you by Odnoklassniki', "anycomment"),
+                    ],
+                    [
+                        'id' => self::OPTION_OK_APP_SECRET,
+                        'title' => __('App Secret', "anycomment"),
+                        'callback' => 'input_text',
+                        'description' => __('Enter client secret. Can be found in the email sent to you by Odnoklassniki', "anycomment"),
+                    ]
+                ]
+            );
         }
 
         /**
          * Check whether VK social is on.
+         *
          * @return bool
          */
         public static function isVkOn()
@@ -344,6 +406,7 @@ if (!class_exists('AnyCommentSocialSettings')) :
 
         /**
          * Get VK App ID.
+         *
          * @return int|null
          */
         public static function getVkAppId()
@@ -353,6 +416,7 @@ if (!class_exists('AnyCommentSocialSettings')) :
 
         /**
          * Get VK Secure key.
+         *
          * @return string|null
          */
         public static function getVkSecureKey()
@@ -362,6 +426,7 @@ if (!class_exists('AnyCommentSocialSettings')) :
 
         /**
          * Check whether GitHub social is on.
+         *
          * @return bool
          */
         public static function isGithubOn()
@@ -371,6 +436,7 @@ if (!class_exists('AnyCommentSocialSettings')) :
 
         /**
          * Get GitHub client ID.
+         *
          * @return int|null
          */
         public static function getGithubClientId()
@@ -380,6 +446,7 @@ if (!class_exists('AnyCommentSocialSettings')) :
 
         /**
          * Get GitHub secret key.
+         *
          * @return string|null
          */
         public static function getGithubSecretKey()
@@ -389,6 +456,7 @@ if (!class_exists('AnyCommentSocialSettings')) :
 
         /**
          * Check whether Twitter is on.
+         *
          * @return bool
          */
         public static function isTwitterOn()
@@ -398,6 +466,7 @@ if (!class_exists('AnyCommentSocialSettings')) :
 
         /**
          * Get Twitter consumer key.
+         *
          * @return string|null
          */
         public static function getTwitterConsumerKey()
@@ -407,6 +476,7 @@ if (!class_exists('AnyCommentSocialSettings')) :
 
         /**
          * Get Twitter consumer secret.
+         *
          * @return string|null
          */
         public static function getTwitterConsumerSecret()
@@ -416,6 +486,7 @@ if (!class_exists('AnyCommentSocialSettings')) :
 
         /**
          * Check whether Facebook social is on.
+         *
          * @return bool
          */
         public static function isFbOn()
@@ -425,6 +496,7 @@ if (!class_exists('AnyCommentSocialSettings')) :
 
         /**
          * Get Facebook App ID.
+         *
          * @return int|null
          */
         public static function getFbAppId()
@@ -434,6 +506,7 @@ if (!class_exists('AnyCommentSocialSettings')) :
 
         /**
          * Get Facebook Secure key.
+         *
          * @return string|null
          */
         public static function getFbAppSecret()
@@ -443,6 +516,7 @@ if (!class_exists('AnyCommentSocialSettings')) :
 
         /**
          * Check whether Google social is on.
+         *
          * @return bool
          */
         public static function isGoogleOn()
@@ -452,6 +526,7 @@ if (!class_exists('AnyCommentSocialSettings')) :
 
         /**
          * Get Google Client ID.
+         *
          * @return int|null
          */
         public static function getGoogleClientId()
@@ -461,11 +536,52 @@ if (!class_exists('AnyCommentSocialSettings')) :
 
         /**
          * Get Google secret key.
+         *
          * @return string|null
          */
         public static function getGoogleSecret()
         {
             return static::instance()->getOption(self::OPTION_GOOGLE_SECRET);
+        }
+
+        /**
+         * Check whether Odnoklassniki social is on.
+         *
+         * @return bool
+         */
+        public static function isOkOn()
+        {
+            return static::instance()->getOption(self::OPTION_OK_TOGGLE) !== null;
+        }
+
+        /**
+         * Get Odnoklassniki app ID.
+         *
+         * @return int|null
+         */
+        public static function getOkAppId()
+        {
+            return static::instance()->getOption(self::OPTION_OK_APP_ID);
+        }
+
+        /**
+         * Get Odnoklassniki app key.
+         *
+         * @return int|null
+         */
+        public static function getOkAppKey()
+        {
+            return static::instance()->getOption(self::OPTION_OK_APP_KEY);
+        }
+
+        /**
+         * Get Odnoklassniki app secret key.
+         *
+         * @return string|null
+         */
+        public static function getOkAppSecret()
+        {
+            return static::instance()->getOption(self::OPTION_OK_APP_SECRET);
         }
     }
 endif;
