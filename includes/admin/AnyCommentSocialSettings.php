@@ -302,37 +302,35 @@ if (!class_exists('AnyCommentSocialSettings')) :
                                        value="<?= AnyCommentSocialAuth::get_github_callback() ?>"></td>
                         </tr>
                     </table>
-
-                    <p class="notice">This authorization options is under active development...</p>
                     <?php
                 },
                 $this->page_slug
             );
 
-//            $this->render_fields(
-//                $this->page_slug,
-//                'section_github',
-//                [
-//                    [
-//                        'id' => self::OPTION_GITHUB_TOGGLE,
-//                        'title' => __('Enable', "anycomment"),
-//                        'callback' => 'input_checkbox',
-//                        'description' => __('Allow GitHub authorization', "anycomment")
-//                    ],
-//                    [
-//                        'id' => self::OPTION_GITHUB_CLIENT_ID,
-//                        'title' => __('Client ID', "anycomment"),
-//                        'callback' => 'input_text',
-//                        'description' => sprintf(__('Enter client id. Can be found in the list of <a href="%s" target="_blank">apps</a>', "anycomment"), 'https://github.com/settings/developers')
-//                    ],
-//                    [
-//                        'id' => self::OPTION_GITHUB_SECRET,
-//                        'title' => __('Client Secret', "anycomment"),
-//                        'callback' => 'input_text',
-//                        'description' => sprintf(__('Enter client secret. Can be found in the list of <a href="%s" target="_blank">apps</a>', "anycomment"), 'https://github.com/settings/developers')
-//                    ]
-//                ]
-//            );
+            $this->render_fields(
+                $this->page_slug,
+                'section_github',
+                [
+                    [
+                        'id' => self::OPTION_GITHUB_TOGGLE,
+                        'title' => __('Enable', "anycomment"),
+                        'callback' => 'input_checkbox',
+                        'description' => __('Allow GitHub authorization', "anycomment")
+                    ],
+                    [
+                        'id' => self::OPTION_GITHUB_CLIENT_ID,
+                        'title' => __('Client ID', "anycomment"),
+                        'callback' => 'input_text',
+                        'description' => sprintf(__('Enter client id. Can be found in the list of <a href="%s" target="_blank">apps</a>', "anycomment"), 'https://github.com/settings/developers')
+                    ],
+                    [
+                        'id' => self::OPTION_GITHUB_SECRET,
+                        'title' => __('Client Secret', "anycomment"),
+                        'callback' => 'input_text',
+                        'description' => sprintf(__('Enter client secret. Can be found in the list of <a href="%s" target="_blank">apps</a>', "anycomment"), 'https://github.com/settings/developers')
+                    ]
+                ]
+            );
         }
 
         /**

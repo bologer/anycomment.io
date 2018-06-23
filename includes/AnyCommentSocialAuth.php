@@ -110,7 +110,6 @@ if (!class_exists('AnyCommentSocialAuth')) :
 
             $user = $adapter->getUserProfile();
 
-
             if (!$user instanceof \Hybridauth\User\Profile) {
                 wp_redirect($redirect);
                 exit();
@@ -192,11 +191,11 @@ if (!class_exists('AnyCommentSocialAuth')) :
                         'keys' => ['key' => AnyCommentSocialSettings::getTwitterConsumerKey(), 'secret' => AnyCommentSocialSettings::getTwitterConsumerSecret()],
                         'callback' => static::get_twitter_callback(),
                     ],
-//                    self::PROVIDERS[self::SOCIAL_GITHUB] => [
-//                        'enabled' => AnyCommentSocialSettings::isGithubOn(),
-//                        'keys' => ['id' => AnyCommentSocialSettings::getGithubClientId(), 'secret' => AnyCommentSocialSettings::getGithubSecretKey()],
-//                        'callback' => static::get_github_callback(),
-//                    ]
+                    self::PROVIDERS[self::SOCIAL_GITHUB] => [
+                        'enabled' => AnyCommentSocialSettings::isGithubOn(),
+                        'keys' => ['id' => AnyCommentSocialSettings::getGithubClientId(), 'secret' => AnyCommentSocialSettings::getGithubSecretKey()],
+                        'callback' => static::get_github_callback(),
+                    ]
                 ],
             ];
 
