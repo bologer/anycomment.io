@@ -302,6 +302,9 @@ body {
   body a {
     text-decoration: none; }
 
+*, *:before, *:after {
+  box-sizing: border-box; }
+
 .send-comment.send-comment-authorized .send-comment-body-outliner__avatar, .anycomment-list .comment-single-avatar, .anycomment-list .comment-single-avatar__img {
   width: 60px;
   height: 60px; }

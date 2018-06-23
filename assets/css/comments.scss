@@ -26,6 +26,10 @@ body {
   }
 }
 
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
 %author-avatar-parent {
   width: $parent-avatar-size;
   height: $parent-avatar-size;
@@ -330,7 +334,6 @@ body {
         @extend %author-avatar;
         @include border-radius(50%);
 
-
         &-auth-type {
           position: absolute;
           bottom: 7px;
@@ -340,7 +343,6 @@ body {
           background-size: cover;
           background-repeat: no-repeat;
         }
-
 
         &-auth-type.vk {
           background-image: url('../img/social-auth-mini-vkontakte.svg');
