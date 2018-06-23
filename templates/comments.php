@@ -13,7 +13,7 @@ if (post_password_required($postId) || !comments_open($postId)) {
     return;
 }
 
-wp_enqueue_script('anycomment-iframe-jquery', AnyComment()->plugin_url() . '/assets/js/jquery-3.3.1.min.js', [], AnyComment()->version);
+wp_enqueue_script("jquery");
 wp_enqueue_script('anycomment-iframe-iframeResizer-contentWindow', AnyComment()->plugin_url() . '/assets/js/iframeResizer.contentWindow.min.js', [], AnyComment()->version);
 wp_enqueue_script('anycomment-iframe-timeago', AnyComment()->plugin_url() . '/assets/js/timeago.min.js', [], AnyComment()->version);
 wp_enqueue_script('anycomment-iframe-timeago-locales', AnyComment()->plugin_url() . '/assets/js/timeago.locales.min.js', [], AnyComment()->version);

@@ -303,7 +303,7 @@ if (!class_exists('AnyCommentSocialSettings')) :
                         </tr>
                     </table>
 
-                    <p>This feature is under development...</p>
+                    <p class="notice">This authorization options is under active development...</p>
                     <?php
                 },
                 $this->page_slug

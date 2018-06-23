@@ -68,7 +68,7 @@ function anycomment_login_with($redirectUrl = null)
         AnyCommentSocialAuth::SOCIAL_GITHUB => [
             'url' => AnyCommentSocialAuth::get_callback_url(AnyCommentSocialAuth::SOCIAL_GITHUB, $redirectUrl),
             'label' => __('Github', "anycomment"),
-            'visible' => false,//AnyCommentSocialSettings::isGithubOn()
+            'visible' => false //AnyCommentSocialSettings::isGithubOn()
         ],
     ];
 

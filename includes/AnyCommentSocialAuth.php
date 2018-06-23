@@ -21,13 +21,25 @@ if (!class_exists('AnyCommentSocialAuth')) :
         const SOCIAL_GITHUB = 'github';
         const SOCIAL_ODNOKLASSNIKI = 'odnoklassniki';
 
+        /**
+         * Associative array list of providers.
+         */
+        const PROVIDERS = [
+            self::SOCIAL_VKONTAKTE => 'Vkontakte',
+            self::SOCIAL_FACEBOOK => 'Facebook',
+            self::SOCIAL_TWITTER => 'Twitter',
+            self::SOCIAL_GOOGLE => 'Google',
+            self::SOCIAL_GITHUB => 'GitHub',
+            self::SOCIAL_ODNOKLASSNIKI => 'Odnoklassniki'
+        ];
+
         const META_SOCIAL_TYPE = 'anycomment_social';
         const META_SOCIAL_AVATAR = 'anycomment_social_avatar';
 
         /**
          * @var \Hybridauth\Hybridauth
          */
-        private $auth;
+        private $_auth;
 
         protected static $rest_prefix = 'anycomment';
         protected static $rest_version = 'v1';
@@ -75,7 +87,7 @@ if (!class_exists('AnyCommentSocialAuth')) :
             $social = $request->get_param('social');
             $cookie_redirect = 'post_redirect';
 
-            if (!static::social_exists($social) || is_user_logged_in()) {
+            if (!$this->social_exists($social) || is_user_logged_in()) {
                 wp_redirect($redirect);
                 exit();
             }
@@ -87,8 +99,8 @@ if (!class_exists('AnyCommentSocialAuth')) :
             }
 
             try {
-                $adapter = $this->prepare_auth()
-                    ->authenticate(ucfirst($social));
+                $this->prepare_auth();
+                $adapter = $this->authenticate($social);
             } catch (\Throwable $exception) {
                 wp_redirect($redirect);
                 exit();
@@ -120,57 +132,93 @@ if (!class_exists('AnyCommentSocialAuth')) :
         }
 
         /**
+         * Get provider name from lowercased name.
+         *
+         * @param string $social Social name, usually lowercase, which comes from REST API.
+         * @return null|string NULL when unable to get provider name.
+         */
+        public function getProviderName($social)
+        {
+            if (!$this->social_exists($social)) {
+                return null;
+            }
+
+            return trim(self::PROVIDERS[$social]);
+        }
+
+        /**
          * Check whether social exists or not.
          *
-         * @param string $social Social name. Example: vkontakte. Name will be uppercased.
+         * @param string $social Social name to be checked for existance.
          * @return bool
          */
-        public static function social_exists($social)
+        public function social_exists($social)
         {
-            return constant(sprintf('self::SOCIAL_%s', strtoupper($social))) !== null;
+            $array = self::PROVIDERS;
+
+            if (isset($array[strtolower($social)])) {
+                return true;
+            }
+            return false;
         }
 
         /**
          * Prepare authentication.
          * @throws \Hybridauth\Exception\InvalidArgumentException on failure.
-         * @return \Hybridauth\Hybridauth
          */
         private function prepare_auth()
         {
             $config = [
                 'providers' => [
-                    self::SOCIAL_VKONTAKTE => [
+                    self::PROVIDERS[self::SOCIAL_VKONTAKTE] => [
                         'enabled' => AnyCommentSocialSettings::isVkOn(),
                         'keys' => ['id' => AnyCommentSocialSettings::getVkAppId(), 'secret' => AnyCommentSocialSettings::getVkSecureKey()],
                         'callback' => static::get_vk_callback(),
                     ],
-                    self::SOCIAL_GOOGLE => [
+                    self::PROVIDERS[self::SOCIAL_GOOGLE] => [
                         'enabled' => AnyCommentSocialSettings::isGoogleOn(),
                         'keys' => ['id' => AnyCommentSocialSettings::getGoogleClientId(), 'secret' => AnyCommentSocialSettings::getGoogleSecret()],
                         'scope' => 'profile https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.profile.emails.read',
                         'callback' => static::get_google_callback(),
                     ],
-                    self::SOCIAL_FACEBOOK => [
+                    self::PROVIDERS[self::SOCIAL_FACEBOOK] => [
                         'enabled' => AnyCommentSocialSettings::isFbOn(),
                         'scope' => 'email, public_profile',
                         'keys' => ['id' => AnyCommentSocialSettings::getFbAppId(), 'secret' => AnyCommentSocialSettings::getFbAppSecret()],
                         'callback' => static::get_facebook_callback(),
                     ],
-                    self::SOCIAL_TWITTER => [
+                    self::PROVIDERS[self::SOCIAL_TWITTER] => [
                         'enabled' => AnyCommentSocialSettings::isTwitterOn(),
                         'keys' => ['key' => AnyCommentSocialSettings::getTwitterConsumerKey(), 'secret' => AnyCommentSocialSettings::getTwitterConsumerSecret()],
                         'callback' => static::get_twitter_callback(),
                     ],
-                    self::SOCIAL_GITHUB => [
-                        'enabled' => AnyCommentSocialSettings::isGithubOn(),
-                        'keys' => ['id' => AnyCommentSocialSettings::getGithubClientId(), 'secret' => AnyCommentSocialSettings::getGithubSecretKey()]
-                    ]
+//                    self::PROVIDERS[self::SOCIAL_GITHUB] => [
+//                        'enabled' => AnyCommentSocialSettings::isGithubOn(),
+//                        'keys' => ['id' => AnyCommentSocialSettings::getGithubClientId(), 'secret' => AnyCommentSocialSettings::getGithubSecretKey()],
+//                        'callback' => static::get_github_callback(),
+//                    ]
                 ],
             ];
 
-            $this->auth = new \Hybridauth\Hybridauth($config);
+            $this->_auth = new \Hybridauth\Hybridauth($config);
+        }
 
-            return $this->auth;
+        /**
+         * Authenticate a user.
+         * @param string $social Socila network name.
+         * @return bool|\Hybridauth\Adapter\AdapterInterface
+         * @throws \Hybridauth\Exception\InvalidArgumentException
+         * @throws \Hybridauth\Exception\UnexpectedValueException
+         */
+        private function authenticate($social)
+        {
+            if ($this->_auth === null) {
+                return false;
+            }
+
+            $providerName = $this->getProviderName($social);
+
+            return $this->_auth->authenticate($providerName);
         }
 
         /**

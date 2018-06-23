@@ -60,8 +60,6 @@ if (!class_exists('AnyCommentAdminPages')) :
                 [$this, 'page_dashboard'],
                 AnyComment()->plugin_url() . '/assets/img/admin-menu-logo.png'
             );
-
-
         }
 
         /**
