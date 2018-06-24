@@ -135,8 +135,6 @@ $active_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'anycomm
 
                                 clearInterval(chart);
                             }
-
-                            // c.canvas.parentNode.style.height = '128px';
                         }, 1000);
                     </script>
                 </div>
@@ -146,7 +144,8 @@ $active_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'anycomm
                         <ul>
                             <?php foreach ($users as $user): ?>
                                 <li>
-                                    <span class="anycomment-dashboard__statistics-userlist-avatar" style="background-image:url('<?= AnyComment()->auth->get_user_avatar_url($user->user_id) ?>')"></span>
+                                    <span class="anycomment-dashboard__statistics-userlist-avatar"
+                                          style="background-image:url('<?= AnyComment()->auth->get_user_avatar_url($user->user_id) ?>')"></span>
                                     <?= $user->name ?>
                                     <span class="anycomment-dashboard__statistics-userlist-counter"><?= $user->comment_count ?></span>
                                 </li>
@@ -159,7 +158,24 @@ $active_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'anycomm
             </div>
         </div>
         <aside class="anycomment-dashboard__sidebar">
+            <h2><?= __('News', 'anycomment') ?></h2>
+            <ul class="anycomment-dashboard__sidebar-news">
+                <?php
+                $posts = AnyComment()->admin_pages->get_news();
 
+                if ($posts !== null):
+                    foreach ($posts as $key => $post): ?>
+                        <li>
+                            <a href="<?= $post['link'] ?>"
+                               target="_blank"
+                               class="anycomment-dashboard__sidebar-news-title"><?= esc_html($post['title']['rendered']) ?></a>
+                            <div class="anycomment-dashboard__sidebar-news-summary"><?= $post['content']['rendered'] ?></div>
+                        </li>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <li><?= __('No news yet', 'anycomment') ?></li>
+                <?php endif; ?>
+            </ul>
         </aside>
 
         <div class="clearfix"></div>

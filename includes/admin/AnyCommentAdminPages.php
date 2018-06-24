@@ -79,6 +79,42 @@ if (!class_exists('AnyCommentAdminPages')) :
             wp_enqueue_style('anycomment-admin-roboto-font', 'https://fonts.googleapis.com/css?family=Roboto:300,400,700&amp;subset=cyrillic');
             wp_enqueue_script('anycomment-admin-chartjs', AnyComment()->plugin_url() . '/assets/js/Chart.min.js', [], AnyComment()->version);
         }
+
+        /**
+         * Get resent news.
+         *
+         * @return false|array Array on success (list of posts), false on failure.
+         */
+        public function get_news()
+        {
+            $url = 'https://anycomment.io/wp-json/wp/v2/posts';
+            $options = [
+                'method' => 'GET',
+                'timeout' => 10,
+                'body' => [
+                    'type' => 'post',
+                    'status' => 'publish',
+                    'categories' => 15,
+                ]
+            ];
+
+            $response = wp_remote_get($url, $options);
+
+            if (!is_wp_error($response)) {
+                /**
+                 * @var WP_Posts_List_Table
+                 */
+                $posts = isset($response['body']) ? $response['body'] : null;
+
+                if ($posts !== null) {
+                    return json_decode($posts, true);
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
     }
 endif;
 
