@@ -90,7 +90,7 @@ function anycomment_login_with($redirectUrl = null)
                target="_parent"
                title="<?= $social['label'] ?>"
                class="<?= AnyComment()->classPrefix() ?>login-with-list-<?= $key ?>"><img
-                        src="<?= AnyComment()->plugin_url() ?>/assets/img/social-auth-<?= $key ?>.svg"
+                        src="<?= AnyComment()->plugin_url() ?>/assets/img/icons/auth/social-<?= $key ?>.svg"
                         alt="<?= $social['label'] ?>"></a>
         </li>
     <?php
@@ -146,7 +146,8 @@ function anycomment_avatar($comment)
         <?php if (($avatarUrl = AnyComment()->auth->get_user_avatar_url($comment->user_id))): ?>
             <div class="comment-single-avatar__img" style="background-image: url('<?= $avatarUrl ?>');">
                 <?php if ($social = get_user_meta($comment->user_id, 'anycomment_social', true)): ?>
-                    <span class="comment-single-avatar__img-auth-type <?= $social ?>"></span>
+                    <span class="comment-single-avatar__img-auth-type <?= $social ?>"
+                          style="background-image: url('<?= sprintf(AnyComment()->plugin_url() . '/assets/img/icons/avatars/social-%s.svg', $social) ?>')"></span>
                 <?php endif; ?>
             </div>
         <?php endif; ?>
