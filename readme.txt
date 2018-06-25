@@ -23,12 +23,11 @@ Dark for light background websites, where as light for dark background ones.
 
 AnyComment stands for simplicity, so default comment have very simple user interface, it is up to you what features to have.
 
-Ps. Comment will be actively supported and maintained. We would like to have your opinions on what is good and what could be improved. Thank you for sharing love with us!
+Ps. Comment will be actively supported. We would like to have your opinions on what is good and what could be improved. Thank you for sharing love with us!
 
 = Can I contribute? =
 
 Yes! Join our [GitHub repository](https://github.com/bologer/anycomment.io) :)
-
 
 Major features of AnyComment include:
 * Social network authorization via Facebook, VK, Twitter or Google
@@ -38,8 +37,9 @@ Major features of AnyComment include:
 * Simple & informative dashboard with graphs to display number of comments over number of active user per certain period & most active commenting users
 * Comments do no inherit any of the currently active theme styles. Meaning that comments will not be broken by styles you have.
 * Integration with [WP User Avatar](https://wordpress.org/plugins/wp-user-avatar/), to specify customized avatars
+* All comments stored in your own database. We do not create extra tables for these reasons. We reuse native comment's table, so all of the default WordPress functionality comes out of the box.
 
-Todo features:
+= Todo features =
 * Option: customization of comment styles
 * Option: add option to specify default number of comments loaded
 * Option: add option to specify number of comments loaded per page
