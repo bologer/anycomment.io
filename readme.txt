@@ -93,6 +93,7 @@ On the next release, special options will be enabled on plugin to have Privacy P
 * Added authorization via GitHub & Odnoklassniki
 * Fix - comment text box was overflowing on long texts, #22
 * Fix - better responsiveness of dashboard layout, #32
+* Fix - avatars uploaded locally to escape problem when some social medias were blocking access to avatar after token expiration, #14
 * Enh - display most recent news from plugin, #31
 
 = 0.0.1 - 24.06.2018 =
