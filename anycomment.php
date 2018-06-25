@@ -206,6 +206,7 @@ if (!class_exists('AnyComment')) :
              * Class autoloader.
              */
             include_once(ANY_COMMENT_ABSPATH . 'includes/AnyCommentErrorHandler.php');
+            include_once(ANY_COMMENT_ABSPATH . 'includes/AnyCommentUploadHandler.php');
             include_once(ANY_COMMENT_ABSPATH . 'includes/AnyCommentRender.php');
             include_once(ANY_COMMENT_ABSPATH . 'includes/ac-core-functions.php');
             include_once(ANY_COMMENT_ABSPATH . 'includes/AnyCommentSocialAuth.php');

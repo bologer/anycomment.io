@@ -325,6 +325,19 @@ if (!class_exists('AnyCommentSocialAuth')) :
                 'user_url' => $user->profileURL
             ];
 
+            $photoUrl = null;
+
+            if (!empty($user->photoURL)) {
+                $localUrl = \AnyComment\Handlers\AnyCommentUploadHandler::upload($user->photoURL, [
+                    $social,
+                    $user->identifier
+                ]);
+
+                if ($localUrl !== false) {
+                    $photoUrl = $localUrl;
+                }
+            }
+
             if ($email !== null) {
                 $userdata['user_email'] = $email;
             }
@@ -337,7 +350,10 @@ if (!class_exists('AnyCommentSocialAuth')) :
                 $searchBy,
                 $searchValue,
                 $userdata,
-                ['anycomment_social_avatar' => $user->photoURL]
+                [
+                    'anycomment_social_avatar' => $photoUrl,
+                    'anycomment_social_avatar_origin' => $user->photoURL
+                ]
             );
         }
 
