@@ -45,7 +45,8 @@ $classPrefix = AnyComment()->classPrefix();
 <script>
     let settings =  <?= json_encode( [
 		'url'   => esc_url_raw( rest_url( 'anycomment/v1/comments' ) ),
-		'nonce' => wp_create_nonce( 'wp_rest' )
+		'nonce' => wp_create_nonce( 'wp_rest' ),
+		'debug' => true
 	] ) ?>;
 
     // Load generic comments template
@@ -71,7 +72,10 @@ $classPrefix = AnyComment()->classPrefix();
             jQuery('#<?= $classPrefix ?>load-container').html(data);
             loadTime();
         }).fail(function () {
-            console.log('Unable to get most recent comments');
+            // todo: need proper way of fandling generic failures, possibly translatable message
+            if (settings.debug) {
+                console.log('Unable to get most recent comments');
+            }
         }).always(function () {
             hideLoader();
         });
@@ -216,19 +220,25 @@ $classPrefix = AnyComment()->classPrefix();
         let commentField = form.find('[name="content"]') || '';
         let editIdField = form.find('[name="edit_id"]') || '';
 
-        console.log(type);
+        if (settings.debug) {
+            console.log(type);
+        }
 
         switch (type) {
             case 'add':
                 commentField.val('');
                 editIdField.val('');
-                console.log('done ' + type);
+                if (settings.debug) {
+                    console.log('done ' + type);
+                }
                 break;
 
             case 'edit':
                 commentField.val(commentResponse.content);
                 editIdField.val(commentResponse.id);
-                console.log('done ' + type);
+                if (settings.debug) {
+                    console.log('done ' + type);
+                }
                 break;
             default:
         }
@@ -283,8 +293,10 @@ $classPrefix = AnyComment()->classPrefix();
                 cleanAlerts();
             },
             error: function (error) {
-                console.log('Err:');
-                console.log(error);
+                if (settings.debug) {
+                    console.log('Err:');
+                    console.log(error);
+                }
 
                 let response = error.responseJSON;
 
