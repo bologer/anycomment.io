@@ -2,21 +2,21 @@
 /**
  * This template is used to display comments.
  */
-if (!defined('ABSPATH')) {
-    exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
 }
 
-$postId = sanitize_text_field($_GET['postId']);
-AnyComment()->setCurrentPost($postId);
+$postId = sanitize_text_field( $_GET['postId'] );
+AnyComment()->setCurrentPost( $postId );
 
-if (post_password_required($postId) || !comments_open($postId)) {
-    return;
+if ( post_password_required( $postId ) || ! comments_open( $postId ) ) {
+	return;
 }
 
-wp_enqueue_script("jquery");
-wp_enqueue_script('anycomment-iframe-iframeResizer-contentWindow', AnyComment()->plugin_url() . '/assets/js/iframeResizer.contentWindow.min.js', [], AnyComment()->version);
-wp_enqueue_script('anycomment-iframe-timeago', AnyComment()->plugin_url() . '/assets/js/timeago.min.js', [], AnyComment()->version);
-wp_enqueue_script('anycomment-iframe-timeago-locales', AnyComment()->plugin_url() . '/assets/js/timeago.locales.min.js', [], AnyComment()->version);
+wp_enqueue_script( "jquery" );
+wp_enqueue_script( 'anycomment-iframe-iframeResizer-contentWindow', AnyComment()->plugin_url() . '/assets/js/iframeResizer.contentWindow.min.js', [], AnyComment()->version );
+wp_enqueue_script( 'anycomment-iframe-timeago', AnyComment()->plugin_url() . '/assets/js/timeago.min.js', [], AnyComment()->version );
+wp_enqueue_script( 'anycomment-iframe-timeago-locales', AnyComment()->plugin_url() . '/assets/js/timeago.locales.min.js', [], AnyComment()->version );
 
 $classPrefix = AnyComment()->classPrefix();
 ?>
@@ -33,16 +33,21 @@ $classPrefix = AnyComment()->classPrefix();
      data-origin-limit="<?= AnyCommentRender::LIMIT ?>"
      data-current-limit="<?= AnyCommentRender::LIMIT ?>"
      data-sort="<?= AnyCommentRender::SORT_NEW ?>"
-     data-guest="<?= !is_user_logged_in() ? "1" : "0" ?>">
-    <?php do_action('anycomment_send_comment') ?>
-    <?php do_action('anycomment_notifications') ?>
-    <?php do_action('anycomment_load_comments') ?>
-    <?php do_action('anycomment_footer') ?>
+     data-guest="<?= ! is_user_logged_in() ? "1" : "0" ?>">
+	<?php do_action( 'anycomment_send_comment' ) ?>
+	<?php do_action( 'anycomment_notifications' ) ?>
+	<?php do_action( 'anycomment_load_comments' ) ?>
+	<?php do_action( 'anycomment_footer' ) ?>
 </div>
 
 <?php wp_footer(); ?>
 
 <script>
+    let settings =  <?= json_encode( [
+		'url'   => esc_url_raw( rest_url( 'anycomment/v1/comments' ) ),
+		'nonce' => wp_create_nonce( 'wp_rest' )
+	] ) ?>;
+
     // Load generic comments template
     function loadComments(options = {}) {
         showLoader();
@@ -51,8 +56,6 @@ $classPrefix = AnyComment()->classPrefix();
         let limit = null,
             sort = null;
 
-        console.log(options);
-
         if (options !== {}) {
             limit = 'limit' in options ? options.limit : null;
             sort = 'sort' in options ? options.sort : null;
@@ -60,7 +63,7 @@ $classPrefix = AnyComment()->classPrefix();
 
         jQuery.post('<?= AnyComment()->ajax_url() ?>', {
             action: 'render_comments',
-            _wpnonce: '<?= wp_create_nonce("load-comments-nonce") ?>',
+            _wpnonce: '<?= wp_create_nonce( "load-comments-nonce" ) ?>',
             postId: '<?= $postId ?>',
             limit: limit,
             sort: sort
@@ -90,7 +93,7 @@ $classPrefix = AnyComment()->classPrefix();
     }
 
     function getForm() {
-        return jQuery('#send-comment-form') || '';
+        return jQuery('#process-comment-form') || '';
     }
 
 
@@ -101,14 +104,14 @@ $classPrefix = AnyComment()->classPrefix();
             return;
         }
 
-        return form.find('[name="comment"]') || '';
+        return form.find('[name="content"]') || '';
     }
 
     function commentSort(type) {
         loadComments({sort: type});
     }
 
-    function checkAuthorization() {
+    function shouldLogin() {
         let root = getRoot();
         let isGuest = root.data('guest');
         let guestOverlay = jQuery('#auth-required');
@@ -141,11 +144,11 @@ $classPrefix = AnyComment()->classPrefix();
         }
 
 
-        if (checkAuthorization()) {
+        if (shouldLogin()) {
             return;
         }
 
-        let commentField = form.find('[name="comment"]') || '';
+        let commentField = form.find('[name="content"]') || '';
         let replyToField = form.find('[name="reply_to"]') || '';
 
 
@@ -164,23 +167,92 @@ $classPrefix = AnyComment()->classPrefix();
         return false;
     }
 
-    // Genetic send comment function
-    function sendComment(el, formId) {
+    // Edit comment
+    function editComment(el, commentId) {
 
-        let form = jQuery(formId) || '';
+        if (!commentId) {
+            return;
+        }
+
+        let form = getForm();
+
 
         if (!form) {
             return;
         }
 
-        let commentField = form.find('[name="comment"]') || '';
-        let postIdField = form.find('[name="post_id"]') || '';
-        let actionField = form.find('[name="action"]') || '';
+        if (shouldLogin()) {
+            return;
+        }
+
+        let commentField = form.find('[name="content"]') || '';
+        let editIdField = form.find(['[name="edit_id"]']) || '';
+
+
+        if (!commentField || !editIdField) {
+            return;
+        }
+
+        jQuery.get(settings.url + '/' + commentId, function (resp) {
+            prepareTo('edit', resp);
+        });
+
+        commentField.focus();
+
+        return false;
+    }
+
+    function prepareTo(type, commentResponse = null) {
+        if (type !== 'add' && type !== 'edit') {
+            return;
+        }
+
+        let form = getForm();
+
+        if (!form) {
+            return;
+        }
+
+        let commentField = form.find('[name="content"]') || '';
+        let editIdField = form.find('[name="edit_id"]') || '';
+
+        console.log(type);
+
+        switch (type) {
+            case 'add':
+                commentField.val('');
+                editIdField.val('');
+                console.log('done ' + type);
+                break;
+
+            case 'edit':
+                commentField.val(commentResponse.content);
+                editIdField.val(commentResponse.id);
+                console.log('done ' + type);
+                break;
+            default:
+        }
+
+        return true;
+    }
+
+    // Genetic send comment function
+    function processComment(el, formId) {
+
+        let form = getForm();
+
+        if (!form) {
+            return;
+        }
+
+        let commentField = form.find('[name="content"]') || '';
+        let postIdField = form.find('[name="post"]') || '';
         let nonceField = form.find('[name="nonce"]') || '';
         let replyToField = form.find('[name="reply_to"]') || '';
+        let editIdField = form.find('[name="edit_id"]') || '';
         let commentCountEl = jQuery('#comment-count') || '';
 
-        if (!commentField || !postIdField || !actionField || !nonceField) {
+        if (!commentField || !postIdField || !nonceField) {
             return;
         }
 
@@ -190,29 +262,56 @@ $classPrefix = AnyComment()->classPrefix();
             return null;
         }
 
-        showLoader();
-
         let data = form.serialize();
 
-        jQuery.post('<?= AnyComment()->ajax_url() ?>', data, function (data) {
-            if (data.success) {
-                let response = JSON.parse(data.response);
-                if (commentCountEl) {
-                    commentCountEl.text(response.comment_count_text);
-                }
+        let url = settings.url;
 
-                replyToField.val('');
-                commentField.val('');
-                commentField.attr('placeholder', commentField.data('original-placeholder'));
+        if (editIdField) {
+            url = settings.url + '/' + editIdField.val().trim();
+        }
+
+        jQuery.ajax({
+            method: 'POST',
+            url: url,
+            dataType: 'json',
+            data: data,
+            headers: {'X-WP-Nonce': settings.nonce},
+            beforeSend: showLoader,
+            success: function (response) {
                 loadComments();
-            } else {
-                addError(data.response.error);
-                hideLoader();
-            }
-            commentField.focus();
-        }, 'json');
+                revertToAdd();
+                cleanAlerts();
+            },
+            error: function (error) {
+                console.log('Err:');
+                console.log(error);
 
-        return false;
+                let response = error.responseJSON;
+
+                if (response.code) {
+                    addError(response.message);
+                }
+            }
+        }).always(function () {
+            hideLoader();
+        });
+    }
+
+    function revertToAdd() {
+        let form = getForm();
+
+        if (!form) {
+            return;
+        }
+
+        let commentField = form.find('[name="content"]') || '';
+        let replyToField = form.find('[name="reply_to"]') || '';
+        let editIdField = form.find('[name="edit_id"]') || '';
+
+        commentField.val('');
+        replyToField.val('');
+        editIdField.val('');
+        commentField.attr('placeholder', commentField.data('original-placeholder'));
     }
 
     /**
@@ -287,9 +386,7 @@ $classPrefix = AnyComment()->classPrefix();
 
         let isOpen = notifications.length;
 
-        let isEmpty = notifications.html().trim() === '';
-
-        let htmlContent = isEmpty ? alert : notifications.html() + alert;
+        let htmlContent = alert;
 
         if (isOpen) {
             notifications.slideUp(300, function () {
@@ -329,7 +426,7 @@ $classPrefix = AnyComment()->classPrefix();
 </script>
 
 
-<?php if (AnyComment()->errors->hasErrors()): ?>
+<?php if ( AnyComment()->errors->hasErrors() ): ?>
     <script>
         /**
          * Display error messages form cookies. After errors display

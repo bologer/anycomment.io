@@ -42,9 +42,14 @@ if ( ! class_exists( 'AnyComment' ) ) :
 		public $render = null;
 
 		/**
+		 * @var null|AnyCommentRestComment
+		 */
+		public $rest = null;
+
+		/**
 		 * Instance of error handler to keep information about erors.
 		 *
-		 * @var null|\AnyComment\Handlers\AnyCommentErrorHandler
+		 * @var null|AnyCommentErrorHandler
 		 */
 		public $errors = null;
 
@@ -193,6 +198,8 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			/**
 			 * Class autoloader.
 			 */
+			include_once( ANY_COMMENT_ABSPATH . 'includes/AnyCommentRestCommentMeta.php' );
+			include_once( ANY_COMMENT_ABSPATH . 'includes/AnyCommentRestComment.php' );
 			include_once( ANY_COMMENT_ABSPATH . 'includes/AnyCommentErrorHandler.php' );
 			include_once( ANY_COMMENT_ABSPATH . 'includes/AnyCommentUploadHandler.php' );
 			include_once( ANY_COMMENT_ABSPATH . 'includes/AnyCommentRender.php' );
@@ -214,7 +221,8 @@ if ( ! class_exists( 'AnyComment' ) ) :
 				include_once( ANY_COMMENT_ABSPATH . 'includes/hybridauth/src/autoload.php' );
 			}
 
-			$this->errors      = new AnyComment\Handlers\AnyCommentErrorHandler();
+			$this->rest      = new AnyCommentRestComment();
+			$this->errors      = new AnyCommentErrorHandler();
 			$this->render      = new AnyCommentRender();
 			$this->admin_pages = new AnyCommentAdminPages();
 			$this->auth        = new AnyCommentSocialAuth();
