@@ -169,7 +169,6 @@ $active_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'anycomm
                             <a href="<?= $post['link'] ?>"
                                target="_blank"
                                class="anycomment-dashboard__sidebar-news-title"><?= esc_html($post['title']['rendered']) ?></a>
-                            <div class="anycomment-dashboard__sidebar-news-summary"><?= $post['content']['rendered'] ?></div>
                         </li>
                     <?php endforeach; ?>
                 <?php else: ?>

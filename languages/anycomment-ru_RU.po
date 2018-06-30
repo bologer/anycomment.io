@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-23 14:45+0000\n"
-"PO-Revision-Date: 2018-06-23 14:46+0000\n"
-"Last-Translator: Саша Тешабаев <sasha.tesh@gmail.com1>\n"
-"Language-Team: Русский\n"
+"POT-Creation-Date: 2018-06-30 09:42+0000\n"
+"PO-Revision-Date: 2018-06-30 09:44+0000\n"
+"Last-Translator: admin <sasha.tesh@gmail.com>\n"
+"Language-Team: Russian\n"
 "Language: ru_RU\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10 >= 2 && "
 "n%10<=4 &&(n%100<10||n%100 >= 20)? 1 : 2);\n"
@@ -14,14 +14,102 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/"
 
-#: templates/send-comment-logged-in-as.php:15
-#, php-format
-msgid "Logged in as %s"
-msgstr "Вы авторизованы как %s"
+#: includes/AnyCommentSocialAuth.php:105
+msgid "Unable to authorize, please try again later"
+msgstr "Что-то пошло не так, попробуйте чуть позже..."
 
-#: templates/send-comment-logged-in-as.php:17
-msgid "Logout"
-msgstr "Выйти"
+#: includes/ac-core-functions.php:51
+#: includes/admin/AnyCommentSocialSettings.php:117
+msgid "VK"
+msgstr "ВК"
+
+#: includes/ac-core-functions.php:56
+#: includes/admin/AnyCommentSocialSettings.php:164
+msgid "Twitter"
+msgstr "Твиттер"
+
+#: includes/ac-core-functions.php:61
+#: includes/admin/AnyCommentSocialSettings.php:210
+msgid "Facebook"
+msgstr "Facebook"
+
+#: includes/ac-core-functions.php:66
+#: includes/admin/AnyCommentSocialSettings.php:256
+msgid "Google"
+msgstr "Google"
+
+#: includes/ac-core-functions.php:71
+#: includes/admin/AnyCommentSocialSettings.php:302
+msgid "Github"
+msgstr "Github"
+
+#: includes/ac-core-functions.php:76
+#: includes/admin/AnyCommentSocialSettings.php:348
+msgid "Odnoklassniki"
+msgstr "Одноклассники"
+
+#: includes/ac-core-functions.php:167 includes/ac-core-functions.php:171
+msgid "Unknown"
+msgstr "Аноним"
+
+#: includes/ac-core-functions.php:231
+msgid "Load more"
+msgstr "Загрузить еще"
+
+#: includes/ac-core-functions.php:252
+msgid "Reply"
+msgstr "Ответить"
+
+#: includes/ac-core-functions.php:256
+msgid "Edit"
+msgstr "Изменить"
+
+#: includes/ac-core-functions.php:315
+msgid "No comments to display"
+msgstr "Пока еще не было комментариев"
+
+#: includes/ac-core-functions.php:347
+msgid "Add Anycomment to your site"
+msgstr "Добавить AnyComment на свой сайт"
+
+#: includes/AnyCommentPrivacyHelper.php:12
+msgid "What personal data we collect and why we collect it:"
+msgstr ""
+
+#: includes/AnyCommentPrivacyHelper.php:13
+msgid ""
+"\n"
+"When you authorize via some of the available social networks, we collect the "
+"following information about you: first name, last name, login (when "
+"available), avatar URL, email (when available or access given)."
+msgstr ""
+
+#: includes/AnyCommentPrivacyHelper.php:14
+msgid ""
+"\n"
+"Some of the information may vary from social to social. For example, VK.com "
+"give access to email only when you accept it while authorizing."
+msgstr ""
+
+#: includes/AnyCommentPrivacyHelper.php:15
+msgid ""
+"\n"
+"We record information about only when social network allows us to have it."
+msgstr ""
+
+#: includes/AnyCommentRender.php:140
+msgid "No post ID specified"
+msgstr "Не указано ID поста"
+
+#: includes/AnyCommentRender.php:145
+#, php-format
+msgid "Unable to find post with ID #%s"
+msgstr "Не возможно найти пост с ID #%s"
+
+#: includes/AnyCommentRender.php:161
+#, php-format
+msgid "%s Comments"
+msgstr "%s комментариев"
 
 #: templates/send-comment.php:18
 msgid "Sort By"
@@ -35,162 +123,113 @@ msgstr "Новые"
 msgid "Oldest"
 msgstr "Старые"
 
-#: templates/send-comment.php:40 templates/send-comment.php:41
+#: templates/send-comment.php:41 templates/send-comment.php:42
 msgid "Add comment..."
 msgstr "Добавить комментарий..."
 
-#: templates/send-comment.php:42
+#: templates/send-comment.php:43
 msgid "Reply to {name}..."
 msgstr "Ответить {name}..."
 
-#: templates/send-comment.php:48
+#: templates/send-comment.php:49
 msgid "Quick Login"
 msgstr "Быстрый вход"
 
-#: templates/send-comment.php:56
+#: templates/send-comment.php:57
 msgid "Send"
 msgstr "Отправить"
 
-#: includes/ac-core-functions.php:50
-#: includes/admin/AnyCommentSocialSettings.php:117
-msgid "VK"
-msgstr "ВК"
-
-#: includes/ac-core-functions.php:55
-#: includes/admin/AnyCommentSocialSettings.php:164
-msgid "Twitter"
-msgstr "Твиттер"
-
-#: includes/ac-core-functions.php:60
-#: includes/admin/AnyCommentSocialSettings.php:210
-msgid "Facebook"
-msgstr "Facebook"
-
-#: includes/ac-core-functions.php:65
-#: includes/admin/AnyCommentSocialSettings.php:256
-msgid "Google"
-msgstr "Google"
-
-#: includes/ac-core-functions.php:70
-#: includes/admin/AnyCommentSocialSettings.php:302
-msgid "Github"
-msgstr "Github"
-
-#: includes/ac-core-functions.php:75
-#: includes/admin/AnyCommentSocialSettings.php:348
-msgid "Odnoklassniki"
-msgstr "Одноклассники"
-
-#: includes/ac-core-functions.php:167 includes/ac-core-functions.php:171
-msgid "Unknown"
-msgstr "Аноним"
-
-#: includes/ac-core-functions.php:230
-msgid "Load more"
-msgstr "Загрузить еще"
-
-#: includes/ac-core-functions.php:248
-msgid "Reply"
-msgstr "Ответить"
-
-#: includes/ac-core-functions.php:306
-msgid "No comments to display"
-msgstr "Пока еще не было комментариев"
-
-#: includes/ac-core-functions.php:339
-msgid "Add Anycomment to your site"
-msgstr "Добавить AnyComment на свой сайт"
-
-#: includes/AnyCommentRender.php:143
-msgid "No post ID specified"
-msgstr "Не указано ID поста"
-
-#: includes/AnyCommentRender.php:148
+#: templates/send-comment-logged-in-as.php:15
 #, php-format
-msgid "Unable to find post with ID #%s"
-msgstr "Не возможно найти пост с ID #%s"
+msgid "Logged in as %s"
+msgstr "Вы авторизованы как %s"
 
-#: includes/AnyCommentRender.php:166
-msgid "Login to add a comment"
-msgstr "Авторизуйтесь, чтобы добавить комментарий"
+#: templates/send-comment-logged-in-as.php:17
+msgid "Logout"
+msgstr "Выйти"
 
-#: includes/AnyCommentRender.php:175
-msgid "Wrong params passed"
-msgstr "Переданы неправильные параметры"
+#: includes/admin/AnyCommentIntegrationSettings.php:61
+#: includes/admin/AnyCommentIntegrationSettings.php:62
+msgid "Integration"
+msgstr "Интеграция"
 
-#: includes/AnyCommentRender.php:180
-msgid "No such post"
-msgstr "Такой пост не существует"
+#: includes/admin/AnyCommentIntegrationSettings.php:75
+#: includes/admin/AnyCommentGenericSettings.php:85
+msgid "Generic"
+msgstr "Общие"
 
-#: includes/AnyCommentRender.php:190
-msgid "Reply comment does not belong to the post"
-msgstr "Комментарий на который вы ответили не относится не к какому посту"
+#: includes/admin/AnyCommentIntegrationSettings.php:78
+msgid "Integration with other plugin and/or services."
+msgstr "Интеграция с другими плагинами."
 
-#: includes/AnyCommentRender.php:218
-msgid "Failed to add comment. Please, try again."
-msgstr "Ошибка добавления комментария. Пожалуйста попробуй чуть позже. "
+#: includes/admin/AnyCommentIntegrationSettings.php:90
+msgid "Akismet Anti-Spam"
+msgstr "Akismet Anti-Spam"
 
-#: includes/AnyCommentRender.php:236
-#, php-format
-msgid "%s Comments"
-msgstr "%s комментариев"
+#: includes/admin/AnyCommentIntegrationSettings.php:92
+msgid "Filter all new comments through Akismet Anti-Spam plugin."
+msgstr "Фильтровать все комментарии через Akismet Anti-Spam. "
 
-#: includes/AnyCommentSocialAuth.php:105
-msgid "Unable to authorize, please try again later"
-msgstr "Что-то пошло не так, попробуйте чуть позже..."
-
-#: templates/admin/dashboard.php:10 templates/admin/dashboard.php:30
-msgid "Dashboard"
-msgstr "Консоль"
-
-#. Name of the plugin
-#: templates/admin/dashboard.php:17 templates/admin/dashboard.php:18
-#: includes/admin/AnyCommentAdminPages.php:56
-#: includes/admin/AnyCommentAdminPages.php:57
-msgid "AnyComment"
-msgstr "AnyComment"
-
-#: templates/admin/dashboard.php:22
-msgid "Official Website"
-msgstr "Официальный сайт"
-
-#: templates/admin/dashboard.php:31
-msgid "Social"
-msgstr "Соц. сети"
-
-#: templates/admin/dashboard.php:32
 #: includes/admin/AnyCommentGenericSettings.php:70
 #: includes/admin/AnyCommentGenericSettings.php:71
+#: templates/admin/dashboard.php:32
 msgid "Settings"
 msgstr "Настройки"
 
-#: templates/admin/dashboard.php:42 templates/admin/dashboard.php:46
-msgid "Commentators"
-msgstr "Комментаторы"
+#: includes/admin/AnyCommentGenericSettings.php:87
+msgid "Generic settings."
+msgstr "Общение настройки."
 
-#: templates/admin/dashboard.php:53 templates/admin/dashboard.php:56
-msgid "All Comments"
-msgstr "Все комментарии"
+#: includes/admin/AnyCommentGenericSettings.php:98
+msgid "Enable Comments"
+msgstr "Включить комментарии"
 
-#: templates/admin/dashboard.php:66
-msgid "Overal Statistics"
-msgstr "Общая статистика"
+#: includes/admin/AnyCommentGenericSettings.php:100
+msgid ""
+"Visible plugin or not. When off default comments of your website will be "
+"shown instead. Could be useful to configure comments first and then enable "
+"this option."
+msgstr ""
+"Видны комментарии или нет. Если нет, то комментарии которые у вас по "
+"умолчанию будут видны вместе AnyComment. Это может использоваться во время "
+"настройки плагина, чтобы не сбивать текущую активность на сайте."
 
-#: templates/admin/dashboard.php:90
-msgid "Comments"
-msgstr "Комментарии"
+#: includes/admin/AnyCommentGenericSettings.php:104
+msgid "Theme"
+msgstr "Тема"
 
-#: templates/admin/dashboard.php:101
-msgid "Users"
-msgstr "Пользователи"
+#: includes/admin/AnyCommentGenericSettings.php:108
+msgid "For Dark Websites"
+msgstr "Для темных сайтов"
 
-#: templates/admin/dashboard.php:144
-msgid "Most Active Users"
-msgstr "Активные пользователи"
+#: includes/admin/AnyCommentGenericSettings.php:109
+msgid "For Light Websites"
+msgstr "Для светлых сайтов"
 
-#: templates/admin/dashboard.php:156
-msgid "No users yet"
-msgstr "Данные пока что отсутствуют"
+#: includes/admin/AnyCommentGenericSettings.php:112
+msgid "Choose theme of the comments."
+msgstr "Выберите тему для комментариев."
+
+#: includes/admin/AnyCommentGenericSettings.php:116
+msgid "Thanks"
+msgstr "Спасибо"
+
+#: includes/admin/AnyCommentGenericSettings.php:118
+msgid ""
+"Show AnyComment's link in the footer of comments. Copyright helps to bring "
+"awareness of such plugin and bring people to allow us to understand that it "
+"is a wanted product and give more often updated."
+msgstr ""
+"Показать ссылку на AnyComment's в подвале комментариев.  Копирайт помогает "
+"нам информировать о плагине и поддерживать дальнейшую разработку и "
+"усовершенствования."
+
+#. Name of the plugin
+#: includes/admin/AnyCommentAdminPages.php:57
+#: includes/admin/AnyCommentAdminPages.php:58 templates/admin/dashboard.php:17
+#: templates/admin/dashboard.php:18
+msgid "AnyComment"
+msgstr "AnyComment"
 
 #: includes/admin/AnyCommentSocialSettings.php:99
 #: includes/admin/AnyCommentSocialSettings.php:100
@@ -394,65 +433,61 @@ msgstr ""
 "Введите секретный ключ. Вы можете это найти в официальном письме, "
 "отправленное вам на почту от Одноклассников."
 
-#: includes/admin/AnyCommentOptions.php:165
+#: includes/admin/AnyCommentOptions.php:160
 msgid "Settings Saved"
 msgstr "Настройки сохранены"
 
-#: includes/admin/AnyCommentOptions.php:176
+#: includes/admin/AnyCommentOptions.php:171
 msgid "Save"
 msgstr "Сохранить"
 
-#: includes/admin/AnyCommentGenericSettings.php:85
-msgid "Generic"
-msgstr "Общие"
+#: templates/admin/dashboard.php:10 templates/admin/dashboard.php:30
+msgid "Dashboard"
+msgstr "Консоль"
 
-#: includes/admin/AnyCommentGenericSettings.php:87
-msgid "Generic settings."
-msgstr "Общение настройки."
+#: templates/admin/dashboard.php:22
+msgid "Official Website"
+msgstr "Официальный сайт"
 
-#: includes/admin/AnyCommentGenericSettings.php:98
-msgid "Enable Comments"
-msgstr "Включить комментарии"
+#: templates/admin/dashboard.php:31
+msgid "Social"
+msgstr "Соц. сети"
 
-#: includes/admin/AnyCommentGenericSettings.php:100
-msgid ""
-"Visible plugin or not. When off default comments of your website will be "
-"shown instead. Could be useful to configure comments first and then enable "
-"this option."
-msgstr ""
-"Видны комментарии или нет. Если нет, то комментарии которые у вас по "
-"умолчанию будут видны вместе AnyComment. Это может использоваться во время "
-"настройки плагина, чтобы не сбивать текущую активность на сайте."
+#: templates/admin/dashboard.php:42 templates/admin/dashboard.php:46
+msgid "Commentators"
+msgstr "Комментаторы"
 
-#: includes/admin/AnyCommentGenericSettings.php:104
-msgid "Theme"
-msgstr "Тема"
+#: templates/admin/dashboard.php:53 templates/admin/dashboard.php:56
+msgid "All Comments"
+msgstr "Все комментарии"
 
-#: includes/admin/AnyCommentGenericSettings.php:108
-msgid "Dark"
-msgstr "Темная (для светлых сайтов)"
+#: templates/admin/dashboard.php:66
+msgid "Overal Statistics"
+msgstr "Общая статистика"
 
-#: includes/admin/AnyCommentGenericSettings.php:109
-msgid "Light"
-msgstr "Светлая (для темных сайтов)"
+#: templates/admin/dashboard.php:90
+msgid "Comments"
+msgstr "Комментарии"
 
-#: includes/admin/AnyCommentGenericSettings.php:112
-msgid "Choose theme of the comments."
-msgstr "Выберите тему для комментариев."
+#: templates/admin/dashboard.php:101
+msgid "Users"
+msgstr "Пользователи"
 
-#: includes/admin/AnyCommentGenericSettings.php:116
-msgid "Thanks"
-msgstr "Спасибо"
+#: templates/admin/dashboard.php:142
+msgid "Most Active Users"
+msgstr "Активные пользователи"
 
-#: includes/admin/AnyCommentGenericSettings.php:118
-msgid ""
-"Show AnyComment's link in the footer of comments. Copyright helps to bring "
-"awareness of such plugin and bring people to allow us to understand that it "
-"is a wanted product and give more often updated."
-msgstr ""
-"Показать ссылку на AnyComment's в подвале комментариев.  Копирайт помогает "
-"нам информировать о плагине и поддерживать дальнейшую разработку и "
-"усовершенствования."
+#: templates/admin/dashboard.php:155
+msgid "No users yet"
+msgstr "Данные пока что отсутствуют"
+
+#: templates/admin/dashboard.php:161
+msgid "News"
+msgstr "Новости"
+
+#: templates/admin/dashboard.php:176
+msgid "No news yet"
+msgstr "Новостей пока не было."
 
 #. Description of the plugin
 msgid "AnyComment is an advanced commenting system for WordPress."

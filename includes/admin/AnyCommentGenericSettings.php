@@ -105,8 +105,8 @@ if (!class_exists('AnyCommentGenericSettings')) :
                         'callback' => 'input_select',
                         'args' => [
                             'options' => [
-                                self::THEME_DARK => __('Dark', 'anycomment'),
-                                self::THEME_LIGHT => __('Light', 'anycomment'),
+                                self::THEME_DARK => __('For Dark Websites', 'anycomment'),
+                                self::THEME_LIGHT => __('For Light Websites', 'anycomment'),
                             ]
                         ],
                         'description' => esc_html(__('Choose theme of the comments.', "anycomment"))

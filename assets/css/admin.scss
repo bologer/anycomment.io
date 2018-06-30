@@ -54,6 +54,12 @@ $separator-color: #d8d8d8;
       color: #fff;
       margin-top: 0;
     }
+    &-news {
+      li {
+        color: #fff;
+        list-style: disc;
+      }
+    }
 
     &-news-title {
       font-size: $font-size + 2;
