@@ -147,13 +147,12 @@ $classPrefix = AnyComment()->classPrefix();
             return;
         }
 
-
         if (shouldLogin()) {
             return;
         }
 
         let commentField = form.find('[name="content"]') || '';
-        let replyToField = form.find('[name="reply_to"]') || '';
+        let replyToField = form.find('[name="parent"]') || '';
 
 
         if (!commentField || !replyToField) {
@@ -191,6 +190,7 @@ $classPrefix = AnyComment()->classPrefix();
 
         let commentField = form.find('[name="content"]') || '';
         let editIdField = form.find(['[name="edit_id"]']) || '';
+        let parentField = form.find(['[name="parent"]']) || '';
 
 
         if (!commentField || !editIdField) {
@@ -218,6 +218,7 @@ $classPrefix = AnyComment()->classPrefix();
         }
 
         let commentField = form.find('[name="content"]') || '';
+        let parentField = form.find('[name="parent"]') || '';
         let editIdField = form.find('[name="edit_id"]') || '';
 
         if (settings.debug) {
@@ -228,6 +229,7 @@ $classPrefix = AnyComment()->classPrefix();
             case 'add':
                 commentField.val('');
                 editIdField.val('');
+                parentField.val(0);
                 if (settings.debug) {
                     console.log('done ' + type);
                 }
@@ -236,6 +238,7 @@ $classPrefix = AnyComment()->classPrefix();
             case 'edit':
                 commentField.val(commentResponse.content);
                 editIdField.val(commentResponse.id);
+                parentField.val(commentResponse.parent);
                 if (settings.debug) {
                     console.log('done ' + type);
                 }
@@ -258,9 +261,7 @@ $classPrefix = AnyComment()->classPrefix();
         let commentField = form.find('[name="content"]') || '';
         let postIdField = form.find('[name="post"]') || '';
         let nonceField = form.find('[name="nonce"]') || '';
-        let replyToField = form.find('[name="reply_to"]') || '';
         let editIdField = form.find('[name="edit_id"]') || '';
-        let commentCountEl = jQuery('#comment-count') || '';
 
         if (!commentField || !postIdField || !nonceField) {
             return;
@@ -317,11 +318,11 @@ $classPrefix = AnyComment()->classPrefix();
         }
 
         let commentField = form.find('[name="content"]') || '';
-        let replyToField = form.find('[name="reply_to"]') || '';
+        let replyToField = form.find('[name="parent"]') || '';
         let editIdField = form.find('[name="edit_id"]') || '';
 
         commentField.val('');
-        replyToField.val('');
+        replyToField.val(0);
         editIdField.val('');
         commentField.attr('placeholder', commentField.data('original-placeholder'));
     }

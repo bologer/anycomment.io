@@ -160,5 +160,53 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 		public function get_comment_count( $post_id ) {
 			return sprintf( __( '%s Comments', 'anycomment' ), get_comments_number( $post_id ) );
 		}
+
+		/**
+		 * Check whether it is too old to edit (update/delete) comment.
+		 *
+		 * @param WP_Comment $comment Comment to be checked.
+		 * @param int $minutes Number of minutes comment allow to be edited.
+		 *
+		 * Note: if `$minutes` is below 5, it will be set to 5 as it is the default value.
+		 *
+		 * @return bool
+		 */
+		public function is_old_to_edit( $comment, $minutes = 5 ) {
+			$commentTime = strtotime( $comment->comment_date_gmt );
+
+			if ( (int) $minutes < 5 ) {
+				$minutes = 5;
+			}
+
+			$secondsToEdit = (int) $minutes * 60;
+
+			return time() > ( $commentTime + $secondsToEdit );
+		}
+
+		/**
+		 * Check whether current user has ability to edit current user.
+		 *
+		 * @param $comment
+		 *
+		 * @return bool
+		 */
+		public function can_edit_comment( $comment ) {
+			if ( $this->is_old_to_edit( $comment ) ) {
+				return false;
+			}
+
+			if ( current_user_can( 'moderate_comments' ) ||
+			     current_user_can( 'edit_comment', $comment->comment_ID ) ) {
+				return true;
+			}
+
+			$user = wp_get_current_user();
+
+			if ( ! $user instanceof WP_User ) {
+				return false;
+			}
+
+			return (int) $user->ID === (int) $comment->user_id;
+		}
 	}
 endif;

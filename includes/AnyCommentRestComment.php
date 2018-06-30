@@ -47,49 +47,49 @@ class AnyCommentRestComment extends WP_REST_Controller {
 			'schema' => [ $this, 'get_public_item_schema' ],
 		] );
 
-		register_rest_route( $this->namespace, '/' . $this->rest_base . '/(?P<id>[\d]+)', array(
-			'args'   => array(
-				'id' => array(
+		register_rest_route( $this->namespace, '/' . $this->rest_base . '/(?P<id>[\d]+)', [
+			'args'   => [
+				'id' => [
 					'description' => __( 'Unique identifier for the object.' ),
 					'type'        => 'integer',
-				),
-			),
-			array(
+				],
+			],
+			[
 				'methods'             => WP_REST_Server::READABLE,
-				'callback'            => array( $this, 'get_item' ),
-				'permission_callback' => array( $this, 'get_item_permissions_check' ),
-				'args'                => array(
-					'context'  => $this->get_context_param( array( 'default' => 'view' ) ),
-					'password' => array(
+				'callback'            => [ $this, 'get_item' ],
+				'permission_callback' => [ $this, 'get_item_permissions_check' ],
+				'args'                => [
+					'context'  => $this->get_context_param( [ 'default' => 'view' ] ),
+					'password' => [
 						'description' => __( 'The password for the parent post of the comment (if the post is password protected).' ),
 						'type'        => 'string',
-					),
-				),
-			),
-			array(
+					],
+				],
+			],
+			[
 				'methods'             => WP_REST_Server::EDITABLE,
-				'callback'            => array( $this, 'update_item' ),
-				'permission_callback' => array( $this, 'update_item_permissions_check' ),
+				'callback'            => [ $this, 'update_item' ],
+				'permission_callback' => [ $this, 'update_item_permissions_check' ],
 				'args'                => $this->get_endpoint_args_for_item_schema( WP_REST_Server::EDITABLE ),
-			),
-			array(
+			],
+			[
 				'methods'             => WP_REST_Server::DELETABLE,
-				'callback'            => array( $this, 'delete_item' ),
-				'permission_callback' => array( $this, 'delete_item_permissions_check' ),
-				'args'                => array(
-					'force'    => array(
+				'callback'            => [ $this, 'delete_item' ],
+				'permission_callback' => [ $this, 'delete_item_permissions_check' ],
+				'args'                => [
+					'force'    => [
 						'type'        => 'boolean',
 						'default'     => false,
 						'description' => __( 'Whether to bypass trash and force deletion.' ),
-					),
-					'password' => array(
+					],
+					'password' => [
 						'description' => __( 'The password for the parent post of the comment (if the post is password protected).' ),
 						'type'        => 'string',
-					),
-				),
-			),
-			'schema' => array( $this, 'get_public_item_schema' ),
-		) );
+					],
+				],
+			],
+			'schema' => [ $this, 'get_public_item_schema' ],
+		] );
 	}
 
 	/**
@@ -519,13 +519,6 @@ class AnyCommentRestComment extends WP_REST_Controller {
 			$prepared_comment['comment_author_url']   = $user->user_url;
 		}
 
-		// Honor the discussion setting that requires a name and email address of the comment author.
-		if ( get_option( 'require_name_email' ) ) {
-			if ( empty( $prepared_comment['comment_author'] ) || empty( $prepared_comment['comment_author_email'] ) ) {
-				return new WP_Error( 'rest_comment_author_data_required', __( 'Creating a comment requires valid author name and email values.' ), array( 'status' => 400 ) );
-			}
-		}
-
 		if ( ! isset( $prepared_comment['comment_author_email'] ) ) {
 			$prepared_comment['comment_author_email'] = '';
 		}
@@ -543,23 +536,6 @@ class AnyCommentRestComment extends WP_REST_Controller {
 			$error_code = $check_comment_lengths->get_error_code();
 
 			return new WP_Error( $error_code, __( 'Comment field exceeds maximum length allowed.' ), array( 'status' => 400 ) );
-		}
-
-		$prepared_comment['comment_approved'] = wp_allow_comment( $prepared_comment, true );
-
-		if ( is_wp_error( $prepared_comment['comment_approved'] ) ) {
-			$error_code    = $prepared_comment['comment_approved']->get_error_code();
-			$error_message = $prepared_comment['comment_approved']->get_error_message();
-
-			if ( 'comment_duplicate' === $error_code ) {
-				return new WP_Error( $error_code, $error_message, array( 'status' => 409 ) );
-			}
-
-			if ( 'comment_flood' === $error_code ) {
-				return new WP_Error( $error_code, $error_message, array( 'status' => 400 ) );
-			}
-
-			return $prepared_comment['comment_approved'];
 		}
 
 		/**
@@ -1558,20 +1534,42 @@ class AnyCommentRestComment extends WP_REST_Controller {
 	 *
 	 * @since 4.7.0
 	 *
-	 * @param object $comment Comment object.
+	 * @param WP_Comment $comment Comment object.
 	 *
 	 * @return bool Whether the comment can be edited or deleted.
 	 */
 	protected function check_edit_permission( $comment ) {
-		if ( 0 === (int) get_current_user_id() ) {
+
+		if ( $this->is_old_to_edit( $comment ) ) {
 			return false;
 		}
 
-		if ( ! current_user_can( 'moderate_comments' ) ) {
+		$user = wp_get_current_user();
+
+		if ( ! $user instanceof WP_User ) {
 			return false;
 		}
 
-		return current_user_can( 'edit_comment', $comment->comment_ID );
+		if ( current_user_can( 'moderate_comments' ) ||
+		     current_user_can( 'edit_comment', $comment->comment_ID ) ) {
+			return true;
+		}
+
+		return (int) $comment->user_id === (int) $user->ID;
+	}
+
+	/**
+	 * Check whether it is too old to edit (update/delete) comment.
+	 *
+	 * @param WP_Comment $comment Comment to be checked.
+	 * @param int $minutes Number of minutes comment allow to be edited.
+	 *
+	 * Note: if `$minutes` is below 5, it will be set to 5 as it is the default value.
+	 *
+	 * @return bool
+	 */
+	public function is_old_to_edit( $comment, $minutes = 5 ) {
+		return AnyComment()->render->is_old_to_edit( $comment, $minutes );
 	}
 
 	/**

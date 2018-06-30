@@ -90,6 +90,10 @@ On the next release, special options will be enabled on plugin to have Privacy P
 == Changelog ==
 
 = 0.0.2 =
+* Enh - refactoring of comments logic towards native WordPress REST
+* Enh - ability to update any comment if user has `moderate_comments` or `edit_comment` capability (no time limit)
+* Enh - ability to update personal comment within 5 minutes
+* Fix - guest user cannot see comment actions (reply/edit)
 * Added authorization via GitHub & Odnoklassniki
 * Fix - comment text box was overflowing on long texts, #22
 * Fix - better responsiveness of dashboard layout, #32

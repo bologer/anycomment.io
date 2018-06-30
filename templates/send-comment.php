@@ -55,11 +55,10 @@ $post = AnyComment()->getCurrentPost();
 
 			<?php if ( is_user_logged_in() ): ?>
                 <button class="btn send-comment-body__btn"><?= __( 'Send', "anycomment" ) ?></button>
-                <input type="hidden" name="reply_to">
+                <input type="hidden" name="parent" value="0">
                 <input type="hidden" name="edit_id">
                 <input type="hidden" name="post" value="<?= $post->ID ?>">
                 <input type="hidden" name="nonce" value="<?= wp_create_nonce( "add-comment-nonce" ) ?>">
-                <input type="hidden" name="action" value="add_comment">
 			<?php endif; ?>
         </form>
 
