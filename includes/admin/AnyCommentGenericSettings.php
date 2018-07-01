@@ -11,6 +11,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 	class AnyCommentGenericSettings extends AnyCommentOptions {
 		const OPTION_THEME = 'option_theme_toggle';
 		const OPTION_PLUGIN_TOGGLE = 'option_plugin_toggle';
+		const OPTION_COUNT_PER_PAGE = 'option_comments_count_per_page';
 		const OPTION_COPYRIGHT_TOGGLE = 'option_copyright_toggle';
 
 		const THEME_DARK = 'dark';
@@ -34,7 +35,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 */
 		protected $default_options = [
 			self::OPTION_THEME            => self::THEME_DARK,
-			self::OPTION_COPYRIGHT_TOGGLE => 'on'
+			self::OPTION_COPYRIGHT_TOGGLE => 'on',
+			self::OPTION_COUNT_PER_PAGE   => 20
 		];
 
 
@@ -93,7 +95,13 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'id'          => self::OPTION_PLUGIN_TOGGLE,
 						'title'       => __( 'Enable Comments', "anycomment" ),
 						'callback'    => 'input_checkbox',
-						'description' => esc_html( __( 'Visible plugin or not. When off default comments of your website will be shown instead. Could be useful to configure comments first and then enable this option.', "anycomment" ) )
+						'description' => esc_html( __( 'When on, comments are visible. When off, default WordPress\' comments shown. This can be used to configure social networks on fresh installation.', "anycomment" ) )
+					],
+					[
+						'id'          => self::OPTION_COUNT_PER_PAGE,
+						'title'       => __( 'Number of Comments Loaded', "anycomment" ),
+						'callback'    => 'input_number',
+						'description' => esc_html( __( 'Number of comments loaded on initial page load. For example, "20" will display 20 comments on the page and if you have 40 in total, at the very bottom you will see button to load more. Min 5, max as defined.', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_THEME,
@@ -124,6 +132,21 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 */
 		public static function isEnabled() {
 			return static::instance()->getOption( self::OPTION_PLUGIN_TOGGLE ) !== null;
+		}
+
+		/**
+		 * Get comment loaded per page setting value.
+		 *
+		 * @return int
+		 */
+		public static function getPerPage() {
+			$value = (int) static::instance()->getOption( self::OPTION_COUNT_PER_PAGE );
+
+			if ( $value < 5 ) {
+				$value = 5;
+			}
+
+			return $value;
 		}
 
 		/**

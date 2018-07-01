@@ -83,8 +83,9 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 		 * @return array|null NULL when there are no comments for post.
 		 */
 		public function get_comments( $postId = null, $limit = null, $sort = null ) {
-			if ( $limit === null || empty( $limit ) || (int) $limit < self::LIMIT ) {
-				$limit = self::LIMIT;
+
+			if ( $limit === null || empty( $limit ) ) {
+				$limit = AnyCommentGenericSettings::getPerPage();
 			}
 
 			if ( $sort === null || ( $sort !== self::SORT_NEW && $sort !== self::SORT_OLD ) ) {

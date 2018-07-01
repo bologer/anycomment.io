@@ -30,8 +30,8 @@ $classPrefix = AnyComment()->classPrefix();
 <body>
 <div id="<?= $classPrefix ?>comments"
      class="<?= $classPrefix ?>comments-dark"
-     data-origin-limit="<?= AnyCommentRender::LIMIT ?>"
-     data-current-limit="<?= AnyCommentRender::LIMIT ?>"
+     data-origin-limit="<?= AnyCommentGenericSettings::getPerPage() ?>"
+     data-current-limit="<?= AnyCommentGenericSettings::getPerPage() ?>"
      data-sort="<?= AnyCommentRender::SORT_NEW ?>"
      data-guest="<?= ! is_user_logged_in() ? "1" : "0" ?>">
 	<?php do_action( 'anycomment_send_comment' ) ?>
@@ -84,7 +84,7 @@ $classPrefix = AnyComment()->classPrefix();
     // Load next comments if available
     function loadNext() {
         let root = getRoot();
-        let newLimit = parseInt(root.attr('data-current-limit')) + 10;
+        let newLimit = parseInt(root.attr('data-current-limit')) + <?= AnyCommentGenericSettings::getPerPage() ?>;
 
         root.attr('data-current-limit', newLimit);
 

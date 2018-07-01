@@ -59,10 +59,11 @@ if ( ! class_exists( 'AnyCommentOptions' ) ) :
 		}
 
 		/**
+		 * Render fields.
 		 *
-		 * @param $page
-		 * @param $section_id
-		 * @param array $fields
+		 * @param string $page Page to be rendered fields for.
+		 * @param string $section_id ID of the section to render fields for.
+		 * @param array $fields List of fields to render.
 		 */
 		public function render_fields( $page, $section_id, array $fields ) {
 			foreach ( $fields as $field ) {
@@ -148,6 +149,22 @@ if ( ! class_exists( 'AnyCommentOptions' ) ) :
 		}
 
 		/**
+		 * Helper to render input of type number.
+		 *
+		 * @param array $args List of passed arguments.
+		 */
+		public function input_number( $args ) {
+			?>
+            <input type="number" id="<?= esc_attr( $args['label_for'] ); ?>"
+                   name="<?= $this->option_name ?>[<?= esc_attr( $args['label_for'] ); ?>]"
+                   value="<?= $this->getOption( $args['label_for'] ) ?>">
+			<?php if ( isset( $args['description'] ) ): ?>
+                <p class="description"><?= $args['description'] ?></p>
+			<?php endif; ?>
+			<?php
+		}
+
+		/**
 		 * top level menu:
 		 * callback functions
 		 */
@@ -221,8 +238,13 @@ if ( ! class_exists( 'AnyCommentOptions' ) ) :
 				$this->options = get_option( $this->option_name, null );
 			}
 
-			if ( $this->options === null && ! empty( $this->default_options ) ) {
-				$this->options = wp_parse_args( $this->options, $this->default_options );
+			if ( ! empty( $this->default_options ) ) {
+				foreach ( $this->default_options as $key => $optionValue ) {
+					$setDefault = ! isset( $this->options[ $key ] ) || isset( $this->options[ $key ] ) && empty( $this->options[ $key ] );
+					if ( $setDefault ) {
+						$this->options[ $key ] = $optionValue;
+					}
+				}
 			}
 
 			return $this->options;
