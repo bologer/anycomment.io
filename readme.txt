@@ -100,7 +100,7 @@ WordPress currently has default Privacy Policy page create for your. What you ca
 
 == Changelog ==
 
-= 0.0.2 =
+= 0.0.2 – 01.07.2018 =
 * Fix - admin OR moderator was unable to edit comment as it was too old
 * Enh - ability to specify number of default comments to load. The same settings applies to number of comment loaded per page, when there are more comments on post/page then specified in settings
 * Fix - plugin is not enabled until you specify at least one social network, even thought you set plugin to be ON in general settings, #11
