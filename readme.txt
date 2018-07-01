@@ -28,30 +28,29 @@ Here is the list of the supported ones:
 * GitHub
 * and more to be added
 
-Dark for light background websites, where as light for dark background ones.
+Dark & light themes available.
 
-AnyComment stands for simplicity, so default comment have very simple user interface, it is up to you what features to have.
+AnyComment stands for simplicity, so comments have very simple user interface, it is up to you what other features to add.
 
-Ps. Comment will be actively supported. We would like to have your opinions on what is good and what could be improved. Thank you for sharing love with us!
+Ps. Comment will be actively supported. We would like to have your opinion on what could be improved or fixed. Thank you for using it!
 
 = Can I contribute? =
 
 Yes! Join our [GitHub repository](https://github.com/bologer/anycomment.io) :)
 
-= Major features of AnyComment =
-* Social network authorization via Facebook, VK, Twitter or Google
-* Currently translated in two languages: English, Russian
+= Features =
+* Social network authorization via Facebook, VK, Twitter, Google, Odnoklassniki or GitHub
+* Translated in English & Russian
 * Suitable for dark & light themes (on your choice)
 * Blazing-fast AJAX way of sending comments
 * Simple & informative dashboard with graphs to display number of comments over number of active user per certain period & most active commenting users
 * Comments do no inherit any of the currently active theme styles. Meaning that comments will not be broken by styles you have.
+* Get latest plugin update news directly in the dashboard, don't miss a thing
 * Integration with [WP User Avatar](https://wordpress.org/plugins/wp-user-avatar/), to specify customized avatars
 * All comments stored in your own database. We do not create extra tables for these reasons. We reuse native comment's table, so all of the default WordPress functionality comes out of the box.
 
-= Todo features =
+= TODO features =
 * Option: customization of comment styles
-* Option: add option to specify default number of comments loaded
-* Option: add option to specify number of comments loaded per page
 * Option: add option to load comments when user scrolls to it, save some loading time
 * Option: add option to define whether new comments will be added automatically or will be required to be moderated first
 * Option: add option to allow guests to leave comments
@@ -60,7 +59,7 @@ Yes! Join our [GitHub repository](https://github.com/bologer/anycomment.io) :)
 * Code highlighting
 * Markdown support
 * Integration of: Akismet Anti-Spam and Google's reCaptcha
-* Integration of more social networks: Dribble, Github, etc
+* Integration of more social networks: Dribble, etc
 * More widgets to be added on the page (sidebar, custom pages, etc)
 * Special moderator panel integrated into custom AnyComment pages (for easy comment moderation)
 * More statistics and analytics regarding comments...
@@ -68,18 +67,18 @@ Yes! Join our [GitHub repository](https://github.com/bologer/anycomment.io) :)
 
 == Screenshots ==
 
-1. For light-colored websites.
-2. For dark-colored websites.
+1. For whitish websites.
+2. For darkish websites.
 3. Main plugin dashboard.
 
 == Frequently Asked Questions ==
 
 = Installation & Instructions =
-* Upload files into the `/wp-content/plugins/anycomment/` directory OR install via WordPress directly
-* Install & activate from `Plugins` section in admin panel
-* Register you website in the API of social networks to get API secrets
+
+* Install via WordPress admin panel directly (or [download plugin](https://downloads.wordpress.org/plugin/anycomment.zip) and upload into the `/wp-content/plugins/anycomment/` directory)
+* Activate from `Plugins` section in admin panel
+* Go to preferred social media and register to get API access (API key, secrets, etc)
 * Specify required API details in special social network settings
-* Try it out!
 * Go to some post and try to authorize using any of the enabled social networks and leave a comment!
 
 = Why Facebook and Twitter want Privacy Policy URL? =
@@ -109,11 +108,13 @@ WordPress currently has default Privacy Policy page create for your. What you ca
 * Enh - ability to update any comment if user has `moderate_comments` or `edit_comment` capability (no time limit)
 * Enh - ability to update personal comment within 5 minutes
 * Fix - guest user cannot see comment actions (reply/edit)
-* Added authorization via GitHub & Odnoklassniki
+* Enh - added two new authorization methods: GitHub & Odnoklassniki
 * Fix - comment text box was overflowing on long texts, #22
 * Fix - better responsiveness of dashboard layout, #32
 * Fix - avatars uploaded locally to escape problem when some social medias were blocking access to avatar after token expiration, #14
 * Enh - display most recent news from plugin, #31
+* Enh - other small bug fixes and improvements
+* Eng - moved completely towards REST architecture
 
 = 0.0.1 - 24.06.2018 =
 * First Release
