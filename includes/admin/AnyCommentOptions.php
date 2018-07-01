@@ -176,6 +176,28 @@ if ( ! class_exists( 'AnyCommentOptions' ) ) :
 		}
 
 		/**
+		 * Check whether there are any options set on model.
+		 *
+		 * @return bool
+		 */
+		public function hasOptions() {
+			$options = $this->getOptions();
+
+			if ( $options === null ) {
+				return false;
+			}
+
+			$nonEmptyCount = 0;
+			foreach ( $options as $key => $optionValue ) {
+				if ( ! empty( $optionValue ) ) {
+					$nonEmptyCount ++;
+				}
+			}
+
+			return $nonEmptyCount > 0;
+		}
+
+		/**
 		 * Get single option.
 		 *
 		 * @param string $name Options name to search for.
@@ -200,7 +222,7 @@ if ( ! class_exists( 'AnyCommentOptions' ) ) :
 			}
 
 			if ( $this->options === null && ! empty( $this->default_options ) ) {
-				$this->options = wp_parse_args($this->options, $this->default_options);
+				$this->options = wp_parse_args( $this->options, $this->default_options );
 			}
 
 			return $this->options;

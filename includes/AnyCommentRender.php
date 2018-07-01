@@ -28,7 +28,7 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 		 * AC_Render constructor.
 		 */
 		public function __construct() {
-			if ( AnyCommentGenericSettings::isEnabled() ) {
+			if ( AnyCommentGenericSettings::isEnabled() && AnyCommentSocialSettings::hasAnySocial() ) {
 				add_filter( 'comments_template', [ $this, 'render_iframe' ] );
 
 				add_action( 'wp_ajax_iframe_comments', [ $this, 'iframe_comments' ] );
