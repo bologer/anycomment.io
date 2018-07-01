@@ -13,11 +13,20 @@ AnyComment allows you to have a better commenting experience in WordPress.
 
 Are you tired of connecting different third part commenting system to your website or having the default ones?
 
-AnyComment is here to help you - it is a better commenting system in WordPress.
+AnyComment is here to help you - it is a better commenting system for WordPress.
 
-No dependency on third party services, all comments store in your own database.
+No dependency on third party services, all comments stored in your database.
 
 You may connect your favorite social networks.
+
+Here is the list of the supported ones:
+* Facebook
+* Google
+* Twitter
+* VK
+* Odnoklassniki
+* GitHub
+* and more to be added
 
 Dark for light background websites, where as light for dark background ones.
 
@@ -29,7 +38,7 @@ Ps. Comment will be actively supported. We would like to have your opinions on w
 
 Yes! Join our [GitHub repository](https://github.com/bologer/anycomment.io) :)
 
-Major features of AnyComment include:
+= Major features of AnyComment =
 * Social network authorization via Facebook, VK, Twitter or Google
 * Currently translated in two languages: English, Russian
 * Suitable for dark & light themes (on your choice)
@@ -73,23 +82,27 @@ Major features of AnyComment include:
 * Try it out!
 * Go to some post and try to authorize using any of the enabled social networks and leave a comment!
 
-= Why Facebook wants Privacy Policy URL? =
+= Why Facebook and Twitter want Privacy Policy URL? =
 
-This is now only facebook, but Twitter and Facebook.
+Facebook and Twitter are now require your website to have Privacy Policy.
 
-After [General Data Protection Regulation](https://en.wikipedia.org/wiki/General_Data_Protection_Regulation) (GDPR) regulation was made it is not required to have a link to Privacy Policy.
+After [General Data Protection Regulation](https://en.wikipedia.org/wiki/General_Data_Protection_Regulation) (GDPR) regulation was made it is now required to have a link to Privacy Policy.
 
 Currently known problem is that it is NOT possible to start using Facebook API (only in test mode), until you specify `Privacy Policy URL` in their settings.
 
 Twitter is not that strict, and only does not provide email of the user when he is logged in.
+What You Can Do
 
-Current workaround is to copy some of the Privacy Policy from another website, correct it to you own, have public URL to it and specify it on Facebook.
+WordPress currently has default Privacy Policy page create for your. What you can is to add the following text there under "What personal data we collect and why we collect it" header:
 
-On the next release, special options will be enabled on plugin to have Privacy Policy URL out of the box! :)
+> When you authorize via some of the available social networks, we collects the following information about you: first name, last name, login (when available), avatar URL and email (when available or access given).
+> Some of the information may vary from social to social. For example, VK.com give access to email only when you accept it while authorizing.
+> We record information about only when social network allows us to have it.
 
 == Changelog ==
 
 = 0.0.2 =
+* Fix - plugin is not enabled until you specify at least one social network, even thought you set plugin to be ON in general settings, #11
 * Enh - refactoring of comments logic towards native WordPress REST
 * Enh - ability to update any comment if user has `moderate_comments` or `edit_comment` capability (no time limit)
 * Enh - ability to update personal comment within 5 minutes
