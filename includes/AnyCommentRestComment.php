@@ -1540,6 +1540,15 @@ class AnyCommentRestComment extends WP_REST_Controller {
 	 */
 	protected function check_edit_permission( $comment ) {
 
+		if ( 0 === (int) get_current_user_id() ) {
+			return false;
+		}
+
+		if ( current_user_can( 'moderate_comments' ) ||
+		     current_user_can( 'edit_comment', $comment->comment_ID ) ) {
+			return true;
+		}
+
 		if ( $this->is_old_to_edit( $comment ) ) {
 			return false;
 		}
@@ -1548,11 +1557,6 @@ class AnyCommentRestComment extends WP_REST_Controller {
 
 		if ( ! $user instanceof WP_User ) {
 			return false;
-		}
-
-		if ( current_user_can( 'moderate_comments' ) ||
-		     current_user_can( 'edit_comment', $comment->comment_ID ) ) {
-			return true;
 		}
 
 		return (int) $comment->user_id === (int) $user->ID;
