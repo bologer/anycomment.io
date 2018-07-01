@@ -30,10 +30,8 @@ $classPrefix = AnyComment()->classPrefix();
 <body>
 <div id="<?= $classPrefix ?>comments"
      class="<?= $classPrefix ?>comments-dark"
-     data-origin-limit="<?= AnyCommentGenericSettings::getPerPage() ?>"
      data-current-limit="<?= AnyCommentGenericSettings::getPerPage() ?>"
-     data-sort="<?= AnyCommentRender::SORT_NEW ?>"
-     data-guest="<?= ! is_user_logged_in() ? "1" : "0" ?>">
+     data-sort="<?= AnyCommentRender::SORT_NEW ?>">
 	<?php do_action( 'anycomment_send_comment' ) ?>
 	<?php do_action( 'anycomment_notifications' ) ?>
 	<?php do_action( 'anycomment_load_comments' ) ?>
@@ -44,10 +42,24 @@ $classPrefix = AnyComment()->classPrefix();
 
 <script>
     let settings =  <?= json_encode( [
-		'url'   => esc_url_raw( rest_url( 'anycomment/v1/comments' ) ),
-		'nonce' => wp_create_nonce( 'wp_rest' ),
-		'debug' => true
+		'url'          => esc_url_raw( rest_url( 'anycomment/v1/comments' ) ),
+		'nonce'        => wp_create_nonce( 'wp_rest' ),
+		'debug'        => true,
+		'options'      => [
+			'limit' => AnyCommentGenericSettings::getPerPage(),
+			'guest' => ! is_user_logged_in()
+		],
+		'translations' => [
+			'button_send'  => __( 'Send', 'anycomment' ),
+			'button_save'  => __( 'Save', 'anycomment' ),
+			'button_reply' => __( 'Reply', 'anycomment' ),
+		]
 	] ) ?>;
+
+    if (settings.debug) {
+        console.log('Settings are:');
+        console.log(settings);
+    }
 
     // Load generic comments template
     function loadComments(options = {}) {
@@ -116,11 +128,9 @@ $classPrefix = AnyComment()->classPrefix();
     }
 
     function shouldLogin() {
-        let root = getRoot();
-        let isGuest = root.data('guest');
         let guestOverlay = jQuery('#auth-required');
 
-        if (isGuest) {
+        if (settings.options.guest) {
             guestOverlay.hide();
             guestOverlay.fadeIn(300, function () {
                 jQuery(this).hide();
@@ -134,9 +144,9 @@ $classPrefix = AnyComment()->classPrefix();
     }
 
     // Reply to some comment
-    function replyComment(el, replyTo, replyToName) {
+    function replyComment(el, commentId) {
 
-        if (!replyTo) {
+        if (!commentId) {
             return;
         }
 
@@ -148,6 +158,9 @@ $classPrefix = AnyComment()->classPrefix();
         }
 
         if (shouldLogin()) {
+            if (settings.debug) {
+                console.log('Should login, unable to reply');
+            }
             return;
         }
 
@@ -159,13 +172,13 @@ $classPrefix = AnyComment()->classPrefix();
             return;
         }
 
-        if (replyToName) {
-            let replyToPlaceholderText = commentField.data('reply-name').replace('{name}', replyToName);
-            commentField.attr('placeholder', replyToPlaceholderText);
-        }
-
-        replyToField.val(replyTo);
-        commentField.focus();
+        jQuery.get(settings.url + '/' + commentId, function (resp) {
+            if (settings.debug) {
+                console.log('Response on reply:');
+                console.log(resp);
+            }
+            prepareTo('reply', resp);
+        });
 
         return false;
     }
@@ -185,29 +198,32 @@ $classPrefix = AnyComment()->classPrefix();
         }
 
         if (shouldLogin()) {
+            if (settings.debug) {
+                console.log('Should login, unable to edit');
+            }
             return;
         }
 
         let commentField = form.find('[name="content"]') || '';
         let editIdField = form.find(['[name="edit_id"]']) || '';
-        let parentField = form.find(['[name="parent"]']) || '';
-
 
         if (!commentField || !editIdField) {
             return;
         }
 
         jQuery.get(settings.url + '/' + commentId, function (resp) {
+            if (settings.debug) {
+                console.log('Response on edit:');
+                console.log(resp);
+            }
             prepareTo('edit', resp);
         });
-
-        commentField.focus();
 
         return false;
     }
 
     function prepareTo(type, commentResponse = null) {
-        if (type !== 'add' && type !== 'edit') {
+        if (type !== 'add' && type !== 'edit' && type !== 'reply') {
             return;
         }
 
@@ -220,6 +236,7 @@ $classPrefix = AnyComment()->classPrefix();
         let commentField = form.find('[name="content"]') || '';
         let parentField = form.find('[name="parent"]') || '';
         let editIdField = form.find('[name="edit_id"]') || '';
+        let buttonField = form.find('button') || '';
 
         if (settings.debug) {
             console.log(type);
@@ -228,23 +245,41 @@ $classPrefix = AnyComment()->classPrefix();
         switch (type) {
             case 'add':
                 commentField.val('');
-                editIdField.val('');
                 parentField.val(0);
+                editIdField.val('');
+                commentField.attr('placeholder', commentField.data('original-placeholder'));
+                buttonField.text(settings.translations.button_send);
+
                 if (settings.debug) {
                     console.log('done ' + type);
                 }
                 break;
+            case 'reply':
+                commentField.val('');
+                parentField.val(commentResponse.id);
+                editIdField.val('');
+                buttonField.text(settings.translations.button_reply);
 
+                let replyToPlaceholderText = commentField.data('reply-name').replace('{name}', commentResponse.author_name);
+                commentField.attr('placeholder', replyToPlaceholderText);
+
+                if (settings.debug) {
+                    console.log('done ' + type);
+                }
+                break;
             case 'edit':
                 commentField.val(commentResponse.content);
                 editIdField.val(commentResponse.id);
                 parentField.val(commentResponse.parent);
+                buttonField.text(settings.translations.button_save);
                 if (settings.debug) {
                     console.log('done ' + type);
                 }
                 break;
             default:
         }
+
+        commentField.focus();
 
         return true;
     }
@@ -290,7 +325,7 @@ $classPrefix = AnyComment()->classPrefix();
             beforeSend: showLoader,
             success: function (response) {
                 loadComments();
-                revertToAdd();
+                prepareTo('add');
                 cleanAlerts();
             },
             error: function (error) {
@@ -308,23 +343,6 @@ $classPrefix = AnyComment()->classPrefix();
         }).always(function () {
             hideLoader();
         });
-    }
-
-    function revertToAdd() {
-        let form = getForm();
-
-        if (!form) {
-            return;
-        }
-
-        let commentField = form.find('[name="content"]') || '';
-        let replyToField = form.find('[name="parent"]') || '';
-        let editIdField = form.find('[name="edit_id"]') || '';
-
-        commentField.val('');
-        replyToField.val(0);
-        editIdField.val('');
-        commentField.attr('placeholder', commentField.data('original-placeholder'));
     }
 
     /**
