@@ -20,6 +20,7 @@ No dependency on third party services, all comments stored in your database.
 You may connect your favorite social networks.
 
 Here is the list of the supported ones:
+
 * Facebook
 * Google
 * Twitter
@@ -31,6 +32,8 @@ Here is the list of the supported ones:
 Dark & light themes available.
 
 AnyComment stands for simplicity, so comments have very simple user interface, it is up to you what other features to add.
+
+> See our [demo](https://anycomment.io/en/demo/)
 
 Ps. Comment will be actively supported. We would like to have your opinion on what could be improved or fixed. Thank you for using it!
 
