@@ -192,13 +192,13 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 		 * @return bool
 		 */
 		public function can_edit_comment( $comment ) {
-			if ( $this->is_old_to_edit( $comment ) ) {
-				return false;
-			}
-
 			if ( current_user_can( 'moderate_comments' ) ||
 			     current_user_can( 'edit_comment', $comment->comment_ID ) ) {
 				return true;
+			}
+
+			if ( $this->is_old_to_edit( $comment ) ) {
+				return false;
 			}
 
 			$user = wp_get_current_user();
