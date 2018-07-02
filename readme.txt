@@ -3,13 +3,15 @@ Contributors: ateshabaev
 Tags: anycomment, comments, comment moderation, anycomment.io
 Requires at least: 4.7
 Tested up to: 4.9.6
-Stable tag: trunk
+Stable tag: 0.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/
 
 AnyComment allows you to have a better commenting experience in WordPress.
 
 == Description ==
+
+> See [demo](https://anycomment.io/demo/)
 
 Are you tired of connecting different third part commenting system to your website or having the default ones?
 
@@ -32,8 +34,6 @@ Here is the list of the supported ones:
 Dark & light themes available.
 
 AnyComment stands for simplicity, so comments have very simple user interface, it is up to you what other features to add.
-
-> See our [demo](https://anycomment.io/en/demo/)
 
 Ps. Comment will be actively supported. We would like to have your opinion on what could be improved or fixed. Thank you for using it!
 

@@ -325,6 +325,7 @@ $classPrefix = AnyComment()->classPrefix();
             beforeSend: showLoader,
             success: function (response) {
                 loadComments();
+                updateCount(response);
                 prepareTo('add');
                 cleanAlerts();
             },
@@ -343,6 +344,19 @@ $classPrefix = AnyComment()->classPrefix();
         }).always(function () {
             hideLoader();
         });
+    }
+
+    // Update comment count
+    function updateCount(response) {
+        if (!response) {
+            return false;
+        }
+
+        if (!('meta' in response)) {
+            return false;
+        }
+
+        jQuery('#comment-count').text(response.meta.count_text);
     }
 
     /**

@@ -844,7 +844,10 @@ class AnyCommentRestComment extends WP_REST_Controller {
 			'date'        => mysql_to_rfc3339( $comment->comment_date ),
 			'date_gmt'    => mysql_to_rfc3339( $comment->comment_date_gmt ),
 			'content'     => $comment->comment_content,
-			'avatar_url'  => AnyComment()->auth->get_user_avatar_url( $comment->user_id )
+			'avatar_url'  => AnyComment()->auth->get_user_avatar_url( $comment->user_id ),
+			'meta'        => [
+				'count_text' => AnyComment()->render->get_comment_count( $comment->comment_post_ID )
+			]
 		);
 
 

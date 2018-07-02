@@ -98,7 +98,7 @@ ORDER BY day ASC";
 		 * - label - list of labels
 		 * - data - list of data for labels
 		 */
-		public static function prepare_data( $query, $type = 'month' ) {
+		public static function prepare_data( $query, $type = null ) {
 			global $wpdb;
 
 			$queryResult = $wpdb->get_results( $query );
@@ -112,18 +112,20 @@ ORDER BY day ASC";
 			}
 
 			// Default get number of days in a month
-			$symbol = 't';
+			if ( $type === null ) {
+				$symbol = 't';
+			}
 
-			if ( $type == 'year' ) {
+			if ( $type !== null && $type == 'year' ) {
 				$symbol = 'z';
 			}
 
 			// Fill 0 for empty days yet
-			$expectedCount = date( $symbol );
+			$daysInPeriod = date( $symbol );
 
 
-			if ( count( $data ) < $expectedCount ) {
-				$moreToAdd = $expectedCount - count( $data );
+			if ( count( $data ) < $daysInPeriod ) {
+				$moreToAdd = $daysInPeriod - count( $data );
 
 				for ( $i = 0; $i < $moreToAdd; $i ++ ) {
 					$data[] = 0;
