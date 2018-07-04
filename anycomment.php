@@ -75,6 +75,11 @@ if ( ! class_exists( 'AnyComment' ) ) :
 		public $statistics = null;
 
 		/**
+		 * @var null|AnyCommentMigration
+		 */
+		public $migrations = null;
+
+		/**
 		 * Instance of EasyComment.
 		 * @var null|AnyComment
 		 */
@@ -132,7 +137,43 @@ if ( ! class_exists( 'AnyComment' ) ) :
 		 * Initiate hooks.
 		 */
 		private function init_hooks() {
+			// todo: change to activation hook
+			add_action( 'init', [ $this, 'apply_migration' ] );
+
+//			register_uninstall_hook( __FILE__, [ $this, 'apply_migrations' ] );
 		}
+
+		/**
+		 * Apply migrations.
+		 */
+		public function apply_migration() {
+
+			include_once( ANY_COMMENT_ABSPATH . 'includes/migrations/AnyCommentMigration.php' );
+
+			$migrationList = ( new AnyCommentMigration )->getList();
+
+			foreach ( $migrationList as $key => $migrationVersion ) {
+				$format        = 'AnyCommentMigration%s';
+				$migrationName = sprintf( $format, $migrationVersion );
+				$path          = sprintf( ANY_COMMENT_ABSPATH . 'includes/migrations/%s.php', $migrationName );
+
+				if ( file_exists( $path ) ) {
+					continue;
+				}
+
+				include_once( $path );
+
+				/**
+				 * @var $model AnyCommentMigration
+				 */
+				$model = new $migrationName();
+
+				if ( ! $model->isApplied() ) {
+					$model->up();
+				}
+			}
+		}
+
 
 		/**
 		 * Define EasyComment Constants.
@@ -198,13 +239,18 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			/**
 			 * Class autoloader.
 			 */
-			include_once( ANY_COMMENT_ABSPATH . 'includes/AnyCommentRestCommentMeta.php' );
-			include_once( ANY_COMMENT_ABSPATH . 'includes/AnyCommentRestComment.php' );
+			// Rest
+			include_once( ANY_COMMENT_ABSPATH . 'includes/rest/AnyCommentRestCommentMeta.php' );
+			include_once( ANY_COMMENT_ABSPATH . 'includes/rest/AnyCommentRestComment.php' );
+			include_once( ANY_COMMENT_ABSPATH . 'includes/rest/AnyCommentRestLikeMeta.php' );
+			include_once( ANY_COMMENT_ABSPATH . 'includes/rest/AnyCommentRestLikes.php' );
+
 			include_once( ANY_COMMENT_ABSPATH . 'includes/AnyCommentErrorHandler.php' );
 			include_once( ANY_COMMENT_ABSPATH . 'includes/AnyCommentUploadHandler.php' );
 			include_once( ANY_COMMENT_ABSPATH . 'includes/AnyCommentRender.php' );
 			include_once( ANY_COMMENT_ABSPATH . 'includes/ac-core-functions.php' );
 			include_once( ANY_COMMENT_ABSPATH . 'includes/AnyCommentSocialAuth.php' );
+			include_once( ANY_COMMENT_ABSPATH . 'includes/AnyCommentLikes.php' );
 
 			/**
 			 * Admin related
@@ -221,7 +267,9 @@ if ( ! class_exists( 'AnyComment' ) ) :
 				include_once( ANY_COMMENT_ABSPATH . 'includes/hybridauth/src/autoload.php' );
 			}
 
-			$this->rest      = new AnyCommentRestComment();
+			$this->rest = new AnyCommentRestComment();
+			new AnyCommentRestLikes();
+
 			$this->errors      = new AnyCommentErrorHandler();
 			$this->render      = new AnyCommentRender();
 			$this->admin_pages = new AnyCommentAdminPages();

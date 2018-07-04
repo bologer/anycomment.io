@@ -43,11 +43,13 @@ $classPrefix = AnyComment()->classPrefix();
 <script>
     let settings =  <?= json_encode( [
 		'url'          => esc_url_raw( rest_url( 'anycomment/v1/comments' ) ),
+		'urlLikes'     => esc_url_raw( rest_url( 'anycomment/v1/likes' ) ),
 		'nonce'        => wp_create_nonce( 'wp_rest' ),
 		'debug'        => true,
 		'options'      => [
-			'limit' => AnyCommentGenericSettings::getPerPage(),
-			'guest' => ! is_user_logged_in()
+			'postId' => $postId,
+			'limit'  => AnyCommentGenericSettings::getPerPage(),
+			'guest'  => ! is_user_logged_in()
 		],
 		'translations' => [
 			'button_send'  => __( 'Send', 'anycomment' ),
@@ -343,6 +345,55 @@ $classPrefix = AnyComment()->classPrefix();
             }
         }).always(function () {
             hideLoader();
+        });
+    }
+
+    function like(el, commentId) {
+        if (!el || !commentId) {
+            return false;
+        }
+
+        var el = jQuery(el);
+
+        if (!el.length) {
+            return false;
+        }
+
+        jQuery.ajax({
+            method: 'POST',
+            url: settings.urlLikes,
+            dataType: 'json',
+            data: {
+                comment: commentId,
+                post: settings.options.postId,
+            },
+            headers: {'X-WP-Nonce': settings.nonce},
+            success: function (response) {
+                if ('total_count' in response) {
+                    el.text(response.total_count);
+                }
+
+                if ('has_like' in response) {
+                    if (response.has_like) {
+                        el.addClass('active');
+                    } else {
+                        el.removeClass('active');
+                    }
+                }
+            },
+            error: function (error) {
+                if (settings.debug) {
+                    console.log('Err:');
+                    console.log(error);
+                }
+
+                let response = error.responseJSON;
+
+                if (response.code) {
+                    addError(response.message);
+                }
+            }
+        }).always(function () {
         });
     }
 

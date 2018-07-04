@@ -251,6 +251,10 @@ function anycomment_actions_part( $comment ) {
             <li><a href="javascript:void(0)" data-reply-to="<?= $comment->comment_ID ?>"
                    onclick="return replyComment(this, <?= $comment->comment_ID ?>, '<?= $comment->comment_author ?>')"><?= __( 'Reply', "anycomment" ) ?></a>
             </li>
+            <li>
+                <span class="comment-single-body__actions-like <?= ( AnyCommentLikes::isCurrentUserHasLike( $comment->comment_ID ) ? 'active' : '' ) ?>"
+                      onclick="return like(this, <?= $comment->comment_ID ?>);"><?= AnyCommentLikes::getLikesCount( $comment->comment_ID ) ?></span>
+            </li>
 			<?php if ( AnyComment()->render->can_edit_comment( $comment ) ): ?>
                 <li><a href="javascript:void(0)" data-edit="<?= $comment->comment_ID ?>"
                        onclick="return editComment(this, <?= $comment->comment_ID ?>)"><?= __( 'Edit', "anycomment" ) ?></a>

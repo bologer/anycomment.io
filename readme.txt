@@ -46,6 +46,7 @@ Yes! Join our [GitHub repository](https://github.com/bologer/anycomment.io) :)
 * Translated in English & Russian
 * Suitable for dark & light themes (on your choice)
 * Blazing-fast AJAX way of sending comments
+* Likes
 * Simple & informative dashboard with graphs to display number of comments over number of active user per certain period & most active commenting users
 * Comments do no inherit any of the currently active theme styles. Meaning that comments will not be broken by styles you have.
 * Get latest plugin update news directly in the dashboard, don't miss a thing
@@ -102,6 +103,10 @@ WordPress currently has default Privacy Policy page create for your. What you ca
 > We record information about only when social network allows us to have it.
 
 == Changelog ==
+
+= 0.0.3 – TBD =
+* Enh - introducing comment likes, #35
+
 
 = 0.0.2 – 01.07.2018 =
 * Fix - admin OR moderator was unable to edit comment as it was too old

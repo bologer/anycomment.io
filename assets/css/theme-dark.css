@@ -585,19 +585,40 @@ body {
       .anycomment-list .comment-single-body__actions {
         width: 100%;
         display: block; }
+        .anycomment-list .comment-single-body__actions-like.active::before {
+          background-image: url("../img/icons/like-on.svg") !important; }
+        .anycomment-list .comment-single-body__actions-like {
+          position: relative;
+          padding-left: 28px;
+          cursor: pointer;
+          user-select: none;
+          -moz-user-select: none;
+          -khtml-user-select: none;
+          -webkit-user-select: none;
+          -o-user-select: none; }
+          .anycomment-list .comment-single-body__actions-like::before {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 16px;
+            left: 0;
+            top: 0;
+            background-image: url("../img/icons/like-off.svg");
+            background-repeat: no-repeat;
+            background-size: 18px; }
         .anycomment-list .comment-single-body__actions ul {
           list-style: none;
           margin: 0;
           padding: 0; }
           .anycomment-list .comment-single-body__actions ul li {
             display: inline-block;
-            margin-right: 5px; }
+            margin-right: 15px; }
             .anycomment-list .comment-single-body__actions ul li:last-of-type {
               margin-right: 0; }
-            .anycomment-list .comment-single-body__actions ul li a {
+            .anycomment-list .comment-single-body__actions ul li a, .anycomment-list .comment-single-body__actions ul li span {
               font-size: 14px;
               color: #efe9f1; }
-              .anycomment-list .comment-single-body__actions ul li a:hover, .anycomment-list .comment-single-body__actions ul li a:active, .anycomment-list .comment-single-body__actions ul li a:focus {
+              .anycomment-list .comment-single-body__actions ul li a:hover, .anycomment-list .comment-single-body__actions ul li a:active, .anycomment-list .comment-single-body__actions ul li a:focus, .anycomment-list .comment-single-body__actions ul li span:hover, .anycomment-list .comment-single-body__actions ul li span:active, .anycomment-list .comment-single-body__actions ul li span:focus {
                 color: #a6b0b4; }
   .anycomment-list-child {
     margin-left: 90px; }

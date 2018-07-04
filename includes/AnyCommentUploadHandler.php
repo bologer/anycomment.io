@@ -6,7 +6,7 @@ namespace AnyComment\Handlers;
  * Class AnyCommentUploadHandler is used to handle avatar upload for social medias
  * as some of the give access to the avatar for the period of access token.
  *
- * @since 0.0.2
+ * @since 0.0.3
  * @package AnyComment\Handlers
  */
 class AnyCommentUploadHandler
