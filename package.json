@@ -1,0 +1,33 @@
+{
+  "name": "anycomment",
+  "version": "0.0.3",
+  "description": "AnyComment allows you to have a better commenting experience in WordPress.",
+  "main": "gulpfile.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^5.0.0",
+    "gulp-rename": "^1.3.0",
+    "gulp-sass": "^4.0.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bologer/anycomment.io.git"
+  },
+  "keywords": [
+    "wordpress",
+    "comments"
+  ],
+  "author": "bologer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bologer/anycomment.io/issues"
+  },
+  "homepage": "https://github.com/bologer/anycomment.io#readme"
+}

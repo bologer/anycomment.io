@@ -34,7 +34,7 @@ class AnyCommentRestLikes extends WP_REST_Controller {
 		register_rest_route( $this->namespace, '/' . $this->rest_base . '/(?P<id>[\d]+)', [
 			'args'   => [
 				'id' => [
-					'description' => __( 'Unique identifier for the object.' ),
+					'description' => __( 'Unique identifier for the object.', 'anycomment' ),
 					'type'        => 'integer',
 				],
 			],
@@ -53,29 +53,37 @@ class AnyCommentRestLikes extends WP_REST_Controller {
 	public function create_item_permissions_check( $request ) {
 
 		if ( ! is_user_logged_in() ) {
-			return new WP_Error( 'rest_comment_like_login_required', __( 'Login to like comment' ), [ 'status' => 403 ] );
+			return new WP_Error( 'rest_comment_like_login_required', __( 'Login to like comment', 'anycomment' ), [ 'status' => 403 ] );
 		}
 
 		if ( empty( $request['post'] ) ) {
-			return new WP_Error( 'rest_comment_like_invalid_post_id', __( 'Sorry, you are not allowed to make like without a post.' ), array( 'status' => 403 ) );
+			return new WP_Error( 'rest_comment_like_invalid_post_id', __( 'Sorry, post does not exist.', 'anycomment' ), array( 'status' => 403 ) );
 		}
 
 		if ( empty( $request['comment'] ) ) {
-			return new WP_Error( 'rest_comment_like_invalid_post_id', __( 'Sorry, you are not allowed to make like without a comment ID.' ), array( 'status' => 403 ) );
+			return new WP_Error( 'rest_comment_like_invalid_post_id', __( 'Sorry, comment that you liked does not exist.', 'anycomment' ), array( 'status' => 403 ) );
+		}
+
+		$commentId = (int) $request['comment'];
+
+		$comment = get_comment( $commentId );
+
+		if ( ! $comment ) {
+			return new WP_Error( 'rest_comment_like_invalid_post_id', __( 'Sorry, comment that you liked does not exist.', 'anycomment' ), array( 'status' => 403 ) );
 		}
 
 		$post = get_post( (int) $request['post'] );
 
 		if ( ! $post ) {
-			return new WP_Error( 'rest_comment_like_invalid_post_id', __( 'Sorry, you are not allowed to create this comment without a post.' ), array( 'status' => 403 ) );
+			return new WP_Error( 'rest_comment_like_invalid_post_id', __( 'Sorry, post does not exist.', 'anycomment' ), array( 'status' => 403 ) );
 		}
 
 		if ( 'draft' === $post->post_status ) {
-			return new WP_Error( 'rest_comment_like_draft_post', __( 'Sorry, you are not allowed to create a comment on this post.' ), array( 'status' => 403 ) );
+			return new WP_Error( 'rest_comment_like_draft_post', __( 'Sorry, you are not allowed to create a comment on this post.', 'anycomment' ), array( 'status' => 403 ) );
 		}
 
 		if ( 'trash' === $post->post_status ) {
-			return new WP_Error( 'rest_comment_like_trash_post', __( 'Sorry, you are not allowed to create a comment on this post.' ), array( 'status' => 403 ) );
+			return new WP_Error( 'rest_comment_like_trash_post', __( 'Sorry, you are not allowed to create a comment on this post.', 'anycomment' ), array( 'status' => 403 ) );
 		}
 
 		return true;
@@ -94,7 +102,7 @@ class AnyCommentRestLikes extends WP_REST_Controller {
 	public function create_item( $request ) {
 
 		if ( ! empty( $request['id'] ) ) {
-			return new WP_Error( 'rest_comment_like_exists', __( 'Cannot create existing like.' ), array( 'status' => 400 ) );
+			return new WP_Error( 'rest_comment_like_exists', __( 'Cannot create existing like.', 'anycomment' ), array( 'status' => 400 ) );
 		}
 
 		$prepareLike = new AnyCommentLikes();
@@ -110,7 +118,7 @@ class AnyCommentRestLikes extends WP_REST_Controller {
 		if ( ! AnyCommentLikes::isCurrentUserHasLike( $prepareLike->comment_ID ) ) {
 			$like = AnyCommentLikes::addLike( $prepareLike );
 			if ( ! $like ) {
-				return new WP_Error( 'rest_like_fail', __( 'Failed to like' ), [ 'status' => 400 ] );
+				return new WP_Error( 'rest_like_fail', __( 'Failed to like', 'anycomment' ), [ 'status' => 400 ] );
 			}
 		} else {
 			AnyCommentLikes::deleteLike( $prepareLike->comment_ID );
