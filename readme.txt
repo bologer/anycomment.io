@@ -59,6 +59,7 @@ Yes! Join our [GitHub repository](https://github.com/bologer/anycomment.io) :)
 * Option: add option to define whether new comments will be added automatically or will be required to be moderated first
 * Option: add option to allow guests to leave comments
 * Option: Auto-update comments on new comments
+* Option: to choose favorite comment of the post (sticky at the top of the comments)
 * Support more languages
 * Code highlighting
 * Markdown support
