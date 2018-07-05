@@ -41,12 +41,12 @@ class AnyCommentMigration0021 extends AnyCommentMigration {
 
 			$user_id_index     = "ALTER TABLE `$table` ADD INDEX `user_ID` (`user_ID`)";
 			$post_id_index     = "ALTER TABLE `$table` ADD INDEX `post_ID` (`post_ID`)";
-			$fingerprint_index = "ALTER TABLE `$table` ADD INDEX `fingerprint` (`fingerprint`)";
 
 			$wpdb->query( $user_id_index );
 			$wpdb->query( $post_id_index );
-			$wpdb->query( $fingerprint_index );
 		}
+
+		return true;
 	}
 
 	/**
@@ -57,5 +57,7 @@ class AnyCommentMigration0021 extends AnyCommentMigration {
 
 		$sql = "DROP TABLE IF EXISTS `{$this->getTable()}`;";
 		$wpdb->query( $sql );
+
+		return true;
 	}
 }

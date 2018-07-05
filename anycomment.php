@@ -3,7 +3,7 @@
  * Plugin Name: AnyComment
  * Plugin URI: https://anycomment.io
  * Description: AnyComment is an advanced commenting system for WordPress.
- * Version: 0.0.21
+ * Version: 0.0.3
  * Author: Bologer
  * Author URI: http://bologer.ru
  * Requires at least: 4.4
@@ -32,7 +32,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 		 *
 		 * @var string
 		 */
-		public $version = '0.0.21';
+		public $version = '0.0.3';
 
 		/**
 		 * Instance of render class.
@@ -137,43 +137,13 @@ if ( ! class_exists( 'AnyComment' ) ) :
 		 * Initiate hooks.
 		 */
 		private function init_hooks() {
-			// todo: change to activation hook
-			add_action( 'init', [ $this, 'apply_migration' ] );
+			register_activation_hook( __FILE__, [ new AnyCommentMigrationManager(), 'applyAll' ] );
+			register_uninstall_hook( __FILE__, [ new AnyCommentMigrationManager(), 'dropAll' ] );
 
-//			register_uninstall_hook( __FILE__, [ $this, 'apply_migrations' ] );
-		}
-
-		/**
-		 * Apply migrations.
-		 */
-		public function apply_migration() {
-
-			include_once( ANY_COMMENT_ABSPATH . 'includes/migrations/AnyCommentMigration.php' );
-
-			$migrationList = ( new AnyCommentMigration )->getList();
-
-			foreach ( $migrationList as $key => $migrationVersion ) {
-				$format        = 'AnyCommentMigration%s';
-				$migrationName = sprintf( $format, $migrationVersion );
-				$path          = sprintf( ANY_COMMENT_ABSPATH . 'includes/migrations/%s.php', $migrationName );
-
-				if ( file_exists( $path ) ) {
-					continue;
-				}
-
-				include_once( $path );
-
-				/**
-				 * @var $model AnyCommentMigration
-				 */
-				$model = new $migrationName();
-
-				if ( ! $model->isApplied() ) {
-					$model->up();
-				}
+			if ( version_compare( AnyCommentOptions::getMigration(), $this->version, '<' ) ) {
+				( new AnyCommentMigrationManager() )->applyAll();
 			}
 		}
-
 
 		/**
 		 * Define EasyComment Constants.
@@ -236,9 +206,8 @@ if ( ! class_exists( 'AnyComment' ) ) :
 		 * Include required core files used in admin and on the frontend.
 		 */
 		public function includes() {
-			/**
-			 * Class autoloader.
-			 */
+			include_once( ANY_COMMENT_ABSPATH . 'includes/AnyCommentOptions.php' );
+
 			// Rest
 			include_once( ANY_COMMENT_ABSPATH . 'includes/rest/AnyCommentRestCommentMeta.php' );
 			include_once( ANY_COMMENT_ABSPATH . 'includes/rest/AnyCommentRestComment.php' );
@@ -256,12 +225,15 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			 * Admin related
 			 */
 			include_once( ANY_COMMENT_ABSPATH . 'includes/admin/AnyCommentStatistics.php' );
-			include_once( ANY_COMMENT_ABSPATH . 'includes/admin/AnyCommentOptions.php' );
+			include_once( ANY_COMMENT_ABSPATH . 'includes/admin/AnyCommentAdminOptions.php' );
 			include_once( ANY_COMMENT_ABSPATH . 'includes/admin/AnyCommentAdminPages.php' );
 			include_once( ANY_COMMENT_ABSPATH . 'includes/admin/AnyCommentGenericSettings.php' );
 			include_once( ANY_COMMENT_ABSPATH . 'includes/admin/AnyCommentSocialSettings.php' );
+			include_once( ANY_COMMENT_ABSPATH . 'includes/admin/AnyCommentGenericSettings.php' );
 			include_once( ANY_COMMENT_ABSPATH . 'includes/admin/AnyCommentIntegrationSettings.php' );
 
+			// Migration manager
+			include_once( ANY_COMMENT_ABSPATH . 'includes/migrations/AnyCommentMigrationManager.php' );
 
 			if ( ! class_exists( 'Hybridauth' ) ) {
 				include_once( ANY_COMMENT_ABSPATH . 'includes/hybridauth/src/autoload.php' );

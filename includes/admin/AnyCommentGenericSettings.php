@@ -8,7 +8,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 	/**
 	 * AC_AdminSettingPage helps to process generic plugin settings.
 	 */
-	class AnyCommentGenericSettings extends AnyCommentOptions {
+	class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 		const OPTION_THEME = 'option_theme_toggle';
 		const OPTION_PLUGIN_TOGGLE = 'option_plugin_toggle';
 		const OPTION_COUNT_PER_PAGE = 'option_comments_count_per_page';

@@ -172,29 +172,29 @@ if (!class_exists('AnyCommentSocialAuth')) :
                 'providers' => [
                     self::PROVIDERS[self::SOCIAL_VKONTAKTE] => [
                         'enabled' => AnyCommentSocialSettings::isVkOn(),
-                        'keys' => ['id' => AnyCommentSocialSettings::getVkAppId(), 'secret' => AnyCommentSocialSettings::getVkSecureKey()],
+                        'keys' => [ 'id' => AnyCommentSocialSettings::getVkAppId(), 'secret' => AnyCommentSocialSettings::getVkSecureKey()],
                         'callback' => static::get_vk_callback(),
                     ],
                     self::PROVIDERS[self::SOCIAL_GOOGLE] => [
                         'enabled' => AnyCommentSocialSettings::isGoogleOn(),
-                        'keys' => ['id' => AnyCommentSocialSettings::getGoogleClientId(), 'secret' => AnyCommentSocialSettings::getGoogleSecret()],
+                        'keys' => [ 'id' => AnyCommentSocialSettings::getGoogleClientId(), 'secret' => AnyCommentSocialSettings::getGoogleSecret()],
                         'scope' => 'profile https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.profile.emails.read',
                         'callback' => static::get_google_callback(),
                     ],
                     self::PROVIDERS[self::SOCIAL_FACEBOOK] => [
                         'enabled' => AnyCommentSocialSettings::isFbOn(),
                         'scope' => 'email, public_profile',
-                        'keys' => ['id' => AnyCommentSocialSettings::getFbAppId(), 'secret' => AnyCommentSocialSettings::getFbAppSecret()],
+                        'keys' => [ 'id' => AnyCommentSocialSettings::getFbAppId(), 'secret' => AnyCommentSocialSettings::getFbAppSecret()],
                         'callback' => static::get_facebook_callback(),
                     ],
                     self::PROVIDERS[self::SOCIAL_TWITTER] => [
                         'enabled' => AnyCommentSocialSettings::isTwitterOn(),
-                        'keys' => ['key' => AnyCommentSocialSettings::getTwitterConsumerKey(), 'secret' => AnyCommentSocialSettings::getTwitterConsumerSecret()],
+                        'keys' => [ 'key' => AnyCommentSocialSettings::getTwitterConsumerKey(), 'secret' => AnyCommentSocialSettings::getTwitterConsumerSecret()],
                         'callback' => static::get_twitter_callback(),
                     ],
                     self::PROVIDERS[self::SOCIAL_GITHUB] => [
                         'enabled' => AnyCommentSocialSettings::isGithubOn(),
-                        'keys' => ['id' => AnyCommentSocialSettings::getGithubClientId(), 'secret' => AnyCommentSocialSettings::getGithubSecretKey()],
+                        'keys' => [ 'id' => AnyCommentSocialSettings::getGithubClientId(), 'secret' => AnyCommentSocialSettings::getGithubSecretKey()],
                         'callback' => static::get_github_callback(),
                     ],
                     self::PROVIDERS[self::SOCIAL_ODNOKLASSNIKI] => [
@@ -328,7 +328,7 @@ if (!class_exists('AnyCommentSocialAuth')) :
             $photoUrl = null;
 
             if (!empty($user->photoURL)) {
-                $localUrl = \AnyComment\Handlers\AnyCommentUploadHandler::upload($user->photoURL, [
+                $localUrl = AnyCommentUploadHandler::upload($user->photoURL, [
                     $social,
                     $user->identifier
                 ]);

@@ -8,7 +8,7 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 	/**
 	 * AC_AdminSettingPage helps to process generic plugin settings.
 	 */
-	class AnyCommentIntegrationSettings extends AnyCommentOptions {
+	class AnyCommentIntegrationSettings extends AnyCommentAdminOptions {
 		const OPTION_AKISMET = 'option_akismet_toggle';
 
 		/**

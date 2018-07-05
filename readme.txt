@@ -106,7 +106,7 @@ WordPress currently has default Privacy Policy page create for your. What you ca
 
 = 0.0.3 – TBD =
 * Enh - introducing comment likes, #35
-
+* Enh - minified CSS, to save some loading time
 
 = 0.0.2 – 01.07.2018 =
 * Fix - admin OR moderator was unable to edit comment as it was too old
