@@ -55,14 +55,13 @@ Yes! Join our [GitHub repository](https://github.com/bologer/anycomment.io) :)
 
 = TODO features =
 * Option: customization of comment styles
-* Option: add option to load comments when user scrolls to it, save some loading time
 * Option: add option to define whether new comments will be added automatically or will be required to be moderated first
 * Option: add option to allow guests to leave comments
 * Option: Auto-update comments on new comments
 * Support more languages
 * Code highlighting
 * Markdown support
-* Integration of: Akismet Anti-Spam and Google's reCaptcha
+* Integration of: Google's reCaptcha
 * Integration of more social networks: Dribble, etc
 * More widgets to be added on the page (sidebar, custom pages, etc)
 * Special moderator panel integrated into custom AnyComment pages (for easy comment moderation)
