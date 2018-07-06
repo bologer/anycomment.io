@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-06 09:05+0000\n"
+"POT-Creation-Date: 2018-07-06 09:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -133,7 +133,7 @@ msgid "Integration"
 msgstr ""
 
 #: includes/admin/AnyCommentIntegrationSettings.php:87
-#: includes/admin/AnyCommentGenericSettings.php:134
+#: includes/admin/AnyCommentGenericSettings.php:139
 msgid "Generic"
 msgstr ""
 
@@ -168,77 +168,85 @@ msgstr ""
 msgid "Settings Saved"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:105
-#: includes/admin/AnyCommentGenericSettings.php:159
+#: includes/admin/AnyCommentGenericSettings.php:110
+#: includes/admin/AnyCommentGenericSettings.php:164
 msgid "Social Network Subscriber"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:120
-#: includes/admin/AnyCommentGenericSettings.php:121
+#: includes/admin/AnyCommentGenericSettings.php:125
+#: includes/admin/AnyCommentGenericSettings.php:126
 #: templates/admin/dashboard.php:32
 msgid "Settings"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:136
+#: includes/admin/AnyCommentGenericSettings.php:141
 msgid "Generic settings."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:147
+#: includes/admin/AnyCommentGenericSettings.php:152
 msgid "Enable Comments"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:149
+#: includes/admin/AnyCommentGenericSettings.php:154
 msgid ""
 "When on, comments are visible. When off, default WordPress' comments shown. "
 "This can be used to configure social networks on fresh installation."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:153
+#: includes/admin/AnyCommentGenericSettings.php:158
 msgid "Register User Group"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:155
+#: includes/admin/AnyCommentGenericSettings.php:160
 msgid ""
 "When users will authorize via plugin, they are being registered and be "
 "assigned with group selected above."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:158
+#: includes/admin/AnyCommentGenericSettings.php:163
 msgid "Subscriber"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:165
+#: includes/admin/AnyCommentGenericSettings.php:170
 msgid "Number of Comments Loaded"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:167
+#: includes/admin/AnyCommentGenericSettings.php:172
 msgid ""
 "Number of comments loaded on initial page load. For example, \"20\" will "
 "display 20 comments on the page and if you have 40 in total, at the very "
 "bottom you will see button to load more. Min 5, max as defined."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:171
+#: includes/admin/AnyCommentGenericSettings.php:176
 msgid "Theme"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:175
+#: includes/admin/AnyCommentGenericSettings.php:180
 msgid "For Dark Websites"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:176
+#: includes/admin/AnyCommentGenericSettings.php:181
 msgid "For Light Websites"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:179
+#: includes/admin/AnyCommentGenericSettings.php:184
 msgid "Choose theme of the comments."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:183
+#: includes/admin/AnyCommentGenericSettings.php:188
+msgid "Load on Scroll"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:190
+msgid "Load comments when user scrolls to it."
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:194
 msgid "Thanks"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:185
+#: includes/admin/AnyCommentGenericSettings.php:196
 msgid ""
 "Show AnyComment's link in the footer of comments. Copyright helps to bring "
 "awareness of such plugin and bring people to allow us to understand that it "
