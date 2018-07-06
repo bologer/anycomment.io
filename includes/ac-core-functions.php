@@ -184,7 +184,7 @@ function anycomment_author( $comment, $parentComment = null ) {
 		<?php endif; ?>
         <time class="comment-single-body-header__date timeago-date-time"
               datetime="<?= $comment->comment_date ?>"
-              title="<?= date( 'd-m-Y H:i', strtotime( $comment->comment_date ) ) ?>"></time>
+              title="<?= date( get_option( 'date_format' ), strtotime( $comment->comment_date ) ) ?>"></time>
     </header>
 	<?php
 }
@@ -404,24 +404,37 @@ EOT;
 	if ( AnyCommentGenericSettings::isLoadOnScroll() ):
 		$html .= <<<EOT
 <script>
+    var loaded = false;
+
     jQuery(document).ready(function ($) {
-       var loaded = false;
+       iframeCommentLoad();
+       
        $(window).scroll(function($) {
-           if(loaded) {
-               return;
-           }
-           var iframeToTop = jQuery('#$randIframeId').offset().top,
-               wH = jQuery(window).height(),
-               currentTop = jQuery(this).scrollTop();
-           
-           wH = wH * 0.9;
-         
-           if((currentTop + wH) > iframeToTop ) {
-               loaded = true;
-               jQuery('#$randIframeId').iFrameResize($jsonOptions);
-           }
+           iframeCommentLoad();
        });
     });
+    
+    function iframeCommentLoad() {
+         if(loaded) {
+             return;
+         }
+         
+         var iframe = jQuery('#$randIframeId'),
+             iframeToTop = iframe.offset().top,
+             wH = jQuery(window).height(),
+             currentTop = jQuery(this).scrollTop();
+         
+         if(iframe.outerHeight() > 2) {
+             return;
+         }
+           
+         wH = wH * 0.9;
+         
+         if((currentTop + wH) > iframeToTop ) {
+            loaded = true;
+            jQuery('#$randIframeId').iFrameResize($jsonOptions);
+         }
+    }
 </script>
 EOT;
 
