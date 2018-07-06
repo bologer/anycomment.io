@@ -9,6 +9,12 @@ $active_tab = isset( $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : 'any
 <div class="wrap">
     <h2><?= __( 'Dashboard', 'anycomment' ) ?></h2>
 
+    <div class="updated notice">
+        <p>
+            <strong><?= sprintf( __( 'Please take a few seconds and <a href="%s" target="_blank">rate us on WordPress.org</a>. You are the one who can help to grow and make thus plugin better!', 'anycomment' ), 'https://wordpress.org/support/plugin/anycomment/reviews/?rate=5#new-post' ) ?></strong>
+        </p>
+    </div>
+
     <div class="anycomment-dashboard">
         <div class="anycomment-dashboard__container">
             <header class="anycomment-dashboard__header">

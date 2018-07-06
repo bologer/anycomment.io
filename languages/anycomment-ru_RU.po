@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-06 09:46+0000\n"
-"PO-Revision-Date: 2018-07-06 09:52+0000\n"
+"POT-Creation-Date: 2018-07-06 10:17+0000\n"
+"PO-Revision-Date: 2018-07-06 10:19+0000\n"
 "Last-Translator: admin <sasha.tesh@gmail.com>\n"
 "Language-Team: Русский\n"
 "Language: ru_RU\n"
@@ -181,7 +181,7 @@ msgstr "Подписчик соц. сети"
 
 #: includes/admin/AnyCommentGenericSettings.php:125
 #: includes/admin/AnyCommentGenericSettings.php:126
-#: templates/admin/dashboard.php:32
+#: templates/admin/dashboard.php:38
 msgid "Settings"
 msgstr "Настройки"
 
@@ -274,8 +274,8 @@ msgstr ""
 
 #. Name of the plugin
 #: includes/admin/AnyCommentAdminPages.php:57
-#: includes/admin/AnyCommentAdminPages.php:58 templates/admin/dashboard.php:17
-#: templates/admin/dashboard.php:18
+#: includes/admin/AnyCommentAdminPages.php:58 templates/admin/dashboard.php:23
+#: templates/admin/dashboard.php:24
 msgid "AnyComment"
 msgstr "AnyComment"
 
@@ -788,51 +788,62 @@ msgstr ""
 msgid "The password for the post if it is password protected."
 msgstr ""
 
-#: templates/admin/dashboard.php:10 templates/admin/dashboard.php:30
+#: templates/admin/dashboard.php:10 templates/admin/dashboard.php:36
 msgid "Dashboard"
 msgstr "Консоль"
 
-#: templates/admin/dashboard.php:22
+#: templates/admin/dashboard.php:14
+#, php-format
+msgid ""
+"Please take a few seconds and <a href=\"%s\" target=\"_blank\">rate us on "
+"WordPress.org</a>. You are the one who can help to grow and make thus plugin "
+"better!"
+msgstr ""
+"Пожалуйста, потратьте пару секунд, чтобы <a href=\"%s\" target=\"_blank\">"
+"оценить плагин на WordPress.org</a>. Таким образом вы помогаете в росте и в "
+"дальнейшем развитии плагина!"
+
+#: templates/admin/dashboard.php:28
 msgid "Official Website"
 msgstr "Официальный сайт"
 
-#: templates/admin/dashboard.php:31
+#: templates/admin/dashboard.php:37
 msgid "Social"
 msgstr "Соц. сети"
 
-#: templates/admin/dashboard.php:42 templates/admin/dashboard.php:46
+#: templates/admin/dashboard.php:48 templates/admin/dashboard.php:52
 msgid "Commentators"
 msgstr "Комментаторы"
 
-#: templates/admin/dashboard.php:53 templates/admin/dashboard.php:56
+#: templates/admin/dashboard.php:59 templates/admin/dashboard.php:62
 msgid "All Comments"
 msgstr "Все комментарии"
 
-#: templates/admin/dashboard.php:66
+#: templates/admin/dashboard.php:72
 msgid "Overal Statistics"
 msgstr "Общая статистика"
 
-#: templates/admin/dashboard.php:90
+#: templates/admin/dashboard.php:96
 msgid "Comments"
 msgstr "Комментарии"
 
-#: templates/admin/dashboard.php:101
+#: templates/admin/dashboard.php:107
 msgid "Users"
 msgstr "Пользователи"
 
-#: templates/admin/dashboard.php:142
+#: templates/admin/dashboard.php:148
 msgid "Most Active Users"
 msgstr "Активные пользователи"
 
-#: templates/admin/dashboard.php:155
+#: templates/admin/dashboard.php:161
 msgid "No users yet"
 msgstr "Данные пока что отсутствуют"
 
-#: templates/admin/dashboard.php:161
+#: templates/admin/dashboard.php:167
 msgid "News"
 msgstr "Новости"
 
-#: templates/admin/dashboard.php:175
+#: templates/admin/dashboard.php:181
 msgid "No news yet"
 msgstr "Новостей пока не было."
 
