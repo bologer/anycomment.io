@@ -572,18 +572,34 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		 * @return mixed|null
 		 */
 		public function get_user_avatar_url( $user_id ) {
-			// Integration with WP User Avatar:https://wordpress.org/plugins/wp-user-avatar/
-			if ( class_exists( 'WP_User_Avatar_Setup' ) ) {
+
+
+			if ( AnyCommentIntegrationSettings::isWPUserAvatarOn() ) {
 				global $wpua_functions;
 				if ( $wpua_functions->has_wp_user_avatar( $user_id ) ) {
-					return $wpua_functions->get_wp_user_avatar_src( $user_id, 50 );
+					return $wpua_functions->get_wp_user_avatar_src( $user_id, 60 );
 				}
 			}
 
+			/**
+			 * Get avatar from social network.
+			 */
 			$avatarUrl = get_user_meta( $user_id, self::META_SOCIAL_AVATAR, true );
 
+			/**
+			 * When user has avatar from social network.
+			 */
 			if ( ! empty( $avatarUrl ) ) {
 				return $avatarUrl;
+			}
+
+			/**
+			 * As user does not have social avatar, it is required to che
+			 * whether user has non-default gravatar avatar, if does return,
+			 * otherwise get default plugin's one.
+			 */
+			if ( $this->has_gravatar( $user_id ) ) {
+				return get_avatar_url( $user_id, [ 'size' => 60 ] );
 			}
 
 			return AnyComment()->plugin_url() . '/assets/img/no-avatar.svg';
@@ -596,7 +612,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		 *
 		 * @return bool if the gravatar exists or not
 		 */
-		public function validate_gravatar( $id_or_email ) {
+		public function has_gravatar( $id_or_email ) {
 			//id or email code borrowed from wp-includes/pluggable.php
 			$email = '';
 			if ( is_numeric( $id_or_email ) ) {

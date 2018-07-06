@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-06 08:26+0000\n"
+"POT-Creation-Date: 2018-07-06 09:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -90,7 +90,7 @@ msgstr ""
 msgid "Send"
 msgstr ""
 
-#: templates/comments.php:56 includes/admin/AnyCommentAdminOptions.php:188
+#: templates/comments.php:56 includes/admin/AnyCommentAdminOptions.php:197
 msgid "Save"
 msgstr ""
 
@@ -127,29 +127,44 @@ msgstr ""
 msgid "Logout"
 msgstr ""
 
-#: includes/admin/AnyCommentIntegrationSettings.php:61
-#: includes/admin/AnyCommentIntegrationSettings.php:62
+#: includes/admin/AnyCommentIntegrationSettings.php:72
+#: includes/admin/AnyCommentIntegrationSettings.php:73
 msgid "Integration"
 msgstr ""
 
-#: includes/admin/AnyCommentIntegrationSettings.php:75
+#: includes/admin/AnyCommentIntegrationSettings.php:87
 #: includes/admin/AnyCommentGenericSettings.php:134
 msgid "Generic"
 msgstr ""
 
-#: includes/admin/AnyCommentIntegrationSettings.php:78
-msgid "Integration with other plugin and/or services."
+#: includes/admin/AnyCommentIntegrationSettings.php:90
+msgid ""
+"Integration with other plugin and/or services. Integration options will "
+"automatically appear down below once you install one of the supported "
+"plugins."
 msgstr ""
 
-#: includes/admin/AnyCommentIntegrationSettings.php:90
+#: includes/admin/AnyCommentIntegrationSettings.php:102
 msgid "Akismet Anti-Spam"
 msgstr ""
 
-#: includes/admin/AnyCommentIntegrationSettings.php:92
-msgid "Filter all new comments through Akismet Anti-Spam plugin."
+#: includes/admin/AnyCommentIntegrationSettings.php:104
+#, php-format
+msgid ""
+"Filter all new comments through <a href=\"%s\">Akismet Anti-Spam</a> plugin."
 msgstr ""
 
-#: includes/admin/AnyCommentAdminOptions.php:177
+#: includes/admin/AnyCommentIntegrationSettings.php:111
+msgid "WP User Avatar"
+msgstr ""
+
+#: includes/admin/AnyCommentIntegrationSettings.php:113
+#, php-format
+msgid ""
+"Use <a href=\"%s\">WP User Avatar</a> for handling avatars in the plugin."
+msgstr ""
+
+#: includes/admin/AnyCommentAdminOptions.php:186
 msgid "Settings Saved"
 msgstr ""
 
