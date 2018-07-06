@@ -50,7 +50,7 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 				[],
 				1.0
 			);
-
+			
 			return ANYCOMMENT_ABSPATH . 'templates/iframe.php';
 		}
 

@@ -398,13 +398,42 @@ function anycomment_iframe() {
         src="$iframeSrc"
         frameborder="0"
         style="$styles"></iframe>
-       
+EOT;
+
+	if ( AnyCommentGenericSettings::isLoadOnScroll() ):
+		$html .= <<<EOT
 <script>
     jQuery(document).ready(function ($) {
-        $('#$randIframeId').iFrameResize($jsonOptions);
+       var loaded = false;
+       $(window).scroll(function($) {
+           if(loaded) {
+               return;
+           }
+           var iframeToTop = jQuery('#$randIframeId').offset().top,
+               wH = jQuery(window).height(),
+               currentTop = jQuery(this).scrollTop();
+           
+           wH = wH * 0.9;
+         
+           if((currentTop + wH) > iframeToTop ) {
+               loaded = true;
+               jQuery('#$randIframeId').iFrameResize($jsonOptions);
+           }
+       });
     });
 </script>
 EOT;
+
+	else:
+		$html .= <<<EOT
+		<script>
+		jQuery(document).ready(function ($) {
+    jQuery('#$randIframeId').iFrameResize($jsonOptions);
+});
+		</script>
+EOT;
+
+	endif;
 
 	if ( AnyComment()->errors->hasErrors() ) {
 		$html .= <<<EOT

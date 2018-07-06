@@ -108,8 +108,10 @@ WordPress currently has default Privacy Policy page create for your. What you ca
 * Enh - introducing comment likes, #35
 * Enh - minified CSS, to save some loading time
 * Enh - ability to define default user role on creation (registration via plugin), #37
-* Fix - when user has non-default Gravatar, use it, otherwise use default from plugin, #10
+* Enh - when user has non-default Gravatar, use it, otherwise use default from plugin, #10
 * Fix - proper integration with WP User Avatar & Akismet
+* Enh - load commnets on scroll (new options to load comments when user scroll to it), #36
+
 
 = 0.0.2 – 01.07.2018 =
 * Fix - admin OR moderator was unable to edit comment as it was too old

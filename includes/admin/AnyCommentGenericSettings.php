@@ -37,6 +37,11 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		const OPTION_COPYRIGHT_TOGGLE = 'option_copyright_toggle';
 
 		/**
+		 * Load comments on scroll to it.
+		 */
+		const OPTION_LOAD_ON_SCROLL = 'options_load_on_scroll';
+
+		/**
 		 * Dark theme.
 		 */
 		const THEME_DARK = 'dark';
@@ -179,6 +184,12 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'description' => esc_html( __( 'Choose theme of the comments.', "anycomment" ) )
 					],
 					[
+						'id'          => self::OPTION_LOAD_ON_SCROLL,
+						'title'       => __( 'Load on Scroll', "anycomment" ),
+						'callback'    => 'input_checkbox',
+						'description' => esc_html( __( 'Load comments when user scrolls to it.', "anycomment" ) )
+					],
+					[
 						'id'          => self::OPTION_COPYRIGHT_TOGGLE,
 						'title'       => __( 'Thanks', "anycomment" ),
 						'callback'    => 'input_checkbox',
@@ -195,6 +206,15 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 */
 		public static function isEnabled() {
 			return static::instance()->getOption( self::OPTION_PLUGIN_TOGGLE ) !== null;
+		}
+
+		/**
+		 * Check whether it is required to load comments on scroll.
+		 *
+		 * @return bool
+		 */
+		public static function isLoadOnScroll() {
+			return static::instance()->getOption( self::OPTION_LOAD_ON_SCROLL ) !== null;
 		}
 
 		/**
@@ -232,7 +252,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 			$value = static::instance()->getOption( self::OPTION_THEME );
 
 			if ( $value === null || $value !== self::THEME_DARK && $value !== self::THEME_LIGHT ) {
-				return self::THEME_DARK;
+				return self::THEME_LIGHT;
 			}
 
 			return $value;
