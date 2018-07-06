@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-01 08:45+0000\n"
-"PO-Revision-Date: 2018-07-01 08:45+0000\n"
+"POT-Creation-Date: 2018-07-06 08:26+0000\n"
+"PO-Revision-Date: 2018-07-06 08:30+0000\n"
 "Last-Translator: admin <sasha.tesh@gmail.com>\n"
 "Language-Team: Русский\n"
 "Language: ru_RU\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/"
 
-#: includes/AnyCommentSocialAuth.php:105
+#: includes/AnyCommentSocialAuth.php:102
 msgid "Unable to authorize, please try again later"
 msgstr "Что-то пошло не так, попробуйте чуть позже..."
 
@@ -56,19 +56,19 @@ msgstr "Аноним"
 msgid "Load more"
 msgstr "Загрузить еще"
 
-#: includes/ac-core-functions.php:252
+#: includes/ac-core-functions.php:252 templates/comments.php:57
 msgid "Reply"
 msgstr "Ответить"
 
-#: includes/ac-core-functions.php:256
+#: includes/ac-core-functions.php:260
 msgid "Edit"
 msgstr "Изменить"
 
-#: includes/ac-core-functions.php:315
+#: includes/ac-core-functions.php:319
 msgid "No comments to display"
 msgstr "Пока еще не было комментариев"
 
-#: includes/ac-core-functions.php:347
+#: includes/ac-core-functions.php:351
 msgid "Add Anycomment to your site"
 msgstr "Добавить AnyComment на свой сайт"
 
@@ -85,6 +85,14 @@ msgstr "Не возможно найти пост с ID #%s"
 #, php-format
 msgid "%s Comments"
 msgstr "%s комментариев"
+
+#: templates/comments.php:55 templates/send-comment.php:57
+msgid "Send"
+msgstr "Отправить"
+
+#: templates/comments.php:56 includes/admin/AnyCommentAdminOptions.php:188
+msgid "Save"
+msgstr "Сохранить"
 
 #: templates/send-comment.php:18
 msgid "Sort By"
@@ -110,10 +118,6 @@ msgstr "Ответить {name}..."
 msgid "Quick Login"
 msgstr "Быстрый вход"
 
-#: templates/send-comment.php:57
-msgid "Send"
-msgstr "Отправить"
-
 #: templates/send-comment-logged-in-as.php:15
 #, php-format
 msgid "Logged in as %s"
@@ -129,7 +133,7 @@ msgid "Integration"
 msgstr "Интеграция"
 
 #: includes/admin/AnyCommentIntegrationSettings.php:75
-#: includes/admin/AnyCommentGenericSettings.php:83
+#: includes/admin/AnyCommentGenericSettings.php:134
 msgid "Generic"
 msgstr "Общие"
 
@@ -145,21 +149,30 @@ msgstr "Akismet Anti-Spam"
 msgid "Filter all new comments through Akismet Anti-Spam plugin."
 msgstr "Фильтровать все комментарии через Akismet Anti-Spam. "
 
-#: includes/admin/AnyCommentGenericSettings.php:69
-#: includes/admin/AnyCommentGenericSettings.php:70
+#: includes/admin/AnyCommentAdminOptions.php:177
+msgid "Settings Saved"
+msgstr "Настройки сохранены"
+
+#: includes/admin/AnyCommentGenericSettings.php:105
+#: includes/admin/AnyCommentGenericSettings.php:159
+msgid "Social Network Subscriber"
+msgstr "Подписчик соц. сети"
+
+#: includes/admin/AnyCommentGenericSettings.php:120
+#: includes/admin/AnyCommentGenericSettings.php:121
 #: templates/admin/dashboard.php:32
 msgid "Settings"
 msgstr "Настройки"
 
-#: includes/admin/AnyCommentGenericSettings.php:85
+#: includes/admin/AnyCommentGenericSettings.php:136
 msgid "Generic settings."
 msgstr "Общение настройки."
 
-#: includes/admin/AnyCommentGenericSettings.php:96
+#: includes/admin/AnyCommentGenericSettings.php:147
 msgid "Enable Comments"
 msgstr "Включить комментарии"
 
-#: includes/admin/AnyCommentGenericSettings.php:98
+#: includes/admin/AnyCommentGenericSettings.php:149
 msgid ""
 "When on, comments are visible. When off, default WordPress' comments shown. "
 "This can be used to configure social networks on fresh installation."
@@ -168,11 +181,27 @@ msgstr ""
 "от WordPress отображаются. Это может использоваться для настройки соц. сетей "
 "после первой установки. "
 
-#: includes/admin/AnyCommentGenericSettings.php:102
+#: includes/admin/AnyCommentGenericSettings.php:153
+msgid "Register User Group"
+msgstr "Группа зарегистрированного пользователя"
+
+#: includes/admin/AnyCommentGenericSettings.php:155
+msgid ""
+"When users will authorize via plugin, they are being registered and be "
+"assigned with group selected above."
+msgstr ""
+"После авторизации через плагин, система автоматически создает профиль с "
+"выбранной группой выше. "
+
+#: includes/admin/AnyCommentGenericSettings.php:158
+msgid "Subscriber"
+msgstr "Подписчик"
+
+#: includes/admin/AnyCommentGenericSettings.php:165
 msgid "Number of Comments Loaded"
 msgstr "Кол-во комментариев при загрузке"
 
-#: includes/admin/AnyCommentGenericSettings.php:104
+#: includes/admin/AnyCommentGenericSettings.php:167
 msgid ""
 "Number of comments loaded on initial page load. For example, \"20\" will "
 "display 20 comments on the page and if you have 40 in total, at the very "
@@ -182,27 +211,27 @@ msgstr ""
 "20 комментариев, и если у вас всего 40, то в самом низу появится кнопка "
 "\"Загрузить еще\". Минимальное значение 5, максимальное - как указано. "
 
-#: includes/admin/AnyCommentGenericSettings.php:108
+#: includes/admin/AnyCommentGenericSettings.php:171
 msgid "Theme"
 msgstr "Тема"
 
-#: includes/admin/AnyCommentGenericSettings.php:112
+#: includes/admin/AnyCommentGenericSettings.php:175
 msgid "For Dark Websites"
 msgstr "Для темных сайтов"
 
-#: includes/admin/AnyCommentGenericSettings.php:113
+#: includes/admin/AnyCommentGenericSettings.php:176
 msgid "For Light Websites"
 msgstr "Для светлых сайтов"
 
-#: includes/admin/AnyCommentGenericSettings.php:116
+#: includes/admin/AnyCommentGenericSettings.php:179
 msgid "Choose theme of the comments."
 msgstr "Выберите тему для комментариев."
 
-#: includes/admin/AnyCommentGenericSettings.php:120
+#: includes/admin/AnyCommentGenericSettings.php:183
 msgid "Thanks"
 msgstr "Спасибо"
 
-#: includes/admin/AnyCommentGenericSettings.php:122
+#: includes/admin/AnyCommentGenericSettings.php:185
 msgid ""
 "Show AnyComment's link in the footer of comments. Copyright helps to bring "
 "awareness of such plugin and bring people to allow us to understand that it "
@@ -421,13 +450,312 @@ msgstr ""
 "Введите секретный ключ. Вы можете это найти в официальном письме, "
 "отправленное вам на почту от Одноклассников."
 
-#: includes/admin/AnyCommentOptions.php:176
-msgid "Settings Saved"
-msgstr "Настройки сохранены"
+#: includes/rest/AnyCommentRestLikes.php:37
+#: includes/rest/AnyCommentRestComment.php:53
+#: includes/rest/AnyCommentRestComment.php:1039
+msgid "Unique identifier for the object."
+msgstr ""
 
-#: includes/admin/AnyCommentOptions.php:187
-msgid "Save"
-msgstr "Сохранить"
+#: includes/rest/AnyCommentRestLikes.php:56
+msgid "Login to like comment"
+msgstr "Авторизуйтесь, чтобы поставить лайк"
+
+#: includes/rest/AnyCommentRestLikes.php:60
+#: includes/rest/AnyCommentRestLikes.php:78
+msgid "Sorry, post does not exist."
+msgstr "Извините, запись не существует."
+
+#: includes/rest/AnyCommentRestLikes.php:64
+#: includes/rest/AnyCommentRestLikes.php:72
+msgid "Sorry, comment that you liked does not exist."
+msgstr "Изивини, но комментарий которые вы лайкнули не существует."
+
+#: includes/rest/AnyCommentRestLikes.php:82
+#: includes/rest/AnyCommentRestLikes.php:86
+#: includes/rest/AnyCommentRestComment.php:449
+#: includes/rest/AnyCommentRestComment.php:453
+msgid "Sorry, you are not allowed to create a comment on this post."
+msgstr ""
+
+#: includes/rest/AnyCommentRestLikes.php:105
+msgid "Cannot create existing like."
+msgstr ""
+
+#: includes/rest/AnyCommentRestLikes.php:121
+msgid "Failed to like"
+msgstr "Ошибка, невозможно поставить лайк."
+
+#: includes/rest/AnyCommentRestComment.php:64
+#: includes/rest/AnyCommentRestComment.php:86
+msgid ""
+"The password for the parent post of the comment (if the post is password "
+"protected)."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:83
+msgid "Whether to bypass trash and force deletion."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:111
+#: includes/rest/AnyCommentRestComment.php:350
+#: includes/rest/AnyCommentRestComment.php:457
+msgid "Sorry, you are not allowed to read the post for this comment."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:113
+msgid "Sorry, you are not allowed to read comments without a post."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:119
+#: includes/rest/AnyCommentRestComment.php:340
+msgid "Sorry, you are not allowed to edit comments."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:141
+#, php-format
+msgid "Query parameter not permitted: %s"
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:303
+msgid "Invalid comment ID."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:317
+#: includes/rest/AnyCommentRestComment.php:667
+msgid "Invalid post ID."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:346
+msgid "Sorry, you are not allowed to read this comment."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:391
+#: includes/rest/AnyCommentRestComment.php:408
+msgid "Sorry, you must be logged in to comment."
+msgstr ""
+
+#. %s: request parameter
+#: includes/rest/AnyCommentRestComment.php:416
+#: includes/rest/AnyCommentRestComment.php:425
+#: includes/rest/AnyCommentRestComment.php:434
+#, php-format
+msgid "Sorry, you are not allowed to edit '%s' for comments."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:440
+#: includes/rest/AnyCommentRestComment.php:445
+msgid "Sorry, you are not allowed to create this comment without a post."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:461
+msgid "Sorry, comments are closed for this item."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:479
+msgid "Cannot create existing comment."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:499
+#: includes/rest/AnyCommentRestComment.php:684
+msgid "Invalid comment content."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:538
+#: includes/rest/AnyCommentRestComment.php:693
+msgid "Comment field exceeds maximum length allowed."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:562
+msgid "Creating comment failed."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:629
+msgid "Sorry, you are not allowed to edit this comment."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:655
+msgid "Sorry, you are not allowed to change the comment type."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:676
+msgid "Updating comment status failed."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:699
+msgid "Updating comment failed."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:751
+msgid "Sorry, you are not allowed to delete this comment."
+msgstr ""
+
+#. %s: force=true
+#: includes/rest/AnyCommentRestComment.php:797
+#, php-format
+msgid "The comment does not support trashing. Set '%s' to delete."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:801
+msgid "The comment has already been trashed."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:810
+msgid "The comment cannot be deleted."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:968
+msgid "Invalid comment author ID."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1045
+msgid "The ID of the user object, if author was a user."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1050
+msgid "Email address for the object author."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1060
+msgid "IP address for the object author."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1066
+msgid "Display name for the object author."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1074
+msgid "URL for the object author."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1080
+msgid "User agent for the object author."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1088
+msgid "The content for the object."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1099
+msgid "Content for the object, as it exists in the database."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1104
+msgid "HTML content for the object, transformed for display."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1112
+msgid "The date the object was published, in the site's timezone."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1118
+msgid "The date the object was published, as GMT."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1124
+msgid "URL to the object."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1131
+msgid "The ID for the parent of the object."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1137
+msgid "The ID of the associated post object."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1143
+msgid "State of the object."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1151
+msgid "Type of Comment for the object."
+msgstr ""
+
+#. %d: avatar image size in pixels
+#: includes/rest/AnyCommentRestComment.php:1166
+#, php-format
+msgid "Avatar URL with image size of %d pixels."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1174
+msgid "Avatar URLs for the object author."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1200
+msgid ""
+"Limit response to comments published after a given ISO8601 compliant date."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1206
+msgid ""
+"Limit result set to comments assigned to specific user IDs. Requires "
+"authorization."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1214
+msgid ""
+"Ensure result set excludes comments assigned to specific user IDs. Requires "
+"authorization."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1223
+msgid ""
+"Limit result set to that from a specific author email. Requires "
+"authorization."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1229
+msgid ""
+"Limit response to comments published before a given ISO8601 compliant date."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1235
+msgid "Ensure result set excludes specific IDs."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1244
+msgid "Limit result set to specific IDs."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1253
+msgid "Offset the result set by a specific number of items."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1258
+msgid "Order sort attribute ascending or descending."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1268
+msgid "Sort collection by object attribute."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1284
+msgid "Limit result set to comments of specific parent IDs."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1293
+msgid "Ensure result set excludes specific parent IDs."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1302
+msgid "Limit result set to comments assigned to specific post IDs."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1311
+msgid ""
+"Limit result set to comments assigned a specific status. Requires "
+"authorization."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1319
+msgid ""
+"Limit result set to comments assigned a specific type. Requires "
+"authorization."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1326
+msgid "The password for the post if it is password protected."
+msgstr ""
 
 #: templates/admin/dashboard.php:10 templates/admin/dashboard.php:30
 msgid "Dashboard"

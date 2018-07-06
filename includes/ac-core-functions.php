@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function anycomment_get_template( $templateName ) {
 	ob_start();
-	include ANY_COMMENT_ABSPATH . "templates/$templateName.php";
+	include ANYCOMMENT_ABSPATH . "templates/$templateName.php";
 	$content = ob_get_contents();
 	ob_end_clean();
 

@@ -19,7 +19,7 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 	 * Format: 0.0.1, 0.0.2, etc
 	 */
 	private static $_list = [
-		'0.0.21' => [ 'version' => '0.0.21', 'description' => 'Create likes table' ],
+		'0.0.3' => [ 'version' => '0.0.3', 'description' => 'Create likes table' ],
 	];
 
 	/**

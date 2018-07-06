@@ -107,6 +107,7 @@ WordPress currently has default Privacy Policy page create for your. What you ca
 = 0.0.3 – TBD =
 * Enh - introducing comment likes, #35
 * Enh - minified CSS, to save some loading time
+* Enh - ability to define default user role on creation (registration via plugin), #37
 
 = 0.0.2 – 01.07.2018 =
 * Fix - admin OR moderator was unable to edit comment as it was too old
@@ -129,8 +130,8 @@ WordPress currently has default Privacy Policy page create for your. What you ca
 * Options to specify API details (secrets, etc) for social authorization: Vk, Twitter, Facebook, Google
 * Integrated with [WP User Avatar](https://wordpress.org/plugins/wp-user-avatar/)
 * Authorize via VK, Twitter, Facebook, Google
-* enh: date when comment is left is based on website's language. List of supported languages can be seen [here](https://github.com/hustcc/timeago.js/tree/master/src/lang)
-* enh: comment count at the top updated automatically when new comment added
-* enh: add comments with AJAX, no need to refresh the page
-* enh: ability to reply to nested comments up to 2 levels
-* enh: when all socials disabled, libraries not loaded and they are not shown to end user
+* Enh: date when comment is left is based on website's language. List of supported languages can be seen [here](https://github.com/hustcc/timeago.js/tree/master/src/lang)
+* Enh: comment count at the top updated automatically when new comment added
+* Enh: add comments with AJAX, no need to refresh the page
+* Enh: ability to reply to nested comments up to 2 levels
+* Enh: when all socials disabled, libraries not loaded and they are not shown to end user

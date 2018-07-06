@@ -1,6 +1,6 @@
 <?php
 
-include_once( ANY_COMMENT_ABSPATH . 'includes/migrations/AnyCommentMigration.php' );
+include_once( ANYCOMMENT_ABSPATH . 'includes/migrations/AnyCommentMigration.php' );
 
 /**
  * Class AnyCommentMigrationManager
@@ -35,7 +35,7 @@ class AnyCommentMigrationManager {
 		foreach ( $migrationList as $key => $migrationVersion ) {
 			$format        = $this->getFileFormat();
 			$migrationName = sprintf( $format, $migrationVersion );
-			$path          = sprintf( ANY_COMMENT_ABSPATH . 'includes/migrations/%s.php', $migrationName );
+			$path          = sprintf( ANYCOMMENT_ABSPATH . 'includes/migrations/%s.php', $migrationName );
 
 			if ( ! file_exists( $path ) ) {
 				continue;
@@ -74,7 +74,7 @@ class AnyCommentMigrationManager {
 		foreach ( $migrationList as $key => $migrationVersion ) {
 			$format        = $this->getFileFormat();
 			$migrationName = sprintf( $format, $migrationVersion );
-			$path          = sprintf( ANY_COMMENT_ABSPATH . 'includes/migrations/%s.php', $migrationName );
+			$path          = sprintf( ANYCOMMENT_ABSPATH . 'includes/migrations/%s.php', $migrationName );
 
 			if ( ! file_exists( $path ) ) {
 				continue;
