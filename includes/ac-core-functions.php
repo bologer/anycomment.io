@@ -183,7 +183,8 @@ function anycomment_author( $comment, $parentComment = null ) {
             </div>
 		<?php endif; ?>
         <time class="comment-single-body-header__date timeago-date-time"
-              datetime="<?= $comment->comment_date ?>"></time>
+              datetime="<?= $comment->comment_date ?>"
+              title="<?= date( 'd-m-Y H:i', strtotime( $comment->comment_date ) ) ?>"></time>
     </header>
 	<?php
 }
