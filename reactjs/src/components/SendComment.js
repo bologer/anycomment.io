@@ -42,7 +42,7 @@ class SendComment extends AnyCommentComponent {
                     </div>
                 </div>
 
-                <SendCommentForm handleChange={this.props.handleChange} user={this.props.user}/>
+                <SendCommentForm addComment={this.props.addComment} user={this.props.user}/>
             </div>
         );
     }

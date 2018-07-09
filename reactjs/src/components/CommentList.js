@@ -13,6 +13,8 @@ class CommentList extends AnyCommentComponent {
         this.state.error = null;
         this.state.isLoaded = false;
         this.state.comments = [];
+
+        this.addComment = this.addComment.bind(this);
     }
 
     loadComments = () => {
@@ -36,6 +38,22 @@ class CommentList extends AnyCommentComponent {
             });
     };
 
+    /**
+     * Add new comment to the list.
+     *
+     * @param comment
+     */
+    addComment(comment) {
+        console.log('update state');
+        console.log('comment');
+        this.setState({
+            comments: [comment, ...this.state.comments]
+        });
+
+        console.log('state is');
+        console.log(this.state.comments);
+    };
+
     componentDidMount() {
         this.loadComments();
     }
@@ -51,7 +69,7 @@ class CommentList extends AnyCommentComponent {
         }
 
         return [
-            <SendComment handleChange={this.loadComments} user={this.props.user}/>,
+            <SendComment addComment={this.addComment} user={this.props.user}/>,
             <ul id="anycomment-load-container" className="anycomment-list">
                 {comments.map(comment => (
                     <Comment comment={comment}/>
