@@ -1,6 +1,6 @@
 <?php
 
-class AnyCommentMigration003 extends AnyCommentMigration {
+class AnyCommentMigration0031 extends AnyCommentMigration {
 	public $table = 'likes';
 
 	/**
