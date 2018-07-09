@@ -1,6 +1,6 @@
 <?php
 
-class AnyCommentRestComment extends WP_REST_Controller {
+class AnyCommentRestComment extends AnyCommentRestController {
 
 	/**
 	 * Instance of a comment meta fields object.

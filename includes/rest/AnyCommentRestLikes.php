@@ -1,6 +1,6 @@
 <?php
 
-class AnyCommentRestLikes extends WP_REST_Controller {
+class AnyCommentRestLikes extends AnyCommentRestController {
 
 	/**
 	 * Constructor.

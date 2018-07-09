@@ -15,8 +15,32 @@ if ( post_password_required( $postId ) || ! comments_open( $postId ) ) {
 
 wp_enqueue_script( "jquery" );
 wp_enqueue_script( 'anycomment-iframe-iframeResizer-contentWindow', AnyComment()->plugin_url() . '/assets/js/iframeResizer.contentWindow.min.js', [], AnyComment()->version );
-wp_enqueue_script( 'anycomment-iframe-timeago', AnyComment()->plugin_url() . '/assets/js/timeago.min.js', [], AnyComment()->version );
-wp_enqueue_script( 'anycomment-iframe-timeago-locales', AnyComment()->plugin_url() . '/assets/js/timeago.locales.min.js', [], AnyComment()->version );
+
+
+wp_enqueue_script( 'anycomment-react', AnyComment()->plugin_url() . '/reactjs/build/static/js/main.min.js', [], AnyComment()->version );
+
+wp_localize_script( 'anycomment-react', 'anyCommentApiSettings', [
+	'postId'  => $postId,
+	'nonce'   => wp_create_nonce( 'wp_rest' ),
+	// Options from plugin
+	'options' => [
+		'limit' => AnyCommentGenericSettings::getPerPage(),
+	],
+	'i18'     => [
+		'error'        => __( 'Error', 'anycomment' ),
+		'loading'      => __( 'Loading11...', 'anycomment' ),
+		'button_send'  => __( 'Send', 'anycomment' ),
+		'button_save'  => __( 'Save', 'anycomment' ),
+		'button_reply' => __( 'Reply', 'anycomment' ),
+		'sort_oldest'  => __( 'Oldest', 'anycomment' ),
+		'sort_newest'  => __( 'Newest', 'anycomment' ),
+		'reply_to'     => __( 'Reply to {name}', 'anycomment' ),
+		'add_comment'  => __( 'Add comment...', 'anycomment' ),
+	]
+] );
+
+wp_enqueue_script( 'anycomment-react-settings' );
+
 
 $classPrefix = AnyComment()->classPrefix();
 ?>
@@ -32,9 +56,12 @@ $classPrefix = AnyComment()->classPrefix();
      class="<?= $classPrefix ?>comments-dark"
      data-current-limit="<?= AnyCommentGenericSettings::getPerPage() ?>"
      data-sort="<?= AnyCommentRender::SORT_NEW ?>">
-	<?php do_action( 'anycomment_send_comment' ) ?>
+
+    <div id="root" data-nonce="<?= wp_create_nonce( 'wp_rest' ) ?>"></div>
+
+    <!--	--><?php //do_action( 'anycomment_send_comment' ) ?>
 	<?php do_action( 'anycomment_notifications' ) ?>
-	<?php do_action( 'anycomment_load_comments' ) ?>
+    <!--	--><?php //do_action( 'anycomment_load_comments' ) ?>
 	<?php do_action( 'anycomment_footer' ) ?>
 </div>
 
@@ -47,6 +74,7 @@ $classPrefix = AnyComment()->classPrefix();
 		'nonce'        => wp_create_nonce( 'wp_rest' ),
 		'debug'        => true,
 		'options'      => [
+			'locale' => get_locale(),
 			'postId' => $postId,
 			'limit'  => AnyCommentGenericSettings::getPerPage(),
 			'guest'  => ! is_user_logged_in()
@@ -58,10 +86,6 @@ $classPrefix = AnyComment()->classPrefix();
 		]
 	] ) ?>;
 
-    if (settings.debug) {
-        console.log('Settings are:');
-        console.log(settings);
-    }
 
     // Load generic comments template
     function loadComments(options = {}) {
@@ -506,7 +530,7 @@ $classPrefix = AnyComment()->classPrefix();
         });
     }
 
-    loadComments();
+    // loadComments();
 
 
     // Load time

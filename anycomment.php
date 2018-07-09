@@ -229,10 +229,12 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentOptions.php' );
 
 			// Rest
+			include_once( ANYCOMMENT_ABSPATH . 'includes/rest/AnyCommentRestController.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/rest/AnyCommentRestCommentMeta.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/rest/AnyCommentRestComment.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/rest/AnyCommentRestLikeMeta.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/rest/AnyCommentRestLikes.php' );
+			include_once( ANYCOMMENT_ABSPATH . 'includes/rest/AnyCommentRestUsers.php' );
 
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentErrorHandler.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentUploadHandler.php' );
@@ -261,6 +263,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 
 			$this->rest = new AnyCommentRestComment();
 			new AnyCommentRestLikes();
+			new AnyCommentRestUsers();
 
 			$this->errors      = new AnyCommentErrorHandler();
 			$this->render      = new AnyCommentRender();

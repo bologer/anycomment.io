@@ -1,15 +1,11 @@
-import React, {Component} from 'react';
+import React from 'react';
 import SendCommentForm from "./SendCommentForm";
+import AnyCommentComponent from "./AnyCommentComponent";
 
-class SendComment extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isLogged: true,
-            commentCount: 0,
-            activeUser: null,
-        };
-    }
+class SendComment extends AnyCommentComponent {
+    // constructor(props) {
+    //     super(props);
+    // }
 
     processComment() {
         console.log('ready to process');
@@ -17,35 +13,36 @@ class SendComment extends Component {
 
     commentSort(sort) {
         console.log('sort by: ' + sort);
+
     }
 
     showSortDropdown() {
-        //return jQuery('#sort-dropdown').toggle();
+        // return jQuery('#sort-dropdown').toggle();
     }
 
     render() {
         return (
             <div id="anycomment-send-comment"
-                 className={"send-comment " + (this.state.isLogged ? 'send-comment-authorized' : '') + ""}>
+                 className={"send-comment " + (this.props.user ? 'send-comment-authorized' : '') + ""}>
                 <div className="send-comment-supheader">
                     <div className="send-comment-supheader__count"
-                         id="comment-count">{this.state.commentCount}</div>
+                         id="comment-count">{this.props.commentCount}</div>
                     <div className="send-comment-supheader__dropdown">
                         <div className="send-comment-supheader__dropdown-header"
-                             onClick={this.showSortDropdown()}>
+                             onClick={this.showSortDropdown}>
                             Sort By
                         </div>
                         <div className="send-comment-supheader__dropdown-list" style={{display: 'none'}}
                              id="sort-dropdown">
                             <ul>
-                                <li onClick={this.commentSort('new')}>Newest</li>
-                                <li onClick={this.commentSort('old')}>Oldest</li>
+                                <li onClick={() => this.commentSort('new')}>Newest</li>
+                                <li onClick={() => this.commentSort('old')}>Oldest</li>
                             </ul>
                         </div>
                     </div>
                 </div>
 
-                <SendCommentForm isLogged={this.state.isLogged}/>
+                <SendCommentForm handleChange={this.props.handleChange} user={this.props.user}/>
             </div>
         );
     }

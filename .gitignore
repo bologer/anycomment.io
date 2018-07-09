@@ -1,5 +1,3 @@
 .sass-cache
 *.css.map
 node_modules
-anycomment-react/src/css
-anycomment-react/node_modules
