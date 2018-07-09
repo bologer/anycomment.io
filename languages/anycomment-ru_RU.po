@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-06 10:17+0000\n"
-"PO-Revision-Date: 2018-07-09 05:18+0000\n"
+"PO-Revision-Date: 2018-07-06 10:19+0000\n"
 "Last-Translator: admin <sasha.tesh@gmail.com>\n"
 "Language-Team: Русский\n"
 "Language: ru_RU\n"
@@ -250,7 +250,7 @@ msgstr "Выберите тему для комментариев."
 
 #: includes/admin/AnyCommentGenericSettings.php:188
 msgid "Load on Scroll"
-msgstr "Подгружать при скролле"
+msgstr "Подгружать при сколле"
 
 #: includes/admin/AnyCommentGenericSettings.php:190
 msgid "Load comments when user scrolls to it."
