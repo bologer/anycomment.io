@@ -50,8 +50,8 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 				[],
 				1.0
 			);
-
-			return ANY_COMMENT_ABSPATH . 'templates/iframe.php';
+			
+			return ANYCOMMENT_ABSPATH . 'templates/iframe.php';
 		}
 
 		/**
@@ -64,7 +64,7 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 				wp_die();
 			}
 
-			include ANY_COMMENT_ABSPATH . 'templates/comments.php';
+			include ANYCOMMENT_ABSPATH . 'templates/comments.php';
 
 			if ( AnyComment()->errors->hasErrors() ) {
 				AnyComment()->errors->cleanErrors();

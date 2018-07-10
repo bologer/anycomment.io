@@ -4,11 +4,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-if ( ! class_exists( 'AnyCommentOptions' ) ) :
+if ( ! class_exists( 'AnyCommentAdminOptions' ) ) :
 	/**
 	 * AnyCommentAdminPages helps to process website authentication.
 	 */
-	class AnyCommentOptions {
+	class AnyCommentAdminOptions {
 		/**
 		 * @var string Options group.
 		 */
@@ -35,7 +35,7 @@ if ( ! class_exists( 'AnyCommentOptions' ) ) :
 		protected $default_options;
 
 		/**
-		 * @var AnyCommentOptions Instance of current object.
+		 * @var AnyCommentAdminOptions Instance of current object.
 		 */
 		private static $_instances;
 
@@ -64,8 +64,15 @@ if ( ! class_exists( 'AnyCommentOptions' ) ) :
 		 * @param string $page Page to be rendered fields for.
 		 * @param string $section_id ID of the section to render fields for.
 		 * @param array $fields List of fields to render.
+		 *
+		 * @return bool True on success, false on failure.
 		 */
-		public function render_fields( $page, $section_id, array $fields ) {
+		public function render_fields( $page, $section_id, $fields ) {
+
+			if ( empty( $fields ) ) {
+				return false;
+			}
+
 			foreach ( $fields as $field ) {
 
 				$args = isset( $field['args'] ) ? $field['args'] : [];
@@ -91,6 +98,8 @@ if ( ! class_exists( 'AnyCommentOptions' ) ) :
 					$args
 				);
 			}
+
+			return true;
 		}
 
 		/**

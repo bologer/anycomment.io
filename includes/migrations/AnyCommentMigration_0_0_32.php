@@ -1,7 +1,8 @@
 <?php
 
-class AnyCommentMigration0021 extends AnyCommentMigration {
+class AnyCommentMigration_0_0_32 extends AnyCommentMigration {
 	public $table = 'likes';
+	public $version = '0.0.32';
 
 	/**
 	 * {@inheritdoc}
@@ -26,7 +27,6 @@ class AnyCommentMigration0021 extends AnyCommentMigration {
 
 		$table = $this->getTable();
 
-
 		$sql = "CREATE TABLE `$table` (
   `ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `user_ID` bigint(20) UNSIGNED NOT NULL,
@@ -39,14 +39,15 @@ class AnyCommentMigration0021 extends AnyCommentMigration {
 
 		if ( $wpdb->query( $sql ) !== false ) {
 
-			$user_id_index     = "ALTER TABLE `$table` ADD INDEX `user_ID` (`user_ID`)";
-			$post_id_index     = "ALTER TABLE `$table` ADD INDEX `post_ID` (`post_ID`)";
-			$fingerprint_index = "ALTER TABLE `$table` ADD INDEX `fingerprint` (`fingerprint`)";
+			$user_id_index = "ALTER TABLE `$table` ADD INDEX `user_ID` (`user_ID`)";
+			$post_id_index = "ALTER TABLE `$table` ADD INDEX `post_ID` (`post_ID`)";
 
 			$wpdb->query( $user_id_index );
 			$wpdb->query( $post_id_index );
-			$wpdb->query( $fingerprint_index );
 		}
+
+
+		return true;
 	}
 
 	/**
@@ -57,5 +58,7 @@ class AnyCommentMigration0021 extends AnyCommentMigration {
 
 		$sql = "DROP TABLE IF EXISTS `{$this->getTable()}`;";
 		$wpdb->query( $sql );
+
+		return true;
 	}
 }

@@ -24,7 +24,7 @@ $classPrefix = AnyComment()->classPrefix();
 <html lang="<?= get_locale() ?>">
 <head>
     <link rel="stylesheet"
-          href="<?= AnyComment()->plugin_url() ?>/assets/css/theme-<?= AnyCommentGenericSettings::getTheme() ?>.css?v=<?= AnyComment()->version ?>">
+          href="<?= AnyComment()->plugin_url() ?>/assets/css/theme-<?= AnyCommentGenericSettings::getTheme() ?>.min.css?v=<?= AnyComment()->version ?>">
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700&amp;subset=cyrillic" rel="stylesheet">
 </head>
 <body>

@@ -3,11 +3,11 @@
  * Plugin Name: AnyComment
  * Plugin URI: https://anycomment.io
  * Description: AnyComment is an advanced commenting system for WordPress.
- * Version: 0.0.21
+ * Version: 0.0.32
  * Author: Bologer
  * Author URI: http://bologer.ru
  * Requires at least: 4.4
- * Tested up to: 4.7
+ * Tested up to: 4.9
  *
  * Text Domain: anycomment
  * Domain Path: /languages
@@ -22,17 +22,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! class_exists( 'AnyComment' ) ) :
 
 	/**
-	 * Main EasyComment Class.
+	 * Main AnyComment Class.
 	 *
 	 */
 	class AnyComment {
 
 		/**
-		 * EasyComment version.
+		 * AnyComment version.
 		 *
 		 * @var string
 		 */
-		public $version = '0.0.21';
+		public $version = '0.0.32';
 
 		/**
 		 * Instance of render class.
@@ -80,7 +80,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 		public $migrations = null;
 
 		/**
-		 * Instance of EasyComment.
+		 * Instance of AnyComment.
 		 * @var null|AnyComment
 		 */
 		private static $_instance = null;
@@ -98,7 +98,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 		public function __construct() {
 			$this->init();
 
-			do_action( 'any_comment_loaded' );
+			do_action( 'anycomment_loaded' );
 		}
 
 		/**
@@ -111,14 +111,17 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			$this->init_hooks();
 		}
 
+		/**
+		 * Load locale.
+		 */
 		public function init_textdomain() {
 			load_plugin_textdomain( "anycomment", false, basename( dirname( __FILE__ ) ) . '/languages' );
 		}
 
 		/**
-		 * Main EasyComment Instance.
+		 * Main AnyComment Instance.
 		 *
-		 * Ensures only one instance of EasyComment is loaded or can be loaded.
+		 * Ensures only one instance of AnyComment is loaded or can be loaded.
 		 *
 		 * @since 2.1
 		 * @static
@@ -137,54 +140,41 @@ if ( ! class_exists( 'AnyComment' ) ) :
 		 * Initiate hooks.
 		 */
 		private function init_hooks() {
-			// todo: change to activation hook
-			add_action( 'init', [ $this, 'apply_migration' ] );
+			register_activation_hook( __FILE__, [ $this, 'activation' ] );
+			register_uninstall_hook( __FILE__, [ $this, 'uninstall' ] );
 
-//			register_uninstall_hook( __FILE__, [ $this, 'apply_migrations' ] );
-		}
-
-		/**
-		 * Apply migrations.
-		 */
-		public function apply_migration() {
-
-			include_once( ANY_COMMENT_ABSPATH . 'includes/migrations/AnyCommentMigration.php' );
-
-			$migrationList = ( new AnyCommentMigration )->getList();
-
-			foreach ( $migrationList as $key => $migrationVersion ) {
-				$format        = 'AnyCommentMigration%s';
-				$migrationName = sprintf( $format, $migrationVersion );
-				$path          = sprintf( ANY_COMMENT_ABSPATH . 'includes/migrations/%s.php', $migrationName );
-
-				if ( file_exists( $path ) ) {
-					continue;
-				}
-
-				include_once( $path );
-
-				/**
-				 * @var $model AnyCommentMigration
-				 */
-				$model = new $migrationName();
-
-				if ( ! $model->isApplied() ) {
-					$model->up();
-				}
+			if ( version_compare( AnyCommentOptions::getMigration(), $this->version, '<' ) ) {
+				( new AnyCommentMigrationManager() )->applyAll();
 			}
 		}
 
+		/**
+		 * Activation method.
+		 */
+		public function activation() {
+			// Apply migrations
+			( new AnyCommentMigrationManager() )->applyAll();
+		}
 
 		/**
-		 * Define EasyComment Constants.
+		 * Uninstall method.
+		 */
+		public function uninstall() {
+			remove_role( AnyCommentGenericSettings::DEFAULT_ROLE_SOCIAL_SUBSCRIBER );
+
+			( new AnyCommentMigrationManager() )->dropAll();
+		}
+
+		/**
+		 * Define AnyComment Constants.
 		 */
 		private function define_constants() {
-			$this->define( 'ANY_COMMENT_PLUGIN_FILE', __FILE__ );
-			$this->define( 'ANY_COMMENT_LANG', __FILE__ );
-			$this->define( 'ANY_COMMENT_ABSPATH', dirname( __FILE__ ) . '/' );
-			$this->define( 'ANY_COMMENT_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
-			$this->define( 'ANY_COMMENT_VERSION', $this->version );
-			$this->define( 'ANY_COMMENT_DEBUG', false );
+			$this->define( 'ANYCOMMENT_PLUGIN_FILE', __FILE__ );
+			$this->define( 'ANYCOMMENT_LANG', __FILE__ );
+			$this->define( 'ANYCOMMENT_ABSPATH', dirname( __FILE__ ) . '/' );
+			$this->define( 'ANYCOMMENT_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
+			$this->define( 'ANYCOMMENT_VERSION', $this->version );
+			$this->define( 'ANYCOMMENT_DEBUG', false );
 		}
 
 		/**
@@ -236,35 +226,37 @@ if ( ! class_exists( 'AnyComment' ) ) :
 		 * Include required core files used in admin and on the frontend.
 		 */
 		public function includes() {
-			/**
-			 * Class autoloader.
-			 */
-			// Rest
-			include_once( ANY_COMMENT_ABSPATH . 'includes/rest/AnyCommentRestCommentMeta.php' );
-			include_once( ANY_COMMENT_ABSPATH . 'includes/rest/AnyCommentRestComment.php' );
-			include_once( ANY_COMMENT_ABSPATH . 'includes/rest/AnyCommentRestLikeMeta.php' );
-			include_once( ANY_COMMENT_ABSPATH . 'includes/rest/AnyCommentRestLikes.php' );
+			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentOptions.php' );
 
-			include_once( ANY_COMMENT_ABSPATH . 'includes/AnyCommentErrorHandler.php' );
-			include_once( ANY_COMMENT_ABSPATH . 'includes/AnyCommentUploadHandler.php' );
-			include_once( ANY_COMMENT_ABSPATH . 'includes/AnyCommentRender.php' );
-			include_once( ANY_COMMENT_ABSPATH . 'includes/ac-core-functions.php' );
-			include_once( ANY_COMMENT_ABSPATH . 'includes/AnyCommentSocialAuth.php' );
-			include_once( ANY_COMMENT_ABSPATH . 'includes/AnyCommentLikes.php' );
+			// Rest
+			include_once( ANYCOMMENT_ABSPATH . 'includes/rest/AnyCommentRestCommentMeta.php' );
+			include_once( ANYCOMMENT_ABSPATH . 'includes/rest/AnyCommentRestComment.php' );
+			include_once( ANYCOMMENT_ABSPATH . 'includes/rest/AnyCommentRestLikeMeta.php' );
+			include_once( ANYCOMMENT_ABSPATH . 'includes/rest/AnyCommentRestLikes.php' );
+
+			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentErrorHandler.php' );
+			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentUploadHandler.php' );
+			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentRender.php' );
+			include_once( ANYCOMMENT_ABSPATH . 'includes/ac-core-functions.php' );
+			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentSocialAuth.php' );
+			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentLikes.php' );
 
 			/**
 			 * Admin related
 			 */
-			include_once( ANY_COMMENT_ABSPATH . 'includes/admin/AnyCommentStatistics.php' );
-			include_once( ANY_COMMENT_ABSPATH . 'includes/admin/AnyCommentOptions.php' );
-			include_once( ANY_COMMENT_ABSPATH . 'includes/admin/AnyCommentAdminPages.php' );
-			include_once( ANY_COMMENT_ABSPATH . 'includes/admin/AnyCommentGenericSettings.php' );
-			include_once( ANY_COMMENT_ABSPATH . 'includes/admin/AnyCommentSocialSettings.php' );
-			include_once( ANY_COMMENT_ABSPATH . 'includes/admin/AnyCommentIntegrationSettings.php' );
+			include_once( ANYCOMMENT_ABSPATH . 'includes/admin/AnyCommentStatistics.php' );
+			include_once( ANYCOMMENT_ABSPATH . 'includes/admin/AnyCommentAdminOptions.php' );
+			include_once( ANYCOMMENT_ABSPATH . 'includes/admin/AnyCommentAdminPages.php' );
+			include_once( ANYCOMMENT_ABSPATH . 'includes/admin/AnyCommentGenericSettings.php' );
+			include_once( ANYCOMMENT_ABSPATH . 'includes/admin/AnyCommentSocialSettings.php' );
+			include_once( ANYCOMMENT_ABSPATH . 'includes/admin/AnyCommentGenericSettings.php' );
+			include_once( ANYCOMMENT_ABSPATH . 'includes/admin/AnyCommentIntegrationSettings.php' );
 
+			// Migration manager
+			include_once( ANYCOMMENT_ABSPATH . 'includes/migrations/AnyCommentMigrationManager.php' );
 
 			if ( ! class_exists( 'Hybridauth' ) ) {
-				include_once( ANY_COMMENT_ABSPATH . 'includes/hybridauth/src/autoload.php' );
+				include_once( ANYCOMMENT_ABSPATH . 'includes/hybridauth/src/autoload.php' );
 			}
 
 			$this->rest = new AnyCommentRestComment();

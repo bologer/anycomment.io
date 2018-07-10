@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 /**
  * Class AnyCommentLikes.
  *
@@ -92,9 +96,15 @@ class AnyCommentLikes {
 			return false;
 		}
 
+		$userId = get_current_user_id();
+
+		if ( (int) $userId === 0 ) {
+			return false;
+		}
+
 		global $wpdb;
 
-		$rows = $wpdb->delete( static::tableName(), [ 'comment_ID' => $commentId ] );
+		$rows = $wpdb->delete( static::tableName(), [ 'user_ID' => $userId, 'comment_ID' => $commentId ] );
 
 		return $rows !== false && $rows > 0;
 	}

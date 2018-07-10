@@ -8,7 +8,7 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 	/**
 	 * AnyCommentAdminPages helps to process website authentication.
 	 */
-	class AnyCommentSocialSettings extends AnyCommentOptions {
+	class AnyCommentSocialSettings extends AnyCommentAdminOptions {
 		/**
 		 * @inheritdoc
 		 */

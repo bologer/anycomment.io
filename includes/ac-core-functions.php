@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function anycomment_get_template( $templateName ) {
 	ob_start();
-	include ANY_COMMENT_ABSPATH . "templates/$templateName.php";
+	include ANYCOMMENT_ABSPATH . "templates/$templateName.php";
 	$content = ob_get_contents();
 	ob_end_clean();
 
@@ -183,7 +183,8 @@ function anycomment_author( $comment, $parentComment = null ) {
             </div>
 		<?php endif; ?>
         <time class="comment-single-body-header__date timeago-date-time"
-              datetime="<?= $comment->comment_date ?>"></time>
+              datetime="<?= $comment->comment_date ?>"
+              title="<?= date( get_option( 'date_format' ), strtotime( $comment->comment_date ) ) ?>"></time>
     </header>
 	<?php
 }
@@ -398,13 +399,55 @@ function anycomment_iframe() {
         src="$iframeSrc"
         frameborder="0"
         style="$styles"></iframe>
-       
+EOT;
+
+	if ( AnyCommentGenericSettings::isLoadOnScroll() ):
+		$html .= <<<EOT
 <script>
+    var loaded = false;
+
     jQuery(document).ready(function ($) {
-        $('#$randIframeId').iFrameResize($jsonOptions);
+       iframeCommentLoad();
+       
+       $(window).scroll(function($) {
+           iframeCommentLoad();
+       });
     });
+    
+    function iframeCommentLoad() {
+         if(loaded) {
+             return;
+         }
+         
+         var iframe = jQuery('#$randIframeId'),
+             iframeToTop = iframe.offset().top,
+             wH = jQuery(window).height(),
+             currentTop = jQuery(this).scrollTop();
+         
+         if(iframe.outerHeight() > 2) {
+             return;
+         }
+           
+         wH = wH * 0.9;
+         
+         if((currentTop + wH) > iframeToTop ) {
+            loaded = true;
+            jQuery('#$randIframeId').iFrameResize($jsonOptions);
+         }
+    }
 </script>
 EOT;
+
+	else:
+		$html .= <<<EOT
+		<script>
+		jQuery(document).ready(function ($) {
+    jQuery('#$randIframeId').iFrameResize($jsonOptions);
+});
+		</script>
+EOT;
+
+	endif;
 
 	if ( AnyComment()->errors->hasErrors() ) {
 		$html .= <<<EOT

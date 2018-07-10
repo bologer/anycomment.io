@@ -1,9 +1,9 @@
 === AnyComment ===
 Contributors: ateshabaev
 Tags: anycomment, comments, comment moderation, anycomment.io
-Requires at least: 4.7
+Requires at least: 4.4
 Tested up to: 4.9.6
-Stable tag: 0.0.2
+Stable tag: 0.0.32
 License: GPLv2 or later
 License URI: http://www.gnu.org/
 
@@ -55,7 +55,6 @@ Yes! Join our [GitHub repository](https://github.com/bologer/anycomment.io) :)
 
 = TODO features =
 * Option: customization of comment styles
-* Option: add option to load comments when user scrolls to it, save some loading time
 * Option: add option to define whether new comments will be added automatically or will be required to be moderated first
 * Option: add option to allow guests to leave comments
 * Option: Auto-update comments on new comments
@@ -63,7 +62,7 @@ Yes! Join our [GitHub repository](https://github.com/bologer/anycomment.io) :)
 * Support more languages
 * Code highlighting
 * Markdown support
-* Integration of: Akismet Anti-Spam and Google's reCaptcha
+* Integration of: Google's reCaptcha
 * Integration of more social networks: Dribble, etc
 * More widgets to be added on the page (sidebar, custom pages, etc)
 * Special moderator panel integrated into custom AnyComment pages (for easy comment moderation)
@@ -105,8 +104,14 @@ WordPress currently has default Privacy Policy page create for your. What you ca
 
 == Changelog ==
 
-= 0.0.3 – TBD =
+= 0.0.32 – 10.07.2018 =
 * Enh - introducing comment likes, #35
+* Enh - minified CSS, to save some loading time
+* Enh - ability to define default user role on creation (registration via plugin), #37
+* Enh - when user has non-default Gravatar, use it, otherwise use default from plugin, #10
+* Fix - proper integration with WP User Avatar & Akismet
+* Enh - load commnets on scroll (new options to load comments when user scroll to it), #36
+* and other small bug fixes & improvements
 
 
 = 0.0.2 – 01.07.2018 =
@@ -130,8 +135,8 @@ WordPress currently has default Privacy Policy page create for your. What you ca
 * Options to specify API details (secrets, etc) for social authorization: Vk, Twitter, Facebook, Google
 * Integrated with [WP User Avatar](https://wordpress.org/plugins/wp-user-avatar/)
 * Authorize via VK, Twitter, Facebook, Google
-* enh: date when comment is left is based on website's language. List of supported languages can be seen [here](https://github.com/hustcc/timeago.js/tree/master/src/lang)
-* enh: comment count at the top updated automatically when new comment added
-* enh: add comments with AJAX, no need to refresh the page
-* enh: ability to reply to nested comments up to 2 levels
-* enh: when all socials disabled, libraries not loaded and they are not shown to end user
+* Enh: date when comment is left is based on website's language. List of supported languages can be seen [here](https://github.com/hustcc/timeago.js/tree/master/src/lang)
+* Enh: comment count at the top updated automatically when new comment added
+* Enh: add comments with AJAX, no need to refresh the page
+* Enh: ability to reply to nested comments up to 2 levels
+* Enh: when all socials disabled, libraries not loaded and they are not shown to end user
