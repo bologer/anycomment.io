@@ -81,7 +81,7 @@ class AnyCommentOptions {
 	 * @return bool
 	 */
 	public static function updateMigration( $value ) {
-		return static::update( self::OPTION_MIGRATION, $value );
+		return static::update( self::OPTION_MIGRATION, AnyCommentMigration::normalizeVersion( $value ) );
 	}
 
 	/**

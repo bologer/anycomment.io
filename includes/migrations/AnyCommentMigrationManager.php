@@ -18,15 +18,14 @@ class AnyCommentMigrationManager {
 	 * @return string
 	 */
 	public function getFileFormat() {
-		return 'AnyCommentMigration%s';
+		return 'AnyCommentMigration_%s';
 	}
 
 	/**
 	 * Apply all migrations.
 	 */
 	public function applyAll() {
-		$currentMigrationVersion = AnyCommentOptions::getMigration();
-		$migrationList           = AnyCommentMigration::getListUp( $currentMigrationVersion );
+		$migrationList = AnyCommentMigration::getListUp();
 
 		if ( $migrationList === null ) {
 			return true;
@@ -48,10 +47,8 @@ class AnyCommentMigrationManager {
 			 */
 			$model = new $migrationName();
 
-			if ( ! $model->isApplied() ) {
-				if ( $model->up() ) {
-					AnyCommentOptions::updateMigration( $migrationVersion );
-				}
+			if ( ! $model->isApplied() && $model->up() ) {
+				AnyCommentOptions::updateMigration( $migrationVersion );
 			}
 		}
 
@@ -64,8 +61,7 @@ class AnyCommentMigrationManager {
 	 * @return bool
 	 */
 	public function dropAll() {
-		$currentMigrationVersion = AnyCommentOptions::getMigration();
-		$migrationList           = AnyCommentMigration::getListDown( $currentMigrationVersion );
+		$migrationList = AnyCommentMigration::getListDown();
 
 		if ( empty( $migrationList ) ) {
 			return true;
@@ -87,10 +83,8 @@ class AnyCommentMigrationManager {
 			 */
 			$model = new $migrationName();
 
-			if ( $model->isApplied() ) {
-				if ( $model->down() ) {
-					AnyCommentOptions::updateMigration( $migrationVersion );
-				}
+			if ( $model->isApplied() && $model->down() ) {
+				AnyCommentOptions::updateMigration( $migrationVersion );
 			}
 		}
 

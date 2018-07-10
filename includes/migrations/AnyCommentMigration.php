@@ -12,6 +12,7 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 	public $prefix = 'anycomment_';
 
 	public $table = null;
+	public $version = null;
 
 	/**
 	 * @var array List of migration to apply. DESC order please (newest at the top).
@@ -19,7 +20,7 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 	 * Format: 0.0.1, 0.0.2, etc
 	 */
 	private static $_list = [
-		'0.0.31' => [ 'version' => '0.0.31', 'description' => 'Create likes table' ],
+		'0.0.32' => [ 'version' => '0.0.32', 'description' => 'Create likes table' ],
 	];
 
 	/**
@@ -85,26 +86,44 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 	}
 
 	/**
-	 * Get list to migrate down.
+	 * Clean versions.
 	 *
-	 * @param int $afterVersion Migration version
+	 * @param array $versions List of versions.
+	 *
+	 * @return mixed
+	 */
+	public static function cleanVersions( $versions ) {
+		if ( ! empty( $versions ) ) {
+			foreach ( $versions as $key => $version ) {
+				$versions[ $key ] = static::cleanVersion( $version );
+			}
+		}
+
+		return $versions;
+	}
+
+	/**
+	 * Get list to migrate down.
 	 *
 	 * @return array|null
 	 */
-	public static function getListDown( $afterVersion = null ) {
-		$list = static::getList();
+	public static function getListDown() {
+		$currentVersion = AnyCommentOptions::getMigration();
+		$list           = static::getList( false );
 
 		if ( $list === null ) {
 			return null;
 		}
 
-		if ( $afterVersion === null ) {
+		if ( $currentVersion === null ) {
 			return $list;
 		}
 
+		// 0.0.2, 0.0.1
+
 
 		foreach ( $list as $key => $listVersion ) {
-			if ( $listVersion != $afterVersion ) {
+			if ( version_compare( $currentVersion, $listVersion, '<' ) ) {
 				unset( $list[ $key ] );
 				continue;
 			}
@@ -112,24 +131,23 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 			break;
 		}
 
-		return $list;
+		return static::cleanVersions( $list );
 	}
 
 	/**
 	 * Get list to migrate up direction.
 	 *
-	 * @param int $beforeVersion Migration version
-	 *
 	 * @return array|null NULL when migration list is empty.
 	 */
-	public static function getListUp( $beforeVersion = null ) {
-		$list = static::getList();
+	public static function getListUp() {
+		$currentVersion = AnyCommentOptions::getMigration();
+		$list           = static::getList( false );
 
 		if ( $list === null ) {
 			return null;
 		}
 
-		if ( $beforeVersion === null ) {
+		if ( $currentVersion === null ) {
 			return $list;
 		}
 
@@ -137,17 +155,15 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 		$list = array_reverse( $list );
 
 		foreach ( $list as $key => $listVersion ) {
-			if ( $listVersion != $beforeVersion ) {
+			if ( version_compare( $listVersion, $currentVersion, '<=' ) ) {
 				unset( $list[ $key ] );
 				continue;
-			} else {
-				unset( $list[ $key ] );
 			}
 
 			break;
 		}
 
-		return $list;
+		return static::cleanVersions( $list );
 	}
 
 	/**
@@ -163,8 +179,23 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 			return false;
 		}
 
-		$version = str_replace( '.', '', $version );
+		$version = str_replace( '.', '_', $version );
 
-		return sprintf( "%'.03d", $version );
+		return $version;
+	}
+
+	/**
+	 * Normalize version back to normal.
+	 *
+	 * @param string $version Version to be normalized.
+	 *
+	 * @return string
+	 */
+	public static function normalizeVersion( $version ) {
+		if ( strpos( $version, '_' ) === false ) {
+			return $version;
+		}
+
+		return str_replace( '_', '.', $version );
 	}
 }
