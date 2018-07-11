@@ -52,7 +52,7 @@ class SendCommentForm extends AnyCommentComponent {
                     edit_id: '',
                 });
                 self.contentRef.current.focus();
-                self.props.addComment(response.data);
+                self.props.onSend(response.data);
             })
             .catch(function (error) {
                 // handle error

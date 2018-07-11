@@ -41,12 +41,16 @@ class AnyCommentLikes {
 	 *
 	 * @return bool|int
 	 */
-	public static function isCurrentUserHasLike( $commentId ) {
+	public static function isCurrentUserHasLike( $commentId, $userId = null ) {
 		if ( ! ( $comment = get_comment( $commentId ) ) instanceof WP_Comment ) {
 			return false;
 		}
 
-		if ( ! ( $user = wp_get_current_user() ) instanceof WP_User ) {
+		if ( $userId === null && ! (int) ( $userId = get_current_user_id() ) === 0 ) {
+			return false;
+		}
+
+		if ( $userId !== null && ! get_user_by( 'id', $userId ) ) {
 			return false;
 		}
 
@@ -55,7 +59,7 @@ class AnyCommentLikes {
 
 		$tableName = static::tableName();
 
-		$sql   = $wpdb->prepare( "SELECT COUNT(*) FROM $tableName WHERE `user_ID` =%d AND `comment_ID`=%s", $user->ID, $comment->comment_ID );
+		$sql   = $wpdb->prepare( "SELECT COUNT(*) FROM $tableName WHERE `user_ID` =%d AND `comment_ID`=%s", $userId, $comment->comment_ID );
 		$count = $wpdb->get_var( $sql );
 
 		return $count >= 1;

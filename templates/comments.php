@@ -22,20 +22,25 @@ wp_enqueue_script( 'anycomment-react', AnyComment()->plugin_url() . '/reactjs/bu
 wp_localize_script( 'anycomment-react', 'anyCommentApiSettings', [
 	'postId'  => $postId,
 	'nonce'   => wp_create_nonce( 'wp_rest' ),
+	'locale'  => get_locale(),
 	// Options from plugin
 	'options' => [
 		'limit' => AnyCommentGenericSettings::getPerPage(),
 	],
 	'i18'     => [
-		'error'        => __( 'Error', 'anycomment' ),
-		'loading'      => __( 'Loading11...', 'anycomment' ),
-		'button_send'  => __( 'Send', 'anycomment' ),
-		'button_save'  => __( 'Save', 'anycomment' ),
-		'button_reply' => __( 'Reply', 'anycomment' ),
-		'sort_oldest'  => __( 'Oldest', 'anycomment' ),
-		'sort_newest'  => __( 'Newest', 'anycomment' ),
-		'reply_to'     => __( 'Reply to {name}', 'anycomment' ),
-		'add_comment'  => __( 'Add comment...', 'anycomment' ),
+		'error'            => __( 'Error', 'anycomment' ),
+		'loading'          => __( 'Loading...', 'anycomment' ),
+		'button_send'      => __( 'Send', 'anycomment' ),
+		'button_save'      => __( 'Save', 'anycomment' ),
+		'button_reply'     => __( 'Reply', 'anycomment' ),
+		'sort_oldest'      => __( 'Oldest', 'anycomment' ),
+		'sort_newest'      => __( 'Newest', 'anycomment' ),
+		'reply_to'         => __( 'Reply to {name}', 'anycomment' ),
+		'add_comment'      => __( 'Add comment...', 'anycomment' ),
+		'no_comments'      => __( 'No comments to display', "anycomment" ),
+		'footer_copyright' => __( 'Add Anycomment to your site', 'anycomment' ),
+		'reply'            => __( 'Reply', 'anycomment' ),
+		'edit'             => __( 'Edit', 'anycomment' ),
 	]
 ] );
 
@@ -57,12 +62,8 @@ $classPrefix = AnyComment()->classPrefix();
      data-current-limit="<?= AnyCommentGenericSettings::getPerPage() ?>"
      data-sort="<?= AnyCommentRender::SORT_NEW ?>">
 
-    <div id="root" data-nonce="<?= wp_create_nonce( 'wp_rest' ) ?>"></div>
-
-    <!--	--><?php //do_action( 'anycomment_send_comment' ) ?>
 	<?php do_action( 'anycomment_notifications' ) ?>
-    <!--	--><?php //do_action( 'anycomment_load_comments' ) ?>
-	<?php do_action( 'anycomment_footer' ) ?>
+    <div id="root" data-nonce="<?= wp_create_nonce( 'wp_rest' ) ?>"></div>
 </div>
 
 <?php wp_footer(); ?>

@@ -50,7 +50,7 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 				[],
 				1.0
 			);
-			
+
 			return ANYCOMMENT_ABSPATH . 'templates/iframe.php';
 		}
 
@@ -185,7 +185,7 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 		}
 
 		/**
-		 * Check whether current user has ability to edit current user.
+		 * Check whether current user has ability to edit comment.
 		 *
 		 * @param $comment
 		 *

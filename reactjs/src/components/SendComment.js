@@ -3,9 +3,13 @@ import SendCommentForm from "./SendCommentForm";
 import AnyCommentComponent from "./AnyCommentComponent";
 
 class SendComment extends AnyCommentComponent {
-    // constructor(props) {
-    //     super(props);
-    // }
+    constructor(props) {
+        super(props);
+
+        this.state.dropdown = 'none';
+
+        this.onDropdownClick = this.onDropdownClick.bind(this);
+    }
 
     processComment() {
         console.log('ready to process');
@@ -16,8 +20,10 @@ class SendComment extends AnyCommentComponent {
 
     }
 
-    showSortDropdown() {
-        // return jQuery('#sort-dropdown').toggle();
+    onDropdownClick(event) {
+        const el = document.getElementById('sort-dropdown');
+
+        this.setState({dropdown: el.style.display === 'block' ? 'none' : 'block'});
     }
 
     render() {
@@ -29,10 +35,10 @@ class SendComment extends AnyCommentComponent {
                          id="comment-count">{this.props.commentCount}</div>
                     <div className="send-comment-supheader__dropdown">
                         <div className="send-comment-supheader__dropdown-header"
-                             onClick={this.showSortDropdown}>
+                             onClick={(e) => this.onDropdownClick(e)}>
                             Sort By
                         </div>
-                        <div className="send-comment-supheader__dropdown-list" style={{display: 'none'}}
+                        <div className="send-comment-supheader__dropdown-list" style={{display: this.state.dropdown}}
                              id="sort-dropdown">
                             <ul>
                                 <li onClick={() => this.commentSort('new')}>Newest</li>
@@ -42,7 +48,7 @@ class SendComment extends AnyCommentComponent {
                     </div>
                 </div>
 
-                <SendCommentForm addComment={this.props.addComment} user={this.props.user}/>
+                <SendCommentForm onSend={this.props.onSend} user={this.props.user}/>
             </div>
         );
     }

@@ -115,7 +115,7 @@ class AnyCommentRestLikes extends AnyCommentRestController {
 
 		$prepareLike->post_ID = $request['post'];
 
-		if ( ! AnyCommentLikes::isCurrentUserHasLike( $prepareLike->comment_ID ) ) {
+		if ( ! AnyCommentLikes::isCurrentUserHasLike( $prepareLike->comment_ID, $user->ID ) ) {
 			$like = AnyCommentLikes::addLike( $prepareLike );
 			if ( ! $like ) {
 				return new WP_Error( 'rest_like_fail', __( 'Failed to like', 'anycomment' ), [ 'status' => 400 ] );
@@ -157,7 +157,6 @@ class AnyCommentRestLikes extends AnyCommentRestController {
 
 		$data['total_count'] = AnyCommentLikes::getLikesCount( $like->comment_ID );
 		$data['has_like']    = AnyCommentLikes::isCurrentUserHasLike( $like->comment_ID );
-
 
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 		$data    = $this->add_additional_fields_to_object( $data, $request );

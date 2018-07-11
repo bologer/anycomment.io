@@ -1,5 +1,6 @@
 import React from 'react';
 import './css/theme-dark.css'
+import footerLogo from './img/mini-logo.svg'
 import CommentList from './components/CommentList'
 import AnyCommentComponent from "./components/AnyCommentComponent";
 
@@ -44,15 +45,20 @@ class App extends AnyCommentComponent {
     };
 
     render() {
-        const {error, isLoaded, user} = this.state;
+        const {error, isLoaded, user, settings} = this.state;
         if (error) {
-            return <div>Error: {error}</div>;
+            return <div>{settings.i18.error}: {error}</div>;
         } else if (!isLoaded) {
-            return <div>Loading...</div>;
+            return <div>{settings.i18.loading}</div>;
         } else {
             return (
                 <React.Fragment>
-                    <CommentList user={this.state.user}/>
+                    <CommentList user={user}/>
+                    <footer className="main-footer">
+                        <img src={footerLogo}
+                             alt="AnyComment"/> <a href="https://anycomment.io"
+                                                   target="_blank">{settings.i18.footer_copyright}</a>
+                    </footer>
                 </React.Fragment>
             );
         }

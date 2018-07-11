@@ -13,15 +13,23 @@ class CommentList extends AnyCommentComponent {
         this.state.error = null;
         this.state.isLoaded = false;
         this.state.comments = [];
+        this.state.per_page = 20;
 
-        this.addComment = this.addComment.bind(this);
+        this.handleAddComment = this.handleAddComment.bind(this);
     }
 
-    loadComments = () => {
-        let self = this;
+    loadComments() {
+        const self = this;
+        const settings = this.state.settings;
 
         return this.state.axios
-            .get('/comments')
+            .get('/comments', {
+                params: {
+                    post: settings.postId,
+                    per_page: this.state.per_page
+                },
+                headers: {'X-WP-Nonce': settings.nonce}
+            })
             .then(function (response) {
                 self.setState({
                     isLoaded: true,
@@ -43,15 +51,12 @@ class CommentList extends AnyCommentComponent {
      *
      * @param comment
      */
-    addComment(comment) {
+    handleAddComment(comment) {
         console.log('update state');
         console.log('comment');
         this.setState({
             comments: [comment, ...this.state.comments]
         });
-
-        console.log('state is');
-        console.log(this.state.comments);
     };
 
     componentDidMount() {
@@ -68,14 +73,18 @@ class CommentList extends AnyCommentComponent {
             return <div>{settings.i18.loading}</div>;
         }
 
-        return [
-            <SendComment addComment={this.addComment} user={this.props.user}/>,
-            <ul id="anycomment-load-container" className="anycomment-list">
-                {comments.map(comment => (
-                    <Comment comment={comment}/>
-                ))}
-            </ul>
-        ];
+        return (
+            <React.Fragment>
+                <SendComment onSend={this.handleAddComment} user={this.props.user}/>
+                <ul id="anycomment-load-container" className="anycomment-list">
+                    {comments.length > 0 ?
+                        comments.map(comment => (
+                            <Comment comment={comment}/>
+                        )) :
+                        <li className="comment-single comment-no-comments">{settings.i18.no_comments}</li>}
+                </ul>
+            </React.Fragment>
+        );
     }
 }
 
