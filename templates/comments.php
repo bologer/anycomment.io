@@ -21,18 +21,23 @@ wp_enqueue_script( 'anycomment-react', AnyComment()->plugin_url() . '/reactjs/bu
 
 wp_localize_script( 'anycomment-react', 'anyCommentApiSettings', [
 	'postId'  => $postId,
+	'postUrl' => get_permalink( $postId ),
 	'nonce'   => wp_create_nonce( 'wp_rest' ),
 	'locale'  => get_locale(),
 	// Options from plugin
 	'options' => [
-		'limit' => AnyCommentGenericSettings::getPerPage(),
+		'limit'       => AnyCommentGenericSettings::getPerPage(),
+		'isCopyright' => AnyCommentGenericSettings::isCopyrightOn(),
+		'socials'     => anycomment_login_with()
 	],
 	'i18'     => [
 		'error'            => __( 'Error', 'anycomment' ),
 		'loading'          => __( 'Loading...', 'anycomment' ),
+		'load_more'        => __( "Load more", "anycomment" ),
 		'button_send'      => __( 'Send', 'anycomment' ),
 		'button_save'      => __( 'Save', 'anycomment' ),
 		'button_reply'     => __( 'Reply', 'anycomment' ),
+		'sort_by'          => __( 'Sort By', 'anycomment' ),
 		'sort_oldest'      => __( 'Oldest', 'anycomment' ),
 		'sort_newest'      => __( 'Newest', 'anycomment' ),
 		'reply_to'         => __( 'Reply to {name}', 'anycomment' ),
@@ -41,6 +46,7 @@ wp_localize_script( 'anycomment-react', 'anyCommentApiSettings', [
 		'footer_copyright' => __( 'Add Anycomment to your site', 'anycomment' ),
 		'reply'            => __( 'Reply', 'anycomment' ),
 		'edit'             => __( 'Edit', 'anycomment' ),
+		'quick_login'      => __( 'Quick Login', 'anycomment' ),
 	]
 ] );
 
@@ -74,9 +80,10 @@ $classPrefix = AnyComment()->classPrefix();
 		'urlLikes'     => esc_url_raw( rest_url( 'anycomment/v1/likes' ) ),
 		'nonce'        => wp_create_nonce( 'wp_rest' ),
 		'debug'        => true,
+		'postId'       => $postId,
+		'postUrl'      => get_post_permalink( $postId ),
 		'options'      => [
 			'locale' => get_locale(),
-			'postId' => $postId,
 			'limit'  => AnyCommentGenericSettings::getPerPage(),
 			'guest'  => ! is_user_logged_in()
 		],

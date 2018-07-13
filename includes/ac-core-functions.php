@@ -40,11 +40,12 @@ add_action( 'anycomment_logged_in_as', 'anycomment_logged_in_as' );
 /**
  * Display list of available login methods.
  *
+ * @param bool $html If required to return rendered HTML or as array.
  * @param string $redirectUrl Redirect link after successful/failed authentication.
  *
- * @return string|null HTML formatted list of social links.
+ * @return string|array|null HTML formatted list (when $html false and array when true) of social links.
  */
-function anycomment_login_with( $redirectUrl = null ) {
+function anycomment_login_with( $html = false, $redirectUrl = null ) {
 	$socials = [
 		AnyCommentSocialAuth::SOCIAL_VKONTAKTE     => [
 			'url'     => AnyCommentSocialAuth::get_vk_callback( $redirectUrl ),
@@ -80,6 +81,10 @@ function anycomment_login_with( $redirectUrl = null ) {
 
 	if ( count( $socials ) <= 0 ) {
 		return null;
+	}
+
+	if ( ! $html ) {
+		return $socials;
 	}
 
 	foreach ( $socials as $key => $social ):

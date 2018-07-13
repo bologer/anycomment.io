@@ -4,6 +4,7 @@ import buildFormatter from 'react-timeago/lib/formatters/buildFormatter'
 import i18En from 'react-timeago/lib/language-strings/en';
 import i18Ru from 'react-timeago/lib/language-strings/ru';
 import AnyCommentComponent from './AnyCommentComponent'
+import CommentFooter from './CommentFooter';
 
 /**
  * Comment is rendering single comment entry.
@@ -23,12 +24,11 @@ class Comment extends AnyCommentComponent {
 
     onReply(e) {
         e.preventDefault();
-        console.log('on reply');
+
+        this.props.contentRef.current.focus();
     }
 
     onLike(e) {
-        console.log('on like');
-
         const settings = this.state.settings;
         const self = this;
         this.state.axios
@@ -48,6 +48,9 @@ class Comment extends AnyCommentComponent {
                     likesCount: response.data.total_count,
                     hasLike: response.data.has_like,
                 });
+
+                console.log('set after set:');
+                console.log(self.state);
             })
             .catch(function (error) {
                 // handle error
@@ -57,18 +60,18 @@ class Comment extends AnyCommentComponent {
     }
 
     onEdit(e) {
-        console.log('on edit');
+        e.preventDefault();
     }
 
     render() {
         const settings = this.state.settings;
         const comment = this.props.comment;
 
-        const languageStrings = i18En;
+        let languageStrings = i18En;
         const locale = settings.locale.substring(0, 2);
 
         if (locale === 'ru') {
-            const languageStrings = i18Ru;
+            languageStrings = i18Ru;
         }
 
         const formatter = buildFormatter(languageStrings);
@@ -93,21 +96,16 @@ class Comment extends AnyCommentComponent {
                         <p>{comment.content}</p>
                     </div>
 
-                    <footer className="comment-single-body__actions">
-                        <ul>
-                            <li><a href="" onClick={(e) => this.onReply(e)}>{settings.i18.reply}</a>
-                            </li>
-                            <li>
-                            <span
-                                className={"comment-single-body__actions-like " + (this.state.hasLike ? 'active' : '') + ""}
-                                onClick={(e) => this.onLike(e)}>{this.state.likesCount}</span>
-                            </li>
 
-                            {comment.permissions.can_edit_comment ?
-                                <li><a href="" onClick={(e) => this.onEdit(e)}>{settings.i18.edit}</a>
-                                </li> : ''}
-                        </ul>
-                    </footer>
+                    <CommentFooter
+                        onEdit={this.onEdit}
+                        onLike={this.onLike}
+                        onReply={this.onReply}
+                        comment={comment}
+                        user={this.props.user}
+                        likesCount={this.state.likesCount}
+                        hasLike={this.state.hasLike}
+                    />
                 </div>
             </li>
         )

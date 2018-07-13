@@ -11,7 +11,7 @@ class SendCommentForm extends AnyCommentComponent {
         this.state.content = '';
         this.state.parent = '0';
         this.state.edit_id = '';
-        this.contentRef = React.createRef();
+        this.state.shouldLogin = false;
     }
 
     handleContent = (event) => {
@@ -29,8 +29,11 @@ class SendCommentForm extends AnyCommentComponent {
     };
 
     handleSubmit = (event) => {
-        console.log(this.state);
         event.preventDefault();
+
+        if (this.props.user === null) {
+            return false;
+        }
 
         const settings = this.state.settings;
         const self = this;
@@ -51,7 +54,7 @@ class SendCommentForm extends AnyCommentComponent {
                     parent: '0',
                     edit_id: '',
                 });
-                self.contentRef.current.focus();
+                self.props.contentRef.current.focus();
                 self.props.onSend(response.data);
             })
             .catch(function (error) {
@@ -66,8 +69,18 @@ class SendCommentForm extends AnyCommentComponent {
         return false;
     };
 
-    shouldLogin = (event) => {
-        // console.log('should login');
+    shouldLogin = (e) => {
+        e.preventDefault();
+
+
+        if (this.props.user === null) {
+            this.setState({
+                shouldLogin: true
+            });
+            return true;
+        }
+
+        return false;
     };
 
     render() {
@@ -78,18 +91,18 @@ class SendCommentForm extends AnyCommentComponent {
                 <form onSubmit={this.handleSubmit}>
                     <div className="send-comment-body-outliner">
 
-                        <SendCommentGuest user={this.props.user}/>
+                        <SendCommentGuest shouldLogin={this.state.shouldLogin} user={this.props.user}/>
                         <SendCommentAuth user={this.props.user}/>
 
                         <textarea name="content"
-                                  ref={this.contentRef}
+                                  ref={this.props.contentRef}
                                   value={this.state.content}
                                   required="required"
                                   className="send-comment-body-outliner__textfield"
                                   placeholder={translations.add_comment}
                                   data-original-placeholder={translations.add_comment}
                                   data-reply-name={translations.reply_to}
-                                  onClick={this.shouldLogin}
+                                  onClick={(e) => this.shouldLogin(e)}
                                   onChange={this.handleContent}
                         ></textarea>
                     </div>

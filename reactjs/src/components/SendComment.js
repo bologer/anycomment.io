@@ -15,9 +15,10 @@ class SendComment extends AnyCommentComponent {
         console.log('ready to process');
     }
 
-    commentSort(sort) {
-        console.log('sort by: ' + sort);
+    commentSort(e, sort) {
+        e.preventDefault();
 
+        console.log('sort by: ' + sort);
     }
 
     onDropdownClick(event) {
@@ -27,6 +28,8 @@ class SendComment extends AnyCommentComponent {
     }
 
     render() {
+        const settings = this.state.settings;
+
         return (
             <div id="anycomment-send-comment"
                  className={"send-comment " + (this.props.user ? 'send-comment-authorized' : '') + ""}>
@@ -36,19 +39,19 @@ class SendComment extends AnyCommentComponent {
                     <div className="send-comment-supheader__dropdown">
                         <div className="send-comment-supheader__dropdown-header"
                              onClick={(e) => this.onDropdownClick(e)}>
-                            Sort By
+                            {settings.i18.sort_by}
                         </div>
                         <div className="send-comment-supheader__dropdown-list" style={{display: this.state.dropdown}}
                              id="sort-dropdown">
                             <ul>
-                                <li onClick={() => this.commentSort('new')}>Newest</li>
-                                <li onClick={() => this.commentSort('old')}>Oldest</li>
+                                <li onClick={(e) => this.commentSort(e, 'new')}>{settings.i18.sort_newest}</li>
+                                <li onClick={(e) => this.commentSort(e, 'old')}>{settings.i18.sort_oldest}</li>
                             </ul>
                         </div>
                     </div>
                 </div>
 
-                <SendCommentForm onSend={this.props.onSend} user={this.props.user}/>
+                <SendCommentForm contentRef={this.props.contentRef} onSend={this.props.onSend} user={this.props.user}/>
             </div>
         );
     }

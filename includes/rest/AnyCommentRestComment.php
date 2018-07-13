@@ -21,6 +21,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 
 		$this->meta = new AnyCommentRestCommentMeta();
 
+
 		add_action( 'rest_api_init', [ $this, 'register_routes' ] );
 	}
 
@@ -175,7 +176,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			'order'          => 'order',
 			'parent'         => 'parent__in',
 			'parent_exclude' => 'parent__not_in',
-			'per_page'       => 'number',
+			'perPage'       => 'number',
 			'post'           => 'post__in',
 			'search'         => 'search',
 			'status'         => 'status',
@@ -260,7 +261,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			$prepared_args['count'] = true;
 
 			$total_comments = $query->query( $prepared_args );
-			$max_pages      = ceil( $total_comments / $request['per_page'] );
+			$max_pages      = ceil( $total_comments / $request['perPage'] );
 		}
 
 		$response = rest_ensure_response( $comments );

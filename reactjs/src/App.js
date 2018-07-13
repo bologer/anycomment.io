@@ -1,7 +1,7 @@
 import React from 'react';
 import './css/theme-dark.css'
-import footerLogo from './img/mini-logo.svg'
 import CommentList from './components/CommentList'
+import CommentCopyright from './components/CommentCopyright'
 import AnyCommentComponent from "./components/AnyCommentComponent";
 
 // const SettingsContext = React.createContext('anyCommentApiSettings' in window ? window.anyCommentApiSettings : null);
@@ -13,6 +13,8 @@ class App extends AnyCommentComponent {
         this.state.isLoaded = false;
         this.state.user = null;
         this.state.error = null;
+
+        this.contentRef = React.createRef();
     }
 
     getUser = () => {
@@ -36,7 +38,7 @@ class App extends AnyCommentComponent {
                 this.setState({isLoaded: true, user: response.data});
             })
             .catch(error => {
-                console.log(error);
+                this.setState({isLoaded: true});
             });
     };
 
@@ -53,12 +55,8 @@ class App extends AnyCommentComponent {
         } else {
             return (
                 <React.Fragment>
-                    <CommentList user={user}/>
-                    <footer className="main-footer">
-                        <img src={footerLogo}
-                             alt="AnyComment"/> <a href="https://anycomment.io"
-                                                   target="_blank">{settings.i18.footer_copyright}</a>
-                    </footer>
+                    <CommentList contentRef={this.contentRef} user={user}/>
+                    <CommentCopyright/>
                 </React.Fragment>
             );
         }
