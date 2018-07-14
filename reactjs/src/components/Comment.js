@@ -27,11 +27,11 @@ class Comment extends AnyCommentComponent {
     /**
      * On comment reply action.
      * @param e
-     * @param commentId
+     * @param comment
      */
-    onReply(e, commentId) {
+    onReply(e, comment) {
         e.preventDefault();
-        this.props.changeReplyId(commentId);
+        this.props.changeReplyId(comment);
     }
 
     onLike(e) {
@@ -66,11 +66,11 @@ class Comment extends AnyCommentComponent {
     /**
      * On comment edit action.
      * @param e
-     * @param editId
+     * @param comment
      */
-    onEdit(e, editId) {
+    onEdit(e, comment) {
         e.preventDefault();
-        this.props.changeEditId(editId);
+        this.props.changeEditId(comment);
     }
 
     render() {

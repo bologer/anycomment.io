@@ -34,7 +34,6 @@ class CommentList extends AnyCommentComponent {
          */
         this.commentFieldRef = React.createRef();
 
-
         /**
          * Bindings
          */
@@ -68,11 +67,11 @@ class CommentList extends AnyCommentComponent {
 
     /**
      * Handle reply ID change.
-     * @param replyId
+     * @param comment
      */
-    handleReplyIdChange(replyId) {
+    handleReplyIdChange(comment) {
         this.setState({
-            replyId: replyId
+            replyId: comment.id
         });
 
         this.focusCommentField();
@@ -80,12 +79,12 @@ class CommentList extends AnyCommentComponent {
 
     /**
      * Handle edit ID change.
-     * @param editId
+     * @param comment
      */
-    handleEditIdChange(editId) {
+    handleEditIdChange(comment) {
         this.setState({
-            focusCommentField: true,
-            editId: editId
+            editId: comment.id,
+            commentText: comment.content
         });
         this.focusCommentField();
     }

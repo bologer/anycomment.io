@@ -8,7 +8,6 @@ class SendCommentForm extends AnyCommentComponent {
     constructor(props) {
         super(props);
 
-
         this.state = {
             isShouldLogin: false,
         };
@@ -54,15 +53,22 @@ class SendCommentForm extends AnyCommentComponent {
         const settings = this.props.settings;
         const self = this;
 
+        const url = '/comments' + (this.props.editId ? ('/' + this.props.editId) : '');
+
+        let params = {
+            content: this.props.commentText
+        };
+
+        if (!this.props.editId) {
+            params.post = settings.postId;
+            params.parent = this.props.replyId;
+        }
+
         this.props.axios
             .request({
                 method: 'post',
-                url: '/comments',
-                params: {
-                    post: settings.postId,
-                    content: this.props.commentText,
-                    parent: this.props.replyId,
-                },
+                url: url,
+                params: params,
                 headers: {'X-WP-Nonce': settings.nonce}
             })
             .then(function (response) {
@@ -111,8 +117,6 @@ class SendCommentForm extends AnyCommentComponent {
                                   required="required"
                                   className="send-comment-body-outliner__textfield"
                                   placeholder={translations.add_comment}
-                                  data-original-placeholder={translations.add_comment}
-                                  data-reply-name={translations.reply_to}
                                   onClick={this.shouldLogin}
                                   onChange={this.handleContentChange}
                                   ref={this.props.commentFieldRef}

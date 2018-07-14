@@ -862,7 +862,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			'avatar_url'  => AnyComment()->auth->get_user_avatar_url( $comment->user_id ),
 			'children'    => $child_comments,
 			'permissions' => [
-				'can_edit_comment' => AnyComment()->render->can_edit_comment( $comment->comment_ID ),
+				'can_edit_comment' => AnyComment()->render->can_edit_comment( $comment ),
 			],
 			'meta'        => [
 				'has_like'    => AnyCommentLikes::isCurrentUserHasLike( $comment->comment_ID ),

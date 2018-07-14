@@ -179,15 +179,16 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 				$minutes = 5;
 			}
 
-			$secondsToEdit = (int) $minutes * 60;
+			$secondsToEdit        = (int) $minutes * 60;
+			$currentUnixTimeMysql = strtotime( current_time( 'mysql', true ) );
 
-			return time() > ( $commentTime + $secondsToEdit );
+			return $currentUnixTimeMysql > ( $commentTime + $secondsToEdit );
 		}
 
 		/**
 		 * Check whether current user has ability to edit comment.
 		 *
-		 * @param $comment
+		 * @param WP_Comment $comment
 		 *
 		 * @return bool
 		 */
