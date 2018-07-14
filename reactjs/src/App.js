@@ -4,31 +4,38 @@ import CommentList from './components/CommentList'
 import CommentCopyright from './components/CommentCopyright'
 import AnyCommentComponent from "./components/AnyCommentComponent";
 
-// const SettingsContext = React.createContext('anyCommentApiSettings' in window ? window.anyCommentApiSettings : null);
-
 class App extends AnyCommentComponent {
     constructor(props) {
         super(props);
 
-        this.state.isLoaded = false;
-        this.state.user = null;
-        this.state.error = null;
+        this.state = {
+            isLoaded: false,
+            user: null,
+            error: null
+        };
 
-        this.contentRef = React.createRef();
+        this.getUser = this.getUser.bind(this);
     }
 
-    getUser = () => {
-        if (this.state.settings == null) {
+    /**
+     * Get current user.
+     * @returns {*}
+     */
+    getUser() {
+
+        const settings = this.props.settings;
+
+        if (settings == null) {
             return this.setState({
                 error: "No settings defined"
             });
         }
 
-        console.log(this.state.settings);
+        console.log(settings);
 
-        const nonce = this.state.settings.nonce;
+        const nonce = settings.nonce;
 
-        return this.state.axios
+        return this.props.axios
             .get('/users/me', {
                 headers: {"X-WP-Nonce": nonce}
             })
@@ -47,7 +54,9 @@ class App extends AnyCommentComponent {
     };
 
     render() {
-        const {error, isLoaded, user, settings} = this.state;
+        const settings = this.props.settings;
+        const {error, isLoaded, user} = this.state;
+
         if (error) {
             return <div>{settings.i18.error}: {error}</div>;
         } else if (!isLoaded) {
@@ -55,7 +64,7 @@ class App extends AnyCommentComponent {
         } else {
             return (
                 <React.Fragment>
-                    <CommentList contentRef={this.contentRef} user={user}/>
+                    <CommentList user={user}/>
                     <CommentCopyright/>
                 </React.Fragment>
             );

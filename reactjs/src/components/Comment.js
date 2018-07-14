@@ -14,24 +14,31 @@ class Comment extends AnyCommentComponent {
     constructor(props) {
         super(props);
 
-        this.state.likesCount = props.comment.meta.likes_count;
-        this.state.hasLike = props.comment.meta.has_like;
+        this.state = {
+            likesCount: props.comment.meta.likes_count,
+            hasLike: props.comment.meta.has_like
+        };
 
         this.onReply = this.onReply.bind(this);
         this.onLike = this.onLike.bind(this);
         this.onEdit = this.onEdit.bind(this);
     }
 
-    onReply(e) {
+    /**
+     * On comment reply action.
+     * @param e
+     * @param commentId
+     */
+    onReply(e, commentId) {
         e.preventDefault();
-
-        this.props.contentRef.current.focus();
+        this.props.changeReplyId(commentId);
     }
 
     onLike(e) {
-        const settings = this.state.settings;
+        e.preventDefault();
+        const settings = this.props.settings;
         const self = this;
-        this.state.axios
+        this.props.axios
             .request({
                 method: 'post',
                 url: '/likes',
@@ -48,9 +55,6 @@ class Comment extends AnyCommentComponent {
                     likesCount: response.data.total_count,
                     hasLike: response.data.has_like,
                 });
-
-                console.log('set after set:');
-                console.log(self.state);
             })
             .catch(function (error) {
                 // handle error
@@ -59,12 +63,18 @@ class Comment extends AnyCommentComponent {
             });
     }
 
-    onEdit(e) {
+    /**
+     * On comment edit action.
+     * @param e
+     * @param editId
+     */
+    onEdit(e, editId) {
         e.preventDefault();
+        this.props.changeEditId(editId);
     }
 
     render() {
-        const settings = this.state.settings;
+        const settings = this.props.settings;
         const comment = this.props.comment;
 
         let languageStrings = i18En;
@@ -76,17 +86,31 @@ class Comment extends AnyCommentComponent {
 
         const formatter = buildFormatter(languageStrings);
 
+        const childComments = comment.children ?
+            <div className="comment-single-replies">
+                <ul className="anycomment-list anycomment-list-child">
+                    {comment.children.map(childrenComment => (
+                        <Comment
+                            changeReplyId={this.props.changeReplyId}
+                            changeEditId={this.props.changeEditId}
+                            key={childrenComment.id}
+                            user={this.props.user}
+                            comment={childrenComment}/>
+                    ))}
+                </ul>
+            </div> : '';
+
         return (
             <li key={comment.id} className="comment-single">
 
-                <div className="comment-single-avatar" data-author-id="2">
+                <div className="comment-single-avatar">
                     <div className="comment-single-avatar__img"
                          style={{backgroundImage: 'url(' + comment.avatar_url + ')'}}>
                     </div>
                 </div>
 
                 <div className="comment-single-body">
-                    <header className="comment-single-body-header" data-author-id="2">
+                    <header className="comment-single-body-header">
                         <div className="comment-single-body-header__author">{comment.author_name}</div>
                         <TimeAgo className="comment-single-body-header__date"
                                  date={comment.date} formatter={formatter}/>
@@ -107,6 +131,7 @@ class Comment extends AnyCommentComponent {
                         hasLike={this.state.hasLike}
                     />
                 </div>
+                {childComments}
             </li>
         )
     }

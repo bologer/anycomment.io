@@ -13,7 +13,7 @@ class SendCommentGuest extends AnyCommentComponent {
                 <div className="send-comment-body-outliner__logo"></div>
 
                 <div className="send-comment-body-outliner__auth" id="auth-required"
-                     style={{display: this.props.shouldLogin ? 'block' : 'none'}}>
+                     style={{display: this.props.isShouldLogin ? 'block' : 'none'}}>
                     <LoginSocialList/>
                 </div>
             </React.Fragment>

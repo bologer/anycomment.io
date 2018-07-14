@@ -12,7 +12,7 @@ class CommentFooter extends AnyCommentComponent {
             return (null);
         }
 
-        const settings = this.state.settings;
+        const settings = this.props.settings;
         const comment = this.props.comment;
         const hasLike = this.props.hasLike;
         const likesCount = this.props.likesCount;
@@ -20,7 +20,7 @@ class CommentFooter extends AnyCommentComponent {
         return (
             <footer className="comment-single-body__actions">
                 <ul>
-                    <li><a href="" onClick={(e) => this.props.onReply(e)}>{settings.i18.reply}</a>
+                    <li><a href="" onClick={(e) => this.props.onReply(e, comment.id)}>{settings.i18.reply}</a>
                     </li>
                     <li>
                             <span
@@ -29,7 +29,7 @@ class CommentFooter extends AnyCommentComponent {
                     </li>
 
                     {comment.permissions.can_edit_comment ?
-                        <li><a href="" onClick={(e) => this.props.onEdit(e)}>{settings.i18.edit}</a>
+                        <li><a href="" onClick={(e) => this.props.onEdit(e, comment.id)}>{settings.i18.edit}</a>
                         </li> : ''}
                 </ul>
             </footer>

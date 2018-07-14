@@ -7,7 +7,7 @@ import AnyCommentComponent from "./AnyCommentComponent"
  */
 class LoginSocialList extends AnyCommentComponent {
     render() {
-        const settings = this.state.settings;
+        const settings = this.props.settings;
         const socials = settings.options.socials;
 
         if (!socials) {

@@ -6,13 +6,12 @@ class SendComment extends AnyCommentComponent {
     constructor(props) {
         super(props);
 
-        this.state.dropdown = 'none';
+
+        this.state = {
+            dropdown: 'none'
+        };
 
         this.onDropdownClick = this.onDropdownClick.bind(this);
-    }
-
-    processComment() {
-        console.log('ready to process');
     }
 
     commentSort(e, sort) {
@@ -28,7 +27,7 @@ class SendComment extends AnyCommentComponent {
     }
 
     render() {
-        const settings = this.state.settings;
+        const settings = this.props.settings;
 
         return (
             <div id="anycomment-send-comment"
@@ -51,7 +50,7 @@ class SendComment extends AnyCommentComponent {
                     </div>
                 </div>
 
-                <SendCommentForm contentRef={this.props.contentRef} onSend={this.props.onSend} user={this.props.user}/>
+                <SendCommentForm {...this.props} />
             </div>
         );
     }

@@ -11,34 +11,103 @@ class CommentList extends AnyCommentComponent {
     constructor(props) {
         super(props);
 
-        const settings = this.state.settings;
+        const settings = this.props.settings;
 
-        this.state.error = null;
-        this.state.isLoaded = false;
-        this.state.comments = [];
-        this.state.perPage = settings.options.limit;
-        this.state.isLastPage = false;
-        this.state.order = 'desc';
-        this.state.orderBy = 'id';
+        this.state = {
+            error: null,
+            isLoaded: false,
+            comments: [],
+            perPage: settings.options.limit,
+            isLastPage: false,
+            order: 'desc',
+            orderBy: 'id',
 
+            commentText: '',
+            replyId: 0,
+            editId: '',
+        };
+
+
+        /**
+         * Form states.
+         * @type {string}
+         */
+        this.commentFieldRef = React.createRef();
+
+
+        /**
+         * Bindings
+         */
+        this.focusCommentField = this.focusCommentField.bind(this);
         this.loadComments = this.loadComments.bind(this);
         this.handleLoadMore = this.handleLoadMore.bind(this);
         this.handleAddComment = this.handleAddComment.bind(this);
+
+        this.handleCommentTextChange = this.handleCommentTextChange.bind(this);
+        this.handleReplyIdChange = this.handleReplyIdChange.bind(this);
+        this.handleEditIdChange = this.handleEditIdChange.bind(this);
     }
 
+    /**
+     * Focus on comment field.
+     */
+    focusCommentField() {
+        this.commentFieldRef.current.focus();
+    }
+
+    /**
+     * Handle comment text change.
+     * @param text
+     */
+    handleCommentTextChange(text) {
+        this.setState({
+            commentText: text
+        });
+        this.focusCommentField();
+    }
+
+    /**
+     * Handle reply ID change.
+     * @param replyId
+     */
+    handleReplyIdChange(replyId) {
+        this.setState({
+            replyId: replyId
+        });
+
+        this.focusCommentField();
+    }
+
+    /**
+     * Handle edit ID change.
+     * @param editId
+     */
+    handleEditIdChange(editId) {
+        this.setState({
+            focusCommentField: true,
+            editId: editId
+        });
+        this.focusCommentField();
+    }
+
+    /**
+     * Load comments.
+     * @returns {Promise<T>}
+     */
     loadComments() {
         const self = this;
-        const settings = this.state.settings;
+        const settings = this.props.settings;
         const perPage = this.state.perPage;
 
         const params = {
             post: settings.postId,
+            parent: 0,
             per_page: this.state.perPage,
             order: this.state.order,
             order_by: this.state.orderBy,
         };
 
-        return this.state.axios
+        return this.props.axios
             .get('/comments', {
                 params: params,
                 headers: {'X-WP-Nonce': settings.nonce}
@@ -77,7 +146,7 @@ class CommentList extends AnyCommentComponent {
             return false;
         }
 
-        const perPage = this.state.settings.options.limit;
+        const perPage = this.props.settings.options.limit;
 
         this.setState({
             perPage: this.state.perPage + perPage
@@ -93,8 +162,13 @@ class CommentList extends AnyCommentComponent {
      */
     handleAddComment(comment) {
         this.setState({
-            comments: [comment, ...this.state.comments]
+            commentText: '',
+            replyId: 0,
+            editId: '',
         });
+
+        this.loadComments();
+        this.focusCommentField();
     };
 
     componentDidMount() {
@@ -103,32 +177,63 @@ class CommentList extends AnyCommentComponent {
 
     render() {
         const {error, isLoaded, comments} = this.state;
-        const settings = this.state.settings;
+        const settings = this.props.settings;
         const user = this.props.user;
 
         if (error) {
             return <div>{settings.i18.error}: {error}</div>;
         }
 
+        const sendComment = <SendComment
+            commentFieldRef={this.commentFieldRef}
+            commentText={this.state.commentText}
+            replyId={this.state.replyId}
+            editId={this.state.editId}
+            onCommentTextChange={this.handleCommentTextChange}
+            onReplyIdChange={this.handleReplyIdChange}
+            onEditIdChange={this.handleEditIdChange}
+            onSend={this.handleAddComment}
+            user={user}/>;
+
+        if (comments.length === []) {
+            return (
+                <React.Fragment>
+                    {sendComment}
+                    <ul id="anycomment-load-container" className="anycomment-list">
+                        <li className="comment-single comment-no-comments">{settings.i18.no_comments}</li>
+                    </ul>
+                </React.Fragment>
+            )
+        }
+
+        if (!isLoaded) {
+            return (
+                <React.Fragment>
+                    {sendComment}
+                    <div>{settings.i18.loading}</div>
+                </React.Fragment>
+            )
+        }
+
         return (
             <React.Fragment>
-                <SendComment contentRef={this.props.contentRef} onSend={this.handleAddComment} user={user}/>
-                {isLoaded ?
-                    <ul id="anycomment-load-container" className="anycomment-list">
-                        {comments.length !== [] ?
-                            comments.map(comment => (
-                                <Comment contentRef={this.props.contentRef} key={comment.id} user={user}
-                                         comment={comment}/>
-                            )) :
-                            <li className="comment-single comment-no-comments">{settings.i18.no_comments}</li>}
+                {sendComment}
+                <ul id="anycomment-load-container" className="anycomment-list">
+                    {comments.map(comment => (
+                        <Comment
+                            changeReplyId={this.handleReplyIdChange}
+                            changeEditId={this.handleEditIdChange}
+                            key={comment.id}
+                            user={user}
+                            comment={comment}
+                        />
+                    ))}
 
-                        <div className="comment-single-load-more">
+                    <div className="comment-single-load-more">
                             <span onClick={(e) => this.handleLoadMore(e)}
                                   className="btn">{settings.i18.load_more}</span>
-                        </div>
-                    </ul>
-                    :
-                    <div>{settings.i18.loading}</div>}
+                    </div>
+                </ul>
             </React.Fragment>
         );
     }

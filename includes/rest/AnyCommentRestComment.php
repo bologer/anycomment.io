@@ -176,7 +176,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			'order'          => 'order',
 			'parent'         => 'parent__in',
 			'parent_exclude' => 'parent__not_in',
-			'perPage'       => 'number',
+			'perPage'        => 'number',
 			'post'           => 'post__in',
 			'search'         => 'search',
 			'status'         => 'status',
@@ -246,7 +246,8 @@ class AnyCommentRestComment extends AnyCommentRestController {
 				continue;
 			}
 
-			$data       = $this->prepare_item_for_response( $comment, $request );
+			$data = $this->prepare_item_for_response( $comment, $request );
+
 			$comments[] = $this->prepare_response_for_collection( $data );
 		}
 
@@ -836,6 +837,19 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	 * @return WP_REST_Response Response object.
 	 */
 	public function prepare_item_for_response( $comment, $request ) {
+
+		$child_comments = AnyComment()->render->get_child_comments( $comment->comment_ID );
+
+		if ( ! empty( $child_comments ) ) {
+			foreach ( $child_comments as $key => $child_comment ) {
+				$prepared_child_comment = $this->prepare_item_for_response( $child_comment, $request );
+				if ( isset( $prepared_child_comment->data ) ) {
+					$prepared_child_comment = $prepared_child_comment->data;
+				}
+				$child_comments[ $key ] = $prepared_child_comment;
+			}
+		}
+
 		$data = array(
 			'id'          => (int) $comment->comment_ID,
 			'post'        => (int) $comment->comment_post_ID,
@@ -846,6 +860,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			'date_gmt'    => mysql_to_rfc3339( $comment->comment_date_gmt ),
 			'content'     => $comment->comment_content,
 			'avatar_url'  => AnyComment()->auth->get_user_avatar_url( $comment->user_id ),
+			'children'    => $child_comments,
 			'permissions' => [
 				'can_edit_comment' => AnyComment()->render->can_edit_comment( $comment->comment_ID ),
 			],

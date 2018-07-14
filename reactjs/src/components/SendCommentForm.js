@@ -8,53 +8,64 @@ class SendCommentForm extends AnyCommentComponent {
     constructor(props) {
         super(props);
 
-        this.state.content = '';
-        this.state.parent = '0';
-        this.state.edit_id = '';
-        this.state.shouldLogin = false;
+
+        this.state = {
+            isShouldLogin: false,
+        };
+
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.shouldLogin = this.shouldLogin.bind(this);
+        this.handleContentChange = this.handleContentChange.bind(this);
+        this.handleReplyIdChange = this.handleReplyIdChange.bind(this);
+        this.handleEditIdChange = this.handleEditIdChange.bind(this);
     }
 
-    handleContent = (event) => {
-        this.setState({content: event.target.value});
+    /**
+     * Handle comment change.
+     * @param e
+     */
+    handleContentChange(e) {
+        this.props.onCommentTextChange(e.target.value);
     };
 
-    handleParent = (event) => {
-        event.preventDefault();
-        return false;
+    /**
+     * Handle change of parent comment (reply).
+     * @param e
+     */
+    handleReplyIdChange(e) {
+        this.props.onReplyIdChange(e.target.value);
     };
 
-    handleEditId = (event) => {
-        event.preventDefault();
-        return false;
+    /**
+     * Handle edit ID change.
+     * @param e
+     */
+    handleEditIdChange(e) {
+        this.props.onEditIdChange(e.target.value);
     };
 
-    handleSubmit = (event) => {
+    handleSubmit(event) {
         event.preventDefault();
 
         if (this.props.user === null) {
             return false;
         }
 
-        const settings = this.state.settings;
+        const settings = this.props.settings;
         const self = this;
-        this.state.axios
+
+        this.props.axios
             .request({
                 method: 'post',
                 url: '/comments',
                 params: {
                     post: settings.postId,
-                    content: this.state.content,
-                    parent: this.state.parent,
+                    content: this.props.commentText,
+                    parent: this.props.replyId,
                 },
                 headers: {'X-WP-Nonce': settings.nonce}
             })
             .then(function (response) {
-                self.setState({
-                    content: '',
-                    parent: '0',
-                    edit_id: '',
-                });
-                self.props.contentRef.current.focus();
                 self.props.onSend(response.data);
             })
             .catch(function (error) {
@@ -69,13 +80,14 @@ class SendCommentForm extends AnyCommentComponent {
         return false;
     };
 
-    shouldLogin = (e) => {
-        e.preventDefault();
-
-
+    /**
+     * Check whether user should login or not.
+     * @returns {boolean}
+     */
+    shouldLogin() {
         if (this.props.user === null) {
             this.setState({
-                shouldLogin: true
+                isShouldLogin: true
             });
             return true;
         }
@@ -84,33 +96,41 @@ class SendCommentForm extends AnyCommentComponent {
     };
 
     render() {
-        const translations = this.state.settings.i18;
+        const translations = this.props.settings.i18;
 
         return (
             <div className="send-comment-body">
                 <form onSubmit={this.handleSubmit}>
                     <div className="send-comment-body-outliner">
 
-                        <SendCommentGuest shouldLogin={this.state.shouldLogin} user={this.props.user}/>
+                        <SendCommentGuest isShouldLogin={this.state.isShouldLogin} user={this.props.user}/>
                         <SendCommentAuth user={this.props.user}/>
 
                         <textarea name="content"
-                                  ref={this.props.contentRef}
-                                  value={this.state.content}
+                                  value={this.props.commentText}
                                   required="required"
                                   className="send-comment-body-outliner__textfield"
                                   placeholder={translations.add_comment}
                                   data-original-placeholder={translations.add_comment}
                                   data-reply-name={translations.reply_to}
-                                  onClick={(e) => this.shouldLogin(e)}
-                                  onChange={this.handleContent}
+                                  onClick={this.shouldLogin}
+                                  onChange={this.handleContentChange}
+                                  ref={this.props.commentFieldRef}
                         ></textarea>
                     </div>
 
-                    <input type="hidden" name="parent" value={this.state.parent} onChange={this.handleParent}/>
-                    <input type="hidden" name="edit_id" value={this.state.edit_id} onChange={this.handleEditId}/>
-                    <input type="submit" className="btn send-comment-body__btn"
-                           value={translations.button_send}/>
+                    {this.props.user ?
+                        <input
+                            type="hidden"
+                            name="parent"
+                            value={this.props.replyId}
+                            onChange={this.handleReplyIdChange}/> : ''}
+
+                    {this.props.user ? <input type="hidden" name="edit_id" value={this.props.editId}
+                                              onChange={this.handleEditIdChange}/> : ''}
+
+                    {this.props.user ? <input type="submit" className="btn send-comment-body__btn"
+                                              value={translations.button_send}/> : ''}
                 </form>
 
                 <div className="clearfix"></div>
