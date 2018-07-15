@@ -45,6 +45,7 @@ wp_localize_script( 'anycomment-react', 'anyCommentApiSettings', [
 		'reply'            => __( 'Reply', 'anycomment' ),
 		'edit'             => __( 'Edit', 'anycomment' ),
 		'quick_login'      => __( 'Quick Login', 'anycomment' ),
+		'author'           => __( 'Author', 'anycomment' ),
 	]
 ] );
 
@@ -55,7 +56,7 @@ $classPrefix = AnyComment()->classPrefix();
 <html lang="<?= get_locale() ?>">
 <head>
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700&amp;subset=cyrillic" rel="stylesheet">
-    <?php wp_enqueue_style( 'anycomment-styles' ) ?>
+	<?php wp_enqueue_style( 'anycomment-styles' ) ?>
 </head>
 <body>
 <div id="<?= $classPrefix ?>comments"

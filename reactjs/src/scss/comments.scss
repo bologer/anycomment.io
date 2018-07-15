@@ -11,6 +11,7 @@ $font-family: 'Noto-Sans', sans-serif;
 $parent-avatar-size: 60px;
 $child-avatar-size: 48px;
 
+$btn-radius: 40px;
 $btn-primary-color: #53af4a;
 $btn-primary-active-color: #4f9f49;
 
@@ -377,6 +378,15 @@ body {
           font-size: $font-size - 1;
           display: block;
           margin-bottom: 2px;
+          
+          &-owner {
+            background-color: $btn-primary-color;
+            color: #fff;
+            font-size: 10.2px;
+            padding: 2px 5px;
+            margin-left: 10px;
+            @include border-radius($btn-radius);
+          }
 
           &-replied,
           &-parent-author {

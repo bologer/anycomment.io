@@ -103,38 +103,47 @@ WordPress currently has default Privacy Policy page create for your. What you ca
 
 == Changelog ==
 
-= 0.0.3 – TBD =
-* Enh - introducing comment likes, #35
-* Enh - minified CSS, to save some loading time
-* Enh - ability to define default user role on creation (registration via plugin), #37
-* Enh - when user has non-default Gravatar, use it, otherwise use default from plugin, #10
-* Fix - proper integration with WP User Avatar & Akismet
-* Enh - load commnets on scroll (new options to load comments when user scroll to it), #36
+= 0.0.35 =
 
+*Important note:*
+Plugin was completely rewritten to React. It was required as on the very early stage it already had a lot of JS code, partly merged woith HTML).
+Logic behind plugin stays the same, we even added a few improvements and fixes, hope you like the change.
+
+* Added "Author" badge to comment left by post author, #45
+* All assets are now minified (css, js) = faster load time
+
+= 0.0.32 – 10.07.2018 =
+* introducing comment likes, #35
+* minified CSS, to save some loading time
+* ability to define default user role on creation (registration via plugin), #37
+* when user has non-default Gravatar, use it, otherwise use default from plugin, #10
+* proper integration with WP User Avatar & Akismet
+* load commnets on scroll (new options to load comments when user scroll to it), #36
+* and other small bug fixes & improvements
 
 = 0.0.2 – 01.07.2018 =
-* Fix - admin OR moderator was unable to edit comment as it was too old
-* Enh - ability to specify number of default comments to load. The same settings applies to number of comment loaded per page, when there are more comments on post/page then specified in settings
-* Fix - plugin is not enabled until you specify at least one social network, even thought you set plugin to be ON in general settings, #11
-* Enh - refactoring of comments logic towards native WordPress REST
-* Enh - ability to update any comment if user has `moderate_comments` or `edit_comment` capability (no time limit)
-* Enh - ability to update personal comment within 5 minutes
-* Fix - guest user cannot see comment actions (reply/edit)
-* Enh - added two new authorization methods: GitHub & Odnoklassniki
-* Fix - comment text box was overflowing on long texts, #22
-* Fix - better responsiveness of dashboard layout, #32
-* Fix - avatars uploaded locally to escape problem when some social medias were blocking access to avatar after token expiration, #14
-* Enh - display most recent news from plugin, #31
-* Enh - other small bug fixes and improvements
-* Eng - moved completely towards REST architecture
+* admin OR moderator was unable to edit comment as it was too old
+* ability to specify number of default comments to load. The same settings applies to number of comment loaded per page, when there are more comments on post/page then specified in settings
+* plugin is not enabled until you specify at least one social network, even thought you set plugin to be ON in general settings, #11
+* refactoring of comments logic towards native WordPress REST
+* ability to update any comment if user has `moderate_comments` or `edit_comment` capability (no time limit)
+* ability to update personal comment within 5 minutes
+* guest user cannot see comment actions (reply/edit)
+* added two new authorization methods: GitHub & Odnoklassniki
+* comment text box was overflowing on long texts, #22
+* better responsiveness of dashboard layout, #32
+* avatars uploaded locally to escape problem when some social medias were blocking access to avatar after token expiration, #14
+* display most recent news from plugin, #31
+* other small bug fixes and improvements
+* moved completely towards REST architecture
 
 = 0.0.1 - 24.06.2018 =
 * First Release
 * Options to specify API details (secrets, etc) for social authorization: Vk, Twitter, Facebook, Google
 * Integrated with [WP User Avatar](https://wordpress.org/plugins/wp-user-avatar/)
 * Authorize via VK, Twitter, Facebook, Google
-* Enh: date when comment is left is based on website's language. List of supported languages can be seen [here](https://github.com/hustcc/timeago.js/tree/master/src/lang)
-* Enh: comment count at the top updated automatically when new comment added
-* Enh: add comments with AJAX, no need to refresh the page
-* Enh: ability to reply to nested comments up to 2 levels
-* Enh: when all socials disabled, libraries not loaded and they are not shown to end user
+* date when comment is left is based on website's language. List of supported languages can be seen [here](https://github.com/hustcc/timeago.js/tree/master/src/lang)
+* comment count at the top updated automatically when new comment added
+* add comments with AJAX, no need to refresh the page
+* ability to reply to nested comments up to 2 levels
+* when all socials disabled, libraries not loaded and they are not shown to end user

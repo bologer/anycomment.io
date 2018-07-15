@@ -111,7 +111,12 @@ class Comment extends AnyCommentComponent {
 
                 <div className="comment-single-body">
                     <header className="comment-single-body-header">
-                        <div className="comment-single-body-header__author">{comment.author_name}</div>
+                        <div className="comment-single-body-header__author">
+                            {comment.author_name}
+                            {comment.owner.is_post_author ?
+                            <span className="comment-single-body-header__author-owner">{settings.i18.author}</span>
+                            : ''}
+                            </div>
                         <TimeAgo className="comment-single-body-header__date"
                                  date={comment.date} formatter={formatter}/>
                     </header>

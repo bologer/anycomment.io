@@ -849,6 +849,11 @@ class AnyCommentRestComment extends AnyCommentRestController {
 				$child_comments[ $key ] = $prepared_child_comment;
 			}
 		}
+		$is_post_author = false;
+
+		if( ($post = get_post($comment->comment_post_ID)) !== null) {
+			$is_post_author = (int)$post->post_author === (int)$comment->user_id;
+		}
 
 		$data = array(
 			'id'          => (int) $comment->comment_ID,
@@ -861,6 +866,9 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			'content'     => $comment->comment_content,
 			'avatar_url'  => AnyComment()->auth->get_user_avatar_url( $comment->user_id ),
 			'children'    => $child_comments,
+			'owner'      => [
+				'is_post_author' => $is_post_author
+			],
 			'permissions' => [
 				'can_edit_comment' => AnyComment()->render->can_edit_comment( $comment ),
 			],
