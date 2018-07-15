@@ -11,14 +11,15 @@ class CommentList extends AnyCommentComponent {
     constructor(props) {
         super(props);
 
-        const settings = this.props.settings;
+        const options = this.props.settings.options;
 
         this.state = {
             error: null,
             isLoaded: false,
             comments: [],
-            perPage: settings.options.limit,
             isLastPage: false,
+            perPage: options.limit,
+            offset: options.limit,
             order: 'desc',
             orderBy: 'id',
 
@@ -96,12 +97,11 @@ class CommentList extends AnyCommentComponent {
     loadComments() {
         const self = this;
         const settings = this.props.settings;
-        const perPage = this.state.perPage;
 
         const params = {
             post: settings.postId,
             parent: 0,
-            per_page: this.state.perPage,
+            perPage: this.state.perPage,
             order: this.state.order,
             order_by: this.state.orderBy,
         };
@@ -114,8 +114,8 @@ class CommentList extends AnyCommentComponent {
             .then(function (response) {
                 self.setState({
                     isLoaded: true,
+                    isLastPage: !response.data || response.data.length < settings.options.limit,
                     comments: response.data,
-                    isLastPage: response.data.length < perPage
                 });
 
                 console.log(self.state);
@@ -136,7 +136,7 @@ class CommentList extends AnyCommentComponent {
     /**
      * Handles load more comments.
      * @param e
-     * @returns {boolean}
+     * @returns {*}
      */
     handleLoadMore(e) {
         e.preventDefault();
@@ -145,13 +145,42 @@ class CommentList extends AnyCommentComponent {
             return false;
         }
 
-        const perPage = this.props.settings.options.limit;
+        const self = this;
+        const settings = this.props.settings;
+        const limit = settings.options.limit;
 
-        this.setState({
-            perPage: this.state.perPage + perPage
-        });
+        const params = {
+            post: settings.postId,
+            parent: 0,
+            perPage: settings.options.limit,
+            offset: this.state.offset,
+            order: this.state.order,
+            order_by: this.state.orderBy,
+        };
 
-        this.loadComments();
+        return this.props.axios
+            .get('/comments', {
+                params: params,
+                headers: {'X-WP-Nonce': settings.nonce}
+            })
+            .then(function (response) {
+                console.log('comment list: ');
+                console.log([...self.state.comments, response.data]);
+                self.setState({
+                    comments: self.state.comments.concat(response.data),
+                    offset: self.state.offset + limit,
+                    isLastPage: response.data.length <= limit
+                });
+            })
+            .catch(function (error) {
+                console.log(error);
+                self.setState({
+                    isLoaded: true,
+                    error: error.toString()
+                });
+            })
+            .then(function () {
+            });
     }
 
     /**
@@ -228,10 +257,12 @@ class CommentList extends AnyCommentComponent {
                         />
                     ))}
 
-                    <div className="comment-single-load-more">
+                    {!this.state.isLastPage ?
+                        <div className="comment-single-load-more">
                             <span onClick={(e) => this.handleLoadMore(e)}
                                   className="btn">{settings.i18.load_more}</span>
-                    </div>
+                        </div>
+                        : ''}
                 </ul>
             </React.Fragment>
         );

@@ -3,6 +3,7 @@ import './css/theme-dark.css'
 import CommentList from './components/CommentList'
 import CommentCopyright from './components/CommentCopyright'
 import AnyCommentComponent from "./components/AnyCommentComponent";
+import 'iframe-resizer/js/iframeResizer.contentWindow'
 
 class App extends AnyCommentComponent {
     constructor(props) {
