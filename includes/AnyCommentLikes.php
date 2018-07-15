@@ -68,6 +68,28 @@ class AnyCommentLikes {
 	/**
 	 * Get likes count per comment.
 	 *
+	 * @param int $userId User ID to search for.
+	 *
+	 * @return int
+	 */
+	public static function getLikesCountByUser( $userId ) {
+		global $wpdb;
+
+		$table_name = static::tableName();
+		$sql        = "SELECT COUNT(*) FROM $table_name WHERE `user_ID`=%d";
+		$count      = $wpdb->get_var( $wpdb->prepare( $sql, [ $userId ] ) );
+
+		if ( $count === null ) {
+			return 0;
+		}
+
+		return (int) $count;
+	}
+
+
+	/**
+	 * Get likes count per comment.
+	 *
 	 * @param int $commentId Comment ID to be searched for.
 	 *
 	 * @return int
@@ -77,13 +99,13 @@ class AnyCommentLikes {
 
 		$table_name = static::tableName();
 		$sql        = "SELECT COUNT(*) FROM $table_name WHERE `comment_ID`=%d";
-		$value      = $wpdb->get_var( $wpdb->prepare( $sql, [ $commentId ] ) );
+		$count      = $wpdb->get_var( $wpdb->prepare( $sql, [ $commentId ] ) );
 
-		if ( $value === null ) {
+		if ( $count === null ) {
 			return 0;
 		}
 
-		return (int) $value;
+		return (int) $count;
 	}
 
 	/**

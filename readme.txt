@@ -112,7 +112,7 @@ Logic behind plugin stays the same, we even added a few improvements and fixes, 
 * Post author now has "Author" badge in comments section, #45
 * All assets are now minified (css, js) = faster load time
 * Fixed issue when long texts were overflowing maximum with of the comment
-* Now possible to see number of likes per comment in `/wp-admin/edit-comments.php`, #43
+* Now possible to see number of likes per comment (`/wp-admin/edit-comments.php`) & user (`/wp-admin/users.php`), #43
 
 = 0.0.32 – 10.07.2018 =
 * introducing comment likes, #35
