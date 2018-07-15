@@ -253,6 +253,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			include_once( ANYCOMMENT_ABSPATH . 'includes/admin/AnyCommentSocialSettings.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/admin/AnyCommentGenericSettings.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/admin/AnyCommentIntegrationSettings.php' );
+			include_once( ANYCOMMENT_ABSPATH . 'includes/admin/AnyCommentWPComments.php' );
 
 			// Migration manager
 			include_once( ANYCOMMENT_ABSPATH . 'includes/migrations/AnyCommentMigrationManager.php' );
@@ -264,6 +265,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			$this->rest = new AnyCommentRestComment();
 			new AnyCommentRestLikes();
 			new AnyCommentRestUsers();
+			new AnyCommentWPComments();
 
 			$this->errors      = new AnyCommentErrorHandler();
 			$this->render      = new AnyCommentRender();

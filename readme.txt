@@ -109,9 +109,10 @@ WordPress currently has default Privacy Policy page create for your. What you ca
 Plugin was completely rewritten to React. It was required as on the very early stage it already had a lot of JS code, partly merged woith HTML).
 Logic behind plugin stays the same, we even added a few improvements and fixes, hope you like the change.
 
-* Added "Author" badge to comment left by post author, #45
+* Post author now has "Author" badge in comments section, #45
 * All assets are now minified (css, js) = faster load time
 * Fixed issue when long texts were overflowing maximum with of the comment
+* Now possible to see number of likes per comment in `/wp-admin/edit-comments.php`, #43
 
 = 0.0.32 – 10.07.2018 =
 * introducing comment likes, #35
