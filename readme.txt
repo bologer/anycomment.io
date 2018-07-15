@@ -111,6 +111,7 @@ Logic behind plugin stays the same, we even added a few improvements and fixes, 
 
 * Added "Author" badge to comment left by post author, #45
 * All assets are now minified (css, js) = faster load time
+* Fixed issue when long texts were overflowing maximum with of the comment
 
 = 0.0.32 – 10.07.2018 =
 * introducing comment likes, #35

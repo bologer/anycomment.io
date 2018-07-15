@@ -13,8 +13,8 @@ if ( post_password_required( $postId ) || ! comments_open( $postId ) ) {
 	return;
 }
 
-wp_enqueue_script( 'anycomment-react', AnyComment()->plugin_url() . '/reactjs/build/static/js/main.min.js', [], AnyComment()->version );
-wp_enqueue_style( 'anycomment-styles', AnyComment()->plugin_url() . '/reactjs/build/static/css/main.min.css', [], AnyComment()->version );
+wp_enqueue_script( 'anycomment-react', AnyComment()->plugin_url() . '/static/js/main.min.js', [], AnyComment()->version );
+wp_enqueue_style( 'anycomment-styles', AnyComment()->plugin_url() . '/static/css/main.min.css', [], AnyComment()->version );
 
 wp_localize_script( 'anycomment-react', 'anyCommentApiSettings', [
 	'postId'  => $postId,
