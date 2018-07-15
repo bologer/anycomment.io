@@ -1,18 +1,10 @@
-$primary-color: #64ceac;
-$semi-hidden-color: #efe9f1;
-$comment-color: #fff;
-$dropdown-header-color: $comment-color;
-
-@import "comments";
-
-.send-comment {
-  .send-comment-body {
-    &-outliner {
-      border: 0;
+.anycomment-light {
+  .send-comment {
+    .send-comment-body {
+      &-outliner {
+        border: 0;
+      }
     }
   }
 }
 
-.class {
-  border: 1px solid red;
-}

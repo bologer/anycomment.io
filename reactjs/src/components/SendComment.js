@@ -34,7 +34,7 @@ class SendComment extends AnyCommentComponent {
                  className={"send-comment " + (this.props.user ? 'send-comment-authorized' : '') + ""}>
                 <div className="send-comment-supheader">
                     <div className="send-comment-supheader__count"
-                         id="comment-count">{this.props.commentCount}</div>
+                         id="comment-count">{this.props.commentCountText}</div>
                     <div className="send-comment-supheader__dropdown">
                         <div className="send-comment-supheader__dropdown-header"
                              onClick={(e) => this.onDropdownClick(e)}>

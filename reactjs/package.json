@@ -2,7 +2,7 @@
   "name": "reactjs",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://127.0.0.1:9090/index.php/hello-world/",
+  "homepage": "./",
   "dependencies": {
     "axios": "^0.18.0",
     "iframe-resizer": "^3.6.1",
@@ -16,7 +16,7 @@
     "build-css": "node-sass-chokidar src/scss -o src/css --output-style compressed",
     "watch-css": "npm run build-css && node-sass-chokidar src/scss -o src/css --watch",
     "start": "react-scripts start",
-    "build": "react-scripts build && mv build/static/js/main*.js build/static/js/main.min.js",
+    "build": "react-scripts build && mv build/static/js/main*.js build/static/js/main.min.js && mv build/static/css/main*.css build/static/css/main.min.css",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }

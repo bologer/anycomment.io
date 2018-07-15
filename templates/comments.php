@@ -14,6 +14,7 @@ if ( post_password_required( $postId ) || ! comments_open( $postId ) ) {
 }
 
 wp_enqueue_script( 'anycomment-react', AnyComment()->plugin_url() . '/reactjs/build/static/js/main.min.js', [], AnyComment()->version );
+wp_enqueue_style( 'anycomment-styles', AnyComment()->plugin_url() . '/reactjs/build/static/css/main.min.css', [], AnyComment()->version );
 
 wp_localize_script( 'anycomment-react', 'anyCommentApiSettings', [
 	'postId'  => $postId,
@@ -24,7 +25,8 @@ wp_localize_script( 'anycomment-react', 'anyCommentApiSettings', [
 	'options' => [
 		'limit'       => AnyCommentGenericSettings::getPerPage(),
 		'isCopyright' => AnyCommentGenericSettings::isCopyrightOn(),
-		'socials'     => anycomment_login_with()
+		'socials'     => anycomment_login_with(),
+		'theme'       => AnyCommentGenericSettings::getTheme(),
 	],
 	'i18'     => [
 		'error'            => __( 'Error', 'anycomment' ),
@@ -46,17 +48,14 @@ wp_localize_script( 'anycomment-react', 'anyCommentApiSettings', [
 	]
 ] );
 
-wp_enqueue_script( 'anycomment-react-settings' );
-
 
 $classPrefix = AnyComment()->classPrefix();
 ?>
 <!DOCTYPE html>
 <html lang="<?= get_locale() ?>">
 <head>
-    <link rel="stylesheet"
-          href="<?= AnyComment()->plugin_url() ?>/assets/css/theme-<?= AnyCommentGenericSettings::getTheme() ?>.min.css?v=<?= AnyComment()->version ?>">
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700&amp;subset=cyrillic" rel="stylesheet">
+    <?php wp_enqueue_style( 'anycomment-styles' ) ?>
 </head>
 <body>
 <div id="<?= $classPrefix ?>comments"

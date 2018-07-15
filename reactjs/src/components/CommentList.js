@@ -16,12 +16,17 @@ class CommentList extends AnyCommentComponent {
         this.state = {
             error: null,
             isLoaded: false,
+
+            commentCountText: null,
             comments: [],
+
             isLastPage: false,
             perPage: options.limit,
             offset: options.limit,
             order: 'desc',
             orderBy: 'id',
+
+
 
             commentText: '',
             replyId: 0,
@@ -113,6 +118,7 @@ class CommentList extends AnyCommentComponent {
             })
             .then(function (response) {
                 self.setState({
+                    commentCountText: response.data && response.data[0].meta.count_text,
                     isLoaded: true,
                     isLastPage: !response.data || response.data.length < settings.options.limit,
                     comments: response.data,
@@ -165,9 +171,9 @@ class CommentList extends AnyCommentComponent {
             })
             .then(function (response) {
                 console.log('comment list: ');
-                console.log([...self.state.comments, response.data]);
+                console.log([...self.state.comments, ...response.data]);
                 self.setState({
-                    comments: self.state.comments.concat(response.data),
+                    comments: [...self.state.comments, ...response.data],
                     offset: self.state.offset + limit,
                     isLastPage: response.data.length <= limit
                 });
@@ -215,6 +221,7 @@ class CommentList extends AnyCommentComponent {
         const sendComment = <SendComment
             commentFieldRef={this.commentFieldRef}
             commentText={this.state.commentText}
+            commentCountText={this.state.commentCountText}
             replyId={this.state.replyId}
             editId={this.state.editId}
             onCommentTextChange={this.handleCommentTextChange}

@@ -1,9 +1,9 @@
 import React from 'react';
-import './css/theme-dark.css'
 import CommentList from './components/CommentList'
 import CommentCopyright from './components/CommentCopyright'
 import AnyCommentComponent from "./components/AnyCommentComponent";
 import 'iframe-resizer/js/iframeResizer.contentWindow'
+import './css/comments.css'
 
 class App extends AnyCommentComponent {
     constructor(props) {
@@ -64,10 +64,10 @@ class App extends AnyCommentComponent {
             return <div>{settings.i18.loading}</div>;
         } else {
             return (
-                <React.Fragment>
+                <div id="anycomment-root" className={'anycomment anycomment-' + this.props.settings.options.theme}>
                     <CommentList user={user}/>
                     <CommentCopyright/>
-                </React.Fragment>
+                </div>
             );
         }
     }
