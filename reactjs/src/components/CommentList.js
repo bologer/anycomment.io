@@ -23,15 +23,15 @@ class CommentList extends AnyCommentComponent {
             isLastPage: false,
             perPage: options.limit,
             offset: options.limit,
-            order: 'desc',
             orderBy: 'id',
-
 
 
             commentText: '',
             replyId: 0,
             editId: '',
         };
+
+        this.state.order = 'desc';
 
 
         /**
@@ -47,6 +47,7 @@ class CommentList extends AnyCommentComponent {
         this.loadComments = this.loadComments.bind(this);
         this.handleLoadMore = this.handleLoadMore.bind(this);
         this.handleAddComment = this.handleAddComment.bind(this);
+        this.handleSort = this.handleSort.bind(this);
 
         this.handleCommentTextChange = this.handleCommentTextChange.bind(this);
         this.handleReplyIdChange = this.handleReplyIdChange.bind(this);
@@ -96,6 +97,21 @@ class CommentList extends AnyCommentComponent {
     }
 
     /**
+     * Handle sort.
+     * @param order
+     */
+    handleSort(order) {
+        console.log('hand sort of: ' + order);
+
+        const self = this;
+        this.setState({
+            order: order,
+        }, function () {
+            self.loadComments();
+        });
+    }
+
+    /**
      * Load comments.
      * @returns {Promise<T>}
      */
@@ -110,6 +126,9 @@ class CommentList extends AnyCommentComponent {
             order: this.state.order,
             order_by: this.state.orderBy,
         };
+
+        console.log('new req params:');
+        console.log(params);
 
         return this.props.axios
             .get('/comments', {
@@ -127,9 +146,6 @@ class CommentList extends AnyCommentComponent {
                 console.log(self.state);
             })
             .catch(function (error, l, d) {
-                console.log(error);
-                console.log(l);
-                console.log(d);
                 self.setState({
                     isLoaded: true,
                     error: error.toString()
@@ -170,16 +186,13 @@ class CommentList extends AnyCommentComponent {
                 headers: {'X-WP-Nonce': settings.nonce}
             })
             .then(function (response) {
-                console.log('comment list: ');
-                console.log([...self.state.comments, ...response.data]);
                 self.setState({
                     comments: [...self.state.comments, ...response.data],
                     offset: self.state.offset + limit,
-                    isLastPage: response.data.length <= limit
+                    isLastPage: !response.data || response.data.length < limit
                 });
             })
             .catch(function (error) {
-                console.log(error);
                 self.setState({
                     isLoaded: true,
                     error: error.toString()
@@ -224,6 +237,7 @@ class CommentList extends AnyCommentComponent {
             commentCountText={this.state.commentCountText}
             replyId={this.state.replyId}
             editId={this.state.editId}
+            onSort={this.handleSort}
             onCommentTextChange={this.handleCommentTextChange}
             onReplyIdChange={this.handleReplyIdChange}
             onEditIdChange={this.handleEditIdChange}

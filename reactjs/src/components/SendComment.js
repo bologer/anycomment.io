@@ -6,7 +6,6 @@ class SendComment extends AnyCommentComponent {
     constructor(props) {
         super(props);
 
-
         this.state = {
             dropdown: 'none'
         };
@@ -14,10 +13,15 @@ class SendComment extends AnyCommentComponent {
         this.onDropdownClick = this.onDropdownClick.bind(this);
     }
 
-    commentSort(e, sort) {
+    /**
+     * Handle comment sorting.
+     * @param e
+     * @param order
+     */
+    handleCommentSort(e, order) {
         e.preventDefault();
 
-        console.log('sort by: ' + sort);
+        this.props.onSort(order)
     }
 
     onDropdownClick(event) {
@@ -43,8 +47,8 @@ class SendComment extends AnyCommentComponent {
                         <div className="send-comment-supheader__dropdown-list" style={{display: this.state.dropdown}}
                              id="sort-dropdown">
                             <ul>
-                                <li onClick={(e) => this.commentSort(e, 'new')}>{settings.i18.sort_newest}</li>
-                                <li onClick={(e) => this.commentSort(e, 'old')}>{settings.i18.sort_oldest}</li>
+                                <li onClick={(e) => this.handleCommentSort(e, 'desc')}>{settings.i18.sort_newest}</li>
+                                <li onClick={(e) => this.handleCommentSort(e, 'asc')}>{settings.i18.sort_oldest}</li>
                             </ul>
                         </div>
                     </div>
