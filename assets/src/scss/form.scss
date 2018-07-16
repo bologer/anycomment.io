@@ -1,14 +1,62 @@
 $green: #53af4a;
 $description-color: #747474;
+$border-color: #979797;
 
 @import "form-checkboxes";
 
+.clearfix:after {
+  content: "";
+  visibility: hidden;
+  display: block;
+  height: 0;
+  clear: both;
+}
+
+.select2-container {
+  background-color: darken(#fff, 5%);
+
+  .select2-search__field {
+    border: 1px solid $border-color;
+  }
+
+  .select2-results__options {
+    margin: 0;
+    padding: 0;
+
+    li {
+      padding: 10px;
+      font-size: 15px;
+      cursor: pointer;
+
+      &:hover,
+      &:active,
+      &:focus {
+        background-color: #fff;
+      }
+    }
+  }
+}
+
 .anycomment-form {
+
+  select.anycomment-select2 {
+    display: none;
+  }
+
+  .select2 {
+    border: 1px solid $border-color;
+    padding: 10px 17px;
+    background-color: #fff;
+    @include border-radius(6px);
+    color: $description-color;
+    height: 50px;
+    cursor: pointer;
+  }
 
   input[type="text"],
   input[type="number"],
   select {
-    border: 1px solid #979797;
+    border: 1px solid $border-color;
     padding: 10px 17px;
     background-color: #fff;
     @include border-radius(6px);

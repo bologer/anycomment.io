@@ -110,6 +110,7 @@ if ( ! class_exists( 'AnyCommentAdminOptions' ) ) :
 		public function input_select( $args ) {
 			?>
             <select name="<?= $this->option_name ?>[<?= esc_attr( $args['label_for'] ); ?>]"
+                    class="anycomment-select2"
                     id="<?= esc_attr( $args['label_for'] ); ?>">
 				<?php
 				$options = $args['options'];
@@ -122,6 +123,7 @@ if ( ! class_exists( 'AnyCommentAdminOptions' ) ) :
 					endforeach;
 				endif; ?>
             </select>
+            <div class="clearfix"></div>
             <p class="description"><?= $args['description'] ?></p>
 			<?php
 		}
@@ -139,6 +141,7 @@ if ( ! class_exists( 'AnyCommentAdminOptions' ) ) :
                 <span></span>
             </label>
 			<?php if ( isset( $args['description'] ) ): ?>
+                <div class="clearfix"></div>
                 <p class="description"><?= $args['description'] ?></p>
 			<?php endif; ?>
 			<?php
@@ -155,6 +158,7 @@ if ( ! class_exists( 'AnyCommentAdminOptions' ) ) :
                    name="<?= $this->option_name ?>[<?= esc_attr( $args['label_for'] ); ?>]"
                    value="<?= $this->getOption( $args['label_for'] ) ?>">
 			<?php if ( isset( $args['description'] ) ): ?>
+                <div class="clearfix"></div>
                 <p class="description"><?= $args['description'] ?></p>
 			<?php endif; ?>
 			<?php
@@ -171,6 +175,7 @@ if ( ! class_exists( 'AnyCommentAdminOptions' ) ) :
                    name="<?= $this->option_name ?>[<?= esc_attr( $args['label_for'] ); ?>]"
                    value="<?= $this->getOption( $args['label_for'] ) ?>">
 			<?php if ( isset( $args['description'] ) ): ?>
+                <div class="clearfix"></div>
                 <p class="description"><?= $args['description'] ?></p>
 			<?php endif; ?>
 			<?php

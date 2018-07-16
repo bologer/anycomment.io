@@ -14,15 +14,15 @@ for (let i = 0; i < switches.length; i++) {
 
     switchEl.draggable = true;
 
-    ['dragstart', 'touchstart'].forEach(function(e) {
+    ['dragstart', 'touchstart'].forEach(function (e) {
         switchEl.addEventListener(e, onDragStart);
     });
 
-    ['dragover', 'touchmove'].forEach(function(e) {
+    ['dragover', 'touchmove'].forEach(function (e) {
         switchEl.addEventListener(e, onDragOver);
     });
 
-    ['dragend', 'touchend'].forEach(function(e) {
+    ['dragend', 'touchend'].forEach(function (e) {
         switchEl.addEventListener(e, onDragEnd);
     });
 
@@ -81,3 +81,7 @@ function onDragEnd(evt) {
 
     return;
 }
+
+jQuery(document).ready(function () {
+    jQuery('.anycomment-select2').select2();
+});
