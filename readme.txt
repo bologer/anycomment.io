@@ -70,9 +70,10 @@ Yes! Join our [GitHub repository](https://github.com/bologer/anycomment.io) :)
 
 == Screenshots ==
 
-1. For whitish websites.
-2. For darkish websites.
-3. Main plugin dashboard.
+1. White theme
+2. Dark theme
+3. Plugin dashboard. Analytics on current month and most active users.
+4. Settings view
 
 == Frequently Asked Questions ==
 
