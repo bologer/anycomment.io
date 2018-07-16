@@ -11,12 +11,6 @@ gulp.task('sass', function () {
         .pipe(sass({outputStyle: 'compressed'}))
         .pipe(rename({suffix: '.min'}))
         .pipe(gulp.dest(destCssFolder));
-
-    gulp.src([scssFolder + '/theme-*.scss'])
-        .pipe(sass({includePaths: ['assets/src/scss'], outputStyle: 'compressed'}).on('error', sass.logError))
-        .pipe(rename({suffix: '.min'}))
-        .pipe(gulp.dest(destCssFolder));
-
 });
 
 // Default task

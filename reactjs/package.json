@@ -2,7 +2,7 @@
   "name": "reactjs",
   "version": "0.1.0",
   "private": true,
-  "homepage": "~",
+  "homepage": "/wp-content/plugins/anycomment",
   "dependencies": {
     "axios": "^0.18.0",
     "iframe-resizer": "^3.6.1",

@@ -113,6 +113,7 @@ Logic behind plugin stays the same, we even added a few improvements and fixes, 
 * All assets are now minified (css, js) = faster load time
 * Fixed issue when long texts were overflowing maximum with of the comment
 * Now possible to see number of likes per comment (`/wp-admin/edit-comments.php`) & user (`/wp-admin/users.php`), #43
+* Now all setting option have visually better control options and directly integrated into dashboard tabs (pages are still available, no worries), #38
 
 = 0.0.32 – 10.07.2018 =
 * introducing comment likes, #35

@@ -133,8 +133,11 @@ if ( ! class_exists( 'AnyCommentAdminOptions' ) ) :
 		 */
 		public function input_checkbox( $args ) {
 			?>
-            <input type="checkbox" id="<?= esc_attr( $args['label_for'] ); ?>"
-                   name="<?= $this->option_name ?>[<?= esc_attr( $args['label_for'] ); ?>]" <?= $this->getOption( $args['label_for'] ) !== null ? 'checked="checked"' : '' ?>>
+            <label class="switch">
+                <input type="checkbox" id="<?= esc_attr( $args['label_for'] ); ?>"
+                       name="<?= $this->option_name ?>[<?= esc_attr( $args['label_for'] ); ?>]" <?= $this->getOption( $args['label_for'] ) !== null ? 'checked="checked"' : '' ?>>
+                <span></span>
+            </label>
 			<?php if ( isset( $args['description'] ) ): ?>
                 <p class="description"><?= $args['description'] ?></p>
 			<?php endif; ?>
@@ -190,13 +193,14 @@ if ( ! class_exists( 'AnyCommentAdminOptions' ) ) :
 			?>
             <div class="wrap">
                 <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
-                <form action="options.php" method="post">
+                <form action="options.php" method="post" class="anycomment-form">
 					<?php
 					settings_fields( $this->option_group );
 					do_settings_sections( $this->page_slug );
 					submit_button( __( 'Save', 'anycomment' ) );
 					?>
                 </form>
+                <script src="<?= AnyComment()->plugin_url() ?>/assets/js/forms.js"></script>
             </div>
 			<?php
 		}

@@ -10,6 +10,8 @@ $separator-color: #d8d8d8;
   border-radius: $radius;
 }
 
+@import "form";
+
 .anycomment-dashboard *,
 .anycomment-dashboard *:before,
 .anycomment-dashboard *:after {
