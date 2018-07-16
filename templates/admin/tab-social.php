@@ -1,3 +1,3 @@
 <?php
-AnyComment()->admin_pages->page_options_social->page_html();
+AnyComment()->admin_pages->page_options_social->page_html(false);
 ?>

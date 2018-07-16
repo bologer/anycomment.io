@@ -179,8 +179,10 @@ if ( ! class_exists( 'AnyCommentAdminOptions' ) ) :
 		/**
 		 * top level menu:
 		 * callback functions
+		 *
+		 * @param bool $wrapper Whether to wrap for with header or not.
 		 */
-		public function page_html() {
+		public function page_html( $wrapper = true ) {
 			if ( ! current_user_can( 'manage_options' ) ) {
 				return;
 			}
@@ -191,17 +193,22 @@ if ( ! class_exists( 'AnyCommentAdminOptions' ) ) :
 
 			settings_errors( $this->alert_key );
 			?>
-            <div class="wrap">
+			<?php if ( $wrapper ): ?>
+                <div class="wrap">
                 <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
-                <form action="options.php" method="post" class="anycomment-form">
-					<?php
-					settings_fields( $this->option_group );
-					do_settings_sections( $this->page_slug );
-					submit_button( __( 'Save', 'anycomment' ) );
-					?>
-                </form>
-                <script src="<?= AnyComment()->plugin_url() ?>/assets/js/forms.js"></script>
-            </div>
+			<?php endif; ?>
+            <form action="options.php" method="post" class="anycomment-form">
+				<?php
+				settings_fields( $this->option_group );
+				do_settings_sections( $this->page_slug );
+				submit_button( __( 'Save', 'anycomment' ) );
+				?>
+            </form>
+            <script src="<?= AnyComment()->plugin_url() ?>/assets/js/forms.js"></script>
+            <script src="<?= AnyComment()->plugin_url() ?>/assets/js/select2.min.js"></script>
+			<?php if ( $wrapper ): ?>
+                </div>
+			<?php endif; ?>
 			<?php
 		}
 
