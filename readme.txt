@@ -4,7 +4,7 @@ Tags: anycomment, comments, comment moderation, comment, anycomment.io
 Requires at least: 4.4
 Tested up to: 4.9.7
 Requires PHP: 5.4
-Stable tag: 0.0.33
+Stable tag: 0.0.34
 License: GPLv2 or later
 License URI: http://www.gnu.org/
 
@@ -106,6 +106,9 @@ WordPress currently has default Privacy Policy page create for your. What you ca
 > We record information about only when social network allows us to have it.
 
 == Changelog ==
+
+= 0.0.34 – 16.07.2018 =
+* Russian translation fix
 
 = 0.0.33 – 16.07.2018 =
 * Fixed problem with array syntax support on PHP version 5.5, #49
