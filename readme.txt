@@ -2,7 +2,7 @@
 Contributors: ateshabaev
 Tags: anycomment, comments, comment moderation, comment, anycomment.io
 Requires at least: 4.4
-Tested up to: 4.9.6
+Tested up to: 4.9.7
 Requires PHP: 5.4
 Stable tag: 0.0.33
 License: GPLv2 or later
