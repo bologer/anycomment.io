@@ -78,10 +78,9 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 * @inheritdoc
 		 */
 		protected $default_options = [
-			self::OPTION_THEME                  => self::THEME_LIGHT,
-			self::OPTION_COPYRIGHT_TOGGLE       => 'on',
-			self::OPTION_REGISTER_DEFAULT_GROUP => 'on',
-			self::OPTION_COUNT_PER_PAGE         => 20
+			self::OPTION_THEME            => self::THEME_LIGHT,
+			self::OPTION_COPYRIGHT_TOGGLE => 'on',
+			self::OPTION_COUNT_PER_PAGE   => 20
 		];
 
 
