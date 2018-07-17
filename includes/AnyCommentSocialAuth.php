@@ -20,18 +20,6 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		const SOCIAL_GITHUB = 'github';
 		const SOCIAL_ODNOKLASSNIKI = 'odnoklassniki';
 
-		/**
-		 * Associative array list of providers.
-		 */
-		const PROVIDERS = [
-			self::SOCIAL_VKONTAKTE     => 'Vkontakte',
-			self::SOCIAL_FACEBOOK      => 'Facebook',
-			self::SOCIAL_TWITTER       => 'Twitter',
-			self::SOCIAL_GOOGLE        => 'Google',
-			self::SOCIAL_GITHUB        => 'GitHub',
-			self::SOCIAL_ODNOKLASSNIKI => 'Odnoklassniki'
-		];
-
 		const META_SOCIAL_TYPE = 'anycomment_social';
 		const META_SOCIAL_AVATAR = 'anycomment_social_avatar';
 
@@ -39,6 +27,18 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		 * @var \Hybridauth\Hybridauth
 		 */
 		private $_auth;
+
+		/**
+		 * Associative array list of providers.
+		 */
+		protected static $providers = [
+			self::SOCIAL_VKONTAKTE     => 'Vkontakte',
+			self::SOCIAL_FACEBOOK      => 'Facebook',
+			self::SOCIAL_TWITTER       => 'Twitter',
+			self::SOCIAL_GOOGLE        => 'Google',
+			self::SOCIAL_GITHUB        => 'GitHub',
+			self::SOCIAL_ODNOKLASSNIKI => 'Odnoklassniki'
+		];
 
 		protected static $rest_prefix = 'anycomment';
 		protected static $rest_version = 'v1';
@@ -140,7 +140,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 				return null;
 			}
 
-			return trim( self::PROVIDERS[ $social ] );
+			return trim( self::$providers[ $social ] );
 		}
 
 		/**
@@ -151,7 +151,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		 * @return bool
 		 */
 		public function social_exists( $social ) {
-			$array = self::PROVIDERS;
+			$array = self::$providers;
 
 			if ( isset( $array[ strtolower( $social ) ] ) ) {
 				return true;
@@ -167,7 +167,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		private function prepare_auth() {
 			$config = [
 				'providers' => [
-					self::PROVIDERS[ self::SOCIAL_VKONTAKTE ]     => [
+					self::$providers[ self::SOCIAL_VKONTAKTE ]     => [
 						'enabled'  => AnyCommentSocialSettings::isVkOn(),
 						'keys'     => [
 							'id'     => AnyCommentSocialSettings::getVkAppId(),
@@ -175,7 +175,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 						],
 						'callback' => static::get_vk_callback(),
 					],
-					self::PROVIDERS[ self::SOCIAL_GOOGLE ]        => [
+					self::$providers[ self::SOCIAL_GOOGLE ]        => [
 						'enabled'  => AnyCommentSocialSettings::isGoogleOn(),
 						'keys'     => [
 							'id'     => AnyCommentSocialSettings::getGoogleClientId(),
@@ -184,7 +184,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 						'scope'    => 'profile https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.profile.emails.read',
 						'callback' => static::get_google_callback(),
 					],
-					self::PROVIDERS[ self::SOCIAL_FACEBOOK ]      => [
+					self::$providers[ self::SOCIAL_FACEBOOK ]      => [
 						'enabled'  => AnyCommentSocialSettings::isFbOn(),
 						'scope'    => 'email, public_profile',
 						'keys'     => [
@@ -193,7 +193,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 						],
 						'callback' => static::get_facebook_callback(),
 					],
-					self::PROVIDERS[ self::SOCIAL_TWITTER ]       => [
+					self::$providers[ self::SOCIAL_TWITTER ]       => [
 						'enabled'  => AnyCommentSocialSettings::isTwitterOn(),
 						'keys'     => [
 							'key'    => AnyCommentSocialSettings::getTwitterConsumerKey(),
@@ -201,7 +201,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 						],
 						'callback' => static::get_twitter_callback(),
 					],
-					self::PROVIDERS[ self::SOCIAL_GITHUB ]        => [
+					self::$providers[ self::SOCIAL_GITHUB ]        => [
 						'enabled'  => AnyCommentSocialSettings::isGithubOn(),
 						'keys'     => [
 							'id'     => AnyCommentSocialSettings::getGithubClientId(),
@@ -209,7 +209,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 						],
 						'callback' => static::get_github_callback(),
 					],
-					self::PROVIDERS[ self::SOCIAL_ODNOKLASSNIKI ] => [
+					self::$providers[ self::SOCIAL_ODNOKLASSNIKI ] => [
 						'enabled'  => AnyCommentSocialSettings::isOkOn(),
 						'keys'     => [
 							'id'     => AnyCommentSocialSettings::getOkAppId(),

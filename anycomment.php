@@ -242,6 +242,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			include_once( ANYCOMMENT_ABSPATH . 'includes/ac-core-functions.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentSocialAuth.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentLikes.php' );
+			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentUserMeta.php' );
 
 			/**
 			 * Admin related

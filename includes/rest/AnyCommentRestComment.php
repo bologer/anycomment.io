@@ -866,7 +866,10 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			'avatar_url'  => AnyComment()->auth->get_user_avatar_url( $comment->user_id ),
 			'children'    => $child_comments,
 			'owner'       => [
-				'is_post_author' => $is_post_author
+				'is_post_author'  => $is_post_author,
+				'is_social_login' => AnyCommentUserMeta::isSocialLogin( $comment->user_id ),
+				'social_type'     => AnyCommentUserMeta::getSocialType( $comment->user_id ),
+				'social_url'      => AnyCommentUserMeta::getSocialProfileUrl( $comment->user_id ),
 			],
 			'permissions' => [
 				'can_edit_comment' => AnyComment()->render->can_edit_comment( $comment ),

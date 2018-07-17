@@ -86,6 +86,9 @@ class Comment extends AnyCommentComponent {
 
         const formatter = buildFormatter(languageStrings);
 
+        const miniIconUrl = comment.owner.is_social_login ? comment.owner.social_url : '';
+        const miniIconSrc = comment.owner.is_social_login ? require('../img/icons/avatars/social-' + comment.owner.social_type + '.svg') : '';
+
         const childComments = comment.children ?
             <div className="comment-single-replies">
                 <ul className="anycomment-list anycomment-list-child">
@@ -106,6 +109,9 @@ class Comment extends AnyCommentComponent {
                 <div className="comment-single-avatar">
                     <div className="comment-single-avatar__img"
                          style={{backgroundImage: 'url(' + comment.avatar_url + ')'}}>
+                        {comment.owner.is_social_login ? <a target="_blank" href={miniIconUrl} rel="noopener noreferrer"
+                                                            className="comment-single-avatar__img-auth-type"
+                                                            style={{backgroundImage: 'url(' + miniIconSrc + ')'}}></a> : ''}
                     </div>
                 </div>
 
@@ -114,9 +120,9 @@ class Comment extends AnyCommentComponent {
                         <div className="comment-single-body-header__author">
                             {comment.author_name}
                             {comment.owner.is_post_author ?
-                            <span className="comment-single-body-header__author-owner">{settings.i18.author}</span>
-                            : ''}
-                            </div>
+                                <span className="comment-single-body-header__author-owner">{settings.i18.author}</span>
+                                : ''}
+                        </div>
                         <TimeAgo className="comment-single-body-header__date"
                                  date={comment.date} formatter={formatter}/>
                     </header>
