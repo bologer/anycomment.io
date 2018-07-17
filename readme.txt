@@ -1,15 +1,18 @@
 === AnyComment ===
 Contributors: ateshabaev
-Tags: anycomment, comments, comment moderation, anycomment.io
+Tags: anycomment, comments, comment moderation, comment, anycomment.io
 Requires at least: 4.4
 Tested up to: 4.9.6
-Stable tag: 0.0.32
+Requires PHP: 5.4
+Stable tag: 0.0.33
 License: GPLv2 or later
 License URI: http://www.gnu.org/
 
 AnyComment allows you to have a better commenting experience in WordPress.
 
 == Description ==
+
+> **Notice!** 0.0.35 will have some nice change regarding frontend & backend, new feature a lot more! Get prepared. Update will be ready within this week (16-21.07.2018)!
 
 > See [demo](https://anycomment.io/demo/)
 
@@ -71,9 +74,9 @@ Yes! Join our [GitHub repository](https://github.com/bologer/anycomment.io) :)
 
 == Screenshots ==
 
-1. For whitish websites.
-2. For darkish websites.
-3. Main plugin dashboard.
+1. White theme
+2. Dark theme
+3. Plugin dashboard. Analytics on current month and most active users
 
 == Frequently Asked Questions ==
 
@@ -103,6 +106,10 @@ WordPress currently has default Privacy Policy page create for your. What you ca
 > We record information about only when social network allows us to have it.
 
 == Changelog ==
+
+= 0.0.32 – 16.07.2018
+* Fixed problem with array syntax support on PHP version 5.5, #49
+* Fixed possible XSS in the comment
 
 = 0.0.32 – 10.07.2018 =
 * Enh - introducing comment likes, #35

@@ -202,7 +202,7 @@ function anycomment_comment_body( $comment ) {
 		<?php do_action( 'anycomment_author', $comment ) ?>
 
         <div class="comment-single-body__text">
-            <p><?= $comment->comment_content ?></p>
+            <p><?= sanitize_text_field($comment->comment_content) ?></p>
         </div>
 
 		<?php do_action( 'anycomment_actions_part', $comment ) ?>
