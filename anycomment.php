@@ -8,7 +8,6 @@
  * Author URI: http://bologer.ru
  * Requires at least: 4.4
  * Tested up to: 4.9
- *
  * Text Domain: anycomment
  * Domain Path: /languages
  *
