@@ -179,7 +179,6 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			'perPage'        => 'number',
 			'post'           => 'post__in',
 			'search'         => 'search',
-			'status'         => 'status',
 			'type'           => 'type',
 		);
 
@@ -564,8 +563,8 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			return new WP_Error( 'rest_comment_failed_create', __( 'Creating comment failed.', 'anycomment' ), array( 'status' => 500 ) );
 		}
 
-		if ( isset( $request['status'] ) ) {
-			$this->handle_status_param( $request['status'], $comment_id );
+		if ( AnyCommentGenericSettings::isModerateFirst() ) {
+			$this->handle_status_param( 'hold', $comment_id );
 		}
 
 		$comment = get_comment( $comment_id );
@@ -851,8 +850,8 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		}
 		$is_post_author = false;
 
-		if( ($post = get_post($comment->comment_post_ID)) !== null) {
-			$is_post_author = (int)$post->post_author === (int)$comment->user_id;
+		if ( ( $post = get_post( $comment->comment_post_ID ) ) !== null ) {
+			$is_post_author = (int) $post->post_author === (int) $comment->user_id;
 		}
 
 		$data = array(
@@ -866,7 +865,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			'content'     => $comment->comment_content,
 			'avatar_url'  => AnyComment()->auth->get_user_avatar_url( $comment->user_id ),
 			'children'    => $child_comments,
-			'owner'      => [
+			'owner'       => [
 				'is_post_author' => $is_post_author
 			],
 			'permissions' => [

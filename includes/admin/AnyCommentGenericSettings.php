@@ -42,6 +42,11 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		const OPTION_LOAD_ON_SCROLL = 'options_load_on_scroll';
 
 		/**
+		 * Mark comments for moderation before they are added.
+		 */
+		const OPTION_MODERATE_FIRST = 'options_moderate_first';
+
+		/**
 		 * Dark theme.
 		 */
 		const THEME_DARK = 'dark';
@@ -176,17 +181,23 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'callback'    => 'input_select',
 						'args'        => [
 							'options' => [
-								self::THEME_DARK  => __( 'For Dark Websites', 'anycomment' ),
-								self::THEME_LIGHT => __( 'For Light Websites', 'anycomment' ),
+								self::THEME_DARK  => __( 'Dark', 'anycomment' ),
+								self::THEME_LIGHT => __( 'Light', 'anycomment' ),
 							]
 						],
-						'description' => esc_html( __( 'Choose theme of the comments.', "anycomment" ) )
+						'description' => esc_html( __( 'Choose comments theme.', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_LOAD_ON_SCROLL,
 						'title'       => __( 'Load on Scroll', "anycomment" ),
 						'callback'    => 'input_checkbox',
 						'description' => esc_html( __( 'Load comments when user scrolls to it.', "anycomment" ) )
+					],
+					[
+						'id'          => self::OPTION_MODERATE_FIRST,
+						'title'       => __( 'Moderate First', "anycomment" ),
+						'callback'    => 'input_checkbox',
+						'description' => esc_html( __( 'Comment are not shown until they are approved by moderator.', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_COPYRIGHT_TOGGLE,
@@ -215,6 +226,16 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		public static function isLoadOnScroll() {
 			return static::instance()->getOption( self::OPTION_LOAD_ON_SCROLL ) !== null;
 		}
+
+		/**
+		 * Check whether it is required to mark comments for moderation.
+		 *
+		 * @return bool
+		 */
+		public static function isModerateFirst() {
+			return static::instance()->getOption( self::OPTION_MODERATE_FIRST ) !== null;
+		}
+
 
 		/**
 		 * Get default group for registered user.
