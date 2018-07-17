@@ -3,7 +3,8 @@ Contributors: ateshabaev
 Tags: anycomment, comments, comment moderation, anycomment.io
 Requires at least: 4.7
 Tested up to: 4.9.6
-Stable tag: 0.0.3
+Requires PHP: 5.4
+Stable tag: 0.0.35
 License: GPLv2 or later
 License URI: http://www.gnu.org/
 
@@ -103,18 +104,20 @@ WordPress currently has default Privacy Policy page create for your. What you ca
 > We record information about only when social network allows us to have it.
 
 == Changelog ==
-
-= 0.0.35 =
-
-*Important note:*
-Plugin was completely rewritten to React. It was required as on the very early stage it already had a lot of JS code, partly merged woith HTML).
-Logic behind plugin stays the same, we even added a few improvements and fixes, hope you like the change.
+= 0.0.35 – 20.07.2018 =
+> **Important note:**
+> Plugin was completely rewritten to React. It was required as on the very early stage it already had a lot of JS code, partly merged woith HTML).
+> Logic behind plugin stays the same, we even added a few improvements and fixes, hope you like the change.
 
 * Post author now has "Author" badge in comments section, #45
 * All assets are now minified (css, js) = faster load time
 * Fixed issue when long texts were overflowing maximum with of the comment
 * Now possible to see number of likes per comment (`/wp-admin/edit-comments.php`) & user (`/wp-admin/users.php`), #43
 * Now all setting option have visually better control options and directly integrated into dashboard tabs (pages are still available, no worries), #38
+
+= 0.0.33 – 16.07.2018 =
+* Fixed problem with array syntax support on PHP version 5.5, #49
+* Fixed possible XSS in the comment
 
 = 0.0.32 – 10.07.2018 =
 * introducing comment likes, #35
