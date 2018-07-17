@@ -137,7 +137,9 @@ class CommentList extends AnyCommentComponent {
             })
             .then(function (response) {
                 self.setState({
-                    commentCountText: response.data && response.data[0].meta.count_text,
+                    commentCountText: response.data && response.data.length > 0 ?
+                        response.data[0].meta.count_text :
+                        '',
                     isLoaded: true,
                     isLastPage: !response.data || response.data.length < settings.options.limit,
                     comments: response.data,
@@ -145,7 +147,7 @@ class CommentList extends AnyCommentComponent {
 
                 console.log(self.state);
             })
-            .catch(function (error, l, d) {
+            .catch(function (error) {
                 self.setState({
                     isLoaded: true,
                     error: error.toString()
@@ -227,10 +229,6 @@ class CommentList extends AnyCommentComponent {
         const settings = this.props.settings;
         const user = this.props.user;
 
-        if (error) {
-            return <div>{settings.i18.error}: {error}</div>;
-        }
-
         const sendComment = <SendComment
             commentFieldRef={this.commentFieldRef}
             commentText={this.state.commentText}
@@ -244,7 +242,16 @@ class CommentList extends AnyCommentComponent {
             onSend={this.handleAddComment}
             user={user}/>;
 
-        if (comments.length === []) {
+        if (error) {
+            return <div>{settings.i18.error}: {error}</div>;
+        } else if (!isLoaded) {
+            return (
+                <React.Fragment>
+                    {sendComment}
+                    <div>{settings.i18.loading}</div>
+                </React.Fragment>
+            )
+        } else if (isLoaded && !comments.length) {
             return (
                 <React.Fragment>
                     {sendComment}
@@ -253,40 +260,31 @@ class CommentList extends AnyCommentComponent {
                     </ul>
                 </React.Fragment>
             )
-        }
-
-        if (!isLoaded) {
+        } else {
             return (
                 <React.Fragment>
                     {sendComment}
-                    <div>{settings.i18.loading}</div>
+                    <ul id="anycomment-load-container" className="anycomment-list">
+                        {comments.map(comment => (
+                            <Comment
+                                changeReplyId={this.handleReplyIdChange}
+                                changeEditId={this.handleEditIdChange}
+                                key={comment.id}
+                                user={user}
+                                comment={comment}
+                            />
+                        ))}
+
+                        {!this.state.isLastPage ?
+                            <div className="comment-single-load-more">
+                            <span onClick={(e) => this.handleLoadMore(e)}
+                                  className="btn">{settings.i18.load_more}</span>
+                            </div>
+                            : ''}
+                    </ul>
                 </React.Fragment>
             )
         }
-
-        return (
-            <React.Fragment>
-                {sendComment}
-                <ul id="anycomment-load-container" className="anycomment-list">
-                    {comments.map(comment => (
-                        <Comment
-                            changeReplyId={this.handleReplyIdChange}
-                            changeEditId={this.handleEditIdChange}
-                            key={comment.id}
-                            user={user}
-                            comment={comment}
-                        />
-                    ))}
-
-                    {!this.state.isLastPage ?
-                        <div className="comment-single-load-more">
-                            <span onClick={(e) => this.handleLoadMore(e)}
-                                  className="btn">{settings.i18.load_more}</span>
-                        </div>
-                        : ''}
-                </ul>
-            </React.Fragment>
-        );
     }
 }
 

@@ -563,7 +563,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			return new WP_Error( 'rest_comment_failed_create', __( 'Creating comment failed.', 'anycomment' ), array( 'status' => 500 ) );
 		}
 
-		if ( AnyCommentGenericSettings::isModerateFirst() ) {
+		if ( ! current_user_can( 'moderate_comments' ) && AnyCommentGenericSettings::isModerateFirst() ) {
 			$this->handle_status_param( 'hold', $comment_id );
 		}
 

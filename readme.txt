@@ -104,16 +104,18 @@ WordPress currently has default Privacy Policy page create for your. What you ca
 > We record information about only when social network allows us to have it.
 
 == Changelog ==
+
 = 0.0.35 – 20.07.2018 =
 > **Important note:**
-> Plugin was completely rewritten to React. It was required as on the very early stage it already had a lot of JS code, partly merged woith HTML).
+> Plugin was completely rewritten to React. It was required as on the very early stage it had a lot of JavaScript, partly merged with HTML).
 > Logic behind plugin stays the same, we even added a few improvements and fixes, hope you like the change.
 
 **Enhancements:**
 * Post author now has "Author" badge in comments section, #45
 * All assets are now minified (css, js) = faster load time
 * Now possible to see number of likes per comment (`/wp-admin/edit-comments.php`) & user (`/wp-admin/users.php`), #43
-* Now all setting option have visually better control options and directly integrated into dashboard tabs (pages are still available, no worries), #38
+* All settings moved to dashboard tabs (pages are still available, no worries), #38
+* Mark new comment to be moderated or approve immediately, #50
 
 **Fixes:**
 * Fixed issue when long texts were overflowing maximum with of the comment

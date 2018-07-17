@@ -7,16 +7,17 @@ import AnyCommentComponent from "./AnyCommentComponent"
 class LoginSocial extends AnyCommentComponent {
     render() {
         const social = this.props.social;
-        const socialKey = this.props.socialKey;
+
+        const src = require('../img/icons/auth/social-' + social.slug + '.svg');
 
         return (
             <li>
                 <a href={social.url}
                    target="_parent"
                    title={social.label}
-                   className={"anycomment-login-with-list-" + {socialKey}}>
+                   className={"anycomment-login-with-list-" + social.slug}>
                     <img
-                        src={"/assets/img/icons/auth/social-" + {socialKey} + ".svg"}
+                        src={src}
                         alt={social.label}/></a>
             </li>
         );
