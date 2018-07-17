@@ -107,7 +107,7 @@ WordPress currently has default Privacy Policy page create for your. What you ca
 
 == Changelog ==
 
-= 0.0.32 – 16.07.2018
+= 0.0.33 – 16.07.2018 =
 * Fixed problem with array syntax support on PHP version 5.5, #49
 * Fixed possible XSS in the comment
 
