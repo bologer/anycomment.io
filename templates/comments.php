@@ -21,6 +21,7 @@ wp_localize_script( 'anycomment-react', 'anyCommentApiSettings', [
 	'postUrl' => get_permalink( $postId ),
 	'nonce'   => wp_create_nonce( 'wp_rest' ),
 	'locale'  => get_locale(),
+	'restUrl' => esc_url_raw( rest_url( 'anycomment/v1/' ) ),
 	// Options from plugin
 	'options' => [
 		'limit'       => AnyCommentGenericSettings::getPerPage(),
@@ -48,9 +49,6 @@ wp_localize_script( 'anycomment-react', 'anyCommentApiSettings', [
 		'author'           => __( 'Author', 'anycomment' ),
 	]
 ] );
-
-
-$classPrefix = AnyComment()->classPrefix();
 ?>
 <!DOCTYPE html>
 <html lang="<?= get_locale() ?>">
@@ -59,44 +57,13 @@ $classPrefix = AnyComment()->classPrefix();
 	<?php wp_enqueue_style( 'anycomment-styles' ) ?>
 </head>
 <body>
-<div id="<?= $classPrefix ?>comments"
-     class="<?= $classPrefix ?>comments-dark"
-     data-current-limit="<?= AnyCommentGenericSettings::getPerPage() ?>"
-     data-sort="<?= AnyCommentRender::SORT_NEW ?>">
 
-	<?php do_action( 'anycomment_notifications' ) ?>
-    <div id="root" data-nonce="<?= wp_create_nonce( 'wp_rest' ) ?>"></div>
-</div>
+<?php do_action( 'anycomment_notifications' ) ?>
+<div id="anycomment-root"></div>
 
 <?php wp_footer(); ?>
 
 <script>
-    let settings =  <?= json_encode( [
-		'url'          => esc_url_raw( rest_url( 'anycomment/v1/comments' ) ),
-		'urlLikes'     => esc_url_raw( rest_url( 'anycomment/v1/likes' ) ),
-		'nonce'        => wp_create_nonce( 'wp_rest' ),
-		'debug'        => true,
-		'postId'       => $postId,
-		'postUrl'      => get_post_permalink( $postId ),
-		'options'      => [
-			'locale' => get_locale(),
-			'limit'  => AnyCommentGenericSettings::getPerPage(),
-			'guest'  => ! is_user_logged_in()
-		],
-		'translations' => [
-			'button_send'  => __( 'Send', 'anycomment' ),
-			'button_save'  => __( 'Save', 'anycomment' ),
-			'button_reply' => __( 'Reply', 'anycomment' ),
-		]
-	] ) ?>;
-
-    /**
-     * Get loader.
-     */
-    function getLoader() {
-        return jQuery('#<?= AnyComment()->classPrefix()?>loader');
-    }
-
     /**
      * Add error alert.
      * @param message Message of the alert.
@@ -152,20 +119,6 @@ $classPrefix = AnyComment()->classPrefix();
         notifications.slideUp(300, function () {
             jQuery(this).html('');
         });
-    }
-
-    // loadComments();
-
-
-    // Load time
-    function loadTime(lang = '<?= get_locale() ?>') {
-        let i = setInterval(function () {
-            if (('timeago' in window)) {
-                timeago().render(jQuery('.timeago-date-time'), lang.substring(0, 2));
-                //{defaultLocale: '<?= get_locale() ?>'}
-                clearInterval(i);
-            }
-        }, 1000);
     }
 </script>
 

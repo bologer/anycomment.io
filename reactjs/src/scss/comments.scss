@@ -63,6 +63,10 @@ body {
   @include border-radius(50%);
 }
 
+#anycomment-root {
+  padding: 40px 0;
+}
+
 .btn {
   font-size: $font-size;
   font-weight: normal;
@@ -378,7 +382,7 @@ body {
           font-size: $font-size - 1;
           display: block;
           margin-bottom: 2px;
-          
+
           &-owner {
             background-color: $btn-primary-color;
             color: #fff;
