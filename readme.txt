@@ -117,7 +117,7 @@ WordPress currently has default Privacy Policy page create for your. What you ca
 
 **Fixes:**
 * Fixed issue when long texts were overflowing maximum with of the comment
-* Fixed issue when it was not possible to disabled footer copyright ("Thanks" option in admin)
+* Fixed issue when it was not possible to disabled footer copyright ("Thanks" option in admin), #46
 
 = 0.0.33 – 16.07.2018 =
 * Fixed problem with array syntax support on PHP version 5.5, #49
