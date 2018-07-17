@@ -9,7 +9,7 @@
  * Requires at least: 4.4
  * Tested up to: 4.9
  * Text Domain: anycomment
- * Domain Path: /languages
+ * Domain Path: /languages/
  *
  * @package AnyComment
  * @author bologer
@@ -104,10 +104,11 @@ if ( ! class_exists( 'AnyComment' ) ) :
 		 * Init method to invoke starting scripts.
 		 */
 		public function init() {
+
 			$this->define_constants();
 			$this->includes();
-			$this->init_textdomain();
 			$this->init_hooks();
+			$this->init_textdomain();
 		}
 
 		/**
