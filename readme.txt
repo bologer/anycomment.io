@@ -116,6 +116,7 @@ WordPress currently has default Privacy Policy page create for your. What you ca
 * Now possible to see number of likes per comment (`/wp-admin/edit-comments.php`) & user (`/wp-admin/users.php`), #43
 * All settings moved to dashboard tabs (pages are still available, no worries), #38
 * Mark new comment to be moderated or approve immediately, #50
+* Ability to choose whether to show social profile URL in comments (when show is chosen, mini social icon in the bottom right corner will be clickable), #51
 
 **Fixes:**
 * Fixed issue when long texts were overflowing maximum with of the comment
