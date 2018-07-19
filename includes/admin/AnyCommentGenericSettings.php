@@ -26,6 +26,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 */
 		const OPTION_REGISTER_DEFAULT_GROUP = 'option_register_default_group';
 
+
 		/**
 		 * Number of comments displayed per page and on the page load.
 		 */
@@ -45,6 +46,11 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 * Mark comments for moderation before they are added.
 		 */
 		const OPTION_MODERATE_FIRST = 'options_moderate_first';
+
+		/**
+		 * Show/hide profile URL on client mini social icon.
+		 */
+		const OPTION_SHOW_PROFILE_URL = 'options_show_profile_url';
 
 		/**
 		 * Dark theme.
@@ -200,6 +206,12 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'description' => esc_html( __( 'Comment are not shown until they are approved by moderator. Users with ability to moderate comments will be ignored by filter.', "anycomment" ) )
 					],
 					[
+						'id'          => self::OPTION_SHOW_PROFILE_URL,
+						'title'       => __( 'Show Profile URL', "anycomment" ),
+						'callback'    => 'input_checkbox',
+						'description' => esc_html( __( 'Show social network link to user in the mini social icon in bottom right corner of the avatar.', "anycomment" ) )
+					],
+					[
 						'id'          => self::OPTION_COPYRIGHT_TOGGLE,
 						'title'       => __( 'Thanks', "anycomment" ),
 						'callback'    => 'input_checkbox',
@@ -236,6 +248,14 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 			return static::instance()->getOption( self::OPTION_MODERATE_FIRST ) !== null;
 		}
 
+		/**
+		 * Check whether it is required to show social profile URL or not.
+		 *
+		 * @return bool
+		 */
+		public static function isShowProfileUrl() {
+			return static::instance()->getOption( self::OPTION_SHOW_PROFILE_URL ) !== null;
+		}
 
 		/**
 		 * Get default group for registered user.

@@ -854,6 +854,15 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			$is_post_author = (int) $post->post_author === (int) $comment->user_id;
 		}
 
+		$owner = [
+			'is_post_author'  => $is_post_author,
+			'is_social_login' => AnyCommentUserMeta::isSocialLogin( $comment->user_id ),
+			'social_type'     => AnyCommentUserMeta::getSocialType( $comment->user_id ),
+			'social_url'      => AnyCommentGenericSettings::isShowProfileUrl() ?
+				AnyCommentUserMeta::getSocialProfileUrl( $comment->user_id ) :
+				null,
+		];
+
 		$data = array(
 			'id'          => (int) $comment->comment_ID,
 			'post'        => (int) $comment->comment_post_ID,
@@ -865,12 +874,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			'content'     => $comment->comment_content,
 			'avatar_url'  => AnyComment()->auth->get_user_avatar_url( $comment->user_id ),
 			'children'    => $child_comments,
-			'owner'       => [
-				'is_post_author'  => $is_post_author,
-				'is_social_login' => AnyCommentUserMeta::isSocialLogin( $comment->user_id ),
-				'social_type'     => AnyCommentUserMeta::getSocialType( $comment->user_id ),
-				'social_url'      => AnyCommentUserMeta::getSocialProfileUrl( $comment->user_id ),
-			],
+			'owner'       => $owner,
 			'permissions' => [
 				'can_edit_comment' => AnyComment()->render->can_edit_comment( $comment ),
 			],

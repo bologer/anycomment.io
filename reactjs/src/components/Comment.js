@@ -5,6 +5,7 @@ import i18En from 'react-timeago/lib/language-strings/en';
 import i18Ru from 'react-timeago/lib/language-strings/ru';
 import AnyCommentComponent from './AnyCommentComponent'
 import CommentFooter from './CommentFooter';
+import CommentAvatar from './CommentAvatar';
 
 /**
  * Comment is rendering single comment entry.
@@ -86,9 +87,6 @@ class Comment extends AnyCommentComponent {
 
         const formatter = buildFormatter(languageStrings);
 
-        const miniIconUrl = comment.owner.is_social_login ? comment.owner.social_url : '';
-        const miniIconSrc = comment.owner.is_social_login ? require('../img/icons/avatars/social-' + comment.owner.social_type + '.svg') : '';
-
         const childComments = comment.children ?
             <div className="comment-single-replies">
                 <ul className="anycomment-list anycomment-list-child">
@@ -106,14 +104,8 @@ class Comment extends AnyCommentComponent {
         return (
             <li key={comment.id} className="comment-single">
 
-                <div className="comment-single-avatar">
-                    <div className="comment-single-avatar__img"
-                         style={{backgroundImage: 'url(' + comment.avatar_url + ')'}}>
-                        {comment.owner.is_social_login ? <a target="_blank" href={miniIconUrl} rel="noopener noreferrer"
-                                                            className="comment-single-avatar__img-auth-type"
-                                                            style={{backgroundImage: 'url(' + miniIconSrc + ')'}}></a> : ''}
-                    </div>
-                </div>
+                <CommentAvatar comment={comment}/>
+
 
                 <div className="comment-single-body">
                     <header className="comment-single-body-header">
