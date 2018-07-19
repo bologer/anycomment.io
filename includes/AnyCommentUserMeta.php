@@ -40,18 +40,27 @@ class AnyCommentUserMeta {
 	 * Get social profile URL.
 	 *
 	 * @param int $user_id User ID to be checked for.
+	 * @param bool $html If required to return HTML link
 	 *
 	 * @return null|string
 	 */
-	public static function getSocialProfileUrl( $user_id ) {
+	public static function getSocialProfileUrl( $user_id, $html = false ) {
 		if ( ! static::isSocialLogin( $user_id ) ) {
 			return null;
 		}
 
-		if ( ( $user = get_userdata( $user_id ) ) !== false ) {
-			return $user->user_url;
+		$url = get_user_meta( $user_id, AnyCommentSocialAuth::META_SOCIAL_LINK, true );
+
+		if ( empty( $url ) || strpos( $url, 'http' ) !== false ) {
+			$url = null;
 		}
 
-		return null;
+		if ( empty( $url ) && ( $user = get_userdata( $user_id ) ) !== false ) {
+			$url = $user->user_url;
+		}
+
+		return ! $html ? $url : sprintf( '<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>', $url, $url );
 	}
+
+
 }

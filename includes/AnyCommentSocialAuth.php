@@ -21,7 +21,9 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		const SOCIAL_ODNOKLASSNIKI = 'odnoklassniki';
 
 		const META_SOCIAL_TYPE = 'anycomment_social';
+		const META_SOCIAL_LINK = 'anycomment_social_link';
 		const META_SOCIAL_AVATAR = 'anycomment_social_avatar';
+		const META_SOCIAL_AVATAR_ORIGIN = 'anycomment_social_avatar_origin';
 
 		/**
 		 * @var \Hybridauth\Hybridauth
@@ -344,6 +346,8 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 				'user_login'    => $user->identifier,
 				'display_name'  => $user->displayName,
 				'user_nicename' => $user->firstName,
+				'first_name'    => $user->firstName,
+				'last_name'     => $user->lastName,
 				'user_url'      => $user->profileURL
 			];
 
@@ -373,8 +377,9 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 				$searchValue,
 				$userdata,
 				[
-					'anycomment_social_avatar'        => $photoUrl,
-					'anycomment_social_avatar_origin' => $user->photoURL
+					self::META_SOCIAL_LINK          => $user->profileURL,
+					self::META_SOCIAL_AVATAR        => $photoUrl,
+					self::META_SOCIAL_AVATAR_ORIGIN => $user->photoURL,
 				]
 			);
 		}

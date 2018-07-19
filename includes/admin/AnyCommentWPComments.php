@@ -54,6 +54,7 @@ class AnyCommentWPComments {
 	 */
 	public function add_likes_column( $columns ) {
 		$columns['anycomment_likes_count'] = __( "Likes", "anycomment" );
+		$columns['anycomment_social_url']  = __( "Social URL", "anycomment" );
 
 		return $columns;
 	}
@@ -70,6 +71,10 @@ class AnyCommentWPComments {
 	public function add_user_columns( $value, $column_name, $user_id ) {
 		if ( $column_name == 'anycomment_likes_count' ) {
 			return AnyCommentLikes::getLikesCountByUser( $user_id );
+		} elseif ( $column_name == 'anycomment_social_url' ) {
+			$socialUrl = AnyCommentUserMeta::getSocialProfileUrl( $user_id, true );
+
+			return ! empty( $socialUrl ) ? $socialUrl : '—';
 		}
 	}
 }
