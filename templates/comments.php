@@ -30,7 +30,7 @@ wp_localize_script( 'anycomment-react', 'anyCommentApiSettings', [
 		'theme'       => AnyCommentGenericSettings::getTheme(),
 	],
 	'i18'     => [
-		'error'            => __( 'Error', 'anycomment' ),
+		'error_generic'    => __( "Oops, something went wrong..." ),
 		'loading'          => __( 'Loading...', 'anycomment' ),
 		'load_more'        => __( "Load more", "anycomment" ),
 		'button_send'      => __( 'Send', 'anycomment' ),

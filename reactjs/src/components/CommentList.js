@@ -2,6 +2,7 @@ import React from 'react';
 import Comment from './Comment'
 import SendComment from './SendComment'
 import AnyCommentComponent from "./AnyCommentComponent";
+import toast from 'react-toastify';
 
 /**
  * CommentList displays list of comments.
@@ -14,7 +15,7 @@ class CommentList extends AnyCommentComponent {
         const options = this.props.settings.options;
 
         this.state = {
-            error: null,
+            isError: false,
             isLoaded: false,
 
             commentCountText: null,
@@ -101,8 +102,6 @@ class CommentList extends AnyCommentComponent {
      * @param order
      */
     handleSort(order) {
-        console.log('hand sort of: ' + order);
-
         const self = this;
         this.setState({
             order: order,
@@ -127,9 +126,6 @@ class CommentList extends AnyCommentComponent {
             order_by: this.state.orderBy,
         };
 
-        console.log('new req params:');
-        console.log(params);
-
         return this.props.axios
             .get('/comments', {
                 params: params,
@@ -144,16 +140,16 @@ class CommentList extends AnyCommentComponent {
                     isLastPage: !response.data || response.data.length < settings.options.limit,
                     comments: response.data,
                 });
-
-                console.log(self.state);
             })
             .catch(function (error) {
                 self.setState({
                     isLoaded: true,
-                    error: error.toString()
+                    isError: true
                 });
-            })
-            .then(function () {
+
+                if ('message' in error) {
+                    toast(error.message, {type: toast.TYPE.ERROR});
+                }
             });
     };
 
@@ -197,10 +193,11 @@ class CommentList extends AnyCommentComponent {
             .catch(function (error) {
                 self.setState({
                     isLoaded: true,
-                    error: error.toString()
+                    isError: true
                 });
-            })
-            .then(function () {
+                if ('message' in error) {
+                    toast(error.message, {type: toast.TYPE.ERROR});
+                }
             });
     }
 
@@ -225,7 +222,7 @@ class CommentList extends AnyCommentComponent {
     }
 
     render() {
-        const {error, isLoaded, comments} = this.state;
+        const {isError, isLoaded, comments} = this.state;
         const settings = this.props.settings;
         const user = this.props.user;
 
@@ -242,8 +239,8 @@ class CommentList extends AnyCommentComponent {
             onSend={this.handleAddComment}
             user={user}/>;
 
-        if (error) {
-            return <div>{settings.i18.error}: {error}</div>;
+        if (isError) {
+            return <div>{settings.i18.error_generic}</div>;
         } else if (!isLoaded) {
             return (
                 <React.Fragment>

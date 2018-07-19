@@ -1,12 +1,12 @@
-import React, {Component} from 'react';
+import React from 'react';
 import axios from 'axios';
 
 /**
  * Generic wrapper for React component.
  */
-class AnyCommentComponent extends Component {
+class AnyCommentComponent extends React.Component {
     static defaultProps = {
-        ...Component.defaultProps,
+        ...React.Component.defaultProps,
         settings: 'anyCommentApiSettings' in window ? window.anyCommentApiSettings : null,
         axios: axios.create({
             baseURL: 'anyCommentApiSettings' in window ? window.anyCommentApiSettings.restUrl : '',

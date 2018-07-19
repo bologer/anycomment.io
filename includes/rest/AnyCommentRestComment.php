@@ -475,7 +475,6 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	 * @return WP_Error|WP_REST_Response Response object on success, or error object on failure.
 	 */
 	public function create_item( $request ) {
-
 		if ( ! empty( $request['id'] ) ) {
 			return new WP_Error( 'rest_comment_exists', __( 'Cannot create existing comment.', 'anycomment' ), array( 'status' => 400 ) );
 		}

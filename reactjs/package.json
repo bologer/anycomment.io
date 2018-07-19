@@ -10,7 +10,8 @@
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-scripts": "1.1.4",
-    "react-timeago": "^4.1.9"
+    "react-timeago": "^4.1.9",
+    "react-toastify": "^4.1.0"
   },
   "scripts": {
     "build-css": "node-sass-chokidar src/scss -o src/css --output-style compressed",

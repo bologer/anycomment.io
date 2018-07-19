@@ -4,6 +4,8 @@ import CommentCopyright from './components/CommentCopyright'
 import AnyCommentComponent from "./components/AnyCommentComponent";
 import 'iframe-resizer/js/iframeResizer.contentWindow'
 import './css/comments.css'
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class App extends AnyCommentComponent {
     constructor(props) {
@@ -12,7 +14,7 @@ class App extends AnyCommentComponent {
         this.state = {
             isLoaded: false,
             user: null,
-            error: null
+            isError: false
         };
 
         this.getUser = this.getUser.bind(this);
@@ -23,16 +25,13 @@ class App extends AnyCommentComponent {
      * @returns {*}
      */
     getUser() {
-
         const settings = this.props.settings;
 
         if (settings == null) {
             return this.setState({
-                error: "No settings defined"
+                isError: true
             });
         }
-
-        console.log(settings);
 
         const nonce = settings.nonce;
 
@@ -41,12 +40,13 @@ class App extends AnyCommentComponent {
                 headers: {"X-WP-Nonce": nonce}
             })
             .then(response => {
-                console.log('user');
-                console.log(response.data);
                 this.setState({isLoaded: true, user: response.data});
             })
             .catch(error => {
                 this.setState({isLoaded: true});
+                if ('message' in error) {
+                    toast(error.message, {type: toast.TYPE.ERROR});
+                }
             });
     };
 
@@ -56,15 +56,16 @@ class App extends AnyCommentComponent {
 
     render() {
         const settings = this.props.settings;
-        const {error, isLoaded, user} = this.state;
+        const {isError, isLoaded, user} = this.state;
 
-        if (error) {
-            return <div>{settings.i18.error}: {error}</div>;
+        if (isError) {
+            return <div>{settings.i18.error_generic}</div>;
         } else if (!isLoaded) {
             return <div>{settings.i18.loading}</div>;
         } else {
             return (
                 <div id="anycomment-root" className={'anycomment anycomment-' + this.props.settings.options.theme}>
+                    <ToastContainer/>
                     <CommentList user={user}/>
                     <CommentCopyright/>
                 </div>

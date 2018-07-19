@@ -2,6 +2,7 @@ import React from 'react';
 import SendCommentGuest from './SendCommentGuest.js';
 import SendCommentAuth from './SendCommentAuth.js';
 import AnyCommentComponent from "./AnyCommentComponent";
+import {toast} from "react-toastify";
 
 class SendCommentForm extends AnyCommentComponent {
 
@@ -75,12 +76,7 @@ class SendCommentForm extends AnyCommentComponent {
                 self.props.onSend(response.data);
             })
             .catch(function (error) {
-                // handle error
-                console.log('err');
-                console.log(error);
-            })
-            .then(function () {
-                // always executed
+                toast(error.message, {type: toast.TYPE.ERROR});
             });
 
         return false;
