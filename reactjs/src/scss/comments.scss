@@ -389,6 +389,7 @@ body {
             font-size: 10.2px;
             padding: 2px 5px;
             margin-left: 10px;
+            user-select: none;
             @include border-radius($btn-radius);
           }
 
@@ -441,10 +442,6 @@ body {
           padding-left: 28px;
           cursor: pointer;
           user-select: none;
-          -moz-user-select: none;
-          -khtml-user-select: none;
-          -webkit-user-select: none;
-          -o-user-select: none;
 
           &::before {
             content: '';
