@@ -46,17 +46,19 @@ Yes! Join our [GitHub repository](https://github.com/bologer/anycomment.io) :)
 * Social network authorization via Facebook, VK, Twitter, Google, Odnoklassniki or GitHub
 * Translated in English & Russian
 * Suitable for dark & light themes (on your choice)
-* Blazing-fast AJAX way of sending comments
-* Likes
+* Blazing-fast comments based on React
+* Like comments, see number of likes per comment/user in admin
+* Edit comments when you are the owner or have moderate permission(s)
+* Assign default group for users who authorize via social network
+* See user's social profile URL in admin
 * Simple & informative dashboard with graphs to display number of comments over number of active user per certain period & most active commenting users
 * Comments do no inherit any of the currently active theme styles. Meaning that comments will not be broken by styles you have.
 * Get latest plugin update news directly in the dashboard, don't miss a thing
-* Integration with [WP User Avatar](https://wordpress.org/plugins/wp-user-avatar/), to specify customized avatars
+* Integration with [Akismet](https://wordpress.org/plugins/akismet/) & [WP User Avatar](https://wordpress.org/plugins/wp-user-avatar/), to specify customized avatars
 * All comments stored in your own database. We do not create extra tables for these reasons. We reuse native comment's table, so all of the default WordPress functionality comes out of the box.
 
 = TODO features =
 * Option: customization of comment styles
-* Option: add option to define whether new comments will be added automatically or will be required to be moderated first
 * Option: add option to allow guests to leave comments
 * Option: Auto-update comments on new comments
 * Support more languages
@@ -111,16 +113,19 @@ WordPress currently has default Privacy Policy page create for your. What you ca
 > Logic behind plugin stays the same, we even added a few improvements and fixes, hope you like the change.
 
 **Enhancements:**
+* Comments rewritten to React!
 * Post author now has "Author" badge in comments section, #45
 * All assets are now minified (css, js) = faster load time
 * Now possible to see number of likes per comment (`/wp-admin/edit-comments.php`) & user (`/wp-admin/users.php`), #43
 * All settings moved to dashboard tabs (pages are still available, no worries), #38
-* Mark new comment to be moderated or approve immediately, #50
+* Mark new comment to be moderated first or be approved immediately, #50
 * Ability to choose whether to show social profile URL in comments (when show is chosen, mini social icon in the bottom right corner will be clickable), #51
+* Added new column "Social URL" in `users.php` which displays user's social profile URL
 
 **Fixes:**
 * Fixed issue when long texts were overflowing maximum with of the comment
 * Fixed issue when it was not possible to disabled footer copyright ("Thanks" option in admin), #46
+* Fixed issue when first & last name was not recorded in user profile
 
 = 0.0.33 – 16.07.2018 =
 * Fixed problem with array syntax support on PHP version 5.5, #49
