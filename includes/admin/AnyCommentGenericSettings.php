@@ -26,6 +26,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 */
 		const OPTION_REGISTER_DEFAULT_GROUP = 'option_register_default_group';
 
+
 		/**
 		 * Number of comments displayed per page and on the page load.
 		 */
@@ -40,6 +41,16 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 * Load comments on scroll to it.
 		 */
 		const OPTION_LOAD_ON_SCROLL = 'options_load_on_scroll';
+
+		/**
+		 * Mark comments for moderation before they are added.
+		 */
+		const OPTION_MODERATE_FIRST = 'options_moderate_first';
+
+		/**
+		 * Show/hide profile URL on client mini social icon.
+		 */
+		const OPTION_SHOW_PROFILE_URL = 'options_show_profile_url';
 
 		/**
 		 * Dark theme.
@@ -78,10 +89,9 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 * @inheritdoc
 		 */
 		protected $default_options = [
-			self::OPTION_THEME                  => self::THEME_LIGHT,
-			self::OPTION_COPYRIGHT_TOGGLE       => 'on',
-			self::OPTION_REGISTER_DEFAULT_GROUP => 'on',
-			self::OPTION_COUNT_PER_PAGE         => 20
+			self::OPTION_THEME            => self::THEME_LIGHT,
+			self::OPTION_COPYRIGHT_TOGGLE => 'on',
+			self::OPTION_COUNT_PER_PAGE   => 20
 		];
 
 
@@ -177,17 +187,29 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'callback'    => 'input_select',
 						'args'        => [
 							'options' => [
-								self::THEME_DARK  => __( 'For Dark Websites', 'anycomment' ),
-								self::THEME_LIGHT => __( 'For Light Websites', 'anycomment' ),
+								self::THEME_DARK  => __( 'Dark', 'anycomment' ),
+								self::THEME_LIGHT => __( 'Light', 'anycomment' ),
 							]
 						],
-						'description' => esc_html( __( 'Choose theme of the comments.', "anycomment" ) )
+						'description' => esc_html( __( 'Choose comments theme.', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_LOAD_ON_SCROLL,
 						'title'       => __( 'Load on Scroll', "anycomment" ),
 						'callback'    => 'input_checkbox',
 						'description' => esc_html( __( 'Load comments when user scrolls to it.', "anycomment" ) )
+					],
+					[
+						'id'          => self::OPTION_MODERATE_FIRST,
+						'title'       => __( 'Moderate First', "anycomment" ),
+						'callback'    => 'input_checkbox',
+						'description' => esc_html( __( 'Comment are not shown until they are approved by moderator. Users with ability to moderate comments will be ignored by filter.', "anycomment" ) )
+					],
+					[
+						'id'          => self::OPTION_SHOW_PROFILE_URL,
+						'title'       => __( 'Show Profile URL', "anycomment" ),
+						'callback'    => 'input_checkbox',
+						'description' => esc_html( __( 'Show social network link to user in the mini social icon in bottom right corner of the avatar.', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_COPYRIGHT_TOGGLE,
@@ -215,6 +237,24 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 */
 		public static function isLoadOnScroll() {
 			return static::instance()->getOption( self::OPTION_LOAD_ON_SCROLL ) !== null;
+		}
+
+		/**
+		 * Check whether it is required to mark comments for moderation.
+		 *
+		 * @return bool
+		 */
+		public static function isModerateFirst() {
+			return static::instance()->getOption( self::OPTION_MODERATE_FIRST ) !== null;
+		}
+
+		/**
+		 * Check whether it is required to show social profile URL or not.
+		 *
+		 * @return bool
+		 */
+		public static function isShowProfileUrl() {
+			return static::instance()->getOption( self::OPTION_SHOW_PROFILE_URL ) !== null;
 		}
 
 		/**

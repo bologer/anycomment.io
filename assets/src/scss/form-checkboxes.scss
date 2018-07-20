@@ -1,0 +1,115 @@
+/*
+## $component-height is used to
+## scale the switch component.
+## All other dimensions will be
+## automatically calculated using
+## this value as a base.
+## Default = 30px
+*/
+$component-height: 21px;
+
+// ## Colour theme variables
+// ## https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/color/
+$tint-green: #53af4a; // default
+$default-theme: $tint-green;
+
+$sm-scale-factor: 0.75;
+$lg-scale-factor: 1.25;
+
+/*
+## Firefox fix ##########################
+## Firefox will not release :active state
+## after dragging is complete meaning that
+## the stretch effect can not be used.
+## If JavaScript dragging is NOT enabled,
+## this can be safely removed.
+*/
+@media all and (min--moz-device-pixel-ratio: 0) and (min-resolution: .001dpcm) {
+  .switch input:active ~ span:after {
+    width: $component-height - 4px;
+  }
+
+  .switch input:checked:active ~ span:after {
+    transform: translate3d($component-height * 0.6, 0, 0);
+  }
+}
+
+.anycomment-form {
+  .switch input {
+    display: none;
+  }
+
+  .switch * {
+    box-sizing: border-box;
+    vertical-align: middle;
+  }
+
+  .switch {
+    display: inline-block;
+    position: relative;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+
+  .switch span {
+    display: inline-block;
+    width: $component-height * 2;
+    height: $component-height;
+    position: relative;
+    border-radius: $component-height / 2;
+    transition: all .6s linear;
+  }
+
+  .switch input:checked ~ span {
+    background: $default-theme;
+    transition: all .2s ease;
+
+    &:after {
+      background-color: #fff;
+    }
+  }
+
+  .switch span:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: $component-height / 2;
+    background: #EEECEC;
+    transition: all .4s ease;
+  }
+
+  .switch span:after {
+    content: "";
+    display: block;
+    width: $component-height - 4px;
+    height: $component-height - 4px;
+    background: #afafaf;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: all .2s linear;
+    @include border-radius(50%);
+  }
+
+  .switch input:checked ~ span:after {
+    transform: translate3d($component-height * 0.99, 0, 0);
+  }
+
+  .switch input:checked ~ span:before {
+    transform: scale3d(0, 0, 0);
+  }
+
+  /*
+  ## States ###############################
+  */
+  .switch input[disabled] ~ span:before {
+    background: #f2f2f2;
+  }
+
+  .switch input[disabled] ~ span:after {
+    background: #f2f2f2;
+  }
+}

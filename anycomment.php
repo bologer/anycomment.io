@@ -3,13 +3,14 @@
  * Plugin Name: AnyComment
  * Plugin URI: https://anycomment.io
  * Description: AnyComment is an advanced commenting system for WordPress.
- * Version: 0.0.34
+ * Version: 0.0.35
  * Author: Bologer
  * Author URI: http://bologer.ru
  * Requires at least: 4.4
- * Tested up to: 4.9
+ * Requires PHP: 5.4
+ * Tested up to: 4.7
  * Text Domain: anycomment
- * Domain Path: /languages/
+ * Domain Path: /languages
  *
  * @package AnyComment
  * @author bologer
@@ -31,7 +32,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 		 *
 		 * @var string
 		 */
-		public $version = '0.0.34';
+		public $version = '0.0.35';
 
 		/**
 		 * Instance of render class.
@@ -104,11 +105,10 @@ if ( ! class_exists( 'AnyComment' ) ) :
 		 * Init method to invoke starting scripts.
 		 */
 		public function init() {
-
 			$this->define_constants();
 			$this->includes();
-			$this->init_hooks();
 			$this->init_textdomain();
+			$this->init_hooks();
 		}
 
 		/**
@@ -229,10 +229,12 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentOptions.php' );
 
 			// Rest
+			include_once( ANYCOMMENT_ABSPATH . 'includes/rest/AnyCommentRestController.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/rest/AnyCommentRestCommentMeta.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/rest/AnyCommentRestComment.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/rest/AnyCommentRestLikeMeta.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/rest/AnyCommentRestLikes.php' );
+			include_once( ANYCOMMENT_ABSPATH . 'includes/rest/AnyCommentRestUsers.php' );
 
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentErrorHandler.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentUploadHandler.php' );
@@ -240,6 +242,8 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			include_once( ANYCOMMENT_ABSPATH . 'includes/ac-core-functions.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentSocialAuth.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentLikes.php' );
+			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentUser.php' );
+			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentUserMeta.php' );
 
 			/**
 			 * Admin related
@@ -251,6 +255,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			include_once( ANYCOMMENT_ABSPATH . 'includes/admin/AnyCommentSocialSettings.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/admin/AnyCommentGenericSettings.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/admin/AnyCommentIntegrationSettings.php' );
+			include_once( ANYCOMMENT_ABSPATH . 'includes/admin/AnyCommentWPComments.php' );
 
 			// Migration manager
 			include_once( ANYCOMMENT_ABSPATH . 'includes/migrations/AnyCommentMigrationManager.php' );
@@ -261,6 +266,8 @@ if ( ! class_exists( 'AnyComment' ) ) :
 
 			$this->rest = new AnyCommentRestComment();
 			new AnyCommentRestLikes();
+			new AnyCommentRestUsers();
+			new AnyCommentWPComments();
 
 			$this->errors      = new AnyCommentErrorHandler();
 			$this->render      = new AnyCommentRender();

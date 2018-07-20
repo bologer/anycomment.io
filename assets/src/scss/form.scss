@@ -1,0 +1,111 @@
+$green: #53af4a;
+$description-color: #747474;
+$border-color: #979797;
+
+@import "form-checkboxes";
+
+.clearfix:after {
+  content: "";
+  visibility: hidden;
+  display: block;
+  height: 0;
+  clear: both;
+}
+
+.select2-container {
+  background-color: darken(#fff, 5%);
+
+  .select2-search__field {
+    border: 1px solid $border-color;
+  }
+
+  .select2-results__options {
+    margin: 0;
+    padding: 0;
+
+    li {
+      padding: 10px;
+      font-size: 15px;
+      cursor: pointer;
+
+      &:hover,
+      &:active,
+      &:focus {
+        background-color: #fff;
+      }
+    }
+  }
+}
+
+.anycomment-form {
+
+  select.anycomment-select2 {
+    display: none;
+  }
+
+  .select2 {
+    border: 1px solid $border-color;
+    padding: 15px;
+    background-color: #fff;
+    @include border-radius(6px);
+    color: $description-color;
+    cursor: pointer;
+    display: block;
+  }
+
+  input[type="text"],
+  input[type="number"],
+  select {
+    border: 1px solid $border-color;
+    padding: 10px 17px;
+    background-color: #fff;
+    @include border-radius(6px);
+    color: $description-color;
+    height: 50px;
+  }
+
+  .form-table {
+    tbody {
+      tr {
+        th {
+          display: none;
+        }
+        td {
+          .description {
+            font-size: 18px;
+            font-weight: 200;
+            margin: 5px 0 0;
+            font-style: normal;
+            padding: 0;
+            color: $description-color;
+          }
+        }
+      }
+    }
+  }
+
+  input[type="submit"] {
+    background: $green;
+    color: #fff;
+    font-size: 21px;
+    font-weight: 400;
+    height: 50px;
+    line-height: 50px;
+    padding: 0 30px;
+    text-align: center;
+    @include border-radius(38px);
+
+    &,
+    &:hover,
+    &:focus,
+    &:active {
+      border-color: transparent;
+      box-shadow: none;
+      text-shadow: none;
+    }
+
+    &:hover {
+      background: lighten($green, 5%);
+    }
+  }
+}

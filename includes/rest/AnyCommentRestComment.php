@@ -1,6 +1,6 @@
 <?php
 
-class AnyCommentRestComment extends WP_REST_Controller {
+class AnyCommentRestComment extends AnyCommentRestController {
 
 	/**
 	 * Instance of a comment meta fields object.
@@ -21,7 +21,10 @@ class AnyCommentRestComment extends WP_REST_Controller {
 
 		$this->meta = new AnyCommentRestCommentMeta();
 
+
 		add_action( 'rest_api_init', [ $this, 'register_routes' ] );
+
+		remove_filter( 'comment_text', 'wpautop', 30 );
 	}
 
 	/**
@@ -175,10 +178,9 @@ class AnyCommentRestComment extends WP_REST_Controller {
 			'order'          => 'order',
 			'parent'         => 'parent__in',
 			'parent_exclude' => 'parent__not_in',
-			'per_page'       => 'number',
+			'perPage'        => 'number',
 			'post'           => 'post__in',
 			'search'         => 'search',
-			'status'         => 'status',
 			'type'           => 'type',
 		);
 
@@ -245,7 +247,8 @@ class AnyCommentRestComment extends WP_REST_Controller {
 				continue;
 			}
 
-			$data       = $this->prepare_item_for_response( $comment, $request );
+			$data = $this->prepare_item_for_response( $comment, $request );
+
 			$comments[] = $this->prepare_response_for_collection( $data );
 		}
 
@@ -260,7 +263,7 @@ class AnyCommentRestComment extends WP_REST_Controller {
 			$prepared_args['count'] = true;
 
 			$total_comments = $query->query( $prepared_args );
-			$max_pages      = ceil( $total_comments / $request['per_page'] );
+			$max_pages      = ceil( $total_comments / $request['perPage'] );
 		}
 
 		$response = rest_ensure_response( $comments );
@@ -562,8 +565,8 @@ class AnyCommentRestComment extends WP_REST_Controller {
 			return new WP_Error( 'rest_comment_failed_create', __( 'Creating comment failed.', 'anycomment' ), array( 'status' => 500 ) );
 		}
 
-		if ( isset( $request['status'] ) ) {
-			$this->handle_status_param( $request['status'], $comment_id );
+		if ( ! current_user_can( 'moderate_comments' ) && AnyCommentGenericSettings::isModerateFirst() ) {
+			$this->handle_status_param( 'hold', $comment_id );
 		}
 
 		$comment = get_comment( $comment_id );
@@ -835,6 +838,33 @@ class AnyCommentRestComment extends WP_REST_Controller {
 	 * @return WP_REST_Response Response object.
 	 */
 	public function prepare_item_for_response( $comment, $request ) {
+
+		$child_comments = AnyComment()->render->get_child_comments( $comment->comment_ID );
+
+		if ( ! empty( $child_comments ) ) {
+			foreach ( $child_comments as $key => $child_comment ) {
+				$prepared_child_comment = $this->prepare_item_for_response( $child_comment, $request );
+				if ( isset( $prepared_child_comment->data ) ) {
+					$prepared_child_comment = $prepared_child_comment->data;
+				}
+				$child_comments[ $key ] = $prepared_child_comment;
+			}
+		}
+		$is_post_author = false;
+
+		if ( ( $post = get_post( $comment->comment_post_ID ) ) !== null ) {
+			$is_post_author = (int) $post->post_author === (int) $comment->user_id;
+		}
+
+		$owner = [
+			'is_post_author'  => $is_post_author,
+			'is_social_login' => AnyCommentUserMeta::isSocialLogin( $comment->user_id ),
+			'social_type'     => AnyCommentUserMeta::getSocialType( $comment->user_id ),
+			'social_url'      => AnyCommentGenericSettings::isShowProfileUrl() ?
+				AnyCommentUserMeta::getSocialProfileUrl( $comment->user_id ) :
+				null,
+		];
+
 		$data = array(
 			'id'          => (int) $comment->comment_ID,
 			'post'        => (int) $comment->comment_post_ID,
@@ -845,8 +875,15 @@ class AnyCommentRestComment extends WP_REST_Controller {
 			'date_gmt'    => mysql_to_rfc3339( $comment->comment_date_gmt ),
 			'content'     => $comment->comment_content,
 			'avatar_url'  => AnyComment()->auth->get_user_avatar_url( $comment->user_id ),
+			'children'    => $child_comments,
+			'owner'       => $owner,
+			'permissions' => [
+				'can_edit_comment' => AnyComment()->render->can_edit_comment( $comment ),
+			],
 			'meta'        => [
-				'count_text' => AnyComment()->render->get_comment_count( $comment->comment_post_ID )
+				'has_like'    => AnyCommentLikes::isCurrentUserHasLike( $comment->comment_ID ),
+				'likes_count' => AnyCommentLikes::getLikesCount( $comment->comment_ID ),
+				'count_text'  => AnyComment()->render->get_comment_count( $comment->comment_post_ID )
 			]
 		);
 

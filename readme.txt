@@ -1,10 +1,10 @@
 === AnyComment ===
 Contributors: ateshabaev
-Tags: anycomment, comments, comment moderation, comment, anycomment.io
-Requires at least: 4.4
-Tested up to: 4.9.7
+Tags: anycomment, comments, comment moderation, anycomment.io
+Requires at least: 4.7
+Tested up to: 4.9.6
 Requires PHP: 5.4
-Stable tag: 0.0.34
+Stable tag: 0.0.35
 License: GPLv2 or later
 License URI: http://www.gnu.org/
 
@@ -12,11 +12,9 @@ AnyComment allows you to have a better commenting experience in WordPress.
 
 == Description ==
 
-> **Notice!** 0.0.35 will have some nice change regarding frontend & backend, new feature a lot more! Get prepared. Update will be ready within this week (16-21.07.2018)!
-
 > See [demo](https://anycomment.io/demo/)
 
-Are you tired of connecting different third part commenting system to your website or having the default ones?
+Are you tired of connecting different third-party commenting system to your website or having the default ones?
 
 AnyComment is here to help you - it is a better commenting system for WordPress.
 
@@ -48,20 +46,22 @@ Yes! Join our [GitHub repository](https://github.com/bologer/anycomment.io) :)
 * Social network authorization via Facebook, VK, Twitter, Google, Odnoklassniki or GitHub
 * Translated in English & Russian
 * Suitable for dark & light themes (on your choice)
-* Blazing-fast AJAX way of sending comments
-* Likes
+* Blazing-fast comments based on React
+* Likes in comments
+* See likes count per comment/user in admin
+* Edit comments when you are the owner or have moderate permission(s) directly in comments
+* Assign default group for users who authorize via social network
+* See user's social profile URL in admin
 * Simple & informative dashboard with graphs to display number of comments over number of active user per certain period & most active commenting users
 * Comments do no inherit any of the currently active theme styles. Meaning that comments will not be broken by styles you have.
 * Get latest plugin update news directly in the dashboard, don't miss a thing
-* Integration with [WP User Avatar](https://wordpress.org/plugins/wp-user-avatar/), to specify customized avatars
+* Integration with [Akismet](https://wordpress.org/plugins/akismet/) & [WP User Avatar](https://wordpress.org/plugins/wp-user-avatar/), to specify customized avatars
 * All comments stored in your own database. We do not create extra tables for these reasons. We reuse native comment's table, so all of the default WordPress functionality comes out of the box.
 
 = TODO features =
 * Option: customization of comment styles
-* Option: add option to define whether new comments will be added automatically or will be required to be moderated first
 * Option: add option to allow guests to leave comments
 * Option: Auto-update comments on new comments
-* Option: to choose favorite comment of the post (sticky at the top of the comments)
 * Support more languages
 * Code highlighting
 * Markdown support
@@ -74,9 +74,10 @@ Yes! Join our [GitHub repository](https://github.com/bologer/anycomment.io) :)
 
 == Screenshots ==
 
-1. White theme
-2. Dark theme
-3. Plugin dashboard. Analytics on current month and most active users
+1. Plugin dashboard. Analytics on current month and most active users.
+2. Settings view.
+3. White theme.
+4. Dark theme.
 
 == Frequently Asked Questions ==
 
@@ -107,46 +108,62 @@ WordPress currently has default Privacy Policy page create for your. What you ca
 
 == Changelog ==
 
-= 0.0.34 – 16.07.2018 =
-* Russian translation fix
+= 0.0.35 – 20.07.2018 =
+> **Important note:**
+> Plugin was completely rewritten to React. It was required as on the very early stage it had a lot of JavaScript, partly merged with HTML).
+> Logic behind plugin stays the same, we even added a few improvements and fixes, hope you like the change.
+
+**Enhancements:**
+* Comments rewritten to React!
+* Post author now has "Author" badge in comments section, #45
+* All assets are now minified (css, js) = faster load time
+* Now possible to see number of likes per comment (`/wp-admin/edit-comments.php`) & user (`/wp-admin/users.php`), #43
+* All settings moved to dashboard tabs (pages are still available, no worries), #38
+* Mark new comment to be moderated first or be approved immediately, #50
+* Ability to choose whether to show social profile URL in comments (when show is chosen, mini social icon in the bottom right corner will be clickable), #51
+* Added new column "Social URL" in `users.php` which displays user's social profile URL
+
+**Fixes:**
+* Fixed issue when long texts were overflowing maximum with of the comment
+* Fixed issue when it was not possible to disabled footer copyright ("Thanks" option in admin), #46
+* Fixed issue when first & last name was not recorded in user profile
 
 = 0.0.33 – 16.07.2018 =
 * Fixed problem with array syntax support on PHP version 5.5, #49
 * Fixed possible XSS in the comment
 
 = 0.0.32 – 10.07.2018 =
-* Enh - introducing comment likes, #35
-* Enh - minified CSS, to save some loading time
-* Enh - ability to define default user role on creation (registration via plugin), #37
-* Enh - when user has non-default Gravatar, use it, otherwise use default from plugin, #10
-* Fix - proper integration with WP User Avatar & Akismet
-* Enh - load commnets on scroll (new options to load comments when user scroll to it), #36
+* introducing comment likes, #35
+* minified CSS, to save some loading time
+* ability to define default user role on creation (registration via plugin), #37
+* when user has non-default Gravatar, use it, otherwise use default from plugin, #10
+* proper integration with WP User Avatar & Akismet
+* load commnets on scroll (new options to load comments when user scroll to it), #36
 * and other small bug fixes & improvements
 
-
 = 0.0.2 – 01.07.2018 =
-* Fix - admin OR moderator was unable to edit comment as it was too old
-* Enh - ability to specify number of default comments to load. The same settings applies to number of comment loaded per page, when there are more comments on post/page then specified in settings
-* Fix - plugin is not enabled until you specify at least one social network, even thought you set plugin to be ON in general settings, #11
-* Enh - refactoring of comments logic towards native WordPress REST
-* Enh - ability to update any comment if user has `moderate_comments` or `edit_comment` capability (no time limit)
-* Enh - ability to update personal comment within 5 minutes
-* Fix - guest user cannot see comment actions (reply/edit)
-* Enh - added two new authorization methods: GitHub & Odnoklassniki
-* Fix - comment text box was overflowing on long texts, #22
-* Fix - better responsiveness of dashboard layout, #32
-* Fix - avatars uploaded locally to escape problem when some social medias were blocking access to avatar after token expiration, #14
-* Enh - display most recent news from plugin, #31
-* Enh - other small bug fixes and improvements
-* Eng - moved completely towards REST architecture
+* admin OR moderator was unable to edit comment as it was too old
+* ability to specify number of default comments to load. The same settings applies to number of comment loaded per page, when there are more comments on post/page then specified in settings
+* plugin is not enabled until you specify at least one social network, even thought you set plugin to be ON in general settings, #11
+* refactoring of comments logic towards native WordPress REST
+* ability to update any comment if user has `moderate_comments` or `edit_comment` capability (no time limit)
+* ability to update personal comment within 5 minutes
+* guest user cannot see comment actions (reply/edit)
+* added two new authorization methods: GitHub & Odnoklassniki
+* comment text box was overflowing on long texts, #22
+* better responsiveness of dashboard layout, #32
+* avatars uploaded locally to escape problem when some social medias were blocking access to avatar after token expiration, #14
+* display most recent news from plugin, #31
+* other small bug fixes and improvements
+* moved completely towards REST architecture
 
 = 0.0.1 - 24.06.2018 =
 * First Release
 * Options to specify API details (secrets, etc) for social authorization: Vk, Twitter, Facebook, Google
 * Integrated with [WP User Avatar](https://wordpress.org/plugins/wp-user-avatar/)
 * Authorize via VK, Twitter, Facebook, Google
-* Enh: date when comment is left is based on website's language. List of supported languages can be seen [here](https://github.com/hustcc/timeago.js/tree/master/src/lang)
-* Enh: comment count at the top updated automatically when new comment added
-* Enh: add comments with AJAX, no need to refresh the page
-* Enh: ability to reply to nested comments up to 2 levels
-* Enh: when all socials disabled, libraries not loaded and they are not shown to end user
+* date when comment is left is based on website's language. List of supported languages can be seen [here](https://github.com/hustcc/timeago.js/tree/master/src/lang)
+* comment count at the top updated automatically when new comment added
+* add comments with AJAX, no need to refresh the page
+* ability to reply to nested comments up to 2 levels
+* when all socials disabled, libraries not loaded and they are not shown to end user

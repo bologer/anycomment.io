@@ -110,6 +110,7 @@ if ( ! class_exists( 'AnyCommentAdminOptions' ) ) :
 		public function input_select( $args ) {
 			?>
             <select name="<?= $this->option_name ?>[<?= esc_attr( $args['label_for'] ); ?>]"
+                    class="anycomment-select2"
                     id="<?= esc_attr( $args['label_for'] ); ?>">
 				<?php
 				$options = $args['options'];
@@ -122,6 +123,7 @@ if ( ! class_exists( 'AnyCommentAdminOptions' ) ) :
 					endforeach;
 				endif; ?>
             </select>
+            <div class="clearfix"></div>
             <p class="description"><?= $args['description'] ?></p>
 			<?php
 		}
@@ -133,9 +135,13 @@ if ( ! class_exists( 'AnyCommentAdminOptions' ) ) :
 		 */
 		public function input_checkbox( $args ) {
 			?>
-            <input type="checkbox" id="<?= esc_attr( $args['label_for'] ); ?>"
-                   name="<?= $this->option_name ?>[<?= esc_attr( $args['label_for'] ); ?>]" <?= $this->getOption( $args['label_for'] ) !== null ? 'checked="checked"' : '' ?>>
+            <label class="switch">
+                <input type="checkbox" id="<?= esc_attr( $args['label_for'] ); ?>"
+                       name="<?= $this->option_name ?>[<?= esc_attr( $args['label_for'] ); ?>]" <?= $this->getOption( $args['label_for'] ) !== null ? 'checked="checked"' : '' ?>>
+                <span></span>
+            </label>
 			<?php if ( isset( $args['description'] ) ): ?>
+                <div class="clearfix"></div>
                 <p class="description"><?= $args['description'] ?></p>
 			<?php endif; ?>
 			<?php
@@ -152,6 +158,7 @@ if ( ! class_exists( 'AnyCommentAdminOptions' ) ) :
                    name="<?= $this->option_name ?>[<?= esc_attr( $args['label_for'] ); ?>]"
                    value="<?= $this->getOption( $args['label_for'] ) ?>">
 			<?php if ( isset( $args['description'] ) ): ?>
+                <div class="clearfix"></div>
                 <p class="description"><?= $args['description'] ?></p>
 			<?php endif; ?>
 			<?php
@@ -168,6 +175,7 @@ if ( ! class_exists( 'AnyCommentAdminOptions' ) ) :
                    name="<?= $this->option_name ?>[<?= esc_attr( $args['label_for'] ); ?>]"
                    value="<?= $this->getOption( $args['label_for'] ) ?>">
 			<?php if ( isset( $args['description'] ) ): ?>
+                <div class="clearfix"></div>
                 <p class="description"><?= $args['description'] ?></p>
 			<?php endif; ?>
 			<?php
@@ -176,8 +184,10 @@ if ( ! class_exists( 'AnyCommentAdminOptions' ) ) :
 		/**
 		 * top level menu:
 		 * callback functions
+		 *
+		 * @param bool $wrapper Whether to wrap for with header or not.
 		 */
-		public function page_html() {
+		public function page_html( $wrapper = true ) {
 			if ( ! current_user_can( 'manage_options' ) ) {
 				return;
 			}
@@ -188,16 +198,22 @@ if ( ! class_exists( 'AnyCommentAdminOptions' ) ) :
 
 			settings_errors( $this->alert_key );
 			?>
-            <div class="wrap">
+			<?php if ( $wrapper ): ?>
+                <div class="wrap">
                 <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
-                <form action="options.php" method="post">
-					<?php
-					settings_fields( $this->option_group );
-					do_settings_sections( $this->page_slug );
-					submit_button( __( 'Save', 'anycomment' ) );
-					?>
-                </form>
-            </div>
+			<?php endif; ?>
+            <form action="options.php" method="post" class="anycomment-form">
+				<?php
+				settings_fields( $this->option_group );
+				do_settings_sections( $this->page_slug );
+				submit_button( __( 'Save', 'anycomment' ) );
+				?>
+            </form>
+            <script src="<?= AnyComment()->plugin_url() ?>/assets/js/forms.js"></script>
+            <script src="<?= AnyComment()->plugin_url() ?>/assets/js/select2.min.js"></script>
+			<?php if ( $wrapper ): ?>
+                </div>
+			<?php endif; ?>
 			<?php
 		}
 
@@ -247,9 +263,14 @@ if ( ! class_exists( 'AnyCommentAdminOptions' ) ) :
 				$this->options = get_option( $this->option_name, null );
 			}
 
-			if ( ! empty( $this->default_options ) ) {
+			/**
+			 * When first, there are no options at all, and then users sets it,
+			 * but before he sets it, need to set the default ones, if they aren't empty.
+			 */
+			if ( $this->options === null && ! empty( $this->default_options ) ) {
 				foreach ( $this->default_options as $key => $optionValue ) {
-					$setDefault = ! isset( $this->options[ $key ] ) || isset( $this->options[ $key ] ) && empty( $this->options[ $key ] );
+					$setDefault = ! isset( $this->options[ $key ] ) && ! strpos( $key, 'toggle' ) ||
+					              isset( $this->options[ $key ] ) && empty( $this->options[ $key ] );
 					if ( $setDefault ) {
 						$this->options[ $key ] = $optionValue;
 					}

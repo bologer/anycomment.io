@@ -40,38 +40,45 @@ add_action( 'anycomment_logged_in_as', 'anycomment_logged_in_as' );
 /**
  * Display list of available login methods.
  *
+ * @param bool $html If required to return rendered HTML or as array.
  * @param string $redirectUrl Redirect link after successful/failed authentication.
  *
- * @return string|null HTML formatted list of social links.
+ * @return string|array|null HTML formatted list (when $html false and array when true) of social links.
  */
-function anycomment_login_with( $redirectUrl = null ) {
+function anycomment_login_with( $html = false, $redirectUrl = null ) {
 	$socials = [
 		AnyCommentSocialAuth::SOCIAL_VKONTAKTE     => [
+			'slug'    => AnyCommentSocialAuth::SOCIAL_VKONTAKTE,
 			'url'     => AnyCommentSocialAuth::get_vk_callback( $redirectUrl ),
 			'label'   => __( 'VK', "anycomment" ),
 			'visible' => AnyCommentSocialSettings::isVkOn()
 		],
 		AnyCommentSocialAuth::SOCIAL_TWITTER       => [
+			'slug'    => AnyCommentSocialAuth::SOCIAL_TWITTER,
 			'url'     => AnyCommentSocialAuth::get_twitter_callback( $redirectUrl ),
 			'label'   => __( 'Twitter', "anycomment" ),
 			'visible' => AnyCommentSocialSettings::isTwitterOn()
 		],
 		AnyCommentSocialAuth::SOCIAL_FACEBOOK      => [
+			'slug'    => AnyCommentSocialAuth::SOCIAL_FACEBOOK,
 			'url'     => AnyCommentSocialAuth::get_facebook_callback( $redirectUrl ),
 			'label'   => __( 'Facebook', "anycomment" ),
 			'visible' => AnyCommentSocialSettings::isFbOn()
 		],
 		AnyCommentSocialAuth::SOCIAL_GOOGLE        => [
+			'slug'    => AnyCommentSocialAuth::SOCIAL_GOOGLE,
 			'url'     => AnyCommentSocialAuth::get_google_callback( $redirectUrl ),
 			'label'   => __( 'Google', "anycomment" ),
 			'visible' => AnyCommentSocialSettings::isGoogleOn()
 		],
 		AnyCommentSocialAuth::SOCIAL_GITHUB        => [
+			'slug'    => AnyCommentSocialAuth::SOCIAL_GITHUB,
 			'url'     => AnyCommentSocialAuth::get_github_callback( $redirectUrl ),
 			'label'   => __( 'Github', "anycomment" ),
 			'visible' => AnyCommentSocialSettings::isGithubOn()
 		],
 		AnyCommentSocialAuth::SOCIAL_ODNOKLASSNIKI => [
+			'slug'    => AnyCommentSocialAuth::SOCIAL_ODNOKLASSNIKI,
 			'url'     => AnyCommentSocialAuth::get_ok_callback( $redirectUrl ),
 			'label'   => __( 'Odnoklassniki', "anycomment" ),
 			'visible' => AnyCommentSocialSettings::isOkOn()
@@ -80,6 +87,10 @@ function anycomment_login_with( $redirectUrl = null ) {
 
 	if ( count( $socials ) <= 0 ) {
 		return null;
+	}
+
+	if ( ! $html ) {
+		return $socials;
 	}
 
 	foreach ( $socials as $key => $social ):
