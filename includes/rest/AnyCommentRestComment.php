@@ -23,6 +23,8 @@ class AnyCommentRestComment extends AnyCommentRestController {
 
 
 		add_action( 'rest_api_init', [ $this, 'register_routes' ] );
+
+		remove_filter( 'comment_text', 'wpautop', 30 );
 	}
 
 	/**
@@ -475,6 +477,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	 * @return WP_Error|WP_REST_Response Response object on success, or error object on failure.
 	 */
 	public function create_item( $request ) {
+
 		if ( ! empty( $request['id'] ) ) {
 			return new WP_Error( 'rest_comment_exists', __( 'Cannot create existing comment.', 'anycomment' ), array( 'status' => 400 ) );
 		}

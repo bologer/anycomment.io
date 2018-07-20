@@ -1,7 +1,8 @@
 <?php
 
-class AnyCommentMigration003 extends AnyCommentMigration {
+class AnyCommentMigration_0_0_32 extends AnyCommentMigration {
 	public $table = 'likes';
+	public $version = '0.0.32';
 
 	/**
 	 * {@inheritdoc}
