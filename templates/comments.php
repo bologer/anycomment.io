@@ -31,7 +31,7 @@ wp_localize_script( 'anycomment-react', 'anyCommentApiSettings', [
 	],
 	'user'    => AnyCommentUser::getSafeUser(),
 	'i18'     => [
-		'error_generic'    => __( "Oops, something went wrong..." ),
+		'error_generic'    => __( "Oops, something went wrong...", "anycomment"),
 		'loading'          => __( 'Loading...', 'anycomment' ),
 		'load_more'        => __( "Load more", "anycomment" ),
 		'button_send'      => __( 'Send', 'anycomment' ),
