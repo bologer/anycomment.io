@@ -29,6 +29,7 @@ wp_localize_script( 'anycomment-react', 'anyCommentApiSettings', [
 		'socials'     => anycomment_login_with(),
 		'theme'       => AnyCommentGenericSettings::getTheme(),
 	],
+	'user'    => AnyCommentUser::getSafeUser(),
 	'i18'     => [
 		'error_generic'    => __( "Oops, something went wrong..." ),
 		'loading'          => __( 'Loading...', 'anycomment' ),

@@ -4,9 +4,12 @@ import AnyCommentComponent from "./AnyCommentComponent";
 class SendCommentAuth extends AnyCommentComponent {
     render() {
         if (!this.props.user) {
-            return null;
+            return (null);
         }
-        const url = this.props.user.avatar_url;
+
+        const url = this.props.user.data.user_avatar;
+        const name = this.props.user.data.display_name;
+
         const style = {
             backgroundImage: 'url(' + url + ')'
         };
@@ -14,7 +17,7 @@ class SendCommentAuth extends AnyCommentComponent {
         return (
             <React.Fragment>
                 <div className="send-comment-body-outliner__avatar"
-                     style={style}></div>
+                     style={style} title={name}></div>
             </React.Fragment>
         );
     }

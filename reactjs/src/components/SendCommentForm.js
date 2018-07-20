@@ -126,7 +126,7 @@ class SendCommentForm extends AnyCommentComponent {
                             value={this.props.replyId}
                             onChange={this.handleReplyIdChange}/> : ''}
 
-                    {this.props.isReply !== '' ?
+                    {this.props.isReply ?
                         <p className="send-comment-body-reply">{translations.reply_to} {this.props.replyName}
                             <span onClick={this.props.onReplyCancel}>{translations.cancel}</span></p>
                         : ''}

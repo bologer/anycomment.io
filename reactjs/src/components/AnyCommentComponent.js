@@ -8,6 +8,7 @@ class AnyCommentComponent extends React.Component {
     static defaultProps = {
         ...React.Component.defaultProps,
         settings: 'anyCommentApiSettings' in window ? window.anyCommentApiSettings : null,
+        user: 'anyCommentApiSettings' in window ? window.anyCommentApiSettings.user : null,
         axios: axios.create({
             baseURL: 'anyCommentApiSettings' in window ? window.anyCommentApiSettings.restUrl : '',
             timeout: 10000,

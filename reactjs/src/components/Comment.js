@@ -6,6 +6,7 @@ import i18Ru from 'react-timeago/lib/language-strings/ru';
 import AnyCommentComponent from './AnyCommentComponent'
 import CommentFooter from './CommentFooter';
 import CommentAvatar from './CommentAvatar';
+import toast from 'react-toastify';
 
 /**
  * Comment is rendering single comment entry.
@@ -50,17 +51,15 @@ class Comment extends AnyCommentComponent {
                 headers: {'X-WP-Nonce': settings.nonce}
             })
             .then(function (response) {
-                console.log(response);
-
                 self.setState({
                     likesCount: response.data.total_count,
                     hasLike: response.data.has_like,
                 });
             })
             .catch(function (error) {
-                // handle error
-                console.log('err');
-                console.log(error);
+                if ('message' in error) {
+                    toast(error.message, toast.TYPE.ERROR);
+                }
             });
     }
 
@@ -95,7 +94,6 @@ class Comment extends AnyCommentComponent {
                             changeReplyId={this.props.changeReplyId}
                             changeEditId={this.props.changeEditId}
                             key={childrenComment.id}
-                            user={this.props.user}
                             comment={childrenComment}/>
                     ))}
                 </ul>
@@ -105,7 +103,6 @@ class Comment extends AnyCommentComponent {
             <li key={comment.id} className="comment-single">
 
                 <CommentAvatar comment={comment}/>
-
 
                 <div className="comment-single-body">
                     <header className="comment-single-body-header">
@@ -123,13 +120,11 @@ class Comment extends AnyCommentComponent {
                         <p>{comment.content}</p>
                     </div>
 
-
                     <CommentFooter
                         onEdit={this.onEdit}
                         onLike={this.onLike}
                         onReply={this.onReply}
                         comment={comment}
-                        user={this.props.user}
                         likesCount={this.state.likesCount}
                         hasLike={this.state.hasLike}
                     />

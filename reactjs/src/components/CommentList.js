@@ -107,8 +107,8 @@ class CommentList extends AnyCommentComponent {
      */
     handleEditIdChange(comment) {
         this.setState({
-            isReply: true,
-            replyName: comment.author_name,
+            isReply: false,
+            replyName: '',
             editId: comment.id,
             commentText: comment.content
         });
@@ -244,7 +244,6 @@ class CommentList extends AnyCommentComponent {
     render() {
         const {isError, isLoaded, comments} = this.state;
         const settings = this.props.settings;
-        const user = this.props.user;
 
         const sendComment = <SendComment
             commentFieldRef={this.commentFieldRef}
@@ -259,8 +258,7 @@ class CommentList extends AnyCommentComponent {
             onReplyIdChange={this.handleReplyIdChange}
             onReplyCancel={this.handleReplyCancel}
             onEditIdChange={this.handleEditIdChange}
-            onSend={this.handleAddComment}
-            user={user}/>;
+            onSend={this.handleAddComment}/>;
 
         if (isError) {
             return <div>{settings.i18.error_generic}</div>;
@@ -290,7 +288,6 @@ class CommentList extends AnyCommentComponent {
                                 changeReplyId={this.handleReplyIdChange}
                                 changeEditId={this.handleEditIdChange}
                                 key={comment.id}
-                                user={user}
                                 comment={comment}
                             />
                         ))}
