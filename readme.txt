@@ -14,7 +14,7 @@ AnyComment allows you to have a better commenting experience in WordPress.
 
 > See [demo](https://anycomment.io/demo/)
 
-Are you tired of connecting different third part commenting system to your website or having the default ones?
+Are you tired of connecting different third-party commenting system to your website or having the default ones?
 
 AnyComment is here to help you - it is a better commenting system for WordPress.
 
@@ -47,8 +47,9 @@ Yes! Join our [GitHub repository](https://github.com/bologer/anycomment.io) :)
 * Translated in English & Russian
 * Suitable for dark & light themes (on your choice)
 * Blazing-fast comments based on React
-* Like comments, see number of likes per comment/user in admin
-* Edit comments when you are the owner or have moderate permission(s)
+* Likes in comments
+* See likes count per comment/user in admin
+* Edit comments when you are the owner or have moderate permission(s) directly in comments
 * Assign default group for users who authorize via social network
 * See user's social profile URL in admin
 * Simple & informative dashboard with graphs to display number of comments over number of active user per certain period & most active commenting users
@@ -73,10 +74,10 @@ Yes! Join our [GitHub repository](https://github.com/bologer/anycomment.io) :)
 
 == Screenshots ==
 
-1. White theme
-2. Dark theme
-3. Plugin dashboard. Analytics on current month and most active users.
-4. Settings view
+1. Plugin dashboard. Analytics on current month and most active users.
+2. Settings view.
+3. White theme.
+4. Dark theme.
 
 == Frequently Asked Questions ==
 
