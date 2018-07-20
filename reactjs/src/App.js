@@ -4,7 +4,7 @@ import CommentCopyright from './components/CommentCopyright'
 import AnyCommentComponent from "./components/AnyCommentComponent";
 import 'iframe-resizer/js/iframeResizer.contentWindow'
 import './css/comments.css'
-import {ToastContainer, toast} from 'react-toastify';
+import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 class App extends AnyCommentComponent {
