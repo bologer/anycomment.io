@@ -80,12 +80,7 @@ body {
   border: 0;
   outline: 0;
   cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
   appearance: none;
   white-space: nowrap;
   @include border-radius(24px);
@@ -206,6 +201,19 @@ body {
   }
 
   &-body {
+
+    &-reply {
+      font-size: 12px;
+      span {
+        color: #ec4568;
+        font-weight: bold;
+        padding: 2px 5px;
+        display: inline-block;
+        cursor: pointer;
+        user-select: none;
+        appearance: none;
+      }
+    }
 
     &,
     &-outliner {

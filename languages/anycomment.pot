@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-19 06:02+0000\n"
+"POT-Creation-Date: 2018-07-19 18:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -87,10 +87,6 @@ msgstr ""
 msgid "%s Comments"
 msgstr ""
 
-#: templates/comments.php:33
-msgid "Error"
-msgstr ""
-
 #: templates/comments.php:34
 msgid "Loading..."
 msgstr ""
@@ -116,20 +112,27 @@ msgid "Newest"
 msgstr ""
 
 #: templates/comments.php:42
-msgid "Reply to {name}"
+msgid "Reply to"
 msgstr ""
 
-#: templates/comments.php:43 templates/send-comment.php:41
-#: templates/send-comment.php:42
-msgid "Add comment..."
+#: templates/comments.php:43
+msgid "Your comment..."
 msgstr ""
 
-#: templates/comments.php:48 templates/send-comment.php:49
+#: templates/comments.php:48
+msgid "Cancel"
+msgstr ""
+
+#: templates/comments.php:49 templates/send-comment.php:49
 msgid "Quick Login"
 msgstr ""
 
-#: templates/comments.php:49
+#: templates/comments.php:50
 msgid "Author"
+msgstr ""
+
+#: templates/send-comment.php:41 templates/send-comment.php:42
+msgid "Add comment..."
 msgstr ""
 
 #: templates/send-comment.php:43
@@ -489,7 +492,7 @@ msgstr ""
 
 #: includes/rest/AnyCommentRestLikes.php:37
 #: includes/rest/AnyCommentRestComment.php:54
-#: includes/rest/AnyCommentRestComment.php:1074
+#: includes/rest/AnyCommentRestComment.php:1073
 msgid "Unique identifier for the object."
 msgstr ""
 
@@ -558,7 +561,7 @@ msgid "Invalid comment ID."
 msgstr ""
 
 #: includes/rest/AnyCommentRestComment.php:318
-#: includes/rest/AnyCommentRestComment.php:668
+#: includes/rest/AnyCommentRestComment.php:667
 msgid "Invalid post ID."
 msgstr ""
 
@@ -588,209 +591,209 @@ msgstr ""
 msgid "Sorry, comments are closed for this item."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:480
+#: includes/rest/AnyCommentRestComment.php:479
 msgid "Cannot create existing comment."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:500
-#: includes/rest/AnyCommentRestComment.php:685
+#: includes/rest/AnyCommentRestComment.php:499
+#: includes/rest/AnyCommentRestComment.php:684
 msgid "Invalid comment content."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:539
-#: includes/rest/AnyCommentRestComment.php:694
+#: includes/rest/AnyCommentRestComment.php:538
+#: includes/rest/AnyCommentRestComment.php:693
 msgid "Comment field exceeds maximum length allowed."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:563
+#: includes/rest/AnyCommentRestComment.php:562
 msgid "Creating comment failed."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:630
+#: includes/rest/AnyCommentRestComment.php:629
 msgid "Sorry, you are not allowed to edit this comment."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:656
+#: includes/rest/AnyCommentRestComment.php:655
 msgid "Sorry, you are not allowed to change the comment type."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:677
+#: includes/rest/AnyCommentRestComment.php:676
 msgid "Updating comment status failed."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:700
+#: includes/rest/AnyCommentRestComment.php:699
 msgid "Updating comment failed."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:752
+#: includes/rest/AnyCommentRestComment.php:751
 msgid "Sorry, you are not allowed to delete this comment."
 msgstr ""
 
 #. %s: force=true
-#: includes/rest/AnyCommentRestComment.php:798
+#: includes/rest/AnyCommentRestComment.php:797
 #, php-format
 msgid "The comment does not support trashing. Set '%s' to delete."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:802
+#: includes/rest/AnyCommentRestComment.php:801
 msgid "The comment has already been trashed."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:811
+#: includes/rest/AnyCommentRestComment.php:810
 msgid "The comment cannot be deleted."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1003
+#: includes/rest/AnyCommentRestComment.php:1002
 msgid "Invalid comment author ID."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1080
+#: includes/rest/AnyCommentRestComment.php:1079
 msgid "The ID of the user object, if author was a user."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1085
+#: includes/rest/AnyCommentRestComment.php:1084
 msgid "Email address for the object author."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1095
+#: includes/rest/AnyCommentRestComment.php:1094
 msgid "IP address for the object author."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1101
+#: includes/rest/AnyCommentRestComment.php:1100
 msgid "Display name for the object author."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1109
+#: includes/rest/AnyCommentRestComment.php:1108
 msgid "URL for the object author."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1115
+#: includes/rest/AnyCommentRestComment.php:1114
 msgid "User agent for the object author."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1123
+#: includes/rest/AnyCommentRestComment.php:1122
 msgid "The content for the object."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1134
+#: includes/rest/AnyCommentRestComment.php:1133
 msgid "Content for the object, as it exists in the database."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1139
+#: includes/rest/AnyCommentRestComment.php:1138
 msgid "HTML content for the object, transformed for display."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1147
+#: includes/rest/AnyCommentRestComment.php:1146
 msgid "The date the object was published, in the site's timezone."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1153
+#: includes/rest/AnyCommentRestComment.php:1152
 msgid "The date the object was published, as GMT."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1159
+#: includes/rest/AnyCommentRestComment.php:1158
 msgid "URL to the object."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1166
+#: includes/rest/AnyCommentRestComment.php:1165
 msgid "The ID for the parent of the object."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1172
+#: includes/rest/AnyCommentRestComment.php:1171
 msgid "The ID of the associated post object."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1178
+#: includes/rest/AnyCommentRestComment.php:1177
 msgid "State of the object."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1186
+#: includes/rest/AnyCommentRestComment.php:1185
 msgid "Type of Comment for the object."
 msgstr ""
 
 #. %d: avatar image size in pixels
-#: includes/rest/AnyCommentRestComment.php:1201
+#: includes/rest/AnyCommentRestComment.php:1200
 #, php-format
 msgid "Avatar URL with image size of %d pixels."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1209
+#: includes/rest/AnyCommentRestComment.php:1208
 msgid "Avatar URLs for the object author."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1235
+#: includes/rest/AnyCommentRestComment.php:1234
 msgid ""
 "Limit response to comments published after a given ISO8601 compliant date."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1241
+#: includes/rest/AnyCommentRestComment.php:1240
 msgid ""
 "Limit result set to comments assigned to specific user IDs. Requires "
 "authorization."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1249
+#: includes/rest/AnyCommentRestComment.php:1248
 msgid ""
 "Ensure result set excludes comments assigned to specific user IDs. Requires "
 "authorization."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1258
+#: includes/rest/AnyCommentRestComment.php:1257
 msgid ""
 "Limit result set to that from a specific author email. Requires "
 "authorization."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1264
+#: includes/rest/AnyCommentRestComment.php:1263
 msgid ""
 "Limit response to comments published before a given ISO8601 compliant date."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1270
+#: includes/rest/AnyCommentRestComment.php:1269
 msgid "Ensure result set excludes specific IDs."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1279
+#: includes/rest/AnyCommentRestComment.php:1278
 msgid "Limit result set to specific IDs."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1288
+#: includes/rest/AnyCommentRestComment.php:1287
 msgid "Offset the result set by a specific number of items."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1293
+#: includes/rest/AnyCommentRestComment.php:1292
 msgid "Order sort attribute ascending or descending."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1303
+#: includes/rest/AnyCommentRestComment.php:1302
 msgid "Sort collection by object attribute."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1319
+#: includes/rest/AnyCommentRestComment.php:1318
 msgid "Limit result set to comments of specific parent IDs."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1328
+#: includes/rest/AnyCommentRestComment.php:1327
 msgid "Ensure result set excludes specific parent IDs."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1337
+#: includes/rest/AnyCommentRestComment.php:1336
 msgid "Limit result set to comments assigned to specific post IDs."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1346
+#: includes/rest/AnyCommentRestComment.php:1345
 msgid ""
 "Limit result set to comments assigned a specific status. Requires "
 "authorization."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1354
+#: includes/rest/AnyCommentRestComment.php:1353
 msgid ""
 "Limit result set to comments assigned a specific type. Requires "
 "authorization."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1361
+#: includes/rest/AnyCommentRestComment.php:1360
 msgid "The password for the post if it is password protected."
 msgstr ""
 

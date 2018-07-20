@@ -28,7 +28,9 @@ class CommentList extends AnyCommentComponent {
 
 
             commentText: '',
+            isReply: false,
             replyId: 0,
+            replyName: '',
             editId: '',
         };
 
@@ -52,6 +54,7 @@ class CommentList extends AnyCommentComponent {
 
         this.handleCommentTextChange = this.handleCommentTextChange.bind(this);
         this.handleReplyIdChange = this.handleReplyIdChange.bind(this);
+        this.handleReplyCancel = this.handleReplyCancel.bind(this);
         this.handleEditIdChange = this.handleEditIdChange.bind(this);
     }
 
@@ -79,10 +82,23 @@ class CommentList extends AnyCommentComponent {
      */
     handleReplyIdChange(comment) {
         this.setState({
+            isReply: true,
+            replyName: comment.author_name,
             replyId: comment.id
         });
 
         this.focusCommentField();
+    }
+
+    /**
+     * Handel cancel of the reply.
+     */
+    handleReplyCancel() {
+        this.setState({
+            isReply: false,
+            replyName: '',
+            replyId: 0
+        });
     }
 
     /**
@@ -91,6 +107,8 @@ class CommentList extends AnyCommentComponent {
      */
     handleEditIdChange(comment) {
         this.setState({
+            isReply: true,
+            replyName: comment.author_name,
             editId: comment.id,
             commentText: comment.content
         });
@@ -209,6 +227,8 @@ class CommentList extends AnyCommentComponent {
     handleAddComment(comment) {
         this.setState({
             commentText: '',
+            replyName: '',
+            isReply: false,
             replyId: 0,
             editId: '',
         });
@@ -231,10 +251,13 @@ class CommentList extends AnyCommentComponent {
             commentText={this.state.commentText}
             commentCountText={this.state.commentCountText}
             replyId={this.state.replyId}
+            replyName={this.state.replyName}
+            isReply={this.state.isReply}
             editId={this.state.editId}
             onSort={this.handleSort}
             onCommentTextChange={this.handleCommentTextChange}
             onReplyIdChange={this.handleReplyIdChange}
+            onReplyCancel={this.handleReplyCancel}
             onEditIdChange={this.handleEditIdChange}
             onSend={this.handleAddComment}
             user={user}/>;

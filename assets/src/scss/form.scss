@@ -45,12 +45,12 @@ $border-color: #979797;
 
   .select2 {
     border: 1px solid $border-color;
-    padding: 10px 17px;
+    padding: 15px;
     background-color: #fff;
     @include border-radius(6px);
     color: $description-color;
-    height: 50px;
     cursor: pointer;
+    display: block;
   }
 
   input[type="text"],
