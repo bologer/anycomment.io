@@ -19,9 +19,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		const SOCIAL_GOOGLE = 'google';
 		const SOCIAL_GITHUB = 'github';
 		const SOCIAL_ODNOKLASSNIKI = 'odnoklassniki';
-		const META_SOCIAL_TYPE = 'anycomment_social';
-		const META_SOCIAL_AVATAR = 'anycomment_social_avatar';
-		
+
 		/**
 		 * @var \Hybridauth\Hybridauth
 		 */
@@ -31,11 +29,6 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		const META_SOCIAL_LINK = 'anycomment_social_link';
 		const META_SOCIAL_AVATAR = 'anycomment_social_avatar';
 		const META_SOCIAL_AVATAR_ORIGIN = 'anycomment_social_avatar_origin';
-
-		/**
-		 * @var \Hybridauth\Hybridauth
-		 */
-		private $_auth;
 
 		/**
 		 * Associative array list of providers.
