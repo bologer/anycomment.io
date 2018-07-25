@@ -108,12 +108,20 @@ WordPress currently has default Privacy Policy page create for your. What you ca
 
 == Changelog ==
 
+= 0.0.40 – 30.07.2018 =
+
+** Enhancements:**
+
+* Comment send button is now changing text based on action (edit/reply/send)
+* Ability to specify User Agreement URL (used to collect consents from users to moderate personal information), text & URL is shown to guest users below list of available authorization options, #56
+
 = 0.0.35 – 20.07.2018 =
 > **Important note:**
 > Plugin was completely rewritten to React. It was required as on the very early stage it had a lot of JavaScript, partly merged with HTML).
 > Logic behind plugin stays the same, we even added a few improvements and fixes, hope you like the change.
 
 **Enhancements:**
+
 * Comments rewritten to React!
 * Post author now has "Author" badge in comments section, #45
 * All assets are now minified (css, js) = faster load time
@@ -124,6 +132,7 @@ WordPress currently has default Privacy Policy page create for your. What you ca
 * Added new column "Social URL" in `users.php` which displays user's social profile URL
 
 **Fixes:**
+
 * Fixed issue when long texts were overflowing maximum with of the comment
 * Fixed issue when it was not possible to disabled footer copyright ("Thanks" option in admin), #46
 * Fixed issue when first & last name was not recorded in user profile
