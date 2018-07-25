@@ -141,7 +141,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 		 */
 		private function init_hooks() {
 			register_activation_hook( __FILE__, [ $this, 'activation' ] );
-			register_uninstall_hook( __FILE__, [ $this, 'uninstall' ] );
+			register_uninstall_hook( __FILE__, sprintf('%s::uninstall', get_called_class()) );
 
 			if ( version_compare( AnyCommentOptions::getMigration(), $this->version, '<' ) ) {
 				( new AnyCommentMigrationManager() )->applyAll();
@@ -159,7 +159,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 		/**
 		 * Uninstall method.
 		 */
-		public function uninstall() {
+		public static function uninstall() {
 			remove_role( AnyCommentGenericSettings::DEFAULT_ROLE_SOCIAL_SUBSCRIBER );
 
 			( new AnyCommentMigrationManager() )->dropAll();
