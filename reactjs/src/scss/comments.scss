@@ -95,7 +95,6 @@ body {
 .send-comment.send-comment-authorized {
   .send-comment-body {
     &-outliner {
-      min-height: 96px;
       &__avatar {
         position: absolute;
         top: 18px;
@@ -103,10 +102,6 @@ body {
         z-index: 2;
         @extend %author-avatar;
         @extend %author-avatar-parent;
-      }
-      &__textfield {
-        padding: 41px 10px 5px 93px;
-        min-height: 96px !important;
       }
     }
   }
@@ -245,11 +240,12 @@ body {
           margin-right: 21px;
         }
 
+        // List of socials to login
         ul {
           list-style: none;
           padding: 0;
           display: table;
-          margin: 17px auto;
+          margin: 17px auto 6px;
 
           li {
             display: inline-block;
@@ -266,11 +262,77 @@ body {
             }
           }
         }
+
+        .user-agreement {
+          display: table;
+          margin: 0 auto;
+          padding: 0 20px;
+          font-size: $font-size - 1;
+          color: $semi-hidden-color;
+
+          label {
+            position: relative;
+            padding-left: 25px;
+          }
+
+          /* Hide the browser's default checkbox */
+          input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+          }
+
+          /* Create a custom checkbox */
+          .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 18px;
+            width: 18px;
+            @include border-radius(2px);
+            background-color: #747b7e;
+          }
+
+          /* On mouse-over, add a grey background color */
+          &:hover input ~ .checkmark {
+            background-color: darken(#686868, 2%);
+          }
+
+          /* When the checkbox is checked, add a blue background */
+          input:checked ~ .checkmark {
+            background-color: $btn-primary-active-color;
+          }
+
+          /* Create the checkmark/indicator (hidden when not checked) */
+          .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+          }
+
+          /* Show the checkmark when checked */
+          input:checked ~ .checkmark:after {
+            display: block;
+          }
+
+          /* Style the checkmark/indicator */
+          .checkmark:after {
+            left: 6px;
+            top: 3px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+          }
+        }
       }
 
       &__logo {
         position: absolute;
-        left: 33px;
+        left: 36px;
         top: 20px;
         width: 26px;
         height: 26px;
@@ -287,11 +349,10 @@ body {
         width: 100%;
         min-width: 100% !important;
         max-width: 100% !important;
-        min-height: 64px !important;
         max-height: 300px !important;
-        height: 64px;
+        padding: 41px 10px 5px 93px;
+        min-height: 96px;
         position: relative;
-        padding: 26px 10px 5px 89px;
         z-index: 1;
       }
     }

@@ -33,6 +33,11 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		const OPTION_COUNT_PER_PAGE = 'option_comments_count_per_page';
 
 		/**
+		 * Link to the user agreement.
+		 */
+		const OPTION_USER_AGREEMENT_LINK = 'option_comments_user_agreement_link';
+
+		/**
 		 * Show/hide copyright.
 		 */
 		const OPTION_COPYRIGHT_TOGGLE = 'option_copyright_toggle';
@@ -264,6 +269,15 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 */
 		public static function getRegisterDefaultGroup() {
 			return static::instance()->getOption( self::OPTION_REGISTER_DEFAULT_GROUP );
+		}
+
+		/**
+		 * Get user agreement link. Used when user is guest and be authorizing using social network.
+		 *
+		 * @return string|null
+		 */
+		public static function getUserAgreementLink() {
+			return static::instance()->getOption( self::OPTION_USER_AGREEMENT_LINK );
 		}
 
 		/**
