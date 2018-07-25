@@ -28,11 +28,16 @@ class SendCommentGuest extends AnyCommentComponent {
             return null;
         }
 
+
+        const classes = "send-comment-body-outliner__auth" +
+            " " + (this.state.isAgreementAccepted ? 'accepted' : 'not-accepted') +
+            " " + (this.props.settings.options.user_agreement_link ? 'has-link' : 'no-link');
+
         return (
             <React.Fragment>
                 <div className="send-comment-body-outliner__logo"></div>
 
-                <div className="send-comment-body-outliner__auth" id="auth-required"
+                <div className={classes}
                      style={{display: this.props.isShouldLogin ? 'block' : 'none'}}>
                     <LoginSocialList isAccepted={this.state.isAgreementAccepted}/>
                     <DataProcessing isAccepted={this.state.isAgreementAccepted} onAccept={this.handleAgreement}/>

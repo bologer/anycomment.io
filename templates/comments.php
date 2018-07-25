@@ -24,10 +24,11 @@ wp_localize_script( 'anycomment-react', 'anyCommentApiSettings', [
 	'restUrl' => esc_url_raw( rest_url( 'anycomment/v1/' ) ),
 	// Options from plugin
 	'options' => [
-		'limit'       => AnyCommentGenericSettings::getPerPage(),
-		'isCopyright' => AnyCommentGenericSettings::isCopyrightOn(),
-		'socials'     => anycomment_login_with(),
-		'theme'       => AnyCommentGenericSettings::getTheme(),
+		'limit'               => AnyCommentGenericSettings::getPerPage(),
+		'isCopyright'         => AnyCommentGenericSettings::isCopyrightOn(),
+		'socials'             => anycomment_login_with(),
+		'theme'               => AnyCommentGenericSettings::getTheme(),
+		'user_agreement_link' => AnyCommentGenericSettings::getUserAgreementLink(),
 	],
 	'user'    => AnyCommentUser::getSafeUser(),
 	'i18'     => [
@@ -49,7 +50,11 @@ wp_localize_script( 'anycomment-react', 'anyCommentApiSettings', [
 		'cancel'                => __( 'Cancel', 'anycomment' ),
 		'quick_login'           => __( 'Quick Login', 'anycomment' ),
 		'author'                => __( 'Author', 'anycomment' ),
-		'accept_user_agreement' => sprintf( __( 'I accept the <a href="%s"%s>User Agreement</a>', 'anycomment' ), AnyCommentGenericSettings::getUserAgreementLink(), '' ),
+		'accept_user_agreement' => sprintf(
+			__( 'I accept the <a href="%s"%s>User Agreement</a>', 'anycomment' ),
+			AnyCommentGenericSettings::getUserAgreementLink(),
+			' target="_blank" rel="noopener noreferrer" '
+		),
 	]
 ] );
 ?>
@@ -65,88 +70,5 @@ wp_localize_script( 'anycomment-react', 'anyCommentApiSettings', [
 <div id="anycomment-root"></div>
 
 <?php wp_footer(); ?>
-
-<script>
-    /**
-     * Add error alert.
-     * @param message Message of the alert.
-     */
-    function addError(message) {
-        addAlert('error', message);
-    }
-
-    /**
-     * Add success alert.
-     * @param message Message of the alert.
-     */
-    function addSuccess(message) {
-        addAlert('success', message);
-    }
-
-    /**
-     * Add new alert by specifying type and message.
-     * @param type Type of the alert.
-     * @param message Message of the alert.
-     */
-    function addAlert(type, message) {
-        if (!type || !message || (type !== 'success' && type !== 'error')) {
-            return;
-        }
-
-        let alert = '<li class="{class}" onclick="cleanAlerts()">{text}</li>'
-            .replace('{class}', 'alert ' + type)
-            .replace('{text}', message);
-        let notifications = jQuery('#notifications');
-
-        let isOpen = notifications.length;
-
-        let htmlContent = alert;
-
-        if (isOpen) {
-            notifications.slideUp(300, function () {
-                notifications.html(htmlContent);
-            });
-            notifications.slideDown(300);
-        } else {
-            notifications.slideDown(300);
-            notifications.html(htmlContent);
-        }
-    }
-
-    /**
-     * Clean alerts.
-     */
-    function cleanAlerts() {
-        let notifications = jQuery('#notifications');
-
-        notifications.slideUp(300, function () {
-            jQuery(this).html('');
-        });
-    }
-</script>
-
-
-<?php if ( AnyComment()->errors->hasErrors() ): ?>
-    <script>
-        /**
-         * Display error messages form cookies. After errors display
-         * they will be automatically deleted.
-         * @returns {boolean}
-         */
-        function displayCookieErrors() {
-            let errors = JSON.parse('<?= AnyComment()->errors->getErrors() ?>');
-
-            if (!errors) {
-                return false;
-            }
-
-            errors.forEach(function (element) {
-                addError(element);
-            });
-        }
-
-        displayCookieErrors();
-    </script>
-<?php endif; ?>
 </body>
 </html>

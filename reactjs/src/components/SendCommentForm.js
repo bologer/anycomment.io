@@ -115,6 +115,7 @@ class SendCommentForm extends AnyCommentComponent {
                                   placeholder={translations.add_comment}
                                   onClick={this.shouldLogin}
                                   onChange={this.handleContentChange}
+                                  disabled={this.state.isShouldLogin}
                                   ref={this.props.commentFieldRef}
                         ></textarea>
                     </div>
@@ -135,7 +136,7 @@ class SendCommentForm extends AnyCommentComponent {
                                               onChange={this.handleEditIdChange}/> : ''}
 
                     {this.props.user ? <input type="submit" className="btn send-comment-body__btn"
-                                              value={translations.button_send}/> : ''}
+                                              value={this.props.buttonText}/> : ''}
                 </form>
 
                 <div className="clearfix"></div>

@@ -12,7 +12,8 @@ class CommentList extends AnyCommentComponent {
     constructor(props) {
         super(props);
 
-        const options = this.props.settings.options;
+        const settings = this.props.settings;
+        const options = settings.options;
 
         this.state = {
             isError: false,
@@ -28,6 +29,7 @@ class CommentList extends AnyCommentComponent {
 
 
             commentText: '',
+            buttonText: settings.i18.button_send,
             isReply: false,
             replyId: 0,
             replyName: '',
@@ -84,6 +86,7 @@ class CommentList extends AnyCommentComponent {
         this.setState({
             isReply: true,
             replyName: comment.author_name,
+            buttonText: this.props.settings.i18.button_reply,
             replyId: comment.id
         });
 
@@ -97,6 +100,7 @@ class CommentList extends AnyCommentComponent {
         this.setState({
             isReply: false,
             replyName: '',
+            buttonText: this.props.settings.i18.button_send,
             replyId: 0
         });
     }
@@ -110,6 +114,7 @@ class CommentList extends AnyCommentComponent {
             isReply: false,
             replyName: '',
             editId: comment.id,
+            buttonText: this.props.settings.i18.button_save,
             commentText: comment.content
         });
         this.focusCommentField();
@@ -229,6 +234,7 @@ class CommentList extends AnyCommentComponent {
             commentText: '',
             replyName: '',
             isReply: false,
+            buttonText: this.props.settings.i18.button_send,
             replyId: 0,
             editId: '',
         });
@@ -248,6 +254,7 @@ class CommentList extends AnyCommentComponent {
         const sendComment = <SendComment
             commentFieldRef={this.commentFieldRef}
             commentText={this.state.commentText}
+            buttonText={this.state.buttonText}
             commentCountText={this.state.commentCountText}
             replyId={this.state.replyId}
             replyName={this.state.replyName}

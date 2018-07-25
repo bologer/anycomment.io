@@ -217,6 +217,12 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'description' => esc_html( __( 'Show social network link to user in the mini social icon in bottom right corner of the avatar.', "anycomment" ) )
 					],
 					[
+						'id'          => self::OPTION_USER_AGREEMENT_LINK,
+						'title'       => __( 'User Agreement Link', "anycomment" ),
+						'callback'    => 'input_text',
+						'description' => esc_html( __( 'Link to User Agreement, where described how your process users data once they authorize via social network and/or add new comment.', "anycomment" ) )
+					],
+					[
 						'id'          => self::OPTION_COPYRIGHT_TOGGLE,
 						'title'       => __( 'Thanks', "anycomment" ),
 						'callback'    => 'input_checkbox',

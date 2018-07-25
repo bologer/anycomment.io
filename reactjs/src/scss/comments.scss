@@ -226,7 +226,7 @@ body {
       @include border-radius($global-radius);
 
       &__auth {
-        background-color: rgba(255, 255, 255, 0.75);
+        background-color: rgba(255, 255, 255, .9);
         position: absolute;
         top: 0;
         left: 0;
@@ -260,6 +260,21 @@ body {
               width: 30px;
               height: 30px;
             }
+          }
+        }
+
+        // Case when agreemnet checkbox is not checked and therefore ul > li list is hidden
+        // This should center checkbox in the overlay
+        &.not-accepted {
+          .user-agreement {
+            margin: 40px auto;
+          }
+        }
+
+        // Case when user agreement link is not set in settings
+        &.no-link {
+          ul {
+            margin: 32px auto;
           }
         }
 
@@ -332,8 +347,8 @@ body {
 
       &__logo {
         position: absolute;
-        left: 36px;
-        top: 20px;
+        left: 33px;
+        top: 36px;
         width: 26px;
         height: 26px;
         background: url('../img/comment-logo.svg') no-repeat;
