@@ -3,7 +3,7 @@
  * Plugin Name: AnyComment
  * Plugin URI: https://anycomment.io
  * Description: AnyComment is an advanced commenting system for WordPress.
- * Version: 0.0.35
+ * Version: 0.0.40
  * Author: Bologer
  * Author URI: http://bologer.ru
  * Requires at least: 4.4
@@ -32,7 +32,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 		 *
 		 * @var string
 		 */
-		public $version = '0.0.35';
+		public $version = '0.0.40';
 
 		/**
 		 * Instance of render class.
