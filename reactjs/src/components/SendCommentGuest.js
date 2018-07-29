@@ -31,7 +31,7 @@ class SendCommentGuest extends AnyCommentComponent {
 
         const classes = "send-comment-body-outliner__auth" +
             " " + (this.state.isAgreementAccepted ? 'accepted' : 'not-accepted') +
-            " " + (this.props.settings.options.user_agreement_link ? 'has-link' : 'no-link');
+            " " + (this.props.settings.options.userAgreementLink ? 'has-link' : 'no-link');
 
         return (
             <React.Fragment>

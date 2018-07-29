@@ -108,7 +108,12 @@ WordPress currently has default Privacy Policy page create for your. What you ca
 
 == Changelog ==
 
-= 0.0.40 – 30.07.2018 =
+
+= 0.0.41 – 29.07.2018 =
+
+* Fix issue when User Agreement checkbox was not shown
+
+= 0.0.40 – 29.07.2018 =
 
 ** Enhancements:**
 

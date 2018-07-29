@@ -6,7 +6,7 @@ class DataProcessing extends AnyCommentComponent {
         const settings = this.props.settings;
         const i18 = settings.i18;
 
-        if (!('accept_user_agreement' in i18) || !settings.options.user_agreement_link) {
+        if (!('accept_user_agreement' in i18) || !settings.options.userAgreementLink) {
             return (null);
         }
 
