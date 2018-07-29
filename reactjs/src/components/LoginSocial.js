@@ -10,6 +10,10 @@ class LoginSocial extends AnyCommentComponent {
 
         const src = require('../img/icons/auth/social-' + social.slug + '.svg');
 
+        if (!social.visible) {
+            return (null);
+        }
+
         return (
             <li>
                 <a href={social.url}

@@ -118,6 +118,7 @@ WordPress currently has default Privacy Policy page create for your. What you ca
 **Fixes:**
 
 * Uninstall hook was not properly cleaning-up data after plugin, #42
+* Social authorization icon was shown even though it was disabled in admin, #57
 
 = 0.0.35 – 20.07.2018 =
 > **Important note:**
