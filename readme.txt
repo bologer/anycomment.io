@@ -4,7 +4,7 @@ Tags: anycomment, comments, comment moderation, anycomment.io
 Requires at least: 4.7
 Tested up to: 4.9.6
 Requires PHP: 5.4
-Stable tag: 0.0.40
+Stable tag: 0.0.41
 License: GPLv2 or later
 License URI: http://www.gnu.org/
 
