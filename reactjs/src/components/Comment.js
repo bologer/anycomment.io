@@ -112,6 +112,10 @@ class Comment extends AnyCommentComponent {
                 </ul>
             </div> : '';
 
+        const authorName = settings.options.isShowProfileUrl && comment.owner.is_social_login ?
+            <a target="_blank" href={comment.owner.social_url} rel="noopener noreferrer">{comment.author_name}</a> :
+            comment.author_name;
+
         return (
             <li key={comment.id} className="comment-single">
 
@@ -120,7 +124,7 @@ class Comment extends AnyCommentComponent {
                 <div className="comment-single-body">
                     <header className="comment-single-body-header">
                         <div className="comment-single-body-header__author">
-                            {comment.author_name}
+                            {authorName}
                             {comment.owner.is_post_author ?
                                 <span className="comment-single-body-header__author-owner">{settings.i18.author}</span>
                                 : ''}

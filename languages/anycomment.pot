@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-29 08:25+0000\n"
+"POT-Creation-Date: 2018-07-29 08:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -52,24 +52,24 @@ msgstr ""
 msgid "Unknown"
 msgstr ""
 
-#: includes/ac-core-functions.php:243 templates/comments.php:37
+#: includes/ac-core-functions.php:243 templates/comments.php:38
 msgid "Load more"
 msgstr ""
 
-#: includes/ac-core-functions.php:264 templates/comments.php:40
-#: templates/comments.php:48
+#: includes/ac-core-functions.php:264 templates/comments.php:41
+#: templates/comments.php:49
 msgid "Reply"
 msgstr ""
 
-#: includes/ac-core-functions.php:272 templates/comments.php:49
+#: includes/ac-core-functions.php:272 templates/comments.php:50
 msgid "Edit"
 msgstr ""
 
-#: includes/ac-core-functions.php:331 templates/comments.php:46
+#: includes/ac-core-functions.php:331 templates/comments.php:47
 msgid "No comments to display"
 msgstr ""
 
-#: includes/ac-core-functions.php:363 templates/comments.php:47
+#: includes/ac-core-functions.php:363 templates/comments.php:48
 msgid "Add Anycomment to your site"
 msgstr ""
 
@@ -87,59 +87,59 @@ msgstr ""
 msgid "%s Comments"
 msgstr ""
 
-#: templates/comments.php:35
+#: templates/comments.php:36
 msgid "Oops, something went wrong..."
 msgstr ""
 
-#: templates/comments.php:36
+#: templates/comments.php:37
 msgid "Loading..."
 msgstr ""
 
-#: templates/comments.php:38 templates/send-comment.php:57
+#: templates/comments.php:39 templates/send-comment.php:57
 msgid "Send"
 msgstr ""
 
-#: templates/comments.php:39 includes/admin/AnyCommentAdminOptions.php:209
+#: templates/comments.php:40 includes/admin/AnyCommentAdminOptions.php:209
 msgid "Save"
 msgstr ""
 
-#: templates/comments.php:41 templates/send-comment.php:18
+#: templates/comments.php:42 templates/send-comment.php:18
 msgid "Sort By"
 msgstr ""
 
-#: templates/comments.php:42 templates/send-comment.php:23
+#: templates/comments.php:43 templates/send-comment.php:23
 msgid "Oldest"
 msgstr ""
 
-#: templates/comments.php:43 templates/send-comment.php:22
+#: templates/comments.php:44 templates/send-comment.php:22
 msgid "Newest"
 msgstr ""
 
-#: templates/comments.php:44
+#: templates/comments.php:45
 msgid "Reply to"
 msgstr ""
 
-#: templates/comments.php:45
+#: templates/comments.php:46
 msgid "Your comment..."
 msgstr ""
 
-#: templates/comments.php:50
+#: templates/comments.php:51
 msgid "Delete"
 msgstr ""
 
-#: templates/comments.php:51
+#: templates/comments.php:52
 msgid "Cancel"
 msgstr ""
 
-#: templates/comments.php:52 templates/send-comment.php:49
+#: templates/comments.php:53 templates/send-comment.php:49
 msgid "Quick Login"
 msgstr ""
 
-#: templates/comments.php:53
+#: templates/comments.php:54
 msgid "Author"
 msgstr ""
 
-#: templates/comments.php:55
+#: templates/comments.php:56
 #, php-format
 msgid "I accept the <a href=\"%s\"%s>User Agreement</a>"
 msgstr ""
@@ -292,8 +292,8 @@ msgstr ""
 
 #: includes/admin/AnyCommentGenericSettings.php:217
 msgid ""
-"Show social network link to user in the mini social icon in bottom right "
-"corner of the avatar."
+"Show link to user in the social media when available (name of the user will "
+"be clickable)."
 msgstr ""
 
 #: includes/admin/AnyCommentGenericSettings.php:221

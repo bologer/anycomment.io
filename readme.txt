@@ -115,12 +115,14 @@ WordPress currently has default Privacy Policy page create for your. What you ca
 * Comment send button is now changing text based on action (edit/reply/send)
 * Ability to specify User Agreement URL (used to collect consents from users to moderate personal information), text & URL is shown to guest users below list of available authorization options, #56
 * Ability to delete personal or any comment if user has moderate permission, #59
+* Moved social URL to the name of the user, better user experience (when enabled to show URLs)
 
 **Fixes:**
 
 * Uninstall hook was not properly cleaning-up data after plugin, #42
 * Social authorization icon was shown even though it was disabled in admin, #57
 * Guest user is not redirected back to post as redirect param is missing in social authentication URL, #58
+* Options to enable/disabled show user social profile URL was ignored
 
 = 0.0.35 – 20.07.2018 =
 > **Important note:**

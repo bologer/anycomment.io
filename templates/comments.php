@@ -24,11 +24,12 @@ wp_localize_script( 'anycomment-react', 'anyCommentApiSettings', [
 	'restUrl' => esc_url_raw( rest_url( 'anycomment/v1/' ) ),
 	// Options from plugin
 	'options' => [
-		'limit'               => AnyCommentGenericSettings::getPerPage(),
-		'isCopyright'         => AnyCommentGenericSettings::isCopyrightOn(),
-		'socials'             => anycomment_login_with( false, get_permalink( $postId ) ),
-		'theme'               => AnyCommentGenericSettings::getTheme(),
-		'user_agreement_link' => AnyCommentGenericSettings::getUserAgreementLink(),
+		'limit'             => AnyCommentGenericSettings::getPerPage(),
+		'isCopyright'       => AnyCommentGenericSettings::isCopyrightOn(),
+		'socials'           => anycomment_login_with( false, get_permalink( $postId ) ),
+		'theme'             => AnyCommentGenericSettings::getTheme(),
+		'isShowProfileUrl'     => AnyCommentGenericSettings::isShowProfileUrl(),
+		'userAgreementLink' => AnyCommentGenericSettings::getUserAgreementLink(),
 	],
 	'user'    => AnyCommentUser::getSafeUser(),
 	'i18'     => [
@@ -47,7 +48,7 @@ wp_localize_script( 'anycomment-react', 'anyCommentApiSettings', [
 		'footer_copyright'      => __( 'Add Anycomment to your site', 'anycomment' ),
 		'reply'                 => __( 'Reply', 'anycomment' ),
 		'edit'                  => __( 'Edit', 'anycomment' ),
-		'delete'                  => __( 'Delete', 'anycomment' ),
+		'delete'                => __( 'Delete', 'anycomment' ),
 		'cancel'                => __( 'Cancel', 'anycomment' ),
 		'quick_login'           => __( 'Quick Login', 'anycomment' ),
 		'author'                => __( 'Author', 'anycomment' ),

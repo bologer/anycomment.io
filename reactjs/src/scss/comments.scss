@@ -462,10 +462,14 @@ body {
       &-header {
 
         &__author {
-          color: $primary-color;
-          font-size: $font-size - 1;
-          display: block;
-          margin-bottom: 2px;
+
+          &,
+          & > a {
+            color: $primary-color;
+            font-size: $font-size - 1;
+            display: block;
+            margin-bottom: 2px;
+          }
 
           &-owner {
             background-color: $btn-primary-color;
