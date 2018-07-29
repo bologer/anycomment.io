@@ -119,6 +119,7 @@ WordPress currently has default Privacy Policy page create for your. What you ca
 
 * Uninstall hook was not properly cleaning-up data after plugin, #42
 * Social authorization icon was shown even though it was disabled in admin, #57
+* Guest user is not redirected back to post as redirect param is missing in social authentication URL, #58
 
 = 0.0.35 – 20.07.2018 =
 > **Important note:**

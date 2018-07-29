@@ -26,7 +26,7 @@ wp_localize_script( 'anycomment-react', 'anyCommentApiSettings', [
 	'options' => [
 		'limit'               => AnyCommentGenericSettings::getPerPage(),
 		'isCopyright'         => AnyCommentGenericSettings::isCopyrightOn(),
-		'socials'             => anycomment_login_with(),
+		'socials'             => anycomment_login_with( false, get_permalink( $postId ) ),
 		'theme'               => AnyCommentGenericSettings::getTheme(),
 		'user_agreement_link' => AnyCommentGenericSettings::getUserAgreementLink(),
 	],
@@ -65,10 +65,7 @@ wp_localize_script( 'anycomment-react', 'anyCommentApiSettings', [
 	<?php wp_enqueue_style( 'anycomment-styles' ) ?>
 </head>
 <body>
-
-<?php do_action( 'anycomment_notifications' ) ?>
 <div id="anycomment-root"></div>
-
 <?php wp_footer(); ?>
 </body>
 </html>
