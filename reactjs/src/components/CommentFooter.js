@@ -31,6 +31,9 @@ class CommentFooter extends AnyCommentComponent {
                     {comment.permissions.can_edit_comment ?
                         <li><a href="" onClick={(e) => this.props.onEdit(e, comment)}>{settings.i18.edit}</a>
                         </li> : ''}
+                    {comment.permissions.can_edit_comment ?
+                        <li><a href="" onClick={(e) => this.props.onDelete(e, comment)}>{settings.i18.delete}</a>
+                        </li> : ''}
                 </ul>
             </footer>
         );

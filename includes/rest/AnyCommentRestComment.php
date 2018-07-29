@@ -79,17 +79,6 @@ class AnyCommentRestComment extends AnyCommentRestController {
 				'methods'             => WP_REST_Server::DELETABLE,
 				'callback'            => [ $this, 'delete_item' ],
 				'permission_callback' => [ $this, 'delete_item_permissions_check' ],
-				'args'                => [
-					'force'    => [
-						'type'        => 'boolean',
-						'default'     => false,
-						'description' => __( 'Whether to bypass trash and force deletion.', 'anycomment' ),
-					],
-					'password' => [
-						'description' => __( 'The password for the parent post of the comment (if the post is password protected).', 'anycomment' ),
-						'type'        => 'string',
-					],
-				],
 			],
 			'schema' => [ $this, 'get_public_item_schema' ],
 		] );
@@ -772,8 +761,6 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			return $comment;
 		}
 
-		$force = isset( $request['force'] ) ? (bool) $request['force'] : false;
-
 		/**
 		 * Filters whether a comment can be trashed.
 		 *
@@ -788,26 +775,20 @@ class AnyCommentRestComment extends AnyCommentRestController {
 
 		$request->set_param( 'context', 'edit' );
 
-		if ( $force ) {
-			$previous = $this->prepare_item_for_response( $comment, $request );
-			$result   = wp_delete_comment( $comment->comment_ID, true );
-			$response = new WP_REST_Response();
-			$response->set_data( array( 'deleted' => true, 'previous' => $previous->get_data() ) );
-		} else {
-			// If this type doesn't support trashing, error out.
-			if ( ! $supports_trash ) {
-				/* translators: %s: force=true */
-				return new WP_Error( 'rest_trash_not_supported', sprintf( __( "The comment does not support trashing. Set '%s' to delete.", 'anycomment' ), 'force=true' ), array( 'status' => 501 ) );
-			}
-
-			if ( 'trash' === $comment->comment_approved ) {
-				return new WP_Error( 'rest_already_trashed', __( 'The comment has already been trashed.', 'anycomment' ), array( 'status' => 410 ) );
-			}
-
-			$result   = wp_trash_comment( $comment->comment_ID );
-			$comment  = get_comment( $comment->comment_ID );
-			$response = $this->prepare_item_for_response( $comment, $request );
+		// If this type doesn't support trashing, error out.
+		if ( ! $supports_trash ) {
+			/* translators: %s: force=true */
+			return new WP_Error( 'rest_trash_not_supported', sprintf( __( "The comment does not support trashing. Set '%s' to delete.", 'anycomment' ), 'force=true' ), array( 'status' => 501 ) );
 		}
+
+		if ( 'trash' === $comment->comment_approved ) {
+			return new WP_Error( 'rest_already_trashed', __( 'The comment has already been trashed.', 'anycomment' ), array( 'status' => 410 ) );
+		}
+
+		$result   = wp_trash_comment( $comment->comment_ID );
+		$comment  = get_comment( $comment->comment_ID );
+		$response = $this->prepare_item_for_response( $comment, $request );
+
 
 		if ( ! $result ) {
 			return new WP_Error( 'rest_cannot_delete', __( 'The comment cannot be deleted.', 'anycomment' ), array( 'status' => 500 ) );

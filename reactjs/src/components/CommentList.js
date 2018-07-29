@@ -58,6 +58,7 @@ class CommentList extends AnyCommentComponent {
         this.handleReplyIdChange = this.handleReplyIdChange.bind(this);
         this.handleReplyCancel = this.handleReplyCancel.bind(this);
         this.handleEditIdChange = this.handleEditIdChange.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
     }
 
     /**
@@ -118,6 +119,34 @@ class CommentList extends AnyCommentComponent {
             commentText: comment.content
         });
         this.focusCommentField();
+    }
+
+    /**
+     * Handle comment deletion.
+     *
+     * @param comment
+     */
+    handleDelete(comment) {
+        const self = this;
+        const settings = this.props.settings;
+
+        const params = {
+          id: comment.id
+        };
+
+        this.props.axios
+            .delete('/comments/' + comment.id, {
+                params: params,
+                headers: {'X-WP-Nonce': settings.nonce}
+            })
+            .then(function (response) {
+                self.loadComments();
+            })
+            .catch(function (error) {
+                if ('message' in error) {
+                    toast(error.message, {type: toast.TYPE.ERROR});
+                }
+            });
     }
 
     /**
@@ -294,6 +323,7 @@ class CommentList extends AnyCommentComponent {
                             <Comment
                                 changeReplyId={this.handleReplyIdChange}
                                 changeEditId={this.handleEditIdChange}
+                                handleDelete={this.handleDelete}
                                 key={comment.id}
                                 comment={comment}
                             />

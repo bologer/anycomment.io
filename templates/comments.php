@@ -47,6 +47,7 @@ wp_localize_script( 'anycomment-react', 'anyCommentApiSettings', [
 		'footer_copyright'      => __( 'Add Anycomment to your site', 'anycomment' ),
 		'reply'                 => __( 'Reply', 'anycomment' ),
 		'edit'                  => __( 'Edit', 'anycomment' ),
+		'delete'                  => __( 'Delete', 'anycomment' ),
 		'cancel'                => __( 'Cancel', 'anycomment' ),
 		'quick_login'           => __( 'Quick Login', 'anycomment' ),
 		'author'                => __( 'Author', 'anycomment' ),

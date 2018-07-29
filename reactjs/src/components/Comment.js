@@ -24,6 +24,7 @@ class Comment extends AnyCommentComponent {
         this.onReply = this.onReply.bind(this);
         this.onLike = this.onLike.bind(this);
         this.onEdit = this.onEdit.bind(this);
+        this.onDelete = this.onDelete.bind(this);
     }
 
     /**
@@ -73,6 +74,17 @@ class Comment extends AnyCommentComponent {
         this.props.changeEditId(comment);
     }
 
+    /**
+     * On comment delete.
+     *
+     * @param e
+     * @param comment
+     */
+    onDelete(e, comment) {
+        e.preventDefault();
+        this.props.handleDelete(comment);
+    }
+
     render() {
         const settings = this.props.settings;
         const comment = this.props.comment;
@@ -93,6 +105,7 @@ class Comment extends AnyCommentComponent {
                         <Comment
                             changeReplyId={this.props.changeReplyId}
                             changeEditId={this.props.changeEditId}
+                            handleDelete={this.props.handleDelete}
                             key={childrenComment.id}
                             comment={childrenComment}/>
                     ))}
@@ -124,6 +137,7 @@ class Comment extends AnyCommentComponent {
                         onEdit={this.onEdit}
                         onLike={this.onLike}
                         onReply={this.onReply}
+                        onDelete={this.onDelete}
                         comment={comment}
                         likesCount={this.state.likesCount}
                         hasLike={this.state.hasLike}

@@ -114,6 +114,7 @@ WordPress currently has default Privacy Policy page create for your. What you ca
 
 * Comment send button is now changing text based on action (edit/reply/send)
 * Ability to specify User Agreement URL (used to collect consents from users to moderate personal information), text & URL is shown to guest users below list of available authorization options, #56
+* Ability to delete personal or any comment if user has moderate permission, #59
 
 **Fixes:**
 
