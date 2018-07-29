@@ -49,7 +49,7 @@ Yes! Join our [GitHub repository](https://github.com/bologer/anycomment.io) :)
 * Blazing-fast comments based on React
 * Likes in comments
 * See likes count per comment/user in admin
-* Edit comments when you are the owner or have moderate permission(s) directly in comments
+* Edit/delete comments when you are the owner or have moderate permission(s) directly in client area
 * Assign default group for users who authorize via social network
 * See user's social profile URL in admin
 * Simple & informative dashboard with graphs to display number of comments over number of active user per certain period & most active commenting users
@@ -61,7 +61,7 @@ Yes! Join our [GitHub repository](https://github.com/bologer/anycomment.io) :)
 = TODO features =
 * Option: customization of comment styles
 * Option: add option to allow guests to leave comments
-* Option: Auto-update comments on new comments
+* Option: auto-update comments on new comments
 * Support more languages
 * Code highlighting
 * Markdown support
