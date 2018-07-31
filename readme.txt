@@ -4,7 +4,7 @@ Tags: anycomment, comments, comment moderation, anycomment.io
 Requires at least: 4.7
 Tested up to: 4.9.6
 Requires PHP: 5.4
-Stable tag: 0.0.41
+Stable tag: 0.0.45
 License: GPLv2 or later
 License URI: http://www.gnu.org/
 
@@ -108,6 +108,15 @@ WordPress currently has default Privacy Policy page create for your. What you ca
 
 == Changelog ==
 
+= 0.0.45 – 01.08.2018 =
+
+**Enhancements:**
+
+* Now social media avatar shown globally in admin (e.g. in pages, user.php, comment.php, etc), #61
+
+**Fixes:**
+
+* When user did not have social profile URL it lead to clickable name but incorrect URL, #60
 
 = 0.0.41 – 29.07.2018 =
 
@@ -115,7 +124,7 @@ WordPress currently has default Privacy Policy page create for your. What you ca
 
 = 0.0.40 – 29.07.2018 =
 
-** Enhancements:**
+**Enhancements:**
 
 * Comment send button is now changing text based on action (edit/reply/send)
 * Ability to specify User Agreement URL (used to collect consents from users to moderate personal information), text & URL is shown to guest users below list of available authorization options, #56

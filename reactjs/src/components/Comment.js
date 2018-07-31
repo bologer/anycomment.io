@@ -112,7 +112,7 @@ class Comment extends AnyCommentComponent {
                 </ul>
             </div> : '';
 
-        const authorName = settings.options.isShowProfileUrl && comment.owner.is_social_login ?
+        const authorName = settings.options.isShowProfileUrl && comment.owner.is_social_login && comment.owner.social_url.trim() !== '' ?
             <a target="_blank" href={comment.owner.social_url} rel="noopener noreferrer">{comment.author_name}</a> :
             comment.author_name;
 
