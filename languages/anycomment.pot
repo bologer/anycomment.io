@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-29 08:59+0000\n"
+"POT-Creation-Date: 2018-08-02 17:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -835,8 +835,16 @@ msgstr ""
 msgid "News"
 msgstr ""
 
-#: templates/admin/dashboard.php:49
+#: templates/admin/dashboard.php:46
+msgid "New"
+msgstr ""
+
+#: templates/admin/dashboard.php:70
 msgid "No news yet"
+msgstr ""
+
+#: templates/admin/dashboard.php:76
+msgid "All News"
 msgstr ""
 
 #: templates/admin/tab-dashboard.php:6 templates/admin/tab-dashboard.php:10

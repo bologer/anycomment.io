@@ -50,7 +50,7 @@ $separator-color: #d8d8d8;
     position: absolute;
     height: 100%;
     @include border-radius(0 16px 16px 0);
-    background-color: #282828;
+    background-color: #106ddc;
 
     h2 {
       color: #fff;
@@ -59,7 +59,37 @@ $separator-color: #d8d8d8;
     &-news {
       li {
         color: #fff;
-        list-style: disc;
+      }
+    }
+
+    &-all-news {
+      margin-top: 20px;
+      width: 100%;
+      text-align: center;
+
+      a {
+        font-size: $font-size;
+        color: #fff !important;
+      }
+    }
+
+    &-news-content {
+      font-size: $font-size;
+      margin-top: 5px;
+      color: #fff;
+    }
+
+    &-news-date {
+      margin-bottom: 11px;
+      font-size: $font-size - 1;
+
+      &-new {
+        margin-left: 11px;
+        display: inline-block;
+        background-color: #ec4568;
+        color: #fff;
+        padding: 4px 6px;
+        @include border-radius(4px);
       }
     }
 
@@ -67,16 +97,6 @@ $separator-color: #d8d8d8;
       font-size: $font-size + 2;
       font-weight: 700;
       margin-bottom: 5px;
-    }
-
-    &-news-summary {
-      font-size: $font-size;
-      font-weight: 500;
-
-      * {
-        margin: 0;
-        padding: 0;
-      }
     }
 
     ul {

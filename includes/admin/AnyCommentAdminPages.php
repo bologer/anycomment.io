@@ -82,14 +82,23 @@ if ( ! class_exists( 'AnyCommentAdminPages' ) ) :
 		/**
 		 * Get resent news.
 		 *
+		 * @param int $per_page
+		 *
 		 * @return false|array Array on success (list of posts), false on failure.
 		 */
-		public function get_news() {
+		public function get_news( $per_page = 5 ) {
+
+			if ( $per_page < 5 ) {
+				$per_page = 5;
+			}
+
+
 			$url     = 'https://anycomment.io/wp-json/wp/v2/posts';
 			$options = [
 				'method'  => 'GET',
 				'timeout' => 10,
 				'body'    => [
+					'per_page'   => $per_page,
 					'type'       => 'post',
 					'status'     => 'publish',
 					'categories' => 15,
