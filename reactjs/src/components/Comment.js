@@ -3,7 +3,7 @@ import AnyCommentComponent from './AnyCommentComponent'
 import CommentAvatar from './CommentAvatar';
 import CommentHeader from './CommentHeader';
 import CommentFooter from './CommentFooter';
-import toast from 'react-toastify';
+import {toast} from 'react-toastify';
 
 /**
  * Comment is rendering single comment entry.
@@ -56,7 +56,7 @@ class Comment extends AnyCommentComponent {
             })
             .catch(function (error) {
                 if ('message' in error) {
-                    toast(error.message, toast.TYPE.ERROR);
+                    toast.error(error.message);
                 }
             });
     }

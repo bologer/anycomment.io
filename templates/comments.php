@@ -17,22 +17,23 @@ wp_enqueue_script( 'anycomment-react', AnyComment()->plugin_url() . '/static/js/
 wp_enqueue_style( 'anycomment-styles', AnyComment()->plugin_url() . '/static/css/main.min.css', [], AnyComment()->version );
 
 wp_localize_script( 'anycomment-react', 'anyCommentApiSettings', [
-	'postId'  => $postId,
-	'postUrl' => get_permalink( $postId ),
-	'nonce'   => wp_create_nonce( 'wp_rest' ),
-	'locale'  => get_locale(),
-	'restUrl' => esc_url_raw( rest_url( 'anycomment/v1/' ) ),
+	'postId'       => $postId,
+	'postUrl'      => get_permalink( $postId ),
+	'nonce'        => wp_create_nonce( 'wp_rest' ),
+	'locale'       => get_locale(),
+	'restUrl'      => esc_url_raw( rest_url( 'anycomment/v1/' ) ),
+	'commentCount' => ( $res = get_comment_count( $postId ) ) !== null ? (int) $res['all'] : 0,
 	// Options from plugin
-	'options' => [
+	'options'      => [
 		'limit'             => AnyCommentGenericSettings::getPerPage(),
 		'isCopyright'       => AnyCommentGenericSettings::isCopyrightOn(),
 		'socials'           => anycomment_login_with( false, get_permalink( $postId ) ),
 		'theme'             => AnyCommentGenericSettings::getTheme(),
-		'isShowProfileUrl'     => AnyCommentGenericSettings::isShowProfileUrl(),
+		'isShowProfileUrl'  => AnyCommentGenericSettings::isShowProfileUrl(),
 		'userAgreementLink' => AnyCommentGenericSettings::getUserAgreementLink(),
 	],
-	'user'    => AnyCommentUser::getSafeUser(),
-	'i18'     => [
+	'user'         => AnyCommentUser::getSafeUser(),
+	'i18'          => [
 		'error_generic'         => __( "Oops, something went wrong...", "anycomment" ),
 		'loading'               => __( 'Loading...', 'anycomment' ),
 		'load_more'             => __( "Load more", "anycomment" ),
@@ -51,6 +52,7 @@ wp_localize_script( 'anycomment-react', 'anyCommentApiSettings', [
 		'delete'                => __( 'Delete', 'anycomment' ),
 		'cancel'                => __( 'Cancel', 'anycomment' ),
 		'quick_login'           => __( 'Quick Login', 'anycomment' ),
+		'new_comment_was_added' => __( 'New comment was added', 'anycomment' ),
 		'author'                => __( 'Author', 'anycomment' ),
 		'accept_user_agreement' => sprintf(
 			__( 'I accept the <a href="%s"%s>User Agreement</a>', 'anycomment' ),

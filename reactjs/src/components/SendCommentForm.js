@@ -76,7 +76,7 @@ class SendCommentForm extends AnyCommentComponent {
                 self.props.onSend(response.data);
             })
             .catch(function (error) {
-                toast(error.message, {type: toast.TYPE.ERROR});
+                toast.error(error.message);
             });
 
         return false;

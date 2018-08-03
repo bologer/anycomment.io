@@ -2,7 +2,7 @@ import React from 'react';
 import Comment from './Comment'
 import SendComment from './SendComment'
 import AnyCommentComponent from "./AnyCommentComponent";
-import toast from 'react-toastify';
+import { toast } from 'react-toastify';
 
 /**
  * CommentList displays list of comments.
@@ -19,6 +19,7 @@ class CommentList extends AnyCommentComponent {
             isError: false,
             isLoaded: false,
 
+            commentCount: parseInt(settings.commentCount),
             commentCountText: null,
             comments: [],
 
@@ -131,7 +132,7 @@ class CommentList extends AnyCommentComponent {
         const settings = this.props.settings;
 
         const params = {
-          id: comment.id
+            id: comment.id
         };
 
         this.props.axios
@@ -144,7 +145,7 @@ class CommentList extends AnyCommentComponent {
             })
             .catch(function (error) {
                 if ('message' in error) {
-                    toast(error.message, {type: toast.TYPE.ERROR});
+                    toast.error(error.message);
                 }
             });
     }
@@ -200,8 +201,36 @@ class CommentList extends AnyCommentComponent {
                 });
 
                 if ('message' in error) {
-                    toast(error.message, {type: toast.TYPE.ERROR});
+                    toast.error(error.message);
                 }
+            });
+    };
+
+    /**
+     *
+     * @returns {*|Promise<T>}
+     */
+    followNewComments() {
+        const self = this;
+        const settings = this.props.settings;
+
+        return this.props.axios
+            .get('/comments/count', {
+                params: {post: settings.postId},
+            })
+            .then(function (response) {
+                if (response.data &&
+                    parseInt(response.data) !== 0 &&
+                    parseInt(self.state.commentCount) !== parseInt(response.data)) {
+                    self.setState({
+                        commentCount: parseInt(response.data)
+                    });
+
+                    toast.success(settings.i18.new_comment_was_added);
+                    self.loadComments();
+                }
+            })
+            .catch(function (error) {
             });
     };
 
@@ -248,7 +277,7 @@ class CommentList extends AnyCommentComponent {
                     isError: true
                 });
                 if ('message' in error) {
-                    toast(error.message, {type: toast.TYPE.ERROR});
+                    toast.error(error.message);
                 }
             });
     }
@@ -272,8 +301,13 @@ class CommentList extends AnyCommentComponent {
         this.focusCommentField();
     };
 
+
     componentDidMount() {
         this.loadComments();
+        const self = this;
+        setInterval(function () {
+            self.followNewComments();
+        }, 5000);
     }
 
     render() {

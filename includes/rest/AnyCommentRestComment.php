@@ -34,6 +34,26 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	 */
 	public function register_routes() {
 
+		register_rest_route( $this->namespace, '/' . $this->rest_base . '/count', [
+			[
+				'methods'  => WP_REST_Server::READABLE,
+				'callback' => [ $this, 'get_count' ],
+				'args'     => [
+					'post' => [
+						'description' => __( 'Unique post ID', 'anycomment' ),
+						'type'        => 'integer',
+					],
+				],
+			],
+			[
+				'methods'             => WP_REST_Server::CREATABLE,
+				'callback'            => [ $this, 'create_item' ],
+				'permission_callback' => [ $this, 'create_item_permissions_check' ],
+				'args'                => $this->get_endpoint_args_for_item_schema( WP_REST_Server::CREATABLE ),
+			],
+			'schema' => [ $this, 'get_public_item_schema' ],
+		] );
+
 		register_rest_route( $this->namespace, '/' . $this->rest_base, [
 			[
 				'methods'             => WP_REST_Server::READABLE,
@@ -135,6 +155,29 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Get comment count.
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 *
+	 * @return WP_Error|WP_REST_Response Response object on success, or error object on failure.
+	 */
+	public function get_count( $request ) {
+
+		$comment_count = 0;
+		if ( ( $post_id = $request->get_param( 'post' ) ) !== null ) {
+			$data = get_comment_count( $post_id );
+
+			if ( is_array( $data ) ) {
+				$comment_count = $data['all'];
+			}
+		}
+
+		$response = rest_ensure_response( $comment_count );
+
+		return $response;
 	}
 
 	/**
