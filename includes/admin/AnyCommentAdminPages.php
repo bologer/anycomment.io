@@ -98,10 +98,15 @@ if ( ! class_exists( 'AnyCommentAdminPages' ) ) :
 		 */
 		public function get_news( $per_page = 5 ) {
 
+			$cacheKey = 'anycomment-plugin-news';
+
 			if ( $per_page < 5 ) {
 				$per_page = 5;
 			}
 
+			if ( ( $news = AnyComment()->cache->get( $cacheKey ) ) !== null ) {
+				return json_decode( $news, true );
+			}
 
 			$url     = 'https://anycomment.io/wp-json/wp/v2/posts';
 			$options = [
@@ -124,6 +129,9 @@ if ( ! class_exists( 'AnyCommentAdminPages' ) ) :
 				$posts = isset( $response['body'] ) ? $response['body'] : null;
 
 				if ( $posts !== null ) {
+
+					AnyComment()->cache->set( $cacheKey, $posts, strtotime( '+1 day' ) );
+
 					return json_decode( $posts, true );
 				} else {
 					return false;

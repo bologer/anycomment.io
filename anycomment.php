@@ -59,6 +59,11 @@ if ( ! class_exists( 'AnyComment' ) ) :
 		public $auth = null;
 
 		/**
+		 * @var AnyCommentCache
+		 */
+		public $cache;
+
+		/**
 		 * Generic class prefix for all plugin HTML elements.
 		 * @var string
 		 */
@@ -141,7 +146,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 		 */
 		private function init_hooks() {
 			register_activation_hook( __FILE__, [ $this, 'activation' ] );
-			register_uninstall_hook( __FILE__, sprintf('%s::uninstall', get_called_class()) );
+			register_uninstall_hook( __FILE__, sprintf( '%s::uninstall', get_called_class() ) );
 
 			if ( version_compare( AnyCommentOptions::getMigration(), $this->version, '<' ) ) {
 				( new AnyCommentMigrationManager() )->applyAll();
@@ -226,6 +231,8 @@ if ( ! class_exists( 'AnyComment' ) ) :
 		 * Include required core files used in admin and on the frontend.
 		 */
 		public function includes() {
+
+			include_once( ANYCOMMENT_ABSPATH . 'includes/base/cache/AnyCommentCache.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentOptions.php' );
 
 			// Rest
@@ -274,8 +281,13 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			$this->errors      = new AnyCommentErrorHandler();
 			$this->render      = new AnyCommentRender();
 			$this->admin_pages = new AnyCommentAdminPages();
+			$this->cache       = new AnyCommentCache( [
+				'path' => ANYCOMMENT_ABSPATH . 'cache/',
+			] );
 			$this->auth        = new AnyCommentSocialAuth();
 			$this->statistics  = new AnyCommentStatistics();
+
+
 		}
 
 		/**
