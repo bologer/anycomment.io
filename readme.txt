@@ -20,9 +20,7 @@ AnyComment is here to help you - it is a better commenting system for WordPress.
 
 No dependency on third party services, all comments stored in your database.
 
-You may connect your favorite social networks.
-
-Here is the list of the supported ones:
+You may connect your favorite social networks:
 
 * Facebook
 * Google
@@ -34,7 +32,7 @@ Here is the list of the supported ones:
 
 Dark & light themes available.
 
-AnyComment stands for simplicity, so comments have very simple user interface, it is up to you what other features to add.
+AnyComment stands for simplicity, therefore comments have very simple user interface, it is up to you what other features to add.
 
 Ps. Comment will be actively supported. We would like to have your opinion on what could be improved or fixed. Thank you for using it!
 
@@ -43,10 +41,13 @@ Ps. Comment will be actively supported. We would like to have your opinion on wh
 Yes! Join our [GitHub repository](https://github.com/bologer/anycomment.io) :)
 
 = Features =
+* All comments stored in your own database. We do not create extra tables for these reasons. We reuse native comment's table, so all of the default WordPress functionality comes out of the box.
 * Social network authorization via Facebook, VK, Twitter, Google, Odnoklassniki or GitHub
 * Translated in English & Russian
 * Suitable for dark & light themes (on your choice)
 * Blazing-fast comments based on React
+* Provide User Agreement link, so users know how their data used
+* Social avatars shown globally
 * Likes in comments
 * See likes count per comment/user in admin
 * Edit/delete comments when you are the owner or have moderate permission(s) directly in client area
@@ -56,7 +57,6 @@ Yes! Join our [GitHub repository](https://github.com/bologer/anycomment.io) :)
 * Comments do no inherit any of the currently active theme styles. Meaning that comments will not be broken by styles you have.
 * Get latest plugin update news directly in the dashboard, don't miss a thing
 * Integration with [Akismet](https://wordpress.org/plugins/akismet/) & [WP User Avatar](https://wordpress.org/plugins/wp-user-avatar/), to specify customized avatars
-* All comments stored in your own database. We do not create extra tables for these reasons. We reuse native comment's table, so all of the default WordPress functionality comes out of the box.
 
 = TODO features =
 * Option: customization of comment styles
@@ -118,6 +118,7 @@ WordPress currently has default Privacy Policy page create for your. What you ca
 **Fixes:**
 
 * When user did not have social profile URL it lead to clickable name but incorrect URL, #60
+* Do not load styles & scrips globally, only in plugin pages
 
 = 0.0.41 – 29.07.2018 =
 

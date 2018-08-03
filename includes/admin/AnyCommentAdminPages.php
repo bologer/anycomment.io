@@ -74,9 +74,19 @@ if ( ! class_exists( 'AnyCommentAdminPages' ) ) :
 		 * Load dashboard styles & scripts.
 		 */
 		public function enqueue_dashboard_scripts() {
+
+			$page = $_GET['page'];
+
+			if ( strpos( $page, 'anycomment' ) === false ) {
+				return;
+			}
+
+			if ( $page === 'anycomment-dashboard' && ! isset( $_GET['tab'] ) ) {
+				wp_enqueue_script( 'anycomment-admin-chartjs', AnyComment()->plugin_url() . '/assets/js/Chart.min.js', [], AnyComment()->version );
+			}
+
 			wp_enqueue_style( 'anycomment-admin-styles', AnyComment()->plugin_url() . '/assets/css/admin.min.css', [], AnyComment()->version );
 			wp_enqueue_style( 'anycomment-admin-roboto-font', 'https://fonts.googleapis.com/css?family=Roboto:300,400,700&amp;subset=cyrillic' );
-			wp_enqueue_script( 'anycomment-admin-chartjs', AnyComment()->plugin_url() . '/assets/js/Chart.min.js', [], AnyComment()->version );
 		}
 
 		/**
