@@ -112,6 +112,7 @@ WordPress currently has default Privacy Policy page create for your. What you ca
 
 **Enhancements:**
 
+* Comments auto-update and alert on new comment, #63
 * Now social media avatar shown globally in admin (e.g. in pages, user.php, comment.php, etc), #61
 * Better layout for plugin news in admin, `New` label is shown for articles which are not older then 2 weeks, #62
 * Added caching, plugin news in dashboard are now cached
