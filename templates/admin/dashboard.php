@@ -91,3 +91,18 @@ if ( ! defined( 'ABSPATH' ) ) {
         <div class="clearfix"></div>
     </div>
 </div>
+
+<script>
+    jQuery(document).on('ready', function() {
+        setInterval(function () {
+            var container = jQuery('.anycomment-dashboard__container');
+            var sidebar = jQuery('.anycomment-dashboard__sidebar');
+            var containerHeight = container.height();
+            var sidebarHeight = jQuery('.anycomment-dashboard__sidebar').height();
+
+            if (containerHeight > sidebarHeight) {
+                sidebar.css('position', 'absolute');
+            }
+        }, 1000);
+    });
+</script>

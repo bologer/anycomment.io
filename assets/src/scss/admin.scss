@@ -47,7 +47,6 @@ $separator-color: #d8d8d8;
   &__sidebar {
     padding: 37px;
     width: 25%;
-    position: absolute;
     height: 100%;
     @include border-radius(0 16px 16px 0);
     background-color: #106ddc;
