@@ -2,7 +2,7 @@ import React from 'react';
 import Comment from './Comment'
 import SendComment from './SendComment'
 import AnyCommentComponent from "./AnyCommentComponent";
-import { toast } from 'react-toastify';
+import {toast} from 'react-toastify';
 
 /**
  * CommentList displays list of comments.
@@ -19,7 +19,7 @@ class CommentList extends AnyCommentComponent {
             isError: false,
             isLoaded: false,
 
-            commentCount: parseInt(settings.commentCount),
+            commentCount: parseInt(settings.commentCount, 10),
             commentCountText: null,
             comments: [],
 
@@ -219,18 +219,33 @@ class CommentList extends AnyCommentComponent {
                 params: {post: settings.postId},
             })
             .then(function (response) {
-                if (response.data &&
-                    parseInt(response.data) !== 0 &&
-                    parseInt(self.state.commentCount) !== parseInt(response.data)) {
+
+                let stateCount = parseInt(self.state.commentCount, 10);
+                let currentCount = parseInt(response.data, 10);
+
+                if (currentCount &&
+                    currentCount !== 0 &&
+                    stateCount !== currentCount) {
+
                     self.setState({
-                        commentCount: parseInt(response.data)
+                        commentCount: currentCount
                     });
 
-                    toast.success(settings.i18.new_comment_was_added);
+                    // Show toast only if new comment was added, not deleted or
+                    // something like this
+                    if (currentCount > stateCount) {
+                        toast.success(settings.i18.new_comment_was_added);
+                    }
+
                     self.loadComments();
                 }
             })
             .catch(function (error) {
+                if('message' in error) {
+                    toast.error(error.message);
+                } else{
+                    toast.error(error);
+                }
             });
     };
 
