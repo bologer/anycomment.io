@@ -237,11 +237,15 @@ class CommentList extends AnyCommentComponent {
                     // Show toast only if new comment was added, not deleted or
                     // something like this
                     if (!self.state.isJustAdded && currentCount > stateCount) {
-                        toast.success(settings.i18.new_comment_was_added, {autoclose: false});
+                        toast.success(settings.i18.new_comment_was_added, {
+                            onClose: () => self.loadComments(),
+                            autoClose: false,
+                            position: toast.POSITION.TOP_CENTER,
+                            draggable: false,
+                        });
                     }
 
                     self.setState({isJustAdded: false});
-                    self.loadComments();
                 }
             })
             .catch(function (error) {
