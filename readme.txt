@@ -46,7 +46,8 @@ Yes! Join our [GitHub repository](https://github.com/bologer/anycomment.io) :)
 * Translated in English & Russian
 * Suitable for dark & light themes (on your choice)
 * Blazing-fast comments based on React
-* Provide User Agreement link, so users know how their data used
+* Alert notification in comment area when new comment was added (by clicking on alert, comment will be shown)
+* Provide `User Agreement` link, so users know how their data used (when no provided, no checkbox will be shown)
 * Social avatars shown globally
 * Likes in comments
 * See likes count per comment/user in admin
@@ -112,10 +113,10 @@ WordPress currently has default Privacy Policy page create for your. What you ca
 
 **Enhancements:**
 
-* Comments auto-update and alert on new comment, #63
+* Alert shown when new comment arrived, once clicked -> comments will be automatically refreshed, #63
 * Now social media avatar shown globally in admin (e.g. in pages, user.php, comment.php, etc), #61
 * Better layout for plugin news in admin, `New` label is shown for articles which are not older then 2 weeks, #62
-* Added caching, plugin news in dashboard are now cached
+* Added caching, plugin news in dashboard are now cached (no need to load them every time)
 
 **Fixes:**
 
