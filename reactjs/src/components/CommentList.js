@@ -28,6 +28,9 @@ class CommentList extends AnyCommentComponent {
             offset: options.limit,
             orderBy: 'id',
 
+            // Hold voolean whether current user just added comment or not
+            // primarily used to track toast of added new comments
+            isJustAdded: false,
 
             commentText: '',
             buttonText: settings.i18.button_send,
@@ -220,8 +223,8 @@ class CommentList extends AnyCommentComponent {
             })
             .then(function (response) {
 
-                let stateCount = parseInt(self.state.commentCount, 10);
-                let currentCount = parseInt(response.data, 10);
+                const stateCount = parseInt(self.state.commentCount, 10);
+                const currentCount = parseInt(response.data, 10);
 
                 if (currentCount &&
                     currentCount !== 0 &&
@@ -233,17 +236,18 @@ class CommentList extends AnyCommentComponent {
 
                     // Show toast only if new comment was added, not deleted or
                     // something like this
-                    if (currentCount > stateCount) {
-                        toast.success(settings.i18.new_comment_was_added);
+                    if (!self.state.isJustAdded && currentCount > stateCount) {
+                        toast.success(settings.i18.new_comment_was_added, {autoclose: false});
                     }
 
+                    self.setState({isJustAdded: false});
                     self.loadComments();
                 }
             })
             .catch(function (error) {
-                if('message' in error) {
+                if ('message' in error) {
                     toast.error(error.message);
-                } else{
+                } else {
                     toast.error(error);
                 }
             });
@@ -310,6 +314,7 @@ class CommentList extends AnyCommentComponent {
             buttonText: this.props.settings.i18.button_send,
             replyId: 0,
             editId: '',
+            isJustAdded: true,
         });
 
         this.loadComments();
