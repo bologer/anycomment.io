@@ -390,6 +390,171 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 			);
 		}
 
+
+		/**
+		 * top level menu:
+		 * callback functions
+		 *
+		 * @param bool $wrapper Whether to wrap for with header or not.
+		 */
+		public function page_html( $wrapper = true ) {
+			if ( ! current_user_can( 'manage_options' ) ) {
+				return;
+			}
+
+			if ( isset( $_GET['settings-updated'] ) ) {
+				add_settings_error( $this->alert_key, 'anycomment_message', __( 'Settings Saved', 'anycomment' ), 'updated' );
+			}
+
+			settings_errors( $this->alert_key );
+			?>
+			<?php if ( $wrapper ): ?>
+                <div class="wrap">
+                <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+			<?php endif; ?>
+            <form action="options.php" method="post" class="anycomment-form">
+				<?php
+				settings_fields( $this->option_group );
+
+				?>
+
+                <div class="anycomment-socials-setup">
+                    <aside>
+						<?php $this->do_menu( $this->page_slug ) ?>
+                    </aside>
+                    <div class="anycomment-socials-setup-container">
+						<?php
+						$this->do_settings_sections( $this->page_slug, false );
+						submit_button( __( 'Save', 'anycomment' ) );
+						?>
+                    </div>
+                </div>
+            </form>
+            <script src="<?= AnyComment()->plugin_url() ?>/assets/js/forms.js"></script>
+            <script src="<?= AnyComment()->plugin_url() ?>/assets/js/select2.min.js"></script>
+			<?php if ( $wrapper ): ?>
+                </div>
+			<?php endif; ?>
+			<?php
+		}
+
+		private function do_menu( $page ) {
+			global $wp_settings_sections, $wp_settings_fields;
+
+			if ( ! isset( $wp_settings_sections[ $page ] ) ) {
+				return;
+			}
+
+
+			echo '<ul class="anycomment-socials-menu">';
+			echo '<li class="loner"><a href="#"></a></li>';
+
+
+			/*
+			 * array (size=3)
+  'id' => string 'section_vk' (length=10)
+  'title' => string 'ВК' (length=4)
+  'callback' =>
+    object(Closure)[6740]
+      public 'this' =>
+        object(AnyCommentSocialSettings)[589]
+          protected 'option_group' => string 'anycomment-social-group' (length=23)
+          protected 'option_name' => string 'anycomment-social' (length=17)
+          protected 'page_slug' => string 'anycomment-settings-social' (length=26)
+          protected 'alert_key' => string 'anycomment-options-alert' (length=24)
+          protected 'default_options' => null
+          public 'options' => null
+
+
+
+			 * */
+			foreach ( (array) $wp_settings_sections[ $page ] as $section ) {
+				echo '<li><a href="#">' . $section['title'] . '</a></li>';
+			}
+
+			echo '</ul>';
+		}
+
+		/**
+		 * Custom wrapper over original WordPress core method.
+		 *
+		 * Part of the Settings API. Use this in a settings page callback function
+		 * to output all the sections and fields that were added to that $page with
+		 * add_settings_section() and add_settings_field()
+		 *
+		 * @global $wp_settings_sections Storage array of all settings sections added to admin pages
+		 * @global $wp_settings_fields Storage array of settings fields and info about their pages/sections
+		 * @since 0.0.45
+		 *
+		 * @param string $page The slug name of the page whose settings sections you want to output
+		 * @param bool Whether required to have header or not.
+		 */
+		private function do_settings_sections( $page, $includeHeader = true ) {
+			global $wp_settings_sections, $wp_settings_fields;
+
+			if ( ! isset( $wp_settings_sections[ $page ] ) ) {
+				return;
+			}
+
+			foreach ( (array) $wp_settings_sections[ $page ] as $section ) {
+				if ( $includeHeader && $section['title'] ) {
+					echo "<h2>{$section['title']}</h2>\n";
+				}
+
+				if ( $includeHeader && $section['callback'] ) {
+					call_user_func( $section['callback'], $section );
+				}
+
+				if ( ! isset( $wp_settings_fields ) || ! isset( $wp_settings_fields[ $page ] ) || ! isset( $wp_settings_fields[ $page ][ $section['id'] ] ) ) {
+					continue;
+				}
+				echo '<div id="social-tab-' . $section['id'] . '">';
+				echo '<table class="form-table">';
+				$this->do_settings_fields( $page, $section['id'] );
+				echo '</table>';
+				echo '</div>';
+			}
+		}
+
+		/**
+		 * Custom wrapper over original method.
+		 *
+		 * @global $wp_settings_fields Storage array of settings fields and their pages/sections
+		 *
+		 * @since 0.0.45
+		 *
+		 * @param string $page Slug title of the admin page who's settings fields you want to show.
+		 * @param string $section Slug title of the settings section who's fields you want to show.
+		 */
+		private function do_settings_fields( $page, $section ) {
+			global $wp_settings_fields;
+
+			if ( ! isset( $wp_settings_fields[ $page ][ $section ] ) ) {
+				return;
+			}
+
+			foreach ( (array) $wp_settings_fields[ $page ][ $section ] as $field ) {
+				$class = '';
+
+				if ( ! empty( $field['args']['class'] ) ) {
+					$class = ' class="' . esc_attr( $field['args']['class'] ) . '"';
+				}
+
+				echo "<tr{$class}>";
+
+				if ( ! empty( $field['args']['label_for'] ) ) {
+					echo '<th scope="row"><label for="' . esc_attr( $field['args']['label_for'] ) . '">' . $field['title'] . '</label></th>';
+				} else {
+					echo '<th scope="row">' . $field['title'] . '</th>';
+				}
+
+				echo '<td>';
+				call_user_func( $field['callback'], $field['args'] );
+				echo '</td>';
+				echo '</tr>';
+			}
+		}
+
 		/**
 		 * Check if user enter at least some information about socials.
 		 *
