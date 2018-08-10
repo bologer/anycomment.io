@@ -46,7 +46,26 @@ if ( ! class_exists( 'AnyCommentAdminPages' ) ) :
 		 */
 		private function init_hooks() {
 			add_action( 'admin_menu', [ $this, 'add_menu' ] );
+			add_action( 'admin_head', [ $this, 'add_menu_styles' ] );
 			add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_dashboard_scripts' ] );
+		}
+
+		/**
+		 * Add styles for menu.
+		 * Primary used for fixing icon size
+         * and the way it displays.
+		 */
+		public function add_menu_styles() {
+			?>
+            <style>
+                #toplevel_page_anycomment-dashboard .wp-menu-image img {
+                    height: 20px;
+                    width: auto;
+                    padding: 0;
+                    margin: 6px 0 0 3px;
+                }
+            </style>
+			<?php
 		}
 
 		/**

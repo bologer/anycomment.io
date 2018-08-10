@@ -113,15 +113,17 @@ WordPress currently has default Privacy Policy page create for your. What you ca
 
 **Enhancements:**
 
-* Alert shown when new comment arrived, once clicked -> comments will be automatically refreshed, #63
+* Alert shown when new comment was added. Comment list will be automatically refreshed on clicked on alert, #63
 * Now social media avatar shown globally in admin (e.g. in pages, user.php, comment.php, etc), #61
 * Better layout for plugin news in admin, `New` label is shown for articles which are not older then 2 weeks, #62
-* Added caching, plugin news in dashboard are now cached (no need to load them every time)
+* Added caching, plugin news in dashboard are now cached (no need to load them every time) and limited to 3
+* New design for setting up social networks, now tabbed and have (or if don't have yet will have set-up guides) guides to set-up each social media, #64
 
 **Fixes:**
 
 * When user did not have social profile URL it lead to clickable name but incorrect URL, #60
 * Do not load styles & scrips globally, only in plugin pages
+* Plugin icon in admin sidebar was not displaying correctly and was overflowing when menu was opened
 
 = 0.0.41 – 29.07.2018 =
 
