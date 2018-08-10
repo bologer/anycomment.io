@@ -5,16 +5,25 @@
   aside,
   &-container {
     display: inline-block;
+    float: left;
   }
 
   aside {
     width: 30%;
 
     ul {
+      margin: 0;
+      padding: 0;
+
       li {
         margin-bottom: 5px;
 
-        &.active {
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+
+        &.active,
+        &.current {
           a {
             position: relative;
 
@@ -40,6 +49,7 @@
           width: 100%;
           font-size: 24px;
           font-weight: 400;
+          box-shadow: none;
           @include border-radius(30px);
 
           &:hover,
@@ -50,14 +60,21 @@
           }
         }
       }
-
-      &:last-of-type {
-        margin-bottom: 0;
-      }
     }
   }
 
   &-container {
     width: 70%;
+    padding: 0 20px;
+
+    .social-tab.current {
+      display: block;
+    }
+
+    .social-tab {
+      display: none;
+      border: 2px solid #e5e5e5;
+      @include border-radius(6px);
+    }
   }
 }

@@ -449,30 +449,28 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 			echo '<ul class="anycomment-socials-menu">';
 			echo '<li class="loner"><a href="#"></a></li>';
 
-
-			/*
-			 * array (size=3)
-  'id' => string 'section_vk' (length=10)
-  'title' => string 'ВК' (length=4)
-  'callback' =>
-    object(Closure)[6740]
-      public 'this' =>
-        object(AnyCommentSocialSettings)[589]
-          protected 'option_group' => string 'anycomment-social-group' (length=23)
-          protected 'option_name' => string 'anycomment-social' (length=17)
-          protected 'page_slug' => string 'anycomment-settings-social' (length=26)
-          protected 'alert_key' => string 'anycomment-options-alert' (length=24)
-          protected 'default_options' => null
-          public 'options' => null
-
-
-
-			 * */
+			$i = 0;
 			foreach ( (array) $wp_settings_sections[ $page ] as $section ) {
-				echo '<li><a href="#">' . $section['title'] . '</a></li>';
+				echo '<li class="' . ( $i === 0 ? 'current' : '' ) . '" data-tab="' . $section['id'] . '"><a href="#social-tab-' . $section['id'] . '">' . $section['title'] . '</a></li>';
+				$i ++;
 			}
-
 			echo '</ul>';
+
+			?>
+            <script>
+                jQuery('.anycomment-socials-menu li').on('click', function () {
+                    var tab_id = '#social-tab-' + jQuery(this).attr('data-tab');
+
+                    jQuery('.anycomment-socials-menu li').removeClass('current');
+                    jQuery('.social-tab').removeClass('current');
+
+                    jQuery(this).addClass('current');
+                    jQuery(tab_id).addClass('current');
+
+                    return false;
+                })
+            </script>
+			<?php
 		}
 
 		/**
@@ -496,6 +494,7 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 				return;
 			}
 
+			$i = 0;
 			foreach ( (array) $wp_settings_sections[ $page ] as $section ) {
 				if ( $includeHeader && $section['title'] ) {
 					echo "<h2>{$section['title']}</h2>\n";
@@ -508,11 +507,13 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 				if ( ! isset( $wp_settings_fields ) || ! isset( $wp_settings_fields[ $page ] ) || ! isset( $wp_settings_fields[ $page ][ $section['id'] ] ) ) {
 					continue;
 				}
-				echo '<div id="social-tab-' . $section['id'] . '">';
+				echo '<div id="social-tab-' . $section['id'] . '" class="' . ( $i === 0 ? 'current' : '' ) . ' social-tab">';
 				echo '<table class="form-table">';
 				$this->do_settings_fields( $page, $section['id'] );
 				echo '</table>';
 				echo '</div>';
+
+				$i ++;
 			}
 		}
 

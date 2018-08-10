@@ -1,4 +1,4 @@
-<div class="anycomment-dashboard__tab" id="anycomment-dashboard">
+<div class="anycomment-tab anycomment-dashboard__tab" id="anycomment-dashboard">
     <div class="anycomment-dashboard__splitter">
         <div class="anycomment-dashboard__splitter-half anycomment-dashboard__splitter-half-commentators">
             <div class="anycomment-dashboard__splitter-half-center">
