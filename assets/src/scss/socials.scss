@@ -42,7 +42,7 @@
         }
 
         a {
-          padding: 15px 5px;
+          padding: 5px;
           color: #808080;
           background-color: #e9e9e9;
           display: block;
@@ -57,6 +57,14 @@
           &:focus {
             background-color: #bfbfbf;
             color: #fff;
+          }
+
+          img {
+            width: 41px;
+            height: 41px;
+            vertical-align: middle;
+            display: inline-block;
+            margin-right: 9px;
           }
         }
       }

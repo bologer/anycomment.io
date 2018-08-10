@@ -451,7 +451,10 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 
 			$i = 0;
 			foreach ( (array) $wp_settings_sections[ $page ] as $section ) {
-				echo '<li class="' . ( $i === 0 ? 'current' : '' ) . '" data-tab="' . $section['id'] . '"><a href="#social-tab-' . $section['id'] . '">' . $section['title'] . '</a></li>';
+				$path = sprintf( AnyComment()->plugin_url() . '/assets/img/icons/auth/%s.svg', str_replace( 'section_', 'social-', $section['id'] ) );
+				echo '<li class="' . ( $i === 0 ? 'current' : '' ) . '" data-tab="' . $section['id'] . '">
+				<a href="#social-tab-' . $section['id'] . '"><img src="' . $path . '" />' . $section['title'] . '</a>
+				</li>';
 				$i ++;
 			}
 			echo '</ul>';
