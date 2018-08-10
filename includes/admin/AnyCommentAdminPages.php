@@ -100,10 +100,6 @@ if ( ! class_exists( 'AnyCommentAdminPages' ) ) :
 
 			$cacheKey = 'anycomment-plugin-news';
 
-			if ( $per_page < 5 ) {
-				$per_page = 5;
-			}
-
 			if ( ( $news = AnyComment()->cache->get( $cacheKey ) ) !== null ) {
 				return json_decode( $news, true );
 			}
