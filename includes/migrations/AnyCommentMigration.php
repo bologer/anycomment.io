@@ -21,6 +21,7 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 	 */
 	private static $_list = [
 		'0.0.32' => [ 'version' => '0.0.32', 'description' => 'Create likes table' ],
+		'0.0.45' => [ 'version' => '0.0.45', 'description' => 'VK option name change from short "vk" to "vkontake"' ],
 	];
 
 	/**

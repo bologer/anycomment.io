@@ -25,9 +25,9 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		/**
 		 * VK Options
 		 */
-		const OPTION_VK_TOGGLE = 'social_vk_toggle_field';
-		const OPTION_VK_APP_ID = 'social_vk_app_id_field';
-		const OPTION_VK_SECRET = 'social_vk_app_secret_field';
+		const OPTION_VK_TOGGLE = 'social_vkontakte_toggle_field';
+		const OPTION_VK_APP_ID = 'social_vkontakte_app_id_field';
+		const OPTION_VK_SECRET = 'social_vkontakte_app_secret_field';
 
 		/**
 		 * Twitter options
@@ -108,7 +108,7 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 			 * VK
 			 */
 			add_settings_section(
-				'section_vk',
+				'section_vkontakte',
 				__( 'VK', "anycomment" ),
 				function () {
 					?>
@@ -128,7 +128,7 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 
 			$this->render_fields(
 				$this->page_slug,
-				'section_vk',
+				'section_vkontakte',
 				[
 					[
 						'id'          => self::OPTION_VK_TOGGLE,
@@ -438,6 +438,11 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 			<?php
 		}
 
+		/**
+		 * Menu displaying.
+		 *
+		 * @param string $page
+		 */
 		private function do_menu( $page ) {
 			global $wp_settings_sections, $wp_settings_fields;
 
@@ -445,14 +450,17 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 				return;
 			}
 
-
 			echo '<ul class="anycomment-socials-menu">';
 			echo '<li class="loner"><a href="#"></a></li>';
 
 			$i = 0;
 			foreach ( (array) $wp_settings_sections[ $page ] as $section ) {
+				$liClasses = ( $i == 0 ? 'current' : '' );
+
+				$liClasses .= ' ' . ( static::isEnabled( str_replace( 'section_', '', $section['id'] ) ) ? 'toggled' : '' );
+
 				$path = sprintf( AnyComment()->plugin_url() . '/assets/img/icons/auth/%s.svg', str_replace( 'section_', 'social-', $section['id'] ) );
-				echo '<li class="' . ( $i === 0 ? 'current' : '' ) . '" data-tab="' . $section['id'] . '">
+				echo '<li class="' . $liClasses . '" data-tab="' . $section['id'] . '">
 				<a href="#social-tab-' . $section['id'] . '"><img src="' . $path . '" />' . $section['title'] . '</a>
 				</li>';
 				$i ++;
@@ -462,7 +470,12 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 			?>
             <script>
                 jQuery('.anycomment-socials-menu li').on('click', function () {
-                    var tab_id = '#social-tab-' + jQuery(this).attr('data-tab');
+                    var data = jQuery(this).attr('data-tab') || '';
+                    var tab_id = '#social-tab-' + data;
+
+                    if (!data) {
+                        return false;
+                    }
 
                     jQuery('.anycomment-socials-menu li').removeClass('current');
                     jQuery('.social-tab').removeClass('current');
@@ -557,6 +570,17 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 				echo '</td>';
 				echo '</tr>';
 			}
+		}
+
+		/**
+		 * Check whether social enabled by name.
+		 *
+		 * @param string $name Social network name. Will be lowercased.
+		 *
+		 * @return mixed|null
+		 */
+		public static function isEnabled( $name ) {
+			return static::instance()->getOption( sprintf( 'social_%s_toggle_field', strtolower( $name ) ) ) !== null;
 		}
 
 		/**

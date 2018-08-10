@@ -22,11 +22,9 @@
           margin-bottom: 0;
         }
 
-        &.active,
-        &.current {
+        &.toggled {
           a {
             position: relative;
-
             &::after {
               content: '';
               position: absolute;
@@ -38,6 +36,14 @@
               background-color: #39b349;
               @include border-radius(50%);
             }
+          }
+        }
+
+        &.active,
+        &.current {
+          a {
+            background-color: #bfbfbf;
+            color: #fff;
           }
         }
 
