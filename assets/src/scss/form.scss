@@ -62,6 +62,7 @@ $border-color: #979797;
     @include border-radius(6px);
     color: $description-color;
     height: 50px;
+    box-shadow: none;
   }
 
   .form-table {

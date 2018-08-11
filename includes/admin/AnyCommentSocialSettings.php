@@ -451,7 +451,7 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 			}
 
 			echo '<ul class="anycomment-socials-menu">';
-			echo '<li class="loner"><a href="#"></a></li>';
+//			echo '<li class="loner"><a href="#"></a></li>';
 
 			$i = 0;
 			foreach ( (array) $wp_settings_sections[ $page ] as $section ) {
