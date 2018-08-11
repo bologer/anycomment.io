@@ -1,6 +1,20 @@
-
 .anycomment-socials-setup {
   width: 100%;
+
+  .form-table-wrapper.has-guide,
+  .form-table-guide {
+    display: inline-block;
+    float: left;
+  }
+
+  .form-table-wrapper.has-guide {
+    width: 70%;
+  }
+
+  .form-table-guide {
+    width: 30%;
+    padding: 20px 10px;
+  }
 
   aside,
   &-container {

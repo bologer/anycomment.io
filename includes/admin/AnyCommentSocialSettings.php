@@ -523,11 +523,36 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 				if ( ! isset( $wp_settings_fields ) || ! isset( $wp_settings_fields[ $page ] ) || ! isset( $wp_settings_fields[ $page ][ $section['id'] ] ) ) {
 					continue;
 				}
+
+				$social     = str_replace( 'section_', '', $section['id'] );
+				$guide_link = static::getGuide( [ 'social' => $social ] );
+
+
 				echo '<div id="social-tab-' . $section['id'] . '" class="' . ( $i === 0 ? 'current' : '' ) . ' social-tab">';
+				echo '<div class="form-table-wrapper ' . ( $guide_link !== null ? 'has-guide' : '' ) . '">';
 				echo '<table class="form-table">';
 				$this->do_settings_fields( $page, $section['id'] );
 				echo '</table>';
 				echo '</div>';
+
+				if ( $guide_link !== null ) {
+					$path = sprintf( AnyComment()->plugin_url() . '/assets/img/icons/auth/%s.svg', str_replace( 'section_', 'social-', $section['id'] ) );
+					?>
+                    <div class="form-table-guide">
+                        <div class="anycomment-guide-block">
+                            <div class="anycomment-guide-block-social-icon">
+                                <img src="<?= $path ?>" alt="">
+                            </div>
+                            <div class="anycomment-guide-block-header"><?= sprintf( __( "How To Set-Up %s", 'anycomment' ), $section['title'] ) ?></div>
+                            <div class="anycomment-guide-block-link">
+                                <a target="_blank" href="<?= $guide_link ?>"><?= __( "Read", 'anycomment' ) ?></a>
+                            </div>
+                        </div>
+                    </div>
+					<?php
+				}
+
+				echo '<div class="clearfix"></div></div>';
 
 				$i ++;
 			}
@@ -761,6 +786,68 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 */
 		public static function getOkAppSecret() {
 			return static::instance()->getOption( self::OPTION_OK_APP_SECRET );
+		}
+
+		/**
+		 * Get guide.
+		 *
+		 * @param null $options Options. See list below.
+		 * - native (bool) Takes language from WordPress and trying to get guide for it.
+		 * - lang (string) Use this language to search for guide.
+		 * - social (string) Social name. Will be lowecased.
+		 *
+		 * @return null|string NULL when no guide exists for native or specified lang or social, otherwise string.
+		 */
+		public static function getGuide( $options = null ) {
+			$isNative = isset( $options['native'] );
+			$lang     = isset( $options['lang'] ) ? trim( $options['lang'] ) : null;
+			$social   = isset( $options['social'] ) ? trim( $options['social'] ) : null;
+
+			if ( $social === null ) {
+				return null;
+			}
+
+			$searchLang = null;
+
+			if ( $isNative || $lang === null ) {
+				$searchLang = get_locale();
+
+				if ( strlen( $searchLang ) > 2 ) {
+					$searchLang = substr( $searchLang, 0, 2 );
+				}
+			}
+
+			$guides = static::getGuides();
+
+			// When there are guides for specified language
+			if ( ! isset( $guides[ $searchLang ] ) ) {
+				return null;
+			}
+
+			// When there are guides for language, but no for specific social
+			if ( ! isset( $guides[ $searchLang ][ $social ] ) ) {
+				return null;
+			}
+
+			return $guides[ $searchLang ][ $social ];
+		}
+
+		/**
+		 * Get list of available guides.
+		 *
+		 * @return array
+		 */
+		public static function getGuides() {
+			return [
+				'ru' => [
+					AnyCommentSocialAuth::SOCIAL_VKONTAKTE => 'https://anycomment.io/ru/api-vkontakte/',
+					AnyCommentSocialAuth::SOCIAL_TWITTER   => 'https://anycomment.io/ru/api-twitter/',
+				],
+				'en' => [
+					AnyCommentSocialAuth::SOCIAL_VKONTAKTE => 'https://anycomment.io/api-vkontakte/',
+					AnyCommentSocialAuth::SOCIAL_TWITTER   => 'https://anycomment.io/api-twitter/',
+				]
+			];
 		}
 	}
 endif;

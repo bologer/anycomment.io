@@ -503,6 +503,7 @@ body {
       &__text {
         width: 100%;
         margin: 5px 0;
+        overflow: hidden;
 
         p {
           color: $comment-color;
