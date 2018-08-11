@@ -124,6 +124,7 @@ WordPress currently has default Privacy Policy page create for your. What you ca
 * When user did not have social profile URL it lead to clickable name but incorrect URL, #60
 * Do not load styles & scrips globally, only in plugin pages
 * Plugin icon in admin sidebar was not displaying correctly and was overflowing when menu was opened
+* Newlines in comment are now displaying as breaks. Previously everything was as single line
 
 = 0.0.41 – 29.07.2018 =
 
