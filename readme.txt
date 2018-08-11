@@ -14,13 +14,17 @@ AnyComment allows you to have a better commenting experience in WordPress.
 
 > See [demo](https://anycomment.io/demo/)
 
-Are you tired of connecting different third-party commenting system to your website or having the default ones?
+AnyComment allows you to have a better commenting experience in WordPress.
 
-AnyComment is here to help you - it is a better commenting system for WordPress.
+All you need is:
 
-No dependency on third party services, all comments stored in your database.
+* choose social networks you prefer
+* configure API keys (we have guides translated in English & Russian if you do not know how)
+* you are done!
 
-You may connect your favorite social networks:
+And good new is - no dependency on third party services, all comments stored in your database.
+
+Here is the list of supported social networks:
 
 * Facebook
 * Google
@@ -30,11 +34,7 @@ You may connect your favorite social networks:
 * GitHub
 * and more to be added
 
-Dark & light themes available.
-
-AnyComment stands for simplicity, therefore comments have very simple user interface, it is up to you what other features to add.
-
-Ps. Comment will be actively supported. We would like to have your opinion on what could be improved or fixed. Thank you for using it!
+AnyComment stands for simplicity & speed. We value feedback, so if you have failures or any suggestions - please let us know about it!
 
 = Can I contribute? =
 
@@ -46,23 +46,21 @@ Yes! Join our [GitHub repository](https://github.com/bologer/anycomment.io) :)
 * Translated in English & Russian
 * Suitable for dark & light themes (on your choice)
 * Blazing-fast comments based on React
-* Alert notification in comment area when new comment was added (by clicking on alert, comment will be shown)
-* Provide `User Agreement` link, so users know how their data used (when no provided, no checkbox will be shown)
+* Alert notification in comment area when new comment was added (by clicking on alert, new comment will be shown)
+* Provide `Privacy Policy` link, so users know how their data processed and used (when not provided, no checkbox will be shown to users)
 * Social avatars shown globally
-* Likes in comments
-* See likes count per comment/user in admin
+* Likes (see likes count per comment/user in admin)
 * Edit/delete comments when you are the owner or have moderate permission(s) directly in client area
 * Assign default group for users who authorize via social network
 * See user's social profile URL in admin
-* Simple & informative dashboard with graphs to display number of comments over number of active user per certain period & most active commenting users
-* Comments do no inherit any of the currently active theme styles. Meaning that comments will not be broken by styles you have.
+* Simple & informative dashboard with graphs to display number of comments over number of users who were engaged in the conversation per certain period & most active users
+* Comments do no inherit any of the currently active theme styles. Meaning that comments will not be broken by styles you have
 * Get latest plugin update news directly in the dashboard, don't miss a thing
 * Integration with [Akismet](https://wordpress.org/plugins/akismet/) & [WP User Avatar](https://wordpress.org/plugins/wp-user-avatar/), to specify customized avatars
 
 = TODO features =
 * Option: customization of comment styles
 * Option: add option to allow guests to leave comments
-* Option: auto-update comments on new comments
 * Support more languages
 * Code highlighting
 * Markdown support
@@ -70,7 +68,7 @@ Yes! Join our [GitHub repository](https://github.com/bologer/anycomment.io) :)
 * Integration of more social networks: Dribble, etc
 * More widgets to be added on the page (sidebar, custom pages, etc)
 * Special moderator panel integrated into custom AnyComment pages (for easy comment moderation)
-* More statistics and analytics regarding comments...
+* More statistics and analytics...
 * And a lot more...
 
 == Screenshots ==
@@ -96,35 +94,28 @@ Facebook and Twitter are now require your website to have Privacy Policy.
 
 After [General Data Protection Regulation](https://en.wikipedia.org/wiki/General_Data_Protection_Regulation) (GDPR) regulation was made it is now required to have a link to Privacy Policy.
 
-Currently known problem is that it is NOT possible to start using Facebook API (only in test mode), until you specify `Privacy Policy URL` in their settings.
-
-Twitter is not that strict, and only does not provide email of the user when he is logged in.
-What You Can Do
-
-WordPress currently has default Privacy Policy page create for your. What you can is to add the following text there under "What personal data we collect and why we collect it" header:
-
-> When you authorize via some of the available social networks, we collects the following information about you: first name, last name, login (when available), avatar URL and email (when available or access given).
-> Some of the information may vary from social to social. For example, VK.com give access to email only when you accept it while authorizing.
-> We record information about only when social network allows us to have it.
+Read guide on how to create "Privacy Policy" page:
+- [English version](https://anycomment.io/how-to-create-privacy-policy-page-in-wordpress/)
+- [Russian version](https://anycomment.io/ru/kak-sozdat-stranitsu-politiki-konfidentsialnosti-v-wordpress/)
 
 == Changelog ==
 
-= 0.0.45 – 01.08.2018 =
+= 0.0.45 – 13.08.2018 =
 
 **Enhancements:**
 
-* Alert shown when new comment was added. Comment list will be automatically refreshed on clicked on alert, #63
-* Now social media avatar shown globally in admin (e.g. in pages, user.php, comment.php, etc), #61
+* Alert shown when new comment was added. Comment list will be automatically refreshed once clicked on alert, #63
+* Now social media avatar shown globally in admin (e.g. in `dashboard`, `user.php`, `comment.php`, etc), #61
 * Better layout for plugin news in admin, `New` label is shown for articles which are not older then 2 weeks, #62
-* Added caching, plugin news in dashboard are now cached (no need to load them every time) and limited to 3
-* New design for setting up social networks, now tabbed and have (or if don't have yet will have set-up guides) guides to set-up each social media, #64
+* Added caching for news in dashboard (no need to load them every time) and limited to 3
+* New design for setting up social networks, now tabbed and have (or if don't have yet will have set-up guides) guides on how to set-up each social media translated in English & Russian, #64, #66
 
 **Fixes:**
 
 * When user did not have social profile URL it lead to clickable name but incorrect URL, #60
 * Do not load styles & scrips globally, only in plugin pages
 * Plugin icon in admin sidebar was not displaying correctly and was overflowing when menu was opened
-* Newlines in comment are now displaying as breaks. Previously everything was as single line
+* Newlines in comment are now displaying correctly. Previously everything was as a single line
 
 = 0.0.41 – 29.07.2018 =
 

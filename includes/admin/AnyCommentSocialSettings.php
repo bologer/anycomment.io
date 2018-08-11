@@ -842,10 +842,12 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 				'ru' => [
 					AnyCommentSocialAuth::SOCIAL_VKONTAKTE => 'https://anycomment.io/ru/api-vkontakte/',
 					AnyCommentSocialAuth::SOCIAL_TWITTER   => 'https://anycomment.io/ru/api-twitter/',
+					AnyCommentSocialAuth::SOCIAL_FACEBOOK  => 'https://anycomment.io/ru/api-facebook/',
 				],
 				'en' => [
 					AnyCommentSocialAuth::SOCIAL_VKONTAKTE => 'https://anycomment.io/api-vkontakte/',
 					AnyCommentSocialAuth::SOCIAL_TWITTER   => 'https://anycomment.io/api-twitter/',
+					AnyCommentSocialAuth::SOCIAL_FACEBOOK  => 'https://anycomment.io/api-facebook/',
 				]
 			];
 		}
