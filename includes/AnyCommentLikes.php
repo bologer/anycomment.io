@@ -174,7 +174,7 @@ class AnyCommentLikes {
 				return false;
 			}
 
-			return $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $tableName WHERE `id`=%d", $lastId ) );
+			return $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $tableName WHERE `id`=%d LIMIT 1", $lastId ) );
 		}
 
 		return false;
