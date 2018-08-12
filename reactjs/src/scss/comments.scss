@@ -517,6 +517,40 @@ body {
         }
       }
 
+      .comment-attachments {
+        width: 100%;
+        display: block;
+        margin: 3px 0;
+        padding: 0;
+
+        li {
+          display: inline-block;
+          margin-right: 5px;
+          float: left;
+
+          .comment-attachment {
+            display: block;
+            width: 50px;
+            height: 50px;
+            background-color: #eee;
+            @include border-radius(3px);
+
+            &:hover {
+              background-color: darken(#eee, 3%);
+            }
+          }
+
+          .comment-attachment__link {
+            outline: 0;
+          }
+
+          .comment-attachment__image {
+            backgroud-size: cover;
+            background-position: center center;
+          }
+        }
+      }
+
       &__actions {
         width: 100%;
         display: block;
