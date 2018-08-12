@@ -532,6 +532,16 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 				echo '<div class="form-table-wrapper ' . ( $guide_link !== null ? 'has-guide' : '' ) . '">';
 				echo '<table class="form-table">';
 				$this->do_settings_fields( $page, $section['id'] );
+
+				?>
+                <tr>
+                    <td>
+                        <input type="text" id="<?= $social ?>-callback" onclick="this.select()" readonly="readonly"
+                               value="<?= AnyCommentSocialAuth::get_callback_url( $social ) ?>">
+                        <p class="description"><?= __( 'Callback URL', 'anycomment' ) ?></p>
+                    </td>
+                </tr>
+				<?php
 				echo '</table>';
 				echo '</div>';
 
@@ -840,14 +850,20 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		public static function getGuides() {
 			return [
 				'ru' => [
-					AnyCommentSocialAuth::SOCIAL_VKONTAKTE => 'https://anycomment.io/ru/api-vkontakte/',
-					AnyCommentSocialAuth::SOCIAL_TWITTER   => 'https://anycomment.io/ru/api-twitter/',
-					AnyCommentSocialAuth::SOCIAL_FACEBOOK  => 'https://anycomment.io/ru/api-facebook/',
+					AnyCommentSocialAuth::SOCIAL_VKONTAKTE     => 'https://anycomment.io/ru/api-vkontakte/',
+					AnyCommentSocialAuth::SOCIAL_TWITTER       => 'https://anycomment.io/ru/api-twitter/',
+					AnyCommentSocialAuth::SOCIAL_FACEBOOK      => 'https://anycomment.io/ru/api-facebook/',
+					AnyCommentSocialAuth::SOCIAL_GOOGLE        => 'https://anycomment.io/ru/api-google/',
+					AnyCommentSocialAuth::SOCIAL_ODNOKLASSNIKI => 'https://anycomment.io/ru/api-odnoklassniki/',
+					AnyCommentSocialAuth::SOCIAL_GITHUB        => 'https://anycomment.io/ru/api-github/',
 				],
 				'en' => [
-					AnyCommentSocialAuth::SOCIAL_VKONTAKTE => 'https://anycomment.io/api-vkontakte/',
-					AnyCommentSocialAuth::SOCIAL_TWITTER   => 'https://anycomment.io/api-twitter/',
-					AnyCommentSocialAuth::SOCIAL_FACEBOOK  => 'https://anycomment.io/api-facebook/',
+					AnyCommentSocialAuth::SOCIAL_VKONTAKTE     => 'https://anycomment.io/api-vkontakte/',
+					AnyCommentSocialAuth::SOCIAL_TWITTER       => 'https://anycomment.io/api-twitter/',
+					AnyCommentSocialAuth::SOCIAL_FACEBOOK      => 'https://anycomment.io/api-facebook/',
+					AnyCommentSocialAuth::SOCIAL_GOOGLE        => 'https://anycomment.io/api-google/',
+					AnyCommentSocialAuth::SOCIAL_ODNOKLASSNIKI => 'https://anycomment.io/ru/api-odnoklassniki/',
+					AnyCommentSocialAuth::SOCIAL_GITHUB        => 'https://anycomment.io/api-github/',
 				]
 			];
 		}

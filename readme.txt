@@ -19,8 +19,8 @@ AnyComment allows you to have a better commenting experience in WordPress.
 All you need is:
 
 * choose social networks you prefer
-* configure API keys (we have guides translated in English & Russian if you do not know how)
-* you are done!
+* configure API keys (we have guides translated in English & Russian to help you)
+* save & you are done!
 
 And good new is - no dependency on third party services, all comments stored in your database.
 
@@ -34,7 +34,7 @@ Here is the list of supported social networks:
 * GitHub
 * and more to be added
 
-AnyComment stands for simplicity & speed. We value feedback, so if you have failures or any suggestions - please let us know about it!
+AnyComment stands for simplicity & speed. We value feedback, so if you have failures or suggestions - please [let us know](https://wordpress.org/support/plugin/anycomment) about it!
 
 = Can I contribute? =
 
@@ -82,8 +82,8 @@ Yes! Join our [GitHub repository](https://github.com/bologer/anycomment.io) :)
 
 = Installation & Instructions =
 
-* Install via WordPress admin panel directly (or [download plugin](https://downloads.wordpress.org/plugin/anycomment.zip) and upload into the `/wp-content/plugins/anycomment/` directory)
-* Activate from `Plugins` section in admin panel
+* Install via WordPress admin panel directly (or [download plugin](https://downloads.wordpress.org/plugin/anycomment.zip) and upload into the `/wp-content/plugins/` directory)
+* Activate it from `Plugins` section in admin panel
 * Go to preferred social media and register to get API access (API key, secrets, etc)
 * Specify required API details in special social network settings
 * Go to some post and try to authorize using any of the enabled social networks and leave a comment!
@@ -108,7 +108,8 @@ Read guide on how to create "Privacy Policy" page:
 * Now social media avatar shown globally in admin (e.g. in `dashboard`, `user.php`, `comment.php`, etc), #61
 * Better layout for plugin news in admin, `New` label is shown for articles which are not older then 2 weeks, #62
 * Added caching for news in dashboard (no need to load them every time) and limited to 3
-* New design for setting up social networks, now tabbed and have (or if don't have yet will have set-up guides) guides on how to set-up each social media translated in English & Russian, #64, #66
+* New design for setting up social networks, now tabbed, #64
+* Each social now has guide availabe in English & Russian to help you with configurations, #66
 
 **Fixes:**
 
