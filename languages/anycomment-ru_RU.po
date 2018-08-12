@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-11 07:59+0000\n"
-"PO-Revision-Date: 2018-08-12 09:57+0000\n"
+"POT-Creation-Date: 2018-08-12 12:23+0000\n"
+"PO-Revision-Date: 2018-08-12 12:24+0000\n"
 "Last-Translator: admin <sasha.tesh@gmail.com>\n"
 "Language-Team: Русский\n"
 "Language: ru_RU\n"
@@ -173,7 +173,7 @@ msgid "Integration"
 msgstr "Интеграция"
 
 #: includes/admin/AnyCommentIntegrationSettings.php:87
-#: includes/admin/AnyCommentGenericSettings.php:154
+#: includes/admin/AnyCommentGenericSettings.php:159
 msgid "Generic"
 msgstr "Общие"
 
@@ -215,25 +215,25 @@ msgstr ""
 msgid "Settings Saved"
 msgstr "Настройки сохранены"
 
-#: includes/admin/AnyCommentGenericSettings.php:125
-#: includes/admin/AnyCommentGenericSettings.php:179
+#: includes/admin/AnyCommentGenericSettings.php:130
+#: includes/admin/AnyCommentGenericSettings.php:196
 msgid "Social Network Subscriber"
 msgstr "Подписчик соц. сети"
 
-#: includes/admin/AnyCommentGenericSettings.php:140
-#: includes/admin/AnyCommentGenericSettings.php:141 templates/admin/tabs.php:11
+#: includes/admin/AnyCommentGenericSettings.php:145
+#: includes/admin/AnyCommentGenericSettings.php:146 templates/admin/tabs.php:11
 msgid "Settings"
 msgstr "Настройки"
 
-#: includes/admin/AnyCommentGenericSettings.php:156
+#: includes/admin/AnyCommentGenericSettings.php:161
 msgid "Generic settings."
 msgstr "Общие настройки."
 
-#: includes/admin/AnyCommentGenericSettings.php:167
+#: includes/admin/AnyCommentGenericSettings.php:172
 msgid "Enable Comments"
 msgstr "Включить комментарии"
 
-#: includes/admin/AnyCommentGenericSettings.php:169
+#: includes/admin/AnyCommentGenericSettings.php:174
 msgid ""
 "When on, comments are visible. When off, default WordPress' comments shown. "
 "This can be used to configure social networks on fresh installation."
@@ -242,11 +242,27 @@ msgstr ""
 "от WordPress отображаются. Это может использоваться для настройки соц. сетей "
 "после первой установки. "
 
-#: includes/admin/AnyCommentGenericSettings.php:173
+#: includes/admin/AnyCommentGenericSettings.php:178
+msgid "Theme"
+msgstr "Тема"
+
+#: includes/admin/AnyCommentGenericSettings.php:182
+msgid "Dark"
+msgstr "Темный"
+
+#: includes/admin/AnyCommentGenericSettings.php:183
+msgid "Light"
+msgstr "Светлый"
+
+#: includes/admin/AnyCommentGenericSettings.php:186
+msgid "Choose comments theme."
+msgstr "Выбрать тему комментариев."
+
+#: includes/admin/AnyCommentGenericSettings.php:190
 msgid "Register User Group"
 msgstr "Группа зарегистрированного пользователя"
 
-#: includes/admin/AnyCommentGenericSettings.php:175
+#: includes/admin/AnyCommentGenericSettings.php:192
 msgid ""
 "When users will authorize via plugin, they are being registered and be "
 "assigned with group selected above."
@@ -254,15 +270,15 @@ msgstr ""
 "После авторизации через плагин, система автоматически создает профиль с "
 "выбранной группой выше. "
 
-#: includes/admin/AnyCommentGenericSettings.php:178
+#: includes/admin/AnyCommentGenericSettings.php:195
 msgid "Subscriber"
 msgstr "Подписчик"
 
-#: includes/admin/AnyCommentGenericSettings.php:185
+#: includes/admin/AnyCommentGenericSettings.php:202
 msgid "Number of Comments Loaded"
 msgstr "Кол-во комментариев при загрузке"
 
-#: includes/admin/AnyCommentGenericSettings.php:187
+#: includes/admin/AnyCommentGenericSettings.php:204
 msgid ""
 "Number of comments loaded on initial page load. For example, \"20\" will "
 "display 20 comments on the page and if you have 40 in total, at the very "
@@ -272,37 +288,32 @@ msgstr ""
 "20 комментариев, и если у вас всего 40, то в самом низу появится кнопка "
 "\"Загрузить еще\". Минимальное значение 5, максимальное - как указано. "
 
-#: includes/admin/AnyCommentGenericSettings.php:191
-msgid "Theme"
-msgstr "Тема"
+#: includes/admin/AnyCommentGenericSettings.php:208
+msgid "New Comment Alert"
+msgstr "Уведомление при новом комментарии"
 
-#: includes/admin/AnyCommentGenericSettings.php:195
-msgid "Dark"
-msgstr "Темный"
+#: includes/admin/AnyCommentGenericSettings.php:210
+msgid ""
+"Show alert on new comment. Once clicked on alert, new comment will be shown."
+msgstr ""
+"Показывать уведомление при новом комментарии. При нажатии на него, новый "
+"комментарий будет показан. "
 
-#: includes/admin/AnyCommentGenericSettings.php:196
-msgid "Light"
-msgstr "Светлый"
-
-#: includes/admin/AnyCommentGenericSettings.php:199
-msgid "Choose comments theme."
-msgstr "Выбрать тему комментариев."
-
-#: includes/admin/AnyCommentGenericSettings.php:203
+#: includes/admin/AnyCommentGenericSettings.php:214
 msgid "Load on Scroll"
 msgstr "Подгружать при сколле"
 
-#: includes/admin/AnyCommentGenericSettings.php:205
+#: includes/admin/AnyCommentGenericSettings.php:216
 msgid "Load comments when user scrolls to it."
 msgstr ""
 "Подгружать комментарии в момент когда пользователь прокрутил (проскроллил) к "
 "ним."
 
-#: includes/admin/AnyCommentGenericSettings.php:209
+#: includes/admin/AnyCommentGenericSettings.php:220
 msgid "Moderate First"
 msgstr "Сначала модерировать"
 
-#: includes/admin/AnyCommentGenericSettings.php:211
+#: includes/admin/AnyCommentGenericSettings.php:222
 msgid ""
 "Comment are not shown until they are approved by moderator. Users with "
 "ability to moderate comments will be ignored by filter."
@@ -311,11 +322,11 @@ msgstr ""
 "Пользователи, у которых есть права на управление комментариев не попадают "
 "под этот фильтр."
 
-#: includes/admin/AnyCommentGenericSettings.php:215
+#: includes/admin/AnyCommentGenericSettings.php:226
 msgid "Show Profile URL"
 msgstr "Показывать ссылку профиля"
 
-#: includes/admin/AnyCommentGenericSettings.php:217
+#: includes/admin/AnyCommentGenericSettings.php:228
 msgid ""
 "Show link to user in the social media when available (name of the user will "
 "be clickable)."
@@ -323,11 +334,11 @@ msgstr ""
 "Показывать ссылку на профиль пользователя в социальной сети когда доступно "
 "(имя будет кликабельным)."
 
-#: includes/admin/AnyCommentGenericSettings.php:221
+#: includes/admin/AnyCommentGenericSettings.php:232
 msgid "User Agreement Link"
 msgstr "Ссылка на пользовательское соглашение"
 
-#: includes/admin/AnyCommentGenericSettings.php:223
+#: includes/admin/AnyCommentGenericSettings.php:234
 msgid ""
 "Link to User Agreement, where described how your process users data once "
 "they authorize via social network and/or add new comment."
@@ -336,11 +347,11 @@ msgstr ""
 "обрабатываете пользовательскую информацию после того как они авторизуются на "
 "вашем ресурсе и/или добавят комментарий."
 
-#: includes/admin/AnyCommentGenericSettings.php:227
+#: includes/admin/AnyCommentGenericSettings.php:238
 msgid "Thanks"
 msgstr "Спасибо"
 
-#: includes/admin/AnyCommentGenericSettings.php:229
+#: includes/admin/AnyCommentGenericSettings.php:240
 msgid ""
 "Show AnyComment's link in the footer of comments. Copyright helps to bring "
 "awareness of such plugin and bring people to allow us to understand that it "
@@ -381,6 +392,7 @@ msgstr "ВК авторизация."
 #: includes/admin/AnyCommentSocialSettings.php:257
 #: includes/admin/AnyCommentSocialSettings.php:303
 #: includes/admin/AnyCommentSocialSettings.php:349
+#: includes/admin/AnyCommentSocialSettings.php:541
 msgid "Callback URL"
 msgstr "Callback URL"
 
@@ -568,12 +580,12 @@ msgstr ""
 "Введите секретный ключ. Вы можете это найти в официальном письме, "
 "отправленное вам на почту от Одноклассников."
 
-#: includes/admin/AnyCommentSocialSettings.php:546
+#: includes/admin/AnyCommentSocialSettings.php:556
 #, php-format
 msgid "How To Set-Up %s"
 msgstr "Как настроить %s"
 
-#: includes/admin/AnyCommentSocialSettings.php:548
+#: includes/admin/AnyCommentSocialSettings.php:558
 msgid "Read"
 msgstr "Читать"
 

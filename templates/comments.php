@@ -31,6 +31,7 @@ wp_localize_script( 'anycomment-react', 'anyCommentApiSettings', [
 		'theme'             => AnyCommentGenericSettings::getTheme(),
 		'isShowProfileUrl'  => AnyCommentGenericSettings::isShowProfileUrl(),
 		'userAgreementLink' => AnyCommentGenericSettings::getUserAgreementLink(),
+		'notifyOnNewComment' => AnyCommentGenericSettings::isNotifyOnNewComment(),
 	],
 	'user'         => AnyCommentUser::getSafeUser(),
 	'i18'          => [

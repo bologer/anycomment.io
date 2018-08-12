@@ -16,6 +16,11 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		const OPTION_THEME = 'option_theme';
 
 		/**
+		 * Notify about new comment.
+		 */
+		const OPTION_NOTIFY_ON_NEW_COMMENT = 'option_notify_on_new_comment';
+
+		/**
 		 * Checkbox whether plugin is active or not. Can be used to set-up API keys, etc,
 		 * before plugin is ready to be shown to users.
 		 */
@@ -169,6 +174,18 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'description' => esc_html( __( 'When on, comments are visible. When off, default WordPress\' comments shown. This can be used to configure social networks on fresh installation.', "anycomment" ) )
 					],
 					[
+						'id'          => self::OPTION_THEME,
+						'title'       => __( 'Theme', "anycomment" ),
+						'callback'    => 'input_select',
+						'args'        => [
+							'options' => [
+								self::THEME_DARK  => __( 'Dark', 'anycomment' ),
+								self::THEME_LIGHT => __( 'Light', 'anycomment' ),
+							]
+						],
+						'description' => esc_html( __( 'Choose comments theme.', "anycomment" ) )
+					],
+					[
 						'id'          => self::OPTION_REGISTER_DEFAULT_GROUP,
 						'title'       => __( 'Register User Group', "anycomment" ),
 						'callback'    => 'input_select',
@@ -187,16 +204,10 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'description' => esc_html( __( 'Number of comments loaded on initial page load. For example, "20" will display 20 comments on the page and if you have 40 in total, at the very bottom you will see button to load more. Min 5, max as defined.', "anycomment" ) )
 					],
 					[
-						'id'          => self::OPTION_THEME,
-						'title'       => __( 'Theme', "anycomment" ),
-						'callback'    => 'input_select',
-						'args'        => [
-							'options' => [
-								self::THEME_DARK  => __( 'Dark', 'anycomment' ),
-								self::THEME_LIGHT => __( 'Light', 'anycomment' ),
-							]
-						],
-						'description' => esc_html( __( 'Choose comments theme.', "anycomment" ) )
+						'id'          => self::OPTION_NOTIFY_ON_NEW_COMMENT,
+						'title'       => __( 'New Comment Alert', "anycomment" ),
+						'callback'    => 'input_checkbox',
+						'description' => esc_html( __( 'Show alert on new comment. Once clicked on alert, new comment will be shown.', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_LOAD_ON_SCROLL,
@@ -266,6 +277,15 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 */
 		public static function isShowProfileUrl() {
 			return static::instance()->getOption( self::OPTION_SHOW_PROFILE_URL ) !== null;
+		}
+
+		/**
+		 * Check whether it is required to notify with alert on new comment.
+		 *
+		 * @return bool
+		 */
+		public static function isNotifyOnNewComment() {
+			return static::instance()->getOption( self::OPTION_NOTIFY_ON_NEW_COMMENT) !== null;
 		}
 
 		/**

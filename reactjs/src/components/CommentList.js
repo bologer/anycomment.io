@@ -328,10 +328,13 @@ class CommentList extends AnyCommentComponent {
 
     componentDidMount() {
         this.loadComments();
-        const self = this;
-        setInterval(function () {
-            self.followNewComments();
-        }, 5000);
+
+        if (this.props.settings.options.notifyOnNewComment) {
+            const self = this;
+            setInterval(function () {
+                self.followNewComments();
+            }, 5000);
+        }
     }
 
     render() {
