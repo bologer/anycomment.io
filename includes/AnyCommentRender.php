@@ -31,12 +31,20 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 			if ( AnyCommentGenericSettings::isEnabled() && AnyCommentSocialSettings::hasAnySocial() ) {
 				add_filter( 'comments_template', [ $this, 'render_iframe' ] );
 
+				add_shortcode( 'anycomment', [ $this, 'base_shortcode' ] );
+
 				add_action( 'wp_ajax_iframe_comments', [ $this, 'iframe_comments' ] );
 				add_action( 'wp_ajax_nopriv_iframe_comments', [ $this, 'iframe_comments' ] );
-
-				add_action( 'wp_ajax_render_comments', [ $this, 'render_comments' ] );
-				add_action( 'wp_ajax_nopriv_render_comments', [ $this, 'render_comments' ] );
 			}
+		}
+
+		/**
+		 * Base shortcode to display comment box inside posts or pages.
+		 */
+		public function base_shortcode() {
+			wp_enqueue_script( 'anycomment-iframeResizer', AnyComment()->plugin_url() . '/assets/js/iframeResizer.min.js' );
+
+			include ANYCOMMENT_ABSPATH . 'templates/iframe.php';
 		}
 
 		/**
@@ -65,10 +73,6 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 			}
 
 			include ANYCOMMENT_ABSPATH . 'templates/comments.php';
-
-			if ( AnyComment()->errors->hasErrors() ) {
-				AnyComment()->errors->cleanErrors();
-			}
 
 			die();
 		}
@@ -125,30 +129,6 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 			] );
 
 			return count( $comments ) > 0 ? $comments : null;
-		}
-
-		/**
-		 * Use to get freshest list of comment list.
-		 */
-		public function render_comments() {
-			check_ajax_referer( 'load-comments-nonce' );
-
-			$postId = sanitize_text_field( $_POST['postId'] );
-			$limit  = sanitize_text_field( $_POST['limit'] );
-			$sort   = sanitize_text_field( $_POST['sort'] );
-
-			if ( empty( $postId ) ) {
-				echo AnyComment()->json_error( __( "No post ID specified", 'anycomment' ) );
-				wp_die();
-			}
-
-			if ( ! get_post_status( $postId ) ) {
-				echo AnyComment()->json_error( sprintf( __( "Unable to find post with ID #%s", 'anycomment' ), $postId ) );
-				wp_die();
-			}
-
-			do_action( 'anycomment_comments', $postId, $limit, $sort );
-			wp_die();
 		}
 
 		/**

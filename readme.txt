@@ -111,6 +111,7 @@ Read guide on how to create "Privacy Policy" page:
 * Added caching for news in dashboard (no need to load them every time) and limited to 3
 * New design for setting up social networks, now tabbed, #64
 * Each social now has guide availabe in English & Russian to help you with configurations, #66
+* Added base plugin shortcode: `[anycomment]` which displaying comments where placed, #67
 
 **Fixes:**
 
