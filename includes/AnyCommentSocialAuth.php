@@ -19,6 +19,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		const SOCIAL_GOOGLE = 'google';
 		const SOCIAL_GITHUB = 'github';
 		const SOCIAL_ODNOKLASSNIKI = 'odnoklassniki';
+		const SOCIAL_INSTAGRAM = 'instagram';
 
 		/**
 		 * @var \Hybridauth\Hybridauth
@@ -39,7 +40,8 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 			self::SOCIAL_TWITTER       => 'Twitter',
 			self::SOCIAL_GOOGLE        => 'Google',
 			self::SOCIAL_GITHUB        => 'GitHub',
-			self::SOCIAL_ODNOKLASSNIKI => 'Odnoklassniki'
+			self::SOCIAL_ODNOKLASSNIKI => 'Odnoklassniki',
+			self::SOCIAL_INSTAGRAM     => 'Instagram'
 		];
 
 		protected static $rest_prefix = 'anycomment';
@@ -219,6 +221,14 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 							'secret' => AnyCommentSocialSettings::getOkAppSecret()
 						],
 						'callback' => static::get_ok_callback(),
+					],
+					self::$providers[ self::SOCIAL_INSTAGRAM ]     => [
+						'enabled'  => AnyCommentSocialSettings::isInstagramOn(),
+						'keys'     => [
+							'id'     => AnyCommentSocialSettings::getInstagramClientId(),
+							'secret' => AnyCommentSocialSettings::getInstagramClientSecret()
+						],
+						'callback' => static::get_instagram_callback(),
 					]
 				],
 			];
@@ -265,6 +275,17 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		 */
 		public static function get_ok_callback( $redirect = null ) {
 			return static::get_callback_url( self::SOCIAL_ODNOKLASSNIKI, $redirect );
+		}
+
+		/**
+		 * Get ok callback URL.
+		 *
+		 * @param null|string $redirect Redirect URL added to the link.
+		 *
+		 * @return string
+		 */
+		public static function get_instagram_callback( $redirect = null ) {
+			return static::get_callback_url( self::SOCIAL_INSTAGRAM, $redirect );
 		}
 
 		/**

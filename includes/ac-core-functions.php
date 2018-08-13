@@ -83,6 +83,12 @@ function anycomment_login_with( $html = false, $redirectUrl = null ) {
 			'label'   => __( 'Odnoklassniki', "anycomment" ),
 			'visible' => AnyCommentSocialSettings::isOkOn()
 		],
+		AnyCommentSocialAuth::SOCIAL_INSTAGRAM     => [
+			'slug'    => AnyCommentSocialAuth::SOCIAL_INSTAGRAM,
+			'url'     => AnyCommentSocialAuth::get_instagram_callback( $redirectUrl ),
+			'label'   => __( 'Instagram', "anycomment" ),
+			'visible' => AnyCommentSocialSettings::isInstagramOn()
+		],
 	];
 
 	if ( count( $socials ) <= 0 ) {
@@ -213,7 +219,7 @@ function anycomment_comment_body( $comment ) {
 		<?php do_action( 'anycomment_author', $comment ) ?>
 
         <div class="comment-single-body__text">
-            <p><?= sanitize_text_field($comment->comment_content) ?></p>
+            <p><?= sanitize_text_field( $comment->comment_content ) ?></p>
         </div>
 
 		<?php do_action( 'anycomment_actions_part', $comment ) ?>

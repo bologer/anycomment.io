@@ -67,6 +67,14 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 
 
 		/**
+		 * Instagram
+		 */
+		const OPTION_INSTAGRAM_TOGGLE = 'social_instagram_toggle_field';
+		const OPTION_INSTAGRAM_CLIENT_ID = 'social_instagram_client_id_field';
+		const OPTION_INSTAGRAM_CLIENT_SECRET = 'social_instagram_client_secret_field';
+
+
+		/**
 		 * AC_SocialSettingPage constructor.
 		 *
 		 * @param bool $init If required to init the model.
@@ -388,6 +396,52 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 					]
 				]
 			);
+
+			/**
+			 * GitHub
+			 */
+			add_settings_section(
+				'section_instagram',
+				__( 'Instagram', "anycomment" ),
+				function () {
+					?>
+                    <p><?= __( 'Instagram authorization settings.', "anycomment" ) ?></p>
+                    <table class="form-table">
+                        <tr>
+                            <th><label for="instagram-callback"><?= __( 'Callback URL', 'anycomment' ) ?></label></th>
+                            <td><input type="text" id="instagram-callback" onclick="this.select()" readonly="readonly"
+                                       value="<?= AnyCommentSocialAuth::get_instagram_callback() ?>"></td>
+                        </tr>
+                    </table>
+					<?php
+				},
+				$this->page_slug
+			);
+
+			$this->render_fields(
+				$this->page_slug,
+				'section_instagram',
+				[
+					[
+						'id'          => self::OPTION_INSTAGRAM_TOGGLE,
+						'title'       => __( 'Enable', "anycomment" ),
+						'callback'    => 'input_checkbox',
+						'description' => __( 'Allow Instagram authorization', "anycomment" )
+					],
+					[
+						'id'          => self::OPTION_INSTAGRAM_CLIENT_ID,
+						'title'       => __( 'Client ID', "anycomment" ),
+						'callback'    => 'input_text',
+						'description' => sprintf( __( 'Enter client id. Can be found in <a href="%s" target="_blank">Manage Clients</a>', "anycomment" ), 'https://www.instagram.com/developer/clients/manage/' )
+					],
+					[
+						'id'          => self::OPTION_INSTAGRAM_CLIENT_SECRET,
+						'title'       => __( 'Client Secret', "anycomment" ),
+						'callback'    => 'input_text',
+						'description' => sprintf( __( 'Enter client secret. Can be found in <a href="%s" target="_blank">Manage Clients</a>', "anycomment" ), 'https://www.instagram.com/developer/clients/manage/' )
+					]
+				]
+			);
 		}
 
 
@@ -679,6 +733,33 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 */
 		public static function getGithubSecretKey() {
 			return static::instance()->getOption( self::OPTION_GITHUB_SECRET );
+		}
+
+		/**
+		 * Check whether Instagram social is on.
+		 *
+		 * @return bool
+		 */
+		public static function isInstagramOn() {
+			return static::instance()->getOption( self::OPTION_INSTAGRAM_TOGGLE ) !== null;
+		}
+
+		/**
+		 * Get Instagram client ID.
+		 *
+		 * @return int|null
+		 */
+		public static function getInstagramClientId() {
+			return static::instance()->getOption( self::OPTION_INSTAGRAM_CLIENT_ID );
+		}
+
+		/**
+		 * Get Instagram secret key.
+		 *
+		 * @return string|null
+		 */
+		public static function getInstagramClientSecret() {
+			return static::instance()->getOption( self::OPTION_INSTAGRAM_CLIENT_SECRET );
 		}
 
 		/**

@@ -135,12 +135,8 @@ class Comment extends AnyCommentComponent {
         const youtubeRe = /(^(https?:\/\/)?((www\.)?youtube\.com|youtu\.?be)\/.+$)/gi;
         const imageRe = /((http(s?):)([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png|svg))/gi;
 
-
-
-
         const youtubeMatches = comment.content.match(youtubeRe);
         const imageMatches = comment.content.match(imageRe);
-
 
         if (youtubeMatches) {
             for (let i = 0; i < youtubeMatches.length; i++) {
@@ -159,13 +155,10 @@ class Comment extends AnyCommentComponent {
             }
         }
 
-
-
         if (!attachments) {
             return null;
         }
-
-
+        
         return <ul className="comment-attachments clearfix">{attachments}</ul>;
     }
 

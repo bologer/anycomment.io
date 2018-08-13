@@ -113,6 +113,7 @@ Read guide on how to create "Privacy Policy" page:
 * Each social now has guide availabe in English & Russian to help you with configurations, #66
 * Plugin shortcode: `[anycomment]`. Displays comment box, #67
 * Now links, images or videos (e.g. YouTube) displayed as attachments under comment text, #69
+* Added Instagram as authorization option, #72
 
 **Fixes:**
 
