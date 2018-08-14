@@ -21,6 +21,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		const SOCIAL_ODNOKLASSNIKI = 'odnoklassniki';
 		const SOCIAL_INSTAGRAM = 'instagram';
 		const SOCIAL_TWITCH = 'twitch';
+		const SOCIAL_DRIBBBLE = 'dribble';
 
 		/**
 		 * @var \Hybridauth\Hybridauth
@@ -43,7 +44,8 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 			self::SOCIAL_GITHUB        => 'GitHub',
 			self::SOCIAL_ODNOKLASSNIKI => 'Odnoklassniki',
 			self::SOCIAL_INSTAGRAM     => 'Instagram',
-			self::SOCIAL_TWITCH        => 'TwitchTV'
+			self::SOCIAL_TWITCH        => 'TwitchTV',
+			self::SOCIAL_DRIBBBLE      => 'Dribble',
 		];
 
 		protected static $rest_prefix = 'anycomment';
@@ -239,6 +241,14 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 							'secret' => AnyCommentSocialSettings::getTwitchClientSecret()
 						],
 						'callback' => static::get_twitch_callback(),
+					],
+					self::$providers[ self::SOCIAL_DRIBBBLE ]      => [
+						'enabled'  => AnyCommentSocialSettings::isDribbbleOn(),
+						'keys'     => [
+							'id'     => AnyCommentSocialSettings::getDribbbleClientId(),
+							'secret' => AnyCommentSocialSettings::getDribbbleClientSecret()
+						],
+						'callback' => static::get_dribbble_callback(),
 					]
 				],
 			];
@@ -288,7 +298,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		}
 
 		/**
-		 * Get ok callback URL.
+		 * Get Odnoklassniki callback URL.
 		 *
 		 * @param null|string $redirect Redirect URL added to the link.
 		 *
@@ -299,7 +309,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		}
 
 		/**
-		 * Get twitch callback URL.
+		 * Get Twitch callback URL.
 		 *
 		 * @param null|string $redirect Redirect URL added to the link.
 		 *
@@ -307,6 +317,17 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		 */
 		public static function get_twitch_callback( $redirect = null ) {
 			return static::get_callback_url( self::SOCIAL_TWITCH, $redirect );
+		}
+
+		/**
+		 * Get Dribble callback URL.
+		 *
+		 * @param null|string $redirect Redirect URL added to the link.
+		 *
+		 * @return string
+		 */
+		public static function get_dribbble_callback( $redirect = null ) {
+			return static::get_callback_url( self::SOCIAL_DRIBBBLE, $redirect );
 		}
 
 		/**

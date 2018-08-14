@@ -65,7 +65,7 @@ Yes! Join our [GitHub repository](https://github.com/bologer/anycomment.io) :)
 * Code highlighting
 * Markdown support
 * Integration of: Google's reCaptcha
-* Integration of more social networks: Dribble, etc
+* Add Yahoo as authorization option
 * More widgets to be added on the page (sidebar, custom pages, etc)
 * Special moderator panel integrated into custom AnyComment pages (for easy comment moderation)
 * More statistics and analytics...
@@ -104,14 +104,14 @@ Read guide on how to create "Privacy Policy" page:
 
 **Enhancements:**
 
-* Added Instagram & Twitch as authorization option, #72
+* Added Instagram, Dribble and Twitch as authorization option, #72
 * Alert shown when new comment was added. Comment list will be automatically refreshed once clicked on alert, #63
 * Added option to enabled/disable alert nofitication about new comment, #63
 * Now social media avatar shown globally in admin (e.g. in `dashboard`, `user.php`, `comment.php`, etc), #61
 * Better layout for plugin news in admin, `New` label is shown for articles which are not older then 2 weeks, #62
 * Added caching for news in dashboard (no need to load them every time) and limited to 3
 * New design for setting up social networks, now tabbed, #64
-* Added guides English & Russian guides for Vkontakte, Facebook, Twitter, Google, GitHub, Instagram, Twitch, Odnoklassniki to help you with configurations, #66
+* Added guides English & Russian guides for Vkontakte, Facebook, Twitter, Google, GitHub, Odnoklassniki, Instagram, Twitch, Dribbbles to help you with configurations, #66
 * Added base plugin shortcode - `[anycomment]` to displays comment box, #67
 * Now links, images or videos (e.g. YouTube) displayed as attachments under comment text, #69
 

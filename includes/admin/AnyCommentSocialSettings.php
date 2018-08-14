@@ -80,6 +80,13 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		const OPTION_TWITCH_CLIENT_ID = 'social_twitch_client_id_field';
 		const OPTION_TWITCH_CLIENT_SECRET = 'social_twitch_client_secret_field';
 
+		/**
+		 * Dribbble
+		 */
+		const OPTION_DRIBBBLE_TOGGLE = 'social_dribbble_toggle_field';
+		const OPTION_DRIBBBLE_CLIENT_ID = 'social_dribbble_client_id_field';
+		const OPTION_DRIBBBLE_CLIENT_SECRET = 'social_dribbble_client_secret_field';
+
 
 		/**
 		 * AC_SocialSettingPage constructor.
@@ -496,6 +503,52 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 					]
 				]
 			);
+
+			/**
+			 * Twitch
+			 */
+			add_settings_section(
+				'section_dribbble',
+				__( 'Dribbble', "anycomment" ),
+				function () {
+					?>
+                    <p><?= __( 'Dribbble authorization settings.', "anycomment" ) ?></p>
+                    <table class="form-table">
+                        <tr>
+                            <th><label for="dribbble-callback"><?= __( 'Callback URL', 'anycomment' ) ?></label></th>
+                            <td><input type="text" id="dribbble-callback" onclick="this.select()" readonly="readonly"
+                                       value="<?= AnyCommentSocialAuth::get_dribbble_callback() ?>"></td>
+                        </tr>
+                    </table>
+					<?php
+				},
+				$this->page_slug
+			);
+
+			$this->render_fields(
+				$this->page_slug,
+				'section_dribbble',
+				[
+					[
+						'id'          => self::OPTION_DRIBBBLE_TOGGLE,
+						'title'       => __( 'Enable', "anycomment" ),
+						'callback'    => 'input_checkbox',
+						'description' => __( 'Allow Dribbble authorization', "anycomment" )
+					],
+					[
+						'id'          => self::OPTION_DRIBBBLE_CLIENT_ID,
+						'title'       => __( 'Client ID', "anycomment" ),
+						'callback'    => 'input_text',
+						'description' => sprintf( __( 'Enter client id. It can be found in the <a href="%s" target="_blank">your applications</a>', "anycomment" ), 'https://dribbble.com/account/applications' )
+					],
+					[
+						'id'          => self::OPTION_DRIBBBLE_CLIENT_SECRET,
+						'title'       => __( 'Client Secret', "anycomment" ),
+						'callback'    => 'input_text',
+						'description' => sprintf( __( 'Enter client secret. It can be found in the <a href="%s" target="_blank">your applications</a>', "anycomment" ), 'https://dribbble.com/account/applications' )
+					]
+				]
+			);
 		}
 
 
@@ -828,7 +881,7 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		/**
 		 * Get Twitch client ID.
 		 *
-		 * @return int|null
+		 * @return string|null
 		 */
 		public static function getTwitchClientId() {
 			return static::instance()->getOption( self::OPTION_TWITCH_CLIENT_ID );
@@ -841,6 +894,33 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 */
 		public static function getTwitchClientSecret() {
 			return static::instance()->getOption( self::OPTION_TWITCH_CLIENT_SECRET );
+		}
+
+		/**
+		 * Check whether Dribbble social is on.
+		 *
+		 * @return bool
+		 */
+		public static function isDribbbleOn() {
+			return static::instance()->getOption( self::OPTION_DRIBBBLE_TOGGLE ) !== null;
+		}
+
+		/**
+		 * Get Dribbble client ID.
+		 *
+		 * @return string|null
+		 */
+		public static function getDribbbleClientId() {
+			return static::instance()->getOption( self::OPTION_DRIBBBLE_CLIENT_ID );
+		}
+
+		/**
+		 * Get Dribbble secret key.
+		 *
+		 * @return string|null
+		 */
+		public static function getDribbbleClientSecret() {
+			return static::instance()->getOption( self::OPTION_DRIBBBLE_CLIENT_SECRET );
 		}
 
 		/**
@@ -1030,6 +1110,7 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 					AnyCommentSocialAuth::SOCIAL_GITHUB        => 'https://anycomment.io/api-github/',
 					AnyCommentSocialAuth::SOCIAL_INSTAGRAM     => 'https://anycomment.io/api-instagram/',
 					AnyCommentSocialAuth::SOCIAL_TWITCH        => 'https://anycomment.io/api-twitch/',
+					AnyCommentSocialAuth::SOCIAL_DRIBBBLE      => 'https://anycomment.io/api-dribbble/',
 				]
 			];
 		}

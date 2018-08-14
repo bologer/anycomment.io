@@ -95,6 +95,12 @@ function anycomment_login_with( $html = false, $redirectUrl = null ) {
 			'label'   => __( 'Twitch', "anycomment" ),
 			'visible' => AnyCommentSocialSettings::isTwitchOn()
 		],
+		AnyCommentSocialAuth::SOCIAL_DRIBBBLE        => [
+			'slug'    => AnyCommentSocialAuth::SOCIAL_DRIBBBLE,
+			'url'     => AnyCommentSocialAuth::get_dribbble_callback( $redirectUrl ),
+			'label'   => __( 'Dribbble', "anycomment" ),
+			'visible' => AnyCommentSocialSettings::isDribbbleOn()
+		],
 	];
 
 	if ( count( $socials ) <= 0 ) {
