@@ -89,6 +89,12 @@ function anycomment_login_with( $html = false, $redirectUrl = null ) {
 			'label'   => __( 'Instagram', "anycomment" ),
 			'visible' => AnyCommentSocialSettings::isInstagramOn()
 		],
+		AnyCommentSocialAuth::SOCIAL_TWITCH        => [
+			'slug'    => AnyCommentSocialAuth::SOCIAL_TWITCH,
+			'url'     => AnyCommentSocialAuth::get_twitch_callback( $redirectUrl ),
+			'label'   => __( 'Twitch', "anycomment" ),
+			'visible' => AnyCommentSocialSettings::isTwitchOn()
+		],
 	];
 
 	if ( count( $socials ) <= 0 ) {

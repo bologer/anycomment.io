@@ -20,6 +20,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		const SOCIAL_GITHUB = 'github';
 		const SOCIAL_ODNOKLASSNIKI = 'odnoklassniki';
 		const SOCIAL_INSTAGRAM = 'instagram';
+		const SOCIAL_TWITCH = 'twitch';
 
 		/**
 		 * @var \Hybridauth\Hybridauth
@@ -41,7 +42,8 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 			self::SOCIAL_GOOGLE        => 'Google',
 			self::SOCIAL_GITHUB        => 'GitHub',
 			self::SOCIAL_ODNOKLASSNIKI => 'Odnoklassniki',
-			self::SOCIAL_INSTAGRAM     => 'Instagram'
+			self::SOCIAL_INSTAGRAM     => 'Instagram',
+			self::SOCIAL_TWITCH        => 'TwitchTV'
 		];
 
 		protected static $rest_prefix = 'anycomment';
@@ -229,6 +231,14 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 							'secret' => AnyCommentSocialSettings::getInstagramClientSecret()
 						],
 						'callback' => static::get_instagram_callback(),
+					],
+					self::$providers[ self::SOCIAL_TWITCH ]        => [
+						'enabled'  => AnyCommentSocialSettings::isTwitchOn(),
+						'keys'     => [
+							'id'     => AnyCommentSocialSettings::getTwitchClientId(),
+							'secret' => AnyCommentSocialSettings::getTwitchClientSecret()
+						],
+						'callback' => static::get_twitch_callback(),
 					]
 				],
 			];
@@ -286,6 +296,17 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		 */
 		public static function get_instagram_callback( $redirect = null ) {
 			return static::get_callback_url( self::SOCIAL_INSTAGRAM, $redirect );
+		}
+
+		/**
+		 * Get twitch callback URL.
+		 *
+		 * @param null|string $redirect Redirect URL added to the link.
+		 *
+		 * @return string
+		 */
+		public static function get_twitch_callback( $redirect = null ) {
+			return static::get_callback_url( self::SOCIAL_TWITCH, $redirect );
 		}
 
 		/**

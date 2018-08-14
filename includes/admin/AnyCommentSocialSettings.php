@@ -73,6 +73,13 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		const OPTION_INSTAGRAM_CLIENT_ID = 'social_instagram_client_id_field';
 		const OPTION_INSTAGRAM_CLIENT_SECRET = 'social_instagram_client_secret_field';
 
+		/**
+		 * Twitch
+		 */
+		const OPTION_TWITCH_TOGGLE = 'social_twitch_toggle_field';
+		const OPTION_TWITCH_CLIENT_ID = 'social_twitch_client_id_field';
+		const OPTION_TWITCH_CLIENT_SECRET = 'social_twitch_client_secret_field';
+
 
 		/**
 		 * AC_SocialSettingPage constructor.
@@ -398,7 +405,7 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 			);
 
 			/**
-			 * GitHub
+			 * Instagram
 			 */
 			add_settings_section(
 				'section_instagram',
@@ -439,6 +446,53 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 						'title'       => __( 'Client Secret', "anycomment" ),
 						'callback'    => 'input_text',
 						'description' => sprintf( __( 'Enter client secret. Can be found in <a href="%s" target="_blank">Manage Clients</a>', "anycomment" ), 'https://www.instagram.com/developer/clients/manage/' )
+					]
+				]
+			);
+
+
+			/**
+			 * Twitch
+			 */
+			add_settings_section(
+				'section_twitch',
+				__( 'Twitch', "anycomment" ),
+				function () {
+					?>
+                    <p><?= __( 'Twitch authorization settings.', "anycomment" ) ?></p>
+                    <table class="form-table">
+                        <tr>
+                            <th><label for="twitch-callback"><?= __( 'Callback URL', 'anycomment' ) ?></label></th>
+                            <td><input type="text" id="twitch-callback" onclick="this.select()" readonly="readonly"
+                                       value="<?= AnyCommentSocialAuth::get_twitch_callback() ?>"></td>
+                        </tr>
+                    </table>
+					<?php
+				},
+				$this->page_slug
+			);
+
+			$this->render_fields(
+				$this->page_slug,
+				'section_twitch',
+				[
+					[
+						'id'          => self::OPTION_TWITCH_TOGGLE,
+						'title'       => __( 'Enable', "anycomment" ),
+						'callback'    => 'input_checkbox',
+						'description' => __( 'Allow Twitch authorization', "anycomment" )
+					],
+					[
+						'id'          => self::OPTION_TWITCH_CLIENT_ID,
+						'title'       => __( 'Client ID', "anycomment" ),
+						'callback'    => 'input_text',
+						'description' => sprintf( __( 'Enter client id. It can be found in the <a href="%s" target="_blank">apps</a>', "anycomment" ), 'https://glass.twitch.tv/console/apps' )
+					],
+					[
+						'id'          => self::OPTION_TWITCH_CLIENT_SECRET,
+						'title'       => __( 'Client Secret', "anycomment" ),
+						'callback'    => 'input_text',
+						'description' => sprintf( __( 'Enter client secret. It can be found in the <a href="%s" target="_blank">apps</a>', "anycomment" ), 'https://glass.twitch.tv/console/apps' )
 					]
 				]
 			);
@@ -763,6 +817,33 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		}
 
 		/**
+		 * Check whether Twitch social is on.
+		 *
+		 * @return bool
+		 */
+		public static function isTwitchOn() {
+			return static::instance()->getOption( self::OPTION_TWITCH_TOGGLE ) !== null;
+		}
+
+		/**
+		 * Get Twitch client ID.
+		 *
+		 * @return int|null
+		 */
+		public static function getTwitchClientId() {
+			return static::instance()->getOption( self::OPTION_TWITCH_CLIENT_ID );
+		}
+
+		/**
+		 * Get Twitch secret key.
+		 *
+		 * @return string|null
+		 */
+		public static function getTwitchClientSecret() {
+			return static::instance()->getOption( self::OPTION_TWITCH_CLIENT_SECRET );
+		}
+
+		/**
 		 * Check whether Twitter is on.
 		 *
 		 * @return bool
@@ -937,6 +1018,8 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 					AnyCommentSocialAuth::SOCIAL_GOOGLE        => 'https://anycomment.io/ru/api-google/',
 					AnyCommentSocialAuth::SOCIAL_ODNOKLASSNIKI => 'https://anycomment.io/ru/api-odnoklassniki/',
 					AnyCommentSocialAuth::SOCIAL_GITHUB        => 'https://anycomment.io/ru/api-github/',
+					AnyCommentSocialAuth::SOCIAL_INSTAGRAM     => 'https://anycomment.io/ru/api-instagram/',
+					AnyCommentSocialAuth::SOCIAL_TWITCH        => 'https://anycomment.io/ru/api-twitch/',
 				],
 				'en' => [
 					AnyCommentSocialAuth::SOCIAL_VKONTAKTE     => 'https://anycomment.io/api-vkontakte/',
@@ -945,6 +1028,8 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 					AnyCommentSocialAuth::SOCIAL_GOOGLE        => 'https://anycomment.io/api-google/',
 					AnyCommentSocialAuth::SOCIAL_ODNOKLASSNIKI => 'https://anycomment.io/ru/api-odnoklassniki/',
 					AnyCommentSocialAuth::SOCIAL_GITHUB        => 'https://anycomment.io/api-github/',
+					AnyCommentSocialAuth::SOCIAL_INSTAGRAM     => 'https://anycomment.io/api-instagram/',
+					AnyCommentSocialAuth::SOCIAL_TWITCH        => 'https://anycomment.io/api-twitch/',
 				]
 			];
 		}
