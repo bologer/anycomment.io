@@ -114,6 +114,7 @@ Read guide on how to create "Privacy Policy" page:
 * Added guides English & Russian guides for Vkontakte, Facebook, Twitter, Google, GitHub, Odnoklassniki, Instagram, Twitch, Dribbbles to help you with configurations, #66
 * Added base plugin shortcode - `[anycomment]` to displays comment box, #67
 * Now links, images or videos (e.g. YouTube) displayed as attachments under comment text, #69
+* Long comment text will be limited in height, by clicking on text will allow to expand it, #73
 
 **Fixes:**
 

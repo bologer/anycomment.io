@@ -503,6 +503,7 @@ body {
       &__text.shortened {
         height: 100px;
         position: relative;
+        cursor: pointer;
 
         &::after {
           content: '';
@@ -511,6 +512,7 @@ body {
           position: absolute;
           bottom: 0;
           left: 0;
+          pointer-events: none;
           background: linear-gradient(transparent 15px, white);
         }
       }
@@ -519,6 +521,7 @@ body {
         width: 100%;
         margin: 5px 0;
         overflow: hidden;
+        transition: height 1s ease-out;
 
         p {
           color: $comment-color;
