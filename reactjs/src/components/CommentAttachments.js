@@ -10,21 +10,22 @@ class CommentAttachments extends AnyCommentComponent {
     processAttachments() {
         const comment = this.props.comment;
         let attachments = [];
-        const youtubeRe = /(^(https?:\/\/)?((www\.)?youtube\.com|youtu\.?be)\/.+$)/gi;
+
+        const videosRe = /(^(https?:\/\/)?((www\.)?youtube\.com|youtu\.?be|rutube.ru)\/.+$)/gi;
 
         const imageRe = /((http(s?):)([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png|svg))/gi;
-        const youtubeMatches = comment.content.match(youtubeRe);
-        const imageMatches = comment.content.match(imageRe);
+        const videoMatches = [...new Set(comment.content.match(videosRe))];
+        const imageMatches = [...new Set(comment.content.match(imageRe))];
 
-        if (youtubeMatches) {
-            for (let i = 0; i < youtubeMatches.length; i++) {
-                attachments.push(<li><a className="comment-attachment comment-attachment__link" href={youtubeMatches[i]}
+        if (videoMatches.length > 0) {
+            for (let i = 0; i < videoMatches.length; i++) {
+                attachments.push(<li><a className="comment-attachment comment-attachment__link" href={videoMatches[i]}
                                         target="_blank"
                                         rel="noreferrer noopener"></a></li>);
             }
         }
 
-        if (imageMatches) {
+        if (imageMatches.length > 0) {
             for (let k = 0; k < imageMatches.length; k++) {
                 attachments.push(<li><a className="comment-attachment comment-attachment__image" href={imageMatches[k]}
                                         target="_blank"
