@@ -21,7 +21,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		const SOCIAL_ODNOKLASSNIKI = 'odnoklassniki';
 		const SOCIAL_INSTAGRAM = 'instagram';
 		const SOCIAL_TWITCH = 'twitch';
-		const SOCIAL_DRIBBBLE = 'dribble';
+		const SOCIAL_DRIBBBLE = 'dribbble';
 
 		/**
 		 * @var \Hybridauth\Hybridauth
