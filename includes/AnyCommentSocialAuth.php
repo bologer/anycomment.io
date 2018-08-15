@@ -45,7 +45,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 			self::SOCIAL_ODNOKLASSNIKI => 'Odnoklassniki',
 			self::SOCIAL_INSTAGRAM     => 'Instagram',
 			self::SOCIAL_TWITCH        => 'TwitchTV',
-			self::SOCIAL_DRIBBBLE      => 'Dribble',
+			self::SOCIAL_DRIBBBLE      => 'Dribbble',
 		];
 
 		protected static $rest_prefix = 'anycomment';
