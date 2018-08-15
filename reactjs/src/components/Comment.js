@@ -26,6 +26,21 @@ class Comment extends AnyCommentComponent {
     }
 
     /**
+     * Check whether comment text is too long.
+     *
+     * @returns {boolean}
+     */
+    isLongComment() {
+        const comment = this.props.comment;
+
+        if (!comment.content) {
+            return false;
+        }
+
+        return comment.content.length > 250;
+    }
+
+    /**
      * On comment reply action.
      * @param e
      * @param comment
@@ -158,7 +173,7 @@ class Comment extends AnyCommentComponent {
         if (!attachments) {
             return null;
         }
-        
+
         return <ul className="comment-attachments clearfix">{attachments}</ul>;
     }
 
@@ -179,6 +194,8 @@ class Comment extends AnyCommentComponent {
                 </ul>
             </div> : '';
 
+        const bodyClasses = 'comment-single-body__text' + (this.isLongComment() ? ' shortened' : '');
+
         return (
             <li key={comment.id} className="comment-single">
 
@@ -187,7 +204,7 @@ class Comment extends AnyCommentComponent {
                 <div className="comment-single-body">
                     <CommentHeader comment={comment}/>
 
-                    <div className="comment-single-body__text">
+                    <div className={bodyClasses}>
                         <p>{this.processContent(comment)}</p>
                     </div>
 
