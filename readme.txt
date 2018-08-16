@@ -122,6 +122,7 @@ Read guide on how to create "Privacy Policy" page:
 * Do not load styles & scrips globally, only in plugin pages
 * Plugin icon in admin sidebar was not displaying correctly and was overflowing when menu was opened
 * Newlines in comment are now displaying correctly. Previously everything was as a single line
+* Fixed issue when limit of number of comments per page was ignored and maximum number of comments displayed
 
 = 0.0.41 – 29.07.2018 =
 

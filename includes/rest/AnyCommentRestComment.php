@@ -210,7 +210,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			'order'          => 'order',
 			'parent'         => 'parent__in',
 			'parent_exclude' => 'parent__not_in',
-			'perPage'        => 'number',
+			'per_page'        => 'number',
 			'post'           => 'post__in',
 			'search'         => 'search',
 			'type'           => 'type',

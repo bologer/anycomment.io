@@ -276,7 +276,7 @@ class CommentList extends AnyCommentComponent {
         const params = {
             post: settings.postId,
             parent: 0,
-            perPage: settings.options.limit,
+            per_page: settings.options.limit,
             offset: this.state.offset,
             order: this.state.order,
             order_by: this.state.orderBy,
