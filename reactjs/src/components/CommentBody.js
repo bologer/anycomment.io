@@ -95,11 +95,13 @@ class CommentBody extends AnyCommentComponent {
 
         const newLineRe = /(\n)/gi;
 
+        // Replace links
         content = reactStringReplace(content, linksRe, (match, i) => (
             <a key={match + i} href={match} target="_blank" rel="noreferrer noopener">{match}</a>
         ));
 
-        content = reactStringReplace(content, newLineRe, (match, i) => (
+        // Replace new lines
+        content = reactStringReplace(content, newLineRe, () => (
             <br/>
         ));
 

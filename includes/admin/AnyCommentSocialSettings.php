@@ -87,6 +87,13 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		const OPTION_DRIBBBLE_CLIENT_ID = 'social_dribbble_client_id_field';
 		const OPTION_DRIBBBLE_CLIENT_SECRET = 'social_dribbble_client_secret_field';
 
+		/**
+		 * Yahoo
+		 */
+		const OPTION_YAHOO_TOGGLE = 'social_yahoo_toggle_field';
+		const OPTION_YAHOO_APP_ID = 'social_yahoo_app_id_field';
+		const OPTION_YAHOO_CLIENT_SECRET = 'social_yahoo_client_secret_field';
+
 
 		/**
 		 * AC_SocialSettingPage constructor.
@@ -505,7 +512,7 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 			);
 
 			/**
-			 * Twitch
+			 * Dribble
 			 */
 			add_settings_section(
 				'section_dribbble',
@@ -546,6 +553,52 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 						'title'       => __( 'Client Secret', "anycomment" ),
 						'callback'    => 'input_text',
 						'description' => sprintf( __( 'Enter client secret. It can be found in the <a href="%s" target="_blank">your applications</a>', "anycomment" ), 'https://dribbble.com/account/applications' )
+					]
+				]
+			);
+
+			/**
+			 * Yahoo
+			 */
+			add_settings_section(
+				'section_yahoo',
+				__( 'Yahoo', "anycomment" ),
+				function () {
+					?>
+                    <p><?= __( 'Yahoo authorization settings.', "anycomment" ) ?></p>
+                    <table class="form-table">
+                        <tr>
+                            <th><label for="yahoo-callback"><?= __( 'Callback URL', 'anycomment' ) ?></label></th>
+                            <td><input type="text" id="yahoo-callback" onclick="this.select()" readonly="readonly"
+                                       value="<?= AnyCommentSocialAuth::get_yahoo_callback() ?>"></td>
+                        </tr>
+                    </table>
+					<?php
+				},
+				$this->page_slug
+			);
+
+			$this->render_fields(
+				$this->page_slug,
+				'section_yahoo',
+				[
+					[
+						'id'          => self::OPTION_YAHOO_TOGGLE,
+						'title'       => __( 'Enable', "anycomment" ),
+						'callback'    => 'input_checkbox',
+						'description' => __( 'Allow Yahoo authorization', "anycomment" )
+					],
+					[
+						'id'          => self::OPTION_YAHOO_APP_ID,
+						'title'       => __( 'App ID', "anycomment" ),
+						'callback'    => 'input_text',
+						'description' => sprintf( __( 'Enter app id. It can be found in the <a href="%s" target="_blank">my apps</a>', "anycomment" ), 'https://developer.yahoo.com/apps/' )
+					],
+					[
+						'id'          => self::OPTION_YAHOO_CLIENT_SECRET,
+						'title'       => __( 'Client Secret', "anycomment" ),
+						'callback'    => 'input_text',
+						'description' => sprintf( __( 'Enter client secret. It can be found in the <a href="%s" target="_blank">my apps</a>', "anycomment" ), 'https://developer.yahoo.com/apps/' )
 					]
 				]
 			);

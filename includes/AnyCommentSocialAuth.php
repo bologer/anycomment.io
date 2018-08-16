@@ -22,6 +22,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		const SOCIAL_INSTAGRAM = 'instagram';
 		const SOCIAL_TWITCH = 'twitch';
 		const SOCIAL_DRIBBBLE = 'dribbble';
+		const SOCIAL_YAHOO = 'yahoo';
 
 		/**
 		 * @var \Hybridauth\Hybridauth
@@ -328,6 +329,17 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		 */
 		public static function get_dribbble_callback( $redirect = null ) {
 			return static::get_callback_url( self::SOCIAL_DRIBBBLE, $redirect );
+		}
+
+		/**
+		 * Get Yahoo callback URL.
+		 *
+		 * @param null|string $redirect Redirect URL added to the link.
+		 *
+		 * @return string
+		 */
+		public static function get_yahoo_callback( $redirect = null ) {
+			return static::get_callback_url( self::SOCIAL_YAHOO, $redirect );
 		}
 
 		/**
