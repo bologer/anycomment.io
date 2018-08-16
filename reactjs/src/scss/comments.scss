@@ -551,11 +551,22 @@ body {
             display: block;
             width: 50px;
             height: 50px;
+            line-height: 50px;
             background-color: #eee;
+            text-align: center;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            padding: 0 2px;
+            font-size: 8px;
+            font-weight: bold;
+            user-select: none;
+            color: darken(#eee, 15%);
             @include border-radius(3px);
 
             &:hover {
               background-color: darken(#eee, 3%);
+              color: darken(#eee, 20%);
             }
           }
 
@@ -604,6 +615,7 @@ body {
           list-style: none;
           margin: 0;
           padding: 0;
+          user-select: none;
 
           li {
             display: inline-block;

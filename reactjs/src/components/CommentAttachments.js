@@ -14,14 +14,26 @@ class CommentAttachments extends AnyCommentComponent {
         const videosRe = /(^(https?:\/\/)?((www\.)?youtube\.com|youtu\.?be|rutube.ru)\/.+$)/gi;
 
         const imageRe = /((http(s?):)([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png|svg))/gi;
+
         const videoMatches = [...new Set(comment.content.match(videosRe))];
         const imageMatches = [...new Set(comment.content.match(imageRe))];
 
         if (videoMatches.length > 0) {
             for (let i = 0; i < videoMatches.length; i++) {
-                attachments.push(<li><a className="comment-attachment comment-attachment__link" href={videoMatches[i]}
+                const isYoutube = videoMatches[i].indexOf('rutube.ru') === -1;
+                const videoName = isYoutube ? 'YouTube' : 'Rutube';
+                const className = 'comment-attachment comment-attachment__link ' + (isYoutube ? 'youtube' : 'rutube');
+                const style = isYoutube ?
+                    {backgroundColor: '#f00', color: '#fff'} :
+                    {
+                        backgroundColor: '#0968c8', color: '#fff'
+                    };
+
+                attachments.push(<li><a className={className}
+                                        href={videoMatches[i]}
+                                        style={style}
                                         target="_blank"
-                                        rel="noreferrer noopener"></a></li>);
+                                        rel="noreferrer noopener">{videoName}</a></li>);
             }
         }
 
