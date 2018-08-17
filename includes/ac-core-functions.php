@@ -101,6 +101,12 @@ function anycomment_login_with( $html = false, $redirectUrl = null ) {
 			'label'   => __( 'Dribbble', "anycomment" ),
 			'visible' => AnyCommentSocialSettings::isDribbbleOn()
 		],
+		AnyCommentSocialAuth::SOCIAL_YAHOO        => [
+			'slug'    => AnyCommentSocialAuth::SOCIAL_YAHOO,
+			'url'     => AnyCommentSocialAuth::get_yahoo_callback( $redirectUrl ),
+			'label'   => __( 'Yahoo', "anycomment" ),
+			'visible' => AnyCommentSocialSettings::isYahooOn()
+		],
 	];
 
 	if ( count( $socials ) <= 0 ) {

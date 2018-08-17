@@ -47,6 +47,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 			self::SOCIAL_INSTAGRAM     => 'Instagram',
 			self::SOCIAL_TWITCH        => 'TwitchTV',
 			self::SOCIAL_DRIBBBLE      => 'Dribbble',
+			self::SOCIAL_YAHOO         => 'Yahoo',
 		];
 
 		protected static $rest_prefix = 'anycomment';
@@ -250,6 +251,14 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 							'secret' => AnyCommentSocialSettings::getDribbbleClientSecret()
 						],
 						'callback' => static::get_dribbble_callback(),
+					],
+					self::$providers[ self::SOCIAL_YAHOO ]         => [
+						'enabled'  => AnyCommentSocialSettings::isYahooOn(),
+						'keys'     => [
+							'id'     => AnyCommentSocialSettings::getYahooAppId(),
+							'secret' => AnyCommentSocialSettings::getYahooClientSecret()
+						],
+						'callback' => static::get_yahoo_callback(),
 					]
 				],
 			];

@@ -869,6 +869,33 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		}
 
 		/**
+		 * Check whether Yahoo social is on.
+		 *
+		 * @return bool
+		 */
+		public static function isYahooOn() {
+			return static::instance()->getOption( self::OPTION_YAHOO_TOGGLE ) !== null;
+		}
+
+		/**
+		 * Get Yahoo App ID.
+		 *
+		 * @return int|null
+		 */
+		public static function getYahooAppId() {
+			return static::instance()->getOption( self::OPTION_YAHOO_APP_ID );
+		}
+
+		/**
+		 * Get Yahoo Secure key.
+		 *
+		 * @return string|null
+		 */
+		public static function getYahooClientSecret() {
+			return static::instance()->getOption( self::OPTION_YAHOO_CLIENT_SECRET );
+		}
+
+		/**
 		 * Check whether GitHub social is on.
 		 *
 		 * @return bool
