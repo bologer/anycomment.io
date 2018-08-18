@@ -35,7 +35,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             <h2><?= __( 'News', 'anycomment' ) ?></h2>
             <ul class="anycomment-dashboard__sidebar-news">
 				<?php
-				$posts = AnyComment()->admin_pages->get_news(3);
+				$posts = AnyComment()->admin_pages->get_news( 3 );
 
 				if ( $posts !== null ):
 					foreach ( $posts as $key => $post ): ?>
@@ -93,7 +93,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 </div>
 
 <script>
-    jQuery(document).on('ready', function() {
+    jQuery(document).on('ready', function () {
         setInterval(function () {
             var container = jQuery('.anycomment-dashboard__container');
             var sidebar = jQuery('.anycomment-dashboard__sidebar');

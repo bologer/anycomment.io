@@ -115,6 +115,8 @@ Read guide on how to create "Privacy Policy" page:
 * Added base plugin shortcode - `[anycomment]` to displays comment box, #67
 * Now links, images or videos (e.g. YouTube, Rutube) displayed as attachments under comment text, #69
 * Long comment text will be limited in height, by clicking on text will allow to expand it, #73
+* Adding new comment is now 2x faster, ~500ms
+* Plugin is now sending email notification about new reply to his comment
 
 **Fixes:**
 

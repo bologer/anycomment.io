@@ -579,7 +579,7 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 			);
 
 			$this->render_fields(
-				$this->page_slug,
+				$this->page_slug . time(),
 				'section_yahoo',
 				[
 					[

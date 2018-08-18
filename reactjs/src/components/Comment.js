@@ -87,6 +87,7 @@ class Comment extends AnyCommentComponent {
 
     render() {
         const comment = this.props.comment;
+        const commentId = 'comment-' + comment.id;
 
         const childComments = comment.children ?
             <div className="comment-single-replies">
@@ -104,7 +105,7 @@ class Comment extends AnyCommentComponent {
 
 
         return (
-            <li key={comment.id} className="comment-single">
+            <li key={comment.id} className="comment-single" id={commentId}>
 
                 <CommentAvatar comment={comment}/>
 

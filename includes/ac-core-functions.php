@@ -95,13 +95,13 @@ function anycomment_login_with( $html = false, $redirectUrl = null ) {
 			'label'   => __( 'Twitch', "anycomment" ),
 			'visible' => AnyCommentSocialSettings::isTwitchOn()
 		],
-		AnyCommentSocialAuth::SOCIAL_DRIBBBLE        => [
+		AnyCommentSocialAuth::SOCIAL_DRIBBBLE      => [
 			'slug'    => AnyCommentSocialAuth::SOCIAL_DRIBBBLE,
 			'url'     => AnyCommentSocialAuth::get_dribbble_callback( $redirectUrl ),
 			'label'   => __( 'Dribbble', "anycomment" ),
 			'visible' => AnyCommentSocialSettings::isDribbbleOn()
 		],
-		AnyCommentSocialAuth::SOCIAL_YAHOO        => [
+		AnyCommentSocialAuth::SOCIAL_YAHOO         => [
 			'slug'    => AnyCommentSocialAuth::SOCIAL_YAHOO,
 			'url'     => AnyCommentSocialAuth::get_yahoo_callback( $redirectUrl ),
 			'label'   => __( 'Yahoo', "anycomment" ),
@@ -444,10 +444,18 @@ EOT;
     jQuery(document).ready(function ($) {
        iframeCommentLoad();
        
+       if(/\#comment-\d{1,11}/.test(window.location.hash)) {
+          scrollToElement(window.location.hash); 
+       }
+       
        $(window).scroll(function($) {
            iframeCommentLoad();
        });
     });
+    
+    function scrollToElement(ele) {
+        $(window).scrollTop(ele.offset().top).scrollLeft(ele.offset().left);
+    }
     
     function iframeCommentLoad() {
          if(loaded) {

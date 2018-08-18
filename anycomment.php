@@ -249,6 +249,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			include_once( ANYCOMMENT_ABSPATH . 'includes/ac-core-functions.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentSocialAuth.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentLikes.php' );
+			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentEmailQueue.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentUser.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentUserMeta.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentAvatars.php' );
@@ -265,6 +266,8 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			include_once( ANYCOMMENT_ABSPATH . 'includes/admin/AnyCommentIntegrationSettings.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/admin/AnyCommentWPComments.php' );
 
+			include_once( ANYCOMMENT_ABSPATH . 'includes/cron/AnyCommentEmailQueueCron.php' );
+
 			// Migration manager
 			include_once( ANYCOMMENT_ABSPATH . 'includes/migrations/AnyCommentMigrationManager.php' );
 
@@ -277,6 +280,11 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			new AnyCommentRestUsers();
 			new AnyCommentWPComments();
 			new AnyCommentAvatars();
+
+			/**
+			 * Cron tabs.
+			 */
+			new AnyCommentEmailQueueCron();
 
 			$this->errors      = new AnyCommentErrorHandler();
 			$this->render      = new AnyCommentRender();
