@@ -249,7 +249,7 @@ WHERE `emails`.`sent_at` = '0000-00-00 00:00:00'";
 		}
 
 		// Add reply button
-		$body .= '<p><a href="' . $commentLink . '" style="font-size: 15px;font-weight: 400;text-align: center;color: #fff;padding: 0 50px;line-height: 48px;background-color: #53af4a;display: inline-block;vertical-align: middle;border: 0;outline: 0;cursor: pointer;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;-webkit-appearance: none;-moz-appearance: none;appearance: none;white-space: nowrap;border-radius: 24px;">' . __( 'Reply', 'anycomment' ) . '</a></p>';
+		$body .= '<p><a href="' . $commentLink . '" style="font-size: 15px;text-decoration:none;font-weight: 400;text-align: center;color: #fff;padding: 0 50px;line-height: 48px;background-color: #53af4a;display: inline-block;vertical-align: middle;border: 0;outline: 0;cursor: pointer;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;-webkit-appearance: none;-moz-appearance: none;appearance: none;white-space: nowrap;border-radius: 24px;">' . __( 'Reply', 'anycomment' ) . '</a></p>';
 
 		return $body;
 	}
