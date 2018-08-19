@@ -370,8 +370,8 @@ class CommentList extends AnyCommentComponent {
             return (
                 <React.Fragment>
                     {sendComment}
-                    <ul id="anycomment-load-container" className="anycomment-list">
-                        <li className="comment-single comment-no-comments">{settings.i18.no_comments}</li>
+                    <ul id="anycomment-load-container" className="anycomment anycomment-list">
+                        <li className="anycomment comment-single comment-no-comments">{settings.i18.no_comments}</li>
                     </ul>
                 </React.Fragment>
             )
@@ -385,7 +385,7 @@ class CommentList extends AnyCommentComponent {
             return (
                 <React.Fragment>
                     {sendComment}
-                    <ul id="anycomment-load-container" className="anycomment-list">
+                    <ul id="anycomment-load-container" className="anycomment anycomment-list">
                         {comments.map(comment => (
                             <Comment
                                 changeReplyId={this.handleReplyIdChange}
@@ -397,9 +397,9 @@ class CommentList extends AnyCommentComponent {
                         ))}
 
                         {!this.state.isLastPage ?
-                            <div className="comment-single-load-more">
+                            <div className="anycomment comment-single-load-more">
                             <span onClick={(e) => this.handleLoadMore(e)}
-                                  className="btn">{settings.i18.load_more}</span>
+                                  className="anycomment anycomment-btn">{settings.i18.load_more}</span>
                             </div>
                             : ''}
                     </ul>

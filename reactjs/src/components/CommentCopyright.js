@@ -14,10 +14,10 @@ class CommentCopyright extends AnyCommentComponent {
         }
 
         return (
-            <footer className="main-footer">
+            <footer className="anycomment anycomment-copy-footer">
                 <img src={footerLogo}
-                     alt="AnyComment"/> <a href="https://anycomment.io"
-                                           target="_blank">{settings.i18.footer_copyright}</a>
+                     alt="AnyComment" className="anycomment"/> <a href="https://anycomment.io"
+                                                                  target="_blank">{settings.i18.footer_copyright}</a>
             </footer>
         );
     }

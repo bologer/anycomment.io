@@ -12,10 +12,10 @@ class CommentAvatar extends AnyCommentComponent {
         const miniIconSrc = comment.owner.is_social_login ? require('../img/icons/avatars/social-' + comment.owner.social_type + '.svg') : '';
 
         return (
-            <div className="comment-single-avatar">
-                <div className="comment-single-avatar__img"
+            <div className="anycomment comment-single-avatar">
+                <div className="anycomment comment-single-avatar__img"
                      style={{backgroundImage: 'url(' + comment.avatar_url + ')'}}>
-                    {comment.owner.is_social_login ? <span className="comment-single-avatar__img-auth-type"
+                    {comment.owner.is_social_login ? <span className="anycomment comment-single-avatar__img-auth-type"
                         style={{backgroundImage: 'url(' + miniIconSrc + ')'}}></span> : ''}
                 </div>
             </div>

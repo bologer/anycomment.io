@@ -29,12 +29,9 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 		 */
 		public function __construct() {
 			if ( AnyCommentGenericSettings::isEnabled() && AnyCommentSocialSettings::hasAnySocial() ) {
-				add_filter( 'comments_template', [ $this, 'render_iframe' ] );
+				add_filter( 'comments_template', [ $this, 'override_comment' ] );
 
-				add_shortcode( 'anycomment', [ $this, 'base_shortcode' ] );
-
-				add_action( 'wp_ajax_iframe_comments', [ $this, 'iframe_comments' ] );
-				add_action( 'wp_ajax_nopriv_iframe_comments', [ $this, 'iframe_comments' ] );
+				add_shortcode( 'anycomment', [ $this, 'override_comment' ] );
 			}
 		}
 
@@ -51,30 +48,60 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 		 * Make custom template for comments.
 		 * @return string
 		 */
-		public function render_iframe() {
-			wp_enqueue_script(
-				'anycomment-iframeResizer',
-				AnyComment()->plugin_url() . '/assets/js/iframeResizer.min.js',
-				[],
-				1.0
-			);
+		public function override_comment() {
+			wp_enqueue_script( 'anycomment-react', AnyComment()->plugin_url() . '/static/js/main.min.js', [], AnyComment()->version );
+			wp_enqueue_style( 'anycomment-styles', AnyComment()->plugin_url() . '/static/css/main.min.css', [], AnyComment()->version );
+			wp_enqueue_style( 'anycomment-google-font', 'https://fonts.googleapis.com/css?family=Noto+Sans:400,700&amp;subset=cyrillic', [], AnyComment()->version );
 
-			return ANYCOMMENT_ABSPATH . 'templates/iframe.php';
-		}
+			$postId = get_the_ID();
+			wp_localize_script( 'anycomment-react', 'anyCommentApiSettings', [
+				'postId'       => $postId,
+				'postUrl'      => get_permalink( $postId ),
+				'nonce'        => wp_create_nonce( 'wp_rest' ),
+				'locale'       => get_locale(),
+				'restUrl'      => esc_url_raw( rest_url( 'anycomment/v1/' ) ),
+				'commentCount' => ( $res = get_comment_count( $postId ) ) !== null ? (int) $res['all'] : 0,
+				// Options from plugin
+				'options'      => [
+					'limit'             => AnyCommentGenericSettings::getPerPage(),
+					'isCopyright'       => AnyCommentGenericSettings::isCopyrightOn(),
+					'socials'           => anycomment_login_with( false, get_permalink( $postId ) ),
+					'theme'             => AnyCommentGenericSettings::getTheme(),
+					'isShowProfileUrl'  => AnyCommentGenericSettings::isShowProfileUrl(),
+					'userAgreementLink' => AnyCommentGenericSettings::getUserAgreementLink(),
+					'notifyOnNewComment' => AnyCommentGenericSettings::isNotifyOnNewComment(),
+				],
+				'user'         => AnyCommentUser::getSafeUser(),
+				'i18'          => [
+					'error_generic'         => __( "Oops, something went wrong...", "anycomment" ),
+					'loading'               => __( 'Loading...', 'anycomment' ),
+					'load_more'             => __( "Load more", "anycomment" ),
+					'button_send'           => __( 'Send', 'anycomment' ),
+					'button_save'           => __( 'Save', 'anycomment' ),
+					'button_reply'          => __( 'Reply', 'anycomment' ),
+					'sort_by'               => __( 'Sort By', 'anycomment' ),
+					'sort_oldest'           => __( 'Oldest', 'anycomment' ),
+					'sort_newest'           => __( 'Newest', 'anycomment' ),
+					'reply_to'              => __( 'Reply to', 'anycomment' ),
+					'add_comment'           => __( 'Your comment...', 'anycomment' ),
+					'no_comments'           => __( 'No comments to display', "anycomment" ),
+					'footer_copyright'      => __( 'Add Anycomment to your site', 'anycomment' ),
+					'reply'                 => __( 'Reply', 'anycomment' ),
+					'edit'                  => __( 'Edit', 'anycomment' ),
+					'delete'                => __( 'Delete', 'anycomment' ),
+					'cancel'                => __( 'Cancel', 'anycomment' ),
+					'quick_login'           => __( 'Quick Login', 'anycomment' ),
+					'new_comment_was_added' => __( 'New comment was added', 'anycomment' ),
+					'author'                => __( 'Author', 'anycomment' ),
+					'accept_user_agreement' => sprintf(
+						__( 'I accept the <a href="%s"%s>User Agreement</a>', 'anycomment' ),
+						AnyCommentGenericSettings::getUserAgreementLink(),
+						' target="_blank" rel="noopener noreferrer" '
+					),
+				]
+			] );
 
-		/**
-		 * Render comments inside of the iframe.
-		 *
-		 * Should be requested by AJAX.
-		 */
-		public function iframe_comments() {
-			if ( ! wp_verify_nonce( $_GET['nonce'], 'iframe_comments' ) ) {
-				wp_die();
-			}
-
-			include ANYCOMMENT_ABSPATH . 'templates/comments.php';
-
-			die();
+			return ANYCOMMENT_ABSPATH . 'templates/comments.php';
 		}
 
 		/**

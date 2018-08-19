@@ -29,10 +29,10 @@ $global-radius: 4px;
 @import "theme-dark";
 @import "theme-light";
 
-.anc {
+.anycomment {
   float: none;
   text-align: left;
-  font-family: Helvetica,Arial,sans-serif;
+  font-family: $font-family;
   position: relative;
   left: auto;
   right: auto;
@@ -42,7 +42,7 @@ $global-radius: 4px;
   padding: 0;
   border: none 0;
   border-radius: 0;
-  font-size: 12px;
+  font-size: $font-size - 1;
   vertical-align: baseline;
   background: 0 0;
   color: #000;
@@ -54,7 +54,6 @@ $global-radius: 4px;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   text-shadow: none;
-  box-sizing: content-box;
   -moz-box-sizing: content-box;
   -webkit-box-sizing: content-box;
   min-height: 0;
@@ -68,15 +67,13 @@ $global-radius: 4px;
   $dropdown-header-color: $comment-color;
 }
 
-body {
-  font-family: $font-family;
-  a {
-    text-decoration: none;
+#anycomment-root {
+  &,
+  & *,
+  *:before,
+  *:after {
+    box-sizing: border-box;
   }
-}
-
-*, *:before, *:after {
-  box-sizing: border-box;
 }
 
 %author-avatar-parent {
@@ -99,10 +96,13 @@ body {
   padding: 40px 0;
 }
 
-.btn {
+.anycomment-btn,
+.anycomment.input[type="submit"],
+input + .anycomment.input[type="button"] {
   font-size: $font-size;
   font-weight: normal;
   text-align: center;
+  justify-content: center;
   color: #ffffff;
   padding: 0 50px;
   line-height: 48px;
@@ -411,7 +411,7 @@ body {
 }
 
 // Footer
-.main-footer {
+.anycomment-copy-footer {
   margin-top: 50px;
   padding-top: 18px;
   text-align: right;
@@ -498,6 +498,7 @@ body {
           &,
           & > a {
             color: $primary-color;
+            background-color: transparent;
             font-size: $font-size - 1;
             display: block;
             margin-bottom: 2px;
@@ -564,6 +565,16 @@ body {
           word-break: break-word;
           word-wrap: break-word;
           white-space: pre-wrap;
+
+          a {
+            &,
+            &:hover,
+            &:active,
+            &:focus,
+            &:visited {
+              background-color: transparent;
+            }
+          }
         }
       }
 

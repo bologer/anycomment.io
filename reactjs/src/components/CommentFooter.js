@@ -18,21 +18,24 @@ class CommentFooter extends AnyCommentComponent {
         const likesCount = this.props.likesCount;
 
         return (
-            <footer className="comment-single-body__actions">
-                <ul>
-                    <li><a href="" onClick={(e) => this.props.onReply(e, comment)}>{settings.i18.reply}</a>
+            <footer className="anycomment comment-single-body__actions">
+                <ul className="anycomment">
+                    <li className="anycomment"><a className="anycomment" href=""
+                                                  onClick={(e) => this.props.onReply(e, comment)}>{settings.i18.reply}</a>
                     </li>
-                    <li>
+                    <li className="anycomment">
                             <span
-                                className={"comment-single-body__actions-like " + (hasLike ? 'active' : '') + ""}
+                                className={"anycomment comment-single-body__actions-like " + (hasLike ? 'active' : '') + ""}
                                 onClick={(e) => this.props.onLike(e)}>{likesCount}</span>
                     </li>
 
                     {comment.permissions.can_edit_comment ?
-                        <li><a href="" onClick={(e) => this.props.onEdit(e, comment)}>{settings.i18.edit}</a>
+                        <li className="anycomment"><a className="anycomment" href=""
+                                                      onClick={(e) => this.props.onEdit(e, comment)}>{settings.i18.edit}</a>
                         </li> : ''}
                     {comment.permissions.can_edit_comment ?
-                        <li><a href="" onClick={(e) => this.props.onDelete(e, comment)}>{settings.i18.delete}</a>
+                        <li className="anycomment"><a className="anycomment" href=""
+                                                      onClick={(e) => this.props.onDelete(e, comment)}>{settings.i18.delete}</a>
                         </li> : ''}
                 </ul>
             </footer>

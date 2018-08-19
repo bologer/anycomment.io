@@ -22,19 +22,23 @@ class CommentHeader extends AnyCommentComponent {
         const formatter = buildFormatter(languageStrings);
 
         const authorName = settings.options.isShowProfileUrl && comment.owner.is_social_login && comment.owner.social_url.trim() !== '' ?
-            <a target="_blank" href={comment.owner.social_url} rel="noopener noreferrer">{comment.author_name}</a> :
+            <a className="anycomment" target="_blank" href={comment.owner.social_url}
+               rel="noopener noreferrer">{comment.author_name}</a> :
             comment.author_name;
 
         return (
-            <header className="comment-single-body-header">
-                <div className="comment-single-body-header__author">
+            <header className="anycomment comment-single-body-header">
+                <div className="anycomment comment-single-body-header__author">
                     {authorName}
                     {comment.owner.is_post_author ?
-                        <span className="comment-single-body-header__author-owner">{settings.i18.author}</span>
+                        <span
+                            className="anycomment comment-single-body-header__author-owner">{settings.i18.author}</span>
                         : ''}
                 </div>
-                <a href={'#comment-' + comment.id}><TimeAgo className="comment-single-body-header__date"
-                                                            date={comment.date} formatter={formatter}/></a>
+                <a href={'#comment-' + comment.id} className="anycomment">
+                    <TimeAgo className="anycomment comment-single-body-header__date"
+                             date={comment.date} formatter={formatter}/>
+                </a>
             </header>
         );
     }

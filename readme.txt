@@ -117,6 +117,7 @@ Read guide on how to create "Privacy Policy" page:
 * Long comment text will be limited in height, by clicking on text will allow to expand it, #73
 * Adding new comment is now 2x faster, ~500ms
 * Plugin is now sending email notification about new reply to his comment
+* Removed iframe, now comments rendered directly on the page = comments can be searched by crawlers = better SEO, #80
 
 **Fixes:**
 

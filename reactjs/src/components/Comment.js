@@ -90,8 +90,8 @@ class Comment extends AnyCommentComponent {
         const commentId = 'comment-' + comment.id;
 
         const childComments = comment.children ?
-            <div className="comment-single-replies">
-                <ul className="anycomment-list anycomment-list-child">
+            <div className="anycomment comment-single-replies">
+                <ul className="anycomment anycomment-list anycomment-list-child">
                     {comment.children.map(childrenComment => (
                         <Comment
                             changeReplyId={this.props.changeReplyId}
@@ -105,7 +105,7 @@ class Comment extends AnyCommentComponent {
 
 
         return (
-            <li key={comment.id} className="comment-single" id={commentId}>
+            <li key={comment.id} className="anycomment comment-single" id={commentId}>
 
                 <CommentAvatar comment={comment}/>
 

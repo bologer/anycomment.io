@@ -97,7 +97,7 @@ class CommentBody extends AnyCommentComponent {
 
         // Replace links
         content = reactStringReplace(content, linksRe, (match, i) => (
-            <a key={match + i} href={match} target="_blank" rel="noreferrer noopener">{match}</a>
+            <a key={match + i} className="anycomment" href={match} target="_blank" rel="noreferrer noopener">{match}</a>
         ));
 
         // Replace new lines
@@ -109,7 +109,7 @@ class CommentBody extends AnyCommentComponent {
     };
 
     render() {
-        const bodyClasses = 'comment-single-body__text ' + (this.state.hideAsLong ? ' shortened' : '');
+        const bodyClasses = 'anycomment comment-single-body__text ' + (this.state.hideAsLong ? ' shortened' : '');
 
         return <div className={bodyClasses} onClick={() => this.toggleLongComment()}>
             <p>{this.processContent()}</p>

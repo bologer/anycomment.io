@@ -22,7 +22,7 @@ class CommentAttachments extends AnyCommentComponent {
             for (let i = 0; i < videoMatches.length; i++) {
                 const isYoutube = videoMatches[i].indexOf('rutube.ru') === -1;
                 const videoName = isYoutube ? 'YouTube' : 'Rutube';
-                const className = 'comment-attachment comment-attachment__link ' + (isYoutube ? 'youtube' : 'rutube');
+                const className = 'anycomment comment-attachment comment-attachment__link ' + (isYoutube ? 'youtube' : 'rutube');
                 const style = isYoutube ?
                     {backgroundColor: '#f00', color: '#fff'} :
                     {
@@ -39,7 +39,7 @@ class CommentAttachments extends AnyCommentComponent {
 
         if (imageMatches.length > 0) {
             for (let k = 0; k < imageMatches.length; k++) {
-                attachments.push(<li><a className="comment-attachment comment-attachment__image" href={imageMatches[k]}
+                attachments.push(<li><a className="anycomment comment-attachment comment-attachment__image" href={imageMatches[k]}
                                         target="_blank"
                                         rel="noreferrer noopener"
                                         style={{backgroundImage: 'url(' + imageMatches[k] + ')'}}></a></li>);

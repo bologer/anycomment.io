@@ -101,9 +101,9 @@ class SendCommentForm extends AnyCommentComponent {
         const translations = this.props.settings.i18;
 
         return (
-            <div className="send-comment-body">
+            <div className="anycomment send-comment-body">
                 <form onSubmit={this.handleSubmit}>
-                    <div className="send-comment-body-outliner">
+                    <div className="anycomment send-comment-body-outliner">
 
                         <SendCommentGuest isShouldLogin={this.state.isShouldLogin} user={this.props.user}/>
                         <SendCommentAuth user={this.props.user}/>
@@ -111,7 +111,7 @@ class SendCommentForm extends AnyCommentComponent {
                         <textarea name="content"
                                   value={this.props.commentText}
                                   required="required"
-                                  className="send-comment-body-outliner__textfield"
+                                  className="anycomment send-comment-body-outliner__textfield"
                                   placeholder={translations.add_comment}
                                   onClick={this.shouldLogin}
                                   onChange={this.handleContentChange}
@@ -125,17 +125,18 @@ class SendCommentForm extends AnyCommentComponent {
                             type="hidden"
                             name="parent"
                             value={this.props.replyId}
+                            className="anycomment"
                             onChange={this.handleReplyIdChange}/> : ''}
 
                     {this.props.isReply ?
-                        <p className="send-comment-body-reply">{translations.reply_to} {this.props.replyName}
+                        <p className="anycomment send-comment-body-reply">{translations.reply_to} {this.props.replyName}
                             <span onClick={this.props.onReplyCancel}>{translations.cancel}</span></p>
                         : ''}
 
                     {this.props.user ? <input type="hidden" name="edit_id" value={this.props.editId}
                                               onChange={this.handleEditIdChange}/> : ''}
 
-                    {this.props.user ? <input type="submit" className="btn send-comment-body__btn"
+                    {this.props.user ? <input type="submit" className="anycomment-btn send-comment-body__btn"
                                               value={this.props.buttonText}/> : ''}
                 </form>
 

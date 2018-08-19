@@ -34,21 +34,24 @@ class SendComment extends AnyCommentComponent {
         const settings = this.props.settings;
 
         return (
-            <div id="anycomment-send-comment"
+            <div id="anycomment anycomment-send-comment"
                  className={"send-comment " + (this.props.user ? 'send-comment-authorized' : '') + ""}>
-                <div className="send-comment-supheader">
-                    <div className="send-comment-supheader__count"
+                <div className="anycomment send-comment-supheader">
+                    <div className="anycomment send-comment-supheader__count"
                          id="comment-count">{this.props.commentCountText}</div>
-                    <div className="send-comment-supheader__dropdown">
-                        <div className="send-comment-supheader__dropdown-header"
+                    <div className="anycomment send-comment-supheader__dropdown">
+                        <div className="anycomment send-comment-supheader__dropdown-header"
                              onClick={(e) => this.onDropdownClick(e)}>
                             {settings.i18.sort_by}
                         </div>
-                        <div className="send-comment-supheader__dropdown-list" style={{display: this.state.dropdown}}
+                        <div className="anycomment send-comment-supheader__dropdown-list"
+                             style={{display: this.state.dropdown}}
                              id="sort-dropdown">
-                            <ul>
-                                <li onClick={(e) => this.handleCommentSort(e, 'desc')}>{settings.i18.sort_newest}</li>
-                                <li onClick={(e) => this.handleCommentSort(e, 'asc')}>{settings.i18.sort_oldest}</li>
+                            <ul className="anycomment">
+                                <li className="anycomment"
+                                    onClick={(e) => this.handleCommentSort(e, 'desc')}>{settings.i18.sort_newest}</li>
+                                <li className="anycomment"
+                                    onClick={(e) => this.handleCommentSort(e, 'asc')}>{settings.i18.sort_oldest}</li>
                             </ul>
                         </div>
                     </div>
