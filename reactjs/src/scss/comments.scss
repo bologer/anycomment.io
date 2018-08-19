@@ -713,6 +713,17 @@ $global-radius: 4px;
 
         &-body {
           padding-left: 66px;
+
+          .comment-attachments {
+            li {
+              .comment-attachment {
+                width: 40px;
+                height: 40px;
+                line-height: 40px;
+                font-size: 6px;
+              }
+            }
+          }
         }
       }
     }

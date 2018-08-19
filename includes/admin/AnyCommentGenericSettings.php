@@ -242,7 +242,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'id'          => self::OPTION_MODERATE_FIRST,
 						'title'       => __( 'Moderate First', "anycomment" ),
 						'callback'    => 'input_checkbox',
-						'description' => esc_html( __( 'Comment are not shown until they are approved by moderator. Users with ability to moderate comments will be ignored by filter.', "anycomment" ) )
+						'description' => esc_html( __( 'Moderators should check comment before it appears.', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_SHOW_PROFILE_URL,
