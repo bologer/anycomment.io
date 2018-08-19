@@ -70,6 +70,7 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 					'isShowProfileUrl'  => AnyCommentGenericSettings::isShowProfileUrl(),
 					'userAgreementLink' => AnyCommentGenericSettings::getUserAgreementLink(),
 					'notifyOnNewComment' => AnyCommentGenericSettings::isNotifyOnNewComment(),
+					'isLoadOnScroll' => AnyCommentGenericSettings::isLoadOnScroll(),
 				],
 				'user'         => AnyCommentUser::getSafeUser(),
 				'i18'          => [
