@@ -28,7 +28,7 @@ class CommentList extends AnyCommentComponent {
             offset: options.limit,
             orderBy: 'id',
 
-            // Hold voolean whether current user just added comment or not
+            // Hold boolean whether current user just added comment or not
             // primarily used to track toast of added new comments
             isJustAdded: false,
 
@@ -41,7 +41,6 @@ class CommentList extends AnyCommentComponent {
         };
 
         this.state.order = 'desc';
-
 
         /**
          * Form states.
@@ -63,6 +62,7 @@ class CommentList extends AnyCommentComponent {
         this.handleReplyCancel = this.handleReplyCancel.bind(this);
         this.handleEditIdChange = this.handleEditIdChange.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
+        this.checkForAnchor = this.checkForAnchor.bind(this);
     }
 
     /**
@@ -259,12 +259,9 @@ class CommentList extends AnyCommentComponent {
 
     /**
      * Handles load more comments.
-     * @param e
      * @returns {*}
      */
-    handleLoadMore(e) {
-        e.preventDefault();
-
+    handleLoadMore() {
         if (this.state.isLastPage) {
             return false;
         }
@@ -329,6 +326,8 @@ class CommentList extends AnyCommentComponent {
     componentDidMount() {
         this.loadComments();
 
+        this.checkForAnchor();
+
         if (this.props.settings.options.notifyOnNewComment) {
             const self = this;
             setInterval(function () {
@@ -336,6 +335,45 @@ class CommentList extends AnyCommentComponent {
             }, 5000);
         }
     }
+
+    /**
+     * Checks for anchors in the link.
+     * If there are some, it could be user who came from the
+     * email and trying to read his reply.
+     */
+    checkForAnchor() {
+        const self = this;
+        const hash = window.location.hash;
+
+        if (hash !== "" && /#comment-\d{1,11}/.test(hash)) {
+            let interval = setInterval(function () {
+
+                let commentElement = document.getElementById(hash.replace('#', ''));
+
+                console.log(hash.replace('#', ''));
+
+                if (!commentElement) {
+                    console.log('need to load more, as we dont see comment yet');
+                    self.handleLoadMore();
+                } else {
+                    if ('jQuery' in window) {
+
+                        console.log(hash, /#comment-\d{1,11}/.test(hash));
+
+                        const jq = window.jQuery;
+
+                        jq([document.documentElement, document.body]).animate({
+                            scrollTop: jq(hash).offset().top - 50
+                        }, 500);
+
+                        clearInterval(interval);
+                    }
+                }
+            }, 1000);
+        }
+
+
+    };
 
     render() {
         const {isError, isLoaded, comments} = this.state;
@@ -376,12 +414,6 @@ class CommentList extends AnyCommentComponent {
                 </React.Fragment>
             )
         } else {
-            window.iFrameResizer = {
-                readyCallback: function () {
-                    window.parentIFrame.sendMessage('canAnchor');
-                }
-            };
-
             return (
                 <React.Fragment>
                     {sendComment}

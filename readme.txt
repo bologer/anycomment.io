@@ -116,7 +116,9 @@ Read guide on how to create "Privacy Policy" page:
 * Now links, images or videos (e.g. YouTube, Rutube) displayed as attachments under comment text, #69
 * Long comment text will be limited in height, by clicking on text will allow to expand it, #73
 * Adding new comment is now 2x faster, ~500ms
-* Plugin is now sending email notification about new reply to his comment
+* Loading comments is now 2x faster and there is no more iframe, therefore comments loaded directly
+* Plugin is now sending email notification about new reply to the comment, #71
+* Clicking on the "Reply" button in the email, will redirect user directly to the reply in the comments section, #81
 * Removed iframe, now comments rendered directly on the page = comments can be searched by crawlers = better SEO, #80
 
 **Fixes:**

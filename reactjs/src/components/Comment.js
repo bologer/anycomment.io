@@ -6,7 +6,6 @@ import CommentFooter from './CommentFooter';
 import CommentBody from './CommentBody';
 import CommentAttachments from './CommentAttachments';
 import {toast} from 'react-toastify';
-import reactStringReplace from 'react-string-replace';
 
 /**
  * Comment is rendering single comment entry.
