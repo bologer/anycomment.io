@@ -177,7 +177,7 @@ class CommentList extends AnyCommentComponent {
         const params = {
             post: settings.postId,
             parent: 0,
-            perPage: this.state.perPage,
+            per_page: this.state.perPage,
             order: this.state.order,
             order_by: this.state.orderBy,
         };
@@ -376,6 +376,12 @@ class CommentList extends AnyCommentComponent {
                 </React.Fragment>
             )
         } else {
+            window.iFrameResizer = {
+                readyCallback: function () {
+                    window.parentIFrame.sendMessage('canAnchor');
+                }
+            };
+
             return (
                 <React.Fragment>
                     {sendComment}

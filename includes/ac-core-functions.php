@@ -417,23 +417,46 @@ function anycomment_iframe() {
 
 	$randIframeId = uniqid( time() . '-' );
 
-	$options = [
-		'log'                 => false,
-		'enablePublicMethods' => false,
-		'enableInPageLinks'   => true,
-	];
-
-	$jsonOptions = json_encode( $options );
+	$jsonOptions = '{
+	log: false,
+	enablePublicMethods: false,
+	enableInPageLinks: true,
+	messageCallback: function(message) {
+          console.log(message);
+          if(message.message === "canAnchor") {
+            checkForAnchors();
+          }
+      }
+	}';
 
 	$html = <<<EOT
-<iframe id="$randIframeId"
-        allowtransparency="true"
-        scrolling="no"
-        tabindex="0"
-        title="AnyComment"
-        src="$iframeSrc"
-        frameborder="0"
-        style="$styles"></iframe>
+	<div id="anycomment-iframe-root" style="width: 100%;"></div>
+	<script>
+	
+	function setIframe() {
+        var iframe = document.createElement('iframe');
+        iframe.id="$randIframeId";
+        iframe.allowtransparency="true";
+        iframe.scrolling = "no";
+        iframe.tabindex = "0";
+        iframe.setAttribute('style', "$styles");
+        iframe.title = "AnyComment";
+        iframe.frameborder = "0";
+        iframe.src = "$iframeSrc";
+        
+        document.getElementById('anycomment-iframe-root').appendChild(iframe);
+    }
+    
+    function checkForAnchors() {
+	    var hash = window.location.hash;
+	    console.log(hash, /\#comment-\d{1,11}/.test(hash));
+	    
+        if(hash !== "" && /\#comment-\d{1,11}/.test(hash)) {
+            iFrameResize()[0].iFrameResizer.moveToAnchor(hash);
+        }
+    }
+
+</script>
 EOT;
 
 	if ( AnyCommentGenericSettings::isLoadOnScroll() ):
@@ -441,33 +464,25 @@ EOT;
 <script>
     var loaded = false;
 
-    jQuery(document).ready(function ($) {
+    jQuery(document).on('ready', function () {
        iframeCommentLoad();
-       
-       if(/\#comment-\d{1,11}/.test(window.location.hash)) {
-          scrollToElement(window.location.hash); 
-       }
-       
-       $(window).scroll(function($) {
+
+       jQuery(window).scroll(function() {
            iframeCommentLoad();
        });
     });
-    
-    function scrollToElement(ele) {
-        $(window).scrollTop(ele.offset().top).scrollLeft(ele.offset().left);
-    }
     
     function iframeCommentLoad() {
          if(loaded) {
              return;
          }
          
-         var iframe = jQuery('#$randIframeId'),
-             iframeToTop = iframe.offset().top,
+         var iframeRoot = jQuery('#anycomment-iframe-root'),
+             iframeToTop = iframeRoot.offset().top,
              wH = jQuery(window).height(),
              currentTop = jQuery(this).scrollTop();
          
-         if(iframe.outerHeight() > 2) {
+         if(iframeRoot.outerHeight() > 2) {
              return;
          }
            
@@ -475,7 +490,10 @@ EOT;
          
          if((currentTop + wH) > iframeToTop ) {
             loaded = true;
-            jQuery('#$randIframeId').iFrameResize($jsonOptions);
+            setIframe();
+            var iframe = jQuery('#$randIframeId');
+            
+            iframe.iFrameResize($jsonOptions);
          }
     }
 </script>
@@ -484,30 +502,14 @@ EOT;
 	else:
 		$html .= <<<EOT
 		<script>
-		jQuery(document).ready(function ($) {
-    jQuery('#$randIframeId').iFrameResize($jsonOptions);
-});
+		jQuery(document).ready(function () {
+		    setIframe();
+            var iframe = jQuery('#$randIframeId');
+            iframe.iFrameResize($jsonOptions);
+        });
 		</script>
 EOT;
-
 	endif;
-
-	if ( AnyComment()->errors->hasErrors() ) {
-		$html .= <<<EOT
-<script>
-function scrollToIframe() {
-   jQuery(window).on('load', function() {
-       jQuery('html, body').animate({
-            scrollTop: jQuery('#$randIframeId').offset().top
-        }, 500); 
-       });
-   }
-   
-   scrollToIframe();
-</script>
-EOT;
-	}
-
 	echo $html;
 }
 

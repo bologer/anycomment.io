@@ -70,6 +70,7 @@ wp_localize_script( 'anycomment-react', 'anyCommentApiSettings', [
 	<?php wp_enqueue_style( 'anycomment-styles' ) ?>
 </head>
 <body>
+
 <div id="anycomment-root"></div>
 <?php wp_footer(); ?>
 </body>

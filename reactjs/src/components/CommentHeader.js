@@ -33,8 +33,8 @@ class CommentHeader extends AnyCommentComponent {
                         <span className="comment-single-body-header__author-owner">{settings.i18.author}</span>
                         : ''}
                 </div>
-                <TimeAgo className="comment-single-body-header__date"
-                         date={comment.date} formatter={formatter}/>
+                <a href={'#comment-' + comment.id}><TimeAgo className="comment-single-body-header__date"
+                                                            date={comment.date} formatter={formatter}/></a>
             </header>
         );
     }
