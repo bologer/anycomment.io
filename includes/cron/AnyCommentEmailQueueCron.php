@@ -110,7 +110,13 @@ class AnyCommentEmailQueueCron {
 
 			$body = AnyCommentEmailQueue::generateReplyEmail( $email );
 
-			$isSent = wp_mail( $email->notify_email, $subject, $body, $headers );
+			/**
+			 * When required to notify new users about replies, them them email,
+			 * otherwise fake it as sent in order not to break the logic of the queue.
+			 */
+			$isSent = AnyCommentGenericSettings::isNotifyOnNewReply() ?
+				wp_mail( $email->notify_email, $subject, $body, $headers ) :
+				true;
 
 			if ( $isSent ) {
 				AnyCommentEmailQueue::markAsSent( $email->ID );

@@ -21,6 +21,11 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		const OPTION_NOTIFY_ON_NEW_COMMENT = 'option_notify_on_new_comment';
 
 		/**
+		 * Send email notification to users about new reply.
+		 */
+		const OPTION_NOTIFY_ON_NEW_REPLY = 'option_notify_on_new_reply';
+
+		/**
 		 * Checkbox whether plugin is active or not. Can be used to set-up API keys, etc,
 		 * before plugin is ready to be shown to users.
 		 */
@@ -31,6 +36,11 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 */
 		const OPTION_REGISTER_DEFAULT_GROUP = 'option_register_default_group';
 
+		/**
+		 * Interval, expressed in seconds per which check new comments.
+		 * When OPTION_NOTIFY_ON_NEW_COMMENT is not enabled, this constant not used.
+		 */
+		const OPTION_INTERVAL_COMMENTS_CHECK = 'option_interval_comment_check';
 
 		/**
 		 * Number of comments displayed per page and on the page load.
@@ -99,9 +109,10 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 * @inheritdoc
 		 */
 		protected $default_options = [
-			self::OPTION_THEME            => self::THEME_LIGHT,
-			self::OPTION_COPYRIGHT_TOGGLE => 'on',
-			self::OPTION_COUNT_PER_PAGE   => 20
+			self::OPTION_THEME                   => self::THEME_LIGHT,
+			self::OPTION_COPYRIGHT_TOGGLE        => 'on',
+			self::OPTION_COUNT_PER_PAGE          => 20,
+			self::OPTION_INTERVAL_COMMENTS_CHECK => 10,
 		];
 
 
@@ -210,6 +221,18 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'description' => esc_html( __( 'Show alert on new comment. Once clicked on alert, new comment will be shown.', "anycomment" ) )
 					],
 					[
+						'id'          => self::OPTION_INTERVAL_COMMENTS_CHECK,
+						'title'       => __( 'New Comment Interval Checking', "anycomment" ),
+						'callback'    => 'input_number',
+						'description' => esc_html( __( 'Interval (in seconds) to check for new comments. Minimum 5 and maximum is 100 seconds.', "anycomment" ) )
+					],
+					[
+						'id'          => self::OPTION_NOTIFY_ON_NEW_REPLY,
+						'title'       => __( 'Email Notifications', "anycomment" ),
+						'callback'    => 'input_checkbox',
+						'description' => esc_html( __( 'Notify users by email (if specified) about new replies. Make sure you have proper SMTP configurations in order to send emails.', "anycomment" ) )
+					],
+					[
 						'id'          => self::OPTION_LOAD_ON_SCROLL,
 						'title'       => __( 'Load on Scroll', "anycomment" ),
 						'callback'    => 'input_checkbox',
@@ -285,7 +308,35 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 * @return bool
 		 */
 		public static function isNotifyOnNewComment() {
-			return static::instance()->getOption( self::OPTION_NOTIFY_ON_NEW_COMMENT) !== null;
+			return static::instance()->getOption( self::OPTION_NOTIFY_ON_NEW_COMMENT ) !== null;
+		}
+
+		/**
+		 * Check whether it is required to notify by sending email on new reply.
+		 *
+		 * @return bool
+		 */
+		public static function isNotifyOnNewReply() {
+			return static::instance()->getOption( self::OPTION_NOTIFY_ON_NEW_REPLY ) !== null;
+		}
+
+		/**
+		 * Get interval in seconds per each check for new comments.
+		 *
+		 * @see AnyCommentGenericSettings::isNotifyOnNewReply() for more information. Which option is ignored when notification disabled.
+		 *
+		 * @return string
+		 */
+		public static function getIntervalCommentsCheck() {
+			$intervalInSeconds = static::instance()->getOption( self::OPTION_INTERVAL_COMMENTS_CHECK );
+
+			if ( $intervalInSeconds < 5 ) {
+				$intervalInSeconds = 5;
+			} elseif ( $intervalInSeconds > 100 ) {
+				$intervalInSeconds = 100;
+			}
+
+			return $intervalInSeconds;
 		}
 
 		/**

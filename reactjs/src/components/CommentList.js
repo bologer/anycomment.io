@@ -328,11 +328,15 @@ class CommentList extends AnyCommentComponent {
 
         this.checkForAnchor();
 
-        if (this.props.settings.options.notifyOnNewComment) {
-            const self = this;
+        const {options} = this.props.settings;
+
+        if (options.notifyOnNewComment) {
+            const self = this,
+                intervalInSeconds = (options.intervalCommentsCheck * 1000) || 5000;
+
             setInterval(function () {
                 self.followNewComments();
-            }, 5000);
+            }, intervalInSeconds);
         }
     }
 

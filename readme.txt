@@ -120,6 +120,7 @@ Read guide on how to create "Privacy Policy" page:
 * Plugin is now sending email notification about new reply to the comment, #71
 * Clicking on the "Reply" button in the email, will redirect user directly to the reply in the comments section, #81
 * Removed iframe, now comments rendered directly on the page = comments can be searched by crawlers = better SEO, #80
+* Add ability to defined interval to check for new comments, #82
 
 **Fixes:**
 
@@ -128,6 +129,7 @@ Read guide on how to create "Privacy Policy" page:
 * Plugin icon in admin sidebar was not displaying correctly and was overflowing when menu was opened
 * Newlines in comment are now displaying correctly. Previously everything was as a single line
 * Fixed issue when limit of number of comments per page was ignored and maximum number of comments displayed
+* Fixed overlapping sidebar news in admin on screens smaller then 1000px
 
 = 0.0.41 – 29.07.2018 =
 

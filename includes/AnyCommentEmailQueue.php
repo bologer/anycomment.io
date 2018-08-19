@@ -236,7 +236,7 @@ WHERE `emails`.`sent_at` = '0000-00-00 00:00:00'";
 		$cleanPermalink = get_permalink( $post );
 		$commentLink    = sprintf( '%s#comment-%s', $cleanPermalink, $comment->comment_ID );
 
-		$body = '<p>' . sprintf( __( 'New comment was posted in <a href="%s">%s</a>', 'anycomment' ), get_option( 'siteurl' ), get_option( 'blogname' ) ) . '</p>';
+		$body = '<p>' . sprintf( __( 'New reply was posted in <a href="%s">%s</a>', 'anycomment' ), get_option( 'siteurl' ), get_option( 'blogname' ) ) . '</p>';
 
 		if ( $post !== null ) {
 			$body .= '<p>' . sprintf( __( 'For post <a href="%s">%s</a>', 'anycomment' ), $cleanPermalink, $post->post_title ) . '</p>';
