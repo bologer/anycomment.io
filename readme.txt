@@ -42,11 +42,13 @@ Yes! Join our [GitHub repository](https://github.com/bologer/anycomment.io) :)
 
 = Features =
 * All comments stored in your own database. We do not create extra tables for these reasons. We reuse native comment's table, so all of the default WordPress functionality comes out of the box.
-* Social network authorization via Facebook, VK, Twitter, Google, Odnoklassniki or GitHub
+* Social network authorization via Facebook, VK, Twitter, Google, Odnoklassniki, GitHub, Instagram, Twitch or Dribble
 * Translated in English & Russian
 * Suitable for dark & light themes (on your choice)
 * Blazing-fast comments based on React
 * Alert notification in comment area when new comment was added (by clicking on alert, new comment will be shown)
+* Ability to send email on new comment reply
+* Ability to specify comma-separated list of words to be used to hold comments for moderators
 * Provide `Privacy Policy` link, so users know how their data processed and used (when not provided, no checkbox will be shown to users)
 * Social avatars shown globally
 * Likes (see likes count per comment/user in admin)
@@ -56,7 +58,7 @@ Yes! Join our [GitHub repository](https://github.com/bologer/anycomment.io) :)
 * Simple & informative dashboard with graphs to display number of comments over number of users who were engaged in the conversation per certain period & most active users
 * Comments do no inherit any of the currently active theme styles. Meaning that comments will not be broken by styles you have
 * Get latest plugin update news directly in the dashboard, don't miss a thing
-* Integration with [Akismet](https://wordpress.org/plugins/akismet/) & [WP User Avatar](https://wordpress.org/plugins/wp-user-avatar/), to specify customized avatars
+* Integration with [Akismet](https://wordpress.org/plugins/akismet/), [WP Mail SMTP](https://wordpress.org/plugins/wp-mail-smtp/) and [WP User Avatar](https://wordpress.org/plugins/wp-user-avatar/), to specify customized avatars
 
 = TODO features =
 * Option: customization of comment styles
@@ -101,6 +103,10 @@ Read guide on how to create "Privacy Policy" page:
 == Changelog ==
 
 = 0.0.45 – 13.08.2018 =
+
+> Important note: if you would like emails to work, please install [WP Mail SMTP](https://wordpress.org/plugins/wp-mail-smtp/) and configure SMTP client.
+> [English guide on SendPulse example](https://anycomment.io/smtp-sendpulse/)
+> [Инструкция на русском на примере SendPulse](https://anycomment.io/smtp-sendpulse/)
 
 **Enhancements:**
 
