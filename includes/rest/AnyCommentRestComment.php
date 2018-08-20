@@ -45,12 +45,6 @@ class AnyCommentRestComment extends AnyCommentRestController {
 					],
 				],
 			],
-			[
-				'methods'             => WP_REST_Server::CREATABLE,
-				'callback'            => [ $this, 'create_item' ],
-				'permission_callback' => [ $this, 'create_item_permissions_check' ],
-				'args'                => $this->get_endpoint_args_for_item_schema( WP_REST_Server::CREATABLE ),
-			],
 			'schema' => [ $this, 'get_public_item_schema' ],
 		] );
 
@@ -580,11 +574,19 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		}
 
 		if ( ! current_user_can( 'moderate_comments' ) && AnyCommentGenericSettings::isModerateFirst() ||
-		     AnyCommentComments::has_moderate_words( $comment_id ) ) {
+		     AnyCommentComments::hasModerateWords( $comment_id ) ) {
 			$this->handle_status_param( 'hold', $comment_id );
 		}
 
 		$comment = get_comment( $comment_id );
+
+		if ( AnyCommentGenericSettings::isNotifyOnNewReply() ) {
+			AnyCommentEmailQueue::addAsReply( $comment );
+		}
+
+		if ( AnyCommentGenericSettings::isNotifyAdministrator() ) {
+			AnyCommentEmailQueue::addAsAdminNotification( $comment );
+		}
 
 		/**
 		 * Fires after a comment is created or updated via the REST API.

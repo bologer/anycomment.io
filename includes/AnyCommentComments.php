@@ -12,7 +12,7 @@ class AnyCommentComments {
 	 *
 	 * @return bool
 	 */
-	public static function has_moderate_words( $comment ) {
+	public static function hasModerateWords( $comment ) {
 
 		$comment = get_comment( $comment );
 

@@ -67,31 +67,6 @@ class AnyCommentEmailQueue {
 		return static::db()->get_row( $sql );
 	}
 
-
-	public static function grabForAdmin() {
-		// todo: implement #77
-		return null;
-		$wpdb             = static::db();
-		$commentsTable    = $wpdb->comments;
-		$usersTable       = $wpdb->users;
-		$latestEmailQueue = static::getNewest();
-		$latestDate       = $latestEmailQueue->created_at;
-
-		/**
-		 * Select
-		 * - list of replies to parent comment
-		 * - make sure user has email
-		 * - make sure user did not reply to his own comment
-		 * - and comment date is after the latest reply sent
-		 */
-		$sql = "SELECT `comments`.*, `users`.`ID` AS parent_user_ID FROM `$commentsTable` `comments` 
-INNER JOIN `$commentsTable` `innerComment` ON `innerComment`.`comment_ID` = `comments`.`comment_parent` 
-INNER JOIN `$usersTable` `users` ON `users`.`ID` = `innerComment`.`user_ID` 
-WHERE `comments`.`comment_parent` != 0 AND `users`.`user_email` != '' AND `comments`.`user_ID` != `innerComment`.`user_ID` AND `comments`.`comment_date` > '$latestDate'";
-
-		return $wpdb->get_results( $sql );
-	}
-
 	/**
 	 * Get fresh comments which were not notified about yet.
 	 *
@@ -190,6 +165,93 @@ WHERE `emails`.`sent_at` = '0000-00-00 00:00:00'";
 	}
 
 	/**
+	 * Add specified comment as reply if applicable.
+	 * Method will check:
+	 * - whether specified comment is child comment
+	 * - not a reply to the same user
+	 * - make sure parent user has email (some socials do not provide email in the API)
+	 *
+	 * @param WP_Comment $comment Instance of comment model.
+	 *
+	 * @return AnyCommentEmailQueue|bool|int
+	 */
+	public static function addAsReply( $comment ) {
+
+		if ( ! $comment instanceof WP_Comment || (int) $comment->comment_parent === 0 ) {
+			return false;
+		}
+
+		$db            = static::db();
+		$usersTable    = $db->users;
+		$commentsTable = $db->comments;
+
+		$query = "SELECT `comments`.*, `users`.`ID` AS parent_user_ID FROM `$commentsTable` `comments` 
+LEFT JOIN `$commentsTable` `innerComment` ON `innerComment`.`comment_ID` = `comments`.`comment_parent` 
+LEFT JOIN `$usersTable` `users` ON `users`.`ID` = `innerComment`.`user_ID` 
+WHERE `comments`.`comment_parent` != 0 AND `users`.`user_email` != '' AND `comments`.`user_ID` != `innerComment`.`user_ID` AND `comments`.`comment_ID`=%d";
+
+
+		$result = static::db()->get_row( static::db()->prepare( $query, [ $comment->comment_ID ] ) );
+
+		if ( empty( $result ) || ! $result ) {
+			return false;
+		}
+
+		$email = new self();
+
+		$email->user_ID    = $result->parent_user_ID;
+		$email->post_ID    = $comment->comment_post_ID;
+		$email->comment_ID = $comment->comment_ID;
+		$email->content    = AnyCommentEmailQueue::generateReplyEmail( $email );
+
+		// todo: add some logging
+		$isAdded = AnyCommentEmailQueue::add( $email );
+
+		return $isAdded;
+	}
+
+	public static function addAsAdminNotification( $comment ) {
+		if ( ! $comment instanceof WP_Comment ) {
+			return false;
+		}
+
+		$db            = static::db();
+		$usersTable    = $db->users;
+		$commentsTable = $db->comments;
+		$adminEmail    = get_option( 'new_admin_email' );
+
+
+		$query = "SELECT `comments`.* FROM `$commentsTable` `comments` 
+LEFT JOIN `$usersTable` `users` ON `users`.`ID` = `comments`.`user_ID` 
+WHERE `users`.`user_email` != %s AND `comments`.`comment_ID`=%d";
+
+
+		$result = static::db()->get_row( static::db()->prepare( $query, [ $adminEmail, $comment->comment_ID ] ) );
+
+		if ( empty( $result ) || ! $result ) {
+			return false;
+		}
+
+		$user = get_user_by( 'email', $adminEmail );
+
+		if(!$user instanceof WP_User) {
+			return false;
+		}
+
+		$email = new self();
+
+		$email->user_ID    = $user->ID;
+		$email->post_ID    = $comment->comment_post_ID;
+		$email->comment_ID = $comment->comment_ID;
+		$email->content    = AnyCommentEmailQueue::generateAdminEmail( $email );
+
+		// todo: add some logging
+		$isAdded = AnyCommentEmailQueue::add( $email );
+
+		return $isAdded;
+	}
+
+	/**
 	 * Add new email to queue.
 	 *
 	 * @param AnyCommentEmailQueue $email
@@ -275,6 +337,38 @@ WHERE `emails`.`sent_at` = '0000-00-00 00:00:00'";
 
 		// Add reply button
 		$body .= '<p><a href="' . $commentLink . '" style="font-size: 15px;text-decoration:none;font-weight: 400;text-align: center;color: #fff;padding: 0 50px;line-height: 48px;background-color: #53af4a;display: inline-block;vertical-align: middle;border: 0;outline: 0;cursor: pointer;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;-webkit-appearance: none;-moz-appearance: none;appearance: none;white-space: nowrap;border-radius: 24px;">' . __( 'Reply', 'anycomment' ) . '</a></p>';
+
+		return $body;
+	}
+
+	/**
+	 * Generate email template to send notification to admin.
+	 *
+	 * @param AnyCommentEmailQueue $email
+	 *
+	 * @return string
+	 * todo: need rewrite as duplicate code of email template above, for now good enought
+	 */
+	public static function generateAdminEmail( $email ) {
+		$comment        = get_comment( $email->comment_ID );
+		$post           = get_post( $email->post_ID );
+		$cleanPermalink = get_permalink( $post );
+		$commentLink    = sprintf( '%s#comment-%s', $cleanPermalink, $comment->comment_ID );
+
+		$body = '<p>' . sprintf( __( 'New comment posted in <a href="%s">%s</a>', 'anycomment' ), get_option( 'siteurl' ), get_option( 'blogname' ) ) . '</p>';
+
+		if ( $post !== null ) {
+			$body .= '<p>' . sprintf( __( 'For post <a href="%s">%s</a>', 'anycomment' ), $cleanPermalink, $post->post_title ) . '</p>';
+		}
+
+		if ( $comment !== null ) {
+			$body .= '<div style="background-color:#eee; padding: 10px; font-size: 12pt; font-family: Verdana, Arial, sans-serif; line-height: 1.5;">';
+			$body .= $comment->comment_content;
+			$body .= '</div>';
+		}
+
+		// Add reply button
+		$body .= '<p><a href="' . $commentLink . '" style="font-size: 15px;text-decoration:none;font-weight: 400;text-align: center;color: #fff;padding: 0 50px;line-height: 48px;background-color: #53af4a;display: inline-block;vertical-align: middle;border: 0;outline: 0;cursor: pointer;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;-webkit-appearance: none;-moz-appearance: none;appearance: none;white-space: nowrap;border-radius: 24px;">' . __( 'See', 'anycomment' ) . '</a></p>';
 
 		return $body;
 	}

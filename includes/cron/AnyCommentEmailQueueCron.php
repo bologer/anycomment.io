@@ -19,13 +19,7 @@ class AnyCommentEmailQueueCron {
 			wp_schedule_event( time(), 'every_minute', 'anycomment_email_queue_send_cron' );
 		}
 
-		if ( ! wp_next_scheduled( 'anycomment_email_queue_check_cron' ) ) {
-			wp_schedule_event( time(), 'every_minute', 'anycomment_email_queue_check_cron' );
-		}
-
-
 		add_action( 'anycomment_email_queue_send_cron', [ $this, 'send_emails' ] );
-		add_action( 'anycomment_email_queue_check_cron', [ $this, 'check_for_queue' ] );
 	}
 
 	/**
@@ -42,41 +36,6 @@ class AnyCommentEmailQueueCron {
 		);
 
 		return $schedules;
-	}
-
-	/**
-	 * Check new comments to be added to the email queue.
-	 *
-	 * @return bool
-	 */
-	public function check_for_queue() {
-		$comments = AnyCommentEmailQueue::grabToAdd();
-
-		if ( empty( $comments ) ) {
-			return false;
-		}
-
-		$addedCount = 0;
-
-		/**
-		 * @var $comment WP_Comment
-		 */
-		foreach ( $comments as $key => $comment ) {
-			$email = new AnyCommentEmailQueue();
-
-			$email->user_ID    = $comment->parent_user_ID;
-			$email->post_ID    = $comment->comment_post_ID;
-			$email->comment_ID = $comment->comment_ID;
-			$email->content    = AnyCommentEmailQueue::generateReplyEmail( $email );
-
-			$isAdded = AnyCommentEmailQueue::add( $email );
-
-			if ( $isAdded ) {
-				$addedCount ++;
-			}
-		}
-
-		return count( $comments ) === $addedCount;
 	}
 
 	/**
@@ -97,6 +56,7 @@ class AnyCommentEmailQueueCron {
 		 * @var $email AnyCommentEmailQueue
 		 */
 		foreach ( $emails as $key => $email ) {
+			// todo: can be preselected with query to improve overall performance
 			$post = get_post( $email->post_ID );
 
 			if ( $post !== null ) {
@@ -108,7 +68,7 @@ class AnyCommentEmailQueueCron {
 			$headers   = [];
 			$headers[] = 'Content-Type: text/html; charset=UTF-8';
 
-			$body = AnyCommentEmailQueue::generateReplyEmail( $email );
+			$body = $email->content;
 
 			/**
 			 * When required to notify new users about replies, them them email,
