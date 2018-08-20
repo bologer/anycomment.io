@@ -122,6 +122,7 @@ Read guide on how to create "Privacy Policy" page:
 * Removed iframe, now comments rendered directly on the page = comments can be searched by crawlers = better SEO, #80
 * Added ability to define interval to check for new comments, #82
 * Added ability to define list of comma-separated words. If one of them match comment text, it will be marked for moderation, #86
+* Comment text field is now expanding automatically when you start typing new comment/edit existing/replying to someone
 
 **Fixes:**
 
