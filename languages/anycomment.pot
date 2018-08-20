@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-20 05:21+0000\n"
+"POT-Creation-Date: 2018-08-20 05:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -326,8 +326,8 @@ msgstr ""
 
 #: includes/admin/AnyCommentGenericSettings.php:256
 msgid ""
-"Comment should be marked as spam when at least one word matched from this "
-"comma-separated list."
+"Comment should be marked for moderation when matched word from this list of "
+"comma-separated values."
 msgstr ""
 
 #: includes/admin/AnyCommentGenericSettings.php:260

@@ -253,7 +253,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'id'          => self::OPTION_MODERATE_WORDS,
 						'title'       => __( 'Spam Words', "anycomment" ),
 						'callback'    => 'input_textarea',
-						'description' => esc_html( __( 'Comment should be marked as spam when at least one word matched from this comma-separated list.', "anycomment" ) )
+						'description' => esc_html( __( 'Comment should be marked for moderation when matched word from this list of comma-separated values.', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_SHOW_PROFILE_URL,
