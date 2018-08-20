@@ -120,7 +120,8 @@ Read guide on how to create "Privacy Policy" page:
 * Plugin is now sending email notification about new reply to the comment, #71
 * Clicking on the "Reply" button in the email, will redirect user directly to the reply in the comments section, #81
 * Removed iframe, now comments rendered directly on the page = comments can be searched by crawlers = better SEO, #80
-* Add ability to defined interval to check for new comments, #82
+* Added ability to define interval to check for new comments, #82
+* Added ability to define list of comma-separated words. If one of them match comment text, it will be marked for spam, #
 
 **Fixes:**
 

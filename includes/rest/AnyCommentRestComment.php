@@ -210,7 +210,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			'order'          => 'order',
 			'parent'         => 'parent__in',
 			'parent_exclude' => 'parent__not_in',
-			'per_page'        => 'number',
+			'per_page'       => 'number',
 			'post'           => 'post__in',
 			'search'         => 'search',
 			'type'           => 'type',
@@ -579,7 +579,8 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			return new WP_Error( 'rest_comment_failed_create', __( 'Creating comment failed.', 'anycomment' ), array( 'status' => 500 ) );
 		}
 
-		if ( ! current_user_can( 'moderate_comments' ) && AnyCommentGenericSettings::isModerateFirst() ) {
+		if ( ! current_user_can( 'moderate_comments' ) && AnyCommentGenericSettings::isModerateFirst() ||
+		     AnyCommentComments::has_moderate_words( $comment_id ) ) {
 			$this->handle_status_param( 'hold', $comment_id );
 		}
 

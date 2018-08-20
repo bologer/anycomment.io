@@ -243,6 +243,9 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			include_once( ANYCOMMENT_ABSPATH . 'includes/rest/AnyCommentRestLikes.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/rest/AnyCommentRestUsers.php' );
 
+			/**
+			 * Generic
+			 */
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentErrorHandler.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentUploadHandler.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentRender.php' );
@@ -253,6 +256,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentUser.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentUserMeta.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentAvatars.php' );
+			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentComments.php' );
 
 			/**
 			 * Admin related
@@ -266,11 +270,19 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			include_once( ANYCOMMENT_ABSPATH . 'includes/admin/AnyCommentIntegrationSettings.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/admin/AnyCommentWPComments.php' );
 
+			/**
+			 * Cron tabs
+			 */
 			include_once( ANYCOMMENT_ABSPATH . 'includes/cron/AnyCommentEmailQueueCron.php' );
 
-			// Migration manager
+			/**
+			 * Migration manager
+			 */
 			include_once( ANYCOMMENT_ABSPATH . 'includes/migrations/AnyCommentMigrationManager.php' );
 
+			/**
+			 * Some plugin already have such class.
+			 */
 			if ( ! class_exists( 'Hybridauth' ) ) {
 				include_once( ANYCOMMENT_ABSPATH . 'includes/hybridauth/src/autoload.php' );
 			}

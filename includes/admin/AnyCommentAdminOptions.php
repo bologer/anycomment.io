@@ -165,6 +165,22 @@ if ( ! class_exists( 'AnyCommentAdminOptions' ) ) :
 		}
 
 		/**
+		 * Helper to render textarea.
+		 *
+		 * @param array $args List of passed arguments.
+		 */
+		public function input_textarea( $args ) {
+			?>
+            <textarea rows="5" id="<?= esc_attr( $args['label_for'] ); ?>"
+                      name="<?= $this->option_name ?>[<?= esc_attr( $args['label_for'] ); ?>]"><?= $this->getOption( $args['label_for'] ) ?></textarea>
+			<?php if ( isset( $args['description'] ) ): ?>
+                <div class="clearfix"></div>
+                <p class="description"><?= $args['description'] ?></p>
+			<?php endif; ?>
+			<?php
+		}
+
+		/**
 		 * Helper to render input of type number.
 		 *
 		 * @param array $args List of passed arguments.

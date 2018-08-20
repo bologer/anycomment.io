@@ -68,6 +68,11 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		const OPTION_MODERATE_FIRST = 'options_moderate_first';
 
 		/**
+		 * List of words to mark comments as spam.
+		 */
+		const OPTION_MODERATE_WORDS = 'options_moderate_words';
+
+		/**
 		 * Show/hide profile URL on client mini social icon.
 		 */
 		const OPTION_SHOW_PROFILE_URL = 'options_show_profile_url';
@@ -245,11 +250,18 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'description' => esc_html( __( 'Moderators should check comment before it appears.', "anycomment" ) )
 					],
 					[
+						'id'          => self::OPTION_MODERATE_WORDS,
+						'title'       => __( 'Spam Words', "anycomment" ),
+						'callback'    => 'input_textarea',
+						'description' => esc_html( __( 'Comment should be marked as spam when at least one word matched from this comma-separated list.', "anycomment" ) )
+					],
+					[
 						'id'          => self::OPTION_SHOW_PROFILE_URL,
 						'title'       => __( 'Show Profile URL', "anycomment" ),
 						'callback'    => 'input_checkbox',
 						'description' => esc_html( __( 'Show link to user in the social media when available (name of the user will be clickable).', "anycomment" ) )
 					],
+
 					[
 						'id'          => self::OPTION_USER_AGREEMENT_LINK,
 						'title'       => __( 'User Agreement Link', "anycomment" ),
@@ -318,6 +330,15 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 */
 		public static function isNotifyOnNewReply() {
 			return static::instance()->getOption( self::OPTION_NOTIFY_ON_NEW_REPLY ) !== null;
+		}
+
+		/**
+		 * Get list of words to moderate.
+		 *
+		 * @return string|null
+		 */
+		public static function getModerateWords() {
+			return static::instance()->getOption( self::OPTION_MODERATE_WORDS );
 		}
 
 		/**
