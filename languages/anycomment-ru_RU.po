@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-20 05:37+0000\n"
-"PO-Revision-Date: 2018-08-20 05:38+0000\n"
+"POT-Creation-Date: 2018-08-20 05:43+0000\n"
+"PO-Revision-Date: 2018-08-20 05:43+0000\n"
 "Last-Translator: admin <sasha.tesh@gmail.com>\n"
 "Language-Team: Русский\n"
 "Language: ru_RU\n"
@@ -14,17 +14,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/"
 
-#: includes/AnyCommentEmailQueue.php:239
+#: includes/AnyCommentEmailQueue.php:264
 #, php-format
 msgid "New reply was posted in <a href=\"%s\">%s</a>"
 msgstr "Новый ответ к <a href=\"%s\">%s</a>"
 
-#: includes/AnyCommentEmailQueue.php:242
+#: includes/AnyCommentEmailQueue.php:267
 #, php-format
 msgid "For post <a href=\"%s\">%s</a>"
 msgstr "Для записи <a href=\"%s\">%s</a>"
 
-#: includes/AnyCommentEmailQueue.php:252 includes/AnyCommentRender.php:83
+#: includes/AnyCommentEmailQueue.php:277 includes/AnyCommentRender.php:83
 #: includes/AnyCommentRender.php:91
 msgid "Reply"
 msgstr "Ответить"
@@ -295,10 +295,12 @@ msgstr "Уведомление при новом комментарии"
 
 #: includes/admin/AnyCommentGenericSettings.php:231
 msgid ""
-"Show alert on new comment. Once clicked on alert, new comment will be shown."
+"Show hint about new comment when user is on the comments page. Once clicked "
+"on alert, new comment will be displayed."
 msgstr ""
-"Показывать уведомление при новом комментарии. При нажатии на него, новый "
-"комментарий будет показан. "
+"Показывать подсказку о новых комментариях когда пользователь находится на "
+"странице с комментариями. После нажатия на подсказку комментарий будет "
+"показан."
 
 #: includes/admin/AnyCommentGenericSettings.php:235
 msgid "New Comment Interval Checking"

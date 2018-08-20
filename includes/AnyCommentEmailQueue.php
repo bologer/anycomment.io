@@ -67,6 +67,31 @@ class AnyCommentEmailQueue {
 		return static::db()->get_row( $sql );
 	}
 
+
+	public static function grabForAdmin() {
+		// todo: implement #77
+		return null;
+		$wpdb             = static::db();
+		$commentsTable    = $wpdb->comments;
+		$usersTable       = $wpdb->users;
+		$latestEmailQueue = static::getNewest();
+		$latestDate       = $latestEmailQueue->created_at;
+
+		/**
+		 * Select
+		 * - list of replies to parent comment
+		 * - make sure user has email
+		 * - make sure user did not reply to his own comment
+		 * - and comment date is after the latest reply sent
+		 */
+		$sql = "SELECT `comments`.*, `users`.`ID` AS parent_user_ID FROM `$commentsTable` `comments` 
+INNER JOIN `$commentsTable` `innerComment` ON `innerComment`.`comment_ID` = `comments`.`comment_parent` 
+INNER JOIN `$usersTable` `users` ON `users`.`ID` = `innerComment`.`user_ID` 
+WHERE `comments`.`comment_parent` != 0 AND `users`.`user_email` != '' AND `comments`.`user_ID` != `innerComment`.`user_ID` AND `comments`.`comment_date` > '$latestDate'";
+
+		return $wpdb->get_results( $sql );
+	}
+
 	/**
 	 * Get fresh comments which were not notified about yet.
 	 *
