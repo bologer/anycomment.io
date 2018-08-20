@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-20 05:27+0000\n"
+"POT-Creation-Date: 2018-08-20 05:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -174,7 +174,7 @@ msgid "Integration"
 msgstr ""
 
 #: includes/admin/AnyCommentIntegrationSettings.php:87
-#: includes/admin/AnyCommentGenericSettings.php:175
+#: includes/admin/AnyCommentGenericSettings.php:180
 msgid "Generic"
 msgstr ""
 
@@ -210,151 +210,159 @@ msgstr ""
 msgid "Settings Saved"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:146
-#: includes/admin/AnyCommentGenericSettings.php:212
+#: includes/admin/AnyCommentGenericSettings.php:151
+#: includes/admin/AnyCommentGenericSettings.php:217
 msgid "Social Network Subscriber"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:161
-#: includes/admin/AnyCommentGenericSettings.php:162 templates/admin/tabs.php:11
+#: includes/admin/AnyCommentGenericSettings.php:166
+#: includes/admin/AnyCommentGenericSettings.php:167 templates/admin/tabs.php:11
 msgid "Settings"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:177
+#: includes/admin/AnyCommentGenericSettings.php:182
 msgid "Generic settings."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:188
+#: includes/admin/AnyCommentGenericSettings.php:193
 msgid "Enable Comments"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:190
+#: includes/admin/AnyCommentGenericSettings.php:195
 msgid ""
 "When on, comments are visible. When off, default WordPress' comments shown. "
 "This can be used to configure social networks on fresh installation."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:194
+#: includes/admin/AnyCommentGenericSettings.php:199
 msgid "Theme"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:198
+#: includes/admin/AnyCommentGenericSettings.php:203
 msgid "Dark"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:199
+#: includes/admin/AnyCommentGenericSettings.php:204
 msgid "Light"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:202
+#: includes/admin/AnyCommentGenericSettings.php:207
 msgid "Choose comments theme."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:206
+#: includes/admin/AnyCommentGenericSettings.php:211
 msgid "Register User Group"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:208
+#: includes/admin/AnyCommentGenericSettings.php:213
 msgid ""
 "When users will authorize via plugin, they are being registered and be "
 "assigned with group selected above."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:211
+#: includes/admin/AnyCommentGenericSettings.php:216
 msgid "Subscriber"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:218
+#: includes/admin/AnyCommentGenericSettings.php:223
 msgid "Number of Comments Loaded"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:220
+#: includes/admin/AnyCommentGenericSettings.php:225
 msgid ""
 "Number of comments loaded on initial page load. For example, \"20\" will "
 "display 20 comments on the page and if you have 40 in total, at the very "
 "bottom you will see button to load more. Min 5, max as defined."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:224
+#: includes/admin/AnyCommentGenericSettings.php:229
 msgid "New Comment Alert"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:226
+#: includes/admin/AnyCommentGenericSettings.php:231
 msgid ""
 "Show alert on new comment. Once clicked on alert, new comment will be shown."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:230
+#: includes/admin/AnyCommentGenericSettings.php:235
 msgid "New Comment Interval Checking"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:232
+#: includes/admin/AnyCommentGenericSettings.php:237
 msgid ""
 "Interval (in seconds) to check for new comments. Minimum 5 and maximum is "
 "100 seconds."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:236
+#: includes/admin/AnyCommentGenericSettings.php:241
+msgid "Notify Administrator"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:243
+msgid "Notify administrator via email about new comment."
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:247
 msgid "Email Notifications"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:238
+#: includes/admin/AnyCommentGenericSettings.php:249
 msgid ""
 "Notify users by email (if specified) about new replies. Make sure you have "
 "proper SMTP configurations in order to send emails."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:242
+#: includes/admin/AnyCommentGenericSettings.php:253
 msgid "Load on Scroll"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:244
+#: includes/admin/AnyCommentGenericSettings.php:255
 msgid "Load comments when user scrolls to it."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:248
+#: includes/admin/AnyCommentGenericSettings.php:259
 msgid "Moderate First"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:250
+#: includes/admin/AnyCommentGenericSettings.php:261
 msgid "Moderators should check comment before it appears."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:254
+#: includes/admin/AnyCommentGenericSettings.php:265
 msgid "Spam Words"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:256
+#: includes/admin/AnyCommentGenericSettings.php:267
 msgid ""
 "Comment should be marked for moderation when matched word from this list of "
 "comma-separated values."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:260
+#: includes/admin/AnyCommentGenericSettings.php:271
 msgid "Show Profile URL"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:262
+#: includes/admin/AnyCommentGenericSettings.php:273
 msgid ""
 "Show link to user in the social media when available (name of the user will "
 "be clickable)."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:267
+#: includes/admin/AnyCommentGenericSettings.php:278
 msgid "User Agreement Link"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:269
+#: includes/admin/AnyCommentGenericSettings.php:280
 msgid ""
 "Link to User Agreement, where described how your process users data once "
 "they authorize via social network and/or add new comment."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:273
+#: includes/admin/AnyCommentGenericSettings.php:284
 msgid "Thanks"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:275
+#: includes/admin/AnyCommentGenericSettings.php:286
 msgid ""
 "Show AnyComment's link in the footer of comments. Copyright helps to bring "
 "awareness of such plugin and bring people to allow us to understand that it "

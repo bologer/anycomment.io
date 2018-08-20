@@ -26,6 +26,11 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		const OPTION_NOTIFY_ON_NEW_REPLY = 'option_notify_on_new_reply';
 
 		/**
+		 * Notify administrator about new comment.
+		 */
+		const OPTION_NOTIFY_ADMINISTRATOR = 'option_notify_administrator';
+
+		/**
 		 * Checkbox whether plugin is active or not. Can be used to set-up API keys, etc,
 		 * before plugin is ready to be shown to users.
 		 */
@@ -232,6 +237,12 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'description' => esc_html( __( 'Interval (in seconds) to check for new comments. Minimum 5 and maximum is 100 seconds.', "anycomment" ) )
 					],
 					[
+						'id'          => self::OPTION_NOTIFY_ADMINISTRATOR,
+						'title'       => __( 'Notify Administrator', "anycomment" ),
+						'callback'    => 'input_checkbox',
+						'description' => esc_html( __( 'Notify administrator via email about new comment.', "anycomment" ) )
+					],
+					[
 						'id'          => self::OPTION_NOTIFY_ON_NEW_REPLY,
 						'title'       => __( 'Email Notifications', "anycomment" ),
 						'callback'    => 'input_checkbox',
@@ -321,6 +332,15 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 */
 		public static function isNotifyOnNewComment() {
 			return static::instance()->getOption( self::OPTION_NOTIFY_ON_NEW_COMMENT ) !== null;
+		}
+
+		/**
+		 * Check whether it is required to notify administrator about new comment.
+		 *
+		 * @return bool
+		 */
+		public static function isNotifyAdministrator() {
+			return static::instance()->getOption( self::OPTION_NOTIFY_ADMINISTRATOR ) !== null;
 		}
 
 		/**
