@@ -121,9 +121,12 @@ Read guide on how to create "Privacy Policy" page:
 
 == Changelog ==
 
-= 0.0.45 – 13.08.2018 =
+= 0.0.45 – 21.08.2018 =
 
-> Important note: this plugin update includes email sending features, which might require SMTP configureation.
+> *IMPORTANT NOTE 1:* Please if you find any bugs report on the [support forum](https://wordpress.org/support/plugin/anycomment) or the [issue tracker](https://github.com/bologer/anycomment.io/issues)
+
+
+> *IMPORTANT NOTE 2:* this plugin update includes email sending features, which might require SMTP configureation.
 > We recomment to install [WP Mail SMTP](https://wordpress.org/plugins/wp-mail-smtp/) and follow on the instruction below:
 > [English guide on SendPulse example](https://anycomment.io/en/smtp-sendpulse/)
 > [Инструкция на русском на примере SendPulse](https://anycomment.io/smtp-sendpulse/)
