@@ -124,6 +124,19 @@ Not yet working? Please follow the steps:
 * In the list find request which looks something like the following: `https://yourdomain.com/wp-json/anycomment/v1/comments?post=15&parent=0&per_page=15&order=desc&order_by=id`
 * Click on it, copy its content and or take screenshot of it and report in [support forum](https://wordpress.org/support/plugin/anycomment)
 
+= I cannot delete comment? =
+
+Possbile you are getting "Forbidden" with 403 error code.
+
+*To fix this:*
+
+* Connect to your website
+* Open root folder where `wp-content`, `wp-includes` folders
+* Find & open `.htaccess`
+* Add `Require method GET POST PUT DELETE OPTIONS` like after `RewriteRule`
+* Save & Close
+* Try to delete comment again
+
 = Why Facebook and Twitter want Privacy Policy URL? =
 
 Facebook and Twitter are now require your website to have Privacy Policy.
