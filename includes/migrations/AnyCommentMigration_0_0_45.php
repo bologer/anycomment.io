@@ -83,18 +83,7 @@ class AnyCommentMigration_0_0_45 extends AnyCommentMigration {
 			                            $wpdb->query( $comment_id_index ) !== false;
 		}
 
-		$isInserted = $wpdb->insert( $table, [
-			'user_ID'    => 0,
-			'post_ID'    => 0,
-			'comment_ID' => 0,
-			'content'    => 'initial test mail',
-			'ip'         => null,
-			'user_agent' => null,
-			'sent_at'    => current_time( 'mysql' ),
-			'created_at' => current_time( 'mysql' ),
-		] );
-
-		return $isVkUpdated && $isEmailQueueTableCreated && $isInserted;
+		return $isVkUpdated && $isEmailQueueTableCreated;
 	}
 
 	/**

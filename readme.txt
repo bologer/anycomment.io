@@ -32,6 +32,9 @@ Here is the list of supported social networks:
 * VK
 * Odnoklassniki
 * GitHub
+* Instagram
+* Twitch
+* Dribbble
 * and more to be added
 
 AnyComment stands for simplicity & speed. We value feedback, so if you have failures or suggestions - please [let us know](https://wordpress.org/support/plugin/anycomment) about it!
@@ -45,9 +48,10 @@ Yes! Join our [GitHub repository](https://github.com/bologer/anycomment.io) :)
 * Social network authorization via Facebook, VK, Twitter, Google, Odnoklassniki, GitHub, Instagram, Twitch or Dribble
 * Translated in English & Russian
 * Suitable for dark & light themes (on your choice)
-* Blazing-fast comments based on React
+* Blazing-fast comments based on React & WordPress REST
 * Alert notification in comment area when new comment was added (by clicking on alert, new comment will be shown)
 * Ability to send email on new comment reply
+* Ability to send email notification about new comment to administrator
 * Ability to specify comma-separated list of words to be used to hold comments for moderators
 * Provide `Privacy Policy` link, so users know how their data processed and used (when not provided, no checkbox will be shown to users)
 * Social avatars shown globally
@@ -63,9 +67,23 @@ Yes! Join our [GitHub repository](https://github.com/bologer/anycomment.io) :)
 = TODO features =
 * Option: customization of comment styles
 * Option: add option to allow guests to leave comments
+* Option: ability to specify thanks message and/or page when user left his first comment, #88
+* Option: display matching links as attachments in comment, #87
+* Option: ability to set default sorting, #84
+* Option: ability to premoderate comments with links, #84
+* Option: enable/disable clickable links, #83
+* Option: enable/disable to display attachments (videos, images, etc)
+* Option: when user does not have email after registration via social, ask for it somewhere in the comments again
+* Option: notify moderators about new comments, #77
+* Ability to choose comment to make it sticky at the very top of all comments, #76
+* Add checkbox to subscribe to new replies, #73 (now it is mandatory)
+* Option: Ability to ban user or by IP address, #70
+* Ability to upload images, #68
 * Support more languages
 * Code highlighting
 * Markdown support
+* Add more guides on how to set-up certain services, Google SMTP, Amazon SES, etc
+* Cross sharing of comments, when user posts a comment, duplicate it on their wall
 * Integration of: Google's reCaptcha
 * Add Yahoo as authorization option
 * More widgets to be added on the page (sidebar, custom pages, etc)
@@ -76,9 +94,10 @@ Yes! Join our [GitHub repository](https://github.com/bologer/anycomment.io) :)
 == Screenshots ==
 
 1. Plugin dashboard. Analytics on current month and most active users.
-2. Settings view.
-3. White theme.
-4. Dark theme.
+2. Social settings view.
+3. Settings view.
+4. White theme.
+5. Dark theme.
 
 == Frequently Asked Questions ==
 
@@ -104,20 +123,21 @@ Read guide on how to create "Privacy Policy" page:
 
 = 0.0.45 – 13.08.2018 =
 
-> Important note: if you would like emails to work, please install [WP Mail SMTP](https://wordpress.org/plugins/wp-mail-smtp/) and configure SMTP client.
-> [English guide on SendPulse example](https://anycomment.io/smtp-sendpulse/)
+> Important note: this plugin update includes email sending features, which might require SMTP configureation.
+> We recomment to install [WP Mail SMTP](https://wordpress.org/plugins/wp-mail-smtp/) and follow on the instruction below:
+> [English guide on SendPulse example](https://anycomment.io/en/smtp-sendpulse/)
 > [Инструкция на русском на примере SendPulse](https://anycomment.io/smtp-sendpulse/)
 
 **Enhancements:**
 
 * Added Instagram, Dribble and Twitch as authorization option, #72
 * Alert shown when new comment was added. Comment list will be automatically refreshed once clicked on alert, #63
-* Added option to enabled/disable alert nofitication about new comment, #63
+* Added option to enabled/disable alert notification about new comment, #63
 * Now social media avatar shown globally in admin (e.g. in `dashboard`, `user.php`, `comment.php`, etc), #61
 * Better layout for plugin news in admin, `New` label is shown for articles which are not older then 2 weeks, #62
 * Added caching for news in dashboard (no need to load them every time) and limited to 3
 * New design for setting up social networks, now tabbed, #64
-* Added guides English & Russian guides for Vkontakte, Facebook, Twitter, Google, GitHub, Odnoklassniki, Instagram, Twitch, Dribbbles to help you with configurations, #66
+* Added guides English & Russian guides for Vkontakte, Facebook, Twitter, Google, GitHub, Odnoklassniki, Instagram, Twitch, Dribbble to help you with configurations, #66
 * Added base plugin shortcode - `[anycomment]` to displays comment box, #67
 * Now links, images or videos (e.g. YouTube, Rutube) displayed as attachments under comment text, #69
 * Long comment text will be limited in height, by clicking on text will allow to expand it, #73
