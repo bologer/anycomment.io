@@ -222,7 +222,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'id'          => self::OPTION_COUNT_PER_PAGE,
 						'title'       => __( 'Number of Comments Loaded', "anycomment" ),
 						'callback'    => 'input_number',
-						'description' => esc_html( __( 'Number of comments loaded on initial page load. For example, "20" will display 20 comments on the page and if you have 40 in total, at the very bottom you will see button to load more. Min 5, max as defined.', "anycomment" ) )
+						'description' => esc_html( __( 'Number of comments to load initially and per page.', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_NOTIFY_ON_NEW_COMMENT,
