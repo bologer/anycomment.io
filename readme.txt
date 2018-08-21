@@ -109,6 +109,21 @@ Yes! Join our [GitHub repository](https://github.com/bologer/anycomment.io) :)
 * Specify required API details in special social network settings
 * Go to some post and try to authorize using any of the enabled social networks and leave a comment!
 
+= Comment form does not load. What to do? =
+
+AnyComment uses WordPress' REST API, if you installed plugin which removes it such as [Clearfy](https://wordpress.org/plugins/clearfy/), then please disable "Disable Rest API" option.
+
+Still does not work? Check for other optimization-like plugins and disabled one by one and check the load of the comment form and comments in general.
+
+Not yet working? Please follow the steps:
+
+* Open comments page
+* Open "Developer Console" tab (e.g. press F12 in Firefox or in Chrome). It can named a bit different, depends from browser to browser.
+* Select "Network" tab, inside find "XHR" click on it (name can also vary). If you do not find "XHR" just ignore it
+* Refresh page
+* In the list find request which looks something like the following: `https://yourdomain.com/wp-json/anycomment/v1/comments?post=15&parent=0&per_page=15&order=desc&order_by=id`
+* Click on it, copy its content and or take screenshot of it and report in [support forum](https://wordpress.org/support/plugin/anycomment)
+
 = Why Facebook and Twitter want Privacy Policy URL? =
 
 Facebook and Twitter are now require your website to have Privacy Policy.
