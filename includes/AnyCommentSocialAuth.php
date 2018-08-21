@@ -54,6 +54,11 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		protected static $rest_version = 'v1';
 
 		/**
+		 * @var array Used to track list of requested avatar and the same email requested again, it will user existing check.
+		 */
+		protected static $avatarMap = [];
+
+		/**
 		 * AC_SocialAuth constructor.
 		 */
 		public function __construct() {
@@ -656,30 +661,37 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		/**
 		 * Get user avatar by user id.
 		 *
-		 * @param int $user_id User ID to be searched for.
+		 * @param int $id_or_email User ID to be searched for.
 		 *
 		 * @return mixed|null
 		 */
-		public function get_user_avatar_url( $user_id ) {
-
+		public function get_user_avatar_url( $id_or_email ) {
 
 			if ( AnyCommentIntegrationSettings::isWPUserAvatarOn() ) {
 				global $wpua_functions;
-				if ( $wpua_functions->has_wp_user_avatar( $user_id ) ) {
-					return $wpua_functions->get_wp_user_avatar_src( $user_id, 60 );
+				if ( $wpua_functions->has_wp_user_avatar( $id_or_email ) ) {
+					return $wpua_functions->get_wp_user_avatar_src( $id_or_email, 60 );
 				}
 			}
+
 
 			/**
 			 * Get avatar from social network.
 			 */
-			$avatarUrl = get_user_meta( $user_id, self::META_SOCIAL_AVATAR, true );
+			$userId = null;
 
-			/**
-			 * When user has avatar from social network.
-			 */
-			if ( ! empty( $avatarUrl ) ) {
-				return $avatarUrl;
+			if ( is_numeric( $id_or_email ) ) {
+				$userId = $id_or_email;
+			} elseif ( ( $user = get_user_by( 'email', $id_or_email ) ) instanceof WP_User ) {
+				$userId = $user->ID;
+			}
+
+			if ( $userId !== null ) {
+				$avatarUrl = get_user_meta( $userId, self::META_SOCIAL_AVATAR, true );
+
+				if ( ! empty( $avatarUrl ) ) {
+					return $avatarUrl;
+				}
 			}
 
 			/**
@@ -687,8 +699,8 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 			 * whether user has non-default gravatar avatar, if does return,
 			 * otherwise get default plugin's one.
 			 */
-			if ( $this->has_gravatar( $user_id ) ) {
-				return get_avatar_url( $user_id, [ 'size' => 60 ] );
+			if ( $this->has_gravatar( $id_or_email ) ) {
+				return get_avatar_url( $id_or_email, [ 'size' => 60 ] );
 			}
 
 			return AnyComment()->plugin_url() . '/assets/img/no-avatar.svg';
@@ -730,25 +742,24 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 				$email = $id_or_email;
 			}
 
-			$hashkey = md5( strtolower( trim( $email ) ) );
-			$uri     = 'http://www.gravatar.com/avatar/' . $hashkey . '?d=404';
+			$email = strtolower( trim( $email ) );
 
-			$data = wp_cache_get( $hashkey );
-			if ( false === $data ) {
-				$response = wp_remote_head( $uri );
-				if ( is_wp_error( $response ) ) {
-					$data = 'not200';
-				} else {
-					$data = $response['response']['code'];
-				}
-				wp_cache_set( $hashkey, $data, $group = '', $expire = 60 * 5 );
+			if ( isset( static::$avatarMap[ $email ] ) ) {
+				return static::$avatarMap[ $email ];
+			}
 
-			}
-			if ( $data == '200' ) {
-				return true;
-			} else {
-				return false;
-			}
+			// Build the Gravatar URL by hasing the email address
+			$url = 'http://www.gravatar.com/avatar/' . md5( $email ) . '?d=404';
+
+			// Now check the headers...
+			$headers = @get_headers( $url );
+
+			// If 200 is found, the user has a Gravatar; otherwise, they don't.
+			$hasGravatar = ! preg_match( '|200|', $headers[0] ) ? false : true;
+
+			static::$avatarMap[ $email ] = $hasGravatar;
+
+			return $hasGravatar;
 		}
 	}
 endif;

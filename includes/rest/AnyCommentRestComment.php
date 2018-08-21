@@ -864,13 +864,21 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			$is_post_author = (int) $post->post_author === (int) $comment->user_id;
 		}
 
+		if ( AnyCommentGenericSettings::isShowProfileUrl() && ( $socialUrl = AnyCommentUserMeta::getSocialProfileUrl( $comment->user_id ) ) !== null ) {
+			$profileUrl = $socialUrl;
+		} elseif ( ! empty( $comment->comment_author_url ) ) {
+			$profileUrl = $comment->comment_author_url;
+		} elseif ( ! empty( $comment->user_id ) && ( $user = get_user_by( 'id', $comment->user_id ) ) !== false ) {
+			$profileUrl = $user->user_url;
+		} else {
+			$profileUrl = null;
+		}
+
 		$owner = [
 			'is_post_author'  => $is_post_author,
 			'is_social_login' => AnyCommentUserMeta::isSocialLogin( $comment->user_id ),
 			'social_type'     => AnyCommentUserMeta::getSocialType( $comment->user_id ),
-			'social_url'      => AnyCommentGenericSettings::isShowProfileUrl() ?
-				AnyCommentUserMeta::getSocialProfileUrl( $comment->user_id ) :
-				null,
+			'profile_url'      => $profileUrl
 		];
 
 		$data = array(
@@ -882,7 +890,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			'date'        => mysql_to_rfc3339( $comment->comment_date ),
 			'date_gmt'    => mysql_to_rfc3339( $comment->comment_date_gmt ),
 			'content'     => $comment->comment_content,
-			'avatar_url'  => AnyComment()->auth->get_user_avatar_url( $comment->user_id ),
+			'avatar_url'  => AnyComment()->auth->get_user_avatar_url( (int) $comment->user_id !== 0 ? $comment->user_id : $comment->comment_author_email ),
 			'children'    => $child_comments,
 			'owner'       => $owner,
 			'permissions' => [
