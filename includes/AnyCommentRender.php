@@ -63,15 +63,15 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 				'commentCount' => ( $res = get_comment_count( $postId ) ) !== null ? (int) $res['all'] : 0,
 				// Options from plugin
 				'options'      => [
-					'limit'             => AnyCommentGenericSettings::getPerPage(),
-					'isCopyright'       => AnyCommentGenericSettings::isCopyrightOn(),
-					'socials'           => anycomment_login_with( false, get_permalink( $postId ) ),
-					'theme'             => AnyCommentGenericSettings::getTheme(),
-					'isShowProfileUrl'  => AnyCommentGenericSettings::isShowProfileUrl(),
-					'userAgreementLink' => AnyCommentGenericSettings::getUserAgreementLink(),
-					'notifyOnNewComment' => AnyCommentGenericSettings::isNotifyOnNewComment(),
+					'limit'                 => AnyCommentGenericSettings::getPerPage(),
+					'isCopyright'           => AnyCommentGenericSettings::isCopyrightOn(),
+					'socials'               => anycomment_login_with( false, get_permalink( $postId ) ),
+					'theme'                 => AnyCommentGenericSettings::getTheme(),
+					'isShowProfileUrl'      => AnyCommentGenericSettings::isShowProfileUrl(),
+					'userAgreementLink'     => AnyCommentGenericSettings::getUserAgreementLink(),
+					'notifyOnNewComment'    => AnyCommentGenericSettings::isNotifyOnNewComment(),
 					'intervalCommentsCheck' => AnyCommentGenericSettings::getIntervalCommentsCheck(),
-					'isLoadOnScroll' => AnyCommentGenericSettings::isLoadOnScroll(),
+					'isLoadOnScroll'        => AnyCommentGenericSettings::isLoadOnScroll(),
 				],
 				'user'         => AnyCommentUser::getSafeUser(),
 				'i18'          => [
@@ -95,6 +95,9 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 					'quick_login'           => __( 'Quick Login', 'anycomment' ),
 					'new_comment_was_added' => __( 'New comment was added', 'anycomment' ),
 					'author'                => __( 'Author', 'anycomment' ),
+					'name'                  => __( 'Name', 'anycomment' ),
+					'email'                 => __( 'Email', 'anycomment' ),
+					'website'               => __( 'Website', 'anycomment' ),
 					'accept_user_agreement' => sprintf(
 						__( 'I accept the <a href="%s"%s>User Agreement</a>', 'anycomment' ),
 						AnyCommentGenericSettings::getUserAgreementLink(),

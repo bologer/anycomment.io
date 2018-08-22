@@ -257,7 +257,7 @@ $global-radius: 4px;
         overflow: hidden;
         max-height: 300px;
         background-color: #fff;
-        margin-bottom: 16px;
+        margin-bottom: 10px;
         @include border-radius($global-radius);
 
         &__auth {
@@ -415,6 +415,58 @@ $global-radius: 4px;
           min-height: 96px;
           position: relative;
           z-index: 1;
+        }
+      }
+
+      .anycomment-input-list {
+        width: 100%;
+
+        &-single {
+          display: inline-block;
+          padding-right: 5px;
+          width: 25%;
+          vertical-align: middle;
+
+          &:last-of-type {
+            padding-right: 0;
+          }
+
+          label {
+            color: $semi-hidden-color;
+            font-weight: 700;
+            font-size: 11px;
+            margin-bottom: 0;
+          }
+
+          input[type="text"],
+          input[type="email"],
+          input[type="number"] {
+            border: 1px solid $semi-hidden-color;
+            color: $comment-color;
+            outline: 0;
+            height: 31px;
+            line-height: 31px;
+            background-color: #fff;
+            font-size: 11px;
+            text-align: left;
+            @include border-radius($global-radius);
+
+            &:hover,
+            &:active,
+            &:focus {
+              border: 1px solid darken($semi-hidden-color, 5%);
+            }
+          }
+        }
+
+        &-single-name,
+        &-single-email,
+        &-single-website {
+          width: 20%;
+        }
+
+        &-single-submit {
+          width: 40%;
         }
       }
 

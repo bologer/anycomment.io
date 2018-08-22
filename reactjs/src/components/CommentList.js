@@ -37,6 +37,9 @@ class CommentList extends AnyCommentComponent {
             buttonText: settings.i18.button_send,
             isReply: false,
             replyId: 0,
+            authorName: '',
+            authorEmail: '',
+            authorWebsite: '',
             replyName: '',
             editId: '',
         };
@@ -63,6 +66,9 @@ class CommentList extends AnyCommentComponent {
         this.handleReplyIdChange = this.handleReplyIdChange.bind(this);
         this.handleReplyCancel = this.handleReplyCancel.bind(this);
         this.handleEditIdChange = this.handleEditIdChange.bind(this);
+        this.handleAuthorNameChange = this.handleAuthorNameChange.bind(this);
+        this.handleAuthorEmailChange = this.handleAuthorEmailChange.bind(this);
+        this.handleAuthorWebsiteChange = this.handleAuthorWebsiteChange.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
         this.checkForAnchor = this.checkForAnchor.bind(this);
     }
@@ -79,7 +85,7 @@ class CommentList extends AnyCommentComponent {
 
         const el = $(this.commentFieldRef.current);
 
-        if (type === 'max' && el.outerHeight() === max || type === 'min' && el.outerHeight() === 96) {
+        if (type === 'max' && (el.outerHeight() === max || type === 'min') && el.outerHeight() === 96) {
             return false;
         }
 
@@ -120,6 +126,30 @@ class CommentList extends AnyCommentComponent {
 
         this.focusCommentField(true);
     }
+
+    /**
+     * Handle author name change.
+     * @param event
+     */
+    handleAuthorNameChange(event) {
+        this.setState({authorName: event.target.value});
+    }
+
+    /**
+     * Handle author email change.
+     * @param event
+     */
+    handleAuthorEmailChange(event) {
+        this.setState({authorEmail: event.target.value});
+    }
+
+    /**
+     * Handle author website change.
+     * @param event
+     */
+    handleAuthorWebsiteChange(event) {
+        this.setState({authorWebsite: event.target.value})
+    };
 
     /**
      * Handel cancel of the reply.
@@ -400,8 +430,6 @@ class CommentList extends AnyCommentComponent {
                 }
             }, 1000);
         }
-
-
     };
 
     render() {
@@ -417,11 +445,17 @@ class CommentList extends AnyCommentComponent {
             replyName={this.state.replyName}
             isReply={this.state.isReply}
             editId={this.state.editId}
+            authorName={this.state.authorName}
+            authorEmail={this.state.authorEmail}
+            authorWebsite={this.state.authorWebsite}
             onSort={this.handleSort}
             onCommentTextChange={this.handleCommentTextChange}
             onReplyIdChange={this.handleReplyIdChange}
             onReplyCancel={this.handleReplyCancel}
             onEditIdChange={this.handleEditIdChange}
+            onAuthorNameChange={this.handleAuthorNameChange}
+            onAuthorEmailChange={this.handleAuthorEmailChange}
+            onAuthorWebsiteChange={this.handleAuthorWebsiteChange}
             onSend={this.handleAddComment}/>;
 
         if (isError) {

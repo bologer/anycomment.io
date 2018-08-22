@@ -2,6 +2,7 @@ import React from 'react';
 import SendCommentGuest from './SendCommentGuest.js';
 import SendCommentAuth from './SendCommentAuth.js';
 import AnyCommentComponent from "./AnyCommentComponent";
+import SendCommentGuestv2 from './SendCommentGuestv2';
 import {toast} from "react-toastify";
 
 class SendCommentForm extends AnyCommentComponent {
@@ -120,6 +121,8 @@ class SendCommentForm extends AnyCommentComponent {
                         ></textarea>
                     </div>
 
+                    <SendCommentGuestv2 {...this.props} />
+
                     {this.props.user ?
                         <input
                             type="hidden"
@@ -135,9 +138,6 @@ class SendCommentForm extends AnyCommentComponent {
 
                     {this.props.user ? <input type="hidden" name="edit_id" value={this.props.editId}
                                               onChange={this.handleEditIdChange}/> : ''}
-
-                    {this.props.user ? <input type="submit" className="anycomment-btn send-comment-body__btn"
-                                              value={this.props.buttonText}/> : ''}
                 </form>
 
                 <div className="clearfix"></div>
