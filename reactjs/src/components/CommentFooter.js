@@ -8,14 +8,9 @@ import AnyCommentComponent from "./AnyCommentComponent";
 class CommentFooter extends AnyCommentComponent {
 
     render() {
-        if (!this.props.user) {
-            return (null);
-        }
-
         const settings = this.props.settings;
         const comment = this.props.comment;
-        const hasLike = this.props.hasLike;
-        const likesCount = this.props.likesCount;
+        const isGuest = this.isGuest();
 
         return (
             <footer className="anycomment comment-single-body__actions">
@@ -23,17 +18,17 @@ class CommentFooter extends AnyCommentComponent {
                     <li className="anycomment"><a className="anycomment" href=""
                                                   onClick={(e) => this.props.onReply(e, comment)}>{settings.i18.reply}</a>
                     </li>
-                    <li className="anycomment">
+                    {!isGuest ? <li className="anycomment">
                             <span
-                                className={"anycomment comment-single-body__actions-like " + (hasLike ? 'active' : '') + ""}
-                                onClick={(e) => this.props.onLike(e)}>{likesCount}</span>
-                    </li>
+                                className={"anycomment comment-single-body__actions-like " + (this.props.hasLike ? 'active' : '') + ""}
+                                onClick={(e) => this.props.onLike(e)}>{this.props.likesCount}</span>
+                    </li> : ''}
 
-                    {comment.permissions.can_edit_comment ?
+                    {!isGuest && comment.permissions.can_edit_comment ?
                         <li className="anycomment"><a className="anycomment" href=""
                                                       onClick={(e) => this.props.onEdit(e, comment)}>{settings.i18.edit}</a>
                         </li> : ''}
-                    {comment.permissions.can_edit_comment ?
+                    {!isGuest && comment.permissions.can_edit_comment ?
                         <li className="anycomment"><a className="anycomment" href=""
                                                       onClick={(e) => this.props.onDelete(e, comment)}>{settings.i18.delete}</a>
                         </li> : ''}

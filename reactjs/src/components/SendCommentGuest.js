@@ -1,49 +1,60 @@
 import React from 'react';
-import LoginSocialList from './LoginSocialList';
 import AnyCommentComponent from "./AnyCommentComponent";
-import DataProcessing from './DataProcessing';
+import DataProcessing from './DataProcessing'
+import LoginSocialList from './LoginSocialList'
 
 class SendCommentGuest extends AnyCommentComponent {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            isAgreementAccepted: true
-        };
-
-        this.handleAgreement = this.handleAgreement.bind(this);
-    }
-
-    /**
-     * Handle agreement check.
-     *
-     * @param e
-     */
-    handleAgreement(e) {
-        this.setState({isAgreementAccepted: e.target.checked});
-    }
 
     render() {
-        if (this.props.user) {
-            return null;
-        }
+        const settings = this.getSettings();
+        const translations = settings.i18;
 
-
-        const classes = "send-comment-body-outliner__auth" +
-            " " + (this.state.isAgreementAccepted ? 'accepted' : 'not-accepted') +
-            " " + (this.props.settings.options.userAgreementLink ? 'has-link' : 'no-link');
-
-        return (
-            <React.Fragment>
-                <div className="send-comment-body-outliner__logo"></div>
-
-                <div className={classes}
-                     style={{display: this.props.isShouldLogin ? 'block' : 'none'}}>
-                    <LoginSocialList isAccepted={this.state.isAgreementAccepted}/>
-                    <DataProcessing isAccepted={this.state.isAgreementAccepted} onAccept={this.handleAgreement}/>
+        const guestInputList = <div className="anycomment anycomment-form-guest__container">
+            <div className="anycomment anycomment-input-list">
+                <div className="anycomment anycomment-input-list-single anycomment-input-list-single-name">
+                    <label form="anycomment-author-name">{translations.name}</label>
+                    <input type="text" name="author_name" id="anycomment-author-name"
+                           value={this.props.authorName}
+                           required={true}
+                           onChange={this.props.onAuthorNameChange}
+                    />
                 </div>
-            </React.Fragment>
-        );
+                <div className="anycomment anycomment-input-list-single anycomment-input-list-single-email">
+                    <label form="anycomment-author-email">{translations.email}</label>
+                    <input type="email" name="author_email" id="anycomment-author-email"
+                           value={this.props.authorEmail}
+                           required={true}
+                           onChange={this.props.onAuthorEmailChange}
+                    />
+                </div>
+                <div className="anycomment anycomment-input-list-single anycomment-input-list-single-website">
+                    <label form="anycomment-author-website">{translations.website}</label>
+                    <input type="text" name="author_url" id="anycomment-author-website"
+                           value={this.props.authorWebsite}
+                           onChange={this.props.onAuthorWebsiteChange}
+                    />
+                </div>
+            </div>
+        </div>;
+
+        return <div className="anycomment anycomment-form-guest">
+
+            {settings.options.isFormTypeGuests || settings.options.isFormTypeAll ? guestInputList : ''}
+
+            <div className="anycomment anycomment-form-guest__container">
+                <div className="anycomment anycomment-form-guest-socials">
+                    {(settings.options.isFormTypeSocials || settings.options.isFormTypeAll) && this.props.isAgreementAccepted ?
+                        <LoginSocialList/> : ''}
+                </div>
+                <div className="anycomemnt anycomment-form-submit">
+                    <DataProcessing isAgreementAccepted={this.props.isAgreementAccepted}
+                                    onAccept={this.props.handleAgreement}/>
+
+                    <input type="submit" className="anycomment-btn send-comment-body__btn"
+                           value={this.props.buttonText}/>
+                </div>
+            </div>
+        </div>;
     }
 }
 

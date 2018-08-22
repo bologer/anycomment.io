@@ -7,7 +7,7 @@ import footerLogo from '../img/mini-logo.svg'
  */
 class CommentCopyright extends AnyCommentComponent {
     render() {
-        const settings = this.props.settings;
+        const settings = this.getSettings();
 
         if (!settings.options.isCopyright) {
             return (null);

@@ -416,6 +416,14 @@ class AnyCommentRestComment extends AnyCommentRestController {
 
 		if ( ! is_user_logged_in() ) {
 
+			$user = get_user_by( 'email', $request['author_email'] );
+
+			if ( $user instanceof WP_User && AnyCommentUserMeta::isSocialLogin( $user->ID ) ) {
+				return new WP_Error( 'rest_use_social_to_login', __( 'Email was used as social authorization. Please login using this method.' ), [ 'status' => 403 ] );
+			} elseif ( $user instanceof WP_User ) {
+				return new WP_Error( 'rest_login_to_leave_comment', __( "User with such email is registered. Please login to leave a comment." ), [ 'status' => 403 ] );
+			}
+
 			if ( get_option( 'comment_registration' ) ) {
 				return new WP_Error( 'rest_comment_login_required', __( 'Sorry, you must be logged in to comment.', 'anycomment' ), array( 'status' => 401 ) );
 			}
@@ -432,10 +440,6 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			 * @param WP_REST_Request $request Request used to generate the
 			 *                                 response.
 			 */
-			$allow_anonymous = apply_filters( 'rest_allow_anonymous_comments', false, $request );
-			if ( ! $allow_anonymous ) {
-				return new WP_Error( 'rest_comment_login_required', __( 'Sorry, you must be logged in to comment.', 'anycomment' ), array( 'status' => 401 ) );
-			}
 		}
 
 		// Limit who can set comment `author`, `author_ip` or `status` to anything other than the default.
@@ -525,7 +529,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		 * comment_content. See wp_handle_comment_submission().
 		 */
 		if ( empty( $prepared_comment['comment_content'] ) ) {
-			return new WP_Error( 'rest_comment_content_invalid', __( 'Invalid comment content.', 'anycomment' ), [ 'status' => 400 ] );
+			return new WP_Error( 'rest_comment_content_invalid', __( 'Comment cannot be empty.', 'anycomment' ), [ 'status' => 400 ] );
 		}
 
 		// Setting remaining values before wp_insert_comment so we can use wp_allow_comment().
@@ -533,19 +537,31 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			$prepared_comment['comment_date_gmt'] = current_time( 'mysql', true );
 		}
 
-		// Set author data if the user's logged in.
-		$missing_author = empty( $prepared_comment['user_id'] )
-		                  && empty( $prepared_comment['comment_author'] )
-		                  && empty( $prepared_comment['comment_author_email'] )
-		                  && empty( $prepared_comment['comment_author_url'] );
+		if ( ! is_user_logged_in() && ( ! AnyCommentGenericSettings::isFormTypeGuests() || ! AnyCommentGenericSettings::isFormTypeAll() ) ) {
+			return new WP_Error( 'rest_user_social_to_login', __( 'Please use any of the availabe social networks to leave a comment' ), [ 'status' => 400 ] );
+		}
 
-		if ( is_user_logged_in() && $missing_author ) {
+		if ( is_user_logged_in() ) {
 			$user = wp_get_current_user();
 
 			$prepared_comment['user_id']              = $user->ID;
 			$prepared_comment['comment_author']       = $user->display_name;
 			$prepared_comment['comment_author_email'] = $user->user_email;
 			$prepared_comment['comment_author_url']   = $user->user_url;
+		} else {
+
+
+			if ( empty( $prepared_comment['comment_author'] ) ) {
+				return new WP_Error( 'rest_comment_author_empty', __( 'Name is required.' ), [ 'status' => 400 ] );
+			}
+
+			if ( empty( $prepared_comment['comment_author_email'] ) ) {
+				return new WP_Error( 'rest_comment_email_empty', __( 'Email field is required.' ), [ 'status' => 400 ] );
+			}
+
+			if ( ! empty( $prepared_comment['comment_author_email'] ) && ! is_email( $prepared_comment['comment_author_email'] ) ) {
+				return new WP_Error( 'rest_comment_email_invalid', __( 'Provide valid email address.' ), [ 'status' => 400 ] );
+			}
 		}
 
 		if ( ! isset( $prepared_comment['comment_author_email'] ) ) {
@@ -871,14 +887,14 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		} elseif ( ! empty( $comment->user_id ) && ( $user = get_user_by( 'id', $comment->user_id ) ) !== false ) {
 			$profileUrl = $user->user_url;
 		} else {
-			$profileUrl = null;
+			$profileUrl = '';
 		}
 
 		$owner = [
 			'is_post_author'  => $is_post_author,
 			'is_social_login' => AnyCommentUserMeta::isSocialLogin( $comment->user_id ),
 			'social_type'     => AnyCommentUserMeta::getSocialType( $comment->user_id ),
-			'profile_url'      => $profileUrl
+			'profile_url'     => $profileUrl
 		];
 
 		$data = array(
@@ -1042,24 +1058,8 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			$prepared_comment['comment_author_IP'] = '127.0.0.1';
 		}
 
-		if ( ! empty( $request['author_user_agent'] ) ) {
-			$prepared_comment['comment_agent'] = $request['author_user_agent'];
-		} elseif ( $request->get_header( 'user_agent' ) ) {
+		if ( $request->get_header( 'user_agent' ) ) {
 			$prepared_comment['comment_agent'] = $request->get_header( 'user_agent' );
-		}
-
-		if ( ! empty( $request['date'] ) ) {
-			$date_data = rest_get_date_with_gmt( $request['date'] );
-
-			if ( ! empty( $date_data ) ) {
-				list( $prepared_comment['comment_date'], $prepared_comment['comment_date_gmt'] ) = $date_data;
-			}
-		} elseif ( ! empty( $request['date_gmt'] ) ) {
-			$date_data = rest_get_date_with_gmt( $request['date_gmt'], true );
-
-			if ( ! empty( $date_data ) ) {
-				list( $prepared_comment['comment_date'], $prepared_comment['comment_date_gmt'] ) = $date_data;
-			}
 		}
 
 		/**
@@ -1104,10 +1104,6 @@ class AnyCommentRestComment extends AnyCommentRestController {
 					'type'        => 'string',
 					'format'      => 'email',
 					'context'     => array( 'edit' ),
-					'arg_options' => array(
-						'sanitize_callback' => array( $this, 'check_comment_author_email', 'anycomment' ),
-						'validate_callback' => null, // skip built-in validation of 'email'.
-					),
 				),
 				'author_ip'         => array(
 					'description' => __( 'IP address for the object author.', 'anycomment' ),

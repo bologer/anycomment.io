@@ -56,7 +56,7 @@ class CommentList extends AnyCommentComponent {
          * Bindings
          */
         this.focusCommentField = this.focusCommentField.bind(this);
-        this.toggleHeightCommentField = this.toggleHeightCommentField.bind(this);
+        this.expandCommentField = this.expandCommentField.bind(this);
         this.loadComments = this.loadComments.bind(this);
         this.handleLoadMore = this.handleLoadMore.bind(this);
         this.handleAddComment = this.handleAddComment.bind(this);
@@ -75,32 +75,24 @@ class CommentList extends AnyCommentComponent {
 
     /**
      * Toggle expand/shrink animation of textarea.
-     * @param type
      * @returns {boolean}
      */
-    toggleHeightCommentField(type) {
-        const min = 96;
-        const max = 200;
-        const height = (type === 'min' ? min : max);
-
+    expandCommentField() {
         const el = $(this.commentFieldRef.current);
 
-        if (type === 'max' && (el.outerHeight() === max || type === 'min') && el.outerHeight() === 96) {
+        if (el.hasClass('expanded')) {
             return false;
         }
 
-        el.animate({height: height}, 500);
+        el.addClass('expanded');
+        el.animate({height: 150}, 300);
     }
 
     /**
      * Focus on comment field.
      */
-    focusCommentField(andExpand = false) {
+    focusCommentField() {
         this.commentFieldRef.current.focus();
-
-        if (andExpand) {
-            this.toggleHeightCommentField('max');
-        }
     }
 
     /**
@@ -109,7 +101,8 @@ class CommentList extends AnyCommentComponent {
      */
     handleCommentTextChange(text) {
         this.setState({commentText: text});
-        this.toggleHeightCommentField(text.trim() !== '' ? 'max' : 'min');
+        this.storeComment(text);
+        this.expandCommentField();
     }
 
     /**
@@ -124,7 +117,7 @@ class CommentList extends AnyCommentComponent {
             replyId: comment.id
         });
 
-        this.focusCommentField(true);
+        this.focusCommentField();
     }
 
     /**
@@ -161,7 +154,7 @@ class CommentList extends AnyCommentComponent {
             buttonText: this.props.settings.i18.button_send,
             replyId: 0
         });
-        this.toggleHeightCommentField('min');
+        this.expandCommentField();
     }
 
     /**
@@ -358,10 +351,8 @@ class CommentList extends AnyCommentComponent {
 
     /**
      * Add new comment to the list.
-     *
-     * @param comment
      */
-    handleAddComment(comment) {
+    handleAddComment() {
         this.setState({
             commentText: '',
             replyName: '',
@@ -374,7 +365,6 @@ class CommentList extends AnyCommentComponent {
 
         this.loadComments();
         this.focusCommentField();
-        this.toggleHeightCommentField('min');
     };
 
 

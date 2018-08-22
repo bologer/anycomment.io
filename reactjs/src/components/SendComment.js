@@ -31,11 +31,11 @@ class SendComment extends AnyCommentComponent {
     }
 
     render() {
-        const settings = this.props.settings;
+        const settings = this.getSettings();
 
         return (
             <div id="anycomment anycomment-send-comment"
-                 className={"send-comment " + (this.props.user ? 'send-comment-authorized' : '') + ""}>
+                 className={"send-comment " + (!this.isGuest() ? 'send-comment-authorized' : '') + ""}>
                 <div className="anycomment send-comment-supheader">
                     <div className="anycomment send-comment-supheader__count"
                          id="comment-count">{this.props.commentCountText}</div>

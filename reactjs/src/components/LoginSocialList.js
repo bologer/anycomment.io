@@ -14,13 +14,9 @@ class LoginSocialList extends AnyCommentComponent {
             return (null);
         }
 
-        if(!this.props.isAccepted) {
-            return (null);
-        }
-
         return (
             <ul>
-                <li className="send-comment-body-outliner__auth-header">{settings.i18.quick_login}</li>
+                {/*<li className="send-comment-body-outliner__auth-header">{settings.i18.quick_login}</li>*/}
                 {Object.keys(socials).map((item, index) => (
                     <LoginSocial key={index} social={socials[item]}/>
                 ))}

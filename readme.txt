@@ -2,7 +2,7 @@
 Contributors: ateshabaev
 Tags: anycomment, comments, comment, comment moderation, anycomment.io
 Requires at least: 4.7
-Tested up to: 4.9.6
+Tested up to: 4.9.8
 Requires PHP: 5.4
 Stable tag: 0.0.46
 License: GPLv2 or later
@@ -154,12 +154,16 @@ Read guide on how to create "Privacy Policy" page:
 **Enhancements:**
 
 * Major elements, such as textarea, buttons are now more unified, #90
+* Leave comment as guest, via social or both. Ability to define this from admin, #94
+* New comment form layout for guest users, social icons, #94
+* When guest user entered name, email and/or website, it will be remembered - no need to type every time
 
 
 **Fixes:**
 
 * Fix for missing Gravatar images in the comment section by guest users & now a bit faster on repeating gravatars, #92
 * Added FAQ entry about how to fix problem when unable to delete comment (lack of `DELETE` as request option)
+* Comment text is not lost on authentication via social (when user already typed comment and decided to use social network)
 
 
 = 0.0.45 – 21.08.2018 =

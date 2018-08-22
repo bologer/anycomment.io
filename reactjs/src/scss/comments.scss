@@ -298,95 +298,10 @@ $global-radius: 4px;
             }
           }
 
-          // Case when agreemnet checkbox is not checked and therefore ul > li list is hidden
-          // This should center checkbox in the overlay
-          &.not-accepted {
-            .user-agreement {
-              margin: 40px auto;
-            }
-          }
-
           // Case when user agreement link is not set in settings
           &.no-link {
             ul {
               margin: 32px auto;
-            }
-          }
-
-          .user-agreement {
-            display: table;
-            margin: 0 auto;
-            padding: 0 20px;
-            font-size: $font-size - 1;
-            color: $semi-hidden-color;
-
-            a {
-              text-decoration: underline;
-
-              &:hover,
-              &:focus,
-              &:active {
-                text-decoration: none;
-              }
-            }
-
-            label {
-              position: relative;
-              padding-left: 25px;
-              font-weight: normal;
-            }
-
-            /* Hide the browser's default checkbox */
-            input {
-              position: absolute;
-              opacity: 0;
-              cursor: pointer;
-            }
-
-            /* Create a custom checkbox */
-            .checkmark {
-              position: absolute;
-              top: 0;
-              left: 0;
-              height: 18px;
-              width: 18px;
-              @include border-radius(2px);
-              background-color: #747b7e;
-            }
-
-            /* On mouse-over, add a grey background color */
-            &:hover input ~ .checkmark {
-              background-color: darken(#686868, 2%);
-            }
-
-            /* When the checkbox is checked, add a blue background */
-            input:checked ~ .checkmark {
-              background-color: $btn-primary-active-color;
-            }
-
-            /* Create the checkmark/indicator (hidden when not checked) */
-            .checkmark:after {
-              content: "";
-              position: absolute;
-              display: none;
-            }
-
-            /* Show the checkmark when checked */
-            input:checked ~ .checkmark:after {
-              display: block;
-            }
-
-            /* Style the checkmark/indicator */
-            .checkmark:after {
-              left: 6px;
-              top: 3px;
-              width: 5px;
-              height: 10px;
-              border: solid white;
-              border-width: 0 2px 2px 0;
-              -webkit-transform: rotate(45deg);
-              -ms-transform: rotate(45deg);
-              transform: rotate(45deg);
             }
           }
         }
@@ -418,13 +333,146 @@ $global-radius: 4px;
         }
       }
 
+      .anycomment-form-guest {
+        &__header {
+          font-size: 9px;
+          color: #a0a0a0;
+          text-transform: uppercase
+        }
+
+        &__container {
+          width: 100%;
+
+          .anycomment-form-guest-socials,
+          .anycomment-form-submit {
+            display: inline-block;
+            vertical-align: middle;
+            width: 50%;
+            float: left;
+            margin-top: 5px;
+          }
+
+          .anycomment-form-guest-socials {
+            ul {
+              list-style: none;
+              padding: 0;
+              margin: 0;
+
+              li {
+                display: inline-block;
+                margin-right: 5px;
+
+                &:last-of-type {
+                  margin-right: 0;
+                }
+
+                a {
+                  display: block;
+                  opacity: 0.8;
+
+                  &, & > img {
+                    width: 30px;
+                    height: 30px;
+                  }
+
+                  &:hover,
+                  &:focus,
+                  &:active {
+                    opacity: 1;
+                  }
+                }
+              }
+            }
+          }
+
+          .anycomment-form-submit {
+            &__user-agreement {
+              font-size: $font-size - 3;
+              color: $semi-hidden-color;
+              text-align: right;
+              margin: 5px 0 10px 0;
+
+              a {
+                text-decoration: underline;
+
+                &:hover,
+                &:focus,
+                &:active {
+                  text-decoration: none;
+                }
+              }
+
+              label {
+                position: relative;
+                padding-left: 25px;
+                font-weight: normal;
+                display: inline-block;
+              }
+
+              /* Hide the browser's default checkbox */
+              input {
+                position: absolute;
+                opacity: 0;
+                cursor: pointer;
+              }
+
+              /* Create a custom checkbox */
+              .checkmark {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 16px;
+                width: 16px;
+                @include border-radius(2px);
+                background-color: #747b7e;
+              }
+
+              /* On mouse-over, add a grey background color */
+              &:hover input ~ .checkmark {
+                background-color: darken(#686868, 2%);
+              }
+
+              /* When the checkbox is checked, add a blue background */
+              input:checked ~ .checkmark {
+                background-color: $btn-primary-active-color;
+              }
+
+              /* Create the checkmark/indicator (hidden when not checked) */
+              .checkmark:after {
+                content: "";
+                position: absolute;
+                display: none;
+              }
+
+              /* Show the checkmark when checked */
+              input:checked ~ .checkmark:after {
+                display: block;
+              }
+
+              /* Style the checkmark/indicator */
+              .checkmark:after {
+                left: 6px;
+                top: 2px;
+                width: 5px;
+                height: 10px;
+                border: solid white;
+                border-width: 0 2px 2px 0;
+                -webkit-transform: rotate(45deg);
+                -ms-transform: rotate(45deg);
+                transform: rotate(45deg);
+              }
+            }
+          }
+        }
+      }
+
       .anycomment-input-list {
         width: 100%;
 
         &-single {
           display: inline-block;
           padding-right: 5px;
-          width: 25%;
+          width: 33.333%;
           vertical-align: middle;
 
           &:last-of-type {
@@ -432,10 +480,11 @@ $global-radius: 4px;
           }
 
           label {
-            color: $semi-hidden-color;
+            color: $comment-color;
             font-weight: 700;
             font-size: 11px;
             margin-bottom: 0;
+            line-height: 1.3;
           }
 
           input[type="text"],
@@ -457,16 +506,6 @@ $global-radius: 4px;
               border: 1px solid darken($semi-hidden-color, 5%);
             }
           }
-        }
-
-        &-single-name,
-        &-single-email,
-        &-single-website {
-          width: 20%;
-        }
-
-        &-single-submit {
-          width: 40%;
         }
       }
 

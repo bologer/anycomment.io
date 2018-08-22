@@ -83,6 +83,34 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		const OPTION_SHOW_PROFILE_URL = 'options_show_profile_url';
 
 		/**
+		 * Define form type: only guest users, only social networks or both of it.
+		 */
+		const OPTION_FORM_TYPE = 'options_form_type';
+
+		/**
+		 * FORM TYPES
+		 */
+
+		/**
+		 * Option to enable comments only from guest.
+		 */
+		const FORM_OPTION_GUEST_ONLY = 'form_option_guest_only';
+
+		/**
+		 * Option to allow comments from users who authorized using social.
+		 */
+		const FORM_OPTION_SOCIALS_ONLY = 'form_option_socials_only';
+
+		/**
+		 * Option to allow both: guest & social login.
+		 */
+		const FORM_OPTION_ALL = 'form_option_all';
+
+		/**
+		 * THEMES
+		 */
+
+		/**
 		 * Dark theme.
 		 */
 		const THEME_DARK = 'dark';
@@ -123,6 +151,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 			self::OPTION_COPYRIGHT_TOGGLE        => 'on',
 			self::OPTION_COUNT_PER_PAGE          => 20,
 			self::OPTION_INTERVAL_COMMENTS_CHECK => 10,
+			self::OPTION_FORM_TYPE               => self::FORM_OPTION_SOCIALS_ONLY
 		];
 
 
@@ -193,6 +222,19 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'title'       => __( 'Enable Comments', "anycomment" ),
 						'callback'    => 'input_checkbox',
 						'description' => esc_html( __( 'When on, comments are visible. When off, default WordPress\' comments shown. This can be used to configure social networks on fresh installation.', "anycomment" ) )
+					],
+					[
+						'id'          => self::OPTION_FORM_TYPE,
+						'title'       => __( 'Comment form', "anycomment" ),
+						'callback'    => 'input_select',
+						'description' => esc_html( __( 'Comment form', "anycomment" ) ),
+						'args'        => [
+							'options' => [
+								self::FORM_OPTION_ALL          => __( 'Social, WordPress & guests', 'anycomment' ),
+								self::FORM_OPTION_SOCIALS_ONLY => __( 'Socials & WordPress users only.', 'anycomment' ),
+								self::FORM_OPTION_GUEST_ONLY   => __( 'Guests only. ', 'anycomment' ),
+							]
+						],
 					],
 					[
 						'id'          => self::OPTION_THEME,
@@ -428,6 +470,42 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 			}
 
 			return $value;
+		}
+
+		/**
+		 * Get form type.
+		 *
+		 * @return string|null
+		 */
+		public static function getFormType() {
+			return static::instance()->getOption( self::OPTION_FORM_TYPE );
+		}
+
+		/**
+		 * Check whether form type is for all.
+		 *
+		 * @return bool
+		 */
+		public static function isFormTypeAll() {
+			return static::getFormType() === self::FORM_OPTION_ALL;
+		}
+
+		/**
+		 * Check whether form type is for social only.
+		 *
+		 * @return bool
+		 */
+		public static function isFormTypeSocials() {
+			return static::getFormType() === self::FORM_OPTION_SOCIALS_ONLY;
+		}
+
+		/**
+		 * Check whether form type is for guests only.
+		 *
+		 * @return bool
+		 */
+		public static function isFormTypeGuests() {
+			return static::getFormType() === self::FORM_OPTION_GUEST_ONLY;
 		}
 
 		/**

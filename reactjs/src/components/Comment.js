@@ -38,7 +38,8 @@ class Comment extends AnyCommentComponent {
 
     onLike(e) {
         e.preventDefault();
-        const settings = this.props.settings;
+
+        const settings = this.getSettings();
         const self = this;
         this.props.axios
             .request({

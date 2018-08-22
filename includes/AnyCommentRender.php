@@ -72,6 +72,9 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 					'notifyOnNewComment'    => AnyCommentGenericSettings::isNotifyOnNewComment(),
 					'intervalCommentsCheck' => AnyCommentGenericSettings::getIntervalCommentsCheck(),
 					'isLoadOnScroll'        => AnyCommentGenericSettings::isLoadOnScroll(),
+					'isFormTypeAll'         => AnyCommentGenericSettings::isFormTypeAll(),
+					'isFormTypeGuests'      => AnyCommentGenericSettings::isFormTypeGuests(),
+					'isFormTypeSocials'     => AnyCommentGenericSettings::isFormTypeSocials(),
 				],
 				'user'         => AnyCommentUser::getSafeUser(),
 				'i18'          => [
