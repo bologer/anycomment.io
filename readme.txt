@@ -4,7 +4,7 @@ Tags: anycomment, comments, comment, comment moderation, anycomment.io
 Requires at least: 4.7
 Tested up to: 4.9.8
 Requires PHP: 5.4
-Stable tag: 0.0.47
+Stable tag: 0.0.48
 License: GPLv2 or later
 License URI: http://www.gnu.org/
 
@@ -148,6 +148,13 @@ Read guide on how to create "Privacy Policy" page:
 - [Russian version](https://anycomment.io/ru/kak-sozdat-stranitsu-politiki-konfidentsialnosti-v-wordpress/)
 
 == Changelog ==
+
+= 0.0.48 – 23.08.2018 =
+
+**Fixes:**
+
+* Fixed division by 0 issue, which caused comments not to load, #101
+* Fixed `count_text` alert when loading comment
 
 = 0.0.47 – 23.08.2018 =
 

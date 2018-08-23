@@ -289,7 +289,11 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			$prepared_args['count'] = true;
 
 			$total_comments = $query->query( $prepared_args );
-			$max_pages      = ceil( $total_comments / $request['perPage'] );
+			try {
+				$max_pages = ceil( $total_comments / $request['per_page'] );
+			} catch ( \Exception $exception ) {
+				$max_pages = 0;
+			}
 		}
 
 		$response = rest_ensure_response( $comments );
