@@ -1,6 +1,6 @@
 === AnyComment ===
 Contributors: ateshabaev
-Tags: anycomment, comments, ajax comments, comment, comment moderation, anycomment.io
+Tags: anycomment, comments, ajax comments, comment, comment moderation, custom comment form, comment email, anycomment.io
 Requires at least: 4.7
 Tested up to: 4.9.8
 Requires PHP: 5.4
@@ -12,17 +12,20 @@ AnyComment allows you to have a better commenting experience in WordPress.
 
 == Description ==
 
-> See [demo](https://anycomment.io/demo/)
-
 AnyComment allows you to have a better commenting experience in WordPress.
 
-All you need is:
+It stands for simplicity & speed. We value feedback, so if you have failures or suggestions - please let us know on [support forum](https://wordpress.org/support/plugin/anycomment) or [GitHub](https://github.com/bologer/anycomment.io/issues) about it!
 
+* [See demo](https://anycomment.io/demo/)
+
+In order to start, you need:
+
+* install plugin
 * choose social networks you prefer
 * configure API keys (we have guides translated in English & Russian to help you)
-* save & you are done!
+* you are good to go!
 
-And good new is - no dependency on third party services, all comments stored in your database.
+And good new is AnyComment is free & no dependency on third party services, all comments stored in your database.
 
 Here is the list of supported social networks:
 
@@ -37,18 +40,16 @@ Here is the list of supported social networks:
 * Dribbble
 * and more to be added
 
-AnyComment stands for simplicity & speed. We value feedback, so if you have failures or suggestions - please [let us know](https://wordpress.org/support/plugin/anycomment) about it!
-
 = Can I contribute? =
 
-Yes! Join our [GitHub repository](https://github.com/bologer/anycomment.io) :)
+Yes! Join us at [GitHub](https://github.com/bologer/anycomment.io)
 
 = Features =
-* All comments stored in your own database. We do not create extra tables for these reasons. We reuse native comment's table, so all of the default WordPress functionality comes out of the box.
+* All comments stored in your own database. We reuse native comment's table, so all of the default WordPress functionality comes out of the box.
 * Social network authorization via Facebook, VK, Twitter, Google, Odnoklassniki, GitHub, Instagram, Twitch or Dribble
-* Translated in English & Russian
-* Suitable for dark & light themes (on your choice)
-* Blazing-fast comments based on React & WordPress REST
+* Plugin is translated into English & Russian
+* Suitable for dark & light themes
+* Blazing-fast comments based on React & WordPress REST API
 * Alert notification in comment area when new comment was added (by clicking on alert, new comment will be shown)
 * Ability to send email on new comment reply
 * Ability to send email notification about new comment to administrator
@@ -109,11 +110,20 @@ Yes! Join our [GitHub repository](https://github.com/bologer/anycomment.io) :)
 * Specify required API details in special social network settings
 * Go to some post and try to authorize using any of the enabled social networks and leave a comment!
 
-= Comment form does not load. What to do? =
+= Comment form does not load or gives an error? =
 
-AnyComment uses WordPress' REST API, if you installed plugin which removes it such as [Clearfy](https://wordpress.org/plugins/clearfy/), then please disable "Disable Rest API" option.
+AnyComment uses WordPress' REST API.
 
-Still does not work? Check for other optimization-like plugins and disabled one by one and check the load of the comment form and comments in general.
+Please confirm two things:
+
+1. You WordPress is 4.7 or higher (this is when WordPress introduced REST API)
+2. Going to `http://yourdomain.com/wp-json/` SHOULD NOT redirected to `http://yourdomain.com` or it give 404 Not Found page
+
+For the first step - just upgrade WordPress, it is good.
+
+For the second, check for plugins which make optimization of website. Most of them remove REST API.
+
+For example, [Clearfy](https://wordpress.org/plugins/clearfy/) has option "Disable Rest API". Having this option "On" will fail to load comments in AnyComment.
 
 Not yet working? Please follow the steps:
 
@@ -151,17 +161,20 @@ Read guide on how to create "Privacy Policy" page:
 
 = 0.0.48 – 23.08.2018 =
 
+> I will try to deliver more fixes and features over next release. Thanks for using AnyComment <3.
+> Please give us short review if you like it.
+
 **Fixes:**
 
 * Fixed division by 0 issue, which caused comments not to load, #101
 * Fixed some style conflict issues
+* Other small fixes & improvements
 
 = 0.0.47 – 23.08.2018 =
 
 **Fixes:**
 
 * Fixed issue when selecting both types did not allow guests to leave a comment
-
 
 = 0.0.46 – 23.08.2018 =
 
