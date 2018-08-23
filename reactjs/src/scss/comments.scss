@@ -318,8 +318,8 @@ $global-radius: 4px;
 
         &__textfield {
           background-color: #fff;
-          border: 0;
-          outline: 0;
+          border: 0 !important;
+          outline: 0 !important;
           font-size: $font-size;
           float: left;
           width: 100%;
@@ -490,12 +490,13 @@ $global-radius: 4px;
           input[type="text"],
           input[type="email"],
           input[type="number"] {
-            border: 1px solid $semi-hidden-color;
-            color: $comment-color;
+            border: 1px solid $semi-hidden-color !important;
+            color: $comment-color !important;
             outline: 0;
-            height: 31px;
-            line-height: 31px;
+            height: 31px !important;
+            line-height: 31px !important;
             background-color: #fff;
+            padding: 0 5px !important;
             font-size: 11px;
             text-align: left;
             @include border-radius($global-radius);
@@ -503,7 +504,7 @@ $global-radius: 4px;
             &:hover,
             &:active,
             &:focus {
-              border: 1px solid darken($semi-hidden-color, 5%);
+              border: 1px solid darken($semi-hidden-color, 5%) !important;
             }
           }
         }

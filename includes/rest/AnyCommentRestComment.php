@@ -520,7 +520,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			$prepared_comment['comment_date_gmt'] = current_time( 'mysql', true );
 		}
 
-		if ( ! is_user_logged_in() && ! AnyCommentGenericSettings::isFormTypeGuests() ) {
+		if ( ! is_user_logged_in() && ! ( AnyCommentGenericSettings::isFormTypeGuests() || AnyCommentGenericSettings::isFormTypeAll() ) ) {
 			return new WP_Error( 'rest_user_social_to_login', __( 'Please use any of the available social networks to leave a comment', 'anycomment' ), [ 'status' => 400 ] );
 		}
 
