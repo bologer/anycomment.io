@@ -131,7 +131,7 @@ if ( ! class_exists( 'AnyCommentAdminPages' ) ) :
 					'per_page'   => $per_page,
 					'type'       => 'post',
 					'status'     => 'publish',
-					'categories' => 15,
+					'categories' => '11',
 				]
 			];
 
