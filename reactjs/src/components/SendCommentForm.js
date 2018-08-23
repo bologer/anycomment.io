@@ -127,9 +127,11 @@ class SendCommentForm extends AnyCommentComponent {
         const email = this.props.authorEmail;
         const website = this.props.authorWebsite;
 
-        params.author_name = name;
-        params.author_email = email;
-        params.author_url = website;
+        if (!settings.options.isFormTypeSocials) {
+            params.author_name = name;
+            params.author_email = email;
+            params.author_url = website;
+        }
 
         if (!this.props.editId) {
             params.post = settings.postId;

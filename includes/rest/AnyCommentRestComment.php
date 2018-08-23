@@ -423,23 +423,6 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			} elseif ( $user instanceof WP_User ) {
 				return new WP_Error( 'rest_login_to_leave_comment', __( "User with such email is registered. Please login to leave a comment." ), [ 'status' => 403 ] );
 			}
-
-			if ( get_option( 'comment_registration' ) ) {
-				return new WP_Error( 'rest_comment_login_required', __( 'Sorry, you must be logged in to comment.', 'anycomment' ), array( 'status' => 401 ) );
-			}
-
-			/**
-			 * Filter whether comments can be created without authentication.
-			 *
-			 * Enables creating comments for anonymous users.
-			 *
-			 * @since 4.7.0
-			 *
-			 * @param bool $allow_anonymous Whether to allow anonymous comments to
-			 *                              be created. Default `false`.
-			 * @param WP_REST_Request $request Request used to generate the
-			 *                                 response.
-			 */
 		}
 
 		// Limit who can set comment `author`, `author_ip` or `status` to anything other than the default.
@@ -537,8 +520,8 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			$prepared_comment['comment_date_gmt'] = current_time( 'mysql', true );
 		}
 
-		if ( ! is_user_logged_in() && ( ! AnyCommentGenericSettings::isFormTypeGuests() || ! AnyCommentGenericSettings::isFormTypeAll() ) ) {
-			return new WP_Error( 'rest_user_social_to_login', __( 'Please use any of the availabe social networks to leave a comment' ), [ 'status' => 400 ] );
+		if ( ! is_user_logged_in() && ! AnyCommentGenericSettings::isFormTypeGuests() ) {
+			return new WP_Error( 'rest_user_social_to_login', __( 'Please use any of the available social networks to leave a comment' ), [ 'status' => 400 ] );
 		}
 
 		if ( is_user_logged_in() ) {

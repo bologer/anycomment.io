@@ -62,7 +62,10 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		 * AC_SocialAuth constructor.
 		 */
 		public function __construct() {
-			$this->init_rest_route();
+			// When only guests allowed, social should not be allowed
+			if ( !AnyCommentGenericSettings::isFormTypeGuests() ) {
+				$this->init_rest_route();
+			}
 		}
 
 		/**
