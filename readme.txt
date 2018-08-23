@@ -1,6 +1,6 @@
 === AnyComment ===
 Contributors: ateshabaev
-Tags: anycomment, comments, comment, comment moderation, anycomment.io
+Tags: anycomment, comments, ajax comments, comment, comment moderation, anycomment.io
 Requires at least: 4.7
 Tested up to: 4.9.8
 Requires PHP: 5.4
@@ -154,7 +154,7 @@ Read guide on how to create "Privacy Policy" page:
 **Fixes:**
 
 * Fixed division by 0 issue, which caused comments not to load, #101
-* Fixed `count_text` alert when loading comment
+* Fixed some style conflict issues
 
 = 0.0.47 – 23.08.2018 =
 

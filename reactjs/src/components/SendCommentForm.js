@@ -182,7 +182,7 @@ class SendCommentForm extends AnyCommentComponent {
         const translations = this.props.settings.i18;
 
         return (
-            <div className="anycomment send-comment-body">
+            <div className="anycomment anycomment-send-comment-body">
                 <form onSubmit={this.handleSubmit}>
 
                     <SendCommentFormBody {...this.props} handleContentChange={this.handleContentChange}/>
@@ -204,7 +204,7 @@ class SendCommentForm extends AnyCommentComponent {
 
                     {this.props.isReply ?
                         <div
-                            className="anycomment send-comment-body-reply">{translations.reply_to} {this.props.replyName}
+                            className="anycomment anycomment-send-comment-body-reply">{translations.reply_to} {this.props.replyName}
                             <span onClick={this.props.onReplyCancel}>{translations.cancel}</span></div>
                         : ''}
 

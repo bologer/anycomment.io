@@ -38,6 +38,7 @@ $global-radius: 4px;
   right: auto;
   top: auto;
   bottom: auto;
+  opacity: 1;
   margin: 0;
   padding: 0;
   border: none 0;
@@ -100,10 +101,10 @@ $global-radius: 4px;
   color: #ffffff !important;
   padding: 0 50px !important;
   line-height: 48px !important;
-  background-color: $btn-primary-color !important;
   display: inline-block;
   vertical-align: middle;
   border: 0;
+  opacity: 1;
   outline: 0;
   cursor: pointer;
   user-select: none;
@@ -118,11 +119,13 @@ $global-radius: 4px;
   .anycomment-btn,
   .input[type="submit"],
   input + .input[type="button"] {
+    background-color: $btn-primary-color !important;
     @extend %button-appearance;
 
     &:hover,
     &:active,
     &:focus {
+      @extend %button-appearance;
       background-color: $btn-primary-active-color !important;
     }
   }
@@ -143,7 +146,7 @@ $global-radius: 4px;
   }
 
   // Send comment
-  .send-comment {
+  .anycomment-send-comment {
     width: 100%;
     margin-bottom: 50px;
 
@@ -209,9 +212,13 @@ $global-radius: 4px;
           @include border-radius($global-radius);
 
           ul {
-            list-style: none;
             margin: 0;
             padding: 0;
+
+            &,
+            & > li {
+              list-style: none;
+            }
 
             li {
               margin-bottom: 2px;
@@ -330,6 +337,7 @@ $global-radius: 4px;
           min-height: 96px;
           position: relative;
           z-index: 1;
+          resize: vertical;
         }
       }
 
@@ -482,9 +490,11 @@ $global-radius: 4px;
           label {
             color: $comment-color;
             font-weight: 700;
-            font-size: 11px;
-            margin-bottom: 0;
+            font-size: 12px;
+            margin-bottom: 2px;
             line-height: 1.3;
+            display: block;
+            width: 100%;
           }
 
           input[type="text"],

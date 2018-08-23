@@ -35,16 +35,16 @@ class SendComment extends AnyCommentComponent {
 
         return (
             <div id="anycomment anycomment-send-comment"
-                 className={"send-comment " + (!this.isGuest() ? 'send-comment-authorized' : '') + ""}>
-                <div className="anycomment send-comment-supheader">
-                    <div className="anycomment send-comment-supheader__count"
+                 className={"anycomment-send-comment " + (!this.isGuest() ? 'send-comment-authorized' : '') + ""}>
+                <div className="anycomment anycomment-send-comment-supheader">
+                    <div className="anycomment anycomment-send-comment-supheader__count"
                          id="comment-count">{this.props.commentCountText}</div>
-                    <div className="anycomment send-comment-supheader__dropdown">
-                        <div className="anycomment send-comment-supheader__dropdown-header"
+                    <div className="anycomment anycomment-send-comment-supheader__dropdown">
+                        <div className="anycomment anycomment-send-comment-supheader__dropdown-header"
                              onClick={(e) => this.onDropdownClick(e)}>
                             {settings.i18.sort_by}
                         </div>
-                        <div className="anycomment send-comment-supheader__dropdown-list"
+                        <div className="anycomment anycomment-send-comment-supheader__dropdown-list"
                              style={{display: this.state.dropdown}}
                              id="sort-dropdown">
                             <ul className="anycomment">

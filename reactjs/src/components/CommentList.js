@@ -410,15 +410,11 @@ class CommentList extends AnyCommentComponent {
                 if (!commentElement) {
                     self.handleLoadMore();
                 } else {
-                    if ('jQuery' in window) {
-                        const jq = window.jQuery;
+                    $([document.documentElement, document.body]).animate({
+                        scrollTop: $(hash).offset().top - 50
+                    }, 500);
 
-                        jq([document.documentElement, document.body]).animate({
-                            scrollTop: jq(hash).offset().top - 50
-                        }, 500);
-
-                        clearInterval(interval);
-                    }
+                    clearInterval(interval);
                 }
             }, 1000);
         }

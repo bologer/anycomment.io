@@ -7,7 +7,7 @@ import AnyCommentComponent from "./AnyCommentComponent";
 class SendCommentFormBodyAvatar extends AnyCommentComponent {
     render() {
         if (!this.props.user) {
-            return <div className="send-comment-body-outliner__logo"></div>;
+            return <div className="anycomment-send-comment-body-outliner__logo"></div>;
         }
 
         const url = this.props.user.data.user_avatar;
@@ -17,7 +17,7 @@ class SendCommentFormBodyAvatar extends AnyCommentComponent {
             backgroundImage: 'url(' + url + ')'
         };
 
-        return <div className="send-comment-body-outliner__avatar"
+        return <div className="anycomment-send-comment-body-outliner__avatar"
                     style={style} title={name}></div>;
     }
 }
