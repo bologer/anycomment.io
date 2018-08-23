@@ -419,9 +419,9 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			$user = get_user_by( 'email', $request['author_email'] );
 
 			if ( $user instanceof WP_User && AnyCommentUserMeta::isSocialLogin( $user->ID ) ) {
-				return new WP_Error( 'rest_use_social_to_login', __( 'Email was used as social authorization. Please login using this method.' ), [ 'status' => 403 ] );
+				return new WP_Error( 'rest_use_social_to_login', __( 'Email was used as social authorization. Please login using this method.', 'anycomment' ), [ 'status' => 403 ] );
 			} elseif ( $user instanceof WP_User ) {
-				return new WP_Error( 'rest_login_to_leave_comment', __( "User with such email is registered. Please login to leave a comment." ), [ 'status' => 403 ] );
+				return new WP_Error( 'rest_login_to_leave_comment', __( "User with such email is registered. Please login to leave a comment.", 'anycomment' ), [ 'status' => 403 ] );
 			}
 		}
 
@@ -521,7 +521,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		}
 
 		if ( ! is_user_logged_in() && ! AnyCommentGenericSettings::isFormTypeGuests() ) {
-			return new WP_Error( 'rest_user_social_to_login', __( 'Please use any of the available social networks to leave a comment' ), [ 'status' => 400 ] );
+			return new WP_Error( 'rest_user_social_to_login', __( 'Please use any of the available social networks to leave a comment', 'anycomment' ), [ 'status' => 400 ] );
 		}
 
 		if ( is_user_logged_in() ) {
@@ -535,15 +535,15 @@ class AnyCommentRestComment extends AnyCommentRestController {
 
 
 			if ( empty( $prepared_comment['comment_author'] ) ) {
-				return new WP_Error( 'rest_comment_author_empty', __( 'Name is required.' ), [ 'status' => 400 ] );
+				return new WP_Error( 'rest_comment_author_empty', __( 'Name is required.', 'anycomment' ), [ 'status' => 400 ] );
 			}
 
 			if ( empty( $prepared_comment['comment_author_email'] ) ) {
-				return new WP_Error( 'rest_comment_email_empty', __( 'Email field is required.' ), [ 'status' => 400 ] );
+				return new WP_Error( 'rest_comment_email_empty', __( 'Email field is required.', 'anycomment' ), [ 'status' => 400 ] );
 			}
 
 			if ( ! empty( $prepared_comment['comment_author_email'] ) && ! is_email( $prepared_comment['comment_author_email'] ) ) {
-				return new WP_Error( 'rest_comment_email_invalid', __( 'Provide valid email address.' ), [ 'status' => 400 ] );
+				return new WP_Error( 'rest_comment_email_invalid', __( 'Provide valid email address.', 'anycomment' ), [ 'status' => 400 ] );
 			}
 		}
 

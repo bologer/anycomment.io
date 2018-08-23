@@ -149,7 +149,7 @@ Read guide on how to create "Privacy Policy" page:
 
 == Changelog ==
 
-= 0.0.46 – 22.08.2018 =
+= 0.0.46 – 23.08.2018 =
 
 **Enhancements:**
 
@@ -157,14 +157,15 @@ Read guide on how to create "Privacy Policy" page:
 * Leave comment as guest, via social or both. Ability to define this from admin, #94
 * New comment form layout for guest users, social icons, #94
 * When guest user entered name, email and/or website, it will be remembered - no need to type every time
+* Added warning about [Clearfy](https://wordpress.org/plugins/clearfy/) (only when activated) in the dashboard as some users reported to have problems with it, #95
 
 
 **Fixes:**
 
 * Fix for missing Gravatar images in the comment section by guest users & now a bit faster on repeating gravatars, #92
 * Added FAQ entry about how to fix problem when unable to delete comment (lack of `DELETE` as request option)
-* Comment text is not lost on authentication via social (when user already typed comment and decided to use social network)
-
+* Comment text is now stored safely even when you close tab or switch tabs, so you can continue typing it
+* Added user's website to the comment when submitted as guest, #93
 
 = 0.0.45 – 21.08.2018 =
 
