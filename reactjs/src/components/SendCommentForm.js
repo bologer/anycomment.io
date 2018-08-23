@@ -131,6 +131,10 @@ class SendCommentForm extends AnyCommentComponent {
             params.author_name = name;
             params.author_email = email;
             params.author_url = website;
+
+            this.storeAuthorName(name);
+            this.storeAuthorEmail(email);
+            this.storeAuthorWebsite(website);
         }
 
         if (!this.props.editId) {
@@ -195,6 +199,8 @@ class SendCommentForm extends AnyCommentComponent {
                         value={this.props.replyId}
                         className="anycomment"
                         onChange={this.handleReplyIdChange}/>
+
+                    {this.props.isReply ? <div className="clearfix"></div> : ''}
 
                     {this.props.isReply ?
                         <div

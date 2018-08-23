@@ -363,6 +363,7 @@ class CommentList extends AnyCommentComponent {
             isJustAdded: true,
         });
 
+        this.dropComment();
         this.loadComments();
         this.focusCommentField();
     };
@@ -373,7 +374,14 @@ class CommentList extends AnyCommentComponent {
 
         this.checkForAnchor();
 
-        const {options} = this.props.settings;
+        const options = this.getOptions();
+
+        this.setState({
+            commentText: this.getComment(),
+            authorName: this.getAuthorName(),
+            authorEmail: this.getAuthorEmail(),
+            authorWebsite: this.getAuthorWebsite(),
+        });
 
         if (options.notifyOnNewComment) {
             const self = this,
@@ -399,16 +407,10 @@ class CommentList extends AnyCommentComponent {
 
                 let commentElement = document.getElementById(hash.replace('#', ''));
 
-                console.log(hash.replace('#', ''));
-
                 if (!commentElement) {
-                    console.log('need to load more, as we dont see comment yet');
                     self.handleLoadMore();
                 } else {
                     if ('jQuery' in window) {
-
-                        console.log(hash, /#comment-\d{1,11}/.test(hash));
-
                         const jq = window.jQuery;
 
                         jq([document.documentElement, document.body]).animate({

@@ -57,6 +57,38 @@ class AnyCommentComponent extends React.Component {
     }
 
 
+    getComment() {
+        return this.localGet('anycomment-content')
+    }
+
+    getAuthorName() {
+        return this.localGet('anycomment-name');
+    }
+
+    getAuthorEmail() {
+        return this.localGet('anycomment-email');
+    }
+
+    getAuthorWebsite() {
+        return this.localGet('anycomment-website');
+    }
+
+    dropComment() {
+        this.localDelete('anycomment-content')
+    }
+
+    dropAuthorName() {
+        this.localDelete('anycomment-name');
+    }
+
+    dropAuthorEmail() {
+        this.localDelete('anycomment-email');
+    }
+
+    dropAuthorWebsite() {
+        this.localDelete('anycomment-website');
+    }
+
     storeComment(text) {
         this.localStore('anycomment-content', text);
     }
@@ -73,13 +105,34 @@ class AnyCommentComponent extends React.Component {
         this.localStore('anycomment-website', website);
     }
 
+    localGet(key, returnValue = '') {
+        if (!this.localStorageSupport()) {
+            return returnValue;
+        }
+
+        const value = localStorage.getItem(key);
+
+        return value || returnValue;
+    }
+
     localStore(key, text) {
         if (!this.localStorageSupport()) {
-            console.log('do not support');
             return false;
         }
-        console.log(key, text, 'lol');
         localStorage.setItem(key, text);
+    }
+
+    localDelete(key) {
+        if (!this.localStorageSupport()) {
+            return false;
+        }
+
+        if (localStorage.getItem(key)) {
+            localStorage.removeItem(key);
+            return true;
+        }
+
+        return false;
     }
 
     localStorageSupport() {
