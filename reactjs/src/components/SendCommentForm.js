@@ -190,7 +190,7 @@ class SendCommentForm extends AnyCommentComponent {
                     {this.isGuest() ?
                         <SendCommentGuest {...this.props} handleAgreement={this.handleAgreement}
                                           isAgreementAccepted={this.state.isAgreementAccepted}/> :
-                        <input type="submit" className="anycomment-btn send-comment-body__btn"
+                        <input type="submit" className="anycomment-btn anycomment-send-comment-body__btn"
                                value={this.props.buttonText}/>}
 
                     <input

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-08-23 05:36+0000\n"
-"PO-Revision-Date: 2018-08-23 05:38+0000\n"
+"PO-Revision-Date: 2018-08-24 05:50+0000\n"
 "Last-Translator: admin <sasha.tesh@gmail.com>\n"
 "Language-Team: Русский\n"
 "Language: ru_RU\n"
@@ -1133,7 +1133,7 @@ msgstr ""
 #: templates/admin/dashboard.php:15
 #, php-format
 msgid "Follow us on <a href=\"%s\" %s>VK.com</a>"
-msgstr ""
+msgstr "Подписывайтесь на нас в <a href=\"%s\" %s>ВКонтакте</a>"
 
 #: templates/admin/dashboard.php:21
 #, php-format

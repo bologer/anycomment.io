@@ -35,7 +35,7 @@ class SendComment extends AnyCommentComponent {
 
         return (
             <div id="anycomment anycomment-send-comment"
-                 className={"anycomment-send-comment " + (!this.isGuest() ? 'send-comment-authorized' : '') + ""}>
+                 className={"anycomment-send-comment " + (!this.isGuest() ? 'anycomment-send-comment-authorized' : '') + ""}>
                 <div className="anycomment anycomment-send-comment-supheader">
                     <div className="anycomment anycomment-send-comment-supheader__count"
                          id="comment-count">{this.props.commentCountText}</div>
