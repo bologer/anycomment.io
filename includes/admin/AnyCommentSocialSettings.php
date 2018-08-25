@@ -111,22 +111,7 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 * Initiate hooks.
 		 */
 		private function init_hooks() {
-			add_action( 'admin_menu', [ $this, 'init_submenu' ] );
 			add_action( 'admin_init', [ $this, 'init_settings' ] );
-		}
-
-		/**
-		 * {@inheritdoc}
-		 */
-		public function init_submenu() {
-			add_submenu_page(
-				'anycomment-dashboard',
-				__( 'Social Settings', "anycomment" ),
-				__( 'Social Settings', "anycomment" ),
-				'manage_options',
-				$this->page_slug,
-				[ $this, 'page_html' ]
-			);
 		}
 
 		/**

@@ -59,22 +59,7 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 		 * Initiate hooks.
 		 */
 		private function init_hooks() {
-			add_action( 'admin_menu', [ $this, 'add_menu' ] );
 			add_action( 'admin_init', [ $this, 'init_options' ] );
-		}
-
-		/**
-		 * Init admin menu.
-		 */
-		public function add_menu() {
-			add_submenu_page(
-				'anycomment-dashboard',
-				__( 'Integration', "anycomment" ),
-				__( 'Integration', "anycomment" ),
-				'manage_options',
-				$this->page_slug,
-				[ $this, 'page_html' ]
-			);
 		}
 
 		/**

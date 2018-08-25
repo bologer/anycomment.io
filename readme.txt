@@ -165,6 +165,7 @@ Read guide on how to create "Privacy Policy" page:
 
 * News of plugin in the right sidebar inside console are dispaly per your blog language. For now English and Russian supported
 * Likes are now shown to guest users, however they do not have ability to like. Once likes, plugin will show alert about required to login, #108
+* Removed submenu form main menu, as now all of the submenus can be found from dashboard via tabs
 
 **Fixes:**
 

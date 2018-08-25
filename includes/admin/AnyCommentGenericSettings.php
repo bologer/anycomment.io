@@ -171,7 +171,6 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 * Initiate hooks.
 		 */
 		private function init_hooks() {
-			add_action( 'admin_menu', [ $this, 'add_menu' ] );
 			add_action( 'admin_init', [ $this, 'init_settings' ] );
 
 			// Create role
@@ -183,20 +182,6 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 					'edit_posts'   => false,
 					'delete_posts' => false,
 				]
-			);
-		}
-
-		/**
-		 * Init admin menu.
-		 */
-		public function add_menu() {
-			add_submenu_page(
-				'anycomment-dashboard',
-				__( 'Settings', "anycomment" ),
-				__( 'Settings', "anycomment" ),
-				'manage_options',
-				$this->page_slug,
-				[ $this, 'page_html' ]
 			);
 		}
 
