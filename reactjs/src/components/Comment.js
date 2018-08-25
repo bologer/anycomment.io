@@ -5,7 +5,6 @@ import CommentHeader from './CommentHeader';
 import CommentFooter from './CommentFooter';
 import CommentBody from './CommentBody';
 import CommentAttachments from './CommentAttachments';
-import {toast} from 'react-toastify';
 
 /**
  * Comment is rendering single comment entry.
@@ -58,9 +57,7 @@ class Comment extends AnyCommentComponent {
                 });
             })
             .catch(function (error) {
-                if ('message' in error) {
-                    toast.error(error.message);
-                }
+                self.showError(error);
             });
     }
 

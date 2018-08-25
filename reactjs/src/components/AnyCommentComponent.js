@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import {toast} from 'react-toastify';
 
 /**
  * Generic wrapper for React component.
@@ -15,6 +16,19 @@ class AnyCommentComponent extends React.Component {
         }),
     };
 
+    showSuccess(message, options = null) {
+        toast.success(message, options);
+    }
+
+    showError(data, options = null) {
+        console.log(data);
+        console.log(data.response);
+        if ('response' in data && 'data' in data.response) {
+            toast.error(data.response.data.message, options);
+        } else {
+            toast.error(data, options);
+        }
+    }
 
     /**
      * Check whether user is guest or not.

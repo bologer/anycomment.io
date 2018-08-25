@@ -5,6 +5,7 @@ import AnyCommentComponent from "./components/AnyCommentComponent";
 import './css/comments.css'
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import $ from 'jquery'
 
 /**
  * App is main compontent of the application.
@@ -32,29 +33,24 @@ class App extends AnyCommentComponent {
         const self = this,
             {options} = this.props.settings;
 
-        if (!options.isLoadOnScroll || !('jQuery' in window)) {
-            if ('jQuery' in window) {
-                window.jQuery(document).ready(function () {
-                    self.setState({shouldLoad: true});
-                });
-            } else {
-                this.setState({shouldLoad: true});
-            }
+        if (!options.isLoadOnScroll) {
+            $(document).ready(function () {
+                self.setState({shouldLoad: true});
+            });
         }
 
-        const jq = window.jQuery,
-            root = jq('#anycomment-root'),
+        const root = $('#anycomment-root'),
             tillTop = root.offset().top;
 
-        jq(window).on('scroll', function () {
+        $(window).on('scroll', function () {
 
-            let wH = jq(window).height(),
-                currentTop = jq(this).scrollTop();
+            let wH = $(window).height(),
+                currentTop = $(this).scrollTop();
 
             wH = wH * 0.9;
 
             if ((currentTop + wH) > tillTop) {
-                jq(window).off('scroll');
+                $(window).off('scroll');
                 self.setState({shouldLoad: true});
             }
         });

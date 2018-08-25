@@ -2,8 +2,10 @@ import React from 'react';
 import SendCommentGuest from './SendCommentGuest';
 import SendCommentFormBody from './SendCommentFormBody';
 import AnyCommentComponent from "./AnyCommentComponent";
-import {toast} from "react-toastify";
 
+/**
+ * Class SendCommentForm is used process comment before it will be sent.
+ */
 class SendCommentForm extends AnyCommentComponent {
 
     constructor(props) {
@@ -92,11 +94,7 @@ class SendCommentForm extends AnyCommentComponent {
                 self.props.onSend(response.data);
             })
             .catch(function (error) {
-                if ('response' in error && 'data' in error.response) {
-                    toast.error(error.response.data.message);
-                } else {
-                    toast.error(error.message);
-                }
+                self.showError(error);
             });
 
         return false;
@@ -153,11 +151,7 @@ class SendCommentForm extends AnyCommentComponent {
                 self.props.onSend(response.data);
             })
             .catch(function (error) {
-                if ('response' in error && 'data' in error.response) {
-                    toast.error(error.response.data.message);
-                } else {
-                    toast.error(error.message);
-                }
+                self.showError(error);
             });
 
         return false;

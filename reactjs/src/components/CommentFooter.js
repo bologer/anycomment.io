@@ -18,11 +18,11 @@ class CommentFooter extends AnyCommentComponent {
                     <li className="anycomment"><a className="anycomment" href=""
                                                   onClick={(e) => this.props.onReply(e, comment)}>{settings.i18.reply}</a>
                     </li>
-                    {!isGuest ? <li className="anycomment">
+                    <li className="anycomment">
                             <span
                                 className={"anycomment comment-single-body__actions-like " + (this.props.hasLike ? 'active' : '') + ""}
                                 onClick={(e) => this.props.onLike(e)}>{this.props.likesCount}</span>
-                    </li> : ''}
+                    </li>
 
                     {!isGuest && comment.permissions.can_edit_comment ?
                         <li className="anycomment"><a className="anycomment" href=""

@@ -190,13 +190,11 @@ class CommentList extends AnyCommentComponent {
                 params: params,
                 headers: {'X-WP-Nonce': settings.nonce}
             })
-            .then(function (response) {
+            .then(function () {
                 self.loadComments();
             })
             .catch(function (error) {
-                if ('message' in error) {
-                    toast.error(error.message);
-                }
+                self.showError(error);
             });
     }
 
@@ -249,10 +247,7 @@ class CommentList extends AnyCommentComponent {
                     isLoaded: true,
                     isError: true
                 });
-
-                if ('message' in error) {
-                    toast.error(error.message);
-                }
+                self.showError(error);
             });
     };
 
@@ -284,7 +279,7 @@ class CommentList extends AnyCommentComponent {
                     // Show toast only if new comment was added, not deleted or
                     // something like this
                     if (!self.state.isJustAdded && currentCount > stateCount) {
-                        toast.success(settings.i18.new_comment_was_added, {
+                        self.showSuccess(settings.i18.new_comment_was_added, {
                             onClose: () => self.loadComments(),
                             autoClose: false,
                             position: toast.POSITION.TOP_CENTER,
@@ -296,11 +291,7 @@ class CommentList extends AnyCommentComponent {
                 }
             })
             .catch(function (error) {
-                if ('message' in error) {
-                    toast.error(error.message);
-                } else {
-                    toast.error(error);
-                }
+                self.showError(error);
             });
     };
 
@@ -343,9 +334,7 @@ class CommentList extends AnyCommentComponent {
                     isLoaded: true,
                     isError: true
                 });
-                if ('message' in error) {
-                    toast.error(error.message);
-                }
+                self.showError(error);
             });
     }
 
@@ -447,7 +436,10 @@ class CommentList extends AnyCommentComponent {
             onSend={this.handleAddComment}/>;
 
         if (isError) {
-            return <div>{settings.i18.error_generic}</div>;
+            return <React.Fragment>
+                {sendComment}
+                <div>{settings.i18.error_generic}</div>
+            </React.Fragment>;
         } else if (!isLoaded) {
             return (
                 <React.Fragment>
