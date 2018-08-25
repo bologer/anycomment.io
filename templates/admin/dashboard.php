@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<?php if ( is_plugin_active( 'clearfy/clearfy.php' ) ): ?>
         <div class="updated error">
-            <p><?= sprintf( __( 'You have <a href="%s">Clearfy</a> activated, please make sure "Remove REST API Links" is "Off" under "Performance" tab as it may cause problems to load comments.', 'anycomment'), '/wp-admin/admin.php?page=performance-wbcr_clearfy' ) ?></p>
+            <p><?= sprintf( __( 'You have <a href="%s">Clearfy</a> activated, please make sure "Remove REST API Links" is "Off" under "Performance" tab as it may cause problems to load comments.', 'anycomment' ), '/wp-admin/admin.php?page=performance-wbcr_clearfy' ) ?></p>
         </div>
 	<?php endif; ?>
 
@@ -41,60 +41,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?= anycomment_get_template( 'admin/tabs' ) ?>
         </div>
         <aside class="anycomment-dashboard__sidebar">
-            <h2><?= __( 'News', 'anycomment' ) ?></h2>
-            <ul class="anycomment-dashboard__sidebar-news">
-				<?php
-				$posts = AnyComment()->admin_pages->get_news( 3 );
-
-				if ( $posts !== null ):
-					foreach ( $posts as $key => $post ): ?>
-                        <li>
-                            <div class="anycomment-dashboard__sidebar-news-date">
-								<?= date( 'm.d.Y', strtotime( $post['date'] ) ) ?>
-
-								<?php
-
-								$postTimestamp = strtotime( $post['date'] );
-								$newSeconds    = 14 * 24 * 60 * 60; // two weeks
-								$difference    = time() - $postTimestamp;
-
-								$isNew = $difference <= $newSeconds;
-
-								if ( $isNew ): ?>
-                                    <span class="anycomment-dashboard__sidebar-news-date-new"><?= __( 'New', 'anycomment' ) ?></span>
-								<?php endif; ?>
-                            </div>
-                            <a href="<?= $post['link'] ?>"
-                               target="_blank"
-                               class="anycomment-dashboard__sidebar-news-title"><?= esc_html( $post['title']['rendered'] ) ?></a>
-                            <div class="anycomment-dashboard__sidebar-news-content">
-								<?php
-								$content = isset( $post['content']['rendered'] ) ? $post['content']['rendered'] : null;
-
-								if ( $content !== null ) {
-									$content = wp_strip_all_tags( $content, true );
-
-									if ( strlen( $content ) > 150 ) {
-										$content = substr( $content, 0, 150 ) . '...';
-									}
-
-									echo $content;
-								}
-								?>
-                            </div>
-                        </li>
-					<?php endforeach; ?>
-				<?php else: ?>
-                    <li><?= __( 'No news yet', 'anycomment' ) ?></li>
-				<?php endif; ?>
-            </ul>
-
-			<?php if ( $post !== null ) : ?>
-                <div class="anycomment-dashboard__sidebar-all-news">
-                    <a href="https://anycomment.io/en/category/plugin-updates/"
-                       target="_blank"><?= __( "All News", 'anycomment' ) ?></a>
-                </div>
-			<?php endif; ?>
+            <?= anycomment_get_template('admin/news-sidebar') ?>
         </aside>
 
         <div class="clearfix"></div>

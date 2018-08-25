@@ -53,7 +53,7 @@ if ( ! class_exists( 'AnyCommentAdminPages' ) ) :
 		/**
 		 * Add styles for menu.
 		 * Primary used for fixing icon size
-         * and the way it displays.
+		 * and the way it displays.
 		 */
 		public function add_menu_styles() {
 			?>
@@ -123,7 +123,20 @@ if ( ! class_exists( 'AnyCommentAdminPages' ) ) :
 				return json_decode( $news, true );
 			}
 
-			$url     = 'https://anycomment.io/wp-json/wp/v2/posts';
+			$locale = get_locale();
+
+			// English
+			$category = 24;
+
+			if ( strpos( $locale, 'ru' ) !== false ) {
+				$category = 15;
+			}
+
+			$shortLocale = substr( $locale, 0, 2 );
+
+
+			$url = sprintf( 'https://anycomment.io/%swp-json/wp/v2/posts', strpos( $locale, 'en' ) !== false ? $shortLocale . '/' : '' );
+
 			$options = [
 				'method'  => 'GET',
 				'timeout' => 10,
@@ -131,7 +144,7 @@ if ( ! class_exists( 'AnyCommentAdminPages' ) ) :
 					'per_page'   => $per_page,
 					'type'       => 'post',
 					'status'     => 'publish',
-					'categories' => '11',
+					'categories' => $category,
 				]
 			];
 
