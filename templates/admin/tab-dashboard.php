@@ -104,7 +104,10 @@
         </div>
         <div class="anycomment-dashboard__statistics-userlist">
             <h2><?= __( 'Most Active Users', 'anycomment' ) ?></h2>
-			<?php if ( ! empty( $users = AnyComment()->statistics->get_most_active_users() ) ): ?>
+			<?php
+			$users = AnyComment()->statistics->get_most_active_users();
+
+			if ( ! empty( $users ) ): ?>
                 <ul>
 					<?php foreach ( $users as $user ): ?>
                         <li>
