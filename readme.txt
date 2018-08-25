@@ -4,7 +4,7 @@ Tags: anycomment, comments, ajax comments, comment, comment moderation, custom c
 Requires at least: 4.7
 Tested up to: 4.9.8
 Requires PHP: 5.4
-Stable tag: 0.0.49
+Stable tag: 0.0.50
 License: GPLv2 or later
 License URI: http://www.gnu.org/
 
@@ -158,6 +158,12 @@ Read guide on how to create "Privacy Policy" page:
 - [Russian version](https://anycomment.io/ru/kak-sozdat-stranitsu-politiki-konfidentsialnosti-v-wordpress/)
 
 == Changelog ==
+
+= 0.0.50 – 25.08.2018 =
+
+* Fixed [Facebook guide](https://anycomment.io/en/api-facebook/) & other guides, added information regarding Callback URI, #102
+* Cosmetic style corrections (fixed height/alignment/decoration of button, make inline guest inputs 100%), #104
+
 
 = 0.0.49 – 24.08.2018 =
 

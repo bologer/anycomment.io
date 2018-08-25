@@ -50,7 +50,7 @@ class SendCommentGuest extends AnyCommentComponent {
                     <DataProcessing isAgreementAccepted={this.props.isAgreementAccepted}
                                     onAccept={this.props.handleAgreement}/>
 
-                    <input type="submit" className="anycomment-btn send-comment-body__btn"
+                    <input type="submit" className="anycomment-btn anycomment-send-comment-body__btn"
                            value={this.props.buttonText}/>
                 </div>
             </div>

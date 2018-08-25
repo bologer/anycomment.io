@@ -75,6 +75,10 @@ $global-radius: 4px;
   *:after {
     box-sizing: border-box !important;
   }
+
+  a {
+    text-decoration: none;
+  }
 }
 
 %author-avatar-parent {
@@ -95,11 +99,13 @@ $global-radius: 4px;
 
 %button-appearance {
   font-size: $font-size !important;
-  font-weight: normal;
-  text-align: center;
+  font-weight: normal !important;
+  text-align: center !important;
+  text-transform: none !important;
   justify-content: center;
   color: #ffffff !important;
   padding: 0 50px !important;
+  height: 48px !important;
   line-height: 48px !important;
   display: inline-block;
   vertical-align: middle;
@@ -414,7 +420,7 @@ $global-radius: 4px;
                 position: relative;
                 padding-left: 25px;
                 font-weight: normal;
-                display: inline-block;
+                display: block;
               }
 
               /* Hide the browser's default checkbox */
@@ -494,6 +500,11 @@ $global-radius: 4px;
             margin-bottom: 2px;
             line-height: 1.3;
             display: block;
+          }
+
+          label,
+          input,
+          textarea {
             width: 100%;
           }
 
@@ -787,10 +798,12 @@ $global-radius: 4px;
               a, span {
                 font-size: $font-size - 1;
                 color: $semi-hidden-color;
+                text-decoration: none;
 
                 &:hover,
                 &:active,
                 &:focus {
+                  text-decoration: none;
                   color: #a6b0b4;
                 }
               }
