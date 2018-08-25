@@ -28,7 +28,7 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 		 * AC_Render constructor.
 		 */
 		public function __construct() {
-			if ( AnyCommentGenericSettings::isEnabled() && AnyCommentSocialSettings::hasAnySocial() ) {
+			if ( AnyCommentGenericSettings::isEnabled()) {
 				add_filter( 'comments_template', [ $this, 'override_comment' ] );
 
 				add_shortcode( 'anycomment', [ $this, 'override_comment' ] );
@@ -39,8 +39,6 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 		 * Base shortcode to display comment box inside posts or pages.
 		 */
 		public function base_shortcode() {
-			wp_enqueue_script( 'anycomment-iframeResizer', AnyComment()->plugin_url() . '/assets/js/iframeResizer.min.js' );
-
 			include ANYCOMMENT_ABSPATH . 'templates/iframe.php';
 		}
 

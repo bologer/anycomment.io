@@ -172,6 +172,7 @@ Read guide on how to create "Privacy Policy" page:
 * Fixed [Facebook guide](https://anycomment.io/en/api-facebook/) & other guides, added information regarding Callback URI, #102
 * Cosmetic style corrections (fixed height/alignment/decoration of button, make inline guest inputs 100%), #104
 * Fixed issue when link in news sidebar lead to 404 page,  #109
+* Plugin was not showing comment box until enable showing comment was on and at least one social was configured, not this logic is a bit different, as we allow guests, so now only required to enable option to show comment box, #112
 
 = 0.0.49 – 24.08.2018 =
 
