@@ -147,15 +147,25 @@ Possible you are getting "Forbidden" with 403 error code.
 * Save & Close
 * Try to delete comment again
 
-= Why Facebook and Twitter want Privacy Policy URL? =
+= Why Do Social Media Ask For Privacy Policy link? =
 
-Facebook and Twitter are now require your website to have Privacy Policy.
+It is now one of the requirements to have Privacy Policy link on your website due to GDRP regulation.
 
-After [General Data Protection Regulation](https://en.wikipedia.org/wiki/General_Data_Protection_Regulation) (GDPR) regulation was made it is now required to have a link to Privacy Policy.
+AnyComment is GDRP compliant.
+
+You can read more about General Data Protection Regulation on [Wikipedia](https://en.wikipedia.org/wiki/General_Data_Protection_Regulation).
 
 Read guide on how to create "Privacy Policy" page:
 - [English version](https://anycomment.io/how-to-create-privacy-policy-page-in-wordpress/)
 - [Russian version](https://anycomment.io/ru/kak-sozdat-stranitsu-politiki-konfidentsialnosti-v-wordpress/)
+
+= Why Does Facebook Require HTTPs? =
+
+From some recent time, Facebook now required website to have HTTPs connection in order to work with their API and we cannot do anything about it.
+
+Most of the hosting providers support single button-like installation of SSL certificate, so it should not be that difficult.
+
+It could only be difficult for website who have HTTP only and hight traffic as transfer to HTTPs can cause some traffic lose.
 
 == Changelog ==
 
@@ -178,6 +188,10 @@ Read guide on how to create "Privacy Policy" page:
 * Some users were confused with dropdowns in the admin, as they did not have any visuals, such as triangle to see that there is a list of options
 * When load on scroll is enabled and user from email came to see the reply, he was not moved to the comment, #103
 * When user was logged in via social network, he was redirected back to the top of the post. Now he is being moved to comments section
+
+**Other:**
+
+* Added new entry to FAQ about Facebook forcing websites to have HTTPs in order to use API
 
 = 0.0.49 – 24.08.2018 =
 
