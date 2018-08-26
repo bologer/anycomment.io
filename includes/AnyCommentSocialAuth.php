@@ -690,8 +690,17 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 
 			if ( is_numeric( $id_or_email ) ) {
 				$userId = $id_or_email;
-			} elseif ( ( $user = get_user_by( 'email', $id_or_email ) ) instanceof WP_User ) {
+			} elseif ( is_string( $id_or_email ) && ($user = get_user_by( 'email', $id_or_email )) !== null ) {
 				$userId = $user->ID;
+			} elseif ( $id_or_email instanceof WP_User ) {
+				$userId = $id_or_email->ID;
+			} elseif ( $id_or_email instanceof WP_Comment ) {
+
+				if ( (int) $id_or_email->user_id !== 0 ) {
+					$userId = $id_or_email->user_id;
+				} elseif ( ! empty( $id_or_email->comment_author_email ) ) {
+					$id_or_email = $id_or_email->comment_author_email;
+				}
 			}
 
 			if ( $userId !== null ) {

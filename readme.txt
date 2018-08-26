@@ -189,6 +189,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Some users were confused with dropdowns in the admin, as they did not have any visuals, such as triangle to see that there is a list of options
 * When load on scroll is enabled and user from email came to see the reply, he was not moved to the comment, #103
 * When user was logged in via social network, he was redirected back to the top of the post. Now he is being moved to comments section
+* Fixed issue with `trim()` warning near avatars in Dashboard & Comments page in admin
 
 **Other:**
 
