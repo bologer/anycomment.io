@@ -177,6 +177,7 @@ Read guide on how to create "Privacy Policy" page:
 * Plugin was not showing comment box until enable showing comment was on and at least one social was configured, not this logic is a bit different, as we allow guests, so now only required to enable option to show comment box, #112
 * Some users were confused with dropdowns in the admin, as they did not have any visuals, such as triangle to see that there is a list of options
 * When load on scroll is enabled and user from email came to see the reply, he was not moved to the comment, #103
+* When user was logged in via social network, he was redirected back to the top of the post. Now he is being moved to comments section
 
 = 0.0.49 – 24.08.2018 =
 

@@ -63,7 +63,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		 */
 		public function __construct() {
 			// When only guests allowed, social should not be allowed
-			if ( !AnyCommentGenericSettings::isFormTypeGuests() ) {
+			if ( ! AnyCommentGenericSettings::isFormTypeGuests() ) {
 				$this->init_rest_route();
 			}
 		}
@@ -408,14 +408,19 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		 *
 		 * @param string $social_type URL type, e.g. vk
 		 * @param string|null $redirect Redirect URL where to send back user.
+		 * @param bool $addHash If required to add #comments hash will allows to move users creen directly to comments section.
 		 *
 		 * @return string
 		 */
-		public static function get_callback_url( $social_type, $redirect = null ) {
+		public static function get_callback_url( $social_type, $redirect = null, $addHash = true ) {
 			$url = static::get_rest_namespace() . "/auth/" . $social_type;
 
 			if ( $redirect !== null ) {
 				$url .= "?redirect=$redirect";
+			}
+
+			if ( $addHash ) {
+				$url .= '#comments';
 			}
 
 			return rest_url( $url );
