@@ -132,11 +132,11 @@ Not yet working? Please follow the steps:
 * Select "Network" tab, inside find "XHR" click on it (name can also vary). If you do not find "XHR" just ignore it
 * Refresh page
 * In the list find request which looks something like the following: `https://yourdomain.com/wp-json/anycomment/v1/comments?post=15&parent=0&per_page=15&order=desc&order_by=id`
-* Click on it, copy its content and or take screenshot of it and report in [support forum](https://wordpress.org/support/plugin/anycomment)
+* Click on it, copy its content and take screenshot of it and report in [support forum](https://wordpress.org/support/plugin/anycomment)
 
 = I cannot delete comment? =
 
-Possbile you are getting "Forbidden" with 403 error code.
+Possible you are getting "Forbidden" with 403 error code.
 
 *To fix this:*
 
@@ -219,8 +219,8 @@ Read guide on how to create "Privacy Policy" page:
 > *IMPORTANT NOTE 1:* Please if you find any bugs report on the [support forum](https://wordpress.org/support/plugin/anycomment) or the [issue tracker](https://github.com/bologer/anycomment.io/issues)
 
 
-> *IMPORTANT NOTE 2:* this plugin update includes email sending features, which might require SMTP configureation.
-> We recomment to install [WP Mail SMTP](https://wordpress.org/plugins/wp-mail-smtp/) and follow on the instruction below:
+> *IMPORTANT NOTE 2:* this plugin update includes email sending features, which might require SMTP configuration.
+> We recommend to install [WP Mail SMTP](https://wordpress.org/plugins/wp-mail-smtp/) and follow on the instruction below:
 > [English guide on SendPulse example](https://anycomment.io/en/smtp-sendpulse/)
 > [Инструкция на русском на примере SendPulse](https://anycomment.io/smtp-sendpulse/)
 
