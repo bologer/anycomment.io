@@ -1,10 +1,184 @@
-.anycomment-light {
-  .send-comment {
-    .send-comment-body {
-      &-outliner {
-        border: 0;
+$primary-color: #64ceac;
+$semi-hidden-color: #efe9f1;
+$comment-color: #fff;
+$dropdown-header-color: $comment-color;
+$dropdown-item-color: #000;
+
+$btn-primary-color: #53af4a;
+$btn-primary-active-color: #4f9f49;
+
+$attachment-color: #eee;
+$attachment-background-color: #eee;
+
+#anycomment-root {
+  .anycomment-dark {
+    .anycomment-send-comment {
+      &-supheader {
+        &__count {
+          color: $comment-color;
+        }
+
+        &__dropdown {
+          &-header {
+            color: $dropdown-header-color;
+
+            &:hover {
+              color: lighten($dropdown-header-color, 5%);
+            }
+
+            &:hover::after {
+              border-top: 5px solid lighten($dropdown-header-color, 5%);
+            }
+
+            &::after {
+              border-top: 5px solid $dropdown-header-color;
+            }
+          }
+          &-list {
+            li {
+              &:hover {
+                color: $dropdown-item-color;
+              }
+            }
+          }
+        }
+      }
+
+      &-body {
+        &-outliner {
+          border: 0;
+
+          &__auth {
+            &-header {
+              color: $comment-color;
+            }
+          }
+
+          &__textfield {
+            background-color: #3f3f3f;
+            color: #fff;
+          }
+        }
+
+        .anycomment-form-guest {
+          &__container {
+            .anycomment-form-submit {
+              &__user-agreement {
+                color: $semi-hidden-color;
+
+                /* On mouse-over, add a grey background color */
+                &:hover input ~ .checkmark {
+                  background-color: darken(#686868, 2%);
+                }
+
+                /* When the checkbox is checked, add a blue background */
+                input:checked ~ .checkmark {
+                  background-color: $btn-primary-active-color;
+                }
+              }
+            }
+          }
+        }
+
+        .anycomment-input-list {
+          &-single {
+            label {
+              color: $comment-color;
+              font-weight: 700;
+              font-size: 12px;
+              margin-bottom: 2px;
+              line-height: 1.3;
+              display: block;
+            }
+
+            input[type="text"],
+            input[type="email"],
+            input[type="number"] {
+              border: 1px solid $semi-hidden-color !important;
+              color: $comment-color !important;
+
+              &:hover,
+              &:active,
+              &:focus {
+                border: 1px solid darken($semi-hidden-color, 5%) !important;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .anycomment-list {
+      .comment-single {
+
+        &-body {
+          &-header {
+            &__author {
+              &,
+              & > a {
+                color: $primary-color;
+              }
+
+              &-owner {
+                background-color: $btn-primary-color;
+              }
+
+              &-replied,
+              &-parent-author {
+                color: $primary-color;
+              }
+
+              &-answered {
+                color: #a7b4ba;
+              }
+            }
+
+            &__date {
+              color: $semi-hidden-color;
+            }
+          }
+
+          &__text {
+            p {
+              color: $comment-color;
+            }
+          }
+
+          .comment-attachments {
+            width: 100%;
+            display: block;
+            margin: 3px 0;
+            padding: 0;
+
+            li {
+              display: inline-block;
+              margin-right: 5px;
+              margin-bottom: 2px;
+              float: left;
+
+              .comment-attachment {
+                background-color: $attachment-background-color;
+                color: darken($attachment-color, 15%);
+
+                &:hover {
+                  background-color: darken($attachment-background-color, 3%);
+                  color: darken($attachment-color, 20%);
+                }
+              }
+            }
+          }
+
+          &__actions {
+            ul {
+              li {
+                a, span {
+                  color: $semi-hidden-color;
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
 }
-

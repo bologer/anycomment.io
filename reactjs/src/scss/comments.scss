@@ -17,6 +17,9 @@ $btn-primary-active-color: #4f9f49;
 
 $global-radius: 4px;
 
+$attachment-color: #eee;
+$attachment-background-color: #eee;
+
 @mixin border-radius($radius) {
   -webkit-border-radius: $radius;
   -moz-border-radius: $radius;
@@ -26,8 +29,6 @@ $global-radius: 4px;
 
 @import "normalizer";
 @import "alerts";
-@import "theme-dark";
-@import "theme-light";
 
 .anycomment {
   float: none;
@@ -59,13 +60,6 @@ $global-radius: 4px;
   -webkit-box-sizing: content-box;
   min-height: 0;
   -webkit-overflow-scrolling: touch;
-}
-
-.anycomment-dark {
-  $primary-color: #64ceac;
-  $semi-hidden-color: #efe9f1;
-  $comment-color: #fff;
-  $dropdown-header-color: $comment-color;
 }
 
 #anycomment-root {
@@ -673,7 +667,6 @@ $global-radius: 4px;
             bottom: 0;
             left: 0;
             pointer-events: none;
-            background: linear-gradient(transparent 15px, white);
           }
         }
 
@@ -722,7 +715,7 @@ $global-radius: 4px;
               width: 50px;
               height: 50px;
               line-height: 50px;
-              background-color: #eee;
+              background-color: $attachment-background-color;
               text-align: center;
               overflow: hidden;
               white-space: nowrap;
@@ -731,12 +724,12 @@ $global-radius: 4px;
               font-size: 8px;
               font-weight: bold;
               user-select: none;
-              color: darken(#eee, 15%);
+              color: darken($attachment-color, 15%);
               @include border-radius(3px);
 
               &:hover {
-                background-color: darken(#eee, 3%);
-                color: darken(#eee, 20%);
+                background-color: darken($attachment-background-color, 3%);
+                color: darken($attachment-color, 20%);
               }
             }
 
@@ -849,6 +842,8 @@ $global-radius: 4px;
     }
   }
 }
+
+@import "theme-dark";
 
 .clearfix:after {
   content: "";
