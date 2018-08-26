@@ -17,9 +17,11 @@ class App extends AnyCommentComponent {
 
         this.state = {
             shouldLoad: false,
+            rootElement: 'anycomment-root-inner'
         };
 
         this.handleLoadOnScroll = this.handleLoadOnScroll.bind(this);
+        this.handleScrollToComments = this.handleScrollToComments.bind(this);
     }
 
     /**
@@ -33,7 +35,11 @@ class App extends AnyCommentComponent {
         const self = this,
             {options} = this.props.settings;
 
-        if (!options.isLoadOnScroll) {
+        /**
+         * When load on scroll is not enabled or
+         * there is scroll to comments or specific comment in the url hash.
+         */
+        if (!options.isLoadOnScroll || (this.hasCommentSectionAnchor() || this.hasSpecificCommentAnchor())) {
             $(document).ready(function () {
                 self.setState({shouldLoad: true});
             });
@@ -56,8 +62,26 @@ class App extends AnyCommentComponent {
         });
     }
 
+    /**
+     * Handle scroll to comments.
+     */
+    handleScrollToComments() {
+        const self = this;
+        if (this.hasCommentSectionAnchor()) {
+            const rootEl = '#' + this.state.rootElement;
+            const interval = setInterval(function () {
+                let el = $(rootEl);
+                if (el.length) {
+                    self.moveToElement(rootEl);
+                    clearInterval(interval);
+                }
+            }, 100);
+        }
+    }
+
     componentDidMount() {
         this.handleLoadOnScroll();
+        this.handleScrollToComments();
     }
 
     render() {
@@ -68,7 +92,7 @@ class App extends AnyCommentComponent {
         }
 
         return (
-            <div id="anycomment-root-inner" className={'anycomment anycomment-' + this.props.settings.options.theme}>
+            <div id={this.state.rootElement} className={'anycomment anycomment-' + this.props.settings.options.theme}>
                 <ToastContainer/>
                 <CommentList/>
                 <CommentCopyright/>

@@ -391,18 +391,15 @@ class CommentList extends AnyCommentComponent {
         const self = this;
         const hash = window.location.hash;
 
-        if (hash !== "" && /#comment-\d{1,11}/.test(hash)) {
-            let interval = setInterval(function () {
+        if (this.hasSpecificCommentAnchor()) {
+            const interval = setInterval(function () {
 
-                let commentElement = document.getElementById(hash.replace('#', ''));
+                let commentElement = $(hash).length;
 
                 if (!commentElement) {
                     self.handleLoadMore();
                 } else {
-                    $([document.documentElement, document.body]).animate({
-                        scrollTop: $(hash).offset().top - 50
-                    }, 500);
-
+                    self.moveToElement(hash);
                     clearInterval(interval);
                 }
             }, 1000);

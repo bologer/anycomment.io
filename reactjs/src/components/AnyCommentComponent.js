@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import {toast} from 'react-toastify';
+import $ from 'jquery';
 
 /**
  * Generic wrapper for React component.
@@ -16,13 +17,56 @@ class AnyCommentComponent extends React.Component {
         }),
     };
 
+    moveToElement(id) {
+        $([document.documentElement, document.body]).animate({
+            scrollTop: $(id).offset().top - 60
+        }, 500);
+    }
+
+    /**
+     * Check for generic comments anchor.
+     * Primarily this can be used to move users directly to comments section.
+     *
+     * @returns {boolean}
+     */
+    hasCommentSectionAnchor() {
+        const hash = window.location.hash;
+        return hash !== '' && /#(comments|to-comments|load-comments)$/.test(hash);
+    }
+
+    /**
+     * Check for specific comments.
+     * Can be used to load user to specific comment.
+     *
+     * @returns {boolean}
+     */
+    hasSpecificCommentAnchor() {
+        const hash = window.location.hash;
+        return hash !== "" && /#comment-\d{1,11}$/.test(hash);
+    }
+
+    /**
+     * Show success message toast.
+     * @param message
+     * @param options
+     */
     showSuccess(message, options = null) {
         toast.success(message, options);
     }
 
+    /**
+     * Show error message toast. It can accept axios error, message
+     * will be automatically retrieved.
+     *
+     * @param data
+     * @param options
+     * @returns {boolean}
+     */
     showError(data, options = null) {
-        console.log(data);
-        console.log(data.response);
+        if (!data) {
+            return false;
+        }
+
         if ('response' in data && 'data' in data.response) {
             toast.error(data.response.data.message, options);
         } else {
