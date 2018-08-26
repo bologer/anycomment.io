@@ -179,7 +179,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Settings tab in in admin are now split into specific configuration tabs: general, design, moderation & notifications
 * Now possible to specify #comments, #to-comments or #load-comments (e.g. https://yourwebsite.com/cool-post/#comments) to move users screen to comment section
 * Added subject to each type of email (sent to admin and to user as reply email)
-* Added option to make video or image link as attachment, as well as option to make links in comment clickable or not, #87
+* Added option to make video or image link as attachment, as well as option to make links in comment clickable or not, #87, #83
 
 **Fixes:**
 
