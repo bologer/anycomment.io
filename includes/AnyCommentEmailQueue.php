@@ -344,6 +344,11 @@ WHERE `users`.`user_email` != %s AND `comments`.`comment_ID`=%d";
 	/**
 	 * Generate email template to send notification to admin.
 	 *
+	 * - {blogInfo}
+	 * - {postInfo}
+	 * - {commentText}
+	 * - {replyButton}
+	 *
 	 * @param AnyCommentEmailQueue $email
 	 *
 	 * @return string
@@ -366,6 +371,7 @@ WHERE `users`.`user_email` != %s AND `comments`.`comment_ID`=%d";
 			$body .= $comment->comment_content;
 			$body .= '</div>';
 		}
+
 
 		// Add reply button
 		$body .= '<p><a href="' . $commentLink . '" style="font-size: 15px;text-decoration:none;font-weight: 400;text-align: center;color: #fff;padding: 0 50px;line-height: 48px;background-color: #53af4a;display: inline-block;vertical-align: middle;border: 0;outline: 0;cursor: pointer;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;-webkit-appearance: none;-moz-appearance: none;appearance: none;white-space: nowrap;border-radius: 24px;">' . __( 'See', 'anycomment' ) . '</a></p>';
