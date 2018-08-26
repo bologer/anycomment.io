@@ -234,6 +234,101 @@ if ( ! class_exists( 'AnyCommentAdminOptions' ) ) :
 		}
 
 		/**
+		 * Display tabbed menu.
+		 *
+		 * @param string $page
+		 */
+		protected function do_tab_menu( $page ) {
+			global $wp_settings_sections, $wp_settings_fields;
+
+			if ( ! isset( $wp_settings_sections[ $page ] ) ) {
+				return;
+			}
+
+			echo '<ul>';
+
+			$i = 0;
+			foreach ( (array) $wp_settings_sections[ $page ] as $section ) {
+				echo '<li data-tab="' . $section['id'] . '">
+				<a href="#tab-' . $section['id'] . '">' . $section['title'] . '</a>
+				</li>';
+				$i ++;
+			}
+			echo '</ul>';
+
+			?>
+            <script>
+                jQuery('.anycomment-tabs__menu li').on('click', function (e) {
+                    e.preventDefault();
+
+                    var data = jQuery(this).attr('data-tab') || '';
+                    var tab_id = '#tab-' + data;
+
+                    if (!data) {
+                        return false;
+                    }
+
+                    jQuery('.anycomment-tabs__menu li').removeClass('current');
+                    jQuery('.anycomment-tabs__container__tab').removeClass('current');
+
+                    jQuery(this).addClass('current');
+                    jQuery(tab_id).addClass('current');
+
+                    return false;
+                })
+            </script>
+			<?php
+		}
+
+		/**
+		 * Custom wrapper over original WordPress core method.
+		 *
+		 * Part of the Settings API. Use this in a settings page callback function
+		 * to output all the sections and fields that were added to that $page with
+		 * add_settings_section() and add_settings_field()
+		 *
+		 * @global $wp_settings_sections Storage array of all settings sections added to admin pages
+		 * @global $wp_settings_fields Storage array of settings fields and info about their pages/sections
+		 * @since 0.0.45
+		 *
+		 * @param string $page The slug name of the page whose settings sections you want to output
+		 * @param bool Whether required to have header or not.
+		 */
+		protected function do_tab_sections( $page, $includeHeader = true ) {
+			global $wp_settings_sections, $wp_settings_fields;
+
+			if ( ! isset( $wp_settings_sections[ $page ] ) ) {
+				return;
+			}
+
+			$i = 0;
+			foreach ( (array) $wp_settings_sections[ $page ] as $section ) {
+				if ( $includeHeader && $section['title'] ) {
+					echo "<h2>{$section['title']}</h2>\n";
+				}
+
+				if ( $includeHeader && $section['callback'] ) {
+					call_user_func( $section['callback'], $section );
+				}
+
+				if ( ! isset( $wp_settings_fields ) || ! isset( $wp_settings_fields[ $page ] ) || ! isset( $wp_settings_fields[ $page ][ $section['id'] ] ) ) {
+					continue;
+				}
+
+				echo '<div id="tab-' . $section['id'] . '" class="anycomment-tabs__container__tab ' . ( $i === 0 ? 'current' : '' ) . '">';
+				echo '<div class="form-table-wrapper">';
+				echo '<table class="form-table">';
+				do_settings_fields( $page, $section['id'] );
+				echo '</table>';
+				echo '</div>';
+
+				echo '<div class="clearfix"></div></div>';
+
+				$i ++;
+			}
+		}
+
+		/**
 		 * Check whether there are any options set on model.
 		 *
 		 * @return bool

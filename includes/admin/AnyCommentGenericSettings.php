@@ -192,11 +192,31 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 			add_settings_section(
 				'section_generic',
 				__( 'Generic', "anycomment" ),
-				function () {
-					echo '<p>' . __( 'Generic settings.', "anycomment" ) . '</p>';
-				},
+				null,
 				$this->page_slug
 			);
+
+			add_settings_section(
+				'section_design',
+				__( 'Design', "anycomment" ),
+				null,
+				$this->page_slug
+			);
+
+			add_settings_section(
+				'section_moderation',
+				__( 'Moderation', "anycomment" ),
+				null,
+				$this->page_slug
+			);
+
+			add_settings_section(
+				'section_notifications',
+				__( 'Notifications', "anycomment" ),
+				null,
+				$this->page_slug
+			);
+
 
 			$this->render_fields(
 				$this->page_slug,
@@ -222,18 +242,6 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						],
 					],
 					[
-						'id'          => self::OPTION_THEME,
-						'title'       => __( 'Theme', "anycomment" ),
-						'callback'    => 'input_select',
-						'args'        => [
-							'options' => [
-								self::THEME_DARK  => __( 'Dark', 'anycomment' ),
-								self::THEME_LIGHT => __( 'Light', 'anycomment' ),
-							]
-						],
-						'description' => esc_html( __( 'Choose comments theme.', "anycomment" ) )
-					],
-					[
 						'id'          => self::OPTION_REGISTER_DEFAULT_GROUP,
 						'title'       => __( 'Register User Group', "anycomment" ),
 						'callback'    => 'input_select',
@@ -251,6 +259,77 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'callback'    => 'input_number',
 						'description' => esc_html( __( 'Number of comments to load initially and per page.', "anycomment" ) )
 					],
+					[
+						'id'          => self::OPTION_LOAD_ON_SCROLL,
+						'title'       => __( 'Load on Scroll', "anycomment" ),
+						'callback'    => 'input_checkbox',
+						'description' => esc_html( __( 'Load comments when user scrolls to it.', "anycomment" ) )
+					],
+
+					[
+						'id'          => self::OPTION_SHOW_PROFILE_URL,
+						'title'       => __( 'Show Profile URL', "anycomment" ),
+						'callback'    => 'input_checkbox',
+						'description' => esc_html( __( 'Show link to user in the social media when available (name of the user will be clickable).', "anycomment" ) )
+					],
+
+					[
+						'id'          => self::OPTION_USER_AGREEMENT_LINK,
+						'title'       => __( 'User Agreement Link', "anycomment" ),
+						'callback'    => 'input_text',
+						'description' => esc_html( __( 'Link to User Agreement, where described how your process users data once they authorize via social network and/or add new comment.', "anycomment" ) )
+					],
+					[
+						'id'          => self::OPTION_COPYRIGHT_TOGGLE,
+						'title'       => __( 'Thanks', "anycomment" ),
+						'callback'    => 'input_checkbox',
+						'description' => esc_html( __( 'Show AnyComment\'s link in the footer of comments. Copyright helps to bring awareness of such plugin and bring people to allow us to understand that it is a wanted product and give more often updated.', "anycomment" ) )
+					],
+				]
+			);
+
+			$this->render_fields(
+				$this->page_slug,
+				'section_design',
+				[
+					[
+						'id'          => self::OPTION_THEME,
+						'title'       => __( 'Theme', "anycomment" ),
+						'callback'    => 'input_select',
+						'args'        => [
+							'options' => [
+								self::THEME_DARK  => __( 'Dark', 'anycomment' ),
+								self::THEME_LIGHT => __( 'Light', 'anycomment' ),
+							]
+						],
+						'description' => esc_html( __( 'Choose comments theme.', "anycomment" ) )
+					],
+				]
+			);
+
+			$this->render_fields(
+				$this->page_slug,
+				'section_moderation',
+				[
+					[
+						'id'          => self::OPTION_MODERATE_FIRST,
+						'title'       => __( 'Moderate First', "anycomment" ),
+						'callback'    => 'input_checkbox',
+						'description' => esc_html( __( 'Moderators should check comment before it appears.', "anycomment" ) )
+					],
+					[
+						'id'          => self::OPTION_MODERATE_WORDS,
+						'title'       => __( 'Spam Words', "anycomment" ),
+						'callback'    => 'input_textarea',
+						'description' => esc_html( __( 'Comment should be marked for moderation when matched word from this list of comma-separated values.', "anycomment" ) )
+					],
+				]
+			);
+
+			$this->render_fields(
+				$this->page_slug,
+				'section_notifications',
+				[
 					[
 						'id'          => self::OPTION_NOTIFY_ON_NEW_COMMENT,
 						'title'       => __( 'New Comment Alert', "anycomment" ),
@@ -275,46 +354,56 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'callback'    => 'input_checkbox',
 						'description' => esc_html( __( 'Notify users by email (if specified) about new replies. Make sure you have proper SMTP configurations in order to send emails.', "anycomment" ) )
 					],
-					[
-						'id'          => self::OPTION_LOAD_ON_SCROLL,
-						'title'       => __( 'Load on Scroll', "anycomment" ),
-						'callback'    => 'input_checkbox',
-						'description' => esc_html( __( 'Load comments when user scrolls to it.', "anycomment" ) )
-					],
-					[
-						'id'          => self::OPTION_MODERATE_FIRST,
-						'title'       => __( 'Moderate First', "anycomment" ),
-						'callback'    => 'input_checkbox',
-						'description' => esc_html( __( 'Moderators should check comment before it appears.', "anycomment" ) )
-					],
-					[
-						'id'          => self::OPTION_MODERATE_WORDS,
-						'title'       => __( 'Spam Words', "anycomment" ),
-						'callback'    => 'input_textarea',
-						'description' => esc_html( __( 'Comment should be marked for moderation when matched word from this list of comma-separated values.', "anycomment" ) )
-					],
-					[
-						'id'          => self::OPTION_SHOW_PROFILE_URL,
-						'title'       => __( 'Show Profile URL', "anycomment" ),
-						'callback'    => 'input_checkbox',
-						'description' => esc_html( __( 'Show link to user in the social media when available (name of the user will be clickable).', "anycomment" ) )
-					],
-
-					[
-						'id'          => self::OPTION_USER_AGREEMENT_LINK,
-						'title'       => __( 'User Agreement Link', "anycomment" ),
-						'callback'    => 'input_text',
-						'description' => esc_html( __( 'Link to User Agreement, where described how your process users data once they authorize via social network and/or add new comment.', "anycomment" ) )
-					],
-					[
-						'id'          => self::OPTION_COPYRIGHT_TOGGLE,
-						'title'       => __( 'Thanks', "anycomment" ),
-						'callback'    => 'input_checkbox',
-						'description' => esc_html( __( 'Show AnyComment\'s link in the footer of comments. Copyright helps to bring awareness of such plugin and bring people to allow us to understand that it is a wanted product and give more often updated.', "anycomment" ) )
-					],
 				]
 			);
 		}
+
+		/**
+		 * top level menu:
+		 * callback functions
+		 *
+		 * @param bool $wrapper Whether to wrap for with header or not.
+		 */
+		public function page_html( $wrapper = true ) {
+			if ( ! current_user_can( 'manage_options' ) ) {
+				return;
+			}
+
+			if ( isset( $_GET['settings-updated'] ) ) {
+				add_settings_error( $this->alert_key, 'anycomment_message', __( 'Settings Saved', 'anycomment' ), 'updated' );
+			}
+
+			settings_errors( $this->alert_key );
+			?>
+			<?php if ( $wrapper ): ?>
+                <div class="wrap">
+                <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+			<?php endif; ?>
+            <form action="options.php" method="post" class="anycomment-form">
+				<?php
+				settings_fields( $this->option_group );
+				?>
+
+                <div class="anycomment-tabs">
+                    <aside class="anycomment-tabs__menu">
+						<?php $this->do_tab_menu( $this->page_slug ) ?>
+                    </aside>
+                    <div class="anycomment-tabs__container">
+						<?php
+						$this->do_tab_sections( $this->page_slug, false );
+						submit_button( __( 'Save', 'anycomment' ) );
+						?>
+                    </div>
+                </div>
+            </form>
+            <script src="<?= AnyComment()->plugin_url() ?>/assets/js/forms.js"></script>
+            <script src="<?= AnyComment()->plugin_url() ?>/assets/js/select2.min.js"></script>
+			<?php if ( $wrapper ): ?>
+                </div>
+			<?php endif; ?>
+			<?php
+		}
+
 
 		/**
 		 * Check whether plugin is enabled or not.

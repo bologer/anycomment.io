@@ -617,11 +617,11 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 
 				?>
 
-                <div class="anycomment-socials-setup">
-                    <aside>
-						<?php $this->do_menu( $this->page_slug ) ?>
+                <div class="anycomment-tabs">
+                    <aside class="anycomment-tabs__menu anycomment-tabs__menu-socials">
+						<?php $this->do_tab_menu( $this->page_slug ) ?>
                     </aside>
-                    <div class="anycomment-socials-setup-container">
+                    <div class="anycomment-tabs__container">
 						<?php
 						$this->do_settings_sections( $this->page_slug, false );
 						submit_button( __( 'Save', 'anycomment' ) );
@@ -638,19 +638,16 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		}
 
 		/**
-		 * Menu displaying.
-		 *
-		 * @param string $page
+		 * {@inheritdoc}
 		 */
-		private function do_menu( $page ) {
+		protected function do_tab_menu( $page ) {
 			global $wp_settings_sections, $wp_settings_fields;
 
 			if ( ! isset( $wp_settings_sections[ $page ] ) ) {
 				return;
 			}
 
-			echo '<ul class="anycomment-socials-menu">';
-//			echo '<li class="loner"><a href="#"></a></li>';
+			echo '<ul>';
 
 			$i = 0;
 			foreach ( (array) $wp_settings_sections[ $page ] as $section ) {
@@ -660,7 +657,7 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 
 				$path = sprintf( AnyComment()->plugin_url() . '/assets/img/icons/auth/%s.svg', str_replace( 'section_', 'social-', $section['id'] ) );
 				echo '<li class="' . $liClasses . '" data-tab="' . $section['id'] . '">
-				<a href="#social-tab-' . $section['id'] . '"><img src="' . $path . '" />' . $section['title'] . '</a>
+				<a href="#tab-' . $section['id'] . '"><img src="' . $path . '" />' . $section['title'] . '</a>
 				</li>';
 				$i ++;
 			}
@@ -668,16 +665,16 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 
 			?>
             <script>
-                jQuery('.anycomment-socials-menu li').on('click', function () {
+                jQuery('.anycomment-tabs__menu li').on('click', function () {
                     var data = jQuery(this).attr('data-tab') || '';
-                    var tab_id = '#social-tab-' + data;
+                    var tab_id = '#tab-' + data;
 
                     if (!data) {
                         return false;
                     }
 
-                    jQuery('.anycomment-socials-menu li').removeClass('current');
-                    jQuery('.social-tab').removeClass('current');
+                    jQuery('.anycomment-tabs__menu li').removeClass('current');
+                    jQuery('.anycomment-tabs__container__tab').removeClass('current');
 
                     jQuery(this).addClass('current');
                     jQuery(tab_id).addClass('current');
@@ -727,7 +724,7 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 				$guide_link = static::getGuide( [ 'social' => $social ] );
 
 
-				echo '<div id="social-tab-' . $section['id'] . '" class="' . ( $i === 0 ? 'current' : '' ) . ' social-tab">';
+				echo '<div id="tab-' . $section['id'] . '" class="anycomment-tabs__container__tab ' . ( $i === 0 ? 'current' : '' ) . '">';
 				echo '<div class="form-table-wrapper ' . ( $guide_link !== null ? 'has-guide' : '' ) . '">';
 				echo '<table class="form-table">';
 				$this->do_settings_fields( $page, $section['id'] );
@@ -760,6 +757,54 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
                     </div>
 					<?php
 				}
+
+				echo '<div class="clearfix"></div></div>';
+
+				$i ++;
+			}
+		}
+
+		/**
+		 * Custom wrapper over original WordPress core method.
+		 *
+		 * Part of the Settings API. Use this in a settings page callback function
+		 * to output all the sections and fields that were added to that $page with
+		 * add_settings_section() and add_settings_field()
+		 *
+		 * @global $wp_settings_sections Storage array of all settings sections added to admin pages
+		 * @global $wp_settings_fields Storage array of settings fields and info about their pages/sections
+		 * @since 0.0.45
+		 *
+		 * @param string $page The slug name of the page whose settings sections you want to output
+		 * @param bool Whether required to have header or not.
+		 */
+		protected function do_tab_sections( $page, $includeHeader = true ) {
+			global $wp_settings_sections, $wp_settings_fields;
+
+			if ( ! isset( $wp_settings_sections[ $page ] ) ) {
+				return;
+			}
+
+			$i = 0;
+			foreach ( (array) $wp_settings_sections[ $page ] as $section ) {
+				if ( $includeHeader && $section['title'] ) {
+					echo "<h2>{$section['title']}</h2>\n";
+				}
+
+				if ( $includeHeader && $section['callback'] ) {
+					call_user_func( $section['callback'], $section );
+				}
+
+				if ( ! isset( $wp_settings_fields ) || ! isset( $wp_settings_fields[ $page ] ) || ! isset( $wp_settings_fields[ $page ][ $section['id'] ] ) ) {
+					continue;
+				}
+
+				echo '<div id="tab-' . $section['id'] . '" class="anycomment-tabs__container__tab ' . ( $i === 0 ? 'current' : '' ) . '">';
+				echo '<div class="form-table-wrapper">';
+				echo '<table class="form-table">';
+				do_settings_fields( $page, $section['id'] );
+				echo '</table>';
+				echo '</div>';
 
 				echo '<div class="clearfix"></div></div>';
 

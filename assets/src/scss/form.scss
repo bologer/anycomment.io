@@ -45,12 +45,29 @@ $border-color: #979797;
 
   .select2 {
     border: 1px solid $border-color;
-    padding: 15px;
     background-color: #fff;
     @include border-radius(6px);
     color: $description-color;
     cursor: pointer;
     display: block;
+    position: relative;
+
+    .select2-selection {
+      display: block;
+      padding: 15px;
+    }
+
+    .select2-selection__arrow {
+      width: 0;
+      height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-top: 10px solid #7a7474;
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      margin-top: -5px;
+    }
   }
 
   textarea {

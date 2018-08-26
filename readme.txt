@@ -166,6 +166,7 @@ Read guide on how to create "Privacy Policy" page:
 * News of plugin in the right sidebar inside console are dispaly per your blog language. For now English and Russian supported
 * Likes are now shown to guest users, however they do not have ability to like. Once likes, plugin will show alert about required to login, #108
 * Removed submenu form main menu, as now all of the submenus can be found from dashboard via tabs
+* Settings tab in in admin are now split into specific configuration tabs: general, design, moderation & notifications
 
 **Fixes:**
 
@@ -173,6 +174,7 @@ Read guide on how to create "Privacy Policy" page:
 * Cosmetic style corrections (fixed height/alignment/decoration of button, make inline guest inputs 100%), #104
 * Fixed issue when link in news sidebar lead to 404 page,  #109
 * Plugin was not showing comment box until enable showing comment was on and at least one social was configured, not this logic is a bit different, as we allow guests, so now only required to enable option to show comment box, #112
+* Some users were confused with dropdowns in the admin, as they did not have any visuals, such as triangle to see that there is a list of options
 
 = 0.0.49 – 24.08.2018 =
 
