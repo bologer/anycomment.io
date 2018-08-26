@@ -28,7 +28,7 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 		 * AC_Render constructor.
 		 */
 		public function __construct() {
-			if ( AnyCommentGenericSettings::isEnabled()) {
+			if ( AnyCommentGenericSettings::isEnabled() ) {
 				add_filter( 'comments_template', [ $this, 'override_comment' ] );
 
 				add_shortcode( 'anycomment', [ $this, 'override_comment' ] );
@@ -61,18 +61,21 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 				'commentCount' => ( $res = get_comment_count( $postId ) ) !== null ? (int) $res['all'] : 0,
 				// Options from plugin
 				'options'      => [
-					'limit'                 => AnyCommentGenericSettings::getPerPage(),
-					'isCopyright'           => AnyCommentGenericSettings::isCopyrightOn(),
-					'socials'               => anycomment_login_with( false, get_permalink( $postId ) ),
-					'theme'                 => AnyCommentGenericSettings::getTheme(),
-					'isShowProfileUrl'      => AnyCommentGenericSettings::isShowProfileUrl(),
-					'userAgreementLink'     => AnyCommentGenericSettings::getUserAgreementLink(),
-					'notifyOnNewComment'    => AnyCommentGenericSettings::isNotifyOnNewComment(),
-					'intervalCommentsCheck' => AnyCommentGenericSettings::getIntervalCommentsCheck(),
-					'isLoadOnScroll'        => AnyCommentGenericSettings::isLoadOnScroll(),
-					'isFormTypeAll'         => AnyCommentGenericSettings::isFormTypeAll(),
-					'isFormTypeGuests'      => AnyCommentGenericSettings::isFormTypeGuests(),
-					'isFormTypeSocials'     => AnyCommentGenericSettings::isFormTypeSocials(),
+					'limit'                  => AnyCommentGenericSettings::getPerPage(),
+					'isCopyright'            => AnyCommentGenericSettings::isCopyrightOn(),
+					'socials'                => anycomment_login_with( false, get_permalink( $postId ) ),
+					'theme'                  => AnyCommentGenericSettings::getTheme(),
+					'isShowProfileUrl'       => AnyCommentGenericSettings::isShowProfileUrl(),
+					'isShowImageAttachments' => AnyCommentGenericSettings::isShowImageAttachments(),
+					'isShowVideoAttachments' => AnyCommentGenericSettings::isShowVideoAttachments(),
+					'isLinkClickable'        => AnyCommentGenericSettings::isLinkClickable(),
+					'userAgreementLink'      => AnyCommentGenericSettings::getUserAgreementLink(),
+					'notifyOnNewComment'     => AnyCommentGenericSettings::isNotifyOnNewComment(),
+					'intervalCommentsCheck'  => AnyCommentGenericSettings::getIntervalCommentsCheck(),
+					'isLoadOnScroll'         => AnyCommentGenericSettings::isLoadOnScroll(),
+					'isFormTypeAll'          => AnyCommentGenericSettings::isFormTypeAll(),
+					'isFormTypeGuests'       => AnyCommentGenericSettings::isFormTypeGuests(),
+					'isFormTypeSocials'      => AnyCommentGenericSettings::isFormTypeSocials(),
 				],
 				'user'         => AnyCommentUser::getSafeUser(),
 				'i18'          => [

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-26 14:22+0000\n"
+"POT-Creation-Date: 2018-08-26 19:18+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -14,37 +14,37 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/"
 
-#: includes/AnyCommentEmailQueue.php:207 includes/AnyCommentEmailQueue.php:209
+#: includes/AnyCommentEmailQueue.php:182 includes/AnyCommentEmailQueue.php:184
 #, php-format
 msgid "Re: Comment on %s"
 msgstr ""
 
-#: includes/AnyCommentEmailQueue.php:263 includes/AnyCommentEmailQueue.php:265
+#: includes/AnyCommentEmailQueue.php:237 includes/AnyCommentEmailQueue.php:239
 #, php-format
 msgid "New Comment on %s"
 msgstr ""
 
-#: includes/AnyCommentEmailQueue.php:351
+#: includes/AnyCommentEmailQueue.php:325
 #, php-format
 msgid "New reply was posted in <a href=\"%s\">%s</a>"
 msgstr ""
 
-#: includes/AnyCommentEmailQueue.php:354 includes/AnyCommentEmailQueue.php:391
+#: includes/AnyCommentEmailQueue.php:328 includes/AnyCommentEmailQueue.php:365
 #, php-format
 msgid "For post <a href=\"%s\">%s</a>"
 msgstr ""
 
-#: includes/AnyCommentEmailQueue.php:364 includes/AnyCommentRender.php:84
-#: includes/AnyCommentRender.php:92
+#: includes/AnyCommentEmailQueue.php:338 includes/AnyCommentRender.php:87
+#: includes/AnyCommentRender.php:95
 msgid "Reply"
 msgstr ""
 
-#: includes/AnyCommentEmailQueue.php:388
+#: includes/AnyCommentEmailQueue.php:362
 #, php-format
 msgid "New comment posted in <a href=\"%s\">%s</a>"
 msgstr ""
 
-#: includes/AnyCommentEmailQueue.php:402
+#: includes/AnyCommentEmailQueue.php:376
 msgid "See"
 msgstr ""
 
@@ -102,105 +102,105 @@ msgstr ""
 msgid "Yahoo"
 msgstr ""
 
-#: includes/AnyCommentRender.php:79
+#: includes/AnyCommentRender.php:82
 msgid "Oops, something went wrong..."
 msgstr ""
 
-#: includes/AnyCommentRender.php:80
+#: includes/AnyCommentRender.php:83
 msgid "Loading..."
 msgstr ""
 
-#: includes/AnyCommentRender.php:81
+#: includes/AnyCommentRender.php:84
 msgid "Load more"
 msgstr ""
 
-#: includes/AnyCommentRender.php:82
+#: includes/AnyCommentRender.php:85
 msgid "Send"
 msgstr ""
 
-#: includes/AnyCommentRender.php:83
+#: includes/AnyCommentRender.php:86
 #: includes/admin/AnyCommentAdminOptions.php:225
-#: includes/admin/AnyCommentGenericSettings.php:394
+#: includes/admin/AnyCommentGenericSettings.php:430
 #: includes/admin/AnyCommentSocialSettings.php:627
 msgid "Save"
 msgstr ""
 
-#: includes/AnyCommentRender.php:85
+#: includes/AnyCommentRender.php:88
 msgid "Sort By"
 msgstr ""
 
-#: includes/AnyCommentRender.php:86
+#: includes/AnyCommentRender.php:89
 msgid "Oldest"
 msgstr ""
 
-#: includes/AnyCommentRender.php:87
+#: includes/AnyCommentRender.php:90
 msgid "Newest"
 msgstr ""
 
-#: includes/AnyCommentRender.php:88
+#: includes/AnyCommentRender.php:91
 msgid "Reply to"
 msgstr ""
 
-#: includes/AnyCommentRender.php:89
+#: includes/AnyCommentRender.php:92
 msgid "Your comment..."
 msgstr ""
 
-#: includes/AnyCommentRender.php:90
+#: includes/AnyCommentRender.php:93
 msgid "No comments to display"
 msgstr ""
 
-#: includes/AnyCommentRender.php:91
+#: includes/AnyCommentRender.php:94
 msgid "Add Anycomment to your site"
 msgstr ""
 
-#: includes/AnyCommentRender.php:93
+#: includes/AnyCommentRender.php:96
 msgid "Edit"
 msgstr ""
 
-#: includes/AnyCommentRender.php:94
+#: includes/AnyCommentRender.php:97
 msgid "Delete"
 msgstr ""
 
-#: includes/AnyCommentRender.php:95
+#: includes/AnyCommentRender.php:98
 msgid "Cancel"
 msgstr ""
 
-#: includes/AnyCommentRender.php:96
+#: includes/AnyCommentRender.php:99
 msgid "Quick Login"
 msgstr ""
 
-#: includes/AnyCommentRender.php:97
+#: includes/AnyCommentRender.php:100
 msgid "New comment was added"
 msgstr ""
 
-#: includes/AnyCommentRender.php:98
+#: includes/AnyCommentRender.php:101
 msgid "Author"
 msgstr ""
 
-#: includes/AnyCommentRender.php:99
+#: includes/AnyCommentRender.php:102
 msgid "Name"
 msgstr ""
 
-#: includes/AnyCommentRender.php:100
+#: includes/AnyCommentRender.php:103
 msgid "Email"
 msgstr ""
 
-#: includes/AnyCommentRender.php:101
+#: includes/AnyCommentRender.php:104
 msgid "Website"
 msgstr ""
 
-#: includes/AnyCommentRender.php:103
+#: includes/AnyCommentRender.php:106
 #, php-format
 msgid "I accept the <a href=\"%s\"%s>User Agreement</a>"
 msgstr ""
 
-#: includes/AnyCommentRender.php:175
+#: includes/AnyCommentRender.php:178
 #, php-format
 msgid "%s Comments"
 msgstr ""
 
 #: includes/admin/AnyCommentIntegrationSettings.php:72
-#: includes/admin/AnyCommentGenericSettings.php:194
+#: includes/admin/AnyCommentGenericSettings.php:209
 msgid "Generic"
 msgstr ""
 
@@ -232,183 +232,207 @@ msgid ""
 msgstr ""
 
 #: includes/admin/AnyCommentAdminOptions.php:212
-#: includes/admin/AnyCommentGenericSettings.php:373
+#: includes/admin/AnyCommentGenericSettings.php:409
 #: includes/admin/AnyCommentSocialSettings.php:605
 msgid "Settings Saved"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:179
-#: includes/admin/AnyCommentGenericSettings.php:252
+#: includes/admin/AnyCommentGenericSettings.php:194
+#: includes/admin/AnyCommentGenericSettings.php:267
 msgid "Social Network Subscriber"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:201
+#: includes/admin/AnyCommentGenericSettings.php:216
 msgid "Design"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:208
+#: includes/admin/AnyCommentGenericSettings.php:223
 msgid "Moderation"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:215
+#: includes/admin/AnyCommentGenericSettings.php:230
 msgid "Notifications"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:227
+#: includes/admin/AnyCommentGenericSettings.php:242
 msgid "Enable Comments"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:229
+#: includes/admin/AnyCommentGenericSettings.php:244
 msgid ""
 "When on, comments are visible. When off, default WordPress' comments shown. "
 "This can be used to configure social networks on fresh installation."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:233
-#: includes/admin/AnyCommentGenericSettings.php:235
+#: includes/admin/AnyCommentGenericSettings.php:248
+#: includes/admin/AnyCommentGenericSettings.php:250
 msgid "Comment form"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:238
+#: includes/admin/AnyCommentGenericSettings.php:253
 msgid "Social, WordPress & guests"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:239
+#: includes/admin/AnyCommentGenericSettings.php:254
 msgid "Socials & WordPress users only."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:240
+#: includes/admin/AnyCommentGenericSettings.php:255
 msgid "Guests only. "
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:246
+#: includes/admin/AnyCommentGenericSettings.php:261
 msgid "Register User Group"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:248
+#: includes/admin/AnyCommentGenericSettings.php:263
 msgid ""
 "When users will authorize via plugin, they are being registered and be "
 "assigned with group selected above."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:251
+#: includes/admin/AnyCommentGenericSettings.php:266
 msgid "Subscriber"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:258
+#: includes/admin/AnyCommentGenericSettings.php:273
 msgid "Number of Comments Loaded"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:260
+#: includes/admin/AnyCommentGenericSettings.php:275
 msgid "Number of comments to load initially and per page."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:264
+#: includes/admin/AnyCommentGenericSettings.php:279
 msgid "Load on Scroll"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:266
+#: includes/admin/AnyCommentGenericSettings.php:281
 msgid "Load comments when user scrolls to it."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:271
+#: includes/admin/AnyCommentGenericSettings.php:286
 msgid "Show Profile URL"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:273
+#: includes/admin/AnyCommentGenericSettings.php:288
 msgid ""
 "Show link to user in the social media when available (name of the user will "
 "be clickable)."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:278
+#: includes/admin/AnyCommentGenericSettings.php:293
+msgid "Display Video Attachments"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:295
+msgid "Display video link from comment as attachment."
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:300
+msgid "Display Image Attachments"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:302
+msgid "Display image link from comment as attachment."
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:307
+msgid "Links Clickable"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:309
+msgid "Links in comment are clickable."
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:314
 msgid "User Agreement Link"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:280
+#: includes/admin/AnyCommentGenericSettings.php:316
 msgid ""
 "Link to User Agreement, where described how your process users data once "
 "they authorize via social network and/or add new comment."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:284
+#: includes/admin/AnyCommentGenericSettings.php:320
 msgid "Thanks"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:286
+#: includes/admin/AnyCommentGenericSettings.php:322
 msgid ""
 "Show AnyComment's link in the footer of comments. Copyright helps to bring "
 "awareness of such plugin and bring people to allow us to understand that it "
 "is a wanted product and give more often updated."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:297
+#: includes/admin/AnyCommentGenericSettings.php:333
 msgid "Theme"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:301
+#: includes/admin/AnyCommentGenericSettings.php:337
 msgid "Dark"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:302
+#: includes/admin/AnyCommentGenericSettings.php:338
 msgid "Light"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:305
+#: includes/admin/AnyCommentGenericSettings.php:341
 msgid "Choose comments theme."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:316
+#: includes/admin/AnyCommentGenericSettings.php:352
 msgid "Moderate First"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:318
+#: includes/admin/AnyCommentGenericSettings.php:354
 msgid "Moderators should check comment before it appears."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:322
+#: includes/admin/AnyCommentGenericSettings.php:358
 msgid "Spam Words"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:324
+#: includes/admin/AnyCommentGenericSettings.php:360
 msgid ""
 "Comment should be marked for moderation when matched word from this list of "
 "comma-separated values."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:335
+#: includes/admin/AnyCommentGenericSettings.php:371
 msgid "New Comment Alert"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:337
+#: includes/admin/AnyCommentGenericSettings.php:373
 msgid ""
 "Show hint about new comment when user is on the comments page. Once clicked "
 "on alert, new comment will be displayed."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:341
+#: includes/admin/AnyCommentGenericSettings.php:377
 msgid "New Comment Interval Checking"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:343
+#: includes/admin/AnyCommentGenericSettings.php:379
 msgid ""
 "Interval (in seconds) to check for new comments. Minimum 5 and maximum is "
 "100 seconds."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:347
+#: includes/admin/AnyCommentGenericSettings.php:383
 msgid "Notify Administrator"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:349
+#: includes/admin/AnyCommentGenericSettings.php:385
 msgid "Notify administrator via email about new comment."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:353
+#: includes/admin/AnyCommentGenericSettings.php:389
 msgid "Email Notifications"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:355
+#: includes/admin/AnyCommentGenericSettings.php:391
 msgid ""
 "Notify users by email (if specified) about new replies. Make sure you have "
 "proper SMTP configurations in order to send emails."
@@ -1045,11 +1069,6 @@ msgstr ""
 
 #: includes/rest/AnyCommentRestComment.php:1362
 msgid "The password for the post if it is password protected."
-msgstr ""
-
-#: includes/cron/AnyCommentEmailQueueCron.php:63
-#, php-format
-msgid "Comment on %s"
 msgstr ""
 
 #: templates/admin/dashboard.php:8 templates/admin/tabs.php:4

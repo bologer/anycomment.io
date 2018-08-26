@@ -83,6 +83,21 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		const OPTION_SHOW_PROFILE_URL = 'options_show_profile_url';
 
 		/**
+		 * Show/hide video attachments.
+		 */
+		const OPTION_SHOW_VIDEO_ATTACHMENTS = 'options_show_video_attachments';
+
+		/**
+		 * Show/hide image attachments.
+		 */
+		const OPTION_SHOW_IMAGE_ATTACHMENTS = 'options_show_image_attachments';
+
+		/**
+		 * Whether required to make links clickable.
+		 */
+		const OPTION_MAKE_LINKS_CLICKABLE = 'options_make_links_clickable';
+
+		/**
 		 * Define form type: only guest users, only social networks or both of it.
 		 */
 		const OPTION_FORM_TYPE = 'options_form_type';
@@ -274,6 +289,27 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 					],
 
 					[
+						'id'          => self::OPTION_SHOW_VIDEO_ATTACHMENTS,
+						'title'       => __( 'Display Video Attachments', "anycomment" ),
+						'callback'    => 'input_checkbox',
+						'description' => esc_html( __( 'Display video link from comment as attachment.', "anycomment" ) )
+					],
+
+					[
+						'id'          => self::OPTION_SHOW_IMAGE_ATTACHMENTS,
+						'title'       => __( 'Display Image Attachments', "anycomment" ),
+						'callback'    => 'input_checkbox',
+						'description' => esc_html( __( 'Display image link from comment as attachment.', "anycomment" ) )
+					],
+
+					[
+						'id'          => self::OPTION_MAKE_LINKS_CLICKABLE,
+						'title'       => __( 'Links Clickable', "anycomment" ),
+						'callback'    => 'input_checkbox',
+						'description' => esc_html( __( 'Links in comment are clickable.', "anycomment" ) )
+					],
+
+					[
 						'id'          => self::OPTION_USER_AGREEMENT_LINK,
 						'title'       => __( 'User Agreement Link', "anycomment" ),
 						'callback'    => 'input_text',
@@ -430,6 +466,33 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 */
 		public static function isModerateFirst() {
 			return static::instance()->getOption( self::OPTION_MODERATE_FIRST ) !== null;
+		}
+
+		/**
+		 * Check whether it is required to show video attachments.
+		 *
+		 * @return bool
+		 */
+		public static function isShowVideoAttachments() {
+			return static::instance()->getOption( self::OPTION_SHOW_VIDEO_ATTACHMENTS ) !== null;
+		}
+
+		/**
+		 * Check whether it is required to show image attachments.
+		 *
+		 * @return bool
+		 */
+		public static function isShowImageAttachments() {
+			return static::instance()->getOption( self::OPTION_SHOW_IMAGE_ATTACHMENTS ) !== null;
+		}
+
+		/**
+		 * Check whether it is required to make links clickable.
+		 *
+		 * @return bool
+		 */
+		public static function isLinkClickable() {
+			return static::instance()->getOption( self::OPTION_MAKE_LINKS_CLICKABLE ) !== null;
 		}
 
 		/**

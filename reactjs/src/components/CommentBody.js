@@ -55,7 +55,19 @@ class CommentBody extends AnyCommentComponent {
      * @returns {*}
      */
     processContent() {
+        const settings = this.getOptions(),
+            newLineRe = /(\n)/gi;
+
         let content = this.props.comment.content;
+
+        // Replace new lines
+        content = reactStringReplace(content, newLineRe, () => (
+            <br/>
+        ));
+
+        if (!settings.isLinkClickable) {
+            return content;
+        }
 
         const linksRe = new RegExp(
             // protocol identifier
@@ -93,16 +105,10 @@ class CommentBody extends AnyCommentComponent {
             , "gi"
         );
 
-        const newLineRe = /(\n)/gi;
 
         // Replace links
         content = reactStringReplace(content, linksRe, (match, i) => (
             <a key={match + i} className="anycomment" href={match} target="_blank" rel="noreferrer noopener">{match}</a>
-        ));
-
-        // Replace new lines
-        content = reactStringReplace(content, newLineRe, () => (
-            <br/>
         ));
 
         return content;
