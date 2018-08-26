@@ -67,13 +67,10 @@ Yes! Join us at [GitHub](https://github.com/bologer/anycomment.io)
 
 = TODO features =
 * Option: customization of comment styles
-* Option: add option to allow guests to leave comments
 * Option: ability to specify thanks message and/or page when user left his first comment, #88
 * Option: display matching links as attachments in comment, #87
 * Option: ability to set default sorting, #84
 * Option: ability to premoderate comments with links, #84
-* Option: enable/disable clickable links, #83
-* Option: enable/disable to display attachments (videos, images, etc)
 * Option: when user does not have email after registration via social, ask for it somewhere in the comments again
 * Option: notify moderators about new comments, #77
 * Ability to choose comment to make it sticky at the very top of all comments, #76
