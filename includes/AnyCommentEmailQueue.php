@@ -201,7 +201,7 @@ WHERE `comments`.`comment_parent` != 0 AND `users`.`user_email` != '' AND `comme
 
 		$email = new self();
 
-		$post = get_post( $email->post_ID );
+		$post = get_post( $comment->comment_post_ID);
 
 		if ( $post !== null ) {
 			$subject = sprintf( __( "Re: Comment on %s", 'anycomment' ), $post->post_title );
@@ -257,7 +257,7 @@ WHERE `users`.`user_email` != %s AND `comments`.`comment_ID`=%d";
 
 		$email = new self();
 
-		$post = get_post( $email->post_ID );
+		$post = get_post( $comment->comment_post_ID );
 
 		if ( $post !== null ) {
 			$subject = sprintf( __( "New Comment on %s", 'anycomment' ), $post->post_title );
