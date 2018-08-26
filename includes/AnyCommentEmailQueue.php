@@ -8,6 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Class AnyCommentEmailQueue keeps data about emails to be send to users.
  *
  * @property int $ID
+ * @property string $subject
  * @property int|null $user_ID
  * @property int $post_ID
  * @property int $comment_ID
@@ -22,6 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class AnyCommentEmailQueue {
 
 	public $ID;
+	public $subject;
 	public $user_ID;
 	public $post_ID;
 	public $comment_ID;
@@ -199,17 +201,32 @@ WHERE `comments`.`comment_parent` != 0 AND `users`.`user_email` != '' AND `comme
 
 		$email = new self();
 
+		$post = get_post( $email->post_ID );
+
+		if ( $post !== null ) {
+			$subject = sprintf( __( "Re: Comment on %s", 'anycomment' ), $post->post_title );
+		} else {
+			$subject = sprintf( __( 'Re: Comment on %s', 'anycomment' ), get_option( 'blogname' ) );
+		}
+
+		$email->subject    = $subject;
 		$email->user_ID    = $result->parent_user_ID;
 		$email->post_ID    = $comment->comment_post_ID;
 		$email->comment_ID = $comment->comment_ID;
 		$email->content    = AnyCommentEmailQueue::generateReplyEmail( $email );
 
-		// todo: add some logging
 		$isAdded = AnyCommentEmailQueue::add( $email );
 
 		return $isAdded;
 	}
 
+	/**
+	 * Method can be used to add email notification about new comment to admin.
+	 *
+	 * @param WP_Comment $comment Comment to be added as notification to admin.
+	 *
+	 * @return AnyCommentEmailQueue|bool|int
+	 */
 	public static function addAsAdminNotification( $comment ) {
 		if ( ! $comment instanceof WP_Comment ) {
 			return false;
@@ -234,18 +251,26 @@ WHERE `users`.`user_email` != %s AND `comments`.`comment_ID`=%d";
 
 		$user = get_user_by( 'email', $adminEmail );
 
-		if(!$user instanceof WP_User) {
+		if ( ! $user instanceof WP_User ) {
 			return false;
 		}
 
 		$email = new self();
 
+		$post = get_post( $email->post_ID );
+
+		if ( $post !== null ) {
+			$subject = sprintf( __( "New Comment on %s", 'anycomment' ), $post->post_title );
+		} else {
+			$subject = sprintf( __( 'New Comment on %s', 'anycomment' ), get_option( 'blogname' ) );
+		}
+
+		$email->subject    = $subject;
 		$email->user_ID    = $user->ID;
 		$email->post_ID    = $comment->comment_post_ID;
 		$email->comment_ID = $comment->comment_ID;
 		$email->content    = AnyCommentEmailQueue::generateAdminEmail( $email );
 
-		// todo: add some logging
 		$isAdded = AnyCommentEmailQueue::add( $email );
 
 		return $isAdded;

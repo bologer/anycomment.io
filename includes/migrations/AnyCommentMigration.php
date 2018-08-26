@@ -25,6 +25,10 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 			'version'     => '0.0.45',
 			'description' => 'VK option name change from short "vk" to "vkontake" & creation of "email_queue" table to keep email to send'
 		],
+		'0.0.50' => [
+			'version'     => '0.0.50',
+			'description' => 'Added "subject" column to "email_queue" table'
+		],
 	];
 
 	/**

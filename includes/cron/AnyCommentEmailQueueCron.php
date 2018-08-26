@@ -60,7 +60,7 @@ class AnyCommentEmailQueueCron {
 			$post = get_post( $email->post_ID );
 
 			if ( $post !== null ) {
-				$subject = sprintf( __( "Comment on %s" ), $post->post_title );
+				$subject = sprintf( __( "Comment on %s", 'anycomment' ), $post->post_title );
 			} else {
 				$subject = __( "Re: New Comment" );
 			}
@@ -68,6 +68,7 @@ class AnyCommentEmailQueueCron {
 			$headers   = [];
 			$headers[] = 'Content-Type: text/html; charset=UTF-8';
 
+			$subject = $email->subject;
 			$body = $email->content;
 
 			/**

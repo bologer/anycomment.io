@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-26 07:51+0000\n"
-"PO-Revision-Date: 2018-08-26 07:52+0000\n"
+"POT-Creation-Date: 2018-08-26 14:22+0000\n"
+"PO-Revision-Date: 2018-08-26 14:22+0000\n"
 "Last-Translator: admin <sasha.tesh@gmail.com>\n"
 "Language-Team: Русский\n"
 "Language: ru_RU\n"
@@ -14,27 +14,37 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/"
 
-#: includes/AnyCommentEmailQueue.php:326
+#: includes/AnyCommentEmailQueue.php:207 includes/AnyCommentEmailQueue.php:209
+#, php-format
+msgid "Re: Comment on %s"
+msgstr "Новый ответ на комментарий в %s"
+
+#: includes/AnyCommentEmailQueue.php:263 includes/AnyCommentEmailQueue.php:265
+#, php-format
+msgid "New Comment on %s"
+msgstr "Новый комментарий в %s"
+
+#: includes/AnyCommentEmailQueue.php:351
 #, php-format
 msgid "New reply was posted in <a href=\"%s\">%s</a>"
 msgstr "Новый ответ к <a href=\"%s\">%s</a>"
 
-#: includes/AnyCommentEmailQueue.php:329 includes/AnyCommentEmailQueue.php:366
+#: includes/AnyCommentEmailQueue.php:354 includes/AnyCommentEmailQueue.php:391
 #, php-format
 msgid "For post <a href=\"%s\">%s</a>"
 msgstr "Для записи <a href=\"%s\">%s</a>"
 
-#: includes/AnyCommentEmailQueue.php:339 includes/AnyCommentRender.php:84
+#: includes/AnyCommentEmailQueue.php:364 includes/AnyCommentRender.php:84
 #: includes/AnyCommentRender.php:92
 msgid "Reply"
 msgstr "Ответить"
 
-#: includes/AnyCommentEmailQueue.php:363
+#: includes/AnyCommentEmailQueue.php:388
 #, php-format
 msgid "New comment posted in <a href=\"%s\">%s</a>"
 msgstr "Оставлен новый комментарий на <a href=\"%s\">%s</a>"
 
-#: includes/AnyCommentEmailQueue.php:377
+#: includes/AnyCommentEmailQueue.php:402
 msgid "See"
 msgstr "Посмотреть"
 
@@ -464,7 +474,7 @@ msgstr "ВК авторизация."
 #: includes/admin/AnyCommentSocialSettings.php:464
 #: includes/admin/AnyCommentSocialSettings.php:510
 #: includes/admin/AnyCommentSocialSettings.php:556
-#: includes/admin/AnyCommentSocialSettings.php:740
+#: includes/admin/AnyCommentSocialSettings.php:737
 msgid "Callback URL"
 msgstr "Callback URL"
 
@@ -768,12 +778,12 @@ msgstr ""
 "Введите client secret (\"Секрет клиента\"). Можно найти в <a href=\"%s\" "
 "target=\"_blank\">my apps</a> (\"Моих приложениях\")."
 
-#: includes/admin/AnyCommentSocialSettings.php:755
+#: includes/admin/AnyCommentSocialSettings.php:752
 #, php-format
 msgid "How To Set-Up %s"
 msgstr "Как настроить %s"
 
-#: includes/admin/AnyCommentSocialSettings.php:757
+#: includes/admin/AnyCommentSocialSettings.php:754
 msgid "Read"
 msgstr "Читать"
 
@@ -1107,6 +1117,11 @@ msgstr ""
 
 #: includes/rest/AnyCommentRestComment.php:1362
 msgid "The password for the post if it is password protected."
+msgstr ""
+
+#: includes/cron/AnyCommentEmailQueueCron.php:63
+#, php-format
+msgid "Comment on %s"
 msgstr ""
 
 #: templates/admin/dashboard.php:8 templates/admin/tabs.php:4
