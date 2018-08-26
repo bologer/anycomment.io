@@ -56,27 +56,24 @@ class AnyCommentEmailQueueCron {
 		 * @var $email AnyCommentEmailQueue
 		 */
 		foreach ( $emails as $key => $email ) {
-			// todo: can be preselected with query to improve overall performance
-			$post = get_post( $email->post_ID );
 
-			if ( $post !== null ) {
-				$subject = sprintf( __( "Comment on %s", 'anycomment' ), $post->post_title );
-			} else {
-				$subject = __( "Re: New Comment" );
+			if ( empty( $email->email ) ) {
+				AnyCommentEmailQueue::markAsSent( $email->ID );
+				continue;
 			}
 
 			$headers   = [];
 			$headers[] = 'Content-Type: text/html; charset=UTF-8';
 
 			$subject = $email->subject;
-			$body = $email->content;
+			$body    = $email->content;
 
 			/**
 			 * When required to notify new users about replies, them them email,
 			 * otherwise fake it as sent in order not to break the logic of the queue.
 			 */
 			$isSent = AnyCommentGenericSettings::isNotifyOnNewReply() ?
-				wp_mail( $email->notify_email, $subject, $body, $headers ) :
+				wp_mail( $email->email, $subject, $body, $headers ) :
 				true;
 
 			if ( $isSent ) {

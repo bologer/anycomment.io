@@ -190,6 +190,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * When load on scroll is enabled and user from email came to see the reply, he was not moved to the comment, #103
 * When user was logged in via social network, he was redirected back to the top of the post. Now he is being moved to comments section
 * Fixed issue with `trim()` warning near avatars in Dashboard & Comments page in admin
+* Fixed issue when emails about comment reply were not send to guest users (as it was not planned to have guest form). Now we have, so should support it
 
 **Other:**
 

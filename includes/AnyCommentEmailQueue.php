@@ -8,14 +8,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Class AnyCommentEmailQueue keeps data about emails to be send to users.
  *
  * @property int $ID
+ * @property string|null $email
  * @property string $subject
- * @property int|null $user_ID
  * @property int $post_ID
  * @property int $comment_ID
  * @property string $content Content of the email.
  * @property string|null $ip
  * @property string|null $user_agent
- * @property datetime $sent_at
+ * @property bool $is_sent
  * @property datetime $created_at
  *
  * @since 0.0.3
@@ -24,13 +24,12 @@ class AnyCommentEmailQueue {
 
 	public $ID;
 	public $subject;
-	public $user_ID;
 	public $post_ID;
 	public $comment_ID;
 	public $content;
 	public $user_agent;
 	public $ip;
-	public $sent_at = '0000-00-00 00:00:00';
+	public $is_sent = 0;
 	public $created_at;
 
 	/**
@@ -70,44 +69,13 @@ class AnyCommentEmailQueue {
 	}
 
 	/**
-	 * Get fresh comments which were not notified about yet.
-	 *
-	 * @return WC_Comments[]|null WC_Comments[] on success, NULL on failure.
-	 */
-	public static function grabToAdd() {
-
-		$wpdb             = static::db();
-		$commentsTable    = $wpdb->comments;
-		$usersTable       = $wpdb->users;
-		$latestEmailQueue = static::getNewest();
-		$latestDate       = $latestEmailQueue->created_at;
-
-		/**
-		 * Select
-		 * - list of replies to parent comment
-		 * - make sure user has email
-		 * - make sure user did not reply to his own comment
-		 * - and comment date is after the latest reply sent
-		 */
-		$sql = "SELECT `comments`.*, `users`.`ID` AS parent_user_ID FROM `$commentsTable` `comments` 
-INNER JOIN `$commentsTable` `innerComment` ON `innerComment`.`comment_ID` = `comments`.`comment_parent` 
-INNER JOIN `$usersTable` `users` ON `users`.`ID` = `innerComment`.`user_ID` 
-WHERE `comments`.`comment_parent` != 0 AND `users`.`user_email` != '' AND `comments`.`user_ID` != `innerComment`.`user_ID` AND `comments`.`comment_date` > '$latestDate'";
-
-		return $wpdb->get_results( $sql );
-	}
-
-	/**
 	 * Grab emails to be sent.
 	 *
 	 * @return null|AnyCommentEmailQueue[]
 	 */
 	public static function grabRepliesToSend() {
-		$usersTable = static::db()->users;
-		$tableName  = static::tableName();
-		$sql        = "SELECT `emails`.*, `users`.`user_email` AS notify_email FROM `$tableName` `emails` 
-LEFT JOIN `$usersTable` `users` ON `emails`.`user_ID` = `users`.`ID`
-WHERE `emails`.`sent_at` = '0000-00-00 00:00:00'";
+		$tableName = static::tableName();
+		$sql       = "SELECT `emails`.* FROM `$tableName` `emails` WHERE `emails`.`is_sent` = 0";
 
 		return static::db()->get_results( $sql );
 	}
@@ -125,7 +93,7 @@ WHERE `emails`.`sent_at` = '0000-00-00 00:00:00'";
 		}
 
 		$tableName = static::tableName();
-		$query     = static::db()->prepare( "SELECT `id`, `sent_at` FROM `$tableName` WHERE `id`=%d LIMIT 1", [ $email_id ] );
+		$query     = static::db()->prepare( "SELECT `id`, `is_sent` FROM `$tableName` WHERE `id`=%d LIMIT 1", [ $email_id ] );
 
 		/**
 		 * @var $model AnyCommentEmailQueue|null
@@ -136,7 +104,7 @@ WHERE `emails`.`sent_at` = '0000-00-00 00:00:00'";
 			return false;
 		}
 
-		if ( $model->sent_at === '0000-00-00 00:00:00' ) {
+		if ( (int) $model->is_sent === 0 ) {
 			return false;
 		}
 
@@ -161,7 +129,7 @@ WHERE `emails`.`sent_at` = '0000-00-00 00:00:00'";
 			return true;
 		}
 
-		$isUpdated = static::db()->update( static::tableName(), [ 'sent_at' => current_time( 'mysql' ) ], [ 'ID' => $email_id ] );
+		$isUpdated = static::db()->update( static::tableName(), [ 'is_sent' => 1 ], [ 'ID' => $email_id ] );
 
 		return $isUpdated !== false;
 	}
@@ -187,21 +155,28 @@ WHERE `emails`.`sent_at` = '0000-00-00 00:00:00'";
 		$usersTable    = $db->users;
 		$commentsTable = $db->comments;
 
-		$query = "SELECT `comments`.*, `users`.`ID` AS parent_user_ID FROM `$commentsTable` `comments` 
+		// In case when parent comment is left by registered user (social or by WordPress registration)
+		$query = "SELECT `comments`.*, `users`.`user_email` AS `email` FROM `$commentsTable` `comments` 
 LEFT JOIN `$commentsTable` `innerComment` ON `innerComment`.`comment_ID` = `comments`.`comment_parent` 
 LEFT JOIN `$usersTable` `users` ON `users`.`ID` = `innerComment`.`user_ID` 
-WHERE `comments`.`comment_parent` != 0 AND `users`.`user_email` != '' AND `comments`.`user_ID` != `innerComment`.`user_ID` AND `comments`.`comment_ID`=%d";
+WHERE `comments`.`comment_parent` != 0 
+AND `users`.`user_email` != '' 
+AND `comments`.`user_ID` != `innerComment`.`user_ID` 
+AND `comments`.`comment_ID`=%d";
 
 
 		$result = static::db()->get_row( static::db()->prepare( $query, [ $comment->comment_ID ] ) );
 
-		if ( empty( $result ) || ! $result ) {
+		// In case when parent comment is from guest
+		$parentCommentEmail = get_comment_author_email( $comment->comment_parent );
+
+		if ( empty( $result ) && empty( $parentCommentEmail ) ) {
 			return false;
 		}
 
-		$email = new self();
+		$model = new self();
 
-		$post = get_post( $comment->comment_post_ID);
+		$post = get_post( $comment->comment_post_ID );
 
 		if ( $post !== null ) {
 			$subject = sprintf( __( "Re: Comment on %s", 'anycomment' ), $post->post_title );
@@ -209,13 +184,13 @@ WHERE `comments`.`comment_parent` != 0 AND `users`.`user_email` != '' AND `comme
 			$subject = sprintf( __( 'Re: Comment on %s', 'anycomment' ), get_option( 'blogname' ) );
 		}
 
-		$email->subject    = $subject;
-		$email->user_ID    = $result->parent_user_ID;
-		$email->post_ID    = $comment->comment_post_ID;
-		$email->comment_ID = $comment->comment_ID;
-		$email->content    = AnyCommentEmailQueue::generateReplyEmail( $email );
+		$model->subject    = $subject;
+		$model->email      = ! empty( $result ) ? $result->email : $parentCommentEmail;
+		$model->post_ID    = $comment->comment_post_ID;
+		$model->comment_ID = $comment->comment_ID;
+		$model->content    = AnyCommentEmailQueue::generateReplyEmail( $model );
 
-		$isAdded = AnyCommentEmailQueue::add( $email );
+		$isAdded = AnyCommentEmailQueue::add( $model );
 
 		return $isAdded;
 	}
@@ -237,6 +212,11 @@ WHERE `comments`.`comment_parent` != 0 AND `users`.`user_email` != '' AND `comme
 		$commentsTable = $db->comments;
 		$adminEmail    = get_option( 'new_admin_email' );
 
+		$user = get_user_by( 'email', $adminEmail );
+
+		if ( ! $user instanceof WP_User ) {
+			return false;
+		}
 
 		$query = "SELECT `comments`.* FROM `$commentsTable` `comments` 
 LEFT JOIN `$usersTable` `users` ON `users`.`ID` = `comments`.`user_ID` 
@@ -245,13 +225,7 @@ WHERE `users`.`user_email` != %s AND `comments`.`comment_ID`=%d";
 
 		$result = static::db()->get_row( static::db()->prepare( $query, [ $adminEmail, $comment->comment_ID ] ) );
 
-		if ( empty( $result ) || ! $result ) {
-			return false;
-		}
-
-		$user = get_user_by( 'email', $adminEmail );
-
-		if ( ! $user instanceof WP_User ) {
+		if ( empty( $result ) ) {
 			return false;
 		}
 
@@ -265,13 +239,13 @@ WHERE `users`.`user_email` != %s AND `comments`.`comment_ID`=%d";
 			$subject = sprintf( __( 'New Comment on %s', 'anycomment' ), get_option( 'blogname' ) );
 		}
 
+		$email->email      = $adminEmail;
 		$email->subject    = $subject;
-		$email->user_ID    = $user->ID;
 		$email->post_ID    = $comment->comment_post_ID;
 		$email->comment_ID = $comment->comment_ID;
 		$email->content    = AnyCommentEmailQueue::generateAdminEmail( $email );
 
-		$isAdded = AnyCommentEmailQueue::add( $email );
+		$isAdded = AnyCommentEmailQueue::add( $email, 'bool' );
 
 		return $isAdded;
 	}
