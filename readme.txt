@@ -47,6 +47,7 @@ Yes! Join us at [GitHub](https://github.com/bologer/anycomment.io)
 = Features =
 * All comments stored in your own database. We reuse native comment's table, so all of the default WordPress functionality comes out of the box.
 * Social network authorization via Facebook, VK, Twitter, Google, Odnoklassniki, GitHub, Instagram, Twitch or Dribble
+* Ability to define type of form: guests only, with social authorization or both
 * Plugin is translated into English & Russian
 * Suitable for dark & light themes
 * Blazing-fast comments based on React & WordPress REST API
@@ -54,6 +55,8 @@ Yes! Join us at [GitHub](https://github.com/bologer/anycomment.io)
 * Ability to send email on new comment reply
 * Ability to send email notification about new comment to administrator
 * Ability to specify comma-separated list of words to be used to hold comments for moderators
+* Clickable links in comment (control via admin)
+* Image and video URLs as attachment (control via admin)
 * Provide `Privacy Policy` link, so users know how their data processed and used (when not provided, no checkbox will be shown to users)
 * Social avatars shown globally
 * Likes (see likes count per comment/user in admin)
@@ -87,7 +90,7 @@ Yes! Join us at [GitHub](https://github.com/bologer/anycomment.io)
 * More widgets to be added on the page (sidebar, custom pages, etc)
 * Special moderator panel integrated into custom AnyComment pages (for easy comment moderation)
 * More statistics and analytics...
-* And a lot more...
+* [And a lot more...](https://github.com/bologer/anycomment.io/issues)
 
 == Screenshots ==
 
@@ -140,7 +143,7 @@ Possible you are getting "Forbidden" with 403 error code.
 * Connect to your website
 * Open root folder where `wp-content`, `wp-includes` folders
 * Find & open `.htaccess`
-* Add `Require method GET POST PUT DELETE OPTIONS` like after `RewriteRule`
+* Add "Require method GET POST PUT DELETE OPTIONS" on the next line after "RewriteRule"
 * Save & Close
 * Try to delete comment again
 
@@ -166,28 +169,29 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 == Changelog ==
 
-= 0.0.50 – 25.08.2018 =
+= 0.0.50 – 27.08.2018 =
 
 **Enhancements**
 
-* News of plugin in the right sidebar inside console are dispaly per your blog language. For now English and Russian supported
-* Likes are now shown to guest users, however they do not have ability to like. Once likes, plugin will show alert about required to login, #108
-* Removed submenu form main menu, as now all of the submenus can be found from dashboard via tabs
-* Settings tab in in admin are now split into specific configuration tabs: general, design, moderation & notifications
+* News of plugin in the right sidebar inside console are display per your blog language. For now English and Russian supported
+* Likes are now shown to guest users, however they do not have ability to like. When likesd by guest, plugin will show alert about requirement to login, #108
+* Removed submenu form main menu in admin. Now all of the submenus can be found as tabs inside the dashboard
+* "Settings" tab in admin is now split into specific configuration tabs: General, Design, Moderation & Notifications
 * Now possible to specify #comments, #to-comments or #load-comments (e.g. https://yourwebsite.com/cool-post/#comments) to move users screen to comment section
-* Added subject to each type of email (sent to admin and to user as reply email)
-* Added option to make video or image link as attachment, as well as option to make links in comment clickable or not, #87, #83
+* Added proper subject to each type of email (e.g. sent to admin and to user as reply)
+* Added option to make video or image link as attachment, #87
+* Added option to make links in comment clickable or not, #83
 
 **Fixes:**
 
-* Fixed [Facebook guide](https://anycomment.io/en/api-facebook/) & other guides, added information regarding Callback URI, #102
+* Added [Facebook guide](https://anycomment.io/en/api-facebook/) details regarding "Status" & HTTPs requirement & fixed other guides, also added instruction on how and where to find "Callback URI", #102
 * Cosmetic style corrections (fixed height/alignment/decoration of button, make inline guest inputs 100%), #104
 * Fixed issue when link in news sidebar lead to 404 page,  #109
-* Plugin was not showing comment box until enable showing comment was on and at least one social was configured, not this logic is a bit different, as we allow guests, so now only required to enable option to show comment box, #112
+* Plugin was not showing comment box until option to show comment was enabled and at least one social was configured. Now this logic is a bit different (plugin allows guest users), so now only required to enable option to show comment box, #112
 * Some users were confused with dropdowns in the admin, as they did not have any visuals, such as triangle to see that there is a list of options
-* When load on scroll is enabled and user from email came to see the reply, he was not moved to the comment, #103
-* When user was logged in via social network, he was redirected back to the top of the post. Now he is being moved to comments section
-* Fixed issue with `trim()` warning near avatars in Dashboard & Comments page in admin
+* When load on scroll is enabled and user comes from email his screen was not moved directly to the comment, #103
+* When user was logged in via social network, he was redirected back to the top of the post. Now he is being moved to comment section
+* Fixed issue with `trim()` warning (only some users experienced such problem) near avatars in Dashboard & Comments page in admin
 * Fixed issue when emails about comment reply were not send to guest users (as it was not planned to have guest form). Now we have, so should support it
 * Fixed dark theme CSS styles as after recent update of styles they got broken
 
