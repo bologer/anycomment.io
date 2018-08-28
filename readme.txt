@@ -4,7 +4,7 @@ Tags: anycomment, comments, ajax comments, comment, comment moderation, custom c
 Requires at least: 4.7
 Tested up to: 4.9.8
 Requires PHP: 5.4
-Stable tag: 0.0.51
+Stable tag: 0.0.52
 License: GPLv2 or later
 License URI: http://www.gnu.org/
 
@@ -169,6 +169,16 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 == Changelog ==
 
+= 0.0.52 – 28.08.2018 =
+
+**Enhancements:**
+
+* File upload (drag & drop into the comment field or by using file button), image or file will be appended to the comment as URL, #
+
+**Fixes:**
+
+* Fixed links on white theme being colored as for dark theme
+
 = 0.0.51 – 28.08.2018 =
 
 **Enhancements:**
@@ -178,15 +188,13 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Fixed issue when reply user dialog was in dark color in dark theme (invisible), #114
 * Fixed issue when guest inputs (name, email, website) were white in dark theme
 
-
-
 = 0.0.50 – 27.08.2018 =
 
 **Enhancements**
 
 * News of plugin in the right sidebar inside console are display per your blog language. For now English and Russian supported
 * Likes are now shown to guest users, however they do not have ability to like. When liked by guest, plugin will show alert about requirement to login, #108
-* Removed submenu form main menu in admin. Now all of the submenus can be found as tabs inside the dashboard
+* Removed submenu from main menu in admin. Now all of the submenus can be found as tabs inside the dashboard
 * "Settings" tab in admin is now split into specific configuration tabs: General, Design, Moderation & Notifications
 * Now possible to specify #comments, #to-comments or #load-comments (e.g. https://yourwebsite.com/cool-post/#comments) to move users screen to comment section
 * Added proper subject to each type of email (e.g. sent to admin and to user as reply)

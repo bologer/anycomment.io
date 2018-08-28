@@ -13,13 +13,12 @@ $attachment-background-color: #eee;
 $input-background-color: #3f3f3f;
 
 #anycomment-root {
-
-  label,
-  a {
-    color: $semi-hidden-color;
-  }
-
   .anycomment-dark {
+    label,
+    a {
+      color: $semi-hidden-color;
+    }
+
     .anycomment-send-comment {
       &-supheader {
         &__count {

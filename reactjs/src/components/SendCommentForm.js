@@ -179,7 +179,7 @@ class SendCommentForm extends AnyCommentComponent {
             <div className="anycomment anycomment-send-comment-body">
                 <form onSubmit={this.handleSubmit}>
 
-                    <SendCommentFormBody {...this.props} handleContentChange={this.handleContentChange}/>
+                    <SendCommentFormBody {...this.props} handleContentChange={this.handleContentChange} changeCommenText={this.props.onCommentTextChange}/>
 
                     {this.isGuest() ?
                         <SendCommentGuest {...this.props} handleAgreement={this.handleAgreement}

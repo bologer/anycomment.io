@@ -3,7 +3,7 @@
  * Plugin Name: AnyComment
  * Plugin URI: https://anycomment.io
  * Description: AnyComment is an advanced commenting system for WordPress.
- * Version: 0.0.51
+ * Version: 0.0.52
  * Author: Bologer
  * Author URI: http://bologer.ru
  * Requires at least: 4.4
@@ -32,7 +32,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 		 *
 		 * @var string
 		 */
-		public $version = '0.0.51';
+		public $version = '0.0.52';
 
 		/**
 		 * Instance of render class.
@@ -242,6 +242,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			include_once( ANYCOMMENT_ABSPATH . 'includes/rest/AnyCommentRestLikeMeta.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/rest/AnyCommentRestLikes.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/rest/AnyCommentRestUsers.php' );
+			include_once( ANYCOMMENT_ABSPATH . 'includes/rest/AnyCommentRestDocuments.php' );
 
 			/**
 			 * Generic
@@ -290,6 +291,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			$this->rest = new AnyCommentRestComment();
 			new AnyCommentRestLikes();
 			new AnyCommentRestUsers();
+			new AnyCommentRestDocuments();
 			new AnyCommentWPComments();
 			new AnyCommentAvatars();
 
