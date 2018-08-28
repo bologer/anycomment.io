@@ -4,7 +4,7 @@ Tags: anycomment, comments, ajax comments, comment, comment moderation, custom c
 Requires at least: 4.7
 Tested up to: 4.9.8
 Requires PHP: 5.4
-Stable tag: 0.0.50
+Stable tag: 0.0.51
 License: GPLv2 or later
 License URI: http://www.gnu.org/
 
@@ -168,6 +168,17 @@ Most of the hosting providers support single button-like installation of SSL cer
 It could only be difficult for website who have HTTP only and hight traffic as transfer to HTTPs can cause some traffic lose.
 
 == Changelog ==
+
+= 0.0.51 – 28.08.2018 =
+
+**Enhancements:**
+
+**Fixes:**
+
+* Fixed issue when reply user dialog was in dark color in dark theme (invisible), #114
+* Fixed issue when guest inputs (name, email, website) were white in dark theme
+
+
 
 = 0.0.50 – 27.08.2018 =
 
