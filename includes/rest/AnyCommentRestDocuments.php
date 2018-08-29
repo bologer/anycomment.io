@@ -29,6 +29,10 @@ class AnyCommentRestDocuments extends AnyCommentRestController {
 				'args'                => $this->get_endpoint_args_for_item_schema( WP_REST_Server::CREATABLE ),
 			],
 			'args'   => [
+				'post' => [
+					'description' => __( "Post ID", 'anycomment' ),
+					'type'        => 'int'
+				],
 				'name' => [
 					'description' => __( 'File name', 'anycomment' ),
 					'type'        => 'string'
@@ -55,39 +59,33 @@ class AnyCommentRestDocuments extends AnyCommentRestController {
 	 */
 	public function create_item_permissions_check( $request ) {
 
-//		if ( ! is_user_logged_in() ) {
-//			return new WP_Error( 'rest_comment_like_login_required', __( 'Login to like comment', 'anycomment' ), [ 'status' => 403 ] );
-//		}
-//
-//		if ( empty( $request['post'] ) ) {
-//			return new WP_Error( 'rest_comment_like_invalid_post_id', __( 'Sorry, post does not exist.', 'anycomment' ), array( 'status' => 403 ) );
-//		}
-//
-//		if ( empty( $request['comment'] ) ) {
-//			return new WP_Error( 'rest_comment_like_invalid_post_id', __( 'Sorry, comment that you liked does not exist.', 'anycomment' ), array( 'status' => 403 ) );
-//		}
-//
-//		$commentId = (int) $request['comment'];
-//
-//		$comment = get_comment( $commentId );
-//
-//		if ( ! $comment ) {
-//			return new WP_Error( 'rest_comment_like_invalid_post_id', __( 'Sorry, comment that you liked does not exist.', 'anycomment' ), array( 'status' => 403 ) );
-//		}
-//
-//		$post = get_post( (int) $request['post'] );
-//
-//		if ( ! $post ) {
-//			return new WP_Error( 'rest_comment_like_invalid_post_id', __( 'Sorry, post does not exist.', 'anycomment' ), array( 'status' => 403 ) );
-//		}
-//
-//		if ( 'draft' === $post->post_status ) {
-//			return new WP_Error( 'rest_comment_like_draft_post', __( 'Sorry, you are not allowed to create a comment on this post.', 'anycomment' ), array( 'status' => 403 ) );
-//		}
-//
-//		if ( 'trash' === $post->post_status ) {
-//			return new WP_Error( 'rest_comment_like_trash_post', __( 'Sorry, you are not allowed to create a comment on this post.', 'anycomment' ), array( 'status' => 403 ) );
-//		}
+		$files = $request->get_file_params();
+
+		if ( empty( $files ) ) {
+			return new WP_Error( 'rest_missing_file_data', __( 'Missing file data', 'anycomment' ), [ 'status' => 403 ] );
+		}
+
+		if ( empty( $request['post'] ) ) {
+			return new WP_Error( 'rest_comment_like_invalid_post_id', __( 'Sorry, post does not exist.', 'anycomment' ), array( 'status' => 403 ) );
+		}
+
+		$post = get_post( (int) $request['post'] );
+
+		if ( ! $post ) {
+			return new WP_Error( 'rest_comment_like_invalid_post_id', __( 'Sorry, post does not exist.', 'anycomment' ), array( 'status' => 403 ) );
+		}
+
+		if ( 'draft' === $post->post_status ) {
+			return new WP_Error( 'rest_comment_like_draft_post', __( 'Sorry, you are not allowed to create a comment on this post.', 'anycomment' ), array( 'status' => 403 ) );
+		}
+
+		if ( 'trash' === $post->post_status ) {
+			return new WP_Error( 'rest_comment_like_trash_post', __( 'Sorry, you are not allowed to create a comment on this post.', 'anycomment' ), array( 'status' => 403 ) );
+		}
+
+		if ( AnyCommentUploadedFiles::isOverLimitByIp() ) {
+			return new WP_Error( 'rest_comment_over_limit', __( 'Sorry, you have reached upload limit. Wait a little bit before uploading again.', 'anycomment' ), array( 'status' => 403 ) );
+		}
 
 		return true;
 	}
@@ -104,30 +102,43 @@ class AnyCommentRestDocuments extends AnyCommentRestController {
 	 */
 	public function create_item( $request ) {
 
-		$files = $_FILES;
-
-		if ( empty( $files ) ) {
-			return new WP_Error( 'rest_missing_file_data', __( 'Missing file data', 'anycomment' ), [ 'status' => 403 ] );
-		}
-
 		if ( ! function_exists( 'wp_handle_upload' ) ) {
 			require_once( ABSPATH . 'wp-admin/includes/file.php' );
 		}
 
-		$uploadedUrls = [];
+		$files         = $request->get_file_params();
+		$uploaded_urls = [];
 
 		foreach ( $files as $key => $file ) {
-			$fileExtension = strtolower( trim( end( explode( '.', $file['name'] ) ) ) );
-			$file['name']  = sprintf( '%s.%s', md5( serialize( $file ) ), $fileExtension );
+			$file_extension = strtolower( trim( end( explode( '.', $file['name'] ) ) ) );
+			$file['name']   = sprintf( '%s.%s', md5( serialize( $file ) ), $file_extension );
 
-			$movedFile = wp_handle_upload( $file, [ 'test_form' => false ] );
+			$moved_file = wp_handle_upload( $file, [ 'test_form' => false ] );
 
-			if ( $movedFile && ! isset( $movedFile['error'] ) ) {
-				$uploadedUrls[] = $movedFile['url'];
+			if ( $moved_file && ! isset( $moved_file['error'] ) ) {
+				$uploaded_urls[] = $moved_file['url'];
 			}
 		}
 
-		$response = $this->prepare_item_for_response( $uploadedUrls, $request );
+		if ( ! empty( $uploaded_urls ) ) {
+			foreach ( $uploaded_urls as $key => $uploaded_url ) {
+				$model          = new AnyCommentUploadedFiles();
+				$model->post_ID = $request['post'];
+
+				if ( ( $user = wp_get_current_user() ) !== null ) {
+					$model->user_ID = $user->ID;
+				}
+				$model->url = $uploaded_url;
+
+				if ( ! $model->save() ) {
+					$path      = parse_url( $uploaded_url, PHP_URL_PASS );
+					$full_path = get_home_path() . $path;
+					wp_delete_file( $full_path );
+				}
+			}
+		}
+
+		$response = $this->prepare_item_for_response( $uploaded_urls, $request );
 		$response = rest_ensure_response( $response );
 
 		$response->set_status( 201 );

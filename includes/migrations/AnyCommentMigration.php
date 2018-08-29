@@ -29,6 +29,10 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 			'version'     => '0.0.50',
 			'description' => 'Added "subject", "email" columns and modified "sent_at" to be NULL by default in "email_queue" table'
 		],
+		'0.0.52' => [
+			'version'     => '0.0.52',
+			'description' => 'Create "uploaded_files" table to store log history of all uploaded files'
+		],
 	];
 
 	/**

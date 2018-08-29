@@ -13,7 +13,6 @@ class SendCommentFormBody extends AnyCommentComponent {
         super();
 
         this.state = {
-            files: [],
             urls: [],
             dropzoneActive: false
         };
@@ -47,10 +46,16 @@ class SendCommentFormBody extends AnyCommentComponent {
             files.slice(0, fileLimit);
         }
 
+        this.setState({
+            dropzoneActive: false
+        });
+
         const data = new FormData();
         files.map((file, i) => {
             data.append(i, file, file.name);
         });
+
+        data.append('post', settings.postId);
 
         self.props.axios
             .post('/documents',
@@ -63,8 +68,8 @@ class SendCommentFormBody extends AnyCommentComponent {
                     timeout: 30000,
                 })
             .then(function (response) {
-                self.setState({urls: response.urls});
-                self.addImageLinks();
+                self.setState({urls: response.data.urls});
+                self.addImageLinks(response.data.urls);
                 console.log(response);
                 toast.success('Uploaded!');
             })
@@ -72,21 +77,21 @@ class SendCommentFormBody extends AnyCommentComponent {
                 self.showError(error);
             });
 
-        this.setState({
-            files,
-            dropzoneActive: false
-        });
+
     }
 
-    addImageLinks() {
-        if (!this.state.urls) {
+    addImageLinks(links) {
+        if (!links) {
             return false;
         }
 
         let text = '';
-        this.state.urls.map((url, i) => {
+        links.map((url, i) => {
             text += url + ' ';
         });
+
+        console.log(links);
+        console.log(text);
 
         this.props.changeCommenText(text);
     }
@@ -121,16 +126,7 @@ class SendCommentFormBody extends AnyCommentComponent {
                           onChange={this.props.handleContentChange}
                           ref={this.props.commentFieldRef}
                 ></textarea>
-
             </div>
-
-            {/*<div className="anycomment anycomment-send-comment-attachments">*/}
-                {/*<ul>*/}
-                    {/*{*/}
-                        {/*urls.map(f => <li><img src={f.preview}/> {f.name} - {f.size} bytes</li>)*/}
-                    {/*}*/}
-                {/*</ul>*/}
-            {/*</div>*/}
         </Dropzone>
     }
 }
