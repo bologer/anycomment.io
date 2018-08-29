@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @property string|null $url
  * @property string|null $ip
  * @property string|null $user_agent
- * @property datetime $created_at
+ * @property int $created_at
  *
  * @since 0.0.3
  */
@@ -79,12 +79,13 @@ class AnyCommentUploadedFiles {
 			$ip = $_SERVER["REMOTE_ADDR"];
 		}
 
-		$interval = 2;
-		$limit = 2;
+		$minutes     = 10;
+		$intervalTime = strtotime( "-{$minutes} minutes" );
+		$limit        = 2;
 
 		$table_name = static::tableName();
-		$sql        = "SELECT COUNT(*) FROM $table_name WHERE `ip`=%s AND `created_at` > NOW() - INTERVAL %d MINUTE";
-		$count      = $wpdb->get_var( $wpdb->prepare( $sql, [ $ip, $interval ] ) );
+		$sql        = "SELECT COUNT(*) FROM $table_name WHERE `ip`=%s AND `created_at` >= %d";
+		$count      = $wpdb->get_var( $wpdb->prepare( $sql, [ $ip, $intervalTime ] ) );
 
 		if ( $count === null ) {
 			return 0;
@@ -110,7 +111,7 @@ class AnyCommentUploadedFiles {
 		}
 
 		if ( ! isset( $this->created_at ) ) {
-			$this->created_at = current_time( 'mysql' );
+			$this->created_at = time();
 		}
 
 		global $wpdb;

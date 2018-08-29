@@ -32,7 +32,10 @@ class AnyCommentMigration_0_0_52 extends AnyCommentMigration {
   `ip` varchar(255) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
   `url` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `user_agent` varchar(255) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
-  `created_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
+  `created_at` bigint(20) NOT NULL,
+  INDEX post_ID (`post_ID`),
+  INDEX user_ID (`user_ID`),
+  INDEX ip_created_at (`ip`, `created_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;";
 
 		return $wpdb->query( $sql ) !== false;
