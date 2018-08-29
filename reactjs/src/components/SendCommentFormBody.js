@@ -96,13 +96,9 @@ class SendCommentFormBody extends AnyCommentComponent {
         this.props.changeCommenText(text);
     }
 
-    componentDidMount() {
-        this.addImageLinks();
-    }
-
     render() {
         const translations = this.props.settings.i18;
-        const {urls, dropzoneActive} = this.state;
+        const {dropzoneActive} = this.state;
 
         return <Dropzone
             disableClick

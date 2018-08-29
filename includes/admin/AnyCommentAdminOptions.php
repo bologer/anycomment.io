@@ -374,17 +374,12 @@ if ( ! class_exists( 'AnyCommentAdminOptions' ) ) :
 				$this->options = get_option( $this->option_name, null );
 			}
 
-			/**
-			 * When first, there are no options at all, and then users sets it,
-			 * but before he sets it, need to set the default ones, if they aren't empty.
-			 */
-			if ( $this->options === null && ! empty( $this->default_options ) ) {
-				foreach ( $this->default_options as $key => $optionValue ) {
-					$setDefault = ! isset( $this->options[ $key ] ) && ! strpos( $key, 'toggle' ) ||
-					              isset( $this->options[ $key ] ) && empty( $this->options[ $key ] );
-					if ( $setDefault ) {
-						$this->options[ $key ] = $optionValue;
-					}
+
+			foreach ( $this->default_options as $key => $optionValue ) {
+				$setDefault = ! isset( $this->options[ $key ] ) && ! strpos( $key, 'toggle' ) ||
+				              isset( $this->options[ $key ] ) && empty( $this->options[ $key ] );
+				if ( $setDefault ) {
+					$this->options[ $key ] = $optionValue;
 				}
 			}
 

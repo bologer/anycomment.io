@@ -121,6 +121,16 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 */
 		const FORM_OPTION_ALL = 'form_option_all';
 
+
+		/**
+		 * FILES UPLOAD
+		 */
+		const OPTION_FILES_GUEST_CAN_UPLOAD = 'options_files_guest_can_upload';
+		const OPTION_FILES_MIME_TYPES = 'options_files_mime_types';
+		const OPTION_FILES_LIMIT = 'options_files_limit';
+		const OPTION_FILES_LIMIT_PERIOD = 'options_files_limit_period';
+		const OPTION_FILES_MAX_SIZE = 'options_files_max_size';
+
 		/**
 		 * THEMES
 		 */
@@ -166,7 +176,11 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 			self::OPTION_COPYRIGHT_TOGGLE        => 'on',
 			self::OPTION_COUNT_PER_PAGE          => 20,
 			self::OPTION_INTERVAL_COMMENTS_CHECK => 10,
-			self::OPTION_FORM_TYPE               => self::FORM_OPTION_SOCIALS_ONLY
+			self::OPTION_FORM_TYPE               => self::FORM_OPTION_SOCIALS_ONLY,
+
+			self::OPTION_FILES_LIMIT        => 5,
+			self::OPTION_FILES_LIMIT_PERIOD => 300,
+			self::OPTION_FILES_MAX_SIZE     => 1.5
 		];
 
 
@@ -228,6 +242,13 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 			add_settings_section(
 				'section_notifications',
 				__( 'Notifications', "anycomment" ),
+				null,
+				$this->page_slug
+			);
+
+			add_settings_section(
+				'section_files',
+				__( 'Files', "anycomment" ),
 				null,
 				$this->page_slug
 			);
@@ -389,6 +410,43 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'title'       => __( 'Email Notifications', "anycomment" ),
 						'callback'    => 'input_checkbox',
 						'description' => esc_html( __( 'Notify users by email (if specified) about new replies. Make sure you have proper SMTP configurations in order to send emails.', "anycomment" ) )
+					],
+				]
+			);
+
+			$this->render_fields(
+				$this->page_slug,
+				'section_files',
+				[
+					[
+						'id'          => self::OPTION_FILES_GUEST_CAN_UPLOAD,
+						'title'       => __( 'File Upload By Guests', "anycomment" ),
+						'callback'    => 'input_checkbox',
+						'description' => esc_html( __( 'Guest users can upload documents. Please be careful about this setting as some users may potentially misuse this and periodically upload unwanted files.', "anycomment" ) )
+					],
+					[
+						'id'          => self::OPTION_FILES_MIME_TYPES,
+						'title'       => __( 'File MIME Types', "anycomment" ),
+						'callback'    => 'input_text',
+						'description' => esc_html( __( 'Allowed MIME types (e.g. .png, .jpg, etc). Alternatively, you may write "image/*" for all image types or "audio/*" for audios.', "anycomment" ) )
+					],
+					[
+						'id'          => self::OPTION_FILES_LIMIT,
+						'title'       => __( 'File Upload Limit', "anycomment" ),
+						'callback'    => 'input_number',
+						'description' => esc_html( __( 'Maximum number of files to upload per period defined in the field below.', "anycomment" ) )
+					],
+					[
+						'id'          => self::OPTION_FILES_LIMIT_PERIOD,
+						'title'       => __( 'File Upload Limit Period', "anycomment" ),
+						'callback'    => 'input_number',
+						'description' => esc_html( __( 'If user will cross the limit (defined above) within specified period here he will not be able to upload and receive a warning.', "anycomment" ) )
+					],
+					[
+						'id'          => self::OPTION_FILES_MAX_SIZE,
+						'title'       => __( 'File Size', "anycomment" ),
+						'callback'    => 'input_number',
+						'description' => esc_html( __( 'Maximum allowed file size in megabytes. For example, regular PNG image is about ~ 1.5-2MB, JPEG are even smaller.', "anycomment" ) )
 					],
 				]
 			);

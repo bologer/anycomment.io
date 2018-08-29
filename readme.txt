@@ -173,11 +173,17 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Enhancements:**
 
-* File upload (drag & drop into the comment field or by using file button), image or file will be appended to the comment as URL, #
+* Files: attach files as drag & drop image, #68
+* Files: attach files via regular file input (for those who do not know about drag & drop), #68
+* Files: after successful upload file URL will be added to comment text, #68
+* Files: option to define allowed MIME types (e.g. .jpg, .png) or even image/* for all images and audio/* for audios, #68
+
+TBD
 
 **Fixes:**
 
 * Fixed links on white theme being colored as for dark theme
+* Fixed default options overwrite, before default values were not applied
 
 = 0.0.51 – 28.08.2018 =
 
