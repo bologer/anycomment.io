@@ -62,16 +62,33 @@ class AnyCommentComponent extends React.Component {
      * @param options
      * @returns {boolean}
      */
-    showError(data, options = null) {
+    showError(data, options = null, toastId = null) {
         if (!data) {
             return false;
         }
 
+        let message = '';
+
         if ('response' in data && 'data' in data.response) {
-            toast.error(data.response.data.message, options);
+            message = data.response.data.message;
         } else {
-            toast.error(data, options);
+            message = data;
         }
+
+        if (toastId !== null) {
+            if (!('render' in options)) {
+                options.render = message;
+            }
+
+            if (!('type' in options)) {
+                options.type = toast.TYPE.ERROR;
+            }
+
+            toast.update(toastId, options);
+            return;
+        }
+
+        toast.error(message, options);
     }
 
     /**

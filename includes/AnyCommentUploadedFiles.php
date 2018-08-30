@@ -79,9 +79,9 @@ class AnyCommentUploadedFiles {
 			$ip = $_SERVER["REMOTE_ADDR"];
 		}
 
-		$minutes     = 10;
-		$intervalTime = strtotime( "-{$minutes} minutes" );
-		$limit        = 2;
+		$seconds      = AnyCommentGenericSettings::getFileUploadLimit();
+		$intervalTime = strtotime( "-{$seconds} seconds" );
+		$limit        = AnyCommentGenericSettings::getFileLimit();
 
 		$table_name = static::tableName();
 		$sql        = "SELECT COUNT(*) FROM $table_name WHERE `ip`=%s AND `created_at` >= %d";

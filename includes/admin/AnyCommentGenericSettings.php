@@ -441,7 +441,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'id'          => self::OPTION_FILES_LIMIT_PERIOD,
 						'title'       => __( 'File Upload Limit Period', "anycomment" ),
 						'callback'    => 'input_number',
-						'description' => esc_html( __( 'If user will cross the limit (defined above) within specified period here he will not be able to upload and receive a warning.', "anycomment" ) )
+						'description' => esc_html( __( 'If user will cross the limit (defined above) within specified period (in seconds) in this field, he will be give a warning.', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_FILES_MAX_SIZE,
@@ -628,7 +628,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		}
 
 		/**
-		 * Get file upload period limit.
+		 * Get file upload period limit in seconds.
 		 *
 		 * @return int|null
 		 */

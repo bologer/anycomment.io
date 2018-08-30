@@ -13,7 +13,6 @@ class SendCommentFormBody extends AnyCommentComponent {
         super();
 
         this.state = {
-            urls: [],
             dropzoneActive: false
         };
 
@@ -35,51 +34,81 @@ class SendCommentFormBody extends AnyCommentComponent {
         });
     }
 
+    /**
+     * On files drop.
+     * @param files
+     */
     onDrop(files) {
-        const self = this,
-            {settings, options} = this.props.settings;
+        this.processFiles(files);
+    }
 
-        if (files.length > fileLimit) {
-            toast.error("Please choose 5 or less files");
-            files.slice(0, settings.fileLimit);
+    /**
+     * Process dropped files.
+     * @param files
+     */
+    processFiles(files) {
+        const settings = this.getSettings(),
+            options = settings.options;
+
+        if (!files || files.length === 0) {
+            toast.error(settings.i18.file_not_selected_or_extension)
+            return false;
+        }
+
+        if (files.length > options.fileLimit) {
+            toast.error(settings.i18.file_limit);
+            files.slice(0, options.fileLimit);
         }
 
         this.setState({
             dropzoneActive: false
         });
 
-        const data = new FormData();
+        const filesToUpload = new FormData();
         files.map((file, i) => {
-            if ((file.size / 1000) > options.fileMaxSize) {
-                files.splice(i, 1);
-                return true;
-            }
-            data.append(i, file, file.name);
+            filesToUpload.append(i, file, file.name);
         });
 
-        data.append('post', settings.postId);
+        filesToUpload.append('post', settings.postId);
+
+        this.uploadFiles(filesToUpload);
+    }
+
+    /**
+     * Upload files to server.
+     *
+     * @param filesToUpload
+     */
+    uploadFiles(filesToUpload) {
+        const self = this,
+            settings = this.getSettings();
+
+        const toastId = toast(settings.i18.file_upload_in_progress, {autoClose: false});
 
         self.props.axios
             .post('/documents',
-                data,
+                filesToUpload,
                 {
                     headers: {
                         'X-WP-Nonce': settings.nonce,
-                        'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
+                        'Content-Type': `multipart/form-data; boundary=${filesToUpload._boundary}`,
                     },
                     timeout: 30000,
                 })
             .then(function (response) {
-                self.setState({urls: response.data.urls});
                 self.addImageLinks(response.data.urls);
-                console.log(response);
-                toast.success('Uploaded!');
+                toast.update(toastId, {
+                    render: settings.i18.file_uploaded,
+                    type: toast.TYPE.SUCCESS,
+                    autoClose: 1500,
+                    className: 'rotateY animated'
+                });
             })
             .catch(function (error) {
-                self.showError(error);
+                self.showError(error, {
+                    autoClose: 1500
+                }, toastId);
             });
-
-
     }
 
     addImageLinks(links) {
@@ -99,12 +128,16 @@ class SendCommentFormBody extends AnyCommentComponent {
     }
 
     render() {
-        const {settings, options} = this.props.settings;
+        const settings = this.getSettings();
+        const options = settings.options;
         const {dropzoneActive} = this.state;
+
+        console.log(options.fileMimeTypes);
 
         return <Dropzone
             disableClick
             style={{position: "relative"}}
+            maxSize={options.fileMaxSize * 1000000}
             accept={options.fileMimeTypes}
             onDrop={this.onDrop.bind(this)}
             onDragEnter={this.onDragEnter.bind(this)}
