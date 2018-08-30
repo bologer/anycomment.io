@@ -374,12 +374,13 @@ if ( ! class_exists( 'AnyCommentAdminOptions' ) ) :
 				$this->options = get_option( $this->option_name, null );
 			}
 
-
-			foreach ( $this->default_options as $key => $optionValue ) {
-				$setDefault = ! isset( $this->options[ $key ] ) && ! strpos( $key, 'toggle' ) ||
-				              isset( $this->options[ $key ] ) && empty( $this->options[ $key ] );
-				if ( $setDefault ) {
-					$this->options[ $key ] = $optionValue;
+			if ( ! empty( $this->default_options ) ) {
+				foreach ( $this->default_options as $key => $optionValue ) {
+					$setDefault = ! isset( $this->options[ $key ] ) && ! strpos( $key, 'toggle' ) ||
+					              isset( $this->options[ $key ] ) && empty( $this->options[ $key ] );
+					if ( $setDefault ) {
+						$this->options[ $key ] = $optionValue;
+					}
 				}
 			}
 
