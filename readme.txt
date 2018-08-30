@@ -177,6 +177,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Files: attach files via regular file input (for those who do not know about drag & drop), #68
 * Files: after successful upload file URL will be added to comment text, #68
 * Files: option to define allowed MIME types (e.g. .jpg, .png) or even image/* for all images and audio/* for audios, #68
+* When user user to logout native WordPress logout link, now he is going to be redirected back to post, instead of login page, #122
 
 TBD
 
@@ -184,6 +185,7 @@ TBD
 
 * Fixed links on white theme being colored as for dark theme
 * Fixed default options overwrite, before default values were not applied
+* Fixed missing Russian translation when user is guest and only has option to authorize using social
 
 = 0.0.51 – 28.08.2018 =
 

@@ -180,7 +180,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 
 			self::OPTION_FILES_LIMIT        => 5,
 			self::OPTION_FILES_LIMIT_PERIOD => 300,
-			self::OPTION_FILES_MAX_SIZE     => 1.5
+			self::OPTION_FILES_MAX_SIZE     => 1.5,
+			self::OPTION_FILES_MIME_TYPES   => 'image/*, .pdf',
 		];
 
 
@@ -597,6 +598,53 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		public static function getModerateWords() {
 			return static::instance()->getOption( self::OPTION_MODERATE_WORDS );
 		}
+
+
+		/**
+		 * Check whether guests uses can upload files.
+		 *
+		 * @return bool
+		 */
+		public static function isGuestCanUpload() {
+			return static::instance()->getOption( self::OPTION_FILES_GUEST_CAN_UPLOAD );
+		}
+
+		/**
+		 * Get file max size.
+		 *
+		 * @return float|null
+		 */
+		public static function getFileMaxSize() {
+			return static::instance()->getOption( self::OPTION_FILES_MAX_SIZE );
+		}
+
+		/**
+		 * Get file upload limit.
+		 *
+		 * @return float|null
+		 */
+		public static function getFileLimit() {
+			return static::instance()->getOption( self::OPTION_FILES_LIMIT );
+		}
+
+		/**
+		 * Get file upload period limit.
+		 *
+		 * @return int|null
+		 */
+		public static function getFileUploadLimit() {
+			return static::instance()->getOption( self::OPTION_FILES_LIMIT_PERIOD );
+		}
+
+		/**
+		 * Get allowed file MIME types.
+		 *
+		 * @return string|null
+		 */
+		public static function getFileMimeTypes() {
+			return static::instance()->getOption( self::OPTION_FILES_MIME_TYPES );
+		}
+
 
 		/**
 		 * Get interval in seconds per each check for new comments.

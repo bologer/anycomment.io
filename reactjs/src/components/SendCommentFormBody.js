@@ -36,14 +36,12 @@ class SendCommentFormBody extends AnyCommentComponent {
     }
 
     onDrop(files) {
-
         const self = this,
-            settings = this.getSettings(),
-            fileLimit = 5;
+            {settings, options} = this.props.settings;
 
         if (files.length > fileLimit) {
             toast.error("Please choose 5 or less files");
-            files.slice(0, fileLimit);
+            files.slice(0, settings.fileLimit);
         }
 
         this.setState({
@@ -52,6 +50,10 @@ class SendCommentFormBody extends AnyCommentComponent {
 
         const data = new FormData();
         files.map((file, i) => {
+            if ((file.size / 1000) > options.fileMaxSize) {
+                files.splice(i, 1);
+                return true;
+            }
             data.append(i, file, file.name);
         });
 
@@ -97,13 +99,13 @@ class SendCommentFormBody extends AnyCommentComponent {
     }
 
     render() {
-        const translations = this.props.settings.i18;
+        const {settings, options} = this.props.settings;
         const {dropzoneActive} = this.state;
 
         return <Dropzone
             disableClick
             style={{position: "relative"}}
-            accept={'image/jpeg, image/png'}
+            accept={options.fileMimeTypes}
             onDrop={this.onDrop.bind(this)}
             onDragEnter={this.onDragEnter.bind(this)}
             onDragLeave={this.onDragLeave.bind(this)}>
@@ -118,7 +120,7 @@ class SendCommentFormBody extends AnyCommentComponent {
                           value={this.props.commentText}
                           required="required"
                           className="anycomment anycomment-send-comment-body-outliner__textfield"
-                          placeholder={translations.add_comment}
+                          placeholder={settings.i18.add_comment}
                           onChange={this.props.handleContentChange}
                           ref={this.props.commentFieldRef}
                 ></textarea>

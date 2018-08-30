@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-08-29 20:27+0000\n"
-"PO-Revision-Date: 2018-08-29 20:32+0000\n"
+"PO-Revision-Date: 2018-08-30 05:08+0000\n"
 "Last-Translator: admin <sasha.tesh@gmail.com>\n"
 "Language-Team: Русский\n"
 "Language: ru_RU\n"
@@ -1021,6 +1021,8 @@ msgstr "Комментарий не может быть пустым."
 #: includes/rest/AnyCommentRestComment.php:528
 msgid "Please use any of the available social networks to leave a comment"
 msgstr ""
+"Пожалуйста используйте любую из предложенных социальный сетей, чтобы "
+"оставить комментарий"
 
 #: includes/rest/AnyCommentRestComment.php:542
 msgid "Name is required."

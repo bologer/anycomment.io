@@ -33,6 +33,33 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 
 				add_shortcode( 'anycomment', [ $this, 'override_comment' ] );
 			}
+
+			add_filter( 'logout_url', [ $this, 'logout_redirect' ], 10, 2 );
+		}
+
+		/**
+		 * Custom logout URL to redirect user back to post on logout.
+		 *
+		 * @param string $logout_url Generated logout URL by WordPress.
+		 * @param string|null $redirect Redirect URL.
+		 *
+		 * @since 0.0.52
+		 *
+		 * @return string
+		 */
+		function logout_redirect( $logout_url, $redirect ) {
+			$permaLink = get_permalink();
+			if ( $permaLink !== false && is_singular() ) {
+				$query = parse_url( $logout_url, PHP_URL_QUERY );
+
+				$hashedPermalink = sprintf( '%s#%s', $permaLink, 'comments' );
+
+				if ( $permaLink ) {
+					$logout_url .= sprintf( '%sredirect_to=%s', ( $query ? '&' : '?' ), $hashedPermalink );
+				}
+			}
+
+			return $logout_url;
 		}
 
 		/**
@@ -76,6 +103,11 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 					'isFormTypeAll'          => AnyCommentGenericSettings::isFormTypeAll(),
 					'isFormTypeGuests'       => AnyCommentGenericSettings::isFormTypeGuests(),
 					'isFormTypeSocials'      => AnyCommentGenericSettings::isFormTypeSocials(),
+					'isGuestCanUpload'       => AnyCommentGenericSettings::isGuestCanUpload(),
+					'fileMimeTypes'          => AnyCommentGenericSettings::getFileMimeTypes(),
+					'fileLimit'              => AnyCommentGenericSettings::getFileLimit(),
+					'fileMaxSize'            => AnyCommentGenericSettings::getFileMaxSize(),
+					'fileUploadLimit'        => AnyCommentGenericSettings::getFileUploadLimit(),
 				],
 				'user'         => AnyCommentUser::getSafeUser(),
 				'i18'          => [
@@ -107,6 +139,8 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 						AnyCommentGenericSettings::getUserAgreementLink(),
 						' target="_blank" rel="noopener noreferrer" '
 					),
+					'file_too_big'          => __( "File %s is too big", 'anycomment' ),
+					'file_limit'            => sprintf( __( "Only %s file(s) allowed to be uploaded", 'anycomment' ), AnyCommentGenericSettings::OPTION_FILES_LIMIT ),
 				]
 			] );
 
