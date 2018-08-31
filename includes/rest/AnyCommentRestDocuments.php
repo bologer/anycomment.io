@@ -58,11 +58,8 @@ class AnyCommentRestDocuments extends AnyCommentRestController {
 	 * {@inheritdoc}
 	 */
 	public function create_item_permissions_check( $request ) {
-
-		$files = $request->get_file_params();
-
-		if ( empty( $files ) ) {
-			return new WP_Error( 'rest_missing_file_data', __( 'Missing file data', 'anycomment' ), [ 'status' => 403 ] );
+		if ( ! is_user_logged_in() && ! AnyCommentGenericSettings::isGuestCanUpload() ) {
+			return new WP_Error( 'rest_guest_unable_to_uplaod', __( 'Sorry, guest users cannot upload files', 'anycomment' ), [ 'status' => 403 ] );
 		}
 
 		if ( empty( $request['post'] ) ) {
@@ -102,16 +99,38 @@ class AnyCommentRestDocuments extends AnyCommentRestController {
 	 */
 	public function create_item( $request ) {
 
+		$files = $request->get_file_params();
+
+		if ( empty( $files ) ) {
+			return new WP_Error( 'rest_missing_file_data', __( 'Missing file data', 'anycomment' ), [ 'status' => 403 ] );
+		}
+
 		if ( ! function_exists( 'wp_handle_upload' ) ) {
 			require_once( ABSPATH . 'wp-admin/includes/file.php' );
 		}
 
-		$files         = $request->get_file_params();
-		$uploaded_urls = [];
+
+		$max_size_allowed = AnyCommentGenericSettings::getFileMaxSize() * 1000000;
+		$uploaded_urls    = [];
 
 		foreach ( $files as $key => $file ) {
-			$file_extension = strtolower( trim( end( explode( '.', $file['name'] ) ) ) );
-			$file['name']   = sprintf( '%s.%s', md5( serialize( $file ) ), $file_extension );
+			// When size is bigger then allowed, skip it
+			if ( $file['size'] > $max_size_allowed ) {
+				continue;
+			}
+
+			if ( ! AnyCommentGenericSettings::isAllowedMimeType( $file ) ) {
+				continue;
+			}
+
+			$check_file_type = wp_check_filetype( $file['name'] );
+
+			// When unable to get extension, should skip
+			if ( ! $check_file_type['ext'] ) {
+				continue;
+			}
+
+			$file['name'] = sprintf( '%s.%s', md5( serialize( $file ) ), $check_file_type['ext'] );
 
 			$moved_file = wp_handle_upload( $file, [ 'test_form' => false ] );
 

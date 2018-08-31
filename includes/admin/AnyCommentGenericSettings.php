@@ -429,7 +429,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'id'          => self::OPTION_FILES_MIME_TYPES,
 						'title'       => __( 'File MIME Types', "anycomment" ),
 						'callback'    => 'input_text',
-						'description' => esc_html( __( 'Allowed MIME types (e.g. .png, .jpg, etc). Alternatively, you may write "image/*" for all image types or "audio/*" for audios.', "anycomment" ) )
+						'description' => esc_html( __( 'Comman-separated list of allowed MIME types (e.g. .png, .jpg, etc). Alternatively, you may write "image/*" for all image types or "audio/*" for audios.', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_FILES_LIMIT,
@@ -643,6 +643,42 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 */
 		public static function getFileMimeTypes() {
 			return static::instance()->getOption( self::OPTION_FILES_MIME_TYPES );
+		}
+
+		/**
+		 * Method is used to check for correctness of the file mime type again what is defined in settigs.
+		 *
+		 * @link https://github.com/okonet/attr-accept/blob/master/src/index.js (credits, used in frontend)
+		 * @since 0.0.52
+		 *
+		 * @param array $file Regular array item from $_FILE
+		 *
+		 * @return bool
+		 */
+		public static function isAllowedMimeType( $file ) {
+			$acceptedFilesArray = explode( ',', static::getFileMimeTypes() );
+
+			if ( empty( $acceptedFilesArray ) ) {
+				return false;
+			}
+
+			$fileName     = isset( $file['name'] ) ? $file['name'] : null;
+			$mimeType     = isset( $file['type'] ) ? $file['type'] : null;
+			$baseMimeType = preg_replace( '/\/.*$/', '', $mimeType );
+
+			foreach ( $acceptedFilesArray as $key => $type ) {
+				$validType = trim( $type );
+				if ( $validType{0} === '.' ) {
+					return strpos( strtolower( $fileName ), strtolower( $validType ) ) !== false;
+				} else if ( strpos( $validType, '/*' ) !== false ) {
+					// This is something like a image/* mime type
+					return $baseMimeType === preg_replace( '/\/.*$/', '', $validType );
+				}
+
+				return $mimeType === $validType;
+			}
+
+			return true;
 		}
 
 
