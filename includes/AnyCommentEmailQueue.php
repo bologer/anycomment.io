@@ -156,7 +156,7 @@ class AnyCommentEmailQueue {
 		$commentsTable = $db->comments;
 
 		// In case when parent comment is left by registered user (social or by WordPress registration)
-		$query = "SELECT `comments`.*, `users`.`user_email` AS `email` FROM `$commentsTable` `comments` 
+		$query = "SELECT `comments`.*, `users`.`user_email` AS `userTableEmail` FROM `$commentsTable` `comments` 
 LEFT JOIN `$commentsTable` `innerComment` ON `innerComment`.`comment_ID` = `comments`.`comment_parent` 
 LEFT JOIN `$usersTable` `users` ON `users`.`ID` = `innerComment`.`user_ID` 
 WHERE `comments`.`comment_parent` != 0 
@@ -170,7 +170,9 @@ AND `comments`.`comment_ID`=%d";
 		// In case when parent comment is from guest
 		$parentCommentEmail = get_comment_author_email( $comment->comment_parent );
 
-		if ( empty( $result ) && empty( $parentCommentEmail ) ) {
+		$isParentChildSameEmail = ( ! empty( $parentCommentEmail ) && ! empty( $result ) && $parentCommentEmail === $result->email );
+
+		if ( empty( $result ) &&  empty( $parentCommentEmail ) || $isParentChildSameEmail ) {
 			return false;
 		}
 
@@ -185,7 +187,7 @@ AND `comments`.`comment_ID`=%d";
 		}
 
 		$model->subject    = $subject;
-		$model->email      = ! empty( $result ) ? $result->email : $parentCommentEmail;
+		$model->email      = ! empty( $result ) ? $result->userTableEmail : $parentCommentEmail;
 		$model->post_ID    = $comment->comment_post_ID;
 		$model->comment_ID = $comment->comment_ID;
 		$model->content    = AnyCommentEmailQueue::generateReplyEmail( $model );
