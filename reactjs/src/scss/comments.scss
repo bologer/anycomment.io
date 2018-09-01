@@ -1,26 +1,29 @@
-$primary-color: #3658f7;
-$semi-hidden-color: #b6c1c6;
-$comment-color: #333;
-$dropdown-header-color: #333;
-$dropdown-item-color: #000;
-
 $font-size: 15px;
-$comment-border: 0px solid transparent;
 $font-family: 'Noto-Sans', sans-serif;
+
+$semi-hidden-color: #b6c1c6;
+
+$link-color: #3658f7;
+$text-color: #333;
+
+$form-field-background-color: #fff;
+
+$attachment-color: #eee;
+$attachment-background-color: #eee;
 
 $parent-avatar-size: 60px;
 $child-avatar-size: 48px;
 
 $btn-radius: 40px;
-$btn-primary-color: #53af4a;
-$btn-primary-active-color: #4f9f49;
+
+$btn-color: #fff;
+$btn-background-color: #53af4a;
+$btn-background-color-active: #4f9f49;
+
+
 
 $global-radius: 4px;
 
-$attachment-color: #eee;
-$attachment-background-color: #eee;
-
-$input-background-color: #fff;
 
 @mixin border-radius($radius) {
   -webkit-border-radius: $radius;
@@ -49,7 +52,7 @@ $input-background-color: #fff;
   font-size: $font-size - 1;
   vertical-align: baseline;
   background: 0 0;
-  color: #000;
+  color: $text-color;
   line-height: 1.167em;
   outline: 0;
   text-transform: none;
@@ -99,7 +102,7 @@ $input-background-color: #fff;
   text-align: center !important;
   text-transform: none !important;
   justify-content: center;
-  color: #ffffff !important;
+  color: $btn-color !important;
   padding: 0 50px !important;
   height: 48px !important;
   line-height: 48px !important;
@@ -121,14 +124,14 @@ $input-background-color: #fff;
   .anycomment-btn,
   .input[type="submit"],
   input + .input[type="button"] {
-    background-color: $btn-primary-color !important;
+    background-color: $btn-background-color !important;
     @extend %button-appearance;
 
     &:hover,
     &:active,
     &:focus {
       @extend %button-appearance;
-      background-color: $btn-primary-active-color !important;
+      background-color: $btn-background-color-active !important;
     }
   }
 
@@ -164,7 +167,7 @@ $input-background-color: #fff;
       }
 
       &__count {
-        color: $comment-color;
+        color: $text-color;
       }
 
       &__dropdown {
@@ -175,14 +178,14 @@ $input-background-color: #fff;
           cursor: pointer;
           position: relative;
           padding-right: 15px;
-          color: $dropdown-header-color;
+          color: $text-color;
 
           &:hover {
-            color: lighten($dropdown-header-color, 5%);
+            color: lighten($text-color, 5%);
           }
 
           &:hover::after {
-            border-top: 5px solid lighten($dropdown-header-color, 5%);
+            border-top: 5px solid lighten($text-color, 5%);
           }
 
           &::after {
@@ -193,7 +196,7 @@ $input-background-color: #fff;
             height: 0;
             border-left: 5px solid transparent;
             border-right: 5px solid transparent;
-            border-top: 5px solid $dropdown-header-color;
+            border-top: 5px solid $text-color;
             top: 5px;
           }
         }
@@ -227,7 +230,7 @@ $input-background-color: #fff;
               cursor: pointer;
 
               &:hover {
-                color: $dropdown-item-color;
+                color: $text-color;
               }
 
               &:last-of-type {
@@ -280,7 +283,7 @@ $input-background-color: #fff;
           height: 100%;
 
           &-header {
-            color: $comment-color;
+            color: $text-color;
             font-size: $font-size + 3;
             margin-right: 21px;
           }
@@ -342,12 +345,12 @@ $input-background-color: #fff;
           &:active,
           &:focus {
             opacity: 0.9;
-            background-color: $comment-color;
+            background-color: $text-color;
           }
         }
 
         &__textfield {
-          background-color: $input-background-color;
+          background-color: $form-field-background-color;
           border: 0 !important;
           outline: 0 !important;
           font-size: $font-size;
@@ -498,7 +501,7 @@ $input-background-color: #fff;
 
               /* When the checkbox is checked, add a blue background */
               input:checked ~ .checkmark {
-                background-color: $btn-primary-active-color;
+                background-color: $btn-background-color-active;
               }
 
               /* Create the checkmark/indicator (hidden when not checked) */
@@ -544,7 +547,7 @@ $input-background-color: #fff;
           }
 
           label {
-            color: $comment-color;
+            color: $text-color;
             font-weight: 700;
             font-size: 12px;
             margin-bottom: 2px;
@@ -561,9 +564,9 @@ $input-background-color: #fff;
           input[type="text"],
           input[type="email"],
           input[type="number"] {
-            background-color: $input-background-color;
+            background-color: $form-field-background-color;
             border: 1px solid $semi-hidden-color !important;
-            color: $comment-color !important;
+            color: $text-color !important;
             outline: 0;
             height: 31px !important;
             line-height: 31px !important;
@@ -602,7 +605,7 @@ $input-background-color: #fff;
     a:hover,
     a:focus,
     a:active {
-      color: $comment-color;
+      color: $text-color;
     }
 
     img {
@@ -674,7 +677,7 @@ $input-background-color: #fff;
 
             &,
             & > a {
-              color: $primary-color;
+              color: $link-color;
               background-color: transparent;
               font-size: $font-size - 1;
               margin-bottom: 2px;
@@ -682,7 +685,7 @@ $input-background-color: #fff;
             }
 
             &-owner {
-              background-color: $btn-primary-color;
+              background-color: $btn-background-color;
               color: #fff;
               font-size: 10.2px;
               padding: 2px 5px;
@@ -693,7 +696,7 @@ $input-background-color: #fff;
 
             &-replied,
             &-parent-author {
-              color: $primary-color;
+              color: $link-color;
             }
 
             &-answered {
@@ -733,7 +736,7 @@ $input-background-color: #fff;
           transition: height 1s ease-out;
 
           p {
-            color: $comment-color;
+            color: $text-color;
             font-size: $font-size;
             line-height: 1.45;
             padding: 0;
@@ -853,7 +856,7 @@ $input-background-color: #fff;
                 &:active,
                 &:focus {
                   text-decoration: none;
-                  color: #a6b0b4;
+                  color: darken($semi-hidden-color, 5%);
                 }
               }
             }
