@@ -170,9 +170,11 @@ AND `comments`.`comment_ID`=%d";
 		// In case when parent comment is from guest
 		$parentCommentEmail = get_comment_author_email( $comment->comment_parent );
 
-		$isParentChildSameEmail = ( ! empty( $parentCommentEmail ) && ! empty( $result ) && $parentCommentEmail === $result->email );
+		if ( empty( $result ) && empty( $parentCommentEmail ) ) {
+			return false;
+		}
 
-		if ( empty( $result ) &&  empty( $parentCommentEmail ) || $isParentChildSameEmail ) {
+		if ( $parentCommentEmail === $comment->comment_author_email ) {
 			return false;
 		}
 
