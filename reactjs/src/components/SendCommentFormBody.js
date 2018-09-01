@@ -51,18 +51,15 @@ class SendCommentFormBody extends AnyCommentComponent {
             options = settings.options;
 
         if (!files || files.length === 0) {
-            toast.error(settings.i18.file_not_selected_or_extension)
+            toast.error(settings.i18.file_not_selected_or_extension);
             return false;
         }
 
         if (files.length > options.fileLimit) {
             toast.error(settings.i18.file_limit);
-            files.slice(0, options.fileLimit);
+            this.setState({dropzoneActive: false});
+            return false;
         }
-
-        this.setState({
-            dropzoneActive: false
-        });
 
         const filesToUpload = new FormData();
         files.map((file, i) => {
@@ -72,6 +69,7 @@ class SendCommentFormBody extends AnyCommentComponent {
         filesToUpload.append('post', settings.postId);
 
         this.uploadFiles(filesToUpload);
+        this.setState({dropzoneActive: false});
     }
 
     /**

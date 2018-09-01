@@ -37,6 +37,17 @@ class AnyCommentUploadedFiles {
 	}
 
 	/**
+	 * Start query.
+	 *
+	 * @return wpdb
+	 */
+	public static function find() {
+		global $wpdb;
+
+		return $wpdb;
+	}
+
+	/**
 	 * @param $commentId
 	 *
 	 * @return bool|int
@@ -93,6 +104,34 @@ class AnyCommentUploadedFiles {
 
 		return (int) $count >= $limit;
 	}
+
+	/**
+	 * Delete single file or multiple at once.
+	 *
+	 * @param $data
+	 *
+	 * @return bool
+	 */
+	public static function delete( $data ) {
+
+		if ( empty( $data ) ) {
+			return false;
+		}
+
+		if ( is_array( $data ) ) {
+			$ids = implode( ',', $data );
+		} else {
+			$ids = $data;
+		}
+
+		$table = static::tableName();
+		$query = "DELETE FROM $table WHERE `id` IN ($ids)";
+
+		$affected_rows = static::find()->query( $query );
+
+		return $affected_rows >= 0;
+	}
+
 
 	/**
 	 * Inserts uploaded file to track limits, etc.

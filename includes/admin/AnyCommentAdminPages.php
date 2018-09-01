@@ -39,6 +39,8 @@ if ( ! class_exists( 'AnyCommentAdminPages' ) ) :
 			$this->page_options_social      = new AnyCommentSocialSettings();
 			$this->page_options_general     = new AnyCommentGenericSettings();
 			$this->page_options_integration = new AnyCommentIntegrationSettings();
+
+			new AnyCommentFiles();
 		}
 
 		/**

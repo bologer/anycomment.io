@@ -143,8 +143,8 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 					'file_upload_in_progress'        => __( "Uploading...", 'anycomment' ),
 					'file_uploaded'                  => __( "Uploaded!", 'anycomment' ),
 					'file_too_big'                   => __( "File %s is too big", 'anycomment' ),
-					'file_limit'                     => sprintf( __( "Only %s file(s) allowed to be uploaded", 'anycomment' ), AnyCommentGenericSettings::OPTION_FILES_LIMIT ),
-					'file_not_selected_or_extension' => sprintf( __( "No file selected or select proper extension", 'anycomment' ), AnyCommentGenericSettings::OPTION_FILES_LIMIT ),
+					'file_limit'                     => sprintf( __( "You may upload %s file(s) at maximum", 'anycomment' ), AnyCommentGenericSettings::getFileLimit() ),
+					'file_not_selected_or_extension' => __( "No file selected or select proper extension", 'anycomment' ),
 				]
 			] );
 

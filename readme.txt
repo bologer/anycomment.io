@@ -178,6 +178,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Files: ability to allow/disallow file upload by guest users, #68
 * Files: plugin will add URL of the uploaded file to the comment field (when there is already some comment entered, URL will be appended), #68
 * Files: option to define comma-separated list of allowed MIME types (e.g. .jpg, .png) or even image/* for all images and audio/* for audios, #68
+* Files: added list of uploaded files in the admin (possible to delete, paginate, etc), #68
 * When user user to logout native WordPress logout link, now he is going to be redirected back to post, instead of login page, #122
 * Added some text above social login list as some of the users were confused and thought that it was sharing buttons, #123
 

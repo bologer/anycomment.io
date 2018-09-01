@@ -185,7 +185,15 @@ class AnyCommentComponent extends React.Component {
             return returnValue;
         }
 
-        let value = localStorage.getItem(key);
+        if (!key) {
+            return returnValue;
+        }
+
+        let value = localStorage.getItem(key) || '';
+
+        if (!value) {
+            return returnValue;
+        }
 
         value = value.trim();
 
@@ -196,6 +204,11 @@ class AnyCommentComponent extends React.Component {
         if (!this.localStorageSupport()) {
             return false;
         }
+
+        if (!key) {
+            return false;
+        }
+
         text = text.trim();
         localStorage.setItem(key, text);
     }
