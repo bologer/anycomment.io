@@ -178,6 +178,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Files: after successful upload file URL will be added to comment text, #68
 * Files: option to define allowed MIME types (e.g. .jpg, .png) or even image/* for all images and audio/* for audios, #68
 * When user user to logout native WordPress logout link, now he is going to be redirected back to post, instead of login page, #122
+* Added some text above social login list as some of the users were confused and thought that it was sharing buttons, #123
 
 TBD
 

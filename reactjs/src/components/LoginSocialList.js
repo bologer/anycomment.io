@@ -14,14 +14,14 @@ class LoginSocialList extends AnyCommentComponent {
             return (null);
         }
 
-        return (
+        return [
+            <div className="anycomment anycomment-form-guest__header">{settings.i18.quick_login}:</div>,
             <ul>
-                {/*<li className="send-comment-body-outliner__auth-header">{settings.i18.quick_login}</li>*/}
                 {Object.keys(socials).map((item, index) => (
                     <LoginSocial key={index} social={socials[item]}/>
                 ))}
             </ul>
-        );
+        ];
     }
 }
 
