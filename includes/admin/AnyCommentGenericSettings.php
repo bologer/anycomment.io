@@ -132,6 +132,31 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		const OPTION_FILES_MAX_SIZE = 'options_files_max_size';
 
 		/**
+		 * DESIGN
+		 */
+		const OPTION_DESIGN_FONT_SIZE = 'options_design_font_size';
+		const OPTION_DESIGN_FONT_FAMILY = 'options_design_font_family';
+
+		const OPTION_DESIGN_SEMI_HIDDEN_COLOR = 'options_design_semi_hidden_color';
+		const OPTION_DESIGN_LINK_COLOR = 'options_design_link_color';
+		const OPTION_DESIGN_TEXT_COLOR = 'options_design_text_color';
+
+		const OPTION_DESIGN_FORM_FIELD_BACKGROUND_COLOR = 'options_design_form_field_background_color';
+
+		const OPTION_DESIGN_ATTACHMENT_COLOR = 'options_design_attachment_color';
+		const OPTION_DESIGN_ATTACHMENT_BACKGROUND_COLOR = 'options_design_attachment_background_color';
+
+		const OPTION_DESIGN_PARENT_AVATAR_SIZE = 'options_design_parent_avatar_size';
+		const OPTION_DESIGN_CHILD_AVATAR_SIZE = 'options_design_child_avatar_size';
+
+		const OPTION_DESIGN_BUTTON_COLOR = 'options_design_button_color';
+		const OPTION_DESIGN_BUTTON_BACKGROUND_COLOR = 'options_design_button_background_color';
+		const OPTION_DESIGN_BUTTON_BACKGROUND_COLOR_ACTIVE = 'options_design_button_background_color_active';
+		const OPTION_DESIGN_BUTTON_RADIUS = 'options_design_button_radius';
+
+		const OPTION_DESIGN_GLOBAL_RADIUS = 'options_design_global_radius';
+
+		/**
 		 * THEMES
 		 */
 
@@ -362,6 +387,18 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						],
 						'description' => esc_html( __( 'Choose comments theme.', "anycomment" ) )
 					],
+					[
+						'id'          => self::OPTION_DESIGN_TEXT_COLOR,
+						'title'       => __( 'Text Color', "anycomment" ),
+						'callback'    => 'input_color',
+						'description' => esc_html( __( 'Global text color.', "anycomment" ) )
+					],
+					[
+						'id'          => self::OPTION_DESIGN_LINK_COLOR,
+						'title'       => __( 'Link Color', "anycomment" ),
+						'callback'    => 'input_color',
+						'description' => esc_html( __( 'Links color.', "anycomment" ) )
+					],
 				]
 			);
 
@@ -497,6 +534,77 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
                 </div>
 			<?php endif; ?>
 			<?php
+		}
+
+		/**
+		 * Used to combine SCSS files into one and process
+		 * SCSS via library to convert it into CSS (just for customizing styles).
+		 *
+		 * @link https://github.com/matthiasmullie/minify can be added later for minifying result CSS for speed-up purposes
+		 *
+		 * @return string
+		 */
+		function combineStylesAndProcess() {
+			include_once( AnyComment()->plugin_path() . '/includes/libs/scssphp/scss.inc.php' );
+
+
+			$scss = new \Leafo\ScssPhp\Compiler();
+
+			$scssPath = AnyComment()->plugin_path() . '/reactjs/src/scss/';
+
+			$content = file_get_contents( $scssPath . 'comments.scss' );
+
+			$arr = [
+				'/\$link-color:\s(#[a-z0-9]+);/m' => sprintf( '$link-color: %s;', AnyCommentGenericSettings::getDesignLinkColor() ),
+				'/\$text-color:\s(#[a-z0-9]+);/m' => sprintf( '$text-color: %s;', AnyCommentGenericSettings::getDesignTextColor() ),
+			];
+
+			foreach ( $arr as $pattern => $replacement ) {
+				$content = preg_replace( $pattern, $replacement, $content );
+			}
+
+			if ( strpos( $content, '@import' ) !== null ) {
+				preg_match_all( '/@import\s"([a-z-]+)";/m', $content, $matches );
+
+				if ( ! empty( $matches ) && ! empty( $matches[1] ) ) {
+					foreach ( $matches[1] as $key => $match ) {
+						$subContentPath = sprintf( "%s%s.scss", $scssPath, $match );
+						$subContent     = trim( file_get_contents( $subContentPath ) );
+
+						$search  = $matches[0][ $key ];
+						$replace = '';
+
+						if ( $subContent !== false && ! empty( $subContent ) ) {
+							$replace = $subContent;
+						}
+
+						$content = str_replace( $search, $replace, $content );
+					}
+				}
+			}
+
+			return $scss->compile( $content );
+		}
+
+		/**
+		 * Get design hash to check whether it was changed or not.
+		 *
+		 * @return string
+		 */
+		public function getDesignHash() {
+			$items = [];
+
+			$options = static::instance()->getOptions();
+
+			if ( ! empty( $options ) ) {
+				foreach ( $options as $option_name => $option_value ) {
+					if ( strpos( $option_name, '_design_' ) !== false ) {
+						$items[ $option_name ] = $option_value;
+					}
+				}
+			}
+
+			return md5( serialize( $items ) );
 		}
 
 
@@ -681,6 +789,147 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 			return true;
 		}
 
+		/**
+		 * Get design font size.
+		 *
+		 * @return string|null
+		 */
+		public static function getDesignFontSize() {
+			$value = static::instance()->getOption( self::OPTION_DESIGN_FONT_SIZE );
+
+			if ( strpos( $value, 'px' ) === false && strpos( $value, 'pt' ) === false && strpos( $value, 'em' ) === false ) {
+				return $value . 'px';
+			}
+
+			return $value;
+		}
+
+		/**
+		 * Get design font family size.
+		 *
+		 * @return string|null
+		 */
+		public static function getDesignFontFamily() {
+			return static::instance()->getOption( self::OPTION_DESIGN_FONT_FAMILY );
+		}
+
+		/**
+		 * Get design semi hidden color.
+		 *
+		 * @return string|null
+		 */
+		public static function getDesignSemiHiddenColor() {
+			return static::instance()->getOption( self::OPTION_DESIGN_SEMI_HIDDEN_COLOR );
+		}
+
+
+		/**
+		 * Get link color.
+		 *
+		 * @return string|null
+		 */
+		public static function getDesignLinkColor() {
+			return static::instance()->getOption( self::OPTION_DESIGN_LINK_COLOR );
+		}
+
+		/**
+		 * Get text color.
+		 *
+		 * @return string|null
+		 */
+		public static function getDesignTextColor() {
+			return static::instance()->getOption( self::OPTION_DESIGN_TEXT_COLOR );
+		}
+
+		/**
+		 * Get design form field background color.
+		 *
+		 * @return string|null
+		 */
+		public static function getDesignFormFieldBackgroundColor() {
+			return static::instance()->getOption( self::OPTION_DESIGN_FORM_FIELD_BACKGROUND_COLOR );
+		}
+
+		/**
+		 * Get design attachment color.
+		 *
+		 * @return string|null
+		 */
+		public static function getDesignAttachmentColor() {
+			return static::instance()->getOption( self::OPTION_DESIGN_ATTACHMENT_COLOR );
+		}
+
+		/**
+		 * Get design attachment background color.
+		 *
+		 * @return string|null
+		 */
+		public static function getDesignAttachmentBackgroundColor() {
+			return static::instance()->getOption( self::OPTION_DESIGN_ATTACHMENT_BACKGROUND_COLOR );
+		}
+
+		/**
+		 * Get design parent avatar size.
+		 *
+		 * @return string|null
+		 */
+		public static function getDesignParentAvatarSize() {
+			return static::instance()->getOption( self::OPTION_DESIGN_PARENT_AVATAR_SIZE );
+		}
+
+		/**
+		 * Get design child avatar size.
+		 *
+		 * @return string|null
+		 */
+		public static function getDesignChildAvatarSize() {
+			return static::instance()->getOption( self::OPTION_DESIGN_CHILD_AVATAR_SIZE );
+		}
+
+		/**
+		 * Get design button color.
+		 *
+		 * @return string|null
+		 */
+		public static function getDesignButtonColor() {
+			return static::instance()->getOption( self::OPTION_DESIGN_BUTTON_COLOR );
+		}
+
+		/**
+		 * Get design button background color.
+		 *
+		 * @return string|null
+		 */
+		public static function getDesignButtonBackgroundColor() {
+			return static::instance()->getOption( self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR );
+		}
+
+		/**
+		 * Get design button background color color.
+		 *
+		 * @return string|null
+		 */
+		public static function getDesignButtonBackgroundColorActive() {
+			return static::instance()->getOption( self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR_ACTIVE );
+		}
+
+		/**
+		 * Get design button radius.
+		 *
+		 * @return string|null
+		 */
+		public static function getDesignButtonRadius() {
+			return static::instance()->getOption( self::OPTION_DESIGN_BUTTON_RADIUS );
+		}
+
+		/**
+		 * Get design button radius.
+		 *
+		 * @return string|null
+		 */
+		public static function getDesignGlobalRadius() {
+			return static::instance()->getOption( self::OPTION_DESIGN_GLOBAL_RADIUS );
+		}
 
 		/**
 		 * Get interval in seconds per each check for new comments.

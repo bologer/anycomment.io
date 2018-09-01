@@ -20,10 +20,7 @@ $btn-color: #fff;
 $btn-background-color: #53af4a;
 $btn-background-color-active: #4f9f49;
 
-
-
 $global-radius: 4px;
-
 
 @mixin border-radius($radius) {
   -webkit-border-radius: $radius;

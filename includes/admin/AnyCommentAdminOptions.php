@@ -148,6 +148,23 @@ if ( ! class_exists( 'AnyCommentAdminOptions' ) ) :
 		}
 
 		/**
+		 * Helper to render input color.
+		 *
+		 * @param array $args List of passed arguments.
+		 */
+		public function input_color( $args ) {
+			?>
+            <input type="color" id="<?= esc_attr( $args['label_for'] ); ?>"
+                   name="<?= $this->option_name ?>[<?= esc_attr( $args['label_for'] ); ?>]"
+                   value="<?= $this->getOption( $args['label_for'] ) ?>">
+			<?php if ( isset( $args['description'] ) ): ?>
+                <div class="clearfix"></div>
+                <p class="description"><?= $args['description'] ?></p>
+			<?php endif; ?>
+			<?php
+		}
+
+		/**
 		 * Helper to render input text.
 		 *
 		 * @param array $args List of passed arguments.
