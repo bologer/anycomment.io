@@ -181,6 +181,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Files: added list of uploaded files in the admin (possible to delete, paginate, etc), #68
 * When user user to logout native WordPress logout link, now he is going to be redirected back to post, instead of login page, #122
 * Added some text above social login list as some of the users were confused and thought that it was sharing buttons, #123
+* Added "Possible Problems" to dashboard to help admin figure out about possible problems or conflicts with other plugins (e.g. some plugins may disable REST API, which is crucial), #117
 
 TBD
 

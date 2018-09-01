@@ -37,6 +37,34 @@ a:focus {
   box-shadow: none;
 }
 
+.anycomment-notice {
+  padding: 10px 20px;
+  font-size: $font-size;
+  transition: box-shadow 200ms cubic-bezier(0.4, 0.0, 0.2, 1);
+  border: 1px solid #eae9e9;
+  margin: 0 0 10px 0;
+  background-color: #fff;
+  @include border-radius(50px);
+
+  &.anycomment-square {
+    @include border-radius(0px);
+  }
+
+  &.anycomment-error {
+    border: 1px solid #fe7070;
+  }
+
+  &.anycomment-success {
+    border: 1px solid #259f3c;
+  }
+
+  &:hover,
+  &:active,
+  &:focus {
+    box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
+  }
+}
+
 // Dashboard
 .anycomment-dashboard {
   font-family: $font-family;
@@ -212,6 +240,18 @@ a:focus {
         }
       }
     }
+  }
+
+  &__splitter-horizontal-space {
+    padding: 0 37px;
+  }
+
+  &__splitter-right-space {
+    padding-right: 37px;
+  }
+
+  &__splitter-left-space {
+    padding-right: 37px;
   }
 
   &__splitter {

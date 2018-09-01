@@ -31,3 +31,5 @@ $tabs       = [
 <?php endif; ?>
 
 <?= anycomment_get_template( 'admin/tab-' . $active_tab ) ?>
+
+<div class="clearfix"></div>

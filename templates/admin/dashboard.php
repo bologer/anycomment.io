@@ -7,20 +7,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="wrap">
     <h2><?= __( 'Dashboard', 'anycomment' ) ?></h2>
 
-    <div class="updated notice">
-        <p>
-            <strong><?= sprintf( __( 'Please take a few seconds and <a href="%s" target="_blank">rate us on WordPress.org</a>. You are the one who can help to grow and make thus plugin better!', 'anycomment' ), 'https://wordpress.org/support/plugin/anycomment/reviews/?rate=5#new-post' ) ?></strong>
-        </p>
-        <p>
-            <strong><?= sprintf( __( 'Follow us on <a href="%s" %s>VK.com</a>', 'anycomment' ), 'https://vk.com/anycomment', 'target="_blank"' ) ?></strong>
-        </p>
+    <div class="anycomment-notice anycomment-success">
+		<?= sprintf( __( 'Please take a few seconds and <a href="%s" target="_blank">rate us on WordPress.org</a>. You are the one who can help to grow and make this plugin better!', 'anycomment' ), 'https://wordpress.org/support/plugin/anycomment/reviews/?rate=5#new-post' ) ?>
     </div>
 
-	<?php if ( is_plugin_active( 'clearfy/clearfy.php' ) ): ?>
-        <div class="updated error">
-            <p><?= sprintf( __( 'You have <a href="%s">Clearfy</a> activated, please make sure "Remove REST API Links" is "Off" under "Performance" tab as it may cause problems to load comments.', 'anycomment' ), '/wp-admin/admin.php?page=performance-wbcr_clearfy' ) ?></p>
-        </div>
-	<?php endif; ?>
+    <div class="anycomment-notice anycomment-success"><?= sprintf( __( 'Follow us on <a href="%s" %s>VK.com</a> or join our group in <a href="%s" %s>Telegram</a>', 'anycomment' ),
+			'https://vk.com/anycomment',
+			'target="_blank"',
+			'https://t.me/anycommentio',
+			'target="_blank"' ) ?></div>
 
     <div class="anycomment-dashboard">
         <div class="anycomment-dashboard__container">
@@ -39,9 +34,14 @@ if ( ! defined( 'ABSPATH' ) ) {
             </header>
 
 			<?= anycomment_get_template( 'admin/tabs' ) ?>
+
+            <div class="anycomment-dashboard__splitter anycomment-dashboard__splitter-right-space anycomment-dashboard__splitter-possible-problems">
+                <h2><?= __( 'Possible Problems', 'anycomment' ) ?></h2>
+				<?= anycomment_get_template( 'admin/notifications' ) ?>
+            </div>
         </div>
         <aside class="anycomment-dashboard__sidebar">
-            <?= anycomment_get_template('admin/news-sidebar') ?>
+			<?= anycomment_get_template( 'admin/news-sidebar' ) ?>
         </aside>
 
         <div class="clearfix"></div>

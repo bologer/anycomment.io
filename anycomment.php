@@ -272,6 +272,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			include_once( ANYCOMMENT_ABSPATH . 'includes/admin/AnyCommentIntegrationSettings.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/admin/AnyCommentFiles.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/admin/AnyCommentWPComments.php' );
+			include_once( ANYCOMMENT_ABSPATH . 'includes/admin/AnyCommentProblemNotifier.php' );
 
 			/**
 			 * Cron tabs
