@@ -89,6 +89,15 @@ class CommentList extends AnyCommentComponent {
     }
 
     /**
+     * Check whether comment text is not empty.
+     *
+     * @returns {boolean}
+     */
+    isCommentTextEmpty() {
+        return this.state.commentText.trim() === '';
+    }
+
+    /**
      * Focus on comment field.
      */
     focusCommentField() {
@@ -97,9 +106,16 @@ class CommentList extends AnyCommentComponent {
 
     /**
      * Handle comment text change.
-     * @param text
+     * @param text {String} Text to bet set.
+     * @param append {Boolean} If true, specified text will be appended to the comment text if not empty.
      */
-    handleCommentTextChange(text) {
+    handleCommentTextChange(text, append = false) {
+
+        // When append and comment text is already not empty, should be current text + the specified one
+        if (append && !this.isCommentTextEmpty()) {
+            text = this.state.commentText + text;
+        }
+
         this.setState({commentText: text});
         this.storeComment(text);
         this.expandCommentField();
@@ -363,14 +379,23 @@ class CommentList extends AnyCommentComponent {
 
         this.checkForAnchor();
 
-        const options = this.getOptions();
+        // Expand comment field when not empty
+        // This can happen when text was saved in the local storage
+        // in order not to lose it
+        const localStorageComment = this.getComment();
+
+        if (localStorageComment !== '') {
+            this.expandCommentField();
+        }
 
         this.setState({
-            commentText: this.getComment(),
+            commentText: localStorageComment,
             authorName: this.getAuthorName(),
             authorEmail: this.getAuthorEmail(),
             authorWebsite: this.getAuthorWebsite(),
         });
+
+        const options = this.getOptions();
 
         if (options.notifyOnNewComment) {
             const self = this,

@@ -33,22 +33,6 @@ class AnyCommentRestDocuments extends AnyCommentRestController {
 					'description' => __( "Post ID", 'anycomment' ),
 					'type'        => 'int'
 				],
-				'name' => [
-					'description' => __( 'File name', 'anycomment' ),
-					'type'        => 'string'
-				],
-				'type' => [
-					'description' => __( 'File type (e.g. image/jpeg)', 'anycomment' ),
-					'type'        => 'string'
-				],
-				'size' => [
-					'description' => __( 'File size in bytes', 'anycomment' ),
-					'type'        => 'int'
-				],
-				'blob' => [
-					'description' => __( 'Binary file data', 'anycomment' ),
-					'type'        => 'string',
-				],
 			],
 			'schema' => [ $this, 'get_public_item_schema' ],
 		] );

@@ -111,20 +111,28 @@ class SendCommentFormBody extends AnyCommentComponent {
             });
     }
 
+    /**
+     * Add image links to comment text.
+     * @param links {Array} List of image links.
+     * @returns {boolean}
+     */
     addImageLinks(links) {
         if (!links) {
             return false;
         }
 
         let text = '';
-        links.map((url, i) => {
+        links.map(url => {
             text += url + ' ';
         });
 
-        console.log(links);
-        console.log(text);
+        if (text.trim() === '') {
+            return false;
+        }
 
-        this.props.changeCommenText(text);
+        this.props.changeCommenText(text, true);
+
+        return true;
     }
 
     render() {

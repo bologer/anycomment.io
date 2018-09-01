@@ -173,10 +173,11 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Enhancements:**
 
-* Files: attach files as drag & drop image, #68
-* Files: attach files via regular file input (for those who do not know about drag & drop), #68
-* Files: after successful upload file URL will be added to comment text, #68
-* Files: option to define allowed MIME types (e.g. .jpg, .png) or even image/* for all images and audio/* for audios, #68
+* Files: attach files by dragging into the comment area, #68
+* Files: attach files via by clicking on small photo icon in the top right of the comment text field, #68
+* Files: ability to allow/disallow file upload by guest users, #68
+* Files: plugin will add URL of the uploaded file to the comment field (when there is already some comment entered, URL will be appended), #68
+* Files: option to define comma-separated list of allowed MIME types (e.g. .jpg, .png) or even image/* for all images and audio/* for audios, #68
 * When user user to logout native WordPress logout link, now he is going to be redirected back to post, instead of login page, #122
 * Added some text above social login list as some of the users were confused and thought that it was sharing buttons, #123
 
@@ -188,6 +189,7 @@ TBD
 * Fixed default options overwrite, before default values were not applied
 * Fixed missing Russian translation when user is guest and only has option to authorize using social
 * Some themes have hash navigation to comments as #respond, #124
+* When some comment was remembered, on the page refresh comment field will expand automatically now
 
 = 0.0.51 – 28.08.2018 =
 
