@@ -139,6 +139,7 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 						AnyCommentGenericSettings::getUserAgreementLink(),
 						' target="_blank" rel="noopener noreferrer" '
 					),
+					'upload_file'                    => __( 'Upload file', 'anycomment' ),
 					'file_upload_in_progress'        => __( "Uploading...", 'anycomment' ),
 					'file_uploaded'                  => __( "Uploaded!", 'anycomment' ),
 					'file_too_big'                   => __( "File %s is too big", 'anycomment' ),

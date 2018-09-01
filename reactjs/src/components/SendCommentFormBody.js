@@ -132,32 +132,49 @@ class SendCommentFormBody extends AnyCommentComponent {
         const options = settings.options;
         const {dropzoneActive} = this.state;
 
-        console.log(options.fileMimeTypes);
+        let dropzoneRef;
+
+        const canUpload = !this.isGuest() || this.isGuest() && options.isGuestCanUpload;
+
+        const outliner = <div
+            className={"anycomment anycomment-send-comment-body-outliner" + (dropzoneActive ? ' anycomment-send-comment-body-outliner-dropzone-active' : '')}>
+
+            <SendCommentFormBodyAvatar user={this.props.user}/>
+
+            {canUpload ?
+                <div className="anycomment anycomment-send-comment-body-outliner__select-file"
+                     title={settings.i18.upload_file}
+                     onClick={() => {
+                         dropzoneRef.open()
+                     }}></div> : ''}
+
+            <textarea name="content"
+                      value={this.props.commentText}
+                      required="required"
+                      className="anycomment anycomment-send-comment-body-outliner__textfield"
+                      placeholder={settings.i18.add_comment}
+                      onChange={this.props.handleContentChange}
+                      ref={this.props.commentFieldRef}
+            ></textarea>
+        </div>;
+
+        if (!canUpload) {
+            return outliner;
+        }
 
         return <Dropzone
             disableClick
+            className="anycomment"
+            ref={(node) => {
+                dropzoneRef = node;
+            }}
             style={{position: "relative"}}
             maxSize={options.fileMaxSize * 1000000}
             accept={options.fileMimeTypes}
             onDrop={this.onDrop.bind(this)}
             onDragEnter={this.onDragEnter.bind(this)}
             onDragLeave={this.onDragLeave.bind(this)}>
-
-            <div
-                className={"anycomment anycomment-send-comment-body-outliner" + (dropzoneActive ? ' anycomment-send-comment-body-outliner-dropzone-active' : '')}>
-
-                <SendCommentFormBodyAvatar user={this.props.user}/>
-
-
-                <textarea name="content"
-                          value={this.props.commentText}
-                          required="required"
-                          className="anycomment anycomment-send-comment-body-outliner__textfield"
-                          placeholder={settings.i18.add_comment}
-                          onChange={this.props.handleContentChange}
-                          ref={this.props.commentFieldRef}
-                ></textarea>
-            </div>
+            {outliner}
         </Dropzone>
     }
 }
