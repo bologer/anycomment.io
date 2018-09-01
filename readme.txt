@@ -186,6 +186,7 @@ TBD
 * Fixed links on white theme being colored as for dark theme
 * Fixed default options overwrite, before default values were not applied
 * Fixed missing Russian translation when user is guest and only has option to authorize using social
+* Some themes have hash navigation to comments as #respond, #124
 
 = 0.0.51 – 28.08.2018 =
 

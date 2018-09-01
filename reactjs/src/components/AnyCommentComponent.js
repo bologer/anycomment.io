@@ -31,7 +31,7 @@ class AnyCommentComponent extends React.Component {
      */
     hasCommentSectionAnchor() {
         const hash = window.location.hash;
-        return hash !== '' && /#(comments|to-comments|load-comments)$/.test(hash);
+        return hash !== '' && /#(comments|respond|to-comments|load-comments)$/.test(hash);
     }
 
     /**
