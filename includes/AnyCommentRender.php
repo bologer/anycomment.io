@@ -75,7 +75,16 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 		 */
 		public function override_comment() {
 			wp_enqueue_script( 'anycomment-react', AnyComment()->plugin_url() . '/static/js/main.min.js', [], AnyComment()->version );
-			wp_enqueue_style( 'anycomment-styles', AnyComment()->plugin_url() . '/static/css/main.min.css', [], AnyComment()->version );
+
+
+			if ( AnyCommentGenericSettings::isDesignCustom() ) {
+				$url  = AnyCommentGenericSettings::getCustomDesignStylesheetUrl();
+				wp_enqueue_style( 'anycomment-custom-styles', $url, [], AnyComment()->version );
+			} else {
+				wp_enqueue_style( 'anycomment-styles', AnyComment()->plugin_url() . '/static/css/main.min.css', [], AnyComment()->version );
+			}
+
+
 			wp_enqueue_style( 'anycomment-google-font', 'https://fonts.googleapis.com/css?family=Noto+Sans:400,700&amp;subset=cyrillic', [], AnyComment()->version );
 
 			$postId = get_the_ID();

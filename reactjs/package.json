@@ -20,7 +20,7 @@
     "build-css": "node-sass-chokidar src/scss -o src/css --output-style compressed",
     "watch-css": "npm run build-css && node-sass-chokidar src/scss -o src/css --watch",
     "start": "react-scripts start",
-    "build": "react-scripts build && mv build/static/js/main*.js build/static/js/main.min.js && mv build/static/css/main*.css build/static/css/main.min.css && rm -rf ../static && mv build/static ../",
+    "build": "react-scripts build && mv build/static/js/main*.js build/static/js/main.min.js && mv build/static/css/main*.css build/static/css/main.min.css && rm -rf ../static && mv build/static ../ && cp src/scss/* node_modules/react-toastify/dist/ReactToastify.css ../assets/theming"2,
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }

@@ -156,7 +156,9 @@ if ( ! class_exists( 'AnyCommentAdminOptions' ) ) :
 			?>
             <input type="color" id="<?= esc_attr( $args['label_for'] ); ?>"
                    name="<?= $this->option_name ?>[<?= esc_attr( $args['label_for'] ); ?>]"
-                   value="<?= $this->getOption( $args['label_for'] ) ?>">
+                   value="<?= $this->getOption( $args['label_for'] ) ?>"
+                   pattern="^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+            >
 			<?php if ( isset( $args['description'] ) ): ?>
                 <div class="clearfix"></div>
                 <p class="description"><?= $args['description'] ?></p>

@@ -232,6 +232,10 @@ if ( ! class_exists( 'AnyComment' ) ) :
 		 */
 		public function includes() {
 
+			// Helpers
+
+			include_once( ANYCOMMENT_ABSPATH . 'includes/helpers/AnyCommentInputHelper.php' );
+
 			include_once( ANYCOMMENT_ABSPATH . 'includes/base/cache/AnyCommentCache.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentOptions.php' );
 

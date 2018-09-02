@@ -134,6 +134,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		/**
 		 * DESIGN
 		 */
+		const OPTION_DESIGN_CUSTOM_TOGGLE = 'options_design_custom_toggle';
+
 		const OPTION_DESIGN_FONT_SIZE = 'options_design_font_size';
 		const OPTION_DESIGN_FONT_FAMILY = 'options_design_font_family';
 
@@ -203,10 +205,34 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 			self::OPTION_INTERVAL_COMMENTS_CHECK => 10,
 			self::OPTION_FORM_TYPE               => self::FORM_OPTION_SOCIALS_ONLY,
 
-			self::OPTION_FILES_LIMIT        => 5,
-			self::OPTION_FILES_LIMIT_PERIOD => 300,
-			self::OPTION_FILES_MAX_SIZE     => 1.5,
-			self::OPTION_FILES_MIME_TYPES   => 'image/*, .pdf',
+			// Files
+			self::OPTION_FILES_LIMIT             => 5,
+			self::OPTION_FILES_LIMIT_PERIOD      => 300,
+			self::OPTION_FILES_MAX_SIZE          => 1.5,
+			self::OPTION_FILES_MIME_TYPES        => 'image/*, .pdf',
+
+			// Design
+			self::OPTION_DESIGN_FONT_SIZE        => '15px',
+			self::OPTION_DESIGN_FONT_FAMILY      => "'Noto-Sans', sans-serif",
+
+			self::OPTION_DESIGN_SEMI_HIDDEN_COLOR => '#b6c1c6',
+			self::OPTION_DESIGN_LINK_COLOR        => '#3658f7',
+			self::OPTION_DESIGN_TEXT_COLOR        => '#333333',
+
+			self::OPTION_DESIGN_FORM_FIELD_BACKGROUND_COLOR => '#ffffff',
+
+			self::OPTION_DESIGN_ATTACHMENT_COLOR            => '#eeeeee',
+			self::OPTION_DESIGN_ATTACHMENT_BACKGROUND_COLOR => '#eeeeee',
+
+			self::OPTION_DESIGN_PARENT_AVATAR_SIZE => '60px',
+			self::OPTION_DESIGN_CHILD_AVATAR_SIZE  => '48px',
+
+			self::OPTION_DESIGN_BUTTON_COLOR                   => '#ffffff',
+			self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR        => '#53af4a',
+			self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR_ACTIVE => '#4f9f49',
+			self::OPTION_DESIGN_BUTTON_RADIUS                  => '40px',
+
+			self::OPTION_DESIGN_GLOBAL_RADIUS => '4px',
 		];
 
 
@@ -388,6 +414,31 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'description' => esc_html( __( 'Choose comments theme.', "anycomment" ) )
 					],
 					[
+						'id'          => self::OPTION_DESIGN_CUSTOM_TOGGLE,
+						'title'       => __( 'Custom Design', "anycomment" ),
+						'callback'    => 'input_checkbox',
+						'description' => esc_html( __( 'Use custom design.', "anycomment" ) )
+					],
+					[
+						'id'          => self::OPTION_DESIGN_GLOBAL_RADIUS,
+						'title'       => __( 'Border radius', "anycomment" ),
+						'callback'    => 'input_text',
+						'description' => esc_html( __( 'Border radius.', "anycomment" ) )
+					],
+					[
+						'id'          => self::OPTION_DESIGN_FONT_SIZE,
+						'title'       => __( 'Font Size', "anycomment" ),
+						'callback'    => 'input_text',
+						'description' => esc_html( __( 'Global font size.', "anycomment" ) )
+					],
+					[
+						'id'          => self::OPTION_DESIGN_FONT_FAMILY,
+						'title'       => __( 'Font', "anycomment" ),
+						'callback'    => 'input_text',
+						'description' => esc_html( __( 'Global family.', "anycomment" ) )
+					],
+
+					[
 						'id'          => self::OPTION_DESIGN_TEXT_COLOR,
 						'title'       => __( 'Text Color', "anycomment" ),
 						'callback'    => 'input_color',
@@ -398,6 +449,73 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'title'       => __( 'Link Color', "anycomment" ),
 						'callback'    => 'input_color',
 						'description' => esc_html( __( 'Links color.', "anycomment" ) )
+					],
+					[
+						'id'          => self::OPTION_DESIGN_SEMI_HIDDEN_COLOR,
+						'title'       => __( 'Semi Hidden Color', "anycomment" ),
+						'callback'    => 'input_color',
+						'description' => esc_html( __( 'Semi hidden color. Used for dates, actions (e.g. reply, edit, etc).', "anycomment" ) )
+					],
+					[
+						'id'          => self::OPTION_DESIGN_FORM_FIELD_BACKGROUND_COLOR,
+						'title'       => __( 'Form Fields Background', "anycomment" ),
+						'callback'    => 'input_color',
+						'description' => esc_html( __( 'Form fields background color.', "anycomment" ) )
+					],
+
+					[
+						'id'          => self::OPTION_DESIGN_ATTACHMENT_COLOR,
+						'title'       => __( 'Attachment Text Color', "anycomment" ),
+						'callback'    => 'input_color',
+						'description' => esc_html( __( 'Attachment text color.', "anycomment" ) )
+					],
+
+					[
+						'id'          => self::OPTION_DESIGN_ATTACHMENT_BACKGROUND_COLOR,
+						'title'       => __( 'Attachment Background Color', "anycomment" ),
+						'callback'    => 'input_color',
+						'description' => esc_html( __( 'Attachment background color.', "anycomment" ) )
+					],
+
+					[
+						'id'          => self::OPTION_DESIGN_PARENT_AVATAR_SIZE,
+						'title'       => __( 'Avatar Parent Size', "anycomment" ),
+						'callback'    => 'input_text',
+						'description' => esc_html( __( 'Parent avatar size (main comment).', "anycomment" ) )
+					],
+
+					[
+						'id'          => self::OPTION_DESIGN_CHILD_AVATAR_SIZE,
+						'title'       => __( 'Avatar Child Size', "anycomment" ),
+						'callback'    => 'input_text',
+						'description' => esc_html( __( 'Child avatar size (inside reply).', "anycomment" ) )
+					],
+
+					[
+						'id'          => self::OPTION_DESIGN_BUTTON_RADIUS,
+						'title'       => __( 'Button Radius', "anycomment" ),
+						'callback'    => 'input_text',
+						'description' => esc_html( __( 'Button border radius.', "anycomment" ) )
+					],
+					[
+						'id'          => self::OPTION_DESIGN_BUTTON_COLOR,
+						'title'       => __( 'Button Color', "anycomment" ),
+						'callback'    => 'input_color',
+						'description' => esc_html( __( 'Button text color.', "anycomment" ) )
+					],
+
+					[
+						'id'          => self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR,
+						'title'       => __( 'Button Background Color', "anycomment" ),
+						'callback'    => 'input_color',
+						'description' => esc_html( __( 'Button background color.', "anycomment" ) )
+					],
+
+					[
+						'id'          => self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR_ACTIVE,
+						'title'       => __( 'Button Background Color Active', "anycomment" ),
+						'callback'    => 'input_color',
+						'description' => esc_html( __( 'Button background color when active.', "anycomment" ) )
 					],
 				]
 			);
@@ -505,6 +623,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 				add_settings_error( $this->alert_key, 'anycomment_message', __( 'Settings Saved', 'anycomment' ), 'updated' );
 			}
 
+			static::applyStyleOnDesignChange();
+
 			settings_errors( $this->alert_key );
 			?>
 			<?php if ( $wrapper ): ?>
@@ -537,31 +657,95 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		}
 
 		/**
-		 * Used to combine SCSS files into one and process
-		 * SCSS via library to convert it into CSS (just for customizing styles).
+		 * Used for customized theme'ing.
+		 *
+		 * It can combine multiple SCSS to one SCSS, convert it to CSS, minify,
+		 * replace images with static from react. About last point read URL below.
 		 *
 		 * @link https://github.com/matthiasmullie/minify can be added later for minifying result CSS for speed-up purposes
 		 *
-		 * @return string
+		 * @return string String on success, false on failure.
 		 */
-		function combineStylesAndProcess() {
+		private static function combineStylesAndProcess() {
 			include_once( AnyComment()->plugin_path() . '/includes/libs/scssphp/scss.inc.php' );
 
-
 			$scss = new \Leafo\ScssPhp\Compiler();
+			$scss->setFormatter( 'Leafo\ScssPhp\Formatter\Crunched' );
 
-			$scssPath = AnyComment()->plugin_path() . '/reactjs/src/scss/';
+			$scssPath = AnyComment()->plugin_path() . '/assets/theming/';
 
-			$content = file_get_contents( $scssPath . 'comments.scss' );
+			$content = trim( file_get_contents( $scssPath . 'comments.scss' ) );
+
+			if ( empty( $content ) ) {
+				return false;
+			}
+
+			/**
+			 * Replace custom styles from plugin
+			 */
+			$hexRegex = '#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})';
 
 			$arr = [
-				'/\$link-color:\s(#[a-z0-9]+);/m' => sprintf( '$link-color: %s;', AnyCommentGenericSettings::getDesignLinkColor() ),
-				'/\$text-color:\s(#[a-z0-9]+);/m' => sprintf( '$text-color: %s;', AnyCommentGenericSettings::getDesignTextColor() ),
+				"/\\$(font-size):\s([0-9].*[px|pt|em]);/m" => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignFontSize() ),
+				"/\\$(font-family):\s(.*?);/m"             => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignFontFamily() ),
+				"/\\$(link-color):\s($hexRegex);/m"        => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignLinkColor() ),
+				"/\\$(text-color):\s($hexRegex);/m"        => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignTextColor() ),
+
+				"/\\$(semi-hidden-color):\s($hexRegex);/m" => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignSemiHiddenColor() ),
+
+				"/\\$(form-field-background-color):\s($hexRegex);/m" => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignFormFieldBackgroundColor() ),
+
+				"/\\$(attachment-color):\s($hexRegex]+);/m"          => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignAttachmentColor() ),
+				"/\\$(attachment-background-color):\s($hexRegex);/m" => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignAttachmentBackgroundColor() ),
+
+				"/\\$(parent-avatar-size):\s(#[0-9].*[pt|px|em]);/m" => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignParentAvatarSize() ),
+				"/\\$(child-avatar-size):\s(#[0-9].*[pt|px|em]);/m"  => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignChildAvatarSize() ),
+
+				"/\\$(btn-radius):\s([0-9].*[px|%]);/m"              => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignButtonRadius() ),
+				"/\\$(btn-color):\s($hexRegex);/m"                   => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignButtonColor() ),
+				"/\\$(btn-background-color):\s($hexRegex);/m"        => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignButtonBackgroundColor() ),
+				"/\\$(btn-background-color-active):\s($hexRegex);/m" => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignButtonBackgroundColorActive() ),
+
+				"/\\$(global-radius):\s([a-z0-9]+[px|%]);/m" => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignGlobalRadius() ),
 			];
 
+
 			foreach ( $arr as $pattern => $replacement ) {
-				$content = preg_replace( $pattern, $replacement, $content );
+				$replacedString = preg_replace( $pattern, $replacement, $content );
+
+				if ( $replacedString !== null ) {
+					$content = $replacedString;
+				}
 			}
+
+			/**
+			 * Replace relative paths of the images in the stylesheet with react-way,
+			 * as there is no way to remove it via react-create-app
+			 * @link https://github.com/facebook/create-react-app/issues/821 for further information
+			 */
+
+			$staticFolder = AnyComment()->plugin_path() . '/static/media/';
+			$assets       = $staticFolder . '*.*';
+
+			$fileAssetList = glob( $assets );
+
+			if ( ! empty( $fileAssetList ) ) {
+				foreach ( $fileAssetList as $key => $assetFullPath ) {
+					preg_match( '/\/media\/(.*)\.[a-z0-9]+\.(svg|png|jpg|jpeg|ico|gif)$/m', $assetFullPath, $matches );
+
+					if ( count( $matches ) !== 3 ) {
+						continue;
+					}
+
+					$fullMatchAndUrl = AnyComment()->plugin_url() . '/static' . $matches[0];
+					$fileName        = $matches[1];
+					$extension       = $matches[2];
+
+					$pattern = "/\.\.\/img\/?(.*?\/)$fileName\.$extension/m";
+					$content = preg_replace( $pattern, $fullMatchAndUrl, $content );
+				}
+			}
+
 
 			if ( strpos( $content, '@import' ) !== null ) {
 				preg_match_all( '/@import\s"([a-z-]+)";/m', $content, $matches );
@@ -583,7 +767,46 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 				}
 			}
 
+			$toastCss = file_get_contents( $scssPath . 'ReactToastify.css' );
+
+			if ( $toastCss !== false ) {
+				$content .= $toastCss;
+			}
+
 			return $scss->compile( $content );
+		}
+
+		public static function applyStyleOnDesignChange() {
+			$hash        = static::getDesignHash();
+			$filePattern = 'main-custom-%s.min.css';
+			$path        = AnyComment()->plugin_path() . '/static/css/';
+
+			$fullPath = $path . sprintf( $filePattern, $hash );
+
+			if ( ! file_exists( $fullPath ) ) {
+
+				// Need to check whether files with such patter already exist and delete
+				// to avoid duplicate unwanted files
+				$oldCustomFiles = glob( $path . sprintf( $filePattern, '*' ) );
+
+				$generatedCss = static::combineStylesAndProcess();
+
+				if ( empty( $generatedCss ) ) {
+					return false;
+				}
+
+				if ( ! empty( $oldCustomFiles ) ) {
+					foreach ( $oldCustomFiles as $key => $oldFile ) {
+						unlink( $oldFile );
+					}
+				}
+
+				$fileSaved = file_put_contents( $fullPath, $generatedCss );
+
+				return $fileSaved !== false;
+			}
+
+			return false;
 		}
 
 		/**
@@ -591,7 +814,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return string
 		 */
-		public function getDesignHash() {
+		public static function getDesignHash() {
 			$items = [];
 
 			$options = static::instance()->getOptions();
@@ -605,6 +828,21 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 			}
 
 			return md5( serialize( $items ) );
+		}
+
+		/**
+		 * Get custom design hash.
+		 *
+		 * @return null|string NULL on failure (when nothing in the design specified yet.
+		 */
+		public static function getCustomDesignStylesheetUrl() {
+			$hash = static::getDesignHash();
+
+			if ( empty( $hash ) ) {
+				return null;
+			}
+
+			return AnyComment()->plugin_url() . sprintf( '/static/css/main-custom-%s.min.css', $hash );
 		}
 
 
@@ -790,18 +1028,21 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		}
 
 		/**
+		 * Enable custom design.
+		 *
+		 * @return bool
+		 */
+		public static function isDesignCustom() {
+			return static::instance()->getOption( self::OPTION_DESIGN_CUSTOM_TOGGLE ) !== null;
+		}
+
+		/**
 		 * Get design font size.
 		 *
 		 * @return string|null
 		 */
 		public static function getDesignFontSize() {
-			$value = static::instance()->getOption( self::OPTION_DESIGN_FONT_SIZE );
-
-			if ( strpos( $value, 'px' ) === false && strpos( $value, 'pt' ) === false && strpos( $value, 'em' ) === false ) {
-				return $value . 'px';
-			}
-
-			return $value;
+			return AnyCommentInputHelper::getSizeForCss( static::instance()->getOption( self::OPTION_DESIGN_FONT_SIZE ) );
 		}
 
 		/**
@@ -819,7 +1060,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 * @return string|null
 		 */
 		public static function getDesignSemiHiddenColor() {
-			return static::instance()->getOption( self::OPTION_DESIGN_SEMI_HIDDEN_COLOR );
+			return AnyCommentInputHelper::getHexForCss( static::instance()->getOption( self::OPTION_DESIGN_SEMI_HIDDEN_COLOR ) );
 		}
 
 
@@ -829,7 +1070,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 * @return string|null
 		 */
 		public static function getDesignLinkColor() {
-			return static::instance()->getOption( self::OPTION_DESIGN_LINK_COLOR );
+			return AnyCommentInputHelper::getHexForCss( static::instance()->getOption( self::OPTION_DESIGN_LINK_COLOR ) );
 		}
 
 		/**
@@ -838,7 +1079,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 * @return string|null
 		 */
 		public static function getDesignTextColor() {
-			return static::instance()->getOption( self::OPTION_DESIGN_TEXT_COLOR );
+			return AnyCommentInputHelper::getHexForCss( static::instance()->getOption( self::OPTION_DESIGN_TEXT_COLOR ) );
 		}
 
 		/**
@@ -847,7 +1088,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 * @return string|null
 		 */
 		public static function getDesignFormFieldBackgroundColor() {
-			return static::instance()->getOption( self::OPTION_DESIGN_FORM_FIELD_BACKGROUND_COLOR );
+			return AnyCommentInputHelper::getHexForCss( static::instance()->getOption( self::OPTION_DESIGN_FORM_FIELD_BACKGROUND_COLOR ) );
 		}
 
 		/**
@@ -856,7 +1097,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 * @return string|null
 		 */
 		public static function getDesignAttachmentColor() {
-			return static::instance()->getOption( self::OPTION_DESIGN_ATTACHMENT_COLOR );
+			return AnyCommentInputHelper::getHexForCss( static::instance()->getOption( self::OPTION_DESIGN_ATTACHMENT_COLOR ) );
 		}
 
 		/**
@@ -865,7 +1106,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 * @return string|null
 		 */
 		public static function getDesignAttachmentBackgroundColor() {
-			return static::instance()->getOption( self::OPTION_DESIGN_ATTACHMENT_BACKGROUND_COLOR );
+			return AnyCommentInputHelper::getHexForCss( static::instance()->getOption( self::OPTION_DESIGN_ATTACHMENT_BACKGROUND_COLOR ) );
 		}
 
 		/**
@@ -874,7 +1115,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 * @return string|null
 		 */
 		public static function getDesignParentAvatarSize() {
-			return static::instance()->getOption( self::OPTION_DESIGN_PARENT_AVATAR_SIZE );
+			return AnyCommentInputHelper::getSizeForCss( static::instance()->getOption( self::OPTION_DESIGN_PARENT_AVATAR_SIZE ) );
 		}
 
 		/**
@@ -883,7 +1124,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 * @return string|null
 		 */
 		public static function getDesignChildAvatarSize() {
-			return static::instance()->getOption( self::OPTION_DESIGN_CHILD_AVATAR_SIZE );
+			return AnyCommentInputHelper::getSizeForCss( static::instance()->getOption( self::OPTION_DESIGN_CHILD_AVATAR_SIZE ) );
 		}
 
 		/**
@@ -892,7 +1133,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 * @return string|null
 		 */
 		public static function getDesignButtonColor() {
-			return static::instance()->getOption( self::OPTION_DESIGN_BUTTON_COLOR );
+			return AnyCommentInputHelper::getHexForCss( static::instance()->getOption( self::OPTION_DESIGN_BUTTON_COLOR ) );
 		}
 
 		/**
@@ -901,7 +1142,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 * @return string|null
 		 */
 		public static function getDesignButtonBackgroundColor() {
-			return static::instance()->getOption( self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR );
+			return AnyCommentInputHelper::getHexForCss( static::instance()->getOption( self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR ) );
 		}
 
 		/**
@@ -910,7 +1151,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 * @return string|null
 		 */
 		public static function getDesignButtonBackgroundColorActive() {
-			return static::instance()->getOption( self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR_ACTIVE );
+			return AnyCommentInputHelper::getHexForCss( static::instance()->getOption( self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR_ACTIVE ) );
 		}
 
 		/**
@@ -919,7 +1160,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 * @return string|null
 		 */
 		public static function getDesignButtonRadius() {
-			return static::instance()->getOption( self::OPTION_DESIGN_BUTTON_RADIUS );
+			return AnyCommentInputHelper::getSizeForCss( static::instance()->getOption( self::OPTION_DESIGN_BUTTON_RADIUS ) );
 		}
 
 		/**
@@ -928,7 +1169,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 * @return string|null
 		 */
 		public static function getDesignGlobalRadius() {
-			return static::instance()->getOption( self::OPTION_DESIGN_GLOBAL_RADIUS );
+			return AnyCommentInputHelper::getSizeForCss( static::instance()->getOption( self::OPTION_DESIGN_GLOBAL_RADIUS ) );
 		}
 
 		/**
