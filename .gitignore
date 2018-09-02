@@ -2,3 +2,4 @@
 *.css.map
 node_modules
 cache
+static/css/main-custom-*.min.css
