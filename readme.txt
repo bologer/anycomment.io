@@ -48,8 +48,9 @@ Yes! Join us at [GitHub](https://github.com/bologer/anycomment.io)
 * All comments stored in your own database. We reuse native comment's table, so all of the default WordPress functionality comes out of the box.
 * Social network authorization via Facebook, VK, Twitter, Google, Odnoklassniki, GitHub, Instagram, Twitch or Dribble
 * Ability to define type of form: guests only, with social authorization or both
+* Ability to upload files (define allowed extensions, limit, uploads by guests, etc)
 * Plugin is translated into English & Russian
-* Suitable for dark & light themes
+* Suitable for dark & light themes or customize it yourself
 * Blazing-fast comments based on React & WordPress REST API
 * Alert notification in comment area when new comment was added (by clicking on alert, new comment will be shown)
 * Ability to send email on new comment reply
@@ -69,7 +70,6 @@ Yes! Join us at [GitHub](https://github.com/bologer/anycomment.io)
 * Integration with [Akismet](https://wordpress.org/plugins/akismet/), [WP Mail SMTP](https://wordpress.org/plugins/wp-mail-smtp/) and [WP User Avatar](https://wordpress.org/plugins/wp-user-avatar/), to specify customized avatars
 
 = TODO features =
-* Option: customization of comment styles
 * Option: ability to specify thanks message and/or page when user left his first comment, #88
 * Option: display matching links as attachments in comment, #87
 * Option: ability to set default sorting, #84
@@ -79,7 +79,6 @@ Yes! Join us at [GitHub](https://github.com/bologer/anycomment.io)
 * Ability to choose comment to make it sticky at the very top of all comments, #76
 * Add checkbox to subscribe to new replies, #73 (now it is mandatory)
 * Option: Ability to ban user or by IP address, #70
-* Ability to upload images, #68
 * Support more languages
 * Code highlighting
 * Markdown support
@@ -173,25 +172,25 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Enhancements:**
 
+* Ability to customize styles of the plugin in the frontend (e.g. color of button, text size, color, avatar sizes, etc). Check out "Settings" -> "Design" tab , #113
 * Files: attach files by dragging into the comment area, #68
 * Files: attach files via by clicking on small photo icon in the top right of the comment text field, #68
 * Files: ability to allow/disallow file upload by guest users, #68
-* Files: plugin will add URL of the uploaded file to the comment field (when there is already some comment entered, URL will be appended), #68
-* Files: option to define comma-separated list of allowed MIME types (e.g. .jpg, .png) or even image/* for all images and audio/* for audios, #68
+* Files: plugin will add URL of the uploaded file to the comment field (when there is already some comment text, URL will be appended), #68
+* Files: option to define comma-separated list of allowed MIME types (e.g. .jpg, .png) or even as image/* for all images and audio/* for audios, #68
 * Files: added list of uploaded files in the admin (possible to delete, paginate, etc), #68
-* When user user to logout native WordPress logout link, now he is going to be redirected back to post, instead of login page, #122
-* Added some text above social login list as some of the users were confused and thought that it was sharing buttons, #123
-* Added "Possible Problems" to dashboard to help admin figure out about possible problems or conflicts with other plugins (e.g. some plugins may disable REST API, which is crucial), #117
-
-TBD
+* When user logs out from admin top bar or somewhere else, he is going to be redirected back to post comment section instead of a login page, #122
+* Added some text above list social icons as some of the users were confused and thought these were sharing buttons, #123
+* Added "Possible Problems" to dashboard to help admin to figure out about possible problems or conflicts with other plugins, #117
+* When some comment is remembered the comment field will expand automatically after the page has loaded
 
 **Fixes:**
 
-* Fixed links on white theme being colored as for dark theme
+* Fixed issue when white theme had white links
 * Fixed default options overwrite, before default values were not applied
 * Fixed missing Russian translation when user is guest and only has option to authorize using social
-* Some themes have hash navigation to comments as #respond, #124
-* When some comment was remembered, on the page refresh comment field will expand automatically now
+* Some themes have hash navigation to comments as "#respond", so it was added, #124
+* Removed hash from "Callback URL" as Google does not allow it, #119
 
 = 0.0.51 – 28.08.2018 =
 

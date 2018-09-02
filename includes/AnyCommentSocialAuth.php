@@ -110,7 +110,13 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 			if ( $redirect !== null ) {
 				setcookie( $cookie_redirect, $redirect, time() + 3600 );
 			} else {
-				$redirect = isset( $_COOKIE[ $cookie_redirect ] ) ? $_COOKIE[ $cookie_redirect ] : '/';
+				$redirectCookie = isset( $_COOKIE[ $cookie_redirect ] ) ? $_COOKIE[ $cookie_redirect ] : null;
+
+				if ( $redirectCookie !== null && strpos( $redirectCookie, '#' ) === false ) {
+					$redirectCookie .= '#comments';
+				}
+
+				$redirect = $redirectCookie !== null ? $redirectCookie : '/';
 			}
 
 			try {
@@ -121,8 +127,6 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 				wp_redirect( $redirect );
 				exit();
 			}
-
-			$tokens = $adapter->getAccessToken();
 
 			$user = $adapter->getUserProfile();
 
@@ -412,7 +416,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		 *
 		 * @return string
 		 */
-		public static function get_callback_url( $social_type, $redirect = null, $addHash = true ) {
+		public static function get_callback_url( $social_type, $redirect = null, $addHash = false ) {
 			$url = static::get_rest_namespace() . "/auth/" . $social_type;
 
 			if ( $redirect !== null ) {
@@ -690,7 +694,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 
 			if ( is_numeric( $id_or_email ) ) {
 				$userId = $id_or_email;
-			} elseif ( is_string( $id_or_email ) && ($user = get_user_by( 'email', $id_or_email )) !== null ) {
+			} elseif ( is_string( $id_or_email ) && ( $user = get_user_by( 'email', $id_or_email ) ) !== null ) {
 				$userId = $user->ID;
 			} elseif ( $id_or_email instanceof WP_User ) {
 				$userId = $id_or_email->ID;
