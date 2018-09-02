@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-01 13:49+0000\n"
+"POT-Creation-Date: 2018-09-02 19:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -34,8 +34,8 @@ msgstr ""
 msgid "For post <a href=\"%s\">%s</a>"
 msgstr ""
 
-#: includes/AnyCommentEmailQueue.php:342 includes/AnyCommentRender.php:119
-#: includes/AnyCommentRender.php:127
+#: includes/AnyCommentEmailQueue.php:342 includes/AnyCommentRender.php:128
+#: includes/AnyCommentRender.php:136
 msgid "Reply"
 msgstr ""
 
@@ -48,7 +48,7 @@ msgstr ""
 msgid "See"
 msgstr ""
 
-#: includes/AnyCommentSocialAuth.php:120
+#: includes/AnyCommentSocialAuth.php:126
 msgid "Unable to authorize, please try again later"
 msgstr ""
 
@@ -102,138 +102,138 @@ msgstr ""
 msgid "Yahoo"
 msgstr ""
 
-#: includes/AnyCommentRender.php:114
+#: includes/AnyCommentRender.php:123
 msgid "Oops, something went wrong..."
 msgstr ""
 
-#: includes/AnyCommentRender.php:115
+#: includes/AnyCommentRender.php:124
 msgid "Loading..."
 msgstr ""
 
-#: includes/AnyCommentRender.php:116
+#: includes/AnyCommentRender.php:125
 msgid "Load more"
 msgstr ""
 
-#: includes/AnyCommentRender.php:117
+#: includes/AnyCommentRender.php:126
 msgid "Send"
 msgstr ""
 
-#: includes/AnyCommentRender.php:118
-#: includes/admin/AnyCommentAdminOptions.php:225
-#: includes/admin/AnyCommentGenericSettings.php:489
+#: includes/AnyCommentRender.php:127
+#: includes/admin/AnyCommentAdminOptions.php:244
+#: includes/admin/AnyCommentGenericSettings.php:648
 #: includes/admin/AnyCommentSocialSettings.php:627
 msgid "Save"
 msgstr ""
 
-#: includes/AnyCommentRender.php:120
+#: includes/AnyCommentRender.php:129
 msgid "Sort By"
 msgstr ""
 
-#: includes/AnyCommentRender.php:121
+#: includes/AnyCommentRender.php:130
 msgid "Oldest"
 msgstr ""
 
-#: includes/AnyCommentRender.php:122
+#: includes/AnyCommentRender.php:131
 msgid "Newest"
 msgstr ""
 
-#: includes/AnyCommentRender.php:123
+#: includes/AnyCommentRender.php:132
 msgid "Reply to"
 msgstr ""
 
-#: includes/AnyCommentRender.php:124
+#: includes/AnyCommentRender.php:133
 msgid "Your comment..."
 msgstr ""
 
-#: includes/AnyCommentRender.php:125
+#: includes/AnyCommentRender.php:134
 msgid "No comments to display"
 msgstr ""
 
-#: includes/AnyCommentRender.php:126
+#: includes/AnyCommentRender.php:135
 msgid "Add Anycomment to your site"
 msgstr ""
 
-#: includes/AnyCommentRender.php:128
+#: includes/AnyCommentRender.php:137
 msgid "Edit"
 msgstr ""
 
-#: includes/AnyCommentRender.php:129
+#: includes/AnyCommentRender.php:138
 #: includes/admin/tables/AnyCommentUploadedFilesTable.php:145
 msgid "Delete"
 msgstr ""
 
-#: includes/AnyCommentRender.php:130
+#: includes/AnyCommentRender.php:139
 msgid "Cancel"
 msgstr ""
 
-#: includes/AnyCommentRender.php:131
+#: includes/AnyCommentRender.php:140
 msgid "Quick Login"
 msgstr ""
 
-#: includes/AnyCommentRender.php:132
+#: includes/AnyCommentRender.php:141
 msgid "New comment was added"
 msgstr ""
 
-#: includes/AnyCommentRender.php:133
+#: includes/AnyCommentRender.php:142
 msgid "Author"
 msgstr ""
 
-#: includes/AnyCommentRender.php:134
+#: includes/AnyCommentRender.php:143
 msgid "Name"
 msgstr ""
 
-#: includes/AnyCommentRender.php:135
+#: includes/AnyCommentRender.php:144
 msgid "Email"
 msgstr ""
 
-#: includes/AnyCommentRender.php:136
+#: includes/AnyCommentRender.php:145
 msgid "Website"
 msgstr ""
 
-#: includes/AnyCommentRender.php:138
+#: includes/AnyCommentRender.php:147
 #, php-format
 msgid "I accept the <a href=\"%s\"%s>User Agreement</a>"
 msgstr ""
 
-#: includes/AnyCommentRender.php:142
+#: includes/AnyCommentRender.php:151
 msgid "Upload file"
 msgstr ""
 
-#: includes/AnyCommentRender.php:143
+#: includes/AnyCommentRender.php:152
 msgid "Uploading..."
 msgstr ""
 
-#: includes/AnyCommentRender.php:144
+#: includes/AnyCommentRender.php:153
 msgid "Uploaded!"
 msgstr ""
 
-#: includes/AnyCommentRender.php:145
+#: includes/AnyCommentRender.php:154
 #, php-format
 msgid "File %s is too big"
 msgstr ""
 
-#: includes/AnyCommentRender.php:146
+#: includes/AnyCommentRender.php:155
 #, php-format
 msgid "You may upload %s file(s) at maximum"
 msgstr ""
 
-#: includes/AnyCommentRender.php:147
+#: includes/AnyCommentRender.php:156
 msgid "No file selected or select proper extension"
 msgstr ""
 
-#: includes/AnyCommentRender.php:216
+#: includes/AnyCommentRender.php:225
 #, php-format
 msgid "%s Comments"
 msgstr ""
 
 #: includes/admin/AnyCommentFiles.php:25 includes/admin/AnyCommentFiles.php:26
-#: includes/admin/AnyCommentGenericSettings.php:252
+#: includes/admin/AnyCommentGenericSettings.php:303
 #: templates/admin/files.php:12
 msgid "Files"
 msgstr ""
 
 #: includes/admin/AnyCommentIntegrationSettings.php:72
-#: includes/admin/AnyCommentGenericSettings.php:224
+#: includes/admin/AnyCommentGenericSettings.php:275
 msgid "Generic"
 msgstr ""
 
@@ -264,259 +264,393 @@ msgid ""
 "Use <a href=\"%s\">WP User Avatar</a> for handling avatars in the plugin."
 msgstr ""
 
-#: includes/admin/AnyCommentAdminOptions.php:212
-#: includes/admin/AnyCommentGenericSettings.php:468
+#: includes/admin/AnyCommentAdminOptions.php:231
+#: includes/admin/AnyCommentGenericSettings.php:623
 #: includes/admin/AnyCommentSocialSettings.php:605
 msgid "Settings Saved"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:209
-#: includes/admin/AnyCommentGenericSettings.php:289
+#: includes/admin/AnyCommentGenericSettings.php:260
+#: includes/admin/AnyCommentGenericSettings.php:340
 msgid "Social Network Subscriber"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:231
+#: includes/admin/AnyCommentGenericSettings.php:282
 msgid "Design"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:238
+#: includes/admin/AnyCommentGenericSettings.php:289
 msgid "Moderation"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:245
+#: includes/admin/AnyCommentGenericSettings.php:296
 msgid "Notifications"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:264
+#: includes/admin/AnyCommentGenericSettings.php:315
 msgid "Enable Comments"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:266
+#: includes/admin/AnyCommentGenericSettings.php:317
 msgid ""
 "When on, comments are visible. When off, default WordPress' comments shown. "
 "This can be used to configure social networks on fresh installation."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:270
-#: includes/admin/AnyCommentGenericSettings.php:272
+#: includes/admin/AnyCommentGenericSettings.php:321
+#: includes/admin/AnyCommentGenericSettings.php:323
 msgid "Comment form"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:275
+#: includes/admin/AnyCommentGenericSettings.php:326
 msgid "Social, WordPress & guests"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:276
+#: includes/admin/AnyCommentGenericSettings.php:327
 msgid "Socials & WordPress users only."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:277
+#: includes/admin/AnyCommentGenericSettings.php:328
 msgid "Guests only. "
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:283
+#: includes/admin/AnyCommentGenericSettings.php:334
 msgid "Register User Group"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:285
+#: includes/admin/AnyCommentGenericSettings.php:336
 msgid ""
 "When users will authorize via plugin, they are being registered and be "
 "assigned with group selected above."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:288
+#: includes/admin/AnyCommentGenericSettings.php:339
 msgid "Subscriber"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:295
+#: includes/admin/AnyCommentGenericSettings.php:346
 msgid "Number of Comments Loaded"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:297
+#: includes/admin/AnyCommentGenericSettings.php:348
 msgid "Number of comments to load initially and per page."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:301
+#: includes/admin/AnyCommentGenericSettings.php:352
 msgid "Load on Scroll"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:303
+#: includes/admin/AnyCommentGenericSettings.php:354
 msgid "Load comments when user scrolls to it."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:308
+#: includes/admin/AnyCommentGenericSettings.php:359
 msgid "Show Profile URL"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:310
+#: includes/admin/AnyCommentGenericSettings.php:361
 msgid ""
 "Show link to user in the social media when available (name of the user will "
 "be clickable)."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:315
+#: includes/admin/AnyCommentGenericSettings.php:366
 msgid "Display Video Attachments"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:317
+#: includes/admin/AnyCommentGenericSettings.php:368
 msgid "Display video link from comment as attachment."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:322
+#: includes/admin/AnyCommentGenericSettings.php:373
 msgid "Display Image Attachments"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:324
+#: includes/admin/AnyCommentGenericSettings.php:375
 msgid "Display image link from comment as attachment."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:329
+#: includes/admin/AnyCommentGenericSettings.php:380
 msgid "Links Clickable"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:331
+#: includes/admin/AnyCommentGenericSettings.php:382
 msgid "Links in comment are clickable."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:336
+#: includes/admin/AnyCommentGenericSettings.php:387
 msgid "User Agreement Link"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:338
+#: includes/admin/AnyCommentGenericSettings.php:389
 msgid ""
 "Link to User Agreement, where described how your process users data once "
 "they authorize via social network and/or add new comment."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:342
+#: includes/admin/AnyCommentGenericSettings.php:393
 msgid "Thanks"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:344
+#: includes/admin/AnyCommentGenericSettings.php:395
 msgid ""
 "Show AnyComment's link in the footer of comments. Copyright helps to bring "
 "awareness of such plugin and bring people to allow us to understand that it "
 "is a wanted product and give more often updated."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:355
+#: includes/admin/AnyCommentGenericSettings.php:406
 msgid "Theme"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:359
+#: includes/admin/AnyCommentGenericSettings.php:410
 msgid "Dark"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:360
+#: includes/admin/AnyCommentGenericSettings.php:411
 msgid "Light"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:363
+#: includes/admin/AnyCommentGenericSettings.php:414
 msgid "Choose comments theme."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:374
+#: includes/admin/AnyCommentGenericSettings.php:418
+msgid "Custom Design"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:420
+msgid ""
+"Use custom design. Enable this option to display design changes from below."
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:424
+msgid "Border radius"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:426
+msgid "Border radius. You may use \"px\" or \"%\"."
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:430
+msgid "Text Size"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:432
+msgid "Overal text size. You may use \"px\", \"pt\", \"em\" or \"%\"."
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:436
+msgid "Font Choice"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:438
+msgid "Global font family."
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:443
+msgid "Text Color"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:445
+msgid "Global text color."
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:449
+msgid "Link Color"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:451
+msgid "Links color."
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:455
+msgid "Semi Hidden Color"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:457
+msgid "Semi hidden color. This is used for dates, action links, etc."
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:461
+msgid "Form Fields Background"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:463
+msgid "Form fields background color."
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:468
+msgid "Attachment Text Color"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:470
+msgid ""
+"Attachments text color. For example, YouTube attachments do not have "
+"previews, instead they have \"YouTube\" text over."
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:475
+msgid "Attachment Background Color"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:477
+msgid ""
+"Attachment background color. For example, user may attach PNG image with "
+"transparent background. This color will be used as background behind the "
+"image."
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:482
+msgid "Avatar Parent Size"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:484
+msgid "Parent comment avatar size."
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:489
+msgid "Avatar Child Size"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:491
+msgid "Child comment avatar size. Usually, this is reply comment."
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:496
+msgid "Button Radius"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:498
+msgid "Button border radius."
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:502
+msgid "Button Color"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:504
+msgid "Button text color."
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:509
+msgid "Button Background Color"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:511
+msgid "Button background color."
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:516
+msgid "Button Background Color Active"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:518
+msgid "Button background color when hovered or focused."
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:529
 msgid "Moderate First"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:376
+#: includes/admin/AnyCommentGenericSettings.php:531
 msgid "Moderators should check comment before it appears."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:380
+#: includes/admin/AnyCommentGenericSettings.php:535
 msgid "Spam Words"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:382
+#: includes/admin/AnyCommentGenericSettings.php:537
 msgid ""
 "Comment should be marked for moderation when matched word from this list of "
 "comma-separated values."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:393
+#: includes/admin/AnyCommentGenericSettings.php:548
 msgid "New Comment Alert"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:395
+#: includes/admin/AnyCommentGenericSettings.php:550
 msgid ""
 "Show hint about new comment when user is on the comments page. Once clicked "
 "on alert, new comment will be displayed."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:399
+#: includes/admin/AnyCommentGenericSettings.php:554
 msgid "New Comment Interval Checking"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:401
+#: includes/admin/AnyCommentGenericSettings.php:556
 msgid ""
 "Interval (in seconds) to check for new comments. Minimum 5 and maximum is "
 "100 seconds."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:405
+#: includes/admin/AnyCommentGenericSettings.php:560
 msgid "Notify Administrator"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:407
+#: includes/admin/AnyCommentGenericSettings.php:562
 msgid "Notify administrator via email about new comment."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:411
+#: includes/admin/AnyCommentGenericSettings.php:566
 msgid "Email Notifications"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:413
+#: includes/admin/AnyCommentGenericSettings.php:568
 msgid ""
 "Notify users by email (if specified) about new replies. Make sure you have "
 "proper SMTP configurations in order to send emails."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:424
+#: includes/admin/AnyCommentGenericSettings.php:579
 msgid "File Upload By Guests"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:426
+#: includes/admin/AnyCommentGenericSettings.php:581
 msgid ""
 "Guest users can upload documents. Please be careful about this setting as "
 "some users may potentially misuse this and periodically upload unwanted "
 "files."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:430
+#: includes/admin/AnyCommentGenericSettings.php:585
 msgid "File MIME Types"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:432
+#: includes/admin/AnyCommentGenericSettings.php:587
 msgid ""
 "Comman-separated list of allowed MIME types (e.g. .png, .jpg, etc). "
 "Alternatively, you may write \"image/*\" for all image types or \"audio/*\" "
 "for audios."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:436
+#: includes/admin/AnyCommentGenericSettings.php:591
 msgid "File Upload Limit"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:438
+#: includes/admin/AnyCommentGenericSettings.php:593
 msgid ""
 "Maximum number of files to upload per period defined in the field below."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:442
+#: includes/admin/AnyCommentGenericSettings.php:597
 msgid "File Upload Limit Period"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:444
+#: includes/admin/AnyCommentGenericSettings.php:599
 msgid ""
 "If user will cross the limit (defined above) within specified period (in "
 "seconds) in this field, he will be give a warning."
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:448
+#: includes/admin/AnyCommentGenericSettings.php:603
 msgid "File Size"
 msgstr ""
 
-#: includes/admin/AnyCommentGenericSettings.php:450
+#: includes/admin/AnyCommentGenericSettings.php:605
 msgid ""
 "Maximum allowed file size in megabytes. For example, regular PNG image is "
 "about ~ 1.5-2MB, JPEG are even smaller."
@@ -1270,6 +1404,10 @@ msgid ""
 "Please do not treat every notice below as a problem. They are generated "
 "based on the plugins you use, based on the WordPress version you run and "
 "environment you have. They should be treated as suggestions."
+msgstr ""
+
+#: templates/admin/notifications.php:17
+msgid "Good job! It looks like everything is okay."
 msgstr ""
 
 #: templates/admin/tab-dashboard.php:6 templates/admin/tab-dashboard.php:10

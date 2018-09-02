@@ -423,19 +423,19 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'id'          => self::OPTION_DESIGN_GLOBAL_RADIUS,
 						'title'       => __( 'Border radius', "anycomment" ),
 						'callback'    => 'input_text',
-						'description' => esc_html( __( 'Border radius.', "anycomment" ) )
+						'description' => esc_html( __( 'Border radius. You may use "px" or "%".', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_DESIGN_FONT_SIZE,
-						'title'       => __( 'Font Size', "anycomment" ),
+						'title'       => __( 'Text Size', "anycomment" ),
 						'callback'    => 'input_text',
-						'description' => esc_html( __( 'Global font size.', "anycomment" ) )
+						'description' => esc_html( __( 'Overal text size. You may use "px", "pt", "em" or "%".', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_DESIGN_FONT_FAMILY,
-						'title'       => __( 'Font', "anycomment" ),
+						'title'       => __( 'Font Choice', "anycomment" ),
 						'callback'    => 'input_text',
-						'description' => esc_html( __( 'Global family.', "anycomment" ) )
+						'description' => esc_html( __( 'Global font family.', "anycomment" ) )
 					],
 
 					[
@@ -454,7 +454,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'id'          => self::OPTION_DESIGN_SEMI_HIDDEN_COLOR,
 						'title'       => __( 'Semi Hidden Color', "anycomment" ),
 						'callback'    => 'input_color',
-						'description' => esc_html( __( 'Semi hidden color. Used for dates, actions (e.g. reply, edit, etc).', "anycomment" ) )
+						'description' => esc_html( __( 'Semi hidden color. This is used for dates, action links, etc.', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_DESIGN_FORM_FIELD_BACKGROUND_COLOR,
@@ -467,28 +467,28 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'id'          => self::OPTION_DESIGN_ATTACHMENT_COLOR,
 						'title'       => __( 'Attachment Text Color', "anycomment" ),
 						'callback'    => 'input_color',
-						'description' => esc_html( __( 'Attachment text color.', "anycomment" ) )
+						'description' => esc_html( __( 'Attachments text color. For example, YouTube attachments do not have previews, instead they have "YouTube" text over.', "anycomment" ) )
 					],
 
 					[
 						'id'          => self::OPTION_DESIGN_ATTACHMENT_BACKGROUND_COLOR,
 						'title'       => __( 'Attachment Background Color', "anycomment" ),
 						'callback'    => 'input_color',
-						'description' => esc_html( __( 'Attachment background color.', "anycomment" ) )
+						'description' => esc_html( __( 'Attachment background color. For example, user may attach PNG image with transparent background. This color will be used as background behind the image.', "anycomment" ) )
 					],
 
 					[
 						'id'          => self::OPTION_DESIGN_PARENT_AVATAR_SIZE,
 						'title'       => __( 'Avatar Parent Size', "anycomment" ),
 						'callback'    => 'input_text',
-						'description' => esc_html( __( 'Parent avatar size (main comment).', "anycomment" ) )
+						'description' => esc_html( __( 'Parent comment avatar size.', "anycomment" ) )
 					],
 
 					[
 						'id'          => self::OPTION_DESIGN_CHILD_AVATAR_SIZE,
 						'title'       => __( 'Avatar Child Size', "anycomment" ),
 						'callback'    => 'input_text',
-						'description' => esc_html( __( 'Child avatar size (inside reply).', "anycomment" ) )
+						'description' => esc_html( __( 'Child comment avatar size. Usually, this is reply comment.', "anycomment" ) )
 					],
 
 					[
@@ -515,7 +515,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'id'          => self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR_ACTIVE,
 						'title'       => __( 'Button Background Color Active', "anycomment" ),
 						'callback'    => 'input_color',
-						'description' => esc_html( __( 'Button background color when active.', "anycomment" ) )
+						'description' => esc_html( __( 'Button background color when hovered or focused.', "anycomment" ) )
 					],
 				]
 			);
