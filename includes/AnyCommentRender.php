@@ -76,9 +76,9 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 		public function override_comment() {
 			wp_enqueue_script( 'anycomment-react', AnyComment()->plugin_url() . '/static/js/main.min.js', [], AnyComment()->version );
 
-
 			if ( AnyCommentGenericSettings::isDesignCustom() ) {
-				$url  = AnyCommentGenericSettings::getCustomDesignStylesheetUrl();
+				$url = AnyCommentGenericSettings::getCustomDesignStylesheetUrl();
+
 				wp_enqueue_style( 'anycomment-custom-styles', $url, [], AnyComment()->version );
 			} else {
 				wp_enqueue_style( 'anycomment-styles', AnyComment()->plugin_url() . '/static/css/main.min.css', [], AnyComment()->version );

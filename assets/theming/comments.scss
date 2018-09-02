@@ -155,7 +155,7 @@ $global-radius: 4px;
     &-supheader {
       width: 100%;
       position: relative;
-      font-size: 15px;
+      font-size: $font-size;
       margin-bottom: 20px;
 
       &__count,
@@ -169,7 +169,7 @@ $global-radius: 4px;
 
       &__dropdown {
         float: right;
-        color: #000;
+        color: $text-color;
 
         &-header {
           cursor: pointer;
@@ -208,8 +208,8 @@ $global-radius: 4px;
           top: 20px;
           right: 0;
           z-index: 5;
-          border: 1px solid #aab4b7;
-          background-color: #fff;
+          border: 1px solid $semi-hidden-color;
+          background-color: $form-field-background-color;
           padding: 7px 10px;
           @include border-radius($global-radius);
 
@@ -242,9 +242,9 @@ $global-radius: 4px;
     &-body {
 
       &-reply {
-        font-size: 12px;
+        font-size: $font-size - 2;
         span {
-          color: #ec4568;
+          color: $link-color;
           font-weight: bold;
           padding: 2px 5px;
           display: inline-block;
@@ -265,7 +265,7 @@ $global-radius: 4px;
         position: relative;
         overflow: hidden;
         max-height: 300px;
-        background-color: #fff;
+        background-color: $form-field-background-color;
         margin-bottom: 10px;
         position: relative;
         @include border-radius($global-radius);
@@ -398,8 +398,8 @@ $global-radius: 4px;
 
       .anycomment-form-guest {
         &__header {
-          font-size: 9px;
-          color: #a0a0a0;
+          font-size: $font-size - 6;
+          color: $semi-hidden-color;
           text-transform: uppercase
         }
 
@@ -488,12 +488,12 @@ $global-radius: 4px;
                 height: 16px;
                 width: 16px;
                 @include border-radius(2px);
-                background-color: #747b7e;
+                background-color: $semi-hidden-color;
               }
 
               /* On mouse-over, add a grey background color */
               &:hover input ~ .checkmark {
-                background-color: darken(#686868, 2%);
+                background-color: darken($semi-hidden-color, 5%);
               }
 
               /* When the checkbox is checked, add a blue background */
@@ -546,7 +546,7 @@ $global-radius: 4px;
           label {
             color: $text-color;
             font-weight: 700;
-            font-size: 12px;
+            font-size: $font-size - 3;
             margin-bottom: 2px;
             line-height: 1.3;
             display: block;
@@ -568,7 +568,7 @@ $global-radius: 4px;
             height: 31px !important;
             line-height: 31px !important;
             padding: 0 5px !important;
-            font-size: 11px;
+            font-size: $font-size - 4;
             text-align: left;
             @include border-radius($global-radius);
 
@@ -596,7 +596,7 @@ $global-radius: 4px;
     border-top: 2px solid #e4e2e7;
 
     &, a {
-      color: #cccccd;
+      color: $semi-hidden-color
     }
 
     a:hover,
@@ -666,7 +666,7 @@ $global-radius: 4px;
       }
 
       &-body {
-        padding-left: 90px;
+        padding-left: $parent-avatar-size + 20;
 
         &-header {
 
@@ -683,7 +683,7 @@ $global-radius: 4px;
 
             &-owner {
               background-color: $btn-background-color;
-              color: #fff;
+              color: $btn-color;
               font-size: 10.2px;
               padding: 2px 5px;
               margin-left: 10px;
@@ -697,7 +697,7 @@ $global-radius: 4px;
             }
 
             &-answered {
-              color: #a7b4ba;
+              color: $semi-hidden-color;
             }
           }
 
@@ -777,7 +777,7 @@ $global-radius: 4px;
               white-space: nowrap;
               text-overflow: ellipsis;
               padding: 0 2px;
-              font-size: 8px;
+              font-size: $font-size - 7;
               font-weight: bold;
               user-select: none;
               color: darken($attachment-color, 15%);
@@ -794,7 +794,8 @@ $global-radius: 4px;
             }
 
             .comment-attachment__image {
-              background-size: cover;
+              background-size: 100%;
+              background-repeat: no-repeat;
               background-position: center center;
             }
           }
@@ -865,7 +866,7 @@ $global-radius: 4px;
 
     // Child comments
     &-child {
-      margin-left: 90px;
+      margin-left: $parent-avatar-size + 20;
 
       .comment-single {
         &-avatar {
@@ -876,7 +877,7 @@ $global-radius: 4px;
         }
 
         &-body {
-          padding-left: 66px;
+          padding-left: $child-avatar-size + 10;
 
           .comment-attachments {
             li {
@@ -884,7 +885,7 @@ $global-radius: 4px;
                 width: 40px;
                 height: 40px;
                 line-height: 40px;
-                font-size: 6px;
+                font-size: $font-size - 9;
               }
             }
           }

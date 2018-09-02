@@ -417,7 +417,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'id'          => self::OPTION_DESIGN_CUSTOM_TOGGLE,
 						'title'       => __( 'Custom Design', "anycomment" ),
 						'callback'    => 'input_checkbox',
-						'description' => esc_html( __( 'Use custom design.', "anycomment" ) )
+						'description' => esc_html( __( 'Use custom design. Enable this option to display design changes from below.', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_DESIGN_GLOBAL_RADIUS,
@@ -623,7 +623,9 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 				add_settings_error( $this->alert_key, 'anycomment_message', __( 'Settings Saved', 'anycomment' ), 'updated' );
 			}
 
-			static::applyStyleOnDesignChange();
+			if ( AnyCommentGenericSettings::isDesignCustom() ) {
+				static::applyStyleOnDesignChange();
+			}
 
 			settings_errors( $this->alert_key );
 			?>
@@ -667,11 +669,6 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 * @return string String on success, false on failure.
 		 */
 		private static function combineStylesAndProcess() {
-			include_once( AnyComment()->plugin_path() . '/includes/libs/scssphp/scss.inc.php' );
-
-			$scss = new \Leafo\ScssPhp\Compiler();
-			$scss->setFormatter( 'Leafo\ScssPhp\Formatter\Crunched' );
-
 			$scssPath = AnyComment()->plugin_path() . '/assets/theming/';
 
 			$content = trim( file_get_contents( $scssPath . 'comments.scss' ) );
@@ -683,13 +680,14 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 			/**
 			 * Replace custom styles from plugin
 			 */
-			$hexRegex = '#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})';
+			$hexRegex  = '#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})';
+			$sizeRegex = '([0-9].*(px|pt|em|%))';
 
 			$arr = [
-				"/\\$(font-size):\s([0-9].*[px|pt|em]);/m" => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignFontSize() ),
-				"/\\$(font-family):\s(.*?);/m"             => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignFontFamily() ),
-				"/\\$(link-color):\s($hexRegex);/m"        => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignLinkColor() ),
-				"/\\$(text-color):\s($hexRegex);/m"        => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignTextColor() ),
+				"/\\$(font-size):\s$sizeRegex;/m"   => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignFontSize() ),
+				"/\\$(font-family):\s(.*?);/m"      => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignFontFamily() ),
+				"/\\$(link-color):\s($hexRegex);/m" => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignLinkColor() ),
+				"/\\$(text-color):\s($hexRegex);/m" => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignTextColor() ),
 
 				"/\\$(semi-hidden-color):\s($hexRegex);/m" => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignSemiHiddenColor() ),
 
@@ -698,15 +696,15 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 				"/\\$(attachment-color):\s($hexRegex]+);/m"          => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignAttachmentColor() ),
 				"/\\$(attachment-background-color):\s($hexRegex);/m" => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignAttachmentBackgroundColor() ),
 
-				"/\\$(parent-avatar-size):\s(#[0-9].*[pt|px|em]);/m" => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignParentAvatarSize() ),
-				"/\\$(child-avatar-size):\s(#[0-9].*[pt|px|em]);/m"  => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignChildAvatarSize() ),
+				"/\\$(parent-avatar-size):\s$sizeRegex;/m" => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignParentAvatarSize() ),
+				"/\\$(child-avatar-size):\s$sizeRegex;/m"  => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignChildAvatarSize() ),
 
-				"/\\$(btn-radius):\s([0-9].*[px|%]);/m"              => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignButtonRadius() ),
+				"/\\$(btn-radius):\s$sizeRegex;/m"                   => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignButtonRadius() ),
 				"/\\$(btn-color):\s($hexRegex);/m"                   => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignButtonColor() ),
 				"/\\$(btn-background-color):\s($hexRegex);/m"        => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignButtonBackgroundColor() ),
 				"/\\$(btn-background-color-active):\s($hexRegex);/m" => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignButtonBackgroundColorActive() ),
 
-				"/\\$(global-radius):\s([a-z0-9]+[px|%]);/m" => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignGlobalRadius() ),
+				"/\\$(global-radius):\s$sizeRegex;/m" => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignGlobalRadius() ),
 			];
 
 
@@ -773,9 +771,19 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 				$content .= $toastCss;
 			}
 
+			include_once( AnyComment()->plugin_path() . '/includes/libs/scssphp/scss.inc.php' );
+
+			$scss = new \Leafo\ScssPhp\Compiler();
+			$scss->setFormatter( 'Leafo\ScssPhp\Formatter\Crunched' );
+
 			return $scss->compile( $content );
 		}
 
+		/**
+		 * Apply styles from admin in frontend.
+		 *
+		 * @return bool
+		 */
 		public static function applyStyleOnDesignChange() {
 			$hash        = static::getDesignHash();
 			$filePattern = 'main-custom-%s.min.css';
@@ -833,16 +841,27 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		/**
 		 * Get custom design hash.
 		 *
+		 * @param bool $createOnNotFound Generate stylesheets if do not exist.
+		 *
 		 * @return null|string NULL on failure (when nothing in the design specified yet.
 		 */
-		public static function getCustomDesignStylesheetUrl() {
+		public static function getCustomDesignStylesheetUrl( $createOnNotFound = true ) {
+
 			$hash = static::getDesignHash();
 
 			if ( empty( $hash ) ) {
 				return null;
 			}
 
-			return AnyComment()->plugin_url() . sprintf( '/static/css/main-custom-%s.min.css', $hash );
+			$relativePath = sprintf( '/static/css/main-custom-%s.min.css', $hash );
+
+			$sheetsPath = AnyComment()->plugin_path() . $relativePath;
+
+			if ( $createOnNotFound && ! file_exists( $sheetsPath ) ) {
+				static::applyStyleOnDesignChange();
+			}
+
+			return AnyComment()->plugin_url() . $relativePath;
 		}
 
 

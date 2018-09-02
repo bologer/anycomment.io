@@ -277,24 +277,38 @@ if ( ! class_exists( 'AnyCommentAdminOptions' ) ) :
 
 			?>
             <script>
-                jQuery('.anycomment-tabs__menu li').on('click', function (e) {
-                    e.preventDefault();
+                var $ = jQuery;
+                $('.anycomment-tabs__menu li').on('click', function (e) {
+                    doTab($(this));
+                });
 
-                    var data = jQuery(this).attr('data-tab') || '';
-                    var tab_id = '#tab-' + data;
+
+                function doTab(el) {
+                    var $ = jQuery,
+                        data = (el.attr('data-tab') || ''),
+                        tab_id = (data.indexOf('#tab-') === -1 ? ('#tab-' + data) : data);
 
                     if (!data) {
                         return false;
                     }
 
-                    jQuery('.anycomment-tabs__menu li').removeClass('current');
-                    jQuery('.anycomment-tabs__container__tab').removeClass('current');
+                    $('.anycomment-tabs__menu li').removeClass('current');
+                    $('.anycomment-tabs__container__tab').removeClass('current');
 
-                    jQuery(this).addClass('current');
-                    jQuery(tab_id).addClass('current');
+                    el.addClass('current');
+                    $(tab_id).addClass('current');
+                }
 
-                    return false;
-                })
+                $(document).ready(function () {
+                    var hash = window.location.hash.trim();
+                    if (hash !== '') {
+                        var cleanedHash = hash.replace('#tab-', '');
+                        console.log(cleanedHash);
+                        doTab($('[data-tab="' + cleanedHash + '"]'));
+                    }
+                });
+
+
             </script>
 			<?php
 		}
