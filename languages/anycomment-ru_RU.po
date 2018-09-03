@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-03 06:38+0000\n"
-"PO-Revision-Date: 2018-09-03 06:40+0000\n"
+"POT-Creation-Date: 2018-09-03 10:11+0000\n"
+"PO-Revision-Date: 2018-09-03 10:12+0000\n"
 "Last-Translator: admin <sasha.tesh@gmail.com>\n"
 "Language-Team: Русский\n"
 "Language: ru_RU\n"
@@ -34,8 +34,8 @@ msgstr "Новый ответ к <a href=\"%s\">%s</a>"
 msgid "For post <a href=\"%s\">%s</a>"
 msgstr "Для записи <a href=\"%s\">%s</a>"
 
-#: includes/AnyCommentEmailQueue.php:342 includes/AnyCommentRender.php:129
-#: includes/AnyCommentRender.php:137
+#: includes/AnyCommentEmailQueue.php:342 includes/AnyCommentRender.php:131
+#: includes/AnyCommentRender.php:139
 msgid "Reply"
 msgstr "Ответить"
 
@@ -102,134 +102,134 @@ msgstr "Dribbble"
 msgid "Yahoo"
 msgstr "Yahoo"
 
-#: includes/AnyCommentRender.php:124
+#: includes/AnyCommentRender.php:126
 msgid "Oops, something went wrong..."
 msgstr "Упс, что-то пошло не так. Попробуйте перезагрузить страницу."
 
-#: includes/AnyCommentRender.php:125
+#: includes/AnyCommentRender.php:127
 msgid "Loading..."
 msgstr "Загрузка..."
 
-#: includes/AnyCommentRender.php:126
+#: includes/AnyCommentRender.php:128
 msgid "Load more"
 msgstr "Загрузить еще"
 
-#: includes/AnyCommentRender.php:127
+#: includes/AnyCommentRender.php:129
 msgid "Send"
 msgstr "Отправить"
 
-#: includes/AnyCommentRender.php:128
+#: includes/AnyCommentRender.php:130
 #: includes/admin/AnyCommentAdminOptions.php:244
 #: includes/admin/AnyCommentGenericSettings.php:660
 #: includes/admin/AnyCommentSocialSettings.php:627
 msgid "Save"
 msgstr "Сохранить"
 
-#: includes/AnyCommentRender.php:130
+#: includes/AnyCommentRender.php:132
 msgid "Sort By"
 msgstr "Сортировка"
 
-#: includes/AnyCommentRender.php:131
+#: includes/AnyCommentRender.php:133
 msgid "Oldest"
 msgstr "Старые"
 
-#: includes/AnyCommentRender.php:132
+#: includes/AnyCommentRender.php:134
 msgid "Newest"
 msgstr "Новые"
 
-#: includes/AnyCommentRender.php:133
+#: includes/AnyCommentRender.php:135
 msgid "Reply to"
 msgstr "Ответить"
 
-#: includes/AnyCommentRender.php:134
+#: includes/AnyCommentRender.php:136
 msgid "Your comment..."
 msgstr "Ваш комментарий..."
 
-#: includes/AnyCommentRender.php:135
+#: includes/AnyCommentRender.php:137
 msgid "No comments to display"
 msgstr "Пока еще не было комментариев"
 
-#: includes/AnyCommentRender.php:136
+#: includes/AnyCommentRender.php:138
 msgid "Add Anycomment to your site"
 msgstr "Добавить AnyComment на свой сайт"
 
-#: includes/AnyCommentRender.php:138
+#: includes/AnyCommentRender.php:140
 msgid "Edit"
 msgstr "Изменить"
 
-#: includes/AnyCommentRender.php:139
+#: includes/AnyCommentRender.php:141
 #: includes/admin/tables/AnyCommentUploadedFilesTable.php:145
 msgid "Delete"
 msgstr "Удалить"
 
-#: includes/AnyCommentRender.php:140
+#: includes/AnyCommentRender.php:142
 msgid "Cancel"
 msgstr "Отменить"
 
-#: includes/AnyCommentRender.php:141
+#: includes/AnyCommentRender.php:143
 msgid "Quick Login"
 msgstr "Быстрый вход"
 
-#: includes/AnyCommentRender.php:142
+#: includes/AnyCommentRender.php:144
 msgid "New comment was added"
 msgstr "Был добавлен новый комментарий"
 
-#: includes/AnyCommentRender.php:143
+#: includes/AnyCommentRender.php:145
 msgid "Author"
 msgstr "Автор"
 
-#: includes/AnyCommentRender.php:144
+#: includes/AnyCommentRender.php:146
 msgid "Name"
 msgstr "Имя"
 
-#: includes/AnyCommentRender.php:145
+#: includes/AnyCommentRender.php:147
 msgid "Email"
 msgstr "Почта"
 
-#: includes/AnyCommentRender.php:146
+#: includes/AnyCommentRender.php:148
 msgid "Website"
 msgstr "Веб-сайт"
 
-#: includes/AnyCommentRender.php:148
+#: includes/AnyCommentRender.php:150
 #, php-format
 msgid "I accept the <a href=\"%s\"%s>User Agreement</a>"
 msgstr "Я даю согласие на обработку <a href=\"%s\"%s>персональных данных</a>"
 
-#: includes/AnyCommentRender.php:152
+#: includes/AnyCommentRender.php:154
 msgid "Upload file"
 msgstr "Загрузить файл"
 
-#: includes/AnyCommentRender.php:153
+#: includes/AnyCommentRender.php:155
 msgid "Uploading..."
 msgstr "Идет загрузка..."
 
-#: includes/AnyCommentRender.php:154
+#: includes/AnyCommentRender.php:156
 msgid "Uploaded!"
 msgstr "Загружено!"
 
-#: includes/AnyCommentRender.php:155
+#: includes/AnyCommentRender.php:157
 #, php-format
 msgid "File %s is too big"
 msgstr "Файл %s слишком большой"
 
-#: includes/AnyCommentRender.php:156
+#: includes/AnyCommentRender.php:158
 #, php-format
 msgid "You may upload %s file(s) at maximum"
 msgstr "Вы можете загрузить максимум %s файл(-ов)"
 
-#: includes/AnyCommentRender.php:157
+#: includes/AnyCommentRender.php:159
 msgid "No file selected or select proper extension"
 msgstr "Не выбраны файлы или не правильное расширение"
 
-#: includes/AnyCommentRender.php:158
+#: includes/AnyCommentRender.php:160
 msgid "Read more"
 msgstr "Читать далее"
 
-#: includes/AnyCommentRender.php:159
+#: includes/AnyCommentRender.php:161
 msgid "Show less"
 msgstr "Показать меньше"
 
-#: includes/AnyCommentRender.php:228
+#: includes/AnyCommentRender.php:230
 #, php-format
 msgid "%s Comments"
 msgstr "%s комментариев"
@@ -354,11 +354,11 @@ msgstr "Показывать ссылку профиля"
 
 #: includes/admin/AnyCommentGenericSettings.php:353
 msgid ""
-"Show link to user in the social media when available (name of the user will "
-"be clickable)."
+"Show link to user in the social media or website when available (name of the "
+"user will be clickable)."
 msgstr ""
-"Показывать ссылку на профиль пользователя в социальной сети когда доступно "
-"(имя будет кликабельным)."
+"Показывать ссылку на профиль пользователя в социальной сети или веб-сайт "
+"когда доступно (имя будет кликабельным)."
 
 #: includes/admin/AnyCommentGenericSettings.php:358
 msgid "Display Twitter Embeds"

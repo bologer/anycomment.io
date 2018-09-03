@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-03 06:38+0000\n"
+"POT-Creation-Date: 2018-09-03 10:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -34,8 +34,8 @@ msgstr ""
 msgid "For post <a href=\"%s\">%s</a>"
 msgstr ""
 
-#: includes/AnyCommentEmailQueue.php:342 includes/AnyCommentRender.php:129
-#: includes/AnyCommentRender.php:137
+#: includes/AnyCommentEmailQueue.php:342 includes/AnyCommentRender.php:131
+#: includes/AnyCommentRender.php:139
 msgid "Reply"
 msgstr ""
 
@@ -102,134 +102,134 @@ msgstr ""
 msgid "Yahoo"
 msgstr ""
 
-#: includes/AnyCommentRender.php:124
+#: includes/AnyCommentRender.php:126
 msgid "Oops, something went wrong..."
 msgstr ""
 
-#: includes/AnyCommentRender.php:125
+#: includes/AnyCommentRender.php:127
 msgid "Loading..."
 msgstr ""
 
-#: includes/AnyCommentRender.php:126
+#: includes/AnyCommentRender.php:128
 msgid "Load more"
 msgstr ""
 
-#: includes/AnyCommentRender.php:127
+#: includes/AnyCommentRender.php:129
 msgid "Send"
 msgstr ""
 
-#: includes/AnyCommentRender.php:128
+#: includes/AnyCommentRender.php:130
 #: includes/admin/AnyCommentAdminOptions.php:244
 #: includes/admin/AnyCommentGenericSettings.php:660
 #: includes/admin/AnyCommentSocialSettings.php:627
 msgid "Save"
 msgstr ""
 
-#: includes/AnyCommentRender.php:130
+#: includes/AnyCommentRender.php:132
 msgid "Sort By"
 msgstr ""
 
-#: includes/AnyCommentRender.php:131
+#: includes/AnyCommentRender.php:133
 msgid "Oldest"
 msgstr ""
 
-#: includes/AnyCommentRender.php:132
+#: includes/AnyCommentRender.php:134
 msgid "Newest"
 msgstr ""
 
-#: includes/AnyCommentRender.php:133
+#: includes/AnyCommentRender.php:135
 msgid "Reply to"
 msgstr ""
 
-#: includes/AnyCommentRender.php:134
+#: includes/AnyCommentRender.php:136
 msgid "Your comment..."
 msgstr ""
 
-#: includes/AnyCommentRender.php:135
+#: includes/AnyCommentRender.php:137
 msgid "No comments to display"
 msgstr ""
 
-#: includes/AnyCommentRender.php:136
+#: includes/AnyCommentRender.php:138
 msgid "Add Anycomment to your site"
 msgstr ""
 
-#: includes/AnyCommentRender.php:138
+#: includes/AnyCommentRender.php:140
 msgid "Edit"
 msgstr ""
 
-#: includes/AnyCommentRender.php:139
+#: includes/AnyCommentRender.php:141
 #: includes/admin/tables/AnyCommentUploadedFilesTable.php:145
 msgid "Delete"
 msgstr ""
 
-#: includes/AnyCommentRender.php:140
+#: includes/AnyCommentRender.php:142
 msgid "Cancel"
 msgstr ""
 
-#: includes/AnyCommentRender.php:141
+#: includes/AnyCommentRender.php:143
 msgid "Quick Login"
 msgstr ""
 
-#: includes/AnyCommentRender.php:142
+#: includes/AnyCommentRender.php:144
 msgid "New comment was added"
 msgstr ""
 
-#: includes/AnyCommentRender.php:143
+#: includes/AnyCommentRender.php:145
 msgid "Author"
 msgstr ""
 
-#: includes/AnyCommentRender.php:144
+#: includes/AnyCommentRender.php:146
 msgid "Name"
 msgstr ""
 
-#: includes/AnyCommentRender.php:145
+#: includes/AnyCommentRender.php:147
 msgid "Email"
 msgstr ""
 
-#: includes/AnyCommentRender.php:146
+#: includes/AnyCommentRender.php:148
 msgid "Website"
 msgstr ""
 
-#: includes/AnyCommentRender.php:148
+#: includes/AnyCommentRender.php:150
 #, php-format
 msgid "I accept the <a href=\"%s\"%s>User Agreement</a>"
 msgstr ""
 
-#: includes/AnyCommentRender.php:152
+#: includes/AnyCommentRender.php:154
 msgid "Upload file"
 msgstr ""
 
-#: includes/AnyCommentRender.php:153
+#: includes/AnyCommentRender.php:155
 msgid "Uploading..."
 msgstr ""
 
-#: includes/AnyCommentRender.php:154
+#: includes/AnyCommentRender.php:156
 msgid "Uploaded!"
 msgstr ""
 
-#: includes/AnyCommentRender.php:155
+#: includes/AnyCommentRender.php:157
 #, php-format
 msgid "File %s is too big"
 msgstr ""
 
-#: includes/AnyCommentRender.php:156
+#: includes/AnyCommentRender.php:158
 #, php-format
 msgid "You may upload %s file(s) at maximum"
 msgstr ""
 
-#: includes/AnyCommentRender.php:157
+#: includes/AnyCommentRender.php:159
 msgid "No file selected or select proper extension"
 msgstr ""
 
-#: includes/AnyCommentRender.php:158
+#: includes/AnyCommentRender.php:160
 msgid "Read more"
 msgstr ""
 
-#: includes/AnyCommentRender.php:159
+#: includes/AnyCommentRender.php:161
 msgid "Show less"
 msgstr ""
 
-#: includes/AnyCommentRender.php:228
+#: includes/AnyCommentRender.php:230
 #, php-format
 msgid "%s Comments"
 msgstr ""
@@ -341,8 +341,8 @@ msgstr ""
 
 #: includes/admin/AnyCommentGenericSettings.php:353
 msgid ""
-"Show link to user in the social media when available (name of the user will "
-"be clickable)."
+"Show link to user in the social media or website when available (name of the "
+"user will be clickable)."
 msgstr ""
 
 #: includes/admin/AnyCommentGenericSettings.php:358

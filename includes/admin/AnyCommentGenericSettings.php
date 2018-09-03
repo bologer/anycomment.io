@@ -350,7 +350,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'id'          => self::OPTION_SHOW_PROFILE_URL,
 						'title'       => __( 'Show Profile URL', "anycomment" ),
 						'callback'    => 'input_checkbox',
-						'description' => esc_html( __( 'Show link to user in the social media when available (name of the user will be clickable).', "anycomment" ) )
+						'description' => esc_html( __( 'Show link to user in the social media or website when available (name of the user will be clickable).', "anycomment" ) )
 					],
 
 					[
