@@ -47,8 +47,9 @@ Yes! Join us at [GitHub](https://github.com/bologer/anycomment.io)
 = Features =
 * All comments stored in your own database. We reuse native comment's table, so all of the default WordPress functionality comes out of the box.
 * Social network authorization via Facebook, VK, Twitter, Google, Odnoklassniki, GitHub, Instagram, Twitch or Dribble
-* Ability to define type of form: guests only, with social authorization or both
-* Ability to upload files (define allowed extensions, limit, uploads by guests, etc)
+* Ability to define form type: guests only, with social authorization or both
+* Ability to upload files (define allowed extensions, limit, who can upload, etc)
+* When user leaves a tweet link in the comment, plugin can embed it as external Twitter widget (can be disabled)
 * Plugin is translated into English & Russian
 * Suitable for dark & light themes or customize it yourself
 * Blazing-fast comments based on React & WordPress REST API
@@ -71,11 +72,15 @@ Yes! Join us at [GitHub](https://github.com/bologer/anycomment.io)
 
 = TODO features =
 * Option: ability to specify thanks message and/or page when user left his first comment, #88
-* Option: display matching links as attachments in comment, #87
 * Option: ability to set default sorting, #84
 * Option: ability to premoderate comments with links, #84
 * Option: when user does not have email after registration via social, ask for it somewhere in the comments again
 * Option: notify moderators about new comments, #77
+* Option: ability to set default sorting, #85
+* Option: embed Instagram photos (#115)
+* Option: embed Instafeed (#116)
+* Improve mobile layout, #106
+* Option: ability to change email notification template, #97
 * Ability to choose comment to make it sticky at the very top of all comments, #76
 * Add checkbox to subscribe to new replies, #73 (now it is mandatory)
 * Option: Ability to ban user or by IP address, #70
@@ -168,7 +173,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 == Changelog ==
 
-= 0.0.52 – 28.08.2018 =
+= 0.0.52 – 03.09.2018 =
 
 **Enhancements:**
 

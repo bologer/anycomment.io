@@ -119,7 +119,7 @@ if ( ! class_exists( 'AnyCommentAdminPages' ) ) :
 		 */
 		public function get_news( $per_page = 5 ) {
 
-			$cacheKey = 'anycomment-plugin-news';
+			$cacheKey = sprintf( 'anycomment-plugin-news-v-%s', AnyComment()->version );
 
 			if ( ( $news = AnyComment()->cache->get( $cacheKey ) ) !== null ) {
 				return json_decode( $news, true );
