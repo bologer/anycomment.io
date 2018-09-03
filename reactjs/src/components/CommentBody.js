@@ -1,6 +1,7 @@
 import React from 'react';
 import AnyCommentComponent from './AnyCommentComponent'
 import reactStringReplace from 'react-string-replace';
+import TweetEmbed from 'react-tweet-embed'
 
 /**
  * CommentBody is rendering comment text.
@@ -107,19 +108,44 @@ class CommentBody extends AnyCommentComponent {
 
 
         // Replace links
-        content = reactStringReplace(content, linksRe, (match, i) => (
-            <a key={match + i} className="anycomment" href={match} target="_blank" rel="noreferrer noopener">{match}</a>
-        ));
+        content = reactStringReplace(content, linksRe, (match, i) => this.processUrls(match, i));
 
         return content;
     };
+
+    /**
+     * Process URLs and other content, e.g. Tweets.
+     * @param match
+     * @param i
+     * @returns String
+     */
+    processUrls(match, i) {
+
+
+        const twitterRe = /https:\/\/twitter\.com\/.*\/([0-9]{1,})/gm,
+            link = <a key={match + i} className="anycomment" href={match} target="_blank"
+                      rel="noreferrer noopener">{match}</a>,
+            options = this.getOptions();
+
+        if (!options.isShowTwitterEmbeds) {
+            return link;
+        }
+
+        const matches = twitterRe.exec(match);
+
+        if (matches !== null) {
+            return <TweetEmbed id={matches[1]}/>;
+        }
+
+        return link;
+    }
 
     render() {
         const settings = this.getSettings();
         const bodyClasses = 'anycomment comment-single-body__text ' + (this.state.hideAsLong ? ' comment-single-body__shortened' : '');
 
         return <div className={bodyClasses} onClick={() => this.toggleLongComment()}>
-            <p className="comment-single-body__text-content">{this.processContent()}</p>
+            <div className="comment-single-body__text-content">{this.processContent()}</div>
             {this.isLongComment() ? <p className="comment-single-body__text-readmore"
                                        onClick={() => this.toggleLongComment()}>{this.state.hideAsLong ? settings.i18.read_more : settings.i18.show_less}</p> : ''}
         </div>

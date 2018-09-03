@@ -85,7 +85,9 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 			}
 
 
-			wp_enqueue_style( 'anycomment-google-font', 'https://fonts.googleapis.com/css?family=Noto+Sans:400,700&amp;subset=cyrillic', [], AnyComment()->version );
+			if ( strpos( AnyCommentGenericSettings::getDesignFontFamily(), 'Noto-Sans' ) !== false ) {
+				wp_enqueue_style( 'anycomment-google-font', 'https://fonts.googleapis.com/css?family=Noto+Sans:400,700&amp;subset=cyrillic', [], AnyComment()->version );
+			}
 
 			$postId = get_the_ID();
 			wp_localize_script( 'anycomment-react', 'anyCommentApiSettings', [
@@ -104,6 +106,7 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 					'isShowProfileUrl'       => AnyCommentGenericSettings::isShowProfileUrl(),
 					'isShowImageAttachments' => AnyCommentGenericSettings::isShowImageAttachments(),
 					'isShowVideoAttachments' => AnyCommentGenericSettings::isShowVideoAttachments(),
+					'isShowTwitterEmbeds'    => AnyCommentGenericSettings::isShowTwitterEmbeds(),
 					'isLinkClickable'        => AnyCommentGenericSettings::isLinkClickable(),
 					'userAgreementLink'      => AnyCommentGenericSettings::getUserAgreementLink(),
 					'notifyOnNewComment'     => AnyCommentGenericSettings::isNotifyOnNewComment(),

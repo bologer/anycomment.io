@@ -184,6 +184,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Added "Possible Problems" to dashboard to help admin to figure out about possible problems or conflicts with other plugins, #117
 * When some comment is remembered the comment field will expand automatically after the page has loaded
 * Now "Read more", "Show less" link below long comment as some users were a bit confused that it is possible to expand comment by clicking on its text, #118
+* Ability to attach Tweets from Twitter directly in the comment by adding link to it, #96
 
 **Fixes:**
 

@@ -83,6 +83,11 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		const OPTION_SHOW_PROFILE_URL = 'options_show_profile_url';
 
 		/**
+		 * Show tweet (from Twitter) attachments
+		 */
+		const OPTION_SHOW_TWITTER_EMBEDS = 'options_show_tweet_attachments';
+
+		/**
 		 * Show/hide video attachments.
 		 */
 		const OPTION_SHOW_VIDEO_ATTACHMENTS = 'options_show_video_attachments';
@@ -207,7 +212,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 
 			// Files
 			self::OPTION_FILES_LIMIT             => 5,
-			self::OPTION_FILES_LIMIT_PERIOD      => 300,
+			self::OPTION_FILES_LIMIT_PERIOD      => 900,
 			self::OPTION_FILES_MAX_SIZE          => 1.5,
 			self::OPTION_FILES_MIME_TYPES        => 'image/*, .pdf',
 
@@ -317,19 +322,6 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'description' => esc_html( __( 'When on, comments are visible. When off, default WordPress\' comments shown. This can be used to configure social networks on fresh installation.', "anycomment" ) )
 					],
 					[
-						'id'          => self::OPTION_FORM_TYPE,
-						'title'       => __( 'Comment form', "anycomment" ),
-						'callback'    => 'input_select',
-						'description' => esc_html( __( 'Comment form', "anycomment" ) ),
-						'args'        => [
-							'options' => [
-								self::FORM_OPTION_ALL          => __( 'Social, WordPress & guests', 'anycomment' ),
-								self::FORM_OPTION_SOCIALS_ONLY => __( 'Socials & WordPress users only.', 'anycomment' ),
-								self::FORM_OPTION_GUEST_ONLY   => __( 'Guests only. ', 'anycomment' ),
-							]
-						],
-					],
-					[
 						'id'          => self::OPTION_REGISTER_DEFAULT_GROUP,
 						'title'       => __( 'Register User Group', "anycomment" ),
 						'callback'    => 'input_select',
@@ -359,6 +351,13 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'title'       => __( 'Show Profile URL', "anycomment" ),
 						'callback'    => 'input_checkbox',
 						'description' => esc_html( __( 'Show link to user in the social media when available (name of the user will be clickable).', "anycomment" ) )
+					],
+
+					[
+						'id'          => self::OPTION_SHOW_TWITTER_EMBEDS,
+						'title'       => __( 'Display Twitter Embeds', "anycomment" ),
+						'callback'    => 'input_checkbox',
+						'description' => esc_html( __( 'Detect & display tweets from Twitter as embedded widget.', "anycomment" ) )
 					],
 
 					[
@@ -412,6 +411,19 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 							]
 						],
 						'description' => esc_html( __( 'Choose comments theme.', "anycomment" ) )
+					],
+					[
+						'id'          => self::OPTION_FORM_TYPE,
+						'title'       => __( 'Comment form', "anycomment" ),
+						'callback'    => 'input_select',
+						'description' => esc_html( __( 'Comment form', "anycomment" ) ),
+						'args'        => [
+							'options' => [
+								self::FORM_OPTION_ALL          => __( 'Social, WordPress & guests', 'anycomment' ),
+								self::FORM_OPTION_SOCIALS_ONLY => __( 'Socials & WordPress users only.', 'anycomment' ),
+								self::FORM_OPTION_GUEST_ONLY   => __( 'Guests only. ', 'anycomment' ),
+							]
+						],
 					],
 					[
 						'id'          => self::OPTION_DESIGN_CUSTOM_TOGGLE,
@@ -892,6 +904,15 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 */
 		public static function isModerateFirst() {
 			return static::instance()->getOption( self::OPTION_MODERATE_FIRST ) !== null;
+		}
+
+		/**
+		 * Check whether it is required to show video attachments.
+		 *
+		 * @return bool
+		 */
+		public static function isShowTwitterEmbeds() {
+			return static::instance()->getOption( self::OPTION_SHOW_TWITTER_EMBEDS ) !== null;
 		}
 
 		/**
