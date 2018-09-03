@@ -7,7 +7,9 @@ class AnyCommentAvatars {
 
 
 	public function __construct() {
-		add_filter( 'get_avatar', [ $this, 'override_avatar_globally' ], 10, 5 );
+		if ( is_admin() ) {
+			add_filter( 'get_avatar', [ $this, 'override_avatar_globally' ], 10, 5 );
+		}
 	}
 
 
