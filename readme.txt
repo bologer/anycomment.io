@@ -183,6 +183,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Added some text above list social icons as some of the users were confused and thought these were sharing buttons, #123
 * Added "Possible Problems" to dashboard to help admin to figure out about possible problems or conflicts with other plugins, #117
 * When some comment is remembered the comment field will expand automatically after the page has loaded
+* Now "Read more", "Show less" link below long comment as some users were a bit confused that it is possible to expand comment by clicking on its text, #118
 
 **Fixes:**
 

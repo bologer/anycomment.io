@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-02 19:29+0000\n"
-"PO-Revision-Date: 2018-09-02 19:31+0000\n"
+"POT-Creation-Date: 2018-09-03 04:36+0000\n"
+"PO-Revision-Date: 2018-09-03 04:37+0000\n"
 "Last-Translator: admin <sasha.tesh@gmail.com>\n"
 "Language-Team: Русский\n"
 "Language: ru_RU\n"
@@ -221,7 +221,15 @@ msgstr "Вы можете загрузить максимум %s файл(-ов)
 msgid "No file selected or select proper extension"
 msgstr "Не выбраны файлы или не правильное расширение"
 
-#: includes/AnyCommentRender.php:225
+#: includes/AnyCommentRender.php:157
+msgid "Read more"
+msgstr "Читать далее"
+
+#: includes/AnyCommentRender.php:158
+msgid "Show less"
+msgstr "Показать меньше"
+
+#: includes/AnyCommentRender.php:227
 #, php-format
 msgid "%s Comments"
 msgstr "%s комментариев"

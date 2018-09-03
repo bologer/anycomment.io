@@ -825,6 +825,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		public static function getDesignHash() {
 			$items = [];
 
+			$items[] = AnyComment()->version;
+
 			$options = static::instance()->getOptions();
 
 			if ( ! empty( $options ) ) {

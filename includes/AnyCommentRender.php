@@ -154,6 +154,8 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 					'file_too_big'                   => __( "File %s is too big", 'anycomment' ),
 					'file_limit'                     => sprintf( __( "You may upload %s file(s) at maximum", 'anycomment' ), AnyCommentGenericSettings::getFileLimit() ),
 					'file_not_selected_or_extension' => __( "No file selected or select proper extension", 'anycomment' ),
+					'read_more'                      => __( 'Read more', 'anycomment' ),
+					'show_less'                      => __( 'Show less', 'anycomment' ),
 				]
 			] );
 

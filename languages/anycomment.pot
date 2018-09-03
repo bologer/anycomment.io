@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-02 19:29+0000\n"
+"POT-Creation-Date: 2018-09-03 04:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -221,7 +221,15 @@ msgstr ""
 msgid "No file selected or select proper extension"
 msgstr ""
 
-#: includes/AnyCommentRender.php:225
+#: includes/AnyCommentRender.php:157
+msgid "Read more"
+msgstr ""
+
+#: includes/AnyCommentRender.php:158
+msgid "Show less"
+msgstr ""
+
+#: includes/AnyCommentRender.php:227
 #, php-format
 msgid "%s Comments"
 msgstr ""

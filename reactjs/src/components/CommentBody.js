@@ -115,10 +115,13 @@ class CommentBody extends AnyCommentComponent {
     };
 
     render() {
-        const bodyClasses = 'anycomment comment-single-body__text ' + (this.state.hideAsLong ? ' shortened' : '');
+        const settings = this.getSettings();
+        const bodyClasses = 'anycomment comment-single-body__text ' + (this.state.hideAsLong ? ' comment-single-body__shortened' : '');
 
         return <div className={bodyClasses} onClick={() => this.toggleLongComment()}>
-            <p>{this.processContent()}</p>
+            <p className="comment-single-body__text-content">{this.processContent()}</p>
+            {this.isLongComment() ? <p className="comment-single-body__text-readmore"
+                                       onClick={() => this.toggleLongComment()}>{this.state.hideAsLong ? settings.i18.read_more : settings.i18.show_less}</p> : ''}
         </div>
     }
 }

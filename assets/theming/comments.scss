@@ -4,6 +4,7 @@ $font-family: 'Noto-Sans', sans-serif;
 $semi-hidden-color: #b6c1c6;
 
 $link-color: #3658f7;
+$link-color-active: darken($link-color, 5%);
 $text-color: #333;
 
 $form-field-background-color: #fff;
@@ -710,19 +711,14 @@ $global-radius: 4px;
           }
         }
 
-        &__text.shortened {
-          height: 100px;
-          position: relative;
-          cursor: pointer;
-
-          &::after {
-            content: '';
-            width: 100%;
-            height: 30%;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            pointer-events: none;
+        &__shortened {
+          .comment-single-body__text {
+            &-content {
+              height: 100px;
+              position: relative;
+              cursor: pointer;
+              overflow: hidden;
+            }
           }
         }
 
@@ -732,7 +728,7 @@ $global-radius: 4px;
           overflow: hidden;
           transition: height 1s ease-out;
 
-          p {
+          &-content {
             color: $text-color;
             font-size: $font-size;
             line-height: 1.45;
@@ -750,6 +746,22 @@ $global-radius: 4px;
               &:visited {
                 background-color: transparent;
               }
+            }
+          }
+
+          &-readmore {
+            color: $link-color;
+            font-size: $font-size - 2;
+            text-decoration: none;
+            text-align: center;
+            padding: 5px 0 0;
+            margin: 0;
+            cursor: pointer;
+
+            &:hover,
+            &:active,
+            &:focus {
+              color: $link-color-active;
             }
           }
         }
