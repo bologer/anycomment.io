@@ -63,17 +63,17 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 		}
 
 		/**
-		 * Base shortcode to display comment box inside posts or pages.
-		 */
-		public function base_shortcode() {
-			include ANYCOMMENT_ABSPATH . 'templates/iframe.php';
-		}
-
-		/**
 		 * Make custom template for comments.
 		 * @return string
 		 */
-		public function override_comment() {
+		public function override_comment( $atts ) {
+
+			$params = shortcode_atts( array(
+				'include' => false,
+			), $atts );
+
+			$isInclude = $params['include'];
+
 			wp_enqueue_script( 'anycomment-react', AnyComment()->plugin_url() . '/static/js/main.min.js', [], AnyComment()->version );
 
 			if ( AnyCommentGenericSettings::isDesignCustom() ) {
@@ -162,7 +162,13 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 				]
 			] );
 
-			return ANYCOMMENT_ABSPATH . 'templates/comments.php';
+			$path = ANYCOMMENT_ABSPATH . 'templates/comments.php';
+
+			if ( $isInclude ) {
+				return anycomment_get_template('comments' );
+			}
+
+			return $path;
 		}
 
 		/**
