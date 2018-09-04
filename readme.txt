@@ -173,14 +173,12 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 == Changelog ==
 
-= 0.0.53 – 03.09.2018 =
-
-**Enhancements:**
-
+= 0.0.53 – 04.09.2018 =
 
 **Fixes:**
 
 * Small fixes to translations regarding options to show/hide user URL
+* Fix for main plugin shortcode, now use `[anycomment include="true"]` to include comments on custom place (reported by Ivan)
 
 
 = 0.0.52 – 03.09.2018 =
