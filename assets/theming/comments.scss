@@ -118,6 +118,9 @@ $global-radius: 4px;
 
 #anycomment-root {
   padding: 40px 0;
+  width: 100%;
+  float: left;
+  position: relative;
 
   .anycomment-btn,
   .input[type="submit"],
@@ -910,6 +913,10 @@ $global-radius: 4px;
       text-align: center;
     }
   }
+
+  //@media screen and (max-width 500px) {
+  //
+  //}
 }
 
 @import "theme-dark";

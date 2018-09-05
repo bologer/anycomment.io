@@ -19,6 +19,7 @@ class DataProcessing extends AnyCommentComponent {
                     <span dangerouslySetInnerHTML={{__html: i18.accept_user_agreement}}/>
                     <span className="checkmark"></span>
                 </label>
+                <div className="clearfix"></div>
             </div>
         )
     }
