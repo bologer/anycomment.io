@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-09-03 10:11+0000\n"
-"PO-Revision-Date: 2018-09-03 10:12+0000\n"
+"PO-Revision-Date: 2018-09-05 19:38+0000\n"
 "Last-Translator: admin <sasha.tesh@gmail.com>\n"
 "Language-Team: Русский\n"
 "Language: ru_RU\n"
@@ -1301,7 +1301,7 @@ msgstr ""
 
 #: includes/rest/AnyCommentRestComment.php:773
 msgid "Sorry, you are not allowed to delete this comment."
-msgstr "Ваш не можете удалить этот комментарий."
+msgstr "Извините, но вы не можете удалить этот комментарий."
 
 #. %s: force=true
 #: includes/rest/AnyCommentRestComment.php:811

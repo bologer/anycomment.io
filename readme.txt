@@ -138,19 +138,6 @@ Not yet working? Please follow the steps:
 * In the list find request which looks something like the following: `https://yourdomain.com/wp-json/anycomment/v1/comments?post=15&parent=0&per_page=15&order=desc&order_by=id`
 * Click on it, copy its content and take screenshot of it and report in [support forum](https://wordpress.org/support/plugin/anycomment)
 
-= I cannot delete comment? =
-
-Possible you are getting "Forbidden" with 403 error code.
-
-*To fix this:*
-
-* Connect to your website
-* Open root folder where `wp-content`, `wp-includes` folders
-* Find & open `.htaccess`
-* Add "Require method GET POST PUT DELETE OPTIONS" on the next line after "RewriteRule"
-* Save & Close
-* Try to delete comment again
-
 = Why Do Social Media Ask For Privacy Policy link? =
 
 It is now one of the requirements to have Privacy Policy link on your website due to GDRP regulation.
@@ -177,11 +164,15 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Enhancements:**
 
+* Small improvements in the documentation on how to set-up certain social network
+
 
 **Fixes:**
 
 * Small fixed for cached sidebar news. Added dependency on the locale
 * Fixed issue when some users were unable to authorize using Google caused 500 error, #127
+* Fixed issue on comment delete, no more need to add DELETE option in Apache or Nginx
+* Fixed typo in Russian translation message when trying to delete a comment
 
 
 = 0.0.53 – 04.09.2018 =

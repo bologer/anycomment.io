@@ -197,21 +197,16 @@ class CommentList extends AnyCommentComponent {
         const self = this;
         const settings = this.props.settings;
 
-        const params = {
-            id: comment.id
-        };
 
-        this.props.axios
-            .delete('/comments/' + comment.id, {
-                params: params,
-                headers: {'X-WP-Nonce': settings.nonce}
-            })
-            .then(function () {
-                self.loadComments();
-            })
-            .catch(function (error) {
-                self.showError(error);
-            });
+        this.props.axios({
+            method: 'POST',
+            url: '/comments/delete/' + comment.id,
+            headers: {'X-WP-Nonce': settings.nonce}
+        }).then(function () {
+            self.loadComments();
+        }).catch(function (error) {
+            self.showError(error);
+        });
     }
 
     /**

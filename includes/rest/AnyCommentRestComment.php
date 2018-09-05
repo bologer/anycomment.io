@@ -89,8 +89,18 @@ class AnyCommentRestComment extends AnyCommentRestController {
 				'permission_callback' => [ $this, 'update_item_permissions_check' ],
 				'args'                => $this->get_endpoint_args_for_item_schema( WP_REST_Server::EDITABLE ),
 			],
+			'schema' => [ $this, 'get_public_item_schema' ],
+		] );
+
+		register_rest_route( $this->namespace, '/' . $this->rest_base . '/delete/(?P<id>[\d]+)', [
+			'args'   => [
+				'id' => [
+					'description' => __( 'Unique identifier for the object.', 'anycomment' ),
+					'type'        => 'integer',
+				],
+			],
 			[
-				'methods'             => WP_REST_Server::DELETABLE,
+				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => [ $this, 'delete_item' ],
 				'permission_callback' => [ $this, 'delete_item_permissions_check' ],
 			],
