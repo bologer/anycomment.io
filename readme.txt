@@ -181,6 +181,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 **Fixes:**
 
 * Small fixed for cached sidebar news. Added dependency on the locale
+* Fixed issue when some users were unable to authorize using Google caused 500 error, #127
 
 
 = 0.0.53 – 04.09.2018 =
