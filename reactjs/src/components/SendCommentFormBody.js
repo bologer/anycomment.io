@@ -3,6 +3,8 @@ import SendCommentFormBodyAvatar from './SendCommentFormBodyAvatar'
 import AnyCommentComponent from "./AnyCommentComponent"
 import Dropzone from 'react-dropzone'
 import {toast} from 'react-toastify'
+import SVG from 'react-inlinesvg';
+import selectFileSvg from '../img/select-file.svg'
 
 /**
  * Display comment field of the form.
@@ -152,7 +154,9 @@ class SendCommentFormBody extends AnyCommentComponent {
                      title={settings.i18.upload_file}
                      onClick={() => {
                          dropzoneRef.open()
-                     }}></div> : ''}
+                     }}><SVG src={selectFileSvg}
+                             preloader={false}
+                /></div> : ''}
 
             <textarea name="content"
                       value={this.props.commentText}

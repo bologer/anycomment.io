@@ -92,6 +92,7 @@ class SendCommentForm extends AnyCommentComponent {
             })
             .then(function (response) {
                 self.props.onSend(response.data);
+                return true;
             })
             .catch(function (error) {
                 self.showError(error);
@@ -149,6 +150,7 @@ class SendCommentForm extends AnyCommentComponent {
             })
             .then(function (response) {
                 self.props.onSend(response.data);
+                return true;
             })
             .catch(function (error) {
                 self.showError(error);
@@ -172,6 +174,7 @@ class SendCommentForm extends AnyCommentComponent {
         return this.handleGuest(event);
     };
 
+
     render() {
         const translations = this.props.settings.i18;
 
@@ -179,7 +182,8 @@ class SendCommentForm extends AnyCommentComponent {
             <div className="anycomment anycomment-send-comment-body">
                 <form onSubmit={this.handleSubmit}>
 
-                    <SendCommentFormBody {...this.props} handleContentChange={this.handleContentChange} changeCommenText={this.props.onCommentTextChange}/>
+                    <SendCommentFormBody {...this.props} handleContentChange={this.handleContentChange}
+                                         changeCommenText={this.props.onCommentTextChange}/>
 
                     {this.isGuest() ?
                         <SendCommentGuest {...this.props} handleAgreement={this.handleAgreement}

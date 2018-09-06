@@ -77,8 +77,8 @@ Yes! Join us at [GitHub](https://github.com/bologer/anycomment.io)
 * Option: when user does not have email after registration via social, ask for it somewhere in the comments again
 * Option: notify moderators about new comments, #77
 * Option: ability to set default sorting, #85
-* Option: embed Instagram photos (#115)
-* Option: embed Instafeed (#116)
+* Option: embed Instagram photos, #115
+* Option: embed Instafeed, #116
 * Improve mobile layout, #106
 * Option: ability to change email notification template, #97
 * Ability to choose comment to make it sticky at the very top of all comments, #76
