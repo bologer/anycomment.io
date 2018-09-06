@@ -166,16 +166,14 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 * Small improvements in the documentation on how to set-up certain social network
 
-
 **Fixes:**
 
-* Small fixed for cached sidebar news. Added dependency on the locale
+* Small fixed for cached sidebar news. Added dependency on the website locale
 * Fixed issue when some users were unable to authorize using Google caused 500 error, #127
 * Fixed issue on comment delete, no more need to add DELETE option in Apache or Nginx
 * Fixed typo in Russian translation message when trying to delete a comment
 * Fixed issue when comments displayed on the single page could go over the page content as invisible element, #129
 * Fixed issue with file input icon (was displaying as black square instead)
-
 
 = 0.0.53 – 04.09.2018 =
 
@@ -183,7 +181,6 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 * Small fixes to translations regarding options to show/hide user URL
 * Fix for main plugin shortcode, now use `[anycomment include="true"]` to include comments on custom place (reported by Ivan)
-
 
 = 0.0.52 – 03.09.2018 =
 
