@@ -174,6 +174,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Fixed issue on comment delete, no more need to add DELETE option in Apache or Nginx
 * Fixed typo in Russian translation message when trying to delete a comment
 * Fixed issue when comments displayed on the single page could go over the page content as invisible element, #129
+* Fixed issue with file input icon (was displaying as black square instead)
 
 
 = 0.0.53 – 04.09.2018 =
