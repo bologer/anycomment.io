@@ -30,7 +30,7 @@ $paths = [
 		[ 'regex' => '/Stable\stag:\s[0-9.]+/m', 'replacement' => 'Stable tag: %s' ],
 		[
 			'regex'       => '/==\sChangelog\s==/',
-			'replacement' => "== Changelog ==\n\n= $version – $date =\n\n"
+			'replacement' => "== Changelog ==\n\n= $version – $date =\n\n**Enhancements:**\n\n\n\n**Fixes:**\n\n"
 		]
 	]
 ];
