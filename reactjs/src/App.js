@@ -48,6 +48,11 @@ class App extends AnyCommentComponent {
         const root = $('#anycomment-root'),
             tillTop = root.offset().top;
 
+        if ($(document).outerHeight() <= $(window).outerHeight()) {
+            self.setState({shouldLoad: true});
+            return false;
+        }
+
         $(window).on('scroll', function () {
 
             let wH = $(window).height(),
