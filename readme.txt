@@ -168,6 +168,8 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Fixes:**
 
+* Fixed notice message in admin, #132
+
 
 = 0.0.54 – 06.09.2018 =
 

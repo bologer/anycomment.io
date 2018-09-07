@@ -96,10 +96,14 @@ if ( ! class_exists( 'AnyCommentAdminPages' ) ) :
 		 */
 		public function enqueue_dashboard_scripts() {
 
-			$page = $_GET['page'];
+			$page = isset( $_GET['page'] ) ? trim( $_GET['page'] ) : null;
+
+			if ( $page === null ) {
+				return null;
+			}
 
 			if ( strpos( $page, 'anycomment' ) === false ) {
-				return;
+				return null;
 			}
 
 			if ( $page === 'anycomment-dashboard' && ! isset( $_GET['tab'] ) ) {
