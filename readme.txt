@@ -164,7 +164,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Enhancements:**
 
-
+* Added a Jetpack, Disqus, Disable Comments and a few other plugin to the list of possible problems, #134
 
 **Fixes:**
 
