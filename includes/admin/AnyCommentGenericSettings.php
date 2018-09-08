@@ -694,34 +694,6 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 				return false;
 			}
 
-			/**
-			 * Replace relative paths of the images in the stylesheet with react-way,
-			 * as there is no way to remove it via react-create-app
-			 * @link https://github.com/facebook/create-react-app/issues/821 for further information
-			 */
-
-			$staticFolder = AnyComment()->plugin_path() . '/static/media/';
-			$assets       = $staticFolder . '*.*';
-
-			$fileAssetList = glob( $assets );
-
-			if ( ! empty( $fileAssetList ) ) {
-				foreach ( $fileAssetList as $key => $assetFullPath ) {
-					preg_match( '/\/media\/(.*)\.[a-z0-9]+\.(svg|png|jpg|jpeg|ico|gif)$/m', $assetFullPath, $matches );
-
-					if ( count( $matches ) !== 3 ) {
-						continue;
-					}
-
-					$fullMatchAndUrl = AnyComment()->plugin_url() . '/static' . $matches[0];
-					$fileName        = $matches[1];
-					$extension       = $matches[2];
-
-					$pattern = "/\.\.\/img\/?(.*?\/)$fileName\.$extension/m";
-					$content = preg_replace( $pattern, $fullMatchAndUrl, $content );
-				}
-			}
-
 
 			$toastCss = file_get_contents( $scssPath . 'ReactToastify.css' );
 
@@ -761,7 +733,39 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 
 			$scss->setVariables( $replaceVariables );
 
-			return $scss->compile( $content );
+			$compiled = $scss->compile( $content );
+
+			/**
+			 * Replace relative paths of the images in the stylesheet with react-way,
+			 * as there is no way to remove it via react-create-app
+			 * @link https://github.com/facebook/create-react-app/issues/821 for further information
+			 */
+			$staticFolder = AnyComment()->plugin_path() . '/static/media/';
+			$assets       = $staticFolder . '*.*';
+
+			$fileAssetList = glob( $assets );
+
+			if ( ! empty( $fileAssetList ) ) {
+				foreach ( $fileAssetList as $key => $assetFullPath ) {
+					preg_match( '/\/media\/(.*)\.[a-z0-9]+\.(svg|png|jpg|jpeg|ico|gif)$/m', $assetFullPath, $matches );
+
+					if ( count( $matches ) !== 3 ) {
+						continue;
+					}
+
+					$fullMatchAndUrl = AnyComment()->plugin_url() . '/static' . $matches[0];
+					$fileName        = $matches[1];
+					$extension       = $matches[2];
+
+					$pattern = "/\.\.\/img\/?([\w-_]*\/)$fileName\.$extension/m";
+
+					if ( preg_match( $pattern, $compiled ) ) {
+						$compiled = preg_replace( $pattern, $fullMatchAndUrl, $compiled );
+					}
+				}
+			}
+
+			return $compiled;
 		}
 
 		/**
