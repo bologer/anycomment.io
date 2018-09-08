@@ -178,6 +178,11 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		const THEME_LIGHT = 'light';
 
 		/**
+		 * Custom theme.
+		 */
+		const THEME_CUSTOM = 'custom';
+
+		/**
 		 * Normal subscriber (from WordPress)
 		 */
 		const DEFAULT_ROLE_SUBSCRIBER = 'subscriber';
@@ -1242,6 +1247,11 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 * @return string|null
 		 */
 		public static function getTheme() {
+
+			if ( static::isDesignCustom() ) {
+				return self::THEME_CUSTOM;
+			}
+
 			$value = static::instance()->getOption( self::OPTION_THEME );
 
 			if ( $value === null || $value !== self::THEME_DARK && $value !== self::THEME_LIGHT ) {

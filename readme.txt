@@ -172,6 +172,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 * Fixed notice message in admin, #132
 * Fixed issue when "load on scroll" option was active and comments did not load on short pages because it was not possible to scroll, #135
+* Fixed issue when custom styles were ignored as dark theme was selected
 
 
 = 0.0.54 – 06.09.2018 =
