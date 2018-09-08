@@ -1,3 +1,5 @@
+@import "_variables";
+
 $primary-color: #64ceac;
 $semi-hidden-color: #efe9f1;
 $comment-color: #fff;
@@ -12,7 +14,7 @@ $attachment-background-color: #eee;
 
 $input-background-color: #3f3f3f;
 
-#anycomment-root {
+#{$root} {
   .anycomment-dark {
     label,
     a {

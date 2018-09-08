@@ -1,151 +1,23 @@
-$font-size: 15px;
-$font-family: 'Noto-Sans', sans-serif;
+@import "_variables";
+@import "_mixins";
 
-$semi-hidden-color: #b6c1c6;
-
-$link-color: #3658f7;
-$link-color-active: darken($link-color, 5%);
-$text-color: #333;
-
-$form-field-background-color: #fff;
-
-$attachment-color: #eee;
-$attachment-background-color: #eee;
-
-$parent-avatar-size: 60px;
-$child-avatar-size: 48px;
-
-$btn-radius: 40px;
-
-$btn-color: #fff;
-$btn-background-color: #53af4a;
-$btn-background-color-active: #4f9f49;
-
-$global-radius: 4px;
-
-@mixin border-radius($radius) {
-  -webkit-border-radius: $radius;
-  -moz-border-radius: $radius;
-  -ms-border-radius: $radius;
-  border-radius: $radius;
-}
-
-@import "normalizer";
-@import "alerts";
-
-.anycomment {
-  float: none;
-  text-align: left;
-  font-family: $font-family;
-  position: relative;
-  left: auto;
-  right: auto;
-  top: auto;
-  bottom: auto;
-  opacity: 1;
-  margin: 0;
-  padding: 0;
-  border: none 0;
-  border-radius: 0;
-  font-size: $font-size - 1;
-  vertical-align: baseline;
-  background: 0 0;
-  color: $text-color;
-  line-height: 1.167em;
-  outline: 0;
-  text-transform: none;
-  text-decoration: none;
-  box-shadow: none;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  text-shadow: none;
-  -moz-box-sizing: content-box;
-  -webkit-box-sizing: content-box;
-  min-height: 0;
-  -webkit-overflow-scrolling: touch;
-}
-
-#anycomment-root {
-  &,
-  & *,
-  *:before,
-  *:after {
-    box-sizing: border-box !important;
-  }
-
-  a {
-    text-decoration: none;
-  }
-}
-
-%author-avatar-parent {
-  width: $parent-avatar-size;
-  height: $parent-avatar-size;
-}
-
-%author-avatar-child {
-  width: $child-avatar-size;
-  height: $child-avatar-size;
-}
-
-%author-avatar {
-  background-size: cover;
-  background-position: center center;
-  @include border-radius(50%);
-}
-
-%button-appearance {
-  font-size: $font-size !important;
-  font-weight: normal !important;
-  text-align: center !important;
-  text-transform: none !important;
-  justify-content: center;
-  color: $btn-color !important;
-  padding: 0 50px !important;
-  height: 48px !important;
-  line-height: 48px !important;
-  display: inline-block;
-  vertical-align: middle;
-  border: 0;
-  opacity: 1;
-  outline: 0;
-  cursor: pointer;
-  user-select: none;
-  appearance: none;
-  white-space: nowrap;
-  @include border-radius(24px);
-}
-
-#anycomment-root {
-  padding: 40px 0;
+#{$root} {
+  padding: $global-padding;
   width: 100%;
   float: left;
   position: relative;
-
-  .anycomment-btn,
-  .input[type="submit"],
-  input + .input[type="button"] {
-    background-color: $btn-background-color !important;
-    @extend %button-appearance;
-
-    &:hover,
-    &:active,
-    &:focus {
-      @extend %button-appearance;
-      background-color: $btn-background-color-active !important;
-    }
-  }
 
   .anycomment-send-comment.anycomment-send-comment-authorized {
     .anycomment-send-comment-body {
       &-outliner {
         &__avatar {
           position: absolute;
-          top: 18px;
+          top: 50%;
+          margin-top: -($parent-avatar-size/2);
           left: 15px;
           z-index: 2;
-          @extend %author-avatar;
-          @extend %author-avatar-parent;
+          @include avatar();
+          @include avatar_parent();
         }
       }
     }
@@ -154,7 +26,7 @@ $global-radius: 4px;
   // Send comment
   .anycomment-send-comment {
     width: 100%;
-    margin-bottom: 50px;
+    margin-bottom: $form-after-space;
 
     &-supheader {
       width: 100%;
@@ -271,7 +143,6 @@ $global-radius: 4px;
         max-height: 300px;
         background-color: $form-field-background-color;
         margin-bottom: 10px;
-        position: relative;
         @include border-radius($global-radius);
 
         &__auth {
@@ -357,7 +228,7 @@ $global-radius: 4px;
           min-width: 100% !important;
           max-width: 100% !important;
           max-height: 300px !important;
-          padding: 41px 10px 5px 93px !important;
+          padding: $comment-field-padding !important;
           min-height: 96px;
           position: relative;
           z-index: 1;
@@ -646,20 +517,20 @@ $global-radius: 4px;
 
         &,
         &__img {
-          @extend %author-avatar-parent;
+          @include avatar-parent();
         }
 
         &__img {
           position: relative;
-          @extend %author-avatar;
+          @include avatar();
           @include border-radius(50%);
 
           &-auth-type {
             position: absolute;
-            bottom: 7px;
-            right: 7px;
-            width: 16px;
-            height: 16px;
+            bottom: $parent-avatar-size - ($parent-avatar-size - 6);
+            right: $parent-avatar-size - ($parent-avatar-size - 6);
+            width: $parent-avatar-size / 3.5;
+            height: $parent-avatar-size / 3.5;
             background-size: cover;
             background-repeat: no-repeat;
           }
@@ -807,8 +678,7 @@ $global-radius: 4px;
 
             .comment-attachment__image {
               background-size: 100%;
-              background-repeat: no-repeat;
-              background-position: center center;
+              background: no-repeat center center;
             }
           }
         }
@@ -836,8 +706,7 @@ $global-radius: 4px;
               height: 16px;
               left: 0;
               top: 0;
-              background-image: url('../img/icons/like-off.svg');
-              background-repeat: no-repeat;
+              background: url('../img/icons/like-off.svg') no-repeat;
               background-size: 18px;
             }
 
@@ -878,18 +747,25 @@ $global-radius: 4px;
 
     // Child comments
     &-child {
-      margin-left: $parent-avatar-size + 20;
+      margin-left: $comment-parent-space;
 
       .comment-single {
         &-avatar {
           &,
           &__img {
-            @extend %author-avatar-child;
+            @include avatar-child();
+
+            &-auth-type {
+              bottom: $parent-avatar-size - ($parent-avatar-size - 5);
+              right: $parent-avatar-size - ($parent-avatar-size - 5);
+              width: $parent-avatar-size / 4;
+              height: $parent-avatar-size / 4;
+            }
           }
         }
 
         &-body {
-          padding-left: $child-avatar-size + 10;
+          padding-left: $comment-child-space;
 
           .comment-attachments {
             li {
@@ -911,17 +787,5 @@ $global-radius: 4px;
     }
   }
 
-  //@media screen and (max-width 500px) {
-  //
-  //}
-}
-
-@import "theme-dark";
-
-.clearfix:after {
-  content: "";
-  visibility: hidden;
-  display: block;
-  height: 0;
-  clear: both;
+  @import "mobile";
 }

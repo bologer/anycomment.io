@@ -1,19 +1,18 @@
-import React from 'react';
+import React from 'react'
 import CommentList from './components/CommentList'
 import CommentCopyright from './components/CommentCopyright'
-import AnyCommentComponent from "./components/AnyCommentComponent";
-import './css/comments.css'
-import {ToastContainer} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import AnyCommentComponent from "./components/AnyCommentComponent"
+import './css/app.css'
+import {ToastContainer} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import $ from 'jquery'
 
 /**
  * App is main compontent of the application.
  */
 class App extends AnyCommentComponent {
-
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
 
         this.state = {
             shouldLoad: false,

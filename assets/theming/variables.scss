@@ -1,0 +1,28 @@
+$font-size: 15px;
+$font-family: 'Noto-Sans', sans-serif;
+
+$semi-hidden-color: #b6c1c6;
+
+$link-color: #3658f7;
+$link-color-active: darken($link-color, 5%);
+$text-color: #333;
+
+$form-field-background-color: #fff;
+
+$attachment-color: #eee;
+$attachment-background-color: #eee;
+
+$parent-avatar-size: 60px;
+$child-avatar-size: 48px;
+
+$comment-parent-space: $parent-avatar-size + 20;
+$comment-child-space: $parent-avatar-size + 10;
+
+$btn-radius: 40px;
+
+$btn-color: #fff;
+$btn-background-color: #53af4a;
+$btn-background-color-active: #4f9f49;
+
+$global-radius: 4px;
+$global-padding: 40px 0;

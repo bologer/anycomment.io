@@ -683,49 +683,10 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		private static function combineStylesAndProcess() {
 			$scssPath = AnyComment()->plugin_path() . '/assets/theming/';
 
-			$content = trim( file_get_contents( $scssPath . 'comments.scss' ) );
+			$content = trim( file_get_contents( $scssPath . 'app.scss' ) );
 
 			if ( empty( $content ) ) {
 				return false;
-			}
-
-			/**
-			 * Replace custom styles from plugin
-			 */
-			$hexRegex  = '#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})';
-			$sizeRegex = '([0-9].*(px|pt|em|%))';
-
-			$arr = [
-				"/\\$(font-size):\s$sizeRegex;/m"   => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignFontSize() ),
-				"/\\$(font-family):\s(.*?);/m"      => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignFontFamily() ),
-				"/\\$(link-color):\s($hexRegex);/m" => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignLinkColor() ),
-				"/\\$(text-color):\s($hexRegex);/m" => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignTextColor() ),
-
-				"/\\$(semi-hidden-color):\s($hexRegex);/m" => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignSemiHiddenColor() ),
-
-				"/\\$(form-field-background-color):\s($hexRegex);/m" => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignFormFieldBackgroundColor() ),
-
-				"/\\$(attachment-color):\s($hexRegex]+);/m"          => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignAttachmentColor() ),
-				"/\\$(attachment-background-color):\s($hexRegex);/m" => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignAttachmentBackgroundColor() ),
-
-				"/\\$(parent-avatar-size):\s$sizeRegex;/m" => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignParentAvatarSize() ),
-				"/\\$(child-avatar-size):\s$sizeRegex;/m"  => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignChildAvatarSize() ),
-
-				"/\\$(btn-radius):\s$sizeRegex;/m"                   => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignButtonRadius() ),
-				"/\\$(btn-color):\s($hexRegex);/m"                   => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignButtonColor() ),
-				"/\\$(btn-background-color):\s($hexRegex);/m"        => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignButtonBackgroundColor() ),
-				"/\\$(btn-background-color-active):\s($hexRegex);/m" => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignButtonBackgroundColorActive() ),
-
-				"/\\$(global-radius):\s$sizeRegex;/m" => sprintf( '$$1: %s;', AnyCommentGenericSettings::getDesignGlobalRadius() ),
-			];
-
-
-			foreach ( $arr as $pattern => $replacement ) {
-				$replacedString = preg_replace( $pattern, $replacement, $content );
-
-				if ( $replacedString !== null ) {
-					$content = $replacedString;
-				}
 			}
 
 			/**
@@ -757,26 +718,6 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 			}
 
 
-			if ( strpos( $content, '@import' ) !== null ) {
-				preg_match_all( '/@import\s"([a-z-]+)";/m', $content, $matches );
-
-				if ( ! empty( $matches ) && ! empty( $matches[1] ) ) {
-					foreach ( $matches[1] as $key => $match ) {
-						$subContentPath = sprintf( "%s%s.scss", $scssPath, $match );
-						$subContent     = trim( file_get_contents( $subContentPath ) );
-
-						$search  = $matches[0][ $key ];
-						$replace = '';
-
-						if ( $subContent !== false && ! empty( $subContent ) ) {
-							$replace = $subContent;
-						}
-
-						$content = str_replace( $search, $replace, $content );
-					}
-				}
-			}
-
 			$toastCss = file_get_contents( $scssPath . 'ReactToastify.css' );
 
 			if ( $toastCss !== false ) {
@@ -787,6 +728,33 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 
 			$scss = new \Leafo\ScssPhp\Compiler();
 			$scss->setFormatter( 'Leafo\ScssPhp\Formatter\Crunched' );
+			$scss->addImportPath( $scssPath );
+
+			$replaceVariables = [
+				'font-size'   => AnyCommentGenericSettings::getDesignFontSize(),
+				'font-family' => AnyCommentGenericSettings::getDesignFontFamily(),
+				'link-color'  => AnyCommentGenericSettings::getDesignLinkColor(),
+				'text-color'  => AnyCommentGenericSettings::getDesignTextColor(),
+
+				'semi-hidden-color' => AnyCommentGenericSettings::getDesignSemiHiddenColor(),
+
+				'form-field-background-color' => AnyCommentGenericSettings::getDesignFormFieldBackgroundColor(),
+
+				'attachment-color'            => AnyCommentGenericSettings::getDesignAttachmentColor(),
+				'attachment-background-color' => AnyCommentGenericSettings::getDesignAttachmentBackgroundColor(),
+
+				'parent-avatar-size' => AnyCommentGenericSettings::getDesignParentAvatarSize(),
+				'child-avatar-size'  => AnyCommentGenericSettings::getDesignChildAvatarSize(),
+
+				'btn-radius'                  => AnyCommentGenericSettings::getDesignButtonRadius(),
+				'btn-color'                   => AnyCommentGenericSettings::getDesignButtonColor(),
+				'btn-background-color'        => AnyCommentGenericSettings::getDesignButtonBackgroundColor(),
+				'btn-background-color-active' => AnyCommentGenericSettings::getDesignButtonBackgroundColorActive(),
+
+				'global-radius' => AnyCommentGenericSettings::getDesignGlobalRadius(),
+			];
+
+			$scss->setVariables( $replaceVariables );
 
 			return $scss->compile( $content );
 		}

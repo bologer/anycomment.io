@@ -1,0 +1,14 @@
+#{$root} {
+  .anycomment-btn,
+  .input[type="submit"],
+  input + .input[type="button"] {
+    @include button();
+
+    &:hover,
+    &:active,
+    &:focus {
+      @include button();
+      background-color: $btn-background-color-active !important;
+    }
+  }
+}
