@@ -9,6 +9,9 @@ $text-color: #333 !default;
 
 $form-field-background-color: #fff !default;
 
+$attachment-size: 50px !default;
+$attachment-child-size: $attachment-size - 10 !default;
+
 $attachment-color: #eee !default;
 $attachment-background-color: #eee !default;
 
@@ -22,6 +25,11 @@ $comment-field-padding: 41px 10px 5px 93px !default;
 $comment-field-default-height: 96px !default;
 
 $form-after-space: 50px !default;
+
+$big-space: 50px !default;
+$medium-space: $big-space / 2 !default;
+$small-space: $medium-space / 2 !default;
+$xsmall-space: $small-space / 2 !default;
 
 $btn-radius: 40px !default;
 

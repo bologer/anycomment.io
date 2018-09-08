@@ -461,8 +461,8 @@
 
   // Footer
   .anycomment-copy-footer {
-    margin-top: 50px;
-    padding-top: 18px;
+    margin-top: $big-space;
+    padding-top: $medium-space;
     text-align: right;
     font-size: $font-size - 3;
     border-top: 2px solid #e4e2e7;
@@ -483,12 +483,6 @@
     }
   }
 
-  // Main
-  #anycomment-comments {
-    position: relative;
-    padding: 44px 10px;
-  }
-
   // Comments list
   .anycomment-list {
     list-style: none;
@@ -496,14 +490,10 @@
     padding: 0;
 
     .comment-single {
-      width: 100%;
-      display: block;
-      margin-bottom: 18px;
-      padding: 0;
-      position: relative;
+      margin-bottom: $medium-space;
 
       &-replies {
-        margin-top: 18px;
+        margin-top: $medium-space;
       }
 
       &:last-of-type {
@@ -556,7 +546,7 @@
             &-owner {
               background-color: $btn-background-color;
               color: $btn-color;
-              font-size: 10.2px;
+              font-size: $font-size - 5;
               padding: 2px 5px;
               margin-left: 10px;
               user-select: none;
@@ -576,8 +566,8 @@
           &__date {
             color: $semi-hidden-color;
             font-size: $font-size - 2;
-            min-height: 17px;
-            line-height: 17px;
+            min-height: $medium-space;
+            line-height: $medium-space;
             display: block;
           }
         }
@@ -651,9 +641,9 @@
 
             .comment-attachment {
               display: block;
-              width: 50px;
-              height: 50px;
-              line-height: 50px;
+              width: $attachment-size;
+              height: $attachment-size;
+              line-height: $attachment-size;
               background-color: $attachment-background-color;
               text-align: center;
               overflow: hidden;
@@ -677,8 +667,9 @@
             }
 
             .comment-attachment__image {
-              background-size: 100%;
-              background: no-repeat center center;
+              background-size: cover;
+              background-repeat: no-repeat;
+              background-position: center center;
             }
           }
         }
@@ -720,7 +711,7 @@
 
             li {
               display: inline-block;
-              margin-right: 15px;
+              margin-right: $small-space;
 
               &:last-of-type {
                 margin-right: 0;
@@ -770,9 +761,9 @@
           .comment-attachments {
             li {
               .comment-attachment {
-                width: 40px;
-                height: 40px;
-                line-height: 40px;
+                width: $attachment-child-size;
+                height: $attachment-child-size;
+                line-height: $attachment-child-size;
                 font-size: $font-size - 9;
               }
             }

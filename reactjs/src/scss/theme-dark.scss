@@ -1,5 +1,7 @@
 @import "_variables";
 
+$text-color: #fff;
+
 $primary-color: #64ceac;
 $semi-hidden-color: #efe9f1;
 $comment-color: #fff;
@@ -157,23 +159,13 @@ $input-background-color: #3f3f3f;
           }
 
           &__text {
-            p {
-              color: $comment-color;
+            &-content {
+              color: $text-color;
             }
           }
 
           .comment-attachments {
-            width: 100%;
-            display: block;
-            margin: 3px 0;
-            padding: 0;
-
             li {
-              display: inline-block;
-              margin-right: 5px;
-              margin-bottom: 2px;
-              float: left;
-
               .comment-attachment {
                 background-color: $attachment-background-color;
                 color: darken($attachment-color, 15%);
