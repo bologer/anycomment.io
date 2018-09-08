@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     <div class="anycomment-notice anycomment-success"><?= sprintf( __( 'Follow us on <a href="%s" %s>VK.com</a> or join our group in <a href="%s" %s>Telegram</a>', 'anycomment' ),
 			'https://vk.com/anycomment',
 			'target="_blank"',
-			'https://t.me/anycommentio',
+			'https://t.me/joinchat/BEUJEQ9aMmQsFX65MNRCDg',
 			'target="_blank"' ) ?></div>
 
     <div class="anycomment-dashboard">
