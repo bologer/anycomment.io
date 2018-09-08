@@ -1,5 +1,6 @@
 import React from 'react'
 import AnyCommentComponent from "./AnyCommentComponent"
+import socials from "../img/icons/auth/*.svg";
 
 /**
  * Display single item of single network to login with.
@@ -8,14 +9,22 @@ class LoginSocial extends AnyCommentComponent {
     render() {
         const social = this.props.social;
 
-        const src = require('../img/icons/auth/social-' + social.slug + '.svg');
+
+        console.log(socials);
+        console.log(src);
+
+        const src = socials['social-' + social.slug];
+
+        return (null);
+
+
 
         if (!social.visible) {
             return (null);
         }
 
         return (
-            <li>
+            <li key={this.key}>
                 <a href={social.url}
                    target="_parent"
                    title={social.label}
