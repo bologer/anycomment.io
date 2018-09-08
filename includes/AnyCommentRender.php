@@ -89,14 +89,19 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 				wp_enqueue_style( 'anycomment-google-font', 'https://fonts.googleapis.com/css?family=Noto+Sans:400,700&amp;subset=cyrillic', [], AnyComment()->version );
 			}
 
-			$postId = get_the_ID();
+			$postId        = get_the_ID();
+			$postPermalink = get_permalink( $postId );
+
 			wp_localize_script( 'anycomment-react', 'anyCommentApiSettings', [
 				'postId'       => $postId,
-				'postUrl'      => get_permalink( $postId ),
 				'nonce'        => wp_create_nonce( 'wp_rest' ),
 				'locale'       => get_locale(),
 				'restUrl'      => esc_url_raw( rest_url( 'anycomment/v1/' ) ),
 				'commentCount' => ( $res = get_comment_count( $postId ) ) !== null ? (int) $res['all'] : 0,
+				'urls'         => [
+					'logout'  => wp_logout_url(),
+					'postUrl' => $postPermalink,
+				],
 				// Options from plugin
 				'options'      => [
 					'limit'                  => AnyCommentGenericSettings::getPerPage(),
@@ -141,6 +146,7 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 					'delete'                         => __( 'Delete', 'anycomment' ),
 					'cancel'                         => __( 'Cancel', 'anycomment' ),
 					'quick_login'                    => __( 'Quick Login', 'anycomment' ),
+					'logout'                         => __( 'Logout', 'anycomment' ),
 					'new_comment_was_added'          => __( 'New comment was added', 'anycomment' ),
 					'author'                         => __( 'Author', 'anycomment' ),
 					'name'                           => __( 'Name', 'anycomment' ),
@@ -165,7 +171,7 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 			$path = ANYCOMMENT_ABSPATH . 'templates/comments.php';
 
 			if ( $isInclude ) {
-				return anycomment_get_template('comments' );
+				return anycomment_get_template( 'comments' );
 			}
 
 			return $path;

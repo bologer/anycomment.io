@@ -176,7 +176,8 @@ class SendCommentForm extends AnyCommentComponent {
 
 
     render() {
-        const translations = this.props.settings.i18;
+        const settings = this.getSettings();
+        const translations = settings.i18;
 
         return (
             <div className="anycomment anycomment-send-comment-body">
@@ -188,8 +189,13 @@ class SendCommentForm extends AnyCommentComponent {
                     {this.isGuest() ?
                         <SendCommentGuest {...this.props} handleAgreement={this.handleAgreement}
                                           isAgreementAccepted={this.state.isAgreementAccepted}/> :
-                        <input type="submit" className="anycomment-btn anycomment-send-comment-body__btn"
-                               value={this.props.buttonText}/>}
+                        <div className="">
+                            <a href={settings.urls.logout}>{translations.logout}</a>
+                            <input type="submit" className="anycomment-btn anycomment-send-comment-body__btn"
+                                   value={this.props.buttonText}/>
+                            <div className="clearfix"></div>
+                        </div>
+                    }
 
                     <input
                         type="hidden"
