@@ -74,99 +74,101 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 
 			$isInclude = $params['include'];
 
-			wp_enqueue_script( 'anycomment-react', AnyComment()->plugin_url() . '/static/js/main.min.js', [], AnyComment()->version );
+			if ( ! post_password_required() && comments_open() ) {
+				wp_enqueue_script( 'anycomment-react', AnyComment()->plugin_url() . '/static/js/main.min.js', [], AnyComment()->version );
 
-			if ( AnyCommentGenericSettings::isDesignCustom() ) {
-				$url = AnyCommentGenericSettings::getCustomDesignStylesheetUrl();
+				if ( AnyCommentGenericSettings::isDesignCustom() ) {
+					$url = AnyCommentGenericSettings::getCustomDesignStylesheetUrl();
 
-				wp_enqueue_style( 'anycomment-custom-styles', $url, [], AnyComment()->version );
-			} else {
-				wp_enqueue_style( 'anycomment-styles', AnyComment()->plugin_url() . '/static/css/main.min.css', [], AnyComment()->version );
+					wp_enqueue_style( 'anycomment-custom-styles', $url, [], AnyComment()->version );
+				} else {
+					wp_enqueue_style( 'anycomment-styles', AnyComment()->plugin_url() . '/static/css/main.min.css', [], AnyComment()->version );
+				}
+
+
+				if ( strpos( AnyCommentGenericSettings::getDesignFontFamily(), 'Noto-Sans' ) !== false ) {
+					wp_enqueue_style( 'anycomment-google-font', 'https://fonts.googleapis.com/css?family=Noto+Sans:400,700&amp;subset=cyrillic', [], AnyComment()->version );
+				}
+
+				$postId        = get_the_ID();
+				$postPermalink = get_permalink( $postId );
+
+				wp_localize_script( 'anycomment-react', 'anyCommentApiSettings', [
+					'postId'       => $postId,
+					'nonce'        => wp_create_nonce( 'wp_rest' ),
+					'locale'       => get_locale(),
+					'restUrl'      => esc_url_raw( rest_url( 'anycomment/v1/' ) ),
+					'commentCount' => ( $res = get_comment_count( $postId ) ) !== null ? (int) $res['all'] : 0,
+					'urls'         => [
+						'logout'  => wp_logout_url(),
+						'postUrl' => $postPermalink,
+					],
+					// Options from plugin
+					'options'      => [
+						'limit'                  => AnyCommentGenericSettings::getPerPage(),
+						'isCopyright'            => AnyCommentGenericSettings::isCopyrightOn(),
+						'socials'                => anycomment_login_with( false, get_permalink( $postId ) ),
+						'theme'                  => AnyCommentGenericSettings::getTheme(),
+						'isShowProfileUrl'       => AnyCommentGenericSettings::isShowProfileUrl(),
+						'isShowImageAttachments' => AnyCommentGenericSettings::isShowImageAttachments(),
+						'isShowVideoAttachments' => AnyCommentGenericSettings::isShowVideoAttachments(),
+						'isShowTwitterEmbeds'    => AnyCommentGenericSettings::isShowTwitterEmbeds(),
+						'isLinkClickable'        => AnyCommentGenericSettings::isLinkClickable(),
+						'userAgreementLink'      => AnyCommentGenericSettings::getUserAgreementLink(),
+						'notifyOnNewComment'     => AnyCommentGenericSettings::isNotifyOnNewComment(),
+						'intervalCommentsCheck'  => AnyCommentGenericSettings::getIntervalCommentsCheck(),
+						'isLoadOnScroll'         => AnyCommentGenericSettings::isLoadOnScroll(),
+						'isFormTypeAll'          => AnyCommentGenericSettings::isFormTypeAll(),
+						'isFormTypeGuests'       => AnyCommentGenericSettings::isFormTypeGuests(),
+						'isFormTypeSocials'      => AnyCommentGenericSettings::isFormTypeSocials(),
+						'isGuestCanUpload'       => AnyCommentGenericSettings::isGuestCanUpload(),
+						'fileMimeTypes'          => AnyCommentGenericSettings::getFileMimeTypes(),
+						'fileLimit'              => AnyCommentGenericSettings::getFileLimit(),
+						'fileMaxSize'            => AnyCommentGenericSettings::getFileMaxSize(),
+						'fileUploadLimit'        => AnyCommentGenericSettings::getFileUploadLimit(),
+					],
+					'user'         => AnyCommentUser::getSafeUser(),
+					'i18'          => [
+						'error_generic'                  => __( "Oops, something went wrong...", "anycomment" ),
+						'loading'                        => __( 'Loading...', 'anycomment' ),
+						'load_more'                      => __( "Load more", "anycomment" ),
+						'button_send'                    => __( 'Send', 'anycomment' ),
+						'button_save'                    => __( 'Save', 'anycomment' ),
+						'button_reply'                   => __( 'Reply', 'anycomment' ),
+						'sort_by'                        => __( 'Sort By', 'anycomment' ),
+						'sort_oldest'                    => __( 'Oldest', 'anycomment' ),
+						'sort_newest'                    => __( 'Newest', 'anycomment' ),
+						'reply_to'                       => __( 'Reply to', 'anycomment' ),
+						'add_comment'                    => __( 'Your comment...', 'anycomment' ),
+						'no_comments'                    => __( 'No comments to display', "anycomment" ),
+						'footer_copyright'               => __( 'Add Anycomment to your site', 'anycomment' ),
+						'reply'                          => __( 'Reply', 'anycomment' ),
+						'edit'                           => __( 'Edit', 'anycomment' ),
+						'delete'                         => __( 'Delete', 'anycomment' ),
+						'cancel'                         => __( 'Cancel', 'anycomment' ),
+						'quick_login'                    => __( 'Quick Login', 'anycomment' ),
+						'logout'                         => __( 'Logout', 'anycomment' ),
+						'new_comment_was_added'          => __( 'New comment was added', 'anycomment' ),
+						'author'                         => __( 'Author', 'anycomment' ),
+						'name'                           => __( 'Name', 'anycomment' ),
+						'email'                          => __( 'Email', 'anycomment' ),
+						'website'                        => __( 'Website', 'anycomment' ),
+						'accept_user_agreement'          => sprintf(
+							__( 'I accept the <a href="%s"%s>User Agreement</a>', 'anycomment' ),
+							AnyCommentGenericSettings::getUserAgreementLink(),
+							' target="_blank" rel="noopener noreferrer" '
+						),
+						'upload_file'                    => __( 'Upload file', 'anycomment' ),
+						'file_upload_in_progress'        => __( "Uploading...", 'anycomment' ),
+						'file_uploaded'                  => __( "Uploaded!", 'anycomment' ),
+						'file_too_big'                   => __( "File %s is too big", 'anycomment' ),
+						'file_limit'                     => sprintf( __( "You may upload %s file(s) at maximum", 'anycomment' ), AnyCommentGenericSettings::getFileLimit() ),
+						'file_not_selected_or_extension' => __( "No file selected or select proper extension", 'anycomment' ),
+						'read_more'                      => __( 'Read more', 'anycomment' ),
+						'show_less'                      => __( 'Show less', 'anycomment' ),
+					]
+				] );
 			}
-
-
-			if ( strpos( AnyCommentGenericSettings::getDesignFontFamily(), 'Noto-Sans' ) !== false ) {
-				wp_enqueue_style( 'anycomment-google-font', 'https://fonts.googleapis.com/css?family=Noto+Sans:400,700&amp;subset=cyrillic', [], AnyComment()->version );
-			}
-
-			$postId        = get_the_ID();
-			$postPermalink = get_permalink( $postId );
-
-			wp_localize_script( 'anycomment-react', 'anyCommentApiSettings', [
-				'postId'       => $postId,
-				'nonce'        => wp_create_nonce( 'wp_rest' ),
-				'locale'       => get_locale(),
-				'restUrl'      => esc_url_raw( rest_url( 'anycomment/v1/' ) ),
-				'commentCount' => ( $res = get_comment_count( $postId ) ) !== null ? (int) $res['all'] : 0,
-				'urls'         => [
-					'logout'  => wp_logout_url(),
-					'postUrl' => $postPermalink,
-				],
-				// Options from plugin
-				'options'      => [
-					'limit'                  => AnyCommentGenericSettings::getPerPage(),
-					'isCopyright'            => AnyCommentGenericSettings::isCopyrightOn(),
-					'socials'                => anycomment_login_with( false, get_permalink( $postId ) ),
-					'theme'                  => AnyCommentGenericSettings::getTheme(),
-					'isShowProfileUrl'       => AnyCommentGenericSettings::isShowProfileUrl(),
-					'isShowImageAttachments' => AnyCommentGenericSettings::isShowImageAttachments(),
-					'isShowVideoAttachments' => AnyCommentGenericSettings::isShowVideoAttachments(),
-					'isShowTwitterEmbeds'    => AnyCommentGenericSettings::isShowTwitterEmbeds(),
-					'isLinkClickable'        => AnyCommentGenericSettings::isLinkClickable(),
-					'userAgreementLink'      => AnyCommentGenericSettings::getUserAgreementLink(),
-					'notifyOnNewComment'     => AnyCommentGenericSettings::isNotifyOnNewComment(),
-					'intervalCommentsCheck'  => AnyCommentGenericSettings::getIntervalCommentsCheck(),
-					'isLoadOnScroll'         => AnyCommentGenericSettings::isLoadOnScroll(),
-					'isFormTypeAll'          => AnyCommentGenericSettings::isFormTypeAll(),
-					'isFormTypeGuests'       => AnyCommentGenericSettings::isFormTypeGuests(),
-					'isFormTypeSocials'      => AnyCommentGenericSettings::isFormTypeSocials(),
-					'isGuestCanUpload'       => AnyCommentGenericSettings::isGuestCanUpload(),
-					'fileMimeTypes'          => AnyCommentGenericSettings::getFileMimeTypes(),
-					'fileLimit'              => AnyCommentGenericSettings::getFileLimit(),
-					'fileMaxSize'            => AnyCommentGenericSettings::getFileMaxSize(),
-					'fileUploadLimit'        => AnyCommentGenericSettings::getFileUploadLimit(),
-				],
-				'user'         => AnyCommentUser::getSafeUser(),
-				'i18'          => [
-					'error_generic'                  => __( "Oops, something went wrong...", "anycomment" ),
-					'loading'                        => __( 'Loading...', 'anycomment' ),
-					'load_more'                      => __( "Load more", "anycomment" ),
-					'button_send'                    => __( 'Send', 'anycomment' ),
-					'button_save'                    => __( 'Save', 'anycomment' ),
-					'button_reply'                   => __( 'Reply', 'anycomment' ),
-					'sort_by'                        => __( 'Sort By', 'anycomment' ),
-					'sort_oldest'                    => __( 'Oldest', 'anycomment' ),
-					'sort_newest'                    => __( 'Newest', 'anycomment' ),
-					'reply_to'                       => __( 'Reply to', 'anycomment' ),
-					'add_comment'                    => __( 'Your comment...', 'anycomment' ),
-					'no_comments'                    => __( 'No comments to display', "anycomment" ),
-					'footer_copyright'               => __( 'Add Anycomment to your site', 'anycomment' ),
-					'reply'                          => __( 'Reply', 'anycomment' ),
-					'edit'                           => __( 'Edit', 'anycomment' ),
-					'delete'                         => __( 'Delete', 'anycomment' ),
-					'cancel'                         => __( 'Cancel', 'anycomment' ),
-					'quick_login'                    => __( 'Quick Login', 'anycomment' ),
-					'logout'                         => __( 'Logout', 'anycomment' ),
-					'new_comment_was_added'          => __( 'New comment was added', 'anycomment' ),
-					'author'                         => __( 'Author', 'anycomment' ),
-					'name'                           => __( 'Name', 'anycomment' ),
-					'email'                          => __( 'Email', 'anycomment' ),
-					'website'                        => __( 'Website', 'anycomment' ),
-					'accept_user_agreement'          => sprintf(
-						__( 'I accept the <a href="%s"%s>User Agreement</a>', 'anycomment' ),
-						AnyCommentGenericSettings::getUserAgreementLink(),
-						' target="_blank" rel="noopener noreferrer" '
-					),
-					'upload_file'                    => __( 'Upload file', 'anycomment' ),
-					'file_upload_in_progress'        => __( "Uploading...", 'anycomment' ),
-					'file_uploaded'                  => __( "Uploaded!", 'anycomment' ),
-					'file_too_big'                   => __( "File %s is too big", 'anycomment' ),
-					'file_limit'                     => sprintf( __( "You may upload %s file(s) at maximum", 'anycomment' ), AnyCommentGenericSettings::getFileLimit() ),
-					'file_not_selected_or_extension' => __( "No file selected or select proper extension", 'anycomment' ),
-					'read_more'                      => __( 'Read more', 'anycomment' ),
-					'show_less'                      => __( 'Show less', 'anycomment' ),
-				]
-			] );
 
 			$path = ANYCOMMENT_ABSPATH . 'templates/comments.php';
 

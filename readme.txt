@@ -170,12 +170,14 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Added logout link to logged in client, #133
 * Added ability to customize generated notification email (only for  admin and reply for now), #97
 * Added "Shortcodes" tab. It will have list of available shortcodes, #139
+* Added a helper notice to admins & moderators about closed comments per post, globally or if post is password protected (comments did not show in this case), #142
 
 **Fixes:**
 
 * Fixed notice message in admin, #132
 * Fixed issue when "load on scroll" option was active and comments did not load on short pages because it was not possible to scroll, #135
 * Fixed issue when custom styles were ignored as dark theme was selected
+* JavaScript & Css assets are not loaded on the page, when comments are disabled or post is password protected
 
 
 = 0.0.54 – 06.09.2018 =
