@@ -171,6 +171,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Added ability to customize generated notification email (only for  admin and reply for now), #97
 * Added "Shortcodes" tab. It will have list of available shortcodes, #139
 * Added a helper notice to admins & moderators about closed comments per post, globally or if post is password protected (comments did not show in this case), #142
+* Added ability to rearrange guest form fields or remove unwanted, #125
 
 **Fixes:**
 

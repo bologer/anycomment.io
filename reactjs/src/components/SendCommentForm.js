@@ -128,8 +128,14 @@ class SendCommentForm extends AnyCommentComponent {
 
         if (!settings.options.isFormTypeSocials) {
             params.author_name = name;
-            params.author_email = email;
-            params.author_url = website;
+
+            if (email !== '') {
+                params.author_email = email;
+            }
+
+            if (website !== '') {
+                params.author_url = website;
+            }
 
             this.storeAuthorName(name);
             this.storeAuthorEmail(email);

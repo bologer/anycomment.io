@@ -9,12 +9,6 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 	 * AC_AdminSettingPage helps to process generic plugin settings.
 	 */
 	class AnyCommentGenericSettings extends AnyCommentAdminOptions {
-
-		/**
-		 * Theme chosen for comments.
-		 */
-		const OPTION_THEME = 'option_theme';
-
 		/**
 		 * Notify about new comment.
 		 */
@@ -112,14 +106,44 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 */
 		const OPTION_MAKE_LINKS_CLICKABLE = 'options_make_links_clickable';
 
+
+		/**
+		 * FILES UPLOAD
+		 */
+		const OPTION_FILES_GUEST_CAN_UPLOAD = 'options_files_guest_can_upload';
+		const OPTION_FILES_MIME_TYPES = 'options_files_mime_types';
+		const OPTION_FILES_LIMIT = 'options_files_limit';
+		const OPTION_FILES_LIMIT_PERIOD = 'options_files_limit_period';
+		const OPTION_FILES_MAX_SIZE = 'options_files_max_size';
+
+		/**
+		 * DESIGN
+		 */
+
+		/**
+		 * Theme chosen for comments.
+		 */
+		const OPTION_THEME = 'option_theme';
+
+		/**
+		 * Dark theme.
+		 */
+		const THEME_DARK = 'dark';
+
+		/**
+		 * Light theme.
+		 */
+		const THEME_LIGHT = 'light';
+
+		/**
+		 * Custom theme.
+		 */
+		const THEME_CUSTOM = 'custom';
+
 		/**
 		 * Define form type: only guest users, only social networks or both of it.
 		 */
 		const OPTION_FORM_TYPE = 'options_form_type';
-
-		/**
-		 * FORM TYPES
-		 */
 
 		/**
 		 * Option to enable comments only from guest.
@@ -136,18 +160,13 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 */
 		const FORM_OPTION_ALL = 'form_option_all';
 
-
 		/**
-		 * FILES UPLOAD
+		 * Define what fields to show and order.
 		 */
-		const OPTION_FILES_GUEST_CAN_UPLOAD = 'options_files_guest_can_upload';
-		const OPTION_FILES_MIME_TYPES = 'options_files_mime_types';
-		const OPTION_FILES_LIMIT = 'options_files_limit';
-		const OPTION_FILES_LIMIT_PERIOD = 'options_files_limit_period';
-		const OPTION_FILES_MAX_SIZE = 'options_files_max_size';
+		const OPTION_GUEST_FIELDS = 'options_guest_fields';
 
 		/**
-		 * DESIGN
+		 * Custom design options.
 		 */
 		const OPTION_DESIGN_CUSTOM_TOGGLE = 'options_design_custom_toggle';
 
@@ -172,25 +191,6 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		const OPTION_DESIGN_BUTTON_RADIUS = 'options_design_button_radius';
 
 		const OPTION_DESIGN_GLOBAL_RADIUS = 'options_design_global_radius';
-
-		/**
-		 * THEMES
-		 */
-
-		/**
-		 * Dark theme.
-		 */
-		const THEME_DARK = 'dark';
-
-		/**
-		 * Light theme.
-		 */
-		const THEME_LIGHT = 'light';
-
-		/**
-		 * Custom theme.
-		 */
-		const THEME_CUSTOM = 'custom';
 
 		/**
 		 * Normal subscriber (from WordPress)
@@ -219,44 +219,41 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 * @inheritdoc
 		 */
 		protected $default_options = [
-			self::OPTION_THEME                       => self::THEME_LIGHT,
-			self::OPTION_COPYRIGHT_TOGGLE            => 'on',
-			self::OPTION_COUNT_PER_PAGE              => 20,
-			self::OPTION_INTERVAL_COMMENTS_CHECK     => 10,
-			self::OPTION_FORM_TYPE                   => self::FORM_OPTION_SOCIALS_ONLY,
+			self::OPTION_COPYRIGHT_TOGGLE                      => 'on',
+			self::OPTION_COUNT_PER_PAGE                        => 20,
+			self::OPTION_INTERVAL_COMMENTS_CHECK               => 10,
 
 			// Files
-			self::OPTION_FILES_LIMIT                 => 5,
-			self::OPTION_FILES_LIMIT_PERIOD          => 900,
-			self::OPTION_FILES_MAX_SIZE              => 1.5,
-			self::OPTION_FILES_MIME_TYPES            => 'image/*, .pdf',
+			self::OPTION_FILES_LIMIT                           => 5,
+			self::OPTION_FILES_LIMIT_PERIOD                    => 900,
+			self::OPTION_FILES_MAX_SIZE                        => 1.5,
+			self::OPTION_FILES_MIME_TYPES                      => 'image/*, .pdf',
 
 			// Notifications
-			self::OPTION_NOTIFY_REPLY_EMAIL_TEMPLATE => "New reply for you in {blogUrlHtml}.\nFrom post {postUrlHtml}.\n\n{commentFormatted}\n{replyButton}",
-			self::OPTION_NOTIFY_ADMIN_EMAIL_TEMPLATE => "New comment posted in {blogUrlHtml}.\nFor post {postUrlHtml}.\n\n{commentFormatted}\n{replyButton}",
+			self::OPTION_NOTIFY_REPLY_EMAIL_TEMPLATE           => "New reply for you in {blogUrlHtml}.\nFrom post {postUrlHtml}.\n\n{commentFormatted}\n{replyButton}",
+			self::OPTION_NOTIFY_ADMIN_EMAIL_TEMPLATE           => "New comment posted in {blogUrlHtml}.\nFor post {postUrlHtml}.\n\n{commentFormatted}\n{replyButton}",
 
-			// Design
-			self::OPTION_DESIGN_FONT_SIZE            => '15px',
-			self::OPTION_DESIGN_FONT_FAMILY          => "'Noto-Sans', sans-serif",
+			// Other design
+			self::OPTION_THEME                                 => self::THEME_LIGHT,
+			self::OPTION_FORM_TYPE                             => self::FORM_OPTION_SOCIALS_ONLY,
+			self::OPTION_GUEST_FIELDS                          => '{name} {email} {website}',
 
-			self::OPTION_DESIGN_SEMI_HIDDEN_COLOR => '#b6c1c6',
-			self::OPTION_DESIGN_LINK_COLOR        => '#3658f7',
-			self::OPTION_DESIGN_TEXT_COLOR        => '#333333',
-
-			self::OPTION_DESIGN_FORM_FIELD_BACKGROUND_COLOR => '#ffffff',
-
-			self::OPTION_DESIGN_ATTACHMENT_COLOR            => '#eeeeee',
-			self::OPTION_DESIGN_ATTACHMENT_BACKGROUND_COLOR => '#eeeeee',
-
-			self::OPTION_DESIGN_PARENT_AVATAR_SIZE => '60px',
-			self::OPTION_DESIGN_CHILD_AVATAR_SIZE  => '48px',
-
+			// Custom design
+			self::OPTION_DESIGN_FONT_SIZE                      => '15px',
+			self::OPTION_DESIGN_FONT_FAMILY                    => "'Noto-Sans', sans-serif",
+			self::OPTION_DESIGN_SEMI_HIDDEN_COLOR              => '#b6c1c6',
+			self::OPTION_DESIGN_LINK_COLOR                     => '#3658f7',
+			self::OPTION_DESIGN_TEXT_COLOR                     => '#333333',
+			self::OPTION_DESIGN_FORM_FIELD_BACKGROUND_COLOR    => '#ffffff',
+			self::OPTION_DESIGN_ATTACHMENT_COLOR               => '#eeeeee',
+			self::OPTION_DESIGN_ATTACHMENT_BACKGROUND_COLOR    => '#eeeeee',
+			self::OPTION_DESIGN_PARENT_AVATAR_SIZE             => '60px',
+			self::OPTION_DESIGN_CHILD_AVATAR_SIZE              => '48px',
 			self::OPTION_DESIGN_BUTTON_COLOR                   => '#ffffff',
 			self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR        => '#53af4a',
 			self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR_ACTIVE => '#4f9f49',
 			self::OPTION_DESIGN_BUTTON_RADIUS                  => '40px',
-
-			self::OPTION_DESIGN_GLOBAL_RADIUS => '4px',
+			self::OPTION_DESIGN_GLOBAL_RADIUS                  => '4px',
 		];
 
 
@@ -444,6 +441,13 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 							]
 						],
 					],
+					[
+						'id'          => self::OPTION_GUEST_FIELDS,
+						'title'       => __( 'Guest Fields', "anycomment" ),
+						'callback'    => 'input_text',
+						'description' => esc_html( __( 'Use this rearrange guest form fields or remove something. {name} is required and if you do not add it, it will be added by plugin. {name} is name field, {email} is email field, {website} is website field.', "anycomment" ) )
+					],
+
 					[
 						'id'          => self::OPTION_DESIGN_CUSTOM_TOGGLE,
 						'title'       => __( 'Custom Design', "anycomment" ),
@@ -1382,6 +1386,70 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 */
 		public static function getFormType() {
 			return static::instance()->getOption( self::OPTION_FORM_TYPE );
+		}
+
+		/**
+		 * Get form type.
+		 *
+		 * Expected to have:
+		 * - {name} - for name input field
+		 * - {email} - for user email input field
+		 * - {website} - for user website input field
+		 *
+		 * @param bool $asArray If required to return as array list of params.
+		 *
+		 * @return string|array|null
+		 */
+		public static function getGuestFields( $asArray = false ) {
+			$instance = static::instance();
+			$value    = $instance->getOption( self::OPTION_GUEST_FIELDS );
+
+			/**
+			 * Name is required. If there is no name,
+			 * it should be added.
+			 */
+			if ( strpos( $value, '{name}' ) === false ) {
+				$value = '{name} ' . $value;
+			}
+
+			preg_match_all( '/\{(name|email|website)\}/', $value, $matches );
+
+			if ( ! $asArray && empty( $matches[1] ) ) {
+				return $instance->default_options[ self::OPTION_GUEST_FIELDS ];
+			}
+
+			if ( ! $asArray ) {
+				return $value;
+			}
+
+			return array_slice( $matches[1], 0, 3 );
+		}
+
+		/**
+		 * Check whether name is in the list of guest fields.
+		 *
+		 * @return bool
+		 */
+		public static function isGuestFieldNameOn() {
+			return in_array( 'name', static::getGuestFields( true ), true );
+		}
+
+		/**
+		 * Check whether email is in the list of guest fields.
+		 *
+		 * @return bool
+		 */
+		public static function isGuestFieldEmailOn() {
+			return in_array( 'email', static::getGuestFields( true ), true );
+		}
+
+		/**
+		 * Check whether website is in the list of guest fields.
+		 *
+		 * @return bool
+		 */
+		public static function isGuestFieldWebsiteOn() {
+			return in_array( 'website', static::getGuestFields( true ), true );
 		}
 
 		/**

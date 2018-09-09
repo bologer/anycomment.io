@@ -109,6 +109,7 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 						'isCopyright'            => AnyCommentGenericSettings::isCopyrightOn(),
 						'socials'                => anycomment_login_with( false, get_permalink( $postId ) ),
 						'theme'                  => AnyCommentGenericSettings::getTheme(),
+						'guestInputs'            => AnyCommentGenericSettings::getGuestFields( true ),
 						'isShowProfileUrl'       => AnyCommentGenericSettings::isShowProfileUrl(),
 						'isShowImageAttachments' => AnyCommentGenericSettings::isShowImageAttachments(),
 						'isShowVideoAttachments' => AnyCommentGenericSettings::isShowVideoAttachments(),

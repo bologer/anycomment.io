@@ -453,6 +453,19 @@
         }
       }
 
+      // This is used for better look when admin customizing list of inputs (e.g. only one or two fields are visible)
+      .anycomment-input-list-1 {
+        .anycomment-input-list-single {
+          width: 100%;
+        }
+      }
+
+      .anycomment-input-list-2 {
+        .anycomment-input-list-single {
+          width: 50%;
+        }
+      }
+
       &__btn {
         float: right;
       }

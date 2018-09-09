@@ -552,11 +552,11 @@ class AnyCommentRestComment extends AnyCommentRestController {
 				return new WP_Error( 'rest_comment_author_empty', __( 'Name is required.', 'anycomment' ), [ 'status' => 400 ] );
 			}
 
-			if ( empty( $prepared_comment['comment_author_email'] ) ) {
+			if ( AnyCommentGenericSettings::isGuestFieldEmailOn() && empty( $prepared_comment['comment_author_email'] ) ) {
 				return new WP_Error( 'rest_comment_email_empty', __( 'Email field is required.', 'anycomment' ), [ 'status' => 400 ] );
 			}
 
-			if ( ! empty( $prepared_comment['comment_author_email'] ) && ! is_email( $prepared_comment['comment_author_email'] ) ) {
+			if ( AnyCommentGenericSettings::isGuestFieldEmailOn() && ! empty( $prepared_comment['comment_author_email'] ) && ! is_email( $prepared_comment['comment_author_email'] ) ) {
 				return new WP_Error( 'rest_comment_email_invalid', __( 'Provide valid email address.', 'anycomment' ), [ 'status' => 400 ] );
 			}
 		}
