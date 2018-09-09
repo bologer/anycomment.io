@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-09 10:32+0000\n"
-"PO-Revision-Date: 2018-09-09 10:32+0000\n"
+"POT-Creation-Date: 2018-09-09 10:49+0000\n"
+"PO-Revision-Date: 2018-09-09 10:50+0000\n"
 "Last-Translator: admin <sasha.tesh@gmail.com>\n"
 "Language-Team: Русский\n"
 "Language: ru_RU\n"
@@ -1583,6 +1583,14 @@ msgstr "Официальный сайт"
 msgid "Possible Problems"
 msgstr "Возможные проблемы"
 
+#: templates/admin/tab-shortcodes.php:8
+msgid ""
+"Use this shortcode do display comment box in custom place (e.g. landing page)"
+"."
+msgstr ""
+"Используйте этот шорткод, чтобы отобразить комментарии в собственном месте "
+"(например, на посадочной странице)."
+
 #: templates/admin/files.php:22
 msgid "Files deleted."
 msgstr "Файлы удалены."
@@ -1660,6 +1668,10 @@ msgstr "Настройки"
 #: templates/admin/tabs.php:15
 msgid "Integration"
 msgstr "Интеграция"
+
+#: templates/admin/tabs.php:19
+msgid "Shortcodes"
+msgstr "Шорткоды"
 
 #: includes/admin/tables/AnyCommentUploadedFilesTable.php:82
 msgid "No files uploaded yet."

@@ -169,6 +169,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Improved speed of theming, now x1.5 faster to generate custom styles
 * Added logout link to logged in client, #133
 * Added ability to customize generated notification email (only for  admin and reply for now), #97
+* Added "Shortcodes" tab. It will have list of available shortcodes, #139
 
 **Fixes:**
 

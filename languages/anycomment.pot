@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-09 10:32+0000\n"
+"POT-Creation-Date: 2018-09-09 10:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -1467,6 +1467,12 @@ msgstr ""
 msgid "Possible Problems"
 msgstr ""
 
+#: templates/admin/tab-shortcodes.php:8
+msgid ""
+"Use this shortcode do display comment box in custom place (e.g. landing page)"
+"."
+msgstr ""
+
 #: templates/admin/files.php:22
 msgid "Files deleted."
 msgstr ""
@@ -1540,6 +1546,10 @@ msgstr ""
 
 #: templates/admin/tabs.php:15
 msgid "Integration"
+msgstr ""
+
+#: templates/admin/tabs.php:19
+msgid "Shortcodes"
 msgstr ""
 
 #: includes/admin/tables/AnyCommentUploadedFilesTable.php:82
