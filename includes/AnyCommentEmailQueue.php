@@ -316,6 +316,18 @@ WHERE `users`.`user_email` != %s AND `comments`.`comment_ID`=%d";
 	/**
 	 * Prepare email body.
 	 *
+	 * Subs to replace:
+	 * '{blogName}',
+	 * '{blogUrl}',
+	 * '{blogUrlHtml}',
+	 * '{postTitle}',
+	 * '{postUrl}',
+	 * '{postUrlHtml}',
+	 * '{commentText}',
+	 * '{commentFormatted}',
+	 * '{replyUrl}',
+	 * '{replyButton}'
+	 *
 	 * @param AnyCommentEmailQueue $email
 	 *
 	 * @return string HTML formatted content of email.
@@ -324,33 +336,79 @@ WHERE `users`.`user_email` != %s AND `comments`.`comment_ID`=%d";
 		$comment        = get_comment( $email->comment_ID );
 		$post           = get_post( $email->post_ID );
 		$cleanPermalink = get_permalink( $post );
-		$commentLink    = sprintf( '%s#comment-%s', $cleanPermalink, $comment->comment_ID );
+		$replyUrl       = sprintf( '%s#comment-%s', $cleanPermalink, $comment->comment_ID );
 
-		$body = '<p>' . sprintf( __( 'New reply was posted in <a href="%s">%s</a>', 'anycomment' ), get_option( 'siteurl' ), get_option( 'blogname' ) ) . '</p>';
+		$blogName    = get_option( 'blogname' );
+		$blogUrl     = get_option( 'siteurl' );
+		$blogUrlHtml = sprintf( '<a href="%s">%s</a>', $blogUrl, $blogName );
+
+		$postTitle   = '';
+		$postUrl     = '';
+		$postUrlHtml = '';
+
+		$commentText      = '';
+		$commentFormatted = '';
 
 		if ( $post !== null ) {
-			$body .= '<p>' . sprintf( __( 'For post <a href="%s">%s</a>', 'anycomment' ), $cleanPermalink, $post->post_title ) . '</p>';
+			$postTitle   = $post->post_title;
+			$postUrl     = $cleanPermalink;
+			$postUrlHtml = sprintf( '<a href="%s">%s</a>', $postUrl, $postTitle );
 		}
 
 		if ( $comment !== null ) {
-			$body .= '<div style="background-color:#eee; padding: 10px; font-size: 12pt; font-family: Verdana, Arial, sans-serif; line-height: 1.5;">';
-			$body .= $comment->comment_content;
-			$body .= '</div>';
+			$commentText = $comment->comment_content;
+
+			$commentFormatted = '<div style="background-color:#eee; padding: 10px; font-size: 12pt; font-family: Verdana, Arial, sans-serif; line-height: 1.5;">';
+			$commentFormatted .= $commentText;
+			$commentFormatted .= '</div>';
 		}
 
-		// Add reply button
-		$body .= '<p><a href="' . $commentLink . '" style="font-size: 15px;text-decoration:none;font-weight: 400;text-align: center;color: #fff;padding: 0 50px;line-height: 48px;background-color: #53af4a;display: inline-block;vertical-align: middle;border: 0;outline: 0;cursor: pointer;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;-webkit-appearance: none;-moz-appearance: none;appearance: none;white-space: nowrap;border-radius: 24px;">' . __( 'Reply', 'anycomment' ) . '</a></p>';
+		$replyButton = '<p><a href="' . $replyUrl . '" style="font-size: 15px;text-decoration:none;font-weight: 400;text-align: center;color: #fff;padding: 0 50px;line-height: 48px;background-color: #53af4a;display: inline-block;vertical-align: middle;border: 0;outline: 0;cursor: pointer;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;-webkit-appearance: none;-moz-appearance: none;appearance: none;white-space: nowrap;border-radius: 24px;">' . __( 'See', 'anycomment' ) . '</a></p>';
 
-		return $body;
+		$search      = [
+			'{blogName}',
+			'{blogUrl}',
+			'{blogUrlHtml}',
+			'{postTitle}',
+			'{postUrl}',
+			'{postUrlHtml}',
+			'{commentText}',
+			'{commentFormatted}',
+			'{replyUrl}',
+			'{replyButton}'
+		];
+		$replacement = [
+			$blogName,
+			$blogUrl,
+			$blogUrlHtml,
+			$postTitle,
+			$postUrl,
+			$postUrlHtml,
+			$commentText,
+			$commentFormatted,
+			$replyUrl,
+			$replyButton
+		];
+
+		$template = AnyCommentGenericSettings::getNotifyEmailReplyTemplate();
+
+		return static::prepareEmailTemplate( $template, $search, $replacement );
 	}
 
 	/**
 	 * Generate email template to send notification to admin.
 	 *
-	 * - {blogInfo}
-	 * - {postInfo}
-	 * - {commentText}
-	 * - {replyButton}
+	 * Subs to replace:
+	 * '{blogName}',
+	 * '{blogUrl}',
+	 * '{blogUrlHtml}',
+	 * '{postTitle}',
+	 * '{postUrl}',
+	 * '{postUrlHtml}',
+	 * '{commentText}',
+	 * '{commentFormatted}',
+	 * '{replyUrl}',
+	 * '{replyButton}'
 	 *
 	 * @param AnyCommentEmailQueue $email
 	 *
@@ -361,24 +419,81 @@ WHERE `users`.`user_email` != %s AND `comments`.`comment_ID`=%d";
 		$comment        = get_comment( $email->comment_ID );
 		$post           = get_post( $email->post_ID );
 		$cleanPermalink = get_permalink( $post );
-		$commentLink    = sprintf( '%s#comment-%s', $cleanPermalink, $comment->comment_ID );
+		$replyUrl       = sprintf( '%s#comment-%s', $cleanPermalink, $comment->comment_ID );
 
-		$body = '<p>' . sprintf( __( 'New comment posted in <a href="%s">%s</a>', 'anycomment' ), get_option( 'siteurl' ), get_option( 'blogname' ) ) . '</p>';
+		$blogName    = get_option( 'blogname' );
+		$blogUrl     = get_option( 'siteurl' );
+		$blogUrlHtml = sprintf( '<a href="%s">%s</a>', $blogUrl, $blogName );
+
+		$postTitle   = '';
+		$postUrl     = '';
+		$postUrlHtml = '';
+
+		$commentText      = '';
+		$commentFormatted = '';
 
 		if ( $post !== null ) {
-			$body .= '<p>' . sprintf( __( 'For post <a href="%s">%s</a>', 'anycomment' ), $cleanPermalink, $post->post_title ) . '</p>';
+			$postTitle   = $post->post_title;
+			$postUrl     = $cleanPermalink;
+			$postUrlHtml = sprintf( '<a href="%s">%s</a>', $postUrl, $postTitle );
 		}
 
 		if ( $comment !== null ) {
-			$body .= '<div style="background-color:#eee; padding: 10px; font-size: 12pt; font-family: Verdana, Arial, sans-serif; line-height: 1.5;">';
-			$body .= $comment->comment_content;
-			$body .= '</div>';
+			$commentText = $comment->comment_content;
+
+			$commentFormatted = '<div style="background-color:#eee; padding: 10px; font-size: 12pt; font-family: Verdana, Arial, sans-serif; line-height: 1.5;">';
+			$commentFormatted .= $commentText;
+			$commentFormatted .= '</div>';
 		}
 
+		$replyButton = '<p><a href="' . $replyUrl . '" style="font-size: 15px;text-decoration:none;font-weight: 400;text-align: center;color: #fff;padding: 0 50px;line-height: 48px;background-color: #53af4a;display: inline-block;vertical-align: middle;border: 0;outline: 0;cursor: pointer;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;-webkit-appearance: none;-moz-appearance: none;appearance: none;white-space: nowrap;border-radius: 24px;">' . __( 'See', 'anycomment' ) . '</a></p>';
 
-		// Add reply button
-		$body .= '<p><a href="' . $commentLink . '" style="font-size: 15px;text-decoration:none;font-weight: 400;text-align: center;color: #fff;padding: 0 50px;line-height: 48px;background-color: #53af4a;display: inline-block;vertical-align: middle;border: 0;outline: 0;cursor: pointer;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;-webkit-appearance: none;-moz-appearance: none;appearance: none;white-space: nowrap;border-radius: 24px;">' . __( 'See', 'anycomment' ) . '</a></p>';
+		$search      = [
+			'{blogName}',
+			'{blogUrl}',
+			'{blogUrlHtml}',
+			'{postTitle}',
+			'{postUrl}',
+			'{postUrlHtml}',
+			'{commentText}',
+			'{commentFormatted}',
+			'{replyUrl}',
+			'{replyButton}'
+		];
+		$replacement = [
+			$blogName,
+			$blogUrl,
+			$blogUrlHtml,
+			$postTitle,
+			$postUrl,
+			$postUrlHtml,
+			$commentText,
+			$commentFormatted,
+			$replyUrl,
+			$replyButton
+		];
 
-		return $body;
+		$template = AnyCommentGenericSettings::getNotifyEmailAdminTemplate();
+
+		return static::prepareEmailTemplate( $template, $search, $replacement );
+	}
+
+	/**
+	 * Prepare & clean email template based on provided values.
+	 *
+	 * @param string $content Content of the email. Could contain prepared subst. keys to be replaced.
+	 * @param array $search List of keys to be replaced.
+	 * @param array $replacement Replacements for keys.
+	 *
+	 * @return string
+	 */
+	public static function prepareEmailTemplate( $content, $search, $replacement ) {
+		$content = str_replace( $search, $replacement, $content );
+
+		$content = preg_replace( '/\{.*?\}/', '', $content );
+
+		$content = trim( nl2br( $content ) );
+
+		return $content;
 	}
 }
