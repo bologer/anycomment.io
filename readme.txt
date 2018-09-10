@@ -179,6 +179,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Fixed issue when "load on scroll" option was active and comments did not load on short pages because it was not possible to scroll, #135
 * Fixed issue when custom styles were ignored as dark theme was selected
 * JavaScript & Css assets are not loaded on the page, when comments are disabled or post is password protected
+* Fixed issue when user was trying to login using the social network with same email as one of the existing account. It caused no problem, but redirect to page and user was not logged in, #29
 
 
 = 0.0.54 – 06.09.2018 =
@@ -195,7 +196,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Fixed typo in Russian translation message when trying to delete a comment
 * Fixed issue when comments displayed on the single page could go over the page content as invisible element, #129
 * Fixed issue with file input icon (was displaying as black square instead), #128
-* Fixed issue when send comment button was too close to the "accept privacy policy" checkbo
+* Fixed issue when send comment button was too close to the "accept privacy policy" checkbox
 
 = 0.0.53 – 04.09.2018 =
 

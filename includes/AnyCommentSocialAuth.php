@@ -29,9 +29,29 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		 */
 		private $_auth;
 
+		/**
+		 * Determine type of social.
+		 */
 		const META_SOCIAL_TYPE = 'anycomment_social';
+
+		/**
+		 * Determine whether user has parent or not.
+		 */
+		const META_PARENT = 'anycomment_parent';
+
+		/**
+		 * Link to social.
+		 */
 		const META_SOCIAL_LINK = 'anycomment_social_link';
+
+		/**
+		 * Avatar hosted on website.
+		 */
 		const META_SOCIAL_AVATAR = 'anycomment_social_avatar';
+
+		/**
+		 * Avatar hosted on remote.
+		 */
 		const META_SOCIAL_AVATAR_ORIGIN = 'anycomment_social_avatar_origin';
 
 		/**
@@ -112,7 +132,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 			} else {
 				$redirectCookie = isset( $_COOKIE[ $cookie_redirect ] ) ? $_COOKIE[ $cookie_redirect ] : null;
 
-				if ( $redirectCookie !== null && strpos( $redirectCookie, '#' ) === false ) {
+				if ( $redirectCookie !== null && parse_url( $redirectCookie, PHP_URL_FRAGMENT ) === false ) {
 					$redirectCookie .= '#comments';
 				}
 
@@ -123,7 +143,6 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 				$this->prepare_auth();
 				$adapter = $this->authenticate( $social );
 			} catch ( \Exception $exception ) {
-				AnyComment()->errors->addError( __( 'Unable to authorize, please try again later', 'anycomment' ) );
 				wp_redirect( $redirect );
 				exit();
 			}
@@ -438,7 +457,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		 *
 		 * @return bool False on failure.
 		 */
-		private function process_authentication( Hybridauth\User\Profile $user, $social ) {
+		private function process_authentication( $user, $social ) {
 			$email = isset( $user->email ) && ! empty( $user->email ) ?
 				$user->email :
 				null;
@@ -452,19 +471,6 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 				'user_url'      => $user->profileURL
 			];
 
-			$photoUrl = null;
-
-			if ( ! empty( $user->photoURL ) ) {
-				$localUrl = AnyCommentUploadHandler::upload( $user->photoURL, [
-					$social,
-					$user->identifier
-				] );
-
-				if ( $localUrl !== false ) {
-					$photoUrl = $localUrl;
-				}
-			}
-
 			if ( $email !== null ) {
 				$userdata['user_email'] = $email;
 			}
@@ -473,13 +479,13 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 			$searchValue = $email !== null ? $email : $userdata['user_login'];
 
 			return $this->auth_user(
+				$user,
 				$social,
 				$searchBy,
 				$searchValue,
 				$userdata,
 				[
 					self::META_SOCIAL_LINK          => $user->profileURL,
-					self::META_SOCIAL_AVATAR        => $photoUrl,
 					self::META_SOCIAL_AVATAR_ORIGIN => $user->photoURL,
 				]
 			);
@@ -492,6 +498,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		 *
 		 * @see AnyCommentSocialAuth::get_user_by() for more information about $field and $value fields.
 		 *
+		 * @param Hybridauth\User\Profile $user_profile User profile from library.
 		 * @param string $social Social type. e.g. twitter.
 		 * @param string $field Field name to be used to check existence of such user.
 		 * @param string $value Value of the $field to be checked for.
@@ -500,7 +507,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		 *
 		 * @return bool
 		 */
-		public function auth_user( $social, $field, $value, array $user_data, array $user_meta ) {
+		public function auth_user( $user_profile, $social, $field, $value, array $user_data, array $user_meta ) {
 			if ( $field == 'login' ) {
 				// Need to make username unique per social network, otherwise
 				// some of the IDs might have collision at some point
@@ -513,17 +520,25 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 				$user_data['user_login'] = sprintf( '%s_%s', $social, $user_data['user_login'] );
 			}
 
+			if ( ! isset( $user_data['role'] ) ) {
+				$user_data['role'] = AnyCommentGenericSettings::getRegisterDefaultGroup();
+			}
+
 			// Preset social type as it is passed anyways in the method
 			if ( ! isset( $user_meta[ self::META_SOCIAL_TYPE ] ) ) {
 				$user_meta[ self::META_SOCIAL_TYPE ] = $social;
 			}
 
-			$user = $this->get_user_by( $social, $field, $value );
+			$user = $this->get_user_by( $field, $value );
 
 			if ( $user === false ) {
 
-				if ( ! isset( $user_data['role'] ) ) {
-					$user_data['role'] = AnyCommentGenericSettings::getRegisterDefaultGroup();
+				if ( ! isset( $user_meta[ self::META_PARENT ] ) ) {
+					$user_meta[ self::META_PARENT ] = 0;
+				}
+
+				if ( ! isset( $user_meta[ self::META_SOCIAL_AVATAR ] ) ) {
+					$user_meta[ self::META_SOCIAL_AVATAR ] = $this->upload_photo( $social, $user_profile );
 				}
 
 				$newUserId = $this->insert_user( $user_data, $user_meta );
@@ -545,27 +560,58 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 			return true;
 		}
 
+		/**
+		 * Upload photo locally from social.
+		 *
+		 * @param \Hybridauth\User\Profile $user_profile
+		 *
+		 * @return string|null string on success, null on failure.
+		 */
+		public function upload_photo( $social, $user_profile ) {
+			$photoUrl = null;
+
+			if ( ! empty( $user_profile->photoURL ) ) {
+				$localUrl = AnyCommentUploadHandler::upload( $user_profile->photoURL, [
+					$social,
+					$user_profile->identifier
+				] );
+
+				if ( $localUrl !== false ) {
+					$photoUrl = $localUrl;
+				}
+			}
+
+			return $photoUrl;
+		}
+
+		public function is_user_parent( $user ) {
+			return (int) get_user_meta( $user->ID, self::META_PARENT, true ) === 0;
+		}
+
+		public function is_user_from_social( $user, $social ) {
+			$social_from_meta = trim( get_user_meta( $user->ID, self::META_SOCIAL_TYPE, true ) );
+			$social           = trim( $social );
+
+			if ( $social_from_meta !== $social ) {
+				return false;
+			}
+
+			return true;
+		}
+
 
 		/**
 		 * Check weather user exists.
 		 *
-		 * @param string $social Social type. e.g. twitter.
 		 * @param string $field Field to check for user existence (e.g. username).
 		 * @param string $value Fields to check for value of $field.
 		 *
 		 * @return false|WP_User false on failure.
 		 */
-		public function get_user_by( $social, $field, $value ) {
+		public function get_user_by( $field, $value ) {
 			$user = get_user_by( $field, $value );
 
 			if ( $user === false ) {
-				return false;
-			}
-
-			$social_from_meta = trim( get_user_meta( $user->ID, self::META_SOCIAL_TYPE, true ) );
-			$social           = trim( $social );
-
-			if ( $social_from_meta !== $social ) {
 				return false;
 			}
 
@@ -595,7 +641,6 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 
 			$newUserId = wp_insert_user( $user_data );
 
-			// If unable to create new user
 			if ( $newUserId instanceof WP_Error ) {
 				return false;
 			}
@@ -651,7 +696,8 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		 * @return string|null NULL returned when user does not have any avatar.
 		 */
 		public function get_active_user_avatar_url() {
-			if ( ( $user = wp_get_current_user() ) instanceof WP_User ) {
+			$active_user = $user = wp_get_current_user();
+			if ( $active_user instanceof WP_User ) {
 
 				return $this->get_user_avatar_url( $user->ID );
 			}

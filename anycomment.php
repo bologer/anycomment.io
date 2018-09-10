@@ -42,18 +42,6 @@ if ( ! class_exists( 'AnyComment' ) ) :
 		public $render = null;
 
 		/**
-		 * @var null|AnyCommentRestComment
-		 */
-		public $rest = null;
-
-		/**
-		 * Instance of error handler to keep information about erors.
-		 *
-		 * @var null|AnyCommentErrorHandler
-		 */
-		public $errors = null;
-
-		/**
 		 * @var null|AnyCommentSocialAuth
 		 */
 		public $auth = null;
@@ -295,7 +283,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 				include_once( ANYCOMMENT_ABSPATH . 'includes/hybridauth/src/autoload.php' );
 			}
 
-			$this->rest = new AnyCommentRestComment();
+			new AnyCommentRestComment();
 			new AnyCommentRestLikes();
 			new AnyCommentRestUsers();
 			new AnyCommentRestDocuments();
@@ -307,7 +295,6 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			 */
 			new AnyCommentEmailQueueCron();
 
-			$this->errors      = new AnyCommentErrorHandler();
 			$this->render      = new AnyCommentRender();
 			$this->admin_pages = new AnyCommentAdminPages();
 			$this->cache       = new AnyCommentCache( [
