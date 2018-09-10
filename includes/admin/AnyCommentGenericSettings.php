@@ -41,6 +41,23 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		const OPTION_PLUGIN_TOGGLE = 'option_plugin_toggle';
 
 		/**
+		 * Default sort by.
+		 */
+		const OPTION_DEFAULT_SORT_BY = 'option_default_sort_by';
+
+
+		/**
+		 * Order ascending order.
+		 */
+		const SORT_ASC = 'asc';
+
+		/**
+		 * Order descending order.
+		 */
+		const SORT_DESC = 'desc';
+
+
+		/**
 		 * Default user group on register.
 		 */
 		const OPTION_REGISTER_DEFAULT_GROUP = 'option_register_default_group';
@@ -202,6 +219,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 */
 		const DEFAULT_ROLE_SOCIAL_SUBSCRIBER = 'social_subscriber';
 
+
 		/**
 		 * @inheritdoc
 		 */
@@ -219,9 +237,11 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 * @inheritdoc
 		 */
 		protected $default_options = [
-			self::OPTION_COPYRIGHT_TOGGLE                      => 'on',
-			self::OPTION_COUNT_PER_PAGE                        => 20,
-			self::OPTION_INTERVAL_COMMENTS_CHECK               => 10,
+			self::OPTION_COPYRIGHT_TOGGLE        => 'on',
+			self::OPTION_COUNT_PER_PAGE          => 20,
+			self::OPTION_INTERVAL_COMMENTS_CHECK => 10,
+
+			self::OPTION_DEFAULT_SORT_BY                       => self::SORT_DESC,
 
 			// Files
 			self::OPTION_FILES_LIMIT                           => 5,
@@ -336,6 +356,18 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'title'       => __( 'Enable Comments', "anycomment" ),
 						'callback'    => 'input_checkbox',
 						'description' => esc_html( __( 'When on, comments are visible. When off, default WordPress\' comments shown. This can be used to configure social networks on fresh installation.', "anycomment" ) )
+					],
+					[
+						'id'          => self::OPTION_DEFAULT_SORT_BY,
+						'title'       => __( 'Default Sorting', "anycomment" ),
+						'callback'    => 'input_select',
+						'description' => esc_html( __( 'Default sorting.', "anycomment" ) ),
+						'args'        => [
+							'options' => [
+								self::SORT_DESC => __( 'Newest first', 'anycomment' ),
+								self::SORT_ASC  => __( 'Oldest first', 'anycomment' ),
+							]
+						],
 					],
 					[
 						'id'          => self::OPTION_REGISTER_DEFAULT_GROUP,
@@ -1374,6 +1406,21 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 
 			if ( $value === null || $value !== self::THEME_DARK && $value !== self::THEME_LIGHT ) {
 				return self::THEME_LIGHT;
+			}
+
+			return $value;
+		}
+
+		/**
+		 * Get default sort order.
+		 *
+		 * @return string
+		 */
+		public static function getSortOrder() {
+			$value = static::instance()->getOption( self::OPTION_DEFAULT_SORT_BY );
+
+			if ( $value !== self::SORT_DESC && $value !== self::SORT_ASC ) {
+				return self::SORT_DESC;
 			}
 
 			return $value;

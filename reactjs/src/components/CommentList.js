@@ -44,7 +44,7 @@ class CommentList extends AnyCommentComponent {
             editId: '',
         };
 
-        this.state.order = 'desc';
+        this.state.order = settings.options.sort_order;
 
         /**
          * Form states.
