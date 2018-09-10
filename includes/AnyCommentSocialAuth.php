@@ -132,7 +132,8 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 			} else {
 				$redirectCookie = isset( $_COOKIE[ $cookie_redirect ] ) ? $_COOKIE[ $cookie_redirect ] : null;
 
-				if ( $redirectCookie !== null && parse_url( $redirectCookie, PHP_URL_FRAGMENT ) === false ) {
+				$anchor = parse_url( $redirectCookie, PHP_URL_FRAGMENT );
+				if ( $redirectCookie !== null && empty( $anchor ) ) {
 					$redirectCookie .= '#comments';
 				}
 
