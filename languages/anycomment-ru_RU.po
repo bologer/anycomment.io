@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-09 16:37+0000\n"
-"PO-Revision-Date: 2018-09-09 16:39+0000\n"
-"Last-Translator: admin <sasha.tesh@gmail.com>\n"
+"POT-Creation-Date: 2018-09-11 05:18+0000\n"
+"PO-Revision-Date: 2018-09-11 05:19+0000\n"
+"Last-Translator: admin <sasha.tesh@gmail.com1>\n"
 "Language-Team: Русский\n"
 "Language: ru_RU\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10 >= 2 && "
@@ -27,10 +27,6 @@ msgstr "Новый комментарий в %s"
 #: includes/AnyCommentEmailQueue.php:366 includes/AnyCommentEmailQueue.php:449
 msgid "See"
 msgstr "Посмотреть"
-
-#: includes/AnyCommentSocialAuth.php:126
-msgid "Unable to authorize, please try again later"
-msgstr "Что-то пошло не так, попробуйте чуть позже..."
 
 #: includes/ac-core-functions.php:35
 #: includes/admin/AnyCommentSocialSettings.php:126
@@ -82,142 +78,142 @@ msgstr "Dribbble"
 msgid "Yahoo"
 msgstr "Yahoo"
 
-#: includes/AnyCommentRender.php:133
+#: includes/AnyCommentRender.php:134
 msgid "Oops, something went wrong..."
 msgstr "Упс, что-то пошло не так. Попробуйте перезагрузить страницу."
 
-#: includes/AnyCommentRender.php:134
+#: includes/AnyCommentRender.php:135
 msgid "Loading..."
 msgstr "Загрузка..."
 
-#: includes/AnyCommentRender.php:135
+#: includes/AnyCommentRender.php:136
 msgid "Load more"
 msgstr "Загрузить еще"
 
-#: includes/AnyCommentRender.php:136
+#: includes/AnyCommentRender.php:137
 msgid "Send"
 msgstr "Отправить"
 
-#: includes/AnyCommentRender.php:137
+#: includes/AnyCommentRender.php:138
 #: includes/admin/AnyCommentAdminOptions.php:247
-#: includes/admin/AnyCommentGenericSettings.php:761
+#: includes/admin/AnyCommentGenericSettings.php:793
 #: includes/admin/AnyCommentSocialSettings.php:627
 msgid "Save"
 msgstr "Сохранить"
 
-#: includes/AnyCommentRender.php:138 includes/AnyCommentRender.php:146
+#: includes/AnyCommentRender.php:139 includes/AnyCommentRender.php:147
 msgid "Reply"
 msgstr "Ответить"
 
-#: includes/AnyCommentRender.php:139
+#: includes/AnyCommentRender.php:140
 msgid "Sort By"
 msgstr "Сортировка"
 
-#: includes/AnyCommentRender.php:140
+#: includes/AnyCommentRender.php:141
 msgid "Oldest"
 msgstr "Старые"
 
-#: includes/AnyCommentRender.php:141
+#: includes/AnyCommentRender.php:142
 msgid "Newest"
 msgstr "Новые"
 
-#: includes/AnyCommentRender.php:142
+#: includes/AnyCommentRender.php:143
 msgid "Reply to"
 msgstr "Ответить"
 
-#: includes/AnyCommentRender.php:143
+#: includes/AnyCommentRender.php:144
 msgid "Your comment..."
 msgstr "Ваш комментарий..."
 
-#: includes/AnyCommentRender.php:144
+#: includes/AnyCommentRender.php:145
 msgid "No comments to display"
 msgstr "Пока еще не было комментариев"
 
-#: includes/AnyCommentRender.php:145
+#: includes/AnyCommentRender.php:146
 msgid "Add Anycomment to your site"
 msgstr "Добавить AnyComment на свой сайт"
 
-#: includes/AnyCommentRender.php:147
+#: includes/AnyCommentRender.php:148
 msgid "Edit"
 msgstr "Изменить"
 
-#: includes/AnyCommentRender.php:148
+#: includes/AnyCommentRender.php:149
 #: includes/admin/tables/AnyCommentUploadedFilesTable.php:145
 msgid "Delete"
 msgstr "Удалить"
 
-#: includes/AnyCommentRender.php:149
+#: includes/AnyCommentRender.php:150
 msgid "Cancel"
 msgstr "Отменить"
 
-#: includes/AnyCommentRender.php:150
+#: includes/AnyCommentRender.php:151
 msgid "Quick Login"
 msgstr "Быстрый вход"
 
-#: includes/AnyCommentRender.php:151
+#: includes/AnyCommentRender.php:152
 msgid "Logout"
 msgstr "Выйти"
 
-#: includes/AnyCommentRender.php:152
+#: includes/AnyCommentRender.php:153
 msgid "New comment was added"
 msgstr "Был добавлен новый комментарий"
 
-#: includes/AnyCommentRender.php:153
+#: includes/AnyCommentRender.php:154
 msgid "Author"
 msgstr "Автор"
 
-#: includes/AnyCommentRender.php:154
+#: includes/AnyCommentRender.php:155
 msgid "Name"
 msgstr "Имя"
 
-#: includes/AnyCommentRender.php:155
+#: includes/AnyCommentRender.php:156
 msgid "Email"
 msgstr "Почта"
 
-#: includes/AnyCommentRender.php:156
+#: includes/AnyCommentRender.php:157
 msgid "Website"
 msgstr "Веб-сайт"
 
-#: includes/AnyCommentRender.php:158
+#: includes/AnyCommentRender.php:159
 #, php-format
 msgid "I accept the <a href=\"%s\"%s>User Agreement</a>"
 msgstr "Я даю согласие на обработку <a href=\"%s\"%s>персональных данных</a>"
 
-#: includes/AnyCommentRender.php:162
+#: includes/AnyCommentRender.php:163
 msgid "Upload file"
 msgstr "Загрузить файл"
 
-#: includes/AnyCommentRender.php:163
+#: includes/AnyCommentRender.php:164
 msgid "Uploading..."
 msgstr "Идет загрузка..."
 
-#: includes/AnyCommentRender.php:164
+#: includes/AnyCommentRender.php:165
 msgid "Uploaded!"
 msgstr "Загружено!"
 
-#: includes/AnyCommentRender.php:165
+#: includes/AnyCommentRender.php:166
 #, php-format
 msgid "File %s is too big"
 msgstr "Файл %s слишком большой"
 
-#: includes/AnyCommentRender.php:166
+#: includes/AnyCommentRender.php:167
 #, php-format
 msgid "You may upload %s file(s) at maximum"
 msgstr "Вы можете загрузить максимум %s файл(-ов)"
 
-#: includes/AnyCommentRender.php:167
+#: includes/AnyCommentRender.php:168
 msgid "No file selected or select proper extension"
 msgstr "Не выбраны файлы или не правильное расширение"
 
-#: includes/AnyCommentRender.php:168
+#: includes/AnyCommentRender.php:169
 msgid "Read more"
 msgstr "Читать далее"
 
-#: includes/AnyCommentRender.php:169
+#: includes/AnyCommentRender.php:170
 msgid "Show less"
 msgstr "Показать меньше"
 
-#: includes/AnyCommentRender.php:245
+#: includes/AnyCommentRender.php:246
 #, php-format
 msgid "%s Comments"
 msgstr "%s комментариев"
@@ -233,13 +229,13 @@ msgstr ""
 "запись защищена паролем. "
 
 #: includes/admin/AnyCommentFiles.php:25 includes/admin/AnyCommentFiles.php:26
-#: includes/admin/AnyCommentGenericSettings.php:324
+#: includes/admin/AnyCommentGenericSettings.php:344
 #: templates/admin/files.php:12
 msgid "Files"
 msgstr "Файлы"
 
 #: includes/admin/AnyCommentIntegrationSettings.php:72
-#: includes/admin/AnyCommentGenericSettings.php:296
+#: includes/admin/AnyCommentGenericSettings.php:316
 msgid "Generic"
 msgstr "Общие"
 
@@ -277,33 +273,33 @@ msgstr ""
 "аватарок."
 
 #: includes/admin/AnyCommentAdminOptions.php:234
-#: includes/admin/AnyCommentGenericSettings.php:736
+#: includes/admin/AnyCommentGenericSettings.php:768
 #: includes/admin/AnyCommentSocialSettings.php:605
 msgid "Settings Saved"
 msgstr "Настройки сохранены"
 
-#: includes/admin/AnyCommentGenericSettings.php:281
-#: includes/admin/AnyCommentGenericSettings.php:348
+#: includes/admin/AnyCommentGenericSettings.php:301
+#: includes/admin/AnyCommentGenericSettings.php:380
 msgid "Social Network Subscriber"
 msgstr "Подписчик соц. сети"
 
-#: includes/admin/AnyCommentGenericSettings.php:303
+#: includes/admin/AnyCommentGenericSettings.php:323
 msgid "Design"
 msgstr "Дизайн"
 
-#: includes/admin/AnyCommentGenericSettings.php:310
+#: includes/admin/AnyCommentGenericSettings.php:330
 msgid "Moderation"
 msgstr "Модерация"
 
-#: includes/admin/AnyCommentGenericSettings.php:317
+#: includes/admin/AnyCommentGenericSettings.php:337
 msgid "Notifications"
 msgstr "Уведомления"
 
-#: includes/admin/AnyCommentGenericSettings.php:336
+#: includes/admin/AnyCommentGenericSettings.php:356
 msgid "Enable Comments"
 msgstr "Включить комментарии"
 
-#: includes/admin/AnyCommentGenericSettings.php:338
+#: includes/admin/AnyCommentGenericSettings.php:358
 msgid ""
 "When on, comments are visible. When off, default WordPress' comments shown. "
 "This can be used to configure social networks on fresh installation."
@@ -312,11 +308,27 @@ msgstr ""
 "от WordPress отображаются. Это может использоваться для настройки соц. сетей "
 "после первой установки. "
 
-#: includes/admin/AnyCommentGenericSettings.php:342
+#: includes/admin/AnyCommentGenericSettings.php:362
+msgid "Default Sorting"
+msgstr "Сортировка"
+
+#: includes/admin/AnyCommentGenericSettings.php:364
+msgid "Default sorting."
+msgstr "Сортировка."
+
+#: includes/admin/AnyCommentGenericSettings.php:367
+msgid "Newest first"
+msgstr "Сначала новые"
+
+#: includes/admin/AnyCommentGenericSettings.php:368
+msgid "Oldest first"
+msgstr "Сначала старые"
+
+#: includes/admin/AnyCommentGenericSettings.php:374
 msgid "Register User Group"
 msgstr "Группа зарегистрированного пользователя"
 
-#: includes/admin/AnyCommentGenericSettings.php:344
+#: includes/admin/AnyCommentGenericSettings.php:376
 msgid ""
 "When users will authorize via plugin, they are being registered and be "
 "assigned with group selected above."
@@ -324,33 +336,33 @@ msgstr ""
 "После авторизации через плагин, система автоматически создает профиль с "
 "выбранной группой выше. "
 
-#: includes/admin/AnyCommentGenericSettings.php:347
+#: includes/admin/AnyCommentGenericSettings.php:379
 msgid "Subscriber"
 msgstr "Подписчик"
 
-#: includes/admin/AnyCommentGenericSettings.php:354
+#: includes/admin/AnyCommentGenericSettings.php:386
 msgid "Number of Comments Loaded"
 msgstr "Кол-во комментариев при загрузке"
 
-#: includes/admin/AnyCommentGenericSettings.php:356
+#: includes/admin/AnyCommentGenericSettings.php:388
 msgid "Number of comments to load initially and per page."
 msgstr "Количество изначально и постранично загружаемых комментариев."
 
-#: includes/admin/AnyCommentGenericSettings.php:360
+#: includes/admin/AnyCommentGenericSettings.php:392
 msgid "Load on Scroll"
 msgstr "Подгружать при сколле"
 
-#: includes/admin/AnyCommentGenericSettings.php:362
+#: includes/admin/AnyCommentGenericSettings.php:394
 msgid "Load comments when user scrolls to it."
 msgstr ""
 "Подгружать комментарии в момент когда пользователь прокрутил (проскроллил) к "
 "ним."
 
-#: includes/admin/AnyCommentGenericSettings.php:367
+#: includes/admin/AnyCommentGenericSettings.php:399
 msgid "Show Profile URL"
 msgstr "Показывать ссылку профиля"
 
-#: includes/admin/AnyCommentGenericSettings.php:369
+#: includes/admin/AnyCommentGenericSettings.php:401
 msgid ""
 "Show link to user in the social media or website when available (name of the "
 "user will be clickable)."
@@ -358,43 +370,43 @@ msgstr ""
 "Показывать ссылку на профиль пользователя в социальной сети или веб-сайт "
 "когда доступно (имя будет кликабельным)."
 
-#: includes/admin/AnyCommentGenericSettings.php:374
+#: includes/admin/AnyCommentGenericSettings.php:406
 msgid "Display Twitter Embeds"
 msgstr "Отображать вставки из Твиттера"
 
-#: includes/admin/AnyCommentGenericSettings.php:376
+#: includes/admin/AnyCommentGenericSettings.php:408
 msgid "Detect & display tweets from Twitter as embedded widget."
 msgstr "Определять & отображать твиты из Твиттера как встроенные виджеты."
 
-#: includes/admin/AnyCommentGenericSettings.php:381
+#: includes/admin/AnyCommentGenericSettings.php:413
 msgid "Display Video Attachments"
 msgstr "Отображать приложенные видео"
 
-#: includes/admin/AnyCommentGenericSettings.php:383
+#: includes/admin/AnyCommentGenericSettings.php:415
 msgid "Display video link from comment as attachment."
 msgstr "Отображать ссылки на видео в комментариях как приложение."
 
-#: includes/admin/AnyCommentGenericSettings.php:388
+#: includes/admin/AnyCommentGenericSettings.php:420
 msgid "Display Image Attachments"
 msgstr "Отображать приложенные картинки"
 
-#: includes/admin/AnyCommentGenericSettings.php:390
+#: includes/admin/AnyCommentGenericSettings.php:422
 msgid "Display image link from comment as attachment."
 msgstr "Отображать ссылки на картинки в комментариях как приложение."
 
-#: includes/admin/AnyCommentGenericSettings.php:395
+#: includes/admin/AnyCommentGenericSettings.php:427
 msgid "Links Clickable"
 msgstr "Кликабельные ссылки"
 
-#: includes/admin/AnyCommentGenericSettings.php:397
+#: includes/admin/AnyCommentGenericSettings.php:429
 msgid "Links in comment are clickable."
 msgstr "Сделать ссылки в комментариях кликабельными. "
 
-#: includes/admin/AnyCommentGenericSettings.php:402
+#: includes/admin/AnyCommentGenericSettings.php:434
 msgid "User Agreement Link"
 msgstr "Ссылка на пользовательское соглашение"
 
-#: includes/admin/AnyCommentGenericSettings.php:404
+#: includes/admin/AnyCommentGenericSettings.php:436
 msgid ""
 "Link to User Agreement, where described how your process users data once "
 "they authorize via social network and/or add new comment."
@@ -403,11 +415,11 @@ msgstr ""
 "обрабатываете пользовательскую информацию после того как они авторизуются на "
 "вашем ресурсе и/или добавят комментарий."
 
-#: includes/admin/AnyCommentGenericSettings.php:408
+#: includes/admin/AnyCommentGenericSettings.php:440
 msgid "Thanks"
 msgstr "Спасибо"
 
-#: includes/admin/AnyCommentGenericSettings.php:410
+#: includes/admin/AnyCommentGenericSettings.php:442
 msgid ""
 "Show AnyComment's link in the footer of comments. Copyright helps to bring "
 "awareness of such plugin and bring people to allow us to understand that it "
@@ -417,44 +429,44 @@ msgstr ""
 "нам информировать о плагине и поддерживать дальнейшую разработку и "
 "усовершенствования."
 
-#: includes/admin/AnyCommentGenericSettings.php:421
+#: includes/admin/AnyCommentGenericSettings.php:453
 msgid "Theme"
 msgstr "Тема"
 
-#: includes/admin/AnyCommentGenericSettings.php:425
+#: includes/admin/AnyCommentGenericSettings.php:457
 msgid "Dark"
 msgstr "Темный"
 
-#: includes/admin/AnyCommentGenericSettings.php:426
+#: includes/admin/AnyCommentGenericSettings.php:458
 msgid "Light"
 msgstr "Светлый"
 
-#: includes/admin/AnyCommentGenericSettings.php:429
+#: includes/admin/AnyCommentGenericSettings.php:461
 msgid "Choose comments theme."
 msgstr "Выбрать тему комментариев."
 
-#: includes/admin/AnyCommentGenericSettings.php:433
-#: includes/admin/AnyCommentGenericSettings.php:435
+#: includes/admin/AnyCommentGenericSettings.php:465
+#: includes/admin/AnyCommentGenericSettings.php:467
 msgid "Comment form"
 msgstr "Форма комментария"
 
-#: includes/admin/AnyCommentGenericSettings.php:438
+#: includes/admin/AnyCommentGenericSettings.php:470
 msgid "Social, WordPress & guests"
 msgstr "Социалки, WordPress & гости"
 
-#: includes/admin/AnyCommentGenericSettings.php:439
+#: includes/admin/AnyCommentGenericSettings.php:471
 msgid "Socials & WordPress users only."
 msgstr "Только социалки & WordPress пользователи."
 
-#: includes/admin/AnyCommentGenericSettings.php:440
+#: includes/admin/AnyCommentGenericSettings.php:472
 msgid "Guests only. "
 msgstr "Только гости."
 
-#: includes/admin/AnyCommentGenericSettings.php:446
+#: includes/admin/AnyCommentGenericSettings.php:478
 msgid "Guest Fields"
 msgstr "Гостевые поля"
 
-#: includes/admin/AnyCommentGenericSettings.php:448
+#: includes/admin/AnyCommentGenericSettings.php:480
 msgid ""
 "Use this rearrange guest form fields or remove something. {name} is required "
 "and if you do not add it, it will be added by plugin. {name} is name field, "
@@ -465,80 +477,80 @@ msgstr ""
 "добавлен плагином. {name} - поле имени, {email} - поле почты, {website} - "
 "поле веб-сайта."
 
-#: includes/admin/AnyCommentGenericSettings.php:453
+#: includes/admin/AnyCommentGenericSettings.php:485
 msgid "Custom Design"
 msgstr "Собственный дизайн"
 
-#: includes/admin/AnyCommentGenericSettings.php:455
+#: includes/admin/AnyCommentGenericSettings.php:487
 msgid ""
 "Use custom design. Enable this option to display design changes from below."
 msgstr ""
 "Использовать собственный дизайн. Включите эту опцию, чтобы настройки ниже "
 "начали действовать."
 
-#: includes/admin/AnyCommentGenericSettings.php:459
+#: includes/admin/AnyCommentGenericSettings.php:491
 msgid "Border radius"
 msgstr "Закругление краев"
 
-#: includes/admin/AnyCommentGenericSettings.php:461
+#: includes/admin/AnyCommentGenericSettings.php:493
 msgid "Border radius. You may use \"px\" or \"%\"."
 msgstr "Закругление краев. Можно указать с \"px\" или \"%\"."
 
-#: includes/admin/AnyCommentGenericSettings.php:465
+#: includes/admin/AnyCommentGenericSettings.php:497
 msgid "Text Size"
 msgstr "Размер текста"
 
-#: includes/admin/AnyCommentGenericSettings.php:467
+#: includes/admin/AnyCommentGenericSettings.php:499
 msgid "Overal text size. You may use \"px\", \"pt\", \"em\" or \"%\"."
 msgstr "Общий размер текста. Можно указать с \"px\", \"pt\", \"em\" или \"%\"."
 
-#: includes/admin/AnyCommentGenericSettings.php:471
+#: includes/admin/AnyCommentGenericSettings.php:503
 msgid "Font Choice"
 msgstr "Шрифт"
 
-#: includes/admin/AnyCommentGenericSettings.php:473
+#: includes/admin/AnyCommentGenericSettings.php:505
 msgid "Global font family."
 msgstr "Глобальный шрифт."
 
-#: includes/admin/AnyCommentGenericSettings.php:478
+#: includes/admin/AnyCommentGenericSettings.php:510
 msgid "Text Color"
 msgstr "Цвет текста"
 
-#: includes/admin/AnyCommentGenericSettings.php:480
+#: includes/admin/AnyCommentGenericSettings.php:512
 msgid "Global text color."
 msgstr "Общий цвет текста."
 
-#: includes/admin/AnyCommentGenericSettings.php:484
+#: includes/admin/AnyCommentGenericSettings.php:516
 msgid "Link Color"
 msgstr "Цвет ссылок"
 
-#: includes/admin/AnyCommentGenericSettings.php:486
+#: includes/admin/AnyCommentGenericSettings.php:518
 msgid "Links color."
 msgstr "Цвет ссылок."
 
-#: includes/admin/AnyCommentGenericSettings.php:490
+#: includes/admin/AnyCommentGenericSettings.php:522
 msgid "Semi Hidden Color"
 msgstr "Полускрытый текст"
 
-#: includes/admin/AnyCommentGenericSettings.php:492
+#: includes/admin/AnyCommentGenericSettings.php:524
 msgid "Semi hidden color. This is used for dates, action links, etc."
 msgstr ""
 "Полускрытый текст. Используется для дат, ссылок \"Ответить\", \"Изменить\" и "
 "прочего."
 
-#: includes/admin/AnyCommentGenericSettings.php:496
+#: includes/admin/AnyCommentGenericSettings.php:528
 msgid "Form Fields Background"
 msgstr "Цвет заливки полей формы"
 
-#: includes/admin/AnyCommentGenericSettings.php:498
+#: includes/admin/AnyCommentGenericSettings.php:530
 msgid "Form fields background color."
 msgstr "Цвет заливки полей формы."
 
-#: includes/admin/AnyCommentGenericSettings.php:503
+#: includes/admin/AnyCommentGenericSettings.php:535
 msgid "Attachment Text Color"
 msgstr "Цвет текст приложений"
 
-#: includes/admin/AnyCommentGenericSettings.php:505
+#: includes/admin/AnyCommentGenericSettings.php:537
 msgid ""
 "Attachments text color. For example, YouTube attachments do not have "
 "previews, instead they have \"YouTube\" text over."
@@ -546,11 +558,11 @@ msgstr ""
 "Цвет текста для приложений. Например, у YouTube видео нет превью, поэтому "
 "показывается текст \"YouTube\" поверх. "
 
-#: includes/admin/AnyCommentGenericSettings.php:510
+#: includes/admin/AnyCommentGenericSettings.php:542
 msgid "Attachment Background Color"
 msgstr "Цвет заднего фона приложений"
 
-#: includes/admin/AnyCommentGenericSettings.php:512
+#: includes/admin/AnyCommentGenericSettings.php:544
 msgid ""
 "Attachment background color. For example, user may attach PNG image with "
 "transparent background. This color will be used as background behind the "
@@ -559,67 +571,67 @@ msgstr ""
 "Задний цвет для фона приложений. Например, пользователь может приложить PNG "
 "картинку с прозрачным фоном. Этот цвет будет задним фоном под картинкой. "
 
-#: includes/admin/AnyCommentGenericSettings.php:517
+#: includes/admin/AnyCommentGenericSettings.php:549
 msgid "Avatar Parent Size"
 msgstr "Размер родительской аватарки"
 
-#: includes/admin/AnyCommentGenericSettings.php:519
+#: includes/admin/AnyCommentGenericSettings.php:551
 msgid "Parent comment avatar size."
 msgstr "Размер аватарки родительского комментария."
 
-#: includes/admin/AnyCommentGenericSettings.php:524
+#: includes/admin/AnyCommentGenericSettings.php:556
 msgid "Avatar Child Size"
 msgstr "Размер аватарки в ответах"
 
-#: includes/admin/AnyCommentGenericSettings.php:526
+#: includes/admin/AnyCommentGenericSettings.php:558
 msgid "Child comment avatar size. Usually, this is reply comment."
 msgstr "Размер аватарки в ответах родительского комментария."
 
-#: includes/admin/AnyCommentGenericSettings.php:531
+#: includes/admin/AnyCommentGenericSettings.php:563
 msgid "Button Radius"
 msgstr "Закругление кнопок"
 
-#: includes/admin/AnyCommentGenericSettings.php:533
+#: includes/admin/AnyCommentGenericSettings.php:565
 msgid "Button border radius."
 msgstr "Закругление краев у кнопок."
 
-#: includes/admin/AnyCommentGenericSettings.php:537
+#: includes/admin/AnyCommentGenericSettings.php:569
 msgid "Button Color"
 msgstr "Цвет текста кнопки"
 
-#: includes/admin/AnyCommentGenericSettings.php:539
+#: includes/admin/AnyCommentGenericSettings.php:571
 msgid "Button text color."
 msgstr "Цвет текста кнопки."
 
-#: includes/admin/AnyCommentGenericSettings.php:544
+#: includes/admin/AnyCommentGenericSettings.php:576
 msgid "Button Background Color"
 msgstr "Задний фон кнопки"
 
-#: includes/admin/AnyCommentGenericSettings.php:546
+#: includes/admin/AnyCommentGenericSettings.php:578
 msgid "Button background color."
 msgstr "Задний фон кнопок."
 
-#: includes/admin/AnyCommentGenericSettings.php:551
+#: includes/admin/AnyCommentGenericSettings.php:583
 msgid "Button Background Color Active"
 msgstr "Задний фон кнопок при наведении"
 
-#: includes/admin/AnyCommentGenericSettings.php:553
+#: includes/admin/AnyCommentGenericSettings.php:585
 msgid "Button background color when hovered or focused."
 msgstr "Задний фон кнопок при наведении"
 
-#: includes/admin/AnyCommentGenericSettings.php:564
+#: includes/admin/AnyCommentGenericSettings.php:596
 msgid "Moderate First"
 msgstr "Сначала модерировать"
 
-#: includes/admin/AnyCommentGenericSettings.php:566
+#: includes/admin/AnyCommentGenericSettings.php:598
 msgid "Moderators should check comment before it appears."
 msgstr "Модераторы должны утвердить комментарий перед появлением."
 
-#: includes/admin/AnyCommentGenericSettings.php:570
+#: includes/admin/AnyCommentGenericSettings.php:602
 msgid "Spam Words"
 msgstr "Спам слова"
 
-#: includes/admin/AnyCommentGenericSettings.php:572
+#: includes/admin/AnyCommentGenericSettings.php:604
 msgid ""
 "Comment should be marked for moderation when matched word from this list of "
 "comma-separated values."
@@ -627,11 +639,11 @@ msgstr ""
 "Комментарии должны быть поставлена на модерацию, если совпадают хоть с одним "
 "из указанных слов (каждое слово разделять запятой)."
 
-#: includes/admin/AnyCommentGenericSettings.php:583
+#: includes/admin/AnyCommentGenericSettings.php:615
 msgid "New Comment Alert"
 msgstr "Уведомление при новом комментарии"
 
-#: includes/admin/AnyCommentGenericSettings.php:585
+#: includes/admin/AnyCommentGenericSettings.php:617
 msgid ""
 "Show hint about new comment when user is on the comments page. Once clicked "
 "on alert, new comment will be displayed."
@@ -640,11 +652,11 @@ msgstr ""
 "странице с комментариями. После нажатия на подсказку комментарий будет "
 "показан."
 
-#: includes/admin/AnyCommentGenericSettings.php:589
+#: includes/admin/AnyCommentGenericSettings.php:621
 msgid "New Comment Interval Checking"
 msgstr "Интервал проверки новых комментариев"
 
-#: includes/admin/AnyCommentGenericSettings.php:591
+#: includes/admin/AnyCommentGenericSettings.php:623
 msgid ""
 "Interval (in seconds) to check for new comments. Minimum 5 and maximum is "
 "100 seconds."
@@ -652,19 +664,19 @@ msgstr ""
 "Интервал (в секундах) для проверки на наличие новых комментариев. Минимум 5 "
 "и максимум 100 секунд."
 
-#: includes/admin/AnyCommentGenericSettings.php:595
+#: includes/admin/AnyCommentGenericSettings.php:627
 msgid "Notify Administrator"
 msgstr "Уведомлять администратора"
 
-#: includes/admin/AnyCommentGenericSettings.php:597
+#: includes/admin/AnyCommentGenericSettings.php:629
 msgid "Notify administrator via email about new comment."
 msgstr "Уведомлять администратора по почте о новых комментариях."
 
-#: includes/admin/AnyCommentGenericSettings.php:601
+#: includes/admin/AnyCommentGenericSettings.php:633
 msgid "Email Notifications"
 msgstr "Email уведомления ответов"
 
-#: includes/admin/AnyCommentGenericSettings.php:603
+#: includes/admin/AnyCommentGenericSettings.php:635
 msgid ""
 "Notify users by email (if specified) about new replies. Make sure you have "
 "proper SMTP configurations in order to send emails."
@@ -672,82 +684,82 @@ msgstr ""
 "Уведомлять пользователей по почте (когда присутствует) о новых ответах. "
 "Убедитесь, что у вас правильно настроен SMTP для отправки писем."
 
-#: includes/admin/AnyCommentGenericSettings.php:608
+#: includes/admin/AnyCommentGenericSettings.php:640
 msgid "Reply Email Template"
 msgstr "Шаблон письма ответа"
 
-#: includes/admin/AnyCommentGenericSettings.php:610
+#: includes/admin/AnyCommentGenericSettings.php:642
 msgid "Email template on new comment reply."
 msgstr "Шаблон письма при новом ответе на комментарий."
 
-#: includes/admin/AnyCommentGenericSettings.php:614
-#: includes/admin/AnyCommentGenericSettings.php:653
+#: includes/admin/AnyCommentGenericSettings.php:646
+#: includes/admin/AnyCommentGenericSettings.php:685
 msgid "Blog name as text"
 msgstr "Название сайта как текст"
 
-#: includes/admin/AnyCommentGenericSettings.php:615
-#: includes/admin/AnyCommentGenericSettings.php:654
+#: includes/admin/AnyCommentGenericSettings.php:647
+#: includes/admin/AnyCommentGenericSettings.php:686
 msgid "Blog link as text"
 msgstr "Ссылка на сайт в виде текста"
 
-#: includes/admin/AnyCommentGenericSettings.php:616
-#: includes/admin/AnyCommentGenericSettings.php:655
+#: includes/admin/AnyCommentGenericSettings.php:648
+#: includes/admin/AnyCommentGenericSettings.php:687
 msgid "Blog name in HTML link"
 msgstr "Название сайта в HTML ссылке"
 
-#: includes/admin/AnyCommentGenericSettings.php:617
-#: includes/admin/AnyCommentGenericSettings.php:656
+#: includes/admin/AnyCommentGenericSettings.php:649
+#: includes/admin/AnyCommentGenericSettings.php:688
 msgid "Post title as text"
 msgstr "Заголовок записи как текст"
 
-#: includes/admin/AnyCommentGenericSettings.php:618
-#: includes/admin/AnyCommentGenericSettings.php:657
+#: includes/admin/AnyCommentGenericSettings.php:650
+#: includes/admin/AnyCommentGenericSettings.php:689
 msgid "Post URL as text"
 msgstr "Ссылка на пост как текст"
 
-#: includes/admin/AnyCommentGenericSettings.php:619
-#: includes/admin/AnyCommentGenericSettings.php:658
+#: includes/admin/AnyCommentGenericSettings.php:651
+#: includes/admin/AnyCommentGenericSettings.php:690
 msgid "Post title in HTML link"
 msgstr "Заголовок записи внутри HTML ссылки"
 
-#: includes/admin/AnyCommentGenericSettings.php:620
-#: includes/admin/AnyCommentGenericSettings.php:659
+#: includes/admin/AnyCommentGenericSettings.php:652
+#: includes/admin/AnyCommentGenericSettings.php:691
 msgid "Comment text"
 msgstr "Текст комментария"
 
-#: includes/admin/AnyCommentGenericSettings.php:621
-#: includes/admin/AnyCommentGenericSettings.php:660
+#: includes/admin/AnyCommentGenericSettings.php:653
+#: includes/admin/AnyCommentGenericSettings.php:692
 msgid "Comment text nicely formatted"
 msgstr "Красиво оформленный текст комментария "
 
-#: includes/admin/AnyCommentGenericSettings.php:622
-#: includes/admin/AnyCommentGenericSettings.php:661
+#: includes/admin/AnyCommentGenericSettings.php:654
+#: includes/admin/AnyCommentGenericSettings.php:693
 msgid "Reply link as text"
 msgstr "Ссылка на ответ в виде текста"
 
-#: includes/admin/AnyCommentGenericSettings.php:623
-#: includes/admin/AnyCommentGenericSettings.php:662
+#: includes/admin/AnyCommentGenericSettings.php:655
+#: includes/admin/AnyCommentGenericSettings.php:694
 msgid "Reply link as button"
 msgstr "Ссылка на ответ в виде кнопки"
 
-#: includes/admin/AnyCommentGenericSettings.php:628
-#: includes/admin/AnyCommentGenericSettings.php:667
+#: includes/admin/AnyCommentGenericSettings.php:660
+#: includes/admin/AnyCommentGenericSettings.php:699
 msgid "More info"
 msgstr "Больше информации"
 
-#: includes/admin/AnyCommentGenericSettings.php:647
+#: includes/admin/AnyCommentGenericSettings.php:679
 msgid "Admin Email Template"
 msgstr "Шаблон письма администратору"
 
-#: includes/admin/AnyCommentGenericSettings.php:649
+#: includes/admin/AnyCommentGenericSettings.php:681
 msgid "Email template sent to admin about new comment."
 msgstr "Шаблон письма о новом комментарии отправленный администратору сайта."
 
-#: includes/admin/AnyCommentGenericSettings.php:692
+#: includes/admin/AnyCommentGenericSettings.php:724
 msgid "File Upload By Guests"
 msgstr "Загрузка гостями"
 
-#: includes/admin/AnyCommentGenericSettings.php:694
+#: includes/admin/AnyCommentGenericSettings.php:726
 msgid ""
 "Guest users can upload documents. Please be careful about this setting as "
 "some users may potentially misuse this and periodically upload unwanted "
@@ -757,11 +769,11 @@ msgstr ""
 "настройкой, так как некоторые пользователи могут использовать ее в корыстных "
 "целях и периодично загружать файлы."
 
-#: includes/admin/AnyCommentGenericSettings.php:698
+#: includes/admin/AnyCommentGenericSettings.php:730
 msgid "File MIME Types"
 msgstr "Тип файлов (MIME)"
 
-#: includes/admin/AnyCommentGenericSettings.php:700
+#: includes/admin/AnyCommentGenericSettings.php:732
 msgid ""
 "Comman-separated list of allowed MIME types (e.g. .png, .jpg, etc). "
 "Alternatively, you may write \"image/*\" for all image types or \"audio/*\" "
@@ -771,22 +783,22 @@ msgstr ""
 "Альтернативно можно написать \"image/*\" для всех картинок или \"audio/*\" "
 "для всех аудио."
 
-#: includes/admin/AnyCommentGenericSettings.php:704
+#: includes/admin/AnyCommentGenericSettings.php:736
 msgid "File Upload Limit"
 msgstr "Лимит на загрузку"
 
-#: includes/admin/AnyCommentGenericSettings.php:706
+#: includes/admin/AnyCommentGenericSettings.php:738
 msgid ""
 "Maximum number of files to upload per period defined in the field below."
 msgstr ""
 "Максимальное количество файлов для загрузке за интервал указанный в поле "
 "ниже."
 
-#: includes/admin/AnyCommentGenericSettings.php:710
+#: includes/admin/AnyCommentGenericSettings.php:742
 msgid "File Upload Limit Period"
 msgstr "Лимит за загрузку"
 
-#: includes/admin/AnyCommentGenericSettings.php:712
+#: includes/admin/AnyCommentGenericSettings.php:744
 msgid ""
 "If user will cross the limit (defined above) within specified period (in "
 "seconds) in this field, he will be give a warning."
@@ -794,11 +806,11 @@ msgstr ""
 "Если пользователь превысит лимит файлов в период указанный в этом поле, ему "
 "будет показано предупреждение."
 
-#: includes/admin/AnyCommentGenericSettings.php:716
+#: includes/admin/AnyCommentGenericSettings.php:748
 msgid "File Size"
 msgstr "Размер файла"
 
-#: includes/admin/AnyCommentGenericSettings.php:718
+#: includes/admin/AnyCommentGenericSettings.php:750
 msgid ""
 "Maximum allowed file size in megabytes. For example, regular PNG image is "
 "about ~ 1.5-2MB, JPEG are even smaller."
