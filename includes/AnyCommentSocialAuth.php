@@ -55,6 +55,11 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		const META_SOCIAL_AVATAR_ORIGIN = 'anycomment_social_avatar_origin';
 
 		/**
+		 * Cookie used to store errors.
+		 */
+		const COOKIE_ERROR_STORAGE = 'anycomment_errors';
+
+		/**
 		 * Associative array list of providers.
 		 */
 		protected static $providers = [
@@ -155,12 +160,15 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 				exit();
 			}
 
-
 			if ( session_status() == PHP_SESSION_NONE ) {
 				session_start();
 			}
 
-			$this->process_authentication( $user, $social );
+			$auth_result = $this->process_authentication( $user, $social );
+
+			if ( $auth_result instanceof WP_Error ) {
+				static::addError( $auth_result->get_error_message() );
+			}
 
 			if ( session_status() == PHP_SESSION_ACTIVE ) {
 				session_destroy();
@@ -456,7 +464,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		 * @param \Hybridauth\User\Profile $user User to be processed.
 		 * @param string $social Social name.
 		 *
-		 * @return bool False on failure.
+		 * @return bool|WP_Error WP_Error on failure.
 		 */
 		private function process_authentication( $user, $social ) {
 			$email = isset( $user->email ) && ! empty( $user->email ) ?
@@ -506,7 +514,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		 * @param array $user_data User data to be created for user, when does not exist.
 		 * @param array $user_meta User meta data to be create for user, when does not exist.
 		 *
-		 * @return bool
+		 * @return bool|WP_Error
 		 */
 		public function auth_user( $user_profile, $social, $field, $value, array $user_data, array $user_meta ) {
 			if ( $field == 'login' ) {
@@ -532,11 +540,11 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 
 			$user = $this->get_user_by( $field, $value );
 
-			if ( $user === false ) {
+			if ( $user !== false && !AnyCommentUserMeta::isSocialLogin( $user ) ) {
+				return new WP_Error( 'use_wordpress_to_login', __( "Please use regular login, as this email is associated with regular WordPress user.", "anycomment" ) );
+			}
 
-				if ( ! isset( $user_meta[ self::META_PARENT ] ) ) {
-					$user_meta[ self::META_PARENT ] = 0;
-				}
+			if ( $user === false ) {
 
 				if ( ! isset( $user_meta[ self::META_SOCIAL_AVATAR ] ) ) {
 					$user_meta[ self::META_SOCIAL_AVATAR ] = $this->upload_photo( $social, $user_profile );
@@ -585,10 +593,6 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 			return $photoUrl;
 		}
 
-		public function is_user_parent( $user ) {
-			return (int) get_user_meta( $user->ID, self::META_PARENT, true ) === 0;
-		}
-
 		public function is_user_from_social( $user, $social ) {
 			$social_from_meta = trim( get_user_meta( $user->ID, self::META_SOCIAL_TYPE, true ) );
 			$social           = trim( $social );
@@ -606,14 +610,24 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		 *
 		 * @param string $field Field to check for user existence (e.g. username).
 		 * @param string $value Fields to check for value of $field.
+		 * @param string $social Name of the social.
 		 *
 		 * @return false|WP_User false on failure.
 		 */
-		public function get_user_by( $field, $value ) {
+		public function get_user_by( $field, $value, $social = null ) {
 			$user = get_user_by( $field, $value );
 
 			if ( $user === false ) {
 				return false;
+			}
+
+			if ( $social !== null ) {
+				$social_from_meta = AnyCommentUserMeta::getSocialType( $user );
+				$social           = trim( $social );
+
+				if ( $social_from_meta !== $social ) {
+					return false;
+				}
 			}
 
 			return $user;
@@ -828,6 +842,59 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 			static::$avatarMap[ $email ] = $hasGravatar;
 
 			return $hasGravatar;
+		}
+
+		/**
+		 * Get list of errors stored in cookies.
+		 *
+		 * @param bool $decoded If required to return decoded JSON.
+		 *
+		 * @return string|array|null
+		 */
+		public static function getErrors( $decoded = true ) {
+			$errors = isset( $_COOKIE[ self::COOKIE_ERROR_STORAGE ] ) ? $_COOKIE[ self::COOKIE_ERROR_STORAGE ] : null;
+
+			if ( $errors === null ) {
+				return null;
+			}
+
+			if ( $decoded ) {
+				return json_decode( $errors, true );
+			}
+
+			return $errors;
+		}
+
+		/**
+		 * Add new error.
+		 *
+		 * @param string $errorMessage Error message to be added.
+		 *
+		 * @return bool
+		 */
+		public function addError( $errorMessage ) {
+
+			$errors = static::getErrors();
+
+			if ( $errors !== null ) {
+				$errors[] = $errorMessage;
+			} else {
+				$errors   = [];
+				$errors[] = $errorMessage;
+			}
+
+			$errorsJson = json_encode( $errors );
+
+			return setcookie( self::COOKIE_ERROR_STORAGE, $errorsJson, 0 );
+		}
+
+		/**
+		 * Clean cookie errors.
+		 */
+		public static function cleanErrors() {
+			if ( static::getErrors( false ) !== null ) {
+				unset( $_COOKIE[ self::COOKIE_ERROR_STORAGE ] );
+			}
 		}
 	}
 endif;

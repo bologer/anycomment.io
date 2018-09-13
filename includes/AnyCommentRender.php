@@ -99,6 +99,7 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 					'locale'       => get_locale(),
 					'restUrl'      => esc_url_raw( rest_url( 'anycomment/v1/' ) ),
 					'commentCount' => ( $res = get_comment_count( $postId ) ) !== null ? (int) $res['all'] : 0,
+					'errors'       => AnyCommentSocialAuth::getErrors( true ),
 					'urls'         => [
 						'logout'  => wp_logout_url(),
 						'postUrl' => $postPermalink,
@@ -171,6 +172,8 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 					]
 				] );
 			}
+
+			AnyCommentSocialAuth::cleanErrors();
 
 			$path = ANYCOMMENT_ABSPATH . 'templates/comments.php';
 
