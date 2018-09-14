@@ -166,10 +166,12 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 
 
+
 **Fixes:**
 
 * Added Russian translations for default sorting function
 * Fixed list-style issue on some websites
+* Logout link does not ask extra confirmation
 
 = 0.0.55 – 10.09.2018 =
 
