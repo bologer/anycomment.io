@@ -261,18 +261,6 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			$prepared_args['offset'] = $prepared_args['number'] * ( absint( $request['page'] ) - 1 );
 		}
 
-		/**
-		 * Filters arguments, before passing to WP_Comment_Query, when querying comments via the REST API.
-		 *
-		 * @since 4.7.0
-		 *
-		 * @link https://developer.wordpress.org/reference/classes/wp_comment_query/
-		 *
-		 * @param array $prepared_args Array of arguments for WP_Comment_Query.
-		 * @param WP_REST_Request $request The current request.
-		 */
-		$prepared_args = apply_filters( 'rest_comment_query', $prepared_args, $request );
-
 		$query        = new WP_Comment_Query;
 		$query_result = $query->query( $prepared_args );
 

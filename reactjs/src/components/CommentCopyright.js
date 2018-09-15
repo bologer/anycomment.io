@@ -1,6 +1,7 @@
 import React from 'react';
 import AnyCommentComponent from "./AnyCommentComponent";
 import footerLogo from '../img/mini-logo.svg'
+import SVG from 'react-inlinesvg'
 
 /**
  * Display plugin copyright in the very bottom of comments.
@@ -15,9 +16,10 @@ class CommentCopyright extends AnyCommentComponent {
 
         return (
             <footer className="anycomment anycomment-copy-footer">
-                <img src={footerLogo}
-                     alt="AnyComment" className="anycomment"/> <a href="https://anycomment.io"
-                                                                  target="_blank">{settings.i18.footer_copyright}</a>
+                <SVG
+                    src={footerLogo}
+                    preloader={false}
+                /> <a href="https://anycomment.io" target="_blank">{settings.i18.footer_copyright}</a>
             </footer>
         );
     }

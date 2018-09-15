@@ -1,5 +1,6 @@
 import React from 'react'
 import AnyCommentComponent from "./AnyCommentComponent"
+import SVG from 'react-inlinesvg'
 
 /**
  * Display single item of single network to login with.
@@ -20,9 +21,8 @@ class LoginSocial extends AnyCommentComponent {
                    target="_parent"
                    title={social.label}
                    className={"anycomment-login-with-list-" + social.slug}>
-                    <img
-                        src={src}
-                        alt={social.label}/></a>
+                    <SVG src={src} preloader={false}/>
+                </a>
             </li>
         );
     }
