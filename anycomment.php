@@ -26,7 +26,6 @@ if ( ! class_exists( 'AnyComment' ) ) :
 	 *
 	 */
 	class AnyComment {
-
 		/**
 		 * AnyComment version.
 		 *
@@ -77,13 +76,6 @@ if ( ! class_exists( 'AnyComment' ) ) :
 		 * @var null|AnyComment
 		 */
 		private static $_instance = null;
-
-
-		/**
-		 * Post ID when available.
-		 * @var null|WP_Post
-		 */
-		public $currentPost = null;
 
 		/**
 		 * AnyComment constructor.
@@ -223,9 +215,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			/**
 			 * Cache loading
 			 */
-//			if ( ! class_exists( 'Stash\Pool' ) ) {
-				require_once(ANYCOMMENT_ABSPATH . 'vendor/autoload.php');
-//			}
+			require_once( ANYCOMMENT_ABSPATH . 'vendor/autoload.php' );
 
 			// Helpers
 			include_once( ANYCOMMENT_ABSPATH . 'includes/helpers/AnyCommentInputHelper.php' );
@@ -310,69 +300,6 @@ if ( ! class_exists( 'AnyComment' ) ) :
 
 			$this->auth       = new AnyCommentSocialAuth();
 			$this->statistics = new AnyCommentStatistics();
-
-
-		}
-
-		/**
-		 * Fail response.
-		 *
-		 * @param string $error Error for response.
-		 *
-		 * @return string JSON fail response.
-		 */
-		public function json_error( $error, $response = [] ) {
-			return $this->json_response( false, $response, $error );
-		}
-
-		/**
-		 * Success response.
-		 *
-		 * @param array $response Specify custom response params.
-		 *
-		 * @return string
-		 */
-		public function json_success( $response = [] ) {
-			return $this->json_response( true, $response );
-		}
-
-		/**
-		 * @param bool $success Whether response is success or not.
-		 * @param array $response Specify custom response
-		 * @param $error
-		 *
-		 * @return string JSON string.
-		 */
-		public function json_response( $success = true, $response = [], $error = null ) {
-			return json_encode( [
-				'success'  => (bool) $success,
-				'response' => json_encode( $response ),
-				'error'    => $error,
-				'time'     => time()
-			] );
-		}
-
-		/**
-		 * Set post object by having post.
-		 *
-		 * @param int $postId
-		 */
-		public function setCurrentPost( $postId = null ) {
-			if ( $postId === null ) {
-				$this->currentPost = get_post();
-			} else {
-				if ( ( $post = get_post( $postId ) ) !== null ) {
-					$this->currentPost = $post;
-				}
-			}
-		}
-
-		/**
-		 * Post when available.
-		 * @return null|WP_Post
-		 */
-		public function getCurrentPost() {
-			return $this->currentPost;
 		}
 	}
 endif;

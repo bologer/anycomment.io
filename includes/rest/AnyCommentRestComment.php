@@ -118,7 +118,6 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	 * @return WP_Error|bool True if the request has read access, error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-
 		if ( ! empty( $request['post'] ) ) {
 			foreach ( (array) $request['post'] as $post_id ) {
 				$post = get_post( $post_id );
@@ -184,8 +183,22 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		return $response;
 	}
 
-	public function get_cache_key( $postId ) {
-		return sprintf( 'get_items_%s', $postId );
+	/**
+	 * Get cache key based on provided data.
+	 *
+	 * @param int $postId Post ID to get cached data for.
+	 * @param mixed $args List of additional params to be used within cash. Will be passed into serialize() and then md5().
+	 *
+	 * @return string
+	 */
+	public function get_cache_key( $postId, $args = null ) {
+		$cache_namespace = sprintf( '/comments/%s', $postId );
+
+		if ( $args !== null ) {
+			$cache_namespace .= '/' . md5( serialize( $args ) );
+		}
+
+		return $cache_namespace;
 	}
 
 	/**
@@ -202,7 +215,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		// Retrieve the list of registered collection query parameters.
 		$registered = $this->get_collection_params();
 
-		$cacheKey = sprintf( 'get_items_%s', $request['post'][0] );
+		$cacheKey = $this->get_cache_key( $request['post'][0], $request->get_params() );
 
 		$cachedPost = AnyComment()->cache->getItem( $cacheKey );
 
@@ -335,9 +348,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			$response->link_header( 'next', $next_link );
 		}
 
-		$cachedPost->set( $response );
-		$cachedPost->expiresAfter( 3600 );
-		$cachedPost->save();
+		$cachedPost->set( $response )->save();
 
 		return $response;
 	}
@@ -610,18 +621,6 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			AnyCommentEmailQueue::addAsAdminNotification( $comment );
 		}
 
-		/**
-		 * Fires after a comment is created or updated via the REST API.
-		 *
-		 * @since 4.7.0
-		 *
-		 * @param WP_Comment $comment Inserted or updated comment object.
-		 * @param WP_REST_Request $request Request object.
-		 * @param bool $creating True when creating a comment, false
-		 *                                  when updating.
-		 */
-		do_action( 'rest_insert_comment', $comment, $request, true );
-
 		$schema = $this->get_item_schema();
 
 		if ( ! empty( $schema['properties']['meta'] ) && isset( $request['meta'] ) ) {
@@ -647,6 +646,8 @@ class AnyCommentRestComment extends AnyCommentRestController {
 
 		$response->set_status( 201 );
 		$response->header( 'Location', rest_url( sprintf( '%s/%s/%d', $this->namespace, $this->rest_base, $comment_id ) ) );
+
+		AnyComment()->cache->deleteItem( $this->get_cache_key( $request['post'] ) );
 
 		return $response;
 	}
@@ -770,6 +771,8 @@ class AnyCommentRestComment extends AnyCommentRestController {
 
 		$response = $this->prepare_item_for_response( $comment, $request );
 
+		AnyComment()->cache->deleteItem( $this->get_cache_key( $request['post'] ) );
+
 		return rest_ensure_response( $response );
 	}
 
@@ -843,16 +846,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			return new WP_Error( 'rest_cannot_delete', __( 'The comment cannot be deleted.', 'anycomment' ), array( 'status' => 500 ) );
 		}
 
-		/**
-		 * Fires after a comment is deleted via the REST API.
-		 *
-		 * @since 4.7.0
-		 *
-		 * @param WP_Comment $comment The deleted comment data.
-		 * @param WP_REST_Response $response The response returned from the API.
-		 * @param WP_REST_Request $request The request sent to the API.
-		 */
-		do_action( 'rest_delete_comment', $comment, $response, $request );
+		AnyComment()->cache->deleteItem( $this->get_cache_key( $request['post'] ) );
 
 		return $response;
 	}
@@ -1068,17 +1062,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			$prepared_comment['comment_agent'] = $request->get_header( 'user_agent' );
 		}
 
-		/**
-		 * Filters a comment after it is prepared for the database.
-		 *
-		 * Allows modification of the comment right after it is prepared for the database.
-		 *
-		 * @since 4.7.0
-		 *
-		 * @param array $prepared_comment The prepared comment data for `wp_insert_comment`.
-		 * @param WP_REST_Request $request The current request.
-		 */
-		return apply_filters( 'rest_preprocess_comment', $prepared_comment, $request );
+		return $prepared_comment;
 	}
 
 	/**
