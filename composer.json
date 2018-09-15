@@ -1,0 +1,23 @@
+{
+  "name": "bologer/anycomment",
+  "description": "WordPress commenting plugin",
+  "type": "library",
+  "license": "GPLv2 or later",
+  "authors": [
+    {
+      "name": "Alex",
+      "email": "sasha.tesh@gmail.com"
+    }
+  ],
+  "config": {
+    "autoload": {
+      "psr-4": {
+        "anycomment\\": ""
+      }
+    }
+  },
+  "minimum-stability": "stable",
+  "require": {
+    "tedivm/stash": "0.14.*"
+  }
+}

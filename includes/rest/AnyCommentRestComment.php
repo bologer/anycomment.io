@@ -185,7 +185,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	}
 
 	public function get_cache_key( $postId ) {
-
+		return sprintf( 'get_items_%s', $postId );
 	}
 
 	/**
@@ -202,14 +202,16 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		// Retrieve the list of registered collection query parameters.
 		$registered = $this->get_collection_params();
 
-		$cacheKey = 'get_items' . md5( serialize( $request->get_params() ) );
+		$cacheKey = sprintf( 'get_items_%s', $request['post'][0] );
+
+		$cachedPost = AnyComment()->cache->getItem( $cacheKey );
 
 		/**
 		 * @var $cachedResponse WP_REST_Response
 		 */
-		$cachedResponse = AnyComment()->cache->get( $cacheKey );
+		$cachedResponse = $cachedPost->get();
 
-		if ( $cachedResponse !== null ) {
+		if ( ! $cachedPost->isMiss() ) {
 			return $cachedResponse;
 		}
 
@@ -333,7 +335,9 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			$response->link_header( 'next', $next_link );
 		}
 
-		AnyComment()->cache->set( $cacheKey, $response, strtotime( '+5 minutes' ) );
+		$cachedPost->set( $response );
+		$cachedPost->expiresAfter( 3600 );
+		$cachedPost->save();
 
 		return $response;
 	}

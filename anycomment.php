@@ -47,7 +47,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 		public $auth = null;
 
 		/**
-		 * @var AnyCommentCache
+		 * @var Stash\Pool
 		 */
 		public $cache;
 
@@ -220,11 +220,16 @@ if ( ! class_exists( 'AnyComment' ) ) :
 		 */
 		public function includes() {
 
-			// Helpers
+			/**
+			 * Cache loading
+			 */
+//			if ( ! class_exists( 'Stash\Pool' ) ) {
+				require_once(ANYCOMMENT_ABSPATH . 'vendor/autoload.php');
+//			}
 
+			// Helpers
 			include_once( ANYCOMMENT_ABSPATH . 'includes/helpers/AnyCommentInputHelper.php' );
 
-			include_once( ANYCOMMENT_ABSPATH . 'includes/base/cache/AnyCommentCache.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentOptions.php' );
 
 			// Rest
@@ -297,9 +302,14 @@ if ( ! class_exists( 'AnyComment' ) ) :
 
 			$this->render      = new AnyCommentRender();
 			$this->admin_pages = new AnyCommentAdminPages();
-			$this->cache       = null;
-			$this->auth        = new AnyCommentSocialAuth();
-			$this->statistics  = new AnyCommentStatistics();
+
+
+			$cacheDriver = new Stash\Driver\FileSystem();
+
+			$this->cache = new Stash\Pool( $cacheDriver );
+
+			$this->auth       = new AnyCommentSocialAuth();
+			$this->statistics = new AnyCommentStatistics();
 
 
 		}
