@@ -164,6 +164,8 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Enhancements:**
 
+* Now all avatars are copped = faster load of comments and less disc space it takes (existing avatar will be enhanced automatically for you), #149
+* Converted sorting dropdown to multi dropdown. Now it has sorting option & logout link. When user is guest, it only has sorting options, #145
 
 
 
@@ -172,6 +174,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Added Russian translations for default sorting function
 * Fixed list-style issue on some websites
 * Logout link does not ask extra confirmation
+* Sorting dropdown will close when clicked outside the element. Previously it was always open
 
 = 0.0.55 – 10.09.2018 =
 

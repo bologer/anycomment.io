@@ -12,7 +12,7 @@ class SendCommentGuest extends AnyCommentComponent {
 
         let elementInputs = [];
 
-        inputs.map(el => {
+        inputs.forEach(el => {
             if (el === 'name') {
                 elementInputs.push(
                     <div className="anycomment anycomment-input-list-single anycomment-input-list-single-name">

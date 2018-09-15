@@ -4,6 +4,7 @@ import CommentCopyright from './components/CommentCopyright'
 import AnyCommentComponent from "./components/AnyCommentComponent"
 import './css/app.css'
 import {ToastContainer} from 'react-toastify'
+import {toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import $ from 'jquery'
 
@@ -21,6 +22,7 @@ class App extends AnyCommentComponent {
 
         this.handleLoadOnScroll = this.handleLoadOnScroll.bind(this);
         this.handleScrollToComments = this.handleScrollToComments.bind(this);
+        this.handleErrors = this.handleErrors.bind(this);
     }
 
     /**
@@ -83,9 +85,21 @@ class App extends AnyCommentComponent {
         }
     }
 
+    /**
+     * Handle possible backend errors.
+     */
+    handleErrors() {
+        const settings = this.getSettings();
+
+        if (settings.errors) {
+            settings.errors.map((message) => toast.error(message));
+        }
+    }
+
     componentDidMount() {
         this.handleLoadOnScroll();
         this.handleScrollToComments();
+        this.handleErrors();
     }
 
     render() {

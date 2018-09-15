@@ -5,7 +5,21 @@
  */
 class AnyCommentAvatars {
 
+	/**
+	 * Default avatar width.
+	 */
+	const DEFAULT_AVATAR_WIDTH = 60;
 
+	/**
+	 * Default avatar height.
+	 */
+	const DEFAULT_AVATAR_HEIGHT = 60;
+
+	/**
+	 * AnyCommentAvatars constructor.
+	 *
+	 * Allow to override all avatars in admin.
+	 */
 	public function __construct() {
 		if ( is_admin() ) {
 			add_filter( 'get_avatar', [ $this, 'override_avatar_globally' ], 10, 5 );

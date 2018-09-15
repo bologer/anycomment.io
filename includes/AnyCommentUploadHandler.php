@@ -40,13 +40,29 @@ class AnyCommentUploadHandler {
 			return false;
 		}
 
+		$instance = wp_get_image_editor( $temp_file, [ 'mime_type' => 'image/jpeg' ] );
+
+		if ( $instance instanceof WP_Error ) {
+			return false;
+		}
+
+		$fileName = static::getFileName( $metaIdentifier );
+
+		$instance->resize( AnyCommentAvatars::DEFAULT_AVATAR_WIDTH, AnyCommentAvatars::DEFAULT_AVATAR_HEIGHT, true );
+
+		$croppedImage = $instance->save( $fileName, 'image/jpeg' );
+
+		if ( $croppedImage instanceof WP_Error ) {
+			return false;
+		}
+
 		// Array based on $_FILE as seen in PHP file uploads
 		$file = array(
-			'name'     => static::getFileName( $metaIdentifier ),
-			'type'     => 'image/jpg',
-			'tmp_name' => $temp_file,
+			'name'     => $croppedImage['file'],
+			'type'     => $croppedImage['mime-type'],
+			'tmp_name' => $croppedImage['path'],
 			'error'    => 0,
-			'size'     => filesize( $temp_file ),
+			'size'     => filesize( $croppedImage['path'] ),
 		);
 
 		$overrides = [
