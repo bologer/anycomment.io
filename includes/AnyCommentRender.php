@@ -90,6 +90,9 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 					wp_enqueue_style( 'anycomment-google-font', 'https://fonts.googleapis.com/css?family=Noto+Sans:400,700&amp;subset=cyrillic', [], AnyComment()->version );
 				}
 
+				$errors = AnyCommentSocialAuth::getErrors( true );
+				AnyCommentSocialAuth::cleanErrors();
+
 				$postId        = get_the_ID();
 				$postPermalink = get_permalink( $postId );
 
@@ -99,7 +102,7 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 					'locale'       => get_locale(),
 					'restUrl'      => esc_url_raw( rest_url( 'anycomment/v1/' ) ),
 					'commentCount' => ( $res = get_comment_count( $postId ) ) !== null ? (int) $res['all'] : 0,
-					'errors'       => AnyCommentSocialAuth::getErrors( true ),
+					'errors'       => $errors,
 					'urls'         => [
 						'logout'  => wp_logout_url(),
 						'postUrl' => $postPermalink,

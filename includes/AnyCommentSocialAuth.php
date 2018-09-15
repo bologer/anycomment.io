@@ -540,8 +540,8 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 
 			$user = $this->get_user_by( $field, $value );
 
-			if ( $user !== false && !AnyCommentUserMeta::isSocialLogin( $user ) ) {
-				return new WP_Error( 'use_wordpress_to_login', __( "Please use regular login, as this email is associated with regular WordPress user.", "anycomment" ) );
+			if ( $user !== false && ! AnyCommentUserMeta::isSocialLogin( $user ) ) {
+				return new WP_Error( 'use_wordpress_to_login', __( "Please use normal login form, as this email is associated with a WordPress user.", "anycomment" ) );
 			}
 
 			if ( $user === false ) {
@@ -847,19 +847,19 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		/**
 		 * Get list of errors stored in cookies.
 		 *
-		 * @param bool $decoded If required to return decoded JSON.
+		 * @param bool $decode If required to return decoded JSON.
 		 *
 		 * @return string|array|null
 		 */
-		public static function getErrors( $decoded = true ) {
+		public static function getErrors( $decode = true ) {
 			$errors = isset( $_COOKIE[ self::COOKIE_ERROR_STORAGE ] ) ? $_COOKIE[ self::COOKIE_ERROR_STORAGE ] : null;
 
 			if ( $errors === null ) {
 				return null;
 			}
 
-			if ( $decoded ) {
-				return json_decode( $errors, true );
+			if ( $decode ) {
+				return json_decode( stripslashes( $errors ) );
 			}
 
 			return $errors;
@@ -883,9 +883,9 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 				$errors[] = $errorMessage;
 			}
 
-			$errorsJson = json_encode( $errors );
+			$errorsJson = json_encode( $errors, JSON_HEX_QUOT | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT );
 
-			return setcookie( self::COOKIE_ERROR_STORAGE, $errorsJson, 0 );
+			return setcookie( self::COOKIE_ERROR_STORAGE, $errorsJson, 0, "/" );
 		}
 
 		/**
@@ -893,7 +893,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		 */
 		public static function cleanErrors() {
 			if ( static::getErrors( false ) !== null ) {
-				unset( $_COOKIE[ self::COOKIE_ERROR_STORAGE ] );
+				setcookie( self::COOKIE_ERROR_STORAGE, null, - 1, '/' );
 			}
 		}
 	}
