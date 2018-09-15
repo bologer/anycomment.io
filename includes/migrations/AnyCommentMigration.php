@@ -33,6 +33,10 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 			'version'     => '0.0.52',
 			'description' => 'Create "uploaded_files" table to store log history of all uploaded files'
 		],
+		'0.0.56' => [
+			'version'     => '0.0.56',
+			'description' => 'Reupload avatars to make them smaller in size and therefore speed-up comments loading'
+		],
 	];
 
 	/**

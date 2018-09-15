@@ -85,6 +85,8 @@ class AnyCommentUploadHandler {
 			return false;
 		}
 
+		unlink( $temp_file );
+
 		$localUrl = $results['url'];  // URL to the file in the uploads dir
 
 		// Perform any actions here based in the above results
