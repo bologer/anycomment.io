@@ -167,6 +167,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Comments are now cached. This will help to limit number of requests to the database, load comments faster & help people who have limited resource environments
 * Now all avatars are copped = faster load of comments and less disc space it takes (existing avatar will be enhanced automatically for you), #149
 * Converted sorting dropdown to multi dropdown. Now it has sorting option & logout link. When user is guest, it only has sorting options, #145
+* When user registered via default WordPress form, and the same user is trying to authenticate using social, he will see error message that he need to use regular login form in this case, #143
 * Small cosmetic style changes
 
 **Fixes:**
