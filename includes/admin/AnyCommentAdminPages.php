@@ -123,10 +123,13 @@ if ( ! class_exists( 'AnyCommentAdminPages' ) ) :
 		 */
 		public function get_news( $per_page = 5 ) {
 
-			$cacheKey = sprintf( 'anycomment-plugin-news-%s-%s', AnyComment()->version, get_locale() );
+			$cacheKey   = sprintf( '/anycomment/news/%s/%s/%s', AnyComment()->version, get_locale(), $per_page );
+			$cachedNews = AnyComment()->cache->getItem( $cacheKey );
 
-			if ( ( $news = AnyComment()->cache->get( $cacheKey ) ) !== null ) {
-				return json_decode( $news, true );
+			$cachedJson = $cachedNews->get();
+
+			if ( $cachedNews->isHit() ) {
+				return json_decode( $cachedJson, true);
 			}
 
 			$locale = get_locale();
@@ -164,7 +167,7 @@ if ( ! class_exists( 'AnyCommentAdminPages' ) ) :
 
 				if ( $posts !== null ) {
 
-					AnyComment()->cache->set( $cacheKey, $posts, strtotime( '+1 day' ) );
+					$cachedNews->set( $posts )->expiresAfter( strtotime( '+1 day' ) )->save();
 
 					return json_decode( $posts, true );
 				} else {
