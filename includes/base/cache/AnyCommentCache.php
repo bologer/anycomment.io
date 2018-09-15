@@ -108,6 +108,25 @@ class AnyCommentCache {
 		return $this;
 	}
 
+	public function setGroup( $group, $key, $data, $expiration ) {
+		$storeData = array(
+			'time'   => time(),
+			'expire' => $expiration,
+			'data'   => serialize( $data )
+		);
+		$dataArray = $this->_loadCache();
+
+		if ( is_array( $dataArray ) ) {
+			$dataArray[ $group ] = [ $key => $storeData ];
+		} else {
+			$dataArray = [ $group => [ $key => $storeData ] ];
+		}
+
+		file_put_contents( $this->getCacheDir(), json_encode( $dataArray ) );
+
+		return $this;
+	}
+
 	/**
 	 * Retrieve cached data by its key
 	 *
@@ -178,7 +197,7 @@ class AnyCommentCache {
 	public function delete( $key ) {
 		$cacheData = $this->_loadCache();
 		if ( is_array( $cacheData ) ) {
-			if ( true === isset( $cacheData[ $key ] ) ) {
+			if ( isset( $cacheData[ $key ] ) ) {
 				unset( $cacheData[ $key ] );
 				$cacheData = json_encode( $cacheData );
 				file_put_contents( $this->getCacheDir(), $cacheData );

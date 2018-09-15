@@ -297,9 +297,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 
 			$this->render      = new AnyCommentRender();
 			$this->admin_pages = new AnyCommentAdminPages();
-			$this->cache       = new AnyCommentCache( [
-				'path' => ANYCOMMENT_ABSPATH . 'cache/',
-			] );
+			$this->cache       = null;
 			$this->auth        = new AnyCommentSocialAuth();
 			$this->statistics  = new AnyCommentStatistics();
 

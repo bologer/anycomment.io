@@ -368,6 +368,29 @@ class CommentList extends AnyCommentComponent {
         this.focusCommentField();
     };
 
+    /**
+     * Checks for anchors in the link.
+     * If there are some, it could be user who came from the
+     * email and trying to read his reply.
+     */
+    checkForAnchor() {
+        const self = this;
+        const hash = window.location.hash;
+
+        if (this.hasSpecificCommentAnchor()) {
+            const interval = setInterval(function () {
+
+                let commentElement = $(hash).length;
+
+                if (!commentElement) {
+                    self.handleLoadMore();
+                } else {
+                    self.moveToElement(hash);
+                    clearInterval(interval);
+                }
+            }, 1000);
+        }
+    };
 
     componentDidMount() {
         this.loadComments();
@@ -401,30 +424,6 @@ class CommentList extends AnyCommentComponent {
             }, intervalInSeconds);
         }
     }
-
-    /**
-     * Checks for anchors in the link.
-     * If there are some, it could be user who came from the
-     * email and trying to read his reply.
-     */
-    checkForAnchor() {
-        const self = this;
-        const hash = window.location.hash;
-
-        if (this.hasSpecificCommentAnchor()) {
-            const interval = setInterval(function () {
-
-                let commentElement = $(hash).length;
-
-                if (!commentElement) {
-                    self.handleLoadMore();
-                } else {
-                    self.moveToElement(hash);
-                    clearInterval(interval);
-                }
-            }, 1000);
-        }
-    };
 
     render() {
         const {isError, isLoaded, comments} = this.state;

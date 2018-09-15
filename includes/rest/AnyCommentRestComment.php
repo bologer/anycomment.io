@@ -184,6 +184,10 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		return $response;
 	}
 
+	public function get_cache_key( $postId ) {
+
+	}
+
 	/**
 	 * Retrieves a list of comment items.
 	 *
@@ -197,6 +201,17 @@ class AnyCommentRestComment extends AnyCommentRestController {
 
 		// Retrieve the list of registered collection query parameters.
 		$registered = $this->get_collection_params();
+
+		$cacheKey = 'get_items' . md5( serialize( $request->get_params() ) );
+
+		/**
+		 * @var $cachedResponse WP_REST_Response
+		 */
+		$cachedResponse = AnyComment()->cache->get( $cacheKey );
+
+		if ( $cachedResponse !== null ) {
+			return $cachedResponse;
+		}
 
 		/*
 		 * This array defines mappings between public API query parameters whose
@@ -317,6 +332,8 @@ class AnyCommentRestComment extends AnyCommentRestController {
 
 			$response->link_header( 'next', $next_link );
 		}
+
+		AnyComment()->cache->set( $cacheKey, $response, strtotime( '+5 minutes' ) );
 
 		return $response;
 	}
