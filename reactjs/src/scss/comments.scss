@@ -528,8 +528,7 @@
           &__date {
             color: $semi-hidden-color;
             font-size: $font-size - 2;
-            min-height: $medium-space;
-            line-height: $medium-space;
+            line-height: $small-space;
             display: block;
           }
         }
