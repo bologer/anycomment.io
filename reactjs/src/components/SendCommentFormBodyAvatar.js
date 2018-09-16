@@ -11,7 +11,7 @@ class SendCommentFormBodyAvatar extends AnyCommentComponent {
         let className = "anycomment-send-comment-body-outliner__logo";
         let title = '';
         let svg = <SVG src={commentLogo} loader={false}/>;
-        let style = '';
+        let style = {};
 
         if (!this.isGuest()) {
             const user = this.getCurrentUser();
@@ -22,7 +22,7 @@ class SendCommentFormBodyAvatar extends AnyCommentComponent {
             style = {backgroundImage: 'url(' + user.data.user_avatar + ')'}
         }
 
-        return <div className={className} style={{style}} title={title}>{svg}</div>;
+        return <div className={className} style={style} title={title}>{svg}</div>;
     }
 }
 
