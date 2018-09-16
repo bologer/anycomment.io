@@ -199,6 +199,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		const OPTION_DESIGN_ATTACHMENT_COLOR = 'options_design_attachment_color';
 		const OPTION_DESIGN_ATTACHMENT_BACKGROUND_COLOR = 'options_design_attachment_background_color';
 
+		const OPTION_DESIGN_AVATAR_RADIUS = 'options_design_avatar_radius';
 		const OPTION_DESIGN_PARENT_AVATAR_SIZE = 'options_design_parent_avatar_size';
 		const OPTION_DESIGN_CHILD_AVATAR_SIZE = 'options_design_child_avatar_size';
 
@@ -267,6 +268,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 			self::OPTION_DESIGN_FORM_FIELD_BACKGROUND_COLOR    => '#ffffff',
 			self::OPTION_DESIGN_ATTACHMENT_COLOR               => '#eeeeee',
 			self::OPTION_DESIGN_ATTACHMENT_BACKGROUND_COLOR    => '#eeeeee',
+			self::OPTION_DESIGN_AVATAR_RADIUS                  => '50%',
 			self::OPTION_DESIGN_PARENT_AVATAR_SIZE             => '60px',
 			self::OPTION_DESIGN_CHILD_AVATAR_SIZE              => '48px',
 			self::OPTION_DESIGN_BUTTON_COLOR                   => '#ffffff',
@@ -544,6 +546,12 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'description' => esc_html( __( 'Attachment background color. For example, user may attach PNG image with transparent background. This color will be used as background behind the image.', "anycomment" ) )
 					],
 
+					[
+						'id'          => self::OPTION_DESIGN_AVATAR_RADIUS,
+						'title'       => __( 'Avatar Border Radius', "anycomment" ),
+						'callback'    => 'input_text',
+						'description' => esc_html( __( 'Avatar border radius. You may use "px" or "%". "50%" will make avatars rounded.', "anycomment" ) )
+					],
 					[
 						'id'          => self::OPTION_DESIGN_PARENT_AVATAR_SIZE,
 						'title'       => __( 'Avatar Parent Size', "anycomment" ),
@@ -848,8 +856,9 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 				'attachment-color'            => AnyCommentGenericSettings::getDesignAttachmentColor(),
 				'attachment-background-color' => AnyCommentGenericSettings::getDesignAttachmentBackgroundColor(),
 
-				'parent-avatar-size' => AnyCommentGenericSettings::getDesignParentAvatarSize(),
-				'child-avatar-size'  => AnyCommentGenericSettings::getDesignChildAvatarSize(),
+				'avatar-border-radius' => AnyCommentGenericSettings::getDesignAvatarRadius(),
+				'parent-avatar-size'   => AnyCommentGenericSettings::getDesignParentAvatarSize(),
+				'child-avatar-size'    => AnyCommentGenericSettings::getDesignChildAvatarSize(),
 
 				'btn-radius'                  => AnyCommentGenericSettings::getDesignButtonRadius(),
 				'btn-color'                   => AnyCommentGenericSettings::getDesignButtonColor(),
@@ -1272,6 +1281,15 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 */
 		public static function getDesignAttachmentBackgroundColor() {
 			return AnyCommentInputHelper::getHexForCss( static::instance()->getOption( self::OPTION_DESIGN_ATTACHMENT_BACKGROUND_COLOR ) );
+		}
+
+		/**
+		 * Get design avatar border radius.
+		 *
+		 * @return string|null
+		 */
+		public static function getDesignAvatarRadius() {
+			return AnyCommentInputHelper::getSizeForCss( static::instance()->getOption( self::OPTION_DESIGN_AVATAR_RADIUS ) );
 		}
 
 		/**

@@ -33,7 +33,7 @@
 @mixin avatar() {
   background-size: cover;
   background-position: center center;
-  @include border-radius(50%);
+  @include border-radius($avatar-border-radius);
 }
 
 @mixin avatar-parent() {

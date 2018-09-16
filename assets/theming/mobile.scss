@@ -241,7 +241,6 @@ $btn-padding: 0 40px;
 
         &__img {
           @include avatar();
-          @include border-radius(50%);
 
           &-auth-type {
             bottom: $parent-avatar-size - ($parent-avatar-size - 6);

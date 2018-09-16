@@ -184,6 +184,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Small cosmetic style changes
 * Integration tab now has option to add reCAPTCHA to comment form (for all, guests or authenticated users only, choose theme, etc), #146
 * Added guides in Russian & English on how to set-up reCAPTCHA, #146
+* Added ability to change border radius of avatars, #148
 
 **Fixes:**
 

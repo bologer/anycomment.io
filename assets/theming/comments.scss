@@ -434,7 +434,6 @@
         &__img {
           position: relative;
           @include avatar();
-          @include border-radius(50%);
 
           &-auth-type {
             position: absolute;
