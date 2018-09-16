@@ -19,7 +19,7 @@ $parent-avatar-size: 60px !default;
 $child-avatar-size: 48px !default;
 
 $comment-parent-space: $parent-avatar-size + 20 !default;
-$comment-child-space: $parent-avatar-size + 10 !default;
+$comment-child-space: $parent-avatar-size !default;
 
 $comment-field-padding: 41px 10px 5px 93px !default;
 $comment-field-default-height: 96px !default;

@@ -253,8 +253,6 @@ $btn-padding: 0 40px;
       }
 
       &-body {
-        padding-left: $parent-avatar-size + 20;
-
         &-header {
           &__author {
             &,
@@ -316,8 +314,6 @@ $btn-padding: 0 40px;
 
     // Child comments
     &-child {
-      margin-left: $comment-parent-space;
-
       .comment-single {
         &-avatar {
           &,
@@ -327,8 +323,6 @@ $btn-padding: 0 40px;
         }
 
         &-body {
-          padding-left: $comment-child-space;
-
           .comment-attachments {
             li {
               .comment-attachment {
@@ -336,6 +330,38 @@ $btn-padding: 0 40px;
                 height: $attachment-child-size;
                 line-height: $attachment-child-size;
                 font-size: $font-size - 9;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &-inner > .anycomment-list {
+
+    ul.anycomment-list-child {
+      .comment-single-body {
+        padding-left: $comment-child-space;
+      }
+    }
+
+    & > .comment-single {
+
+      & > .comment-single-body {
+        padding-left: $comment-parent-space;
+      }
+
+      & > .comment-single-replies {
+        // Second level
+        & > ul.anycomment-list-child {
+          margin-left: $comment-parent-space;
+
+          // Third level
+          & > li {
+            & > .comment-single-replies {
+              & > ul.anycomment-list-child {
+                margin-left: $comment-parent-space;
               }
             }
           }
