@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-15 19:39+0000\n"
-"PO-Revision-Date: 2018-09-15 19:40+0000\n"
+"POT-Creation-Date: 2018-09-16 13:24+0000\n"
+"PO-Revision-Date: 2018-09-16 13:36+0000\n"
 "Last-Translator: admin <sasha.tesh@gmail.com>\n"
 "Language-Team: Русский\n"
 "Language: ru_RU\n"
@@ -86,142 +86,142 @@ msgstr "Dribbble"
 msgid "Yahoo"
 msgstr "Yahoo"
 
-#: includes/AnyCommentRender.php:138
+#: includes/AnyCommentRender.php:146
 msgid "Oops, something went wrong..."
 msgstr "Упс, что-то пошло не так. Попробуйте перезагрузить страницу."
 
-#: includes/AnyCommentRender.php:139
+#: includes/AnyCommentRender.php:147
 msgid "Loading..."
 msgstr "Загрузка..."
 
-#: includes/AnyCommentRender.php:140
+#: includes/AnyCommentRender.php:148
 msgid "Load more"
 msgstr "Загрузить еще"
 
-#: includes/AnyCommentRender.php:141
+#: includes/AnyCommentRender.php:149
 msgid "Send"
 msgstr "Отправить"
 
-#: includes/AnyCommentRender.php:142
+#: includes/AnyCommentRender.php:150
 #: includes/admin/AnyCommentAdminOptions.php:247
 #: includes/admin/AnyCommentGenericSettings.php:793
 #: includes/admin/AnyCommentSocialSettings.php:627
 msgid "Save"
 msgstr "Сохранить"
 
-#: includes/AnyCommentRender.php:143 includes/AnyCommentRender.php:151
+#: includes/AnyCommentRender.php:151 includes/AnyCommentRender.php:159
 msgid "Reply"
 msgstr "Ответить"
 
-#: includes/AnyCommentRender.php:144
+#: includes/AnyCommentRender.php:152
 msgid "Sort By"
 msgstr "Сортировка"
 
-#: includes/AnyCommentRender.php:145
+#: includes/AnyCommentRender.php:153
 msgid "Oldest"
 msgstr "Старые"
 
-#: includes/AnyCommentRender.php:146
+#: includes/AnyCommentRender.php:154
 msgid "Newest"
 msgstr "Новые"
 
-#: includes/AnyCommentRender.php:147
+#: includes/AnyCommentRender.php:155
 msgid "Reply to"
 msgstr "Ответить"
 
-#: includes/AnyCommentRender.php:148
+#: includes/AnyCommentRender.php:156
 msgid "Your comment..."
 msgstr "Ваш комментарий..."
 
-#: includes/AnyCommentRender.php:149
+#: includes/AnyCommentRender.php:157
 msgid "No comments to display"
 msgstr "Пока еще не было комментариев"
 
-#: includes/AnyCommentRender.php:150
+#: includes/AnyCommentRender.php:158
 msgid "Add Anycomment to your site"
 msgstr "Добавить AnyComment на свой сайт"
 
-#: includes/AnyCommentRender.php:152
+#: includes/AnyCommentRender.php:160
 msgid "Edit"
 msgstr "Изменить"
 
-#: includes/AnyCommentRender.php:153
+#: includes/AnyCommentRender.php:161
 #: includes/admin/tables/AnyCommentUploadedFilesTable.php:145
 msgid "Delete"
 msgstr "Удалить"
 
-#: includes/AnyCommentRender.php:154
+#: includes/AnyCommentRender.php:162
 msgid "Cancel"
 msgstr "Отменить"
 
-#: includes/AnyCommentRender.php:155
+#: includes/AnyCommentRender.php:163
 msgid "Quick Login"
 msgstr "Быстрый вход"
 
-#: includes/AnyCommentRender.php:156
+#: includes/AnyCommentRender.php:164
 msgid "Logout"
 msgstr "Выйти"
 
-#: includes/AnyCommentRender.php:157
+#: includes/AnyCommentRender.php:165
 msgid "New comment was added"
 msgstr "Был добавлен новый комментарий"
 
-#: includes/AnyCommentRender.php:158
+#: includes/AnyCommentRender.php:166
 msgid "Author"
 msgstr "Автор"
 
-#: includes/AnyCommentRender.php:159
+#: includes/AnyCommentRender.php:167
 msgid "Name"
 msgstr "Имя"
 
-#: includes/AnyCommentRender.php:160
+#: includes/AnyCommentRender.php:168
 msgid "Email"
 msgstr "Почта"
 
-#: includes/AnyCommentRender.php:161
+#: includes/AnyCommentRender.php:169
 msgid "Website"
 msgstr "Веб-сайт"
 
-#: includes/AnyCommentRender.php:163
+#: includes/AnyCommentRender.php:171
 #, php-format
 msgid "I accept the <a href=\"%s\"%s>User Agreement</a>"
 msgstr "Я даю согласие на обработку <a href=\"%s\"%s>персональных данных</a>"
 
-#: includes/AnyCommentRender.php:167
+#: includes/AnyCommentRender.php:175
 msgid "Upload file"
 msgstr "Загрузить файл"
 
-#: includes/AnyCommentRender.php:168
+#: includes/AnyCommentRender.php:176
 msgid "Uploading..."
 msgstr "Идет загрузка..."
 
-#: includes/AnyCommentRender.php:169
+#: includes/AnyCommentRender.php:177
 msgid "Uploaded!"
 msgstr "Загружено!"
 
-#: includes/AnyCommentRender.php:170
+#: includes/AnyCommentRender.php:178
 #, php-format
 msgid "File %s is too big"
 msgstr "Файл %s слишком большой"
 
-#: includes/AnyCommentRender.php:171
+#: includes/AnyCommentRender.php:179
 #, php-format
 msgid "You may upload %s file(s) at maximum"
 msgstr "Вы можете загрузить максимум %s файл(-ов)"
 
-#: includes/AnyCommentRender.php:172
+#: includes/AnyCommentRender.php:180
 msgid "No file selected or select proper extension"
 msgstr "Не выбраны файлы или не правильное расширение"
 
-#: includes/AnyCommentRender.php:173
+#: includes/AnyCommentRender.php:181
 msgid "Read more"
 msgstr "Читать далее"
 
-#: includes/AnyCommentRender.php:174
+#: includes/AnyCommentRender.php:182
 msgid "Show less"
 msgstr "Показать меньше"
 
-#: includes/AnyCommentRender.php:252
+#: includes/AnyCommentRender.php:260
 #, php-format
 msgid "%s Comments"
 msgstr "%s комментариев"
@@ -242,12 +242,12 @@ msgstr ""
 msgid "Files"
 msgstr "Файлы"
 
-#: includes/admin/AnyCommentIntegrationSettings.php:72
+#: includes/admin/AnyCommentIntegrationSettings.php:136
 #: includes/admin/AnyCommentGenericSettings.php:316
 msgid "Generic"
 msgstr "Общие"
 
-#: includes/admin/AnyCommentIntegrationSettings.php:75
+#: includes/admin/AnyCommentIntegrationSettings.php:139
 msgid ""
 "Integration with other plugin and/or services. Integration options will "
 "automatically appear down below once you install one of the supported "
@@ -256,11 +256,11 @@ msgstr ""
 "Интеграция с другими плагинами и/или сервисами. Опции будут появляться "
 "автоматически после установки поддерживаемых плагинов."
 
-#: includes/admin/AnyCommentIntegrationSettings.php:87
+#: includes/admin/AnyCommentIntegrationSettings.php:151
 msgid "Akismet Anti-Spam"
 msgstr "Akismet Anti-Spam"
 
-#: includes/admin/AnyCommentIntegrationSettings.php:89
+#: includes/admin/AnyCommentIntegrationSettings.php:153
 #, php-format
 msgid ""
 "Filter all new comments through <a href=\"%s\">Akismet Anti-Spam</a> plugin."
@@ -268,17 +268,106 @@ msgstr ""
 "Фильтровать все новые комментарии через <a href=\"%s\">Akismet Anti-Spam</a> "
 "плагин."
 
-#: includes/admin/AnyCommentIntegrationSettings.php:96
+#: includes/admin/AnyCommentIntegrationSettings.php:160
 msgid "WP User Avatar"
 msgstr "WP User Avatar"
 
-#: includes/admin/AnyCommentIntegrationSettings.php:98
+#: includes/admin/AnyCommentIntegrationSettings.php:162
 #, php-format
 msgid ""
 "Use <a href=\"%s\">WP User Avatar</a> for handling avatars in the plugin."
 msgstr ""
 "Использовать <a href=\"%s\">WP User Avatar</a> плагин для отображения "
 "аватарок."
+
+#: includes/admin/AnyCommentIntegrationSettings.php:172
+#: includes/admin/AnyCommentIntegrationSettings.php:174
+msgid "Enable reCAPTCHA"
+msgstr "Включить reCAPTCHA"
+
+#: includes/admin/AnyCommentIntegrationSettings.php:179
+msgid "reCAPTCHA Users"
+msgstr "reCAPTCHA пользователи"
+
+#: includes/admin/AnyCommentIntegrationSettings.php:183
+msgid "For all"
+msgstr "Для всех"
+
+#: includes/admin/AnyCommentIntegrationSettings.php:184
+msgid "For guests only"
+msgstr "Только для гостей"
+
+#: includes/admin/AnyCommentIntegrationSettings.php:185
+msgid "For logged in only"
+msgstr "Только для авторизованных"
+
+#: includes/admin/AnyCommentIntegrationSettings.php:188
+msgid "Users affected by reCAPTCHA"
+msgstr "Пользователи которые будут видеть reCAPTCHA"
+
+#: includes/admin/AnyCommentIntegrationSettings.php:193
+msgid "reCAPTCHA Site Key"
+msgstr "reCAPTCHA ключ"
+
+#: includes/admin/AnyCommentIntegrationSettings.php:195
+#, php-format
+msgid ""
+"reCAPTCHA site key. Can be found <a href=\"%s\">here</a> (register your "
+"website if does not exist)"
+msgstr ""
+"reCAPTCHA ключ. Можно найти <a href=\"%s\">тут</a> (зарегистрируйте ваш сайт,"
+" если его нет в списке)"
+
+#: includes/admin/AnyCommentIntegrationSettings.php:200
+msgid "reCAPTCHA Site Secret"
+msgstr "reCAPTCHA секретный ключ"
+
+#: includes/admin/AnyCommentIntegrationSettings.php:202
+#, php-format
+msgid ""
+"reCAPTCHA site secret. Can be found <a href=\"%s\">here</a> (register your "
+"website if does not exist)"
+msgstr ""
+"reCAPTCHA секретный ключ. Можно найти <a href=\"%s\">тут</a> "
+"(зарегистрируйте ваш сайт, если его нет в списке)"
+
+#: includes/admin/AnyCommentIntegrationSettings.php:207
+msgid "reCAPTCHA Theme"
+msgstr "reCAPTCHA тема"
+
+#: includes/admin/AnyCommentIntegrationSettings.php:211
+#: includes/admin/AnyCommentGenericSettings.php:458
+msgid "Light"
+msgstr "Светлый"
+
+#: includes/admin/AnyCommentIntegrationSettings.php:212
+#: includes/admin/AnyCommentGenericSettings.php:457
+msgid "Dark"
+msgstr "Темный"
+
+#: includes/admin/AnyCommentIntegrationSettings.php:215
+msgid "Theme of reCAPTCHA"
+msgstr "Тема для reCAPTCHA"
+
+#: includes/admin/AnyCommentIntegrationSettings.php:220
+msgid "reCAPTCHA Position"
+msgstr "Расположение reCAPTCHA"
+
+#: includes/admin/AnyCommentIntegrationSettings.php:224
+msgid "Bottom right"
+msgstr "Внизу справа"
+
+#: includes/admin/AnyCommentIntegrationSettings.php:225
+msgid "Bottom left"
+msgstr "Внизу слева"
+
+#: includes/admin/AnyCommentIntegrationSettings.php:226
+msgid "Inline"
+msgstr "В строчку"
+
+#: includes/admin/AnyCommentIntegrationSettings.php:230
+msgid "Position of reCAPTCHA"
+msgstr "Расположение reCAPTCHA"
 
 #: includes/admin/AnyCommentAdminOptions.php:234
 #: includes/admin/AnyCommentGenericSettings.php:768
@@ -440,14 +529,6 @@ msgstr ""
 #: includes/admin/AnyCommentGenericSettings.php:453
 msgid "Theme"
 msgstr "Тема"
-
-#: includes/admin/AnyCommentGenericSettings.php:457
-msgid "Dark"
-msgstr "Темный"
-
-#: includes/admin/AnyCommentGenericSettings.php:458
-msgid "Light"
-msgstr "Светлый"
 
 #: includes/admin/AnyCommentGenericSettings.php:461
 msgid "Choose comments theme."
@@ -1276,7 +1357,7 @@ msgstr "Ошибка, отсутствуют файлы для загрузки.
 #: includes/rest/AnyCommentRestLikes.php:37
 #: includes/rest/AnyCommentRestComment.php:70
 #: includes/rest/AnyCommentRestComment.php:98
-#: includes/rest/AnyCommentRestComment.php:1082
+#: includes/rest/AnyCommentRestComment.php:1086
 msgid "Unique identifier for the object."
 msgstr ""
 
@@ -1332,7 +1413,7 @@ msgid "Invalid comment ID."
 msgstr "Неправильный ID комментария."
 
 #: includes/rest/AnyCommentRestComment.php:380
-#: includes/rest/AnyCommentRestComment.php:709
+#: includes/rest/AnyCommentRestComment.php:713
 msgid "Invalid post ID."
 msgstr "Неправильный ID записи."
 
@@ -1373,226 +1454,230 @@ msgstr "Извини, но комментарии закрыты."
 msgid "Cannot create existing comment."
 msgstr "Невозможно создать существующий комментарий."
 
-#: includes/rest/AnyCommentRestComment.php:549
+#: includes/rest/AnyCommentRestComment.php:533
+msgid "Captcha is incorrect. Please try again."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:553
 msgid "Comment cannot be empty."
 msgstr "Комментарий не может быть пустым."
 
-#: includes/rest/AnyCommentRestComment.php:558
+#: includes/rest/AnyCommentRestComment.php:562
 msgid "Please use any of the available social networks to leave a comment"
 msgstr ""
 "Пожалуйста используйте любую из предложенных социальный сетей, чтобы "
 "оставить комментарий"
 
-#: includes/rest/AnyCommentRestComment.php:572
+#: includes/rest/AnyCommentRestComment.php:576
 msgid "Name is required."
 msgstr "Имя должно быть заполнено."
 
-#: includes/rest/AnyCommentRestComment.php:576
+#: includes/rest/AnyCommentRestComment.php:580
 msgid "Email field is required."
 msgstr "Почта должна быть заполнена."
 
-#: includes/rest/AnyCommentRestComment.php:580
+#: includes/rest/AnyCommentRestComment.php:584
 msgid "Provide valid email address."
 msgstr "Укажите правильный формат почты."
 
-#: includes/rest/AnyCommentRestComment.php:600
-#: includes/rest/AnyCommentRestComment.php:735
+#: includes/rest/AnyCommentRestComment.php:604
+#: includes/rest/AnyCommentRestComment.php:739
 msgid "Comment field exceeds maximum length allowed."
 msgstr "Слишком длинный комментарий."
 
-#: includes/rest/AnyCommentRestComment.php:606
+#: includes/rest/AnyCommentRestComment.php:610
 msgid "Creating comment failed."
 msgstr "Ошибка добавления комментария."
 
-#: includes/rest/AnyCommentRestComment.php:671
+#: includes/rest/AnyCommentRestComment.php:675
 msgid "Sorry, you are not allowed to edit this comment."
 msgstr "Вы не можете изменять этот комментарий."
 
-#: includes/rest/AnyCommentRestComment.php:697
+#: includes/rest/AnyCommentRestComment.php:701
 msgid "Sorry, you are not allowed to change the comment type."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:718
+#: includes/rest/AnyCommentRestComment.php:722
 msgid "Updating comment status failed."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:726
+#: includes/rest/AnyCommentRestComment.php:730
 msgid "Invalid comment content."
 msgstr "Неправильный текст комментария."
 
-#: includes/rest/AnyCommentRestComment.php:741
+#: includes/rest/AnyCommentRestComment.php:745
 msgid "Updating comment failed."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:795
+#: includes/rest/AnyCommentRestComment.php:799
 msgid "Sorry, you are not allowed to delete this comment."
 msgstr "Извините, но вы не можете удалить этот комментарий."
 
 #. %s: force=true
-#: includes/rest/AnyCommentRestComment.php:833
+#: includes/rest/AnyCommentRestComment.php:837
 #, php-format
 msgid "The comment does not support trashing. Set '%s' to delete."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:837
+#: includes/rest/AnyCommentRestComment.php:841
 msgid "The comment has already been trashed."
 msgstr "Комментарий уже был удален."
 
-#: includes/rest/AnyCommentRestComment.php:846
+#: includes/rest/AnyCommentRestComment.php:850
 msgid "The comment cannot be deleted."
 msgstr "Комментарий не может быть удален."
 
-#: includes/rest/AnyCommentRestComment.php:1037
+#: includes/rest/AnyCommentRestComment.php:1041
 msgid "Invalid comment author ID."
 msgstr "Неправильный ID автора."
 
-#: includes/rest/AnyCommentRestComment.php:1088
+#: includes/rest/AnyCommentRestComment.php:1092
 msgid "The ID of the user object, if author was a user."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1093
+#: includes/rest/AnyCommentRestComment.php:1097
 msgid "Email address for the object author."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1099
+#: includes/rest/AnyCommentRestComment.php:1103
 msgid "IP address for the object author."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1105
+#: includes/rest/AnyCommentRestComment.php:1109
 msgid "Display name for the object author."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1113
+#: includes/rest/AnyCommentRestComment.php:1117
 msgid "URL for the object author."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1119
+#: includes/rest/AnyCommentRestComment.php:1123
 msgid "User agent for the object author."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1127
+#: includes/rest/AnyCommentRestComment.php:1131
 msgid "The content for the object."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1138
+#: includes/rest/AnyCommentRestComment.php:1142
 msgid "Content for the object, as it exists in the database."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1143
+#: includes/rest/AnyCommentRestComment.php:1147
 msgid "HTML content for the object, transformed for display."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1151
+#: includes/rest/AnyCommentRestComment.php:1155
 msgid "The date the object was published, in the site's timezone."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1157
+#: includes/rest/AnyCommentRestComment.php:1161
 msgid "The date the object was published, as GMT."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1163
+#: includes/rest/AnyCommentRestComment.php:1167
 msgid "URL to the object."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1170
+#: includes/rest/AnyCommentRestComment.php:1174
 msgid "The ID for the parent of the object."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1176
+#: includes/rest/AnyCommentRestComment.php:1180
 msgid "The ID of the associated post object."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1182
+#: includes/rest/AnyCommentRestComment.php:1186
 msgid "State of the object."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1190
+#: includes/rest/AnyCommentRestComment.php:1194
 msgid "Type of Comment for the object."
 msgstr ""
 
 #. %d: avatar image size in pixels
-#: includes/rest/AnyCommentRestComment.php:1205
+#: includes/rest/AnyCommentRestComment.php:1209
 #, php-format
 msgid "Avatar URL with image size of %d pixels."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1213
+#: includes/rest/AnyCommentRestComment.php:1217
 msgid "Avatar URLs for the object author."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1239
+#: includes/rest/AnyCommentRestComment.php:1243
 msgid ""
 "Limit response to comments published after a given ISO8601 compliant date."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1245
+#: includes/rest/AnyCommentRestComment.php:1249
 msgid ""
 "Limit result set to comments assigned to specific user IDs. Requires "
 "authorization."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1253
+#: includes/rest/AnyCommentRestComment.php:1257
 msgid ""
 "Ensure result set excludes comments assigned to specific user IDs. Requires "
 "authorization."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1262
+#: includes/rest/AnyCommentRestComment.php:1266
 msgid ""
 "Limit result set to that from a specific author email. Requires "
 "authorization."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1268
+#: includes/rest/AnyCommentRestComment.php:1272
 msgid ""
 "Limit response to comments published before a given ISO8601 compliant date."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1274
+#: includes/rest/AnyCommentRestComment.php:1278
 msgid "Ensure result set excludes specific IDs."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1283
+#: includes/rest/AnyCommentRestComment.php:1287
 msgid "Limit result set to specific IDs."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1292
+#: includes/rest/AnyCommentRestComment.php:1296
 msgid "Offset the result set by a specific number of items."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1297
+#: includes/rest/AnyCommentRestComment.php:1301
 msgid "Order sort attribute ascending or descending."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1307
+#: includes/rest/AnyCommentRestComment.php:1311
 msgid "Sort collection by object attribute."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1323
+#: includes/rest/AnyCommentRestComment.php:1327
 msgid "Limit result set to comments of specific parent IDs."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1332
+#: includes/rest/AnyCommentRestComment.php:1336
 msgid "Ensure result set excludes specific parent IDs."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1341
+#: includes/rest/AnyCommentRestComment.php:1345
 msgid "Limit result set to comments assigned to specific post IDs."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1350
+#: includes/rest/AnyCommentRestComment.php:1354
 msgid ""
 "Limit result set to comments assigned a specific status. Requires "
 "authorization."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1358
+#: includes/rest/AnyCommentRestComment.php:1362
 msgid ""
 "Limit result set to comments assigned a specific type. Requires "
 "authorization."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1365
+#: includes/rest/AnyCommentRestComment.php:1369
 msgid "The password for the post if it is password protected."
 msgstr ""
 

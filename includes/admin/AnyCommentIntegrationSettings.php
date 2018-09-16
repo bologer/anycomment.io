@@ -169,14 +169,14 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 
 			$integrations[] = [
 				'id'          => self::OPTION_RECAPTCHA_TOGGLE,
-				'title'       => __( 'reCaptcha', "anycomment" ),
+				'title'       => __( 'Enable reCAPTCHA', "anycomment" ),
 				'callback'    => 'input_checkbox',
-				'description' => __( 'Enable reCaptcha', "anycomment" )
+				'description' => __( 'Enable reCAPTCHA', "anycomment" )
 			];
 
 			$integrations[] = [
 				'id'          => self::OPTION_RECAPTCHA_USER,
-				'title'       => __( 'reCaptcha Users', "anycomment" ),
+				'title'       => __( 'reCAPTCHA Users', "anycomment" ),
 				'callback'    => 'input_select',
 				'args'        => [
 					'options' => [
@@ -185,26 +185,26 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 						self::OPTION_RECAPTCHA_USER_AUTH  => __( 'For logged in only', 'anycomment' ),
 					]
 				],
-				'description' => __( 'Users affected by reCaptcha', "anycomment" )
+				'description' => __( 'Users affected by reCAPTCHA', "anycomment" )
 			];
 
 			$integrations[] = [
 				'id'          => self::OPTION_RECAPTCHA_SITE_KEY,
-				'title'       => __( 'reCaptcha Site Key', "anycomment" ),
+				'title'       => __( 'reCAPTCHA Site Key', "anycomment" ),
 				'callback'    => 'input_text',
-				'description' => sprintf( __( 'reCaptcha site key. Can be found <a href="%s">here</a> (register your website if does not exist)', "anycomment" ), "http://www.google.com/recaptcha/admin" )
+				'description' => sprintf( __( 'reCAPTCHA site key. Can be found <a href="%s">here</a> (register your website if does not exist)', "anycomment" ), "http://www.google.com/recaptcha/admin" )
 			];
 
 			$integrations[] = [
 				'id'          => self::OPTION_RECAPTCHA_SITE_SECRET,
-				'title'       => __( 'reCaptcha Site Secret', "anycomment" ),
+				'title'       => __( 'reCAPTCHA Site Secret', "anycomment" ),
 				'callback'    => 'input_text',
-				'description' => sprintf( __( 'reCaptcha site secret. Can be found <a href="%s">here</a> (register your website if does not exist)', "anycomment" ), "http://www.google.com/recaptcha/admin" )
+				'description' => sprintf( __( 'reCAPTCHA site secret. Can be found <a href="%s">here</a> (register your website if does not exist)', "anycomment" ), "http://www.google.com/recaptcha/admin" )
 			];
 
 			$integrations[] = [
 				'id'          => self::OPTION_RECAPTCHA_THEME,
-				'title'       => __( 'reCaptcha Theme', "anycomment" ),
+				'title'       => __( 'reCAPTCHA Theme', "anycomment" ),
 				'callback'    => 'input_select',
 				'args'        => [
 					'options' => [
@@ -212,12 +212,12 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 						self::OPTION_RECAPTCHA_THEME_DARK  => __( 'Dark', 'anycomment' ),
 					]
 				],
-				'description' => __( 'Theme of reCaptcha', "anycomment" )
+				'description' => __( 'Theme of reCAPTCHA', "anycomment" )
 			];
 
 			$integrations[] = [
 				'id'          => self::OPTION_RECAPTCHA_BADGE,
-				'title'       => __( 'reCaptcha Position', "anycomment" ),
+				'title'       => __( 'reCAPTCHA Position', "anycomment" ),
 				'callback'    => 'input_select',
 				'args'        => [
 					'options' => [
@@ -227,7 +227,7 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 					]
 
 				],
-				'description' => __( 'Position of reCaptcha', "anycomment" )
+				'description' => __( 'Position of reCAPTCHA', "anycomment" )
 			];
 
 
@@ -260,7 +260,7 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 		}
 
 		/**
-		 * Check whether reCaptcha is enabled or not.
+		 * Check whether reCAPTCHA is enabled or not.
 		 *
 		 * @since 0.0.56
 		 * @return bool
@@ -270,7 +270,7 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 		}
 
 		/**
-		 * Check whether reCaptcha should be shown to all users.
+		 * Check whether reCAPTCHA should be shown to all users.
 		 *
 		 * @since 0.0.56
 		 * @return bool
@@ -280,7 +280,7 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 		}
 
 		/**
-		 * Check whether reCaptcha should be shown to guest users only.
+		 * Check whether reCAPTCHA should be shown to guest users only.
 		 *
 		 * @since 0.0.56
 		 * @return bool
@@ -290,7 +290,7 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 		}
 
 		/**
-		 * Check whether reCaptcha should be shown to logged in users only.
+		 * Check whether reCAPTCHA should be shown to logged in users only.
 		 *
 		 * @since 0.0.56
 		 * @return bool
@@ -300,7 +300,7 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 		}
 
 		/**
-		 * Get reCaptcha user (for whom it will be shown).
+		 * Get reCAPTCHA user (for whom it will be shown).
 		 *
 		 * @since 0.0.56
 		 * @return string|null
@@ -318,7 +318,7 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 		}
 
 		/**
-		 * Get reCaptcha site key.
+		 * Get reCAPTCHA site key.
 		 *
 		 * @since 0.0.56
 		 * @return string|null
@@ -328,7 +328,7 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 		}
 
 		/**
-		 * Get reCaptcha site secret.
+		 * Get reCAPTCHA site secret.
 		 *
 		 * @since 0.0.56
 		 * @return string|null
@@ -338,7 +338,7 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 		}
 
 		/**
-		 * Get reCaptcha theme.
+		 * Get reCAPTCHA theme.
 		 *
 		 * @since 0.0.56
 		 * @return string|null
@@ -354,7 +354,7 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 		}
 
 		/**
-		 * Get reCaptcha badge (location of invisible captcha).
+		 * Get reCAPTCHA badge (location of invisible captcha).
 		 *
 		 * @since 0.0.56
 		 * @return string|null

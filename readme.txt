@@ -8,41 +8,35 @@ Stable tag: 0.0.56
 License: GPLv2 or later
 License URI: http://www.gnu.org/
 
-AnyComment allows you to have a better commenting experience in WordPress.
+AnyComment is blazing-fast commenting plugin for WordPress.
 
 == Description ==
 
-AnyComment allows you to have a better commenting experience in WordPress.
+AnyComment is blazing-fast commenting plugin for WordPress.
 
-It stands for simplicity & speed. We value feedback, so if you have failures or suggestions - please let us know on [support forum](https://wordpress.org/support/plugin/anycomment) or [GitHub](https://github.com/bologer/anycomment.io/issues) about it!
+It stands for simplicity & speed. We value feedback, so if you have any failures or suggestions - please let us know in [support forum](https://wordpress.org/support/plugin/anycomment) or [GitHub](https://github.com/bologer/anycomment.io/issues)!
 
-* [See demo](https://anycomment.io/demo/)
+= Resources =
+* [Official Website](http://anycomment.io/en/)
+* [All Guides](https://anycomment.io/en/category/tutorials/)
+* [Configure Socials](https://anycomment.io/en/category/tutorials/socials/)
+* [GitHub repository](https://github.com/bologer/anycomment.io)
+* [VK.com Group](http://vk.com/anycomment)
+* [Telegram Group](https://t.me/joinchat/BEUJEQ9aMmQsFX65MNRCDg)
+
+= Demo =
+Feel free to use [this demo page](https://anycomment.io/demo/). Every time new version is released, demo plugin will be updated as well, so you always see the latest version.
+
+= Get Started =
 
 In order to start, you need:
 
-* install plugin
-* choose social networks you prefer
-* configure API keys (we have guides translated in English & Russian to help you)
-* you are good to go!
+* Install plugin
+* Choose social networks you prefer
+* Configure social networks you need (we have guides English & Russian to help you with this)
+* You are good to go!
 
 And good new is AnyComment is free & no dependency on third party services, all comments stored in your database.
-
-Here is the list of supported social networks:
-
-* Facebook
-* Google
-* Twitter
-* VK
-* Odnoklassniki
-* GitHub
-* Instagram
-* Twitch
-* Dribbble
-* and more to be added
-
-= Can I contribute? =
-
-Yes! Join us at [GitHub](https://github.com/bologer/anycomment.io)
 
 = Features =
 * All comments stored in your own database. We reuse native comment's table, so all of the default WordPress functionality comes out of the box.
@@ -68,7 +62,12 @@ Yes! Join us at [GitHub](https://github.com/bologer/anycomment.io)
 * Simple & informative dashboard with graphs to display number of comments over number of users who were engaged in the conversation per certain period & most active users
 * Comments do no inherit any of the currently active theme styles. Meaning that comments will not be broken by styles you have
 * Get latest plugin update news directly in the dashboard, don't miss a thing
-* Integration with [Akismet](https://wordpress.org/plugins/akismet/), [WP Mail SMTP](https://wordpress.org/plugins/wp-mail-smtp/) and [WP User Avatar](https://wordpress.org/plugins/wp-user-avatar/), to specify customized avatars
+
+= Integrations =
+* [Akismet](https://wordpress.org/plugins/akismet/) to fight spam messages
+* [WP Mail SMTP](https://wordpress.org/plugins/wp-mail-smtp/) to set-up SMTP server
+* [WP User Avatar](https://wordpress.org/plugins/wp-user-avatar/) to upload global or personal avatar
+* [reCAPTCHA](https://www.google.com/recaptcha) to fight spam messages
 
 = TODO features =
 * Option: ability to specify thanks message and/or page when user left his first comment, #88
@@ -89,7 +88,6 @@ Yes! Join us at [GitHub](https://github.com/bologer/anycomment.io)
 * Markdown support
 * Add more guides on how to set-up certain services, Google SMTP, Amazon SES, etc
 * Cross sharing of comments, when user posts a comment, duplicate it on their wall
-* Integration of: Google's reCaptcha
 * Add Yahoo as authorization option
 * More widgets to be added on the page (sidebar, custom pages, etc)
 * Special moderator panel integrated into custom AnyComment pages (for easy comment moderation)
@@ -106,13 +104,31 @@ Yes! Join us at [GitHub](https://github.com/bologer/anycomment.io)
 
 == Frequently Asked Questions ==
 
-= Installation & Instructions =
+= Installation Instructions =
 
 * Install via WordPress admin panel directly (or [download plugin](https://downloads.wordpress.org/plugin/anycomment.zip) and upload into the `/wp-content/plugins/` directory)
 * Activate it from `Plugins` section in admin panel
 * Go to preferred social media and register to get API access (API key, secrets, etc)
 * Specify required API details in special social network settings
 * Go to some post and try to authorize using any of the enabled social networks and leave a comment!
+
+= What social networks does AnyComment support? =
+
+So far we support the following:
+
+* Facebook
+* Google
+* Twitter
+* VK
+* Odnoklassniki
+* GitHub
+* Instagram
+* Twitch
+* Dribbble
+
+= Can I contribute? =
+
+Yes you can! Join in on our [GitHub repository](https://github.com/bologer/anycomment.io)
 
 = Comment form does not load or gives an error? =
 
@@ -123,22 +139,17 @@ Please confirm two things:
 1. You WordPress is 4.7 or higher (this is when WordPress introduced REST API)
 2. Going to `http://yourdomain.com/wp-json/` SHOULD NOT redirected to `http://yourdomain.com` or it give 404 Not Found page
 
-For the first step - just upgrade WordPress, it is good.
+For the first step - just upgrade WordPress, it is good idea anyways.
 
-For the second, check for plugins which make optimization of website. Most of them remove REST API.
+For the second, check for plugins which make "optimization" of website. Most of them disable REST API.
 
 For example, [Clearfy](https://wordpress.org/plugins/clearfy/) has option "Disable Rest API". Having this option "On" will fail to load comments in AnyComment.
 
-Not yet working? Please follow the steps:
+Not yet working?
 
-* Open comments page
-* Open "Developer Console" tab (e.g. press F12 in Firefox or in Chrome). It can named a bit different, depends from browser to browser.
-* Select "Network" tab, inside find "XHR" click on it (name can also vary). If you do not find "XHR" just ignore it
-* Refresh page
-* In the list find request which looks something like the following: `https://yourdomain.com/wp-json/anycomment/v1/comments?post=15&parent=0&per_page=15&order=desc&order_by=id`
-* Click on it, copy its content and take screenshot of it and report in [support forum](https://wordpress.org/support/plugin/anycomment)
+Use one the links mentioned in the description above to contact us, we will be happy to help you!
 
-= Why Do Social Media Ask For Privacy Policy link? =
+= Why Do Socials Ask For Privacy Policy link? =
 
 It is now one of the requirements to have Privacy Policy link on your website due to GDRP regulation.
 
@@ -169,7 +180,8 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Converted sorting dropdown to multi dropdown. Now it has sorting option & logout link. When user is guest, it only has sorting options, #145
 * When user registered via default WordPress form, and the same user is trying to authenticate using via social (using same email), he will see error message that he needs to use regular login form in this case, #143
 * Small cosmetic style changes
-* "Integration" tab now has option to add reCaptcha to comment form (for all, guests or authenticated users only, choose theme, etc) + docs on how to configure it, #146
+* Integration tab now has option to add reCAPTCHA to comment form (for all, guests or authenticated users only, choose theme, etc), #146
+* Added guides in Russian & English on how to set-up reCAPTCHA, #146
 
 **Fixes:**
 
