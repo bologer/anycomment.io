@@ -169,6 +169,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Converted sorting dropdown to multi dropdown. Now it has sorting option & logout link. When user is guest, it only has sorting options, #145
 * When user registered via default WordPress form, and the same user is trying to authenticate using via social (using same email), he will see error message that he needs to use regular login form in this case, #143
 * Small cosmetic style changes
+* "Integration" tab now has option to add reCaptcha to comment form (for all, guests or authenticated users only, choose theme, etc) + docs on how to configure it, #146
 
 **Fixes:**
 

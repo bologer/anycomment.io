@@ -23,6 +23,66 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 		const OPTION_WP_USER_AVATAR = 'option_wp_user_avatar';
 
 		/**
+		 * reCaptcha toggle (on/off).
+		 */
+		const OPTION_RECAPTCHA_TOGGLE = 'option_recaptcha_toggle';
+
+		/**
+		 * reCaptcha user (for whom it will shown).
+		 */
+		const OPTION_RECAPTCHA_USER = 'option_recaptcha_user';
+
+		/**
+		 * reCaptcha shown to all.
+		 */
+		const OPTION_RECAPTCHA_USER_ALL = 'option_recaptcha_user_all';
+
+		/**
+		 * reCaptcha shown to guest users only.
+		 */
+		const OPTION_RECAPTCHA_USER_GUEST = 'option_recaptcha_user_guest';
+
+		/**
+		 * reCaptcha shown to logged in users only.
+		 */
+		const OPTION_RECAPTCHA_USER_AUTH = 'option_recaptcha_user_auth';
+
+		/**
+		 * reCaptcha site key.
+		 */
+		const OPTION_RECAPTCHA_SITE_KEY = 'option_recaptcha_site_key';
+
+		/**
+		 * reCaptcha site secret.
+		 */
+		const OPTION_RECAPTCHA_SITE_SECRET = 'option_recaptcha_secret_key';
+
+		/**
+		 * reCaptcha theme (light or dark).
+		 */
+		const OPTION_RECAPTCHA_THEME = 'option_recaptcha_theme';
+
+		/**
+		 * Light theme option.
+		 */
+		const OPTION_RECAPTCHA_THEME_LIGHT = 'light';
+
+		/**
+		 * Dark theme option.
+		 */
+		const OPTION_RECAPTCHA_THEME_DARK = 'dark';
+
+
+		/**
+		 * reCaptcha theme (bottomright, bottomleft or inline).
+		 */
+		const OPTION_RECAPTCHA_BADGE = 'option_recaptcha_badge';
+
+		const OPTION_RECAPTCHA_BADGE_BOTTOM_RIGHT = 'bottomright';
+		const OPTION_RECAPTCHA_BADGE_BOTTOM_LEFT = 'bottomleft';
+		const OPTION_RECAPTCHA_BADGE_BOTTOM_INLINE = 'inline';
+
+		/**
 		 * @inheritdoc
 		 */
 		protected $option_group = 'anycomment-integration-group';
@@ -39,7 +99,11 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 		/**
 		 * @inheritdoc
 		 */
-		protected $default_options = [];
+		protected $default_options = [
+			self::OPTION_RECAPTCHA_THEME => self::OPTION_RECAPTCHA_THEME_LIGHT,
+			self::OPTION_RECAPTCHA_USER  => self::OPTION_RECAPTCHA_USER_GUEST,
+			self::OPTION_RECAPTCHA_BADGE => self::OPTION_RECAPTCHA_BADGE_BOTTOM_RIGHT,
+		];
 
 
 		/**
@@ -99,6 +163,74 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 				];
 			}
 
+			/**
+			 * reCaptcha
+			 */
+
+			$integrations[] = [
+				'id'          => self::OPTION_RECAPTCHA_TOGGLE,
+				'title'       => __( 'reCaptcha', "anycomment" ),
+				'callback'    => 'input_checkbox',
+				'description' => __( 'Enable reCaptcha', "anycomment" )
+			];
+
+			$integrations[] = [
+				'id'          => self::OPTION_RECAPTCHA_USER,
+				'title'       => __( 'reCaptcha Users', "anycomment" ),
+				'callback'    => 'input_select',
+				'args'        => [
+					'options' => [
+						self::OPTION_RECAPTCHA_USER_ALL   => __( 'For all', 'anycomment' ),
+						self::OPTION_RECAPTCHA_USER_GUEST => __( 'For guests only', 'anycomment' ),
+						self::OPTION_RECAPTCHA_USER_AUTH  => __( 'For logged in only', 'anycomment' ),
+					]
+				],
+				'description' => __( 'Users affected by reCaptcha', "anycomment" )
+			];
+
+			$integrations[] = [
+				'id'          => self::OPTION_RECAPTCHA_SITE_KEY,
+				'title'       => __( 'reCaptcha Site Key', "anycomment" ),
+				'callback'    => 'input_text',
+				'description' => sprintf( __( 'reCaptcha site key. Can be found <a href="%s">here</a> (register your website if does not exist)', "anycomment" ), "http://www.google.com/recaptcha/admin" )
+			];
+
+			$integrations[] = [
+				'id'          => self::OPTION_RECAPTCHA_SITE_SECRET,
+				'title'       => __( 'reCaptcha Site Secret', "anycomment" ),
+				'callback'    => 'input_text',
+				'description' => sprintf( __( 'reCaptcha site secret. Can be found <a href="%s">here</a> (register your website if does not exist)', "anycomment" ), "http://www.google.com/recaptcha/admin" )
+			];
+
+			$integrations[] = [
+				'id'          => self::OPTION_RECAPTCHA_THEME,
+				'title'       => __( 'reCaptcha Theme', "anycomment" ),
+				'callback'    => 'input_select',
+				'args'        => [
+					'options' => [
+						self::OPTION_RECAPTCHA_THEME_LIGHT => __( 'Light', 'anycomment' ),
+						self::OPTION_RECAPTCHA_THEME_DARK  => __( 'Dark', 'anycomment' ),
+					]
+				],
+				'description' => __( 'Theme of reCaptcha', "anycomment" )
+			];
+
+			$integrations[] = [
+				'id'          => self::OPTION_RECAPTCHA_BADGE,
+				'title'       => __( 'reCaptcha Position', "anycomment" ),
+				'callback'    => 'input_select',
+				'args'        => [
+					'options' => [
+						self::OPTION_RECAPTCHA_BADGE_BOTTOM_RIGHT  => __( 'Bottom right', 'anycomment' ),
+						self::OPTION_RECAPTCHA_BADGE_BOTTOM_LEFT   => __( 'Bottom left', 'anycomment' ),
+						self::OPTION_RECAPTCHA_BADGE_BOTTOM_INLINE => __( 'Inline', 'anycomment' ),
+					]
+
+				],
+				'description' => __( 'Position of reCaptcha', "anycomment" )
+			];
+
+
 			$this->render_fields(
 				$this->page_slug,
 				'section_integration',
@@ -120,11 +252,124 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 		/**
 		 * Check whether WP User Avatar is enabled or not.
 		 *
-         * @since 0.0.3
+		 * @since 0.0.3
 		 * @return bool
 		 */
 		public static function isWPUserAvatarOn() {
 			return static::instance()->getOption( self::OPTION_WP_USER_AVATAR ) !== null;
+		}
+
+		/**
+		 * Check whether reCaptcha is enabled or not.
+		 *
+		 * @since 0.0.56
+		 * @return bool
+		 */
+		public static function isRecaptchaOn() {
+			return static::instance()->getOption( self::OPTION_RECAPTCHA_TOGGLE ) !== null;
+		}
+
+		/**
+		 * Check whether reCaptcha should be shown to all users.
+		 *
+		 * @since 0.0.56
+		 * @return bool
+		 */
+		public static function isRecaptchaUserAll() {
+			return static::getRecaptchaUser() === self::OPTION_RECAPTCHA_USER_ALL;
+		}
+
+		/**
+		 * Check whether reCaptcha should be shown to guest users only.
+		 *
+		 * @since 0.0.56
+		 * @return bool
+		 */
+		public static function isRecaptchaUserGuest() {
+			return static::getRecaptchaUser() === self::OPTION_RECAPTCHA_USER_GUEST;
+		}
+
+		/**
+		 * Check whether reCaptcha should be shown to logged in users only.
+		 *
+		 * @since 0.0.56
+		 * @return bool
+		 */
+		public static function isRecaptchaUserAuth() {
+			return static::getRecaptchaUser() === self::OPTION_RECAPTCHA_USER_AUTH;
+		}
+
+		/**
+		 * Get reCaptcha user (for whom it will be shown).
+		 *
+		 * @since 0.0.56
+		 * @return string|null
+		 */
+		public static function getRecaptchaUser() {
+			$user = static::instance()->getOption( self::OPTION_RECAPTCHA_USER );
+
+			if ( $user !== self::OPTION_RECAPTCHA_USER_ALL &&
+			     $user !== self::OPTION_RECAPTCHA_USER_AUTH &&
+			     $user !== self::OPTION_RECAPTCHA_USER_GUEST ) {
+				return self::OPTION_RECAPTCHA_USER_GUEST;
+			}
+
+			return $user;
+		}
+
+		/**
+		 * Get reCaptcha site key.
+		 *
+		 * @since 0.0.56
+		 * @return string|null
+		 */
+		public static function getRecaptchaSiteKey() {
+			return static::instance()->getOption( self::OPTION_RECAPTCHA_SITE_KEY );
+		}
+
+		/**
+		 * Get reCaptcha site secret.
+		 *
+		 * @since 0.0.56
+		 * @return string|null
+		 */
+		public static function getRecaptchaSiteSecret() {
+			return static::instance()->getOption( self::OPTION_RECAPTCHA_SITE_SECRET );
+		}
+
+		/**
+		 * Get reCaptcha theme.
+		 *
+		 * @since 0.0.56
+		 * @return string|null
+		 */
+		public static function getRecaptchaTheme() {
+			$theme = static::instance()->getOption( self::OPTION_RECAPTCHA_THEME );
+
+			if ( $theme !== self::OPTION_RECAPTCHA_THEME_LIGHT && $theme !== self::OPTION_RECAPTCHA_THEME_DARK ) {
+				return self::OPTION_RECAPTCHA_THEME_LIGHT;
+			}
+
+			return $theme;
+		}
+
+		/**
+		 * Get reCaptcha badge (location of invisible captcha).
+		 *
+		 * @since 0.0.56
+		 * @return string|null
+		 */
+		public static function getRecaptchaBadge() {
+			$badge = static::instance()->getOption( self::OPTION_RECAPTCHA_BADGE );
+
+
+			if ( $badge !== self::OPTION_RECAPTCHA_BADGE_BOTTOM_RIGHT &&
+			     $badge !== self::OPTION_RECAPTCHA_BADGE_BOTTOM_LEFT &&
+			     $badge !== self::OPTION_RECAPTCHA_BADGE_BOTTOM_INLINE ) {
+				return self::OPTION_RECAPTCHA_BADGE_BOTTOM_RIGHT;
+			}
+
+			return $badge;
 		}
 	}
 endif;

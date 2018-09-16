@@ -529,6 +529,10 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			return new WP_Error( 'rest_comment_exists', __( 'Cannot create existing comment.', 'anycomment' ), array( 'status' => 400 ) );
 		}
 
+		if ( AnyCommentIntegrationSettings::isRecaptchaOn() && ! $this->check_recaptcha( $request['captcha'] ) ) {
+			return new WP_Error( 'invalid_captcha', __( 'Captcha is incorrect. Please try again.', 'anycomment' ), [ 'status' => 400 ] );
+		}
+
 		if ( ! isset( $request['type'] ) ) {
 			$request['type'] = 'comment';
 		}
@@ -1577,5 +1581,39 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		}
 
 		return $email;
+	}
+
+	/**
+	 * Check whether provided reCaptcha token is valid.
+	 *
+	 * @param $token
+	 *
+	 * @return bool
+	 */
+	public function check_recaptcha( $token ) {
+		$response = wp_remote_post( 'https://www.google.com/recaptcha/api/siteverify', [
+			'body' => [
+				'secret'   => AnyCommentIntegrationSettings::getRecaptchaSiteSecret(),
+				'response' => $token,
+				'remoteip' => isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : ''
+			]
+		] );
+
+		if ( is_wp_error( $response ) ) {
+			return false;
+		}
+
+		if ( isset( $response['response']['code'] ) && (int) $response['response']['code'] !== 200 ) {
+			return false;
+		}
+
+		$body = json_decode( $response['body'], true );
+
+		if ( isset( $body['success'] ) && (bool) $body['success'] ) {
+			return true;
+		}
+
+
+		return new WP_Error();
 	}
 }

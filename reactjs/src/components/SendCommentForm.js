@@ -2,6 +2,11 @@ import React from 'react';
 import SendCommentGuest from './SendCommentGuest';
 import SendCommentFormBody from './SendCommentFormBody';
 import AnyCommentComponent from "./AnyCommentComponent";
+import ReCAPTCHA from "react-google-recaptcha";
+import {toast} from 'react-toastify';
+
+
+const recapchaRef = React.createRef();
 
 /**
  * Class SendCommentForm is used process comment before it will be sent.
@@ -11,8 +16,13 @@ class SendCommentForm extends AnyCommentComponent {
     constructor(props) {
         super(props);
 
+        const options = this.getOptions();
+
         this.state = {
-            isAgreementAccepted: true
+            isAgreementAccepted: true,
+            reCaptchaSiteKey: options.reCaptchaSiteKey,
+            reCaptchaTheme: options.reCaptchaTheme,
+            reCaptchaBadge: options.reCaptchaBadge,
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -83,6 +93,14 @@ class SendCommentForm extends AnyCommentComponent {
             params.parent = this.props.replyId;
         }
 
+        if (this.isCaptchaOn()) {
+            params.captcha = recapchaRef.current.getValue();
+
+            if (!params.captcha) {
+                return false;
+            }
+        }
+
         this.props.axios
             .request({
                 method: 'post',
@@ -92,10 +110,12 @@ class SendCommentForm extends AnyCommentComponent {
             })
             .then(function (response) {
                 self.props.onSend(response.data);
+
                 return true;
             })
             .catch(function (error) {
                 self.showError(error);
+
             });
 
         return false;
@@ -143,8 +163,17 @@ class SendCommentForm extends AnyCommentComponent {
         }
 
         if (!this.props.editId) {
+
             params.post = settings.postId;
             params.parent = this.props.replyId;
+        }
+
+        if (this.isCaptchaOn()) {
+            params.captcha = recapchaRef.current.getValue();
+
+            if (!params.captcha) {
+                return false;
+            }
         }
 
         this.props.axios
@@ -156,10 +185,12 @@ class SendCommentForm extends AnyCommentComponent {
             })
             .then(function (response) {
                 self.props.onSend(response.data);
+
                 return true;
             })
             .catch(function (error) {
                 self.showError(error);
+
             });
 
         return false;
@@ -173,6 +204,10 @@ class SendCommentForm extends AnyCommentComponent {
     handleSubmit(event) {
         event.preventDefault();
 
+        if (this.isCaptchaOn()) {
+            recapchaRef.current.execute();
+        }
+
         if (!this.isGuest()) {
             return this.handleAuthorized(event);
         }
@@ -180,9 +215,46 @@ class SendCommentForm extends AnyCommentComponent {
         return this.handleGuest(event);
     };
 
+    /**
+     * Check whether it is required to show captcha or not.
+     *
+     * @returns {*|boolean}
+     */
+    isCaptchaOn() {
+        const options = this.getOptions();
+
+        return options.reCaptchaOn && (options.reCaptchaUserAll || (this.isGuest() && options.reCaptchaUserGuest) || (!this.isGuest() && options.reCaptchaUserAuth));
+    }
+
+    /**
+     * On captcha change. When token received from client.
+     *
+     * @param value
+     */
+    onCaptchaChange(value) {
+    }
+
+    onCaptchaError(error) {
+        toast.error(error);
+    }
+
     render() {
         const settings = this.getSettings();
         const translations = settings.i18;
+
+        let reCaptcha = '';
+
+        if (this.isCaptchaOn()) {
+            reCaptcha = <ReCAPTCHA
+                ref={recapchaRef}
+                theme={this.state.reCaptchaTheme}
+                sitekey={this.state.reCaptchaSiteKey}
+                badge={this.state.reCaptchaBadge}
+                onErrored={this.onCaptchaError}
+                onChange={this.onCaptchaChange}
+                size="invisible"
+            />;
+        }
 
         return (
             <div className="anycomment anycomment-send-comment-body">
@@ -215,6 +287,8 @@ class SendCommentForm extends AnyCommentComponent {
 
                     {!this.isGuest() ? <input type="hidden" name="edit_id" value={this.props.editId}
                                               onChange={this.handleEditIdChange}/> : ''}
+
+                    {reCaptcha}
                 </form>
 
                 <div className="clearfix"></div>
