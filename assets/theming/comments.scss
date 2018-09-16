@@ -477,6 +477,16 @@
               @include border-radius($btn-radius);
             }
 
+            &-reply {
+              margin-left: 5px;
+              display: inline-block;
+
+              &, a {
+                color: $semi-hidden-color;
+                font-size: $font-size - 5px;
+              }
+            }
+
             &-replied,
             &-parent-author {
               color: $link-color;
@@ -656,13 +666,10 @@
           }
         }
       }
-
     }
 
     // Child comments
     &-child {
-      margin-left: $comment-parent-space;
-
       .comment-single {
         &-avatar {
           &,
@@ -679,8 +686,6 @@
         }
 
         &-body {
-          padding-left: $comment-child-space;
-
           .comment-attachments {
             li {
               .comment-attachment {
@@ -698,6 +703,39 @@
     // Load more
     .comment-single-load-more {
       text-align: center;
+    }
+  }
+
+  &-inner > .anycomment-list {
+
+    & > li {
+      & > .comment-single-replies {
+        // Second level
+        & > .anycomment-list-child {
+          margin-left: $comment-parent-space;
+
+          & > .comment-single {
+            &-body {
+              padding-left: $comment-child-space;
+            }
+          }
+
+          // Third level
+          & > li {
+            & > .comment-single-replies {
+              & > .anycomment-list-child {
+                margin-left: $comment-parent-space;
+
+                & > .comment-single {
+                  &-body {
+                    padding-left: $comment-child-space;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 

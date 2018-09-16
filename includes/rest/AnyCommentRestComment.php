@@ -529,7 +529,15 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			return new WP_Error( 'rest_comment_exists', __( 'Cannot create existing comment.', 'anycomment' ), array( 'status' => 400 ) );
 		}
 
-		if ( AnyCommentIntegrationSettings::isRecaptchaOn() && ! $this->check_recaptcha( $request['captcha'] ) ) {
+		//options.reCaptchaOn && (options.reCaptchaUserAll || (this.isGuest() && options.reCaptchaUserGuest) || (!this.isGuest() && options.reCaptchaUserAuth))
+
+		$checkCaptcha = AnyCommentIntegrationSettings::isRecaptchaOn() && (
+				( AnyCommentIntegrationSettings::isRecaptchaUserAll() ) ||
+				( ! is_user_logged_in() && AnyCommentIntegrationSettings::isRecaptchaUserGuest() ) ||
+				( is_user_logged_in() && AnyCommentIntegrationSettings::isRecaptchaUserAuth() )
+			);
+
+		if ( $checkCaptcha && ! $this->check_recaptcha( $request['captcha'] ) ) {
 			return new WP_Error( 'invalid_captcha', __( 'Captcha is incorrect. Please try again.', 'anycomment' ), [ 'status' => 400 ] );
 		}
 
@@ -902,21 +910,22 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		];
 
 		$data = array(
-			'id'          => (int) $comment->comment_ID,
-			'post'        => (int) $comment->comment_post_ID,
-			'parent'      => (int) $comment->comment_parent,
-			'author'      => (int) $comment->user_id,
-			'author_name' => $comment->comment_author,
-			'date'        => mysql_to_rfc3339( $comment->comment_date ),
-			'date_gmt'    => mysql_to_rfc3339( $comment->comment_date_gmt ),
-			'content'     => $comment->comment_content,
-			'avatar_url'  => AnyComment()->auth->get_user_avatar_url( (int) $comment->user_id !== 0 ? $comment->user_id : $comment->comment_author_email ),
-			'children'    => $child_comments,
-			'owner'       => $owner,
-			'permissions' => [
+			'id'                 => (int) $comment->comment_ID,
+			'post'               => (int) $comment->comment_post_ID,
+			'parent'             => (int) $comment->comment_parent,
+			'parent_author_name' => (int) $comment->comment_parent !== 0 ? get_comment_author( $comment->comment_parent ) : '',
+			'author'             => (int) $comment->user_id,
+			'author_name'        => $comment->comment_author,
+			'date'               => mysql_to_rfc3339( $comment->comment_date ),
+			'date_gmt'           => mysql_to_rfc3339( $comment->comment_date_gmt ),
+			'content'            => $comment->comment_content,
+			'avatar_url'         => AnyComment()->auth->get_user_avatar_url( (int) $comment->user_id !== 0 ? $comment->user_id : $comment->comment_author_email ),
+			'children'           => $child_comments,
+			'owner'              => $owner,
+			'permissions'        => [
 				'can_edit_comment' => AnyComment()->render->can_edit_comment( $comment ),
 			],
-			'meta'        => [
+			'meta'               => [
 				'has_like'    => AnyCommentLikes::isCurrentUserHasLike( $comment->comment_ID ),
 				'likes_count' => AnyCommentLikes::getLikesCount( $comment->comment_ID ),
 				'count_text'  => AnyComment()->render->get_comment_count( $comment->comment_post_ID )

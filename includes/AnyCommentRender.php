@@ -152,7 +152,7 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 						'sort_by'                        => __( 'Sort By', 'anycomment' ),
 						'sort_oldest'                    => __( 'Oldest', 'anycomment' ),
 						'sort_newest'                    => __( 'Newest', 'anycomment' ),
-						'reply_to'                       => __( 'Reply to', 'anycomment' ),
+						'reply_to'                       => __( 'reply to', 'anycomment' ),
 						'add_comment'                    => __( 'Your comment...', 'anycomment' ),
 						'no_comments'                    => __( 'No comments to display', "anycomment" ),
 						'footer_copyright'               => __( 'Add Anycomment to your site', 'anycomment' ),
