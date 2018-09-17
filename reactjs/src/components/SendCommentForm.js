@@ -204,15 +204,29 @@ class SendCommentForm extends AnyCommentComponent {
     handleSubmit(event) {
         event.preventDefault();
 
+        const self = this;
+
         if (this.isCaptchaOn()) {
             recapchaRef.current.execute();
-        }
 
-        if (!this.isGuest()) {
-            return this.handleAuthorized(event);
-        }
+            var checkValueInterval = setInterval(function () {
+                if (recapchaRef.current.getValue() !== '') {
+                    clearInterval(checkValueInterval);
 
-        return this.handleGuest(event);
+                    if (!self.isGuest()) {
+                        return self.handleAuthorized(event);
+                    }
+
+                    return self.handleGuest(event);
+                }
+            }, 100);
+        } else {
+            if (!this.isGuest()) {
+                return self.handleAuthorized(event);
+            }
+
+            return self.handleGuest(event);
+        }
     };
 
     /**
