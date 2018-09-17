@@ -17,12 +17,12 @@ AnyComment is blazing-fast commenting plugin for WordPress.
 It stands for simplicity & speed. We value feedback, so if you have any failures or suggestions - please let us know in [support forum](https://wordpress.org/support/plugin/anycomment) or [GitHub](https://github.com/bologer/anycomment.io/issues)!
 
 = Resources =
-* [Official Website](http://anycomment.io/en/)
-* [All Guides](https://anycomment.io/en/category/tutorials/)
-* [Configure Socials](https://anycomment.io/en/category/tutorials/socials/)
+* [Official website](http://anycomment.io/en/)
+* [All guides](https://anycomment.io/en/category/tutorials/)
+* [Configure socials](https://anycomment.io/en/category/tutorials/socials/)
 * [GitHub repository](https://github.com/bologer/anycomment.io)
-* [VK.com Group](http://vk.com/anycomment)
-* [Telegram Group](https://t.me/joinchat/BEUJEQ9aMmQsFX65MNRCDg)
+* [VK.com group](http://vk.com/anycomment)
+* [Telegram group](https://t.me/joinchat/BEUJEQ9aMmQsFX65MNRCDg)
 
 = Demo =
 Feel free to use [this demo page](https://anycomment.io/demo/). Every time new version is released, demo plugin will be updated as well, so you always see the latest version.
@@ -171,7 +171,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 == Changelog ==
 
-= 0.0.56 – 12.09.2018 =
+= 0.0.56 – 17.09.2018 =
 
 **Enhancements:**
 
@@ -181,12 +181,12 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * From now on, plugin will crop original avatar from social into smaller version, which will increase loading speed of comment and take less disc space (existing avatar will be enhanced automatically for you), #149
 * Converted sorting dropdown to multi dropdown. Now it has sorting option & logout link. When user is guest, it only has sorting options, #145
 * When user registered via default WordPress form, and the same user is trying to authenticate using via social (using same email), he will see error message that he needs to use regular login form in this case, #143
-* Small cosmetic style changes
 * Integration tab now has option to add reCAPTCHA to comment form (for all, guests or authenticated users only, choose theme, etc), #146
 * Added guides in Russian & English on how to set-up reCAPTCHA, #146
 * Added ability to change border radius of avatars, #148
-* Added wordpress icon as authorization option in social list, #131
+* Added WordPress icon as authorization option in social list, #131
 * Added ability to choose default avatar (when user does not have any avatar). Currently possible to choose default from AnyComment or ones available from [Gravatar](https://en.gravatar.com/site/implement/images/), #138
+* Small cosmetic style changes
 
 **Fixes:**
 
