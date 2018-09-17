@@ -64,7 +64,7 @@ export default class ProfileDropdown extends AnyCommentComponent {
         const settings = this.getSettings();
 
 
-        let placeholder = 'Sorting';
+        let placeholder = settings.i18.sorting;
 
         let options = [
             {value: 'order_desc', label: settings.i18.sort_newest},

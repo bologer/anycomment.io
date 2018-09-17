@@ -149,6 +149,7 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 						'button_send'                    => __( 'Send', 'anycomment' ),
 						'button_save'                    => __( 'Save', 'anycomment' ),
 						'button_reply'                   => __( 'Reply', 'anycomment' ),
+						'sorting'                        => __( 'Sorting', 'anycomment' ),
 						'sort_by'                        => __( 'Sort By', 'anycomment' ),
 						'sort_oldest'                    => __( 'Oldest', 'anycomment' ),
 						'sort_newest'                    => __( 'Newest', 'anycomment' ),

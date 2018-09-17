@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-17 05:40+0000\n"
-"PO-Revision-Date: 2018-09-17 05:44+0000\n"
+"POT-Creation-Date: 2018-09-17 19:40+0000\n"
+"PO-Revision-Date: 2018-09-17 19:41+0000\n"
 "Last-Translator: admin <sasha.tesh@gmail.com>\n"
 "Language-Team: Русский\n"
 "Language: ru_RU\n"
@@ -113,119 +113,123 @@ msgstr "Отправить"
 msgid "Save"
 msgstr "Сохранить"
 
-#: includes/AnyCommentRender.php:151 includes/AnyCommentRender.php:159
+#: includes/AnyCommentRender.php:151 includes/AnyCommentRender.php:160
 msgid "Reply"
 msgstr "Ответить"
 
 #: includes/AnyCommentRender.php:152
-msgid "Sort By"
+msgid "Sorting"
 msgstr "Сортировка"
 
 #: includes/AnyCommentRender.php:153
+msgid "Sort By"
+msgstr "Сортировка"
+
+#: includes/AnyCommentRender.php:154
 msgid "Oldest"
 msgstr "Старые"
 
-#: includes/AnyCommentRender.php:154
+#: includes/AnyCommentRender.php:155
 msgid "Newest"
 msgstr "Новые"
 
-#: includes/AnyCommentRender.php:155
+#: includes/AnyCommentRender.php:156
 msgid "reply to"
 msgstr "ответ для"
 
-#: includes/AnyCommentRender.php:156
+#: includes/AnyCommentRender.php:157
 msgid "Your comment..."
 msgstr "Ваш комментарий..."
 
-#: includes/AnyCommentRender.php:157
+#: includes/AnyCommentRender.php:158
 msgid "No comments to display"
 msgstr "Пока еще не было комментариев"
 
-#: includes/AnyCommentRender.php:158
+#: includes/AnyCommentRender.php:159
 msgid "Add Anycomment to your site"
 msgstr "Добавить AnyComment на свой сайт"
 
-#: includes/AnyCommentRender.php:160
+#: includes/AnyCommentRender.php:161
 msgid "Edit"
 msgstr "Изменить"
 
-#: includes/AnyCommentRender.php:161
+#: includes/AnyCommentRender.php:162
 #: includes/admin/tables/AnyCommentUploadedFilesTable.php:145
 msgid "Delete"
 msgstr "Удалить"
 
-#: includes/AnyCommentRender.php:162
+#: includes/AnyCommentRender.php:163
 msgid "Cancel"
 msgstr "Отменить"
 
-#: includes/AnyCommentRender.php:163
+#: includes/AnyCommentRender.php:164
 msgid "Quick Login"
 msgstr "Быстрый вход"
 
-#: includes/AnyCommentRender.php:164
+#: includes/AnyCommentRender.php:165
 msgid "Logout"
 msgstr "Выйти"
 
-#: includes/AnyCommentRender.php:165
+#: includes/AnyCommentRender.php:166
 msgid "New comment was added"
 msgstr "Был добавлен новый комментарий"
 
-#: includes/AnyCommentRender.php:166
+#: includes/AnyCommentRender.php:167
 msgid "Author"
 msgstr "Автор"
 
-#: includes/AnyCommentRender.php:167
+#: includes/AnyCommentRender.php:168
 msgid "Name"
 msgstr "Имя"
 
-#: includes/AnyCommentRender.php:168
+#: includes/AnyCommentRender.php:169
 msgid "Email"
 msgstr "Почта"
 
-#: includes/AnyCommentRender.php:169
+#: includes/AnyCommentRender.php:170
 msgid "Website"
 msgstr "Веб-сайт"
 
-#: includes/AnyCommentRender.php:171
+#: includes/AnyCommentRender.php:172
 #, php-format
 msgid "I accept the <a href=\"%s\"%s>User Agreement</a>"
 msgstr "Я даю согласие на обработку <a href=\"%s\"%s>персональных данных</a>"
 
-#: includes/AnyCommentRender.php:175
+#: includes/AnyCommentRender.php:176
 msgid "Upload file"
 msgstr "Загрузить файл"
 
-#: includes/AnyCommentRender.php:176
+#: includes/AnyCommentRender.php:177
 msgid "Uploading..."
 msgstr "Идет загрузка..."
 
-#: includes/AnyCommentRender.php:177
+#: includes/AnyCommentRender.php:178
 msgid "Uploaded!"
 msgstr "Загружено!"
 
-#: includes/AnyCommentRender.php:178
+#: includes/AnyCommentRender.php:179
 #, php-format
 msgid "File %s is too big"
 msgstr "Файл %s слишком большой"
 
-#: includes/AnyCommentRender.php:179
+#: includes/AnyCommentRender.php:180
 #, php-format
 msgid "You may upload %s file(s) at maximum"
 msgstr "Вы можете загрузить максимум %s файл(-ов)"
 
-#: includes/AnyCommentRender.php:180
+#: includes/AnyCommentRender.php:181
 msgid "No file selected or select proper extension"
 msgstr "Не выбраны файлы или не правильное расширение"
 
-#: includes/AnyCommentRender.php:181
+#: includes/AnyCommentRender.php:182
 msgid "Read more"
 msgstr "Читать далее"
 
-#: includes/AnyCommentRender.php:182
+#: includes/AnyCommentRender.php:183
 msgid "Show less"
 msgstr "Показать меньше"
 
-#: includes/AnyCommentRender.php:260
+#: includes/AnyCommentRender.php:261
 #, php-format
 msgid "%s Comments"
 msgstr "%s комментариев"
