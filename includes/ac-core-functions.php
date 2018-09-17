@@ -89,6 +89,25 @@ function anycomment_login_with( $html = false, $redirectUrl = null ) {
 			'label'   => __( 'Yahoo', "anycomment" ),
 			'visible' => AnyCommentSocialSettings::isYahooOn()
 		],
+		'wordpress'                                => [
+
+			'url' => wp_login_url()
+		]
+	];
+
+
+	$wordpress_login_url = site_url( 'wp-login.php', 'login' );
+
+	if ( ! empty( $redirectUrl ) ) {
+		$redirectUrl         .= '#comments';
+		$wordpress_login_url = add_query_arg( 'redirect_to', urlencode( $redirectUrl ), $wordpress_login_url );
+	}
+
+	$socials['wordpress'] = [
+		'slug'    => 'wordpress',
+		'url'     => $wordpress_login_url,
+		'label'   => __( "WordPress", 'anycomment' ),
+		'visible' => true
 	];
 
 	if ( count( $socials ) <= 0 ) {
