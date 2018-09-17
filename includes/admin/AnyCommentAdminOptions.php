@@ -126,6 +126,10 @@ if ( ! class_exists( 'AnyCommentAdminOptions' ) ) :
             <div class="clearfix"></div>
             <p class="description"><?= $args['description'] ?></p>
 			<?php
+
+			if ( isset( $args['callback'] ) ) {
+				echo call_user_func( $args['callback'] );
+			}
 		}
 
 		/**

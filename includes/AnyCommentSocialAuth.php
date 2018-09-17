@@ -743,7 +743,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 			if ( AnyCommentIntegrationSettings::isWPUserAvatarOn() ) {
 				global $wpua_functions;
 				if ( $wpua_functions->has_wp_user_avatar( $id_or_email ) ) {
-					return $wpua_functions->get_wp_user_avatar_src( $id_or_email, 60 );
+					return $wpua_functions->get_wp_user_avatar_src( $id_or_email, AnyCommentAvatars::DEFAULT_AVATAR_WIDTH );
 				}
 			}
 
@@ -769,7 +769,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 			}
 
 			if ( $userId !== null ) {
-				$avatarUrl = get_user_meta( $userId, self::META_SOCIAL_AVATAR, true );
+				$avatarUrl = AnyCommentUserMeta::getSocialAvatar( $userId );
 
 				if ( ! empty( $avatarUrl ) ) {
 					return $avatarUrl;
@@ -782,8 +782,16 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 			 * otherwise get default plugin's one.
 			 */
 			if ( $this->has_gravatar( $id_or_email ) ) {
-				return get_avatar_url( $id_or_email, [ 'size' => 60 ] );
+				return get_avatar_url( $id_or_email, [ 'size' => AnyCommentAvatars::DEFAULT_AVATAR_WIDTH ] );
 			}
+
+			if ( ! AnyCommentGenericSettings::isDefaultAvatarAnyComment() ) {
+				return get_avatar_url( $id_or_email, [
+					'size'    => AnyCommentAvatars::DEFAULT_AVATAR_WIDTH,
+					'default' => AnyCommentGenericSettings::getDefaultAvatar()
+				] );
+			}
+
 
 			return AnyComment()->plugin_url() . '/assets/img/no-avatar.svg';
 		}

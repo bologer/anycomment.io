@@ -3,6 +3,23 @@
 class AnyCommentUserMeta {
 
 	/**
+	 * Get social avatar. This is cropped version.
+	 *
+	 * @param WP_User|int $user User instance or ID to be checked for.
+	 *
+	 * @return mixed
+	 */
+	public static function getSocialAvatar( $user ) {
+		if ( $user instanceof WP_User ) {
+			$user_id = $user->ID;
+		} else {
+			$user_id = $user;
+		}
+
+		return get_user_meta( $user_id, AnyCommentSocialAuth::META_SOCIAL_AVATAR, true );
+	}
+
+	/**
 	 * Get social type. e.g. vkontakte
 	 *
 	 * @param WP_User|int $user User instance or ID to be checked for.

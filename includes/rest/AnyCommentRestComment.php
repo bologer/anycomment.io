@@ -192,7 +192,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	 * @return string
 	 */
 	public function get_cache_key( $postId, $args = null ) {
-		$cache_namespace = sprintf( '/comments/%s', $postId );
+		$cache_namespace = sprintf( '/anycomment/rest/comments/%s', $postId );
 
 		if ( $args !== null ) {
 			$cache_namespace .= '/' . md5( serialize( $args ) );

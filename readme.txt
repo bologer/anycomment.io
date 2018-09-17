@@ -186,6 +186,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Added guides in Russian & English on how to set-up reCAPTCHA, #146
 * Added ability to change border radius of avatars, #148
 * Added wordpress icon as authorization option in social list, #131
+* Added ability to choose default avatar (when user does not have any avatar). Currently possible to choose default from AnyComment or ones available from [Gravatar](https://en.gravatar.com/site/implement/images/), #138
 
 **Fixes:**
 

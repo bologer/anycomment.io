@@ -56,6 +56,19 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 */
 		const SORT_DESC = 'desc';
 
+		/**
+		 * Default avatar.
+		 */
+		const OPTION_DEFAULT_AVATAR = 'option_default_avatar';
+
+		const OPTION_DEFAULT_AVATAR_ANYCOMMENT = 'anycomment';
+		const OPTION_DEFAULT_AVATAR_MP = 'mp';
+		const OPTION_DEFAULT_AVATAR_IDENTICON = 'identicon';
+		const OPTION_DEFAULT_AVATAR_MONSTEROID = 'monsterid';
+		const OPTION_DEFAULT_AVATAR_WAVATAR = 'wavatar';
+		const OPTION_DEFAULT_AVATAR_RETRO = 'retro';
+		const OPTION_DEFAULT_AVATAR_ROBOHASH = 'robohash';
+
 
 		/**
 		 * Default user group on register.
@@ -370,6 +383,27 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 								self::SORT_ASC  => __( 'Oldest first', 'anycomment' ),
 							]
 						],
+					],
+					[
+						'id'          => self::OPTION_DEFAULT_AVATAR,
+						'title'       => __( 'Default Avatar', "anycomment" ),
+						'callback'    => 'input_select',
+						'description' => esc_html( __( 'Default avatar when user does not have any.', "anycomment" ) ),
+						'args'        => [
+							'options'  => [
+								self::OPTION_DEFAULT_AVATAR_ANYCOMMENT => __( 'No avatar (from AnyComment)', 'anycomment' ),
+								self::OPTION_DEFAULT_AVATAR_MP         => __( 'No avatar (from Gravatar)', 'anycomment' ),
+								self::OPTION_DEFAULT_AVATAR_IDENTICON  => __( 'Identicon (from Gravatar)', 'anycomment' ),
+								self::OPTION_DEFAULT_AVATAR_MONSTEROID => __( 'Monsteroid (from Gravatar)', 'anycomment' ),
+								self::OPTION_DEFAULT_AVATAR_WAVATAR    => __( 'Wavatar (from Gravatar)', 'anycomment' ),
+								self::OPTION_DEFAULT_AVATAR_RETRO      => __( 'Retro (from Gravatar)', 'anycomment' ),
+								self::OPTION_DEFAULT_AVATAR_ROBOHASH   => __( 'Robohash (from Gravatar)', 'anycomment' ),
+							],
+							'callback' => function () {
+								sprintf( '<img src="%s">', get_avatar_url( 'example@gravatar.com', [ 'default' => static::getDefaultAvatar() ] ) );
+							}
+						],
+
 					],
 					[
 						'id'          => self::OPTION_REGISTER_DEFAULT_GROUP,
@@ -773,6 +807,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 			}
 
 			if ( isset( $_GET['settings-updated'] ) ) {
+				AnyComment()->cache->deleteItem( '/anycomment/rest/comments' );
 				add_settings_error( $this->alert_key, 'anycomment_message', __( 'Settings Saved', 'anycomment' ), 'updated' );
 			}
 
@@ -1439,6 +1474,36 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 
 			if ( $value !== self::SORT_DESC && $value !== self::SORT_ASC ) {
 				return self::SORT_DESC;
+			}
+
+			return $value;
+		}
+
+		/**
+		 * Check whether default avatar is anycomment.
+		 *
+		 * @return bool
+		 */
+		public static function isDefaultAvatarAnyComment() {
+			return static::getDefaultAvatar() === self::OPTION_DEFAULT_AVATAR_ANYCOMMENT;
+		}
+
+		/**
+		 * Get default avatar option.
+		 *
+		 * @return null|string
+		 */
+		public static function getDefaultAvatar() {
+			$value = static::instance()->getOption( self::OPTION_DEFAULT_AVATAR );
+
+			if ( $value !== self::OPTION_DEFAULT_AVATAR_ANYCOMMENT &&
+			     $value !== self::OPTION_DEFAULT_AVATAR_MP &&
+			     $value !== self::OPTION_DEFAULT_AVATAR_IDENTICON &&
+			     $value !== self::OPTION_DEFAULT_AVATAR_MONSTEROID &&
+			     $value !== self::OPTION_DEFAULT_AVATAR_WAVATAR &&
+			     $value !== self::OPTION_DEFAULT_AVATAR_RETRO &&
+			     $value !== self::OPTION_DEFAULT_AVATAR_ROBOHASH ) {
+				return self::OPTION_DEFAULT_AVATAR_ANYCOMMENT;
 			}
 
 			return $value;
