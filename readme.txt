@@ -171,7 +171,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Enhancements:**
 
-* Comments are now nested up to 3 levels, any further replies will be added without further nesting. Two benefits: easier to maintain mobile view + easirt to follow conversation
+* Comments are now nested up to 3 levels, any further replies will be added without further nesting. Two benefits: easier to maintain mobile view + easier to follow conversation
 * Child comments are now having "reply to {name}" where {name} is the name of the person to whom reply is made
 * Comments are now cached. This will help to limit number of requests to the database, load comments faster & help people who have limited resource environments
 * From now on, plugin will crop original avatar from social into smaller version, which will increase loading speed of comment and take less disc space (existing avatar will be enhanced automatically for you), #149
