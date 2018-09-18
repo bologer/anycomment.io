@@ -294,7 +294,9 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			$this->admin_pages = new AnyCommentAdminPages();
 
 
-			$cacheDriver = new Stash\Driver\FileSystem();
+			$cacheDriver = new Stash\Driver\FileSystem( [
+				'path' => ANYCOMMENT_ABSPATH . 'cache/'
+			] );
 
 			$this->cache = new Stash\Pool( $cacheDriver );
 
