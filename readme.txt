@@ -171,6 +171,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Enhancements:**
 
+* Added ability to disable WordPress from login options in "Socials" -> "WordPress", #154
 
 
 **Fixes:**

@@ -23,6 +23,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		const SOCIAL_TWITCH = 'twitch';
 		const SOCIAL_DRIBBBLE = 'dribbble';
 		const SOCIAL_YAHOO = 'yahoo';
+		const SOCIAL_WORDPRESS = 'wordpress';
 
 		/**
 		 * @var \Hybridauth\Hybridauth
@@ -73,6 +74,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 			self::SOCIAL_TWITCH        => 'TwitchTV',
 			self::SOCIAL_DRIBBBLE      => 'Dribbble',
 			self::SOCIAL_YAHOO         => 'Yahoo',
+			self::SOCIAL_WORDPRESS         => 'WordPress',
 		];
 
 		protected static $rest_prefix = 'anycomment';
@@ -389,6 +391,17 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		 */
 		public static function get_yahoo_callback( $redirect = null ) {
 			return static::get_callback_url( self::SOCIAL_YAHOO, $redirect );
+		}
+
+		/**
+		 * Get WordPress callback URL.
+		 *
+		 * @param null|string $redirect Redirect URL added to the link.
+		 *
+		 * @return string
+		 */
+		public static function get_wordpress_callback( $redirect = null ) {
+			return static::get_callback_url( self::SOCIAL_WORDPRESS, $redirect );
 		}
 
 		/**

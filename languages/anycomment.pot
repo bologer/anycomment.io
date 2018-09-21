@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-17 19:40+0000\n"
+"POT-Creation-Date: 2018-09-21 05:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -28,63 +28,64 @@ msgstr ""
 msgid "See"
 msgstr ""
 
-#: includes/AnyCommentSocialAuth.php:544
+#: includes/AnyCommentSocialAuth.php:557
 msgid ""
 "Please use normal login form, as this email is associated with a WordPress "
 "user."
 msgstr ""
 
 #: includes/ac-core-functions.php:35
-#: includes/admin/AnyCommentSocialSettings.php:126
+#: includes/admin/AnyCommentSocialSettings.php:131
 msgid "VK"
 msgstr ""
 
 #: includes/ac-core-functions.php:41
-#: includes/admin/AnyCommentSocialSettings.php:173
+#: includes/admin/AnyCommentSocialSettings.php:178
 msgid "Twitter"
 msgstr ""
 
 #: includes/ac-core-functions.php:47
-#: includes/admin/AnyCommentSocialSettings.php:219
+#: includes/admin/AnyCommentSocialSettings.php:224
 msgid "Facebook"
 msgstr ""
 
 #: includes/ac-core-functions.php:53
-#: includes/admin/AnyCommentSocialSettings.php:265
+#: includes/admin/AnyCommentSocialSettings.php:270
 msgid "Google"
 msgstr ""
 
 #: includes/ac-core-functions.php:59
-#: includes/admin/AnyCommentSocialSettings.php:311
+#: includes/admin/AnyCommentSocialSettings.php:316
 msgid "Github"
 msgstr ""
 
 #: includes/ac-core-functions.php:65
-#: includes/admin/AnyCommentSocialSettings.php:357
+#: includes/admin/AnyCommentSocialSettings.php:362
 msgid "Odnoklassniki"
 msgstr ""
 
 #: includes/ac-core-functions.php:71
-#: includes/admin/AnyCommentSocialSettings.php:411
+#: includes/admin/AnyCommentSocialSettings.php:416
 msgid "Instagram"
 msgstr ""
 
 #: includes/ac-core-functions.php:77
-#: includes/admin/AnyCommentSocialSettings.php:458
+#: includes/admin/AnyCommentSocialSettings.php:463
 msgid "Twitch"
 msgstr ""
 
 #: includes/ac-core-functions.php:83
-#: includes/admin/AnyCommentSocialSettings.php:504
+#: includes/admin/AnyCommentSocialSettings.php:509
 msgid "Dribbble"
 msgstr ""
 
 #: includes/ac-core-functions.php:89
-#: includes/admin/AnyCommentSocialSettings.php:550
+#: includes/admin/AnyCommentSocialSettings.php:555
 msgid "Yahoo"
 msgstr ""
 
-#: includes/ac-core-functions.php:109
+#: includes/ac-core-functions.php:105
+#: includes/admin/AnyCommentSocialSettings.php:602
 msgid "WordPress"
 msgstr ""
 
@@ -107,7 +108,7 @@ msgstr ""
 #: includes/AnyCommentRender.php:150
 #: includes/admin/AnyCommentAdminOptions.php:251
 #: includes/admin/AnyCommentGenericSettings.php:836
-#: includes/admin/AnyCommentSocialSettings.php:627
+#: includes/admin/AnyCommentSocialSettings.php:667
 msgid "Save"
 msgstr ""
 
@@ -364,7 +365,7 @@ msgstr ""
 
 #: includes/admin/AnyCommentAdminOptions.php:238
 #: includes/admin/AnyCommentGenericSettings.php:811
-#: includes/admin/AnyCommentSocialSettings.php:605
+#: includes/admin/AnyCommentSocialSettings.php:645
 msgid "Settings Saved"
 msgstr ""
 
@@ -967,292 +968,305 @@ msgstr ""
 msgid "AnyComment"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:129
+#: includes/admin/AnyCommentSocialSettings.php:134
 msgid "VK authorization settings."
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:133
-#: includes/admin/AnyCommentSocialSettings.php:179
-#: includes/admin/AnyCommentSocialSettings.php:225
-#: includes/admin/AnyCommentSocialSettings.php:271
-#: includes/admin/AnyCommentSocialSettings.php:317
-#: includes/admin/AnyCommentSocialSettings.php:363
-#: includes/admin/AnyCommentSocialSettings.php:417
-#: includes/admin/AnyCommentSocialSettings.php:464
-#: includes/admin/AnyCommentSocialSettings.php:510
-#: includes/admin/AnyCommentSocialSettings.php:556
-#: includes/admin/AnyCommentSocialSettings.php:737
+#: includes/admin/AnyCommentSocialSettings.php:138
+#: includes/admin/AnyCommentSocialSettings.php:184
+#: includes/admin/AnyCommentSocialSettings.php:230
+#: includes/admin/AnyCommentSocialSettings.php:276
+#: includes/admin/AnyCommentSocialSettings.php:322
+#: includes/admin/AnyCommentSocialSettings.php:368
+#: includes/admin/AnyCommentSocialSettings.php:422
+#: includes/admin/AnyCommentSocialSettings.php:469
+#: includes/admin/AnyCommentSocialSettings.php:515
+#: includes/admin/AnyCommentSocialSettings.php:561
+#: includes/admin/AnyCommentSocialSettings.php:608
+#: includes/admin/AnyCommentSocialSettings.php:777
 msgid "Callback URL"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:149
-#: includes/admin/AnyCommentSocialSettings.php:195
-#: includes/admin/AnyCommentSocialSettings.php:241
-#: includes/admin/AnyCommentSocialSettings.php:287
-#: includes/admin/AnyCommentSocialSettings.php:333
-#: includes/admin/AnyCommentSocialSettings.php:381
-#: includes/admin/AnyCommentSocialSettings.php:433
-#: includes/admin/AnyCommentSocialSettings.php:480
-#: includes/admin/AnyCommentSocialSettings.php:526
-#: includes/admin/AnyCommentSocialSettings.php:572
+#: includes/admin/AnyCommentSocialSettings.php:154
+#: includes/admin/AnyCommentSocialSettings.php:200
+#: includes/admin/AnyCommentSocialSettings.php:246
+#: includes/admin/AnyCommentSocialSettings.php:292
+#: includes/admin/AnyCommentSocialSettings.php:338
+#: includes/admin/AnyCommentSocialSettings.php:386
+#: includes/admin/AnyCommentSocialSettings.php:438
+#: includes/admin/AnyCommentSocialSettings.php:485
+#: includes/admin/AnyCommentSocialSettings.php:531
+#: includes/admin/AnyCommentSocialSettings.php:577
 msgid "Enable"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:151
+#: includes/admin/AnyCommentSocialSettings.php:156
 msgid "Allow VK authorization"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:155
+#: includes/admin/AnyCommentSocialSettings.php:160
 msgid "Application ID"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:157
+#: includes/admin/AnyCommentSocialSettings.php:162
 #, php-format
 msgid ""
 "Enter app id. Can be found in <a href=\"%s\" target=\"_blank\">apps</a> page"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:161
+#: includes/admin/AnyCommentSocialSettings.php:166
 msgid "Secure key"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:163
+#: includes/admin/AnyCommentSocialSettings.php:168
 #, php-format
 msgid ""
 "Enter secure key. Can be found in <a href=\"%s\" target=\"_blank\">apps</a> "
 "page"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:176
+#: includes/admin/AnyCommentSocialSettings.php:181
 msgid "Twitter authorization settings."
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:197
+#: includes/admin/AnyCommentSocialSettings.php:202
 msgid "Allow Twitter authorization"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:201
+#: includes/admin/AnyCommentSocialSettings.php:206
 msgid "Consumer Key"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:203
+#: includes/admin/AnyCommentSocialSettings.php:208
 #, php-format
 msgid ""
 "Enter consumer key. Can be found in the list of <a href=\"%s\" "
 "target=\"_blank\">apps</a>"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:207
+#: includes/admin/AnyCommentSocialSettings.php:212
 msgid "Consumer Secret"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:209
+#: includes/admin/AnyCommentSocialSettings.php:214
 #, php-format
 msgid ""
 "Enter consumer secret. Can be found in the list of <a href=\"%s\" "
 "target=\"_blank\">apps</a>"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:222
+#: includes/admin/AnyCommentSocialSettings.php:227
 msgid "Facebook authorization settings."
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:243
+#: includes/admin/AnyCommentSocialSettings.php:248
 msgid "Allow Facebook authorization"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:247
-#: includes/admin/AnyCommentSocialSettings.php:387
-#: includes/admin/AnyCommentSocialSettings.php:578
+#: includes/admin/AnyCommentSocialSettings.php:252
+#: includes/admin/AnyCommentSocialSettings.php:392
+#: includes/admin/AnyCommentSocialSettings.php:583
 msgid "App ID"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:249
+#: includes/admin/AnyCommentSocialSettings.php:254
 #, php-format
 msgid ""
 "Enter app id. Can be found in the list of <a href=\"%s\" target=\"_blank\">"
 "apps</a>"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:253
-#: includes/admin/AnyCommentSocialSettings.php:399
+#: includes/admin/AnyCommentSocialSettings.php:258
+#: includes/admin/AnyCommentSocialSettings.php:404
 msgid "App Secret"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:255
+#: includes/admin/AnyCommentSocialSettings.php:260
 msgid ""
 "Enter app secret. Can be found in the list of <a href=\"%\" "
 "target=\"_blank\">apps</a>"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:268
+#: includes/admin/AnyCommentSocialSettings.php:273
 msgid "Google authorization settings."
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:289
+#: includes/admin/AnyCommentSocialSettings.php:294
 msgid "Allow Google authorization"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:293
-#: includes/admin/AnyCommentSocialSettings.php:339
-#: includes/admin/AnyCommentSocialSettings.php:439
-#: includes/admin/AnyCommentSocialSettings.php:486
-#: includes/admin/AnyCommentSocialSettings.php:532
+#: includes/admin/AnyCommentSocialSettings.php:298
+#: includes/admin/AnyCommentSocialSettings.php:344
+#: includes/admin/AnyCommentSocialSettings.php:444
+#: includes/admin/AnyCommentSocialSettings.php:491
+#: includes/admin/AnyCommentSocialSettings.php:537
 msgid "Client ID"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:295
-#: includes/admin/AnyCommentSocialSettings.php:341
+#: includes/admin/AnyCommentSocialSettings.php:300
+#: includes/admin/AnyCommentSocialSettings.php:346
 #, php-format
 msgid ""
 "Enter client id. Can be found in the list of <a href=\"%s\" "
 "target=\"_blank\">apps</a>"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:299
-#: includes/admin/AnyCommentSocialSettings.php:345
-#: includes/admin/AnyCommentSocialSettings.php:445
-#: includes/admin/AnyCommentSocialSettings.php:492
-#: includes/admin/AnyCommentSocialSettings.php:538
-#: includes/admin/AnyCommentSocialSettings.php:584
+#: includes/admin/AnyCommentSocialSettings.php:304
+#: includes/admin/AnyCommentSocialSettings.php:350
+#: includes/admin/AnyCommentSocialSettings.php:450
+#: includes/admin/AnyCommentSocialSettings.php:497
+#: includes/admin/AnyCommentSocialSettings.php:543
+#: includes/admin/AnyCommentSocialSettings.php:589
 msgid "Client Secret"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:301
-#: includes/admin/AnyCommentSocialSettings.php:347
+#: includes/admin/AnyCommentSocialSettings.php:306
+#: includes/admin/AnyCommentSocialSettings.php:352
 #, php-format
 msgid ""
 "Enter client secret. Can be found in the list of <a href=\"%s\" "
 "target=\"_blank\">apps</a>"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:314
+#: includes/admin/AnyCommentSocialSettings.php:319
 msgid "Github authorization settings."
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:335
+#: includes/admin/AnyCommentSocialSettings.php:340
 msgid "Allow GitHub authorization"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:360
+#: includes/admin/AnyCommentSocialSettings.php:365
 msgid "Odnoklassniki authorization settings."
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:383
+#: includes/admin/AnyCommentSocialSettings.php:388
 msgid "Allow Odnoklassniki authorization"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:389
+#: includes/admin/AnyCommentSocialSettings.php:394
 msgid "Enter app id. Can be found in the email sent to you by Odnoklassniki"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:393
+#: includes/admin/AnyCommentSocialSettings.php:398
 msgid "App Key"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:395
+#: includes/admin/AnyCommentSocialSettings.php:400
 msgid "Enter app key. Can be found in the email sent to you by Odnoklassniki"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:401
+#: includes/admin/AnyCommentSocialSettings.php:406
 msgid ""
 "Enter client secret. Can be found in the email sent to you by Odnoklassniki"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:414
+#: includes/admin/AnyCommentSocialSettings.php:419
 msgid "Instagram authorization settings."
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:435
+#: includes/admin/AnyCommentSocialSettings.php:440
 msgid "Allow Instagram authorization"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:441
+#: includes/admin/AnyCommentSocialSettings.php:446
 #, php-format
 msgid ""
 "Enter client id. Can be found in <a href=\"%s\" target=\"_blank\">Manage "
 "Clients</a>"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:447
+#: includes/admin/AnyCommentSocialSettings.php:452
 #, php-format
 msgid ""
 "Enter client secret. Can be found in <a href=\"%s\" target=\"_blank\">Manage "
 "Clients</a>"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:461
+#: includes/admin/AnyCommentSocialSettings.php:466
 msgid "Twitch authorization settings."
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:482
+#: includes/admin/AnyCommentSocialSettings.php:487
 msgid "Allow Twitch authorization"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:488
+#: includes/admin/AnyCommentSocialSettings.php:493
 #, php-format
 msgid ""
 "Enter client id. It can be found in the <a href=\"%s\" target=\"_blank\">"
 "apps</a>"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:494
+#: includes/admin/AnyCommentSocialSettings.php:499
 #, php-format
 msgid ""
 "Enter client secret. It can be found in the <a href=\"%s\" target=\"_blank\">"
 "apps</a>"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:507
+#: includes/admin/AnyCommentSocialSettings.php:512
 msgid "Dribbble authorization settings."
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:528
+#: includes/admin/AnyCommentSocialSettings.php:533
 msgid "Allow Dribbble authorization"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:534
+#: includes/admin/AnyCommentSocialSettings.php:539
 #, php-format
 msgid ""
 "Enter client id. It can be found in the <a href=\"%s\" target=\"_blank\">"
 "your applications</a>"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:540
+#: includes/admin/AnyCommentSocialSettings.php:545
 #, php-format
 msgid ""
 "Enter client secret. It can be found in the <a href=\"%s\" target=\"_blank\">"
 "your applications</a>"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:553
+#: includes/admin/AnyCommentSocialSettings.php:558
 msgid "Yahoo authorization settings."
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:574
+#: includes/admin/AnyCommentSocialSettings.php:579
 msgid "Allow Yahoo authorization"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:580
+#: includes/admin/AnyCommentSocialSettings.php:585
 #, php-format
 msgid ""
 "Enter app id. It can be found in the <a href=\"%s\" target=\"_blank\">my "
 "apps</a>"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:586
+#: includes/admin/AnyCommentSocialSettings.php:591
 #, php-format
 msgid ""
 "Enter client secret. It can be found in the <a href=\"%s\" target=\"_blank\">"
 "my apps</a>"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:752
+#: includes/admin/AnyCommentSocialSettings.php:605
+msgid "WordPress authorization settings."
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:624
+msgid "Enable Native"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:626
+msgid "Allow WordPress native authorization"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:792
 #, php-format
 msgid "How To Set-Up %s"
 msgstr ""
 
-#: includes/admin/AnyCommentSocialSettings.php:754
+#: includes/admin/AnyCommentSocialSettings.php:794
 msgid "Read"
 msgstr ""
 
