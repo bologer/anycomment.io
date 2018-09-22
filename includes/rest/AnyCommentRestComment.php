@@ -618,6 +618,10 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			return new WP_Error( 'rest_comment_failed_create', __( 'Creating comment failed.', 'anycomment' ), array( 'status' => 500 ) );
 		}
 
+		if ( ! empty( $request['attachments'] ) ) {
+			AnyCommentCommentMeta::addAttachments( $comment_id, $request['attachments'] );
+		}
+
 		if ( ! current_user_can( 'moderate_comments' ) && AnyCommentGenericSettings::isModerateFirst() ||
 		     AnyCommentComments::hasModerateWords( $comment_id ) ) {
 			$this->handle_status_param( 'hold', $comment_id );
@@ -758,10 +762,11 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			}
 		}
 
-		$comment = get_comment( $id );
+		if ( ! empty( $request['attachments'] ) ) {
+			AnyCommentCommentMeta::updateAttachments( $id, $request['attachments'] );
+		}
 
-		/** This action is documented in wp-includes/rest-api/endpoints/class-wp-rest-comments-controller.php */
-		do_action( 'rest_insert_comment', $comment, $request, false );
+		$comment = get_comment( $id );
 
 		$schema = $this->get_item_schema();
 
@@ -922,6 +927,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			'avatar_url'         => AnyComment()->auth->get_user_avatar_url( (int) $comment->user_id !== 0 ? $comment->user_id : $comment->comment_author_email ),
 			'children'           => $child_comments,
 			'owner'              => $owner,
+			'attachments'        => AnyCommentCommentMeta::getAttachments( $comment->comment_ID, false ),
 			'permissions'        => [
 				'can_edit_comment' => AnyComment()->render->can_edit_comment( $comment ),
 			],

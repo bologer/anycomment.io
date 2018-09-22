@@ -54,6 +54,7 @@ export default class ProfileDropdown extends AnyCommentComponent {
             case 'order_asc':
                 this.handleCommentSort('asc');
                 break;
+            default:
         }
     };
 

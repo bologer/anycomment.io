@@ -1,72 +1,159 @@
-import React from 'react';
-import AnyCommentComponent from './AnyCommentComponent'
+import React, {Component} from 'react';
+import Lightbox from 'react-images';
 
-/**
- * CommentAttachments is checking comment content for images, links, videos and
- * generates attachments from was was found.
- */
-class CommentAttachments extends AnyCommentComponent {
+class CommentAttachments extends Component {
+    constructor(props) {
+        super(props);
 
-    processAttachments() {
+        this.state = {
+            lightboxIsOpen: false,
+            currentImage: 0,
+            showDeleteAction: props.showDeleteAction || false
+        };
 
-        const options = this.getOptions();
+        this.closeLightbox = this.closeLightbox.bind(this);
+        this.gotoNext = this.gotoNext.bind(this);
+        this.gotoPrevious = this.gotoPrevious.bind(this);
+        this.gotoImage = this.gotoImage.bind(this);
+        this.handleClickImage = this.handleClickImage.bind(this);
+        this.openLightbox = this.openLightbox.bind(this);
+        this.filterImages = this.filterImages.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
+    }
 
-        if (!options.isShowImageAttachments && !options.isShowVideoAttachments) {
-            return null;
-        }
+    openLightbox(index, event) {
+        event.preventDefault();
+        this.setState({
+            currentImage: index,
+            lightboxIsOpen: true,
+        });
+    }
 
-        const comment = this.props.comment;
+    closeLightbox() {
+        this.setState({
+            currentImage: 0,
+            lightboxIsOpen: false,
+        });
+    }
 
-        let attachments = [];
+    gotoPrevious() {
+        this.setState({
+            currentImage: this.state.currentImage - 1,
+        });
+    }
 
-        if (options.isShowVideoAttachments) {
-            const videosRe = /(^(https?:\/\/)?((www\.)?youtube\.com|youtu\.?be|rutube.ru)\/.+$)/gi;
-            const videoMatches = [...new Set(comment.content.match(videosRe))];
+    gotoNext() {
+        this.setState({
+            currentImage: this.state.currentImage + 1,
+        });
+    }
 
-            if (videoMatches.length > 0) {
-                for (let i = 0; i < videoMatches.length; i++) {
-                    const isYoutube = videoMatches[i].indexOf('rutube.ru') === -1;
-                    const videoName = isYoutube ? 'YouTube' : 'Rutube';
-                    const className = 'anycomment comment-attachment comment-attachment__link ' + (isYoutube ? 'youtube' : 'rutube');
-                    const style = isYoutube ?
-                        {backgroundColor: '#f00', color: '#fff'} :
-                        {
-                            backgroundColor: '#0968c8', color: '#fff'
-                        };
+    gotoImage(index) {
+        this.setState({
+            currentImage: index,
+        });
+    }
 
-                    attachments.push(<li><a className={className}
-                                            href={videoMatches[i]}
-                                            style={style}
-                                            target="_blank"
-                                            rel="noreferrer noopener">{videoName}</a></li>);
-                }
+    handleClickImage() {
+        if (this.state.currentImage === this.props.images.length - 1) return;
+
+        this.gotoNext();
+    }
+
+    handleDelete(index, event) {
+        event.preventDefault();
+
+        console.log('can try to delete', index, event);
+
+        // this.
+        // this.props.images[index]
+    }
+
+    renderGallery() {
+        const {attachments} = this.props;
+
+        if (!attachments || attachments.length <= 0)
+            return (null);
+
+        const renderedGallery = attachments.map((obj, i) => {
+            const isImage = obj.isImage || false,
+                isAudio = obj.isAudio || false;
+
+            if (isImage) {
+                return <li
+                    key={i}
+                    onClick={(e) => this.openLightbox(i, e)}
+                    className="anycomment anycomment-uploads__item">
+                    {this.state.showDeleteAction ?
+                        <span className="anycomment anycomment-uploads__item-close"
+                              onClick={(e) => this.handleDelete(i, e)}>&times;</span> : ''}
+                    <img className="anycomment anycomment-uploads__item-thumbnail" src={obj.thumbnail}/>
+                </li>;
+            } else if (isAudio) {
+                return <li
+                    key={i}
+                    className="anycomment anycomment-uploads__item anycomment-uploads__item-audio">
+                    {this.state.showDeleteAction ?
+                        <span className="anycomment anycomment-uploads__item-close"
+                              onClick={(e) => this.handleDelete(i, e)}>&times;</span> : ''}
+                    Audio
+                </li>;
             }
+
+            return <li
+                key={i}
+                className="anycomment anycomment-uploads__item anycomment-uploads__item anycomment-uploads__item-document">
+                {this.state.showDeleteAction ?
+                    <span className="anycomment anycomment-uploads__item-close"
+                          onClick={(e) => this.handleDelete(i, e)}>&times;</span> : ''}
+                Doc
+            </li>;
+        });
+
+        return (renderedGallery);
+    }
+
+    /**
+     * Filters files and gets list of images.
+     *
+     * @returns {Array}
+     */
+    filterImages() {
+        const {attachments} = this.props;
+
+        if (!attachments.length) {
+            return [];
         }
 
-        if (options.isShowImageAttachments) {
-            const imageRe = /((http(s?):)([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png|svg))/gi;
-            const imageMatches = [...new Set(comment.content.match(imageRe))];
-
-            if (imageMatches.length > 0) {
-                for (let k = 0; k < imageMatches.length; k++) {
-                    attachments.push(<li><a className="anycomment comment-attachment comment-attachment__image"
-                                            href={imageMatches[k]}
-                                            target="_blank"
-                                            rel="noreferrer noopener"
-                                            style={{backgroundImage: 'url(' + imageMatches[k] + ')'}}></a></li>);
-                }
-            }
-        }
-
-        if (!attachments) {
-            return null;
-        }
-
-        return <ul className="comment-attachments clearfix">{attachments}</ul>;
+        return attachments.filter(item => item.isImage);
     }
 
     render() {
-        return this.processAttachments();
+        const images = this.filterImages();
+
+        if (!images || images.length <= 0) {
+            return (null);
+        }
+
+        console.log(images);
+
+        return (
+            <ul className="anycomment anycomment-uploads">
+                {this.renderGallery()}
+                <Lightbox
+                    currentImage={this.state.currentImage}
+                    images={images}
+                    isOpen={this.state.lightboxIsOpen}
+                    onClickImage={this.handleClickImage}
+                    onClickNext={this.gotoNext}
+                    onClickPrev={this.gotoPrevious}
+                    onClickThumbnail={this.gotoImage}
+                    onClose={this.closeLightbox}
+                    preventScroll={this.props.preventScroll}
+                    showThumbnails={this.props.showThumbnails}
+                />
+            </ul>
+        );
     }
 }
 

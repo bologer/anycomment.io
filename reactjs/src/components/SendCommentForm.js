@@ -79,18 +79,18 @@ class SendCommentForm extends AnyCommentComponent {
             return false;
         }
 
-        const settings = this.props.settings;
+        const {settings, editId, replyId, attachments} = this.props;
         const self = this;
 
-        const url = '/comments' + (this.props.editId ? ('/' + this.props.editId) : '');
+        const url = '/comments' + (editId ? ('/' + editId) : '');
 
         let params = {
             content: this.props.commentText,
         };
 
-        if (!this.props.editId) {
+        if (!editId) {
             params.post = settings.postId;
-            params.parent = this.props.replyId;
+            params.parent = replyId;
         }
 
         if (this.isCaptchaOn()) {
@@ -99,6 +99,10 @@ class SendCommentForm extends AnyCommentComponent {
             if (!params.captcha) {
                 return false;
             }
+        }
+
+        if (attachments || attachments.length > 0) {
+            params.attachments = JSON.stringify(attachments);
         }
 
         this.props.axios
@@ -209,7 +213,7 @@ class SendCommentForm extends AnyCommentComponent {
         if (this.isCaptchaOn()) {
             recapchaRef.current.execute();
 
-            var checkValueInterval = setInterval(function () {
+            let checkValueInterval = setInterval(function () {
                 if (recapchaRef.current.getValue() !== '') {
                     clearInterval(checkValueInterval);
 
@@ -274,7 +278,9 @@ class SendCommentForm extends AnyCommentComponent {
             <div className="anycomment anycomment-send-comment-body">
                 <form onSubmit={this.handleSubmit}>
 
-                    <SendCommentFormBody {...this.props} handleContentChange={this.handleContentChange}
+                    <SendCommentFormBody {...this.props}
+                                         handleContentChange={this.handleContentChange}
+                                         handleAttachmentsChange={this.handleAttachmentChange}
                                          changeCommenText={this.props.onCommentTextChange}/>
 
                     {this.isGuest() ?
@@ -283,6 +289,8 @@ class SendCommentForm extends AnyCommentComponent {
                         <input type="submit" className="anycomment-btn anycomment-send-comment-body__btn"
                                value={this.props.buttonText}/>
                     }
+
+                    {/*<input type="text" value={this.props.}/>*/}
 
                     <input
                         type="hidden"

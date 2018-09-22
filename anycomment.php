@@ -246,6 +246,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentUserMeta.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentAvatars.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentComments.php' );
+			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentCommentMeta.php' );
 
 			/**
 			 * Admin related

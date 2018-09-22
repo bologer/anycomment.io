@@ -5,12 +5,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class AnyCommentLikes.
+ * Class AnyCommentUploadedFiles helps to manage data in `anycomment_uploaded_files` table.
  *
  * @property int $ID
  * @property int $post_ID
  * @property int|null $user_ID
  * @property string|null $url
+ * @property string|null $url_thumbnail Thumbnail of image. Used only for images.
  * @property string|null $ip
  * @property string|null $user_agent
  * @property int $created_at
@@ -23,6 +24,7 @@ class AnyCommentUploadedFiles {
 	public $post_ID;
 	public $user_ID;
 	public $url;
+	public $url_thumbnail;
 	public $ip;
 	public $user_agent;
 	public $created_at;
@@ -48,32 +50,23 @@ class AnyCommentUploadedFiles {
 	}
 
 	/**
-	 * @param $commentId
+	 * Find uploaded file by ID.
 	 *
-	 * @return bool|int
+	 * @param int $id File ID to search for.
+	 *
+	 * @return null|$this NULL returned on failure and object on success.
 	 */
-	public static function isCurrentUserHasLike( $commentId, $userId = null ) {
-		if ( ! ( $comment = get_comment( $commentId ) ) instanceof WP_Comment ) {
-			return false;
+	public static function findOne( $id ) {
+		$tablaName     = static::tableName();
+		$preparedQuery = static::find()->prepare( "SELECT * FROM $tablaName WHERE `id`=%d", [ $id ] );
+
+		$res = static::find()->get_row( $preparedQuery );
+
+		if ( empty( $res ) ) {
+			return null;
 		}
 
-		if ( $userId === null && ! (int) ( $userId = get_current_user_id() ) === 0 ) {
-			return false;
-		}
-
-		if ( $userId !== null && ! get_user_by( 'id', $userId ) ) {
-			return false;
-		}
-
-		global $wpdb;
-
-
-		$tableName = static::tableName();
-
-		$sql   = $wpdb->prepare( "SELECT COUNT(*) FROM $tableName WHERE `user_ID` =%d AND `comment_ID`=%s", $userId, $comment->comment_ID );
-		$count = $wpdb->get_var( $sql );
-
-		return $count >= 1;
+		return $res;
 	}
 
 	/**

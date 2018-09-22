@@ -1220,20 +1220,27 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 			$fileName     = isset( $file['name'] ) ? $file['name'] : null;
 			$mimeType     = isset( $file['type'] ) ? $file['type'] : null;
 			$baseMimeType = preg_replace( '/\/.*$/', '', $mimeType );
+			$successCount = 0;
 
 			foreach ( $acceptedFilesArray as $key => $type ) {
 				$validType = trim( $type );
 				if ( $validType{0} === '.' ) {
-					return strpos( strtolower( $fileName ), strtolower( $validType ) ) !== false;
+					if ( strpos( strtolower( $fileName ), strtolower( $validType ) ) !== false ) {
+						$successCount ++;
+					}
 				} else if ( strpos( $validType, '/*' ) !== false ) {
 					// This is something like a image/* mime type
-					return $baseMimeType === preg_replace( '/\/.*$/', '', $validType );
+					if ( $baseMimeType === preg_replace( '/\/.*$/', '', $validType ) ) {
+						$successCount ++;
+					}
 				}
 
-				return $mimeType === $validType;
+				if ( $mimeType === $validType ) {
+					$successCount ++;
+				}
 			}
 
-			return true;
+			return $successCount > 0;
 		}
 
 		/**

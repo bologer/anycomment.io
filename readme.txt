@@ -172,6 +172,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 **Enhancements:**
 
 * Added ability to disable WordPress from login options in "Socials" -> "WordPress", #154
+* Now uploaded images will be having thumbnail and clicking on it will open original image in gallery viewer, #147
 
 
 **Fixes:**

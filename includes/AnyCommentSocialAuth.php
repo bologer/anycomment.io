@@ -593,7 +593,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 			$photoUrl = null;
 
 			if ( ! empty( $user_profile->photoURL ) ) {
-				$localUrl = AnyCommentUploadHandler::upload( $user_profile->photoURL, [
+				$localUrl = AnyCommentUploadHandler::uploadAvatar( $user_profile->photoURL, [
 					$social,
 					$user_profile->identifier
 				] );
@@ -768,7 +768,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 
 			if ( is_numeric( $id_or_email ) ) {
 				$userId = $id_or_email;
-			} elseif ( is_string( $id_or_email ) && ( $user = get_user_by( 'email', $id_or_email ) ) !== null ) {
+			} elseif ( is_string( $id_or_email ) && ( $user = get_user_by( 'email', $id_or_email ) ) !== false ) {
 				$userId = $user->ID;
 			} elseif ( $id_or_email instanceof WP_User ) {
 				$userId = $id_or_email->ID;

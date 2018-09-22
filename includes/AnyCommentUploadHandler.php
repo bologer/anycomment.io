@@ -11,6 +11,81 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 0.0.3
  */
 class AnyCommentUploadHandler {
+
+	/**
+	 * Get file name.
+	 *
+	 * @param string $name
+	 *
+	 * @return WP_Error|string
+	 */
+	public static function get_file_name( $name ) {
+		$check_file_type = wp_check_filetype( $name );
+
+		$file_extension = $check_file_type['ext'];
+
+		// When unable to get extension, should skip
+		if ( ! $file_extension ) {
+			return new WP_Error( 'no_file_extension_found', 'Unable to find file extension' );
+		}
+
+		return sprintf( '%s.%s', md5( serialize( $name ) . time() ), $file_extension );
+	}
+
+	/**
+	 * Generic method to handle file upload.
+	 *
+	 * @param array $file $_FILE array or can be passed manually. See array format in the note below:
+	 * [
+	 *  - name
+	 *  - type
+	 *  - tmp_name
+	 *  - error
+	 *  - size
+	 * ]
+	 *
+	 * @param string $return Can be all, to return array,
+	 * - `all` will return all of the data below
+	 * - `url` URL to the file
+	 * - `file` absolute path to the file
+	 * - `type` file's MIME type
+	 *
+	 * @return WP_Error|string|array WP_Error in case of error. String is
+	 */
+	public static function save( $file, $return = 'all' ) {
+
+		if ( ! isset( $file['error'] ) ) {
+			$file['error'] = 0;
+		}
+
+		// When no size defined
+		if ( ! isset( $file['size'] ) && isset( $file['tmp_name'] ) ) {
+			$file['size'] = filesize( $file['path'] );
+		}
+
+		$file_name = static::get_file_name( $file['name'] );
+
+		if ( is_wp_error( $file_name ) ) {
+			return $file_name;
+		}
+
+		$file['name'] = $file_name;
+
+		$moved_file = wp_handle_sideload( $file, [ 'test_form' => false, 'test_size' => true ] );
+
+		if ( $moved_file && ! isset( $moved_file['error'] ) ) {
+			if ( $return === 'all' ) {
+				return $moved_file;
+			}
+
+			return $moved_file[ $return ];
+		}
+
+		$error = isset( $moved_file['error'] ) ? $moved_file['error'] : 'Unable to upload file';
+
+		return new WP_Error( 'error_uploading', $error );
+	}
+
 	/**
 	 * Upload specified image.
 	 *
@@ -20,7 +95,7 @@ class AnyCommentUploadHandler {
 	 * @link https://wordpress.stackexchange.com/a/251512
 	 * @return bool
 	 */
-	public static function upload( $profileUrl, $metaIdentifier ) {
+	public static function uploadAvatar( $profileUrl, $metaIdentifier ) {
 		$profileUrl = trim( $profileUrl );
 
 		if ( empty( $profileUrl ) ) {
