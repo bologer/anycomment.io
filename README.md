@@ -1,6 +1,6 @@
 AnyComment is blazing-fast commenting plugin for WordPress.
 
-It stands for simplicity & speed. We value feedback, so if you have any failures or suggestions - please let us know in [support forum](https://wordpress.org/support/plugin/anycomment) or [GitHub](https://github.com/bologer/anycomment.io/issues)!
+It stands for simplicity & speed. We value feedback, so if you have any failures use [issues](https://github.com/bologer/anycomment.io/issues)!
 
 Feel free to use [this demo page](https://anycomment.io/demo/).
 
