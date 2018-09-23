@@ -1,7 +1,6 @@
 <?php
 
 class AnyCommentRestDocuments extends AnyCommentRestController {
-
 	/**
 	 * Constructor.
 	 *
@@ -58,13 +57,16 @@ class AnyCommentRestDocuments extends AnyCommentRestController {
 	 * {@inheritdoc}
 	 */
 	public function delete_item( $request ) {
-		$rowsAffected = AnyCommentUploadedFiles::delete( $request['id'] );
+		AnyCommentUploadedFiles::delete( $request['id'] );
 
-		if ( $rowsAffected <= 0 ) {
-			return new WP_Error( 'rest_failed_to_delete', __( 'Error, unable to delete. Please try again later.', 'anycomment' ), [ 'status' => 403 ] );
-		}
+		$data = [
+			'success' => true
+		];
+		
+		// Wrap the data in a response object.
+		$response = rest_ensure_response( $data );
 
-		return true;
+		return $response;
 	}
 
 	/**
@@ -79,15 +81,15 @@ class AnyCommentRestDocuments extends AnyCommentRestController {
 			return new WP_Error( 'rest_no_guests_allowed', __( 'Sorry, guests unable to delete files.', 'anycomment' ), [ 'status' => 403 ] );
 		}
 
-		$uploaded_file = AnyCommentUploadedFiles::findOne( $request['id'] );
+		$file = AnyCommentUploadedFiles::findOne( $request['id'] );
 
 		// Make sure file can be found
-		if ( $uploaded_file === null ) {
-			return new WP_Error( 'rest_file_not_found', __( 'Files does not exist.', 'anycomment' ), [ 'status' => 403 ] );
+		if ( $file === null ) {
+			return new WP_Error( 'rest_file_not_found', __( 'File does not exist.', 'anycomment' ), [ 'status' => 403 ] );
 		}
 
 		// If file has user ID, check to make sure it is the same user trying to delete the file
-		if ( $uploaded_file->user_ID !== null && (int) $uploaded_file->user_ID !== (int) $user->ID ) {
+		if ( $file->user_ID !== null && (int) $file->user_ID !== (int) $user->ID ) {
 			return new WP_Error( 'rest_wrong_user', __( 'Sorry, such file is unavailable', 'anycomment' ), [ 'status' => 403 ] );
 		}
 
@@ -170,25 +172,14 @@ class AnyCommentRestDocuments extends AnyCommentRestController {
 			}
 
 			$file_mime_type = $file['type'];
-			$cropSupport    = [
-				'image/jpeg' => 'image/jpeg',
-				'image/png'  => 'image/png',
-				'image/gif'  => 'image/gif',
-			];
-
-			$is_image = $this->is_image_by( $file_mime_type );
-			$is_audio = $this->is_audio_by( $file_mime_type );
 
 			$uploaded_files[ $key ] = [
-				'isImage'    => $is_image,
-				'isAudio'    => $is_audio,
-				'isDocument' => ! $is_image && ! $is_audio,
-				'src'        => $original_file['url']
+				'type' => AnyCommentUploadedFiles::get_image_type( $file_mime_type ),
+				'mime' => $file_mime_type,
+				'src'  => $original_file['url']
 			];
 
-			$should_create_thumbnail = isset( $cropSupport[ $file_mime_type ] );
-
-			if ( $should_create_thumbnail ) {
+			if ( AnyCommentUploadedFiles::can_crop( $file_mime_type ) ) {
 				// Get smaller version of file
 				$imageEditor = wp_get_image_editor( $original_file['file'], [ 'mime_type' => $file_mime_type ] );
 
@@ -229,20 +220,21 @@ class AnyCommentRestDocuments extends AnyCommentRestController {
 				if ( isset( $user->ID ) && (int) $user->ID !== 0 ) {
 					$model->user_ID = $user->ID;
 				}
-				$model->url = $upload['src'];
+				$model->type = $upload['mime'];
+				$model->url  = $upload['src'];
 
 				if ( isset( $upload['thumbnail'] ) ) {
 					$model->url_thumbnail = $upload['thumbnail'];
 				}
 
 				if ( ! $model->save() ) {
-					wp_delete_file( $this->get_path_from_url( $model->url ) );
+					wp_delete_file( AnyCommentUploadedFiles::get_path_from_url( $model->url ) );
 
 					if ( isset( $upload['thumbnail'] ) ) {
-						wp_delete_file( $this->get_path_from_url( $model->url_thumbnail ) );
+						wp_delete_file( AnyCommentUploadedFiles::get_path_from_url( $model->url_thumbnail ) );
 					}
 				} else {
-					$uploaded_files[ $key ]['id'] = $model->ID;
+					$uploaded_files[ $key ]['file_id'] = $model->ID;
 				}
 			}
 		}
@@ -253,42 +245,6 @@ class AnyCommentRestDocuments extends AnyCommentRestController {
 		$response->set_status( 201 );
 
 		return $response;
-	}
-
-	/**
-	 * Check whether MIME type is related to image.
-	 *
-	 * @param string $mime_type MIME type to check for.
-	 *
-	 * @return bool
-	 */
-	public function is_image_by( $mime_type ) {
-		return strpos( $mime_type, 'image/' ) !== false;
-	}
-
-	/**
-	 * Check whether mime type is audio.
-	 *
-	 * @param string $mime_type MIME type to check for.
-	 *
-	 * @return bool
-	 */
-	public function is_audio_by( $mime_type ) {
-		return strpos( $mime_type, 'audio/' ) !== false;
-	}
-
-
-	/**
-	 * Get path from file URL.
-	 *
-	 * @param string $url URL where to retrieve the path.
-	 *
-	 * @return string
-	 */
-	public function get_path_from_url( $url ) {
-		$path = parse_url( $url, PHP_URL_PASS );
-
-		return get_home_path() . $path;
 	}
 
 	/**
@@ -316,6 +272,4 @@ class AnyCommentRestDocuments extends AnyCommentRestController {
 
 		return $response;
 	}
-
-
 }

@@ -17,6 +17,10 @@
       overflow: hidden;
       margin: 5px;
       cursor: pointer;
+      width: 60px;
+      height: 60px;
+      background-color: $semi-hidden-color;
+      @include border-radius($global-radius);
 
       &:hover .anycomment-uploads__item-close {
         display: block;
@@ -47,6 +51,14 @@
         width: 100%;
         height: auto;
         @include border-radius($global-radius);
+      }
+
+      .isvg {
+        svg {
+          height: 62%;
+          margin: 11px auto;
+          display: table;
+        }
       }
     }
   }

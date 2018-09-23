@@ -280,7 +280,7 @@ class SendCommentForm extends AnyCommentComponent {
 
                     <SendCommentFormBody {...this.props}
                                          handleContentChange={this.handleContentChange}
-                                         handleAttachmentsChange={this.handleAttachmentChange}
+                                         onAttachmentChange={this.props.onAttachmentChange}
                                          changeCommenText={this.props.onCommentTextChange}/>
 
                     {this.isGuest() ?

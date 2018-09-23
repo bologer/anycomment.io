@@ -1,14 +1,20 @@
-import React, {Component} from 'react';
-import Lightbox from 'react-images';
+import React, {Component} from 'react'
+import Lightbox from 'react-images'
+import {toast} from 'react-toastify'
+import AnyCommentComponent from "./AnyCommentComponent";
+import SVG from 'react-inlinesvg'
+import audioIcon from '../img/icons/icon-audio.svg'
+import documentIcon from '../img/icons/icon-document.svg'
 
-class CommentAttachments extends Component {
+
+class CommentAttachments extends AnyCommentComponent {
     constructor(props) {
         super(props);
 
         this.state = {
             lightboxIsOpen: false,
             currentImage: 0,
-            showDeleteAction: props.showDeleteAction || false
+            showDeleteAction: props.showDeleteAction || false,
         };
 
         this.closeLightbox = this.closeLightbox.bind(this);
@@ -60,13 +66,37 @@ class CommentAttachments extends Component {
         this.gotoNext();
     }
 
-    handleDelete(index, event) {
+    handleDelete(index, obj, event) {
         event.preventDefault();
+        event.stopPropagation();
 
-        console.log('can try to delete', index, event);
+        if (this.isGuest()) {
+            return false;
+        }
 
-        // this.
-        // this.props.images[index]
+        const settings = this.getSettings(),
+            url = '/documents/delete',
+            self = this;
+
+        this.props.axios
+            .request({
+                method: 'post',
+                url: url,
+                params: {id: obj.file_id},
+                headers: {'X-WP-Nonce': settings.nonce}
+            })
+            .then(function (response) {
+                if (response.data.success) {
+                    self.props.onAttachmentChange(self.props.attachments.filter((obj, i) => {
+                        return i !== index;
+                    }));
+                }
+            })
+            .catch(function (error) {
+                self.showError(error);
+            });
+
+        return false;
     }
 
     renderGallery() {
@@ -76,8 +106,9 @@ class CommentAttachments extends Component {
             return (null);
 
         const renderedGallery = attachments.map((obj, i) => {
-            const isImage = obj.isImage || false,
-                isAudio = obj.isAudio || false;
+            const type = (obj.type || ''),
+                isImage = type === 'image',
+                isAudio = type === 'audio';
 
             if (isImage) {
                 return <li
@@ -86,7 +117,7 @@ class CommentAttachments extends Component {
                     className="anycomment anycomment-uploads__item">
                     {this.state.showDeleteAction ?
                         <span className="anycomment anycomment-uploads__item-close"
-                              onClick={(e) => this.handleDelete(i, e)}>&times;</span> : ''}
+                              onClick={(e) => this.handleDelete(i, obj, e)}>&times;</span> : ''}
                     <img className="anycomment anycomment-uploads__item-thumbnail" src={obj.thumbnail}/>
                 </li>;
             } else if (isAudio) {
@@ -95,8 +126,13 @@ class CommentAttachments extends Component {
                     className="anycomment anycomment-uploads__item anycomment-uploads__item-audio">
                     {this.state.showDeleteAction ?
                         <span className="anycomment anycomment-uploads__item-close"
-                              onClick={(e) => this.handleDelete(i, e)}>&times;</span> : ''}
-                    Audio
+                              onClick={(e) => this.handleDelete(i, obj, e)}>&times;</span> : ''}
+                    <a href={obj.src} target="_blank">
+                        <SVG
+                            src={audioIcon}
+                            preloader={false}
+                        />
+                    </a>
                 </li>;
             }
 
@@ -105,8 +141,13 @@ class CommentAttachments extends Component {
                 className="anycomment anycomment-uploads__item anycomment-uploads__item anycomment-uploads__item-document">
                 {this.state.showDeleteAction ?
                     <span className="anycomment anycomment-uploads__item-close"
-                          onClick={(e) => this.handleDelete(i, e)}>&times;</span> : ''}
-                Doc
+                          onClick={(e) => this.handleDelete(i, obj, e)}>&times;</span> : ''}
+                <a href={obj.src} target="_blank">
+                    <SVG
+                        src={documentIcon}
+                        preloader={false}
+                    />
+                </a>
             </li>;
         });
 
@@ -125,17 +166,16 @@ class CommentAttachments extends Component {
             return [];
         }
 
-        return attachments.filter(item => item.isImage);
+        return attachments.filter(item => (item.type === 'image'));
     }
 
     render() {
-        const images = this.filterImages();
+        const images = this.filterImages(),
+            {attachments} = this.props;
 
-        if (!images || images.length <= 0) {
+        if (!attachments || attachments.length <= 0) {
             return (null);
         }
-
-        console.log(images);
 
         return (
             <ul className="anycomment anycomment-uploads">

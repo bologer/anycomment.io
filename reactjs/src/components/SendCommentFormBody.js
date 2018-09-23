@@ -17,7 +17,6 @@ class SendCommentFormBody extends AnyCommentComponent {
 
         this.state = {
             dropzoneActive: false,
-            uploadedFiles: []
         };
 
         this.onDragEnter = this.onDragEnter.bind(this);
@@ -177,7 +176,10 @@ class SendCommentFormBody extends AnyCommentComponent {
             onDragEnter={this.onDragEnter.bind(this)}
             onDragLeave={this.onDragLeave.bind(this)}>
             {outliner}
-            <CommentAttachments attachments={attachments} showDeleteAction={!this.isGuest()}/>
+            <CommentAttachments
+                onAttachmentChange={this.props.onAttachmentChange}
+                attachments={attachments}
+                showDeleteAction={!this.isGuest()}/>
         </Dropzone>
     }
 }

@@ -10,6 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @property int $ID
  * @property int $post_ID
  * @property int|null $user_ID
+ * @property string $type MIME type.
  * @property string|null $url
  * @property string|null $url_thumbnail Thumbnail of image. Used only for images.
  * @property string|null $ip
@@ -19,10 +20,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 0.0.3
  */
 class AnyCommentUploadedFiles {
+	const TYPE_AUDIO = 'audio';
+	const TYPE_APPLICATION = 'document';
+	const TYPE_IMAGE = 'image';
 
 	public $ID;
 	public $post_ID;
 	public $user_ID;
+	public $type;
 	public $url;
 	public $url_thumbnail;
 	public $ip;
@@ -54,7 +59,7 @@ class AnyCommentUploadedFiles {
 	 *
 	 * @param int $id File ID to search for.
 	 *
-	 * @return null|$this NULL returned on failure and object on success.
+	 * @return null|AnyCommentUploadedFiles NULL returned on failure and object on success.
 	 */
 	public static function findOne( $id ) {
 		$tablaName     = static::tableName();
@@ -99,7 +104,7 @@ class AnyCommentUploadedFiles {
 	}
 
 	/**
-	 * Delete single file or multiple at once.
+	 * Delete single file or multiple files at once.
 	 *
 	 * @param $data
 	 *
@@ -117,12 +122,46 @@ class AnyCommentUploadedFiles {
 			$ids = $data;
 		}
 
+		global $wpdb;
+
 		$table = static::tableName();
-		$query = "DELETE FROM $table WHERE `id` IN ($ids)";
+		$sql   = "SELECT * FROM `$table` WHERE `id` IN ($ids)";
 
-		$affected_rows = static::find()->query( $query );
+		$files = $wpdb->get_results( $sql );
 
-		return $affected_rows >= 0;
+		if ( empty( $files ) ) {
+			return true;
+		}
+
+		$deletedCount = 0;
+
+		foreach ( $files as $file ) {
+			/**
+			 * @var AnyCommentUploadedFiles $file
+			 */
+
+			// Delete original file
+			$path = static::get_path_from_url( $file->url );
+			@unlink( $path );
+
+			// Delete file thumbnail, if exists
+			if ( ! empty( $file->url_thumbnail ) ) {
+				$thumbnail_path = static::get_path_from_url( $file->url_thumbnail );
+				@unlink( $thumbnail_path );
+			}
+
+			// Delete attachments of file, if there are such
+			AnyCommentCommentMeta::deleteAttachmentByFileId( $file->ID );
+
+			// Delete files from table
+			$affected_rows = $wpdb->delete( $table, [ 'id' => $file->ID ] );
+
+			if ( $affected_rows > 0 ) {
+				$deletedCount ++;
+			}
+		}
+
+		return $deletedCount === count( $files );
 	}
 
 
@@ -168,5 +207,79 @@ class AnyCommentUploadedFiles {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Check whether specified MIME type can be cropped.
+	 *
+	 * @param string $mime_type MIME type to check.
+	 *
+	 * @return bool
+	 */
+	public static function can_crop( $mime_type ) {
+		if ( empty( $mime_type ) ) {
+			return false;
+		}
+
+		$cropSupport = [
+			'image/jpeg' => 'image/jpeg',
+			'image/png'  => 'image/png',
+			'image/gif'  => 'image/gif',
+		];
+
+		return isset( $cropSupport[ $mime_type ] );
+	}
+
+	/**
+	 * Get image type.
+	 *
+	 * @param string $mime_type File MIME type to get the type.
+	 *
+	 * @return string
+	 */
+	public static function get_image_type( $mime_type ) {
+		if ( static::is_image_by( $mime_type ) ) {
+			return self::TYPE_IMAGE;
+		} elseif ( static::is_audio_by( $mime_type ) ) {
+			return self::TYPE_AUDIO;
+		}
+
+		return self::TYPE_APPLICATION;
+	}
+
+	/**
+	 * Check whether MIME type is related to image.
+	 *
+	 * @param string $mime_type MIME type to check for.
+	 *
+	 * @return bool
+	 */
+	public static function is_image_by( $mime_type ) {
+		return strpos( $mime_type, 'image/' ) !== false;
+	}
+
+	/**
+	 * Check whether mime type is audio.
+	 *
+	 * @param string $mime_type MIME type to check for.
+	 *
+	 * @return bool
+	 */
+	public static function is_audio_by( $mime_type ) {
+		return strpos( $mime_type, 'audio/' ) !== false;
+	}
+
+
+	/**
+	 * Get path from file URL.
+	 *
+	 * @param string $url URL where to retrieve the path.
+	 *
+	 * @return string
+	 */
+	public static function get_path_from_url( $url ) {
+		$path = parse_url( $url );
+
+		return ABSPATH . $path['path'];
 	}
 }

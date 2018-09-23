@@ -529,8 +529,6 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			return new WP_Error( 'rest_comment_exists', __( 'Cannot create existing comment.', 'anycomment' ), array( 'status' => 400 ) );
 		}
 
-		//options.reCaptchaOn && (options.reCaptchaUserAll || (this.isGuest() && options.reCaptchaUserGuest) || (!this.isGuest() && options.reCaptchaUserAuth))
-
 		$checkCaptcha = AnyCommentIntegrationSettings::isRecaptchaOn() && (
 				( AnyCommentIntegrationSettings::isRecaptchaUserAll() ) ||
 				( ! is_user_logged_in() && AnyCommentIntegrationSettings::isRecaptchaUserGuest() ) ||
@@ -618,6 +616,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			return new WP_Error( 'rest_comment_failed_create', __( 'Creating comment failed.', 'anycomment' ), array( 'status' => 500 ) );
 		}
 
+		// Process attachments
 		if ( ! empty( $request['attachments'] ) ) {
 			AnyCommentCommentMeta::addAttachments( $comment_id, $request['attachments'] );
 		}
@@ -762,8 +761,9 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			}
 		}
 
+		// Process attachments
 		if ( ! empty( $request['attachments'] ) ) {
-			AnyCommentCommentMeta::updateAttachments( $id, $request['attachments'] );
+			AnyCommentCommentMeta::addAttachments( $id, $request['attachments'] );
 		}
 
 		$comment = get_comment( $id );
@@ -927,7 +927,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			'avatar_url'         => AnyComment()->auth->get_user_avatar_url( (int) $comment->user_id !== 0 ? $comment->user_id : $comment->comment_author_email ),
 			'children'           => $child_comments,
 			'owner'              => $owner,
-			'attachments'        => AnyCommentCommentMeta::getAttachments( $comment->comment_ID, false ),
+			'attachments'        => AnyCommentCommentMeta::getAttachments( $comment->comment_ID ),
 			'permissions'        => [
 				'can_edit_comment' => AnyComment()->render->can_edit_comment( $comment ),
 			],

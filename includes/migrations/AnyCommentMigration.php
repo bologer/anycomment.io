@@ -39,7 +39,7 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 		],
 		'0.0.57' => [
 			'version'     => '0.0.57',
-			'description' => 'Add "url_thumbnail" column to keep image thumbnail together with original url'
+			'description' => 'Add "url_thumbnail" column to keep image thumbnail together with original url and type for MIME type'
 		]
 	];
 
