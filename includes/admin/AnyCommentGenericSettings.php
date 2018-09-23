@@ -112,6 +112,11 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		const OPTION_MODERATE_WORDS = 'options_moderate_words';
 
 		/**
+		 * Put comments with links on hold.
+		 */
+		const OPTION_LINKS_ON_HOLD = 'options_links_on_hold';
+
+		/**
 		 * Show/hide profile URL on client mini social icon.
 		 */
 		const OPTION_SHOW_PROFILE_URL = 'options_show_profile_url';
@@ -606,6 +611,12 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'description' => esc_html( __( 'Moderators should check comment before it appears.', "anycomment" ) )
 					],
 					[
+						'id'          => self::OPTION_LINKS_ON_HOLD,
+						'title'       => __( 'Links on Hold', "anycomment" ),
+						'callback'    => 'input_checkbox',
+						'description' => esc_html( __( 'Comment with links should be marked for moderation.', "anycomment" ) )
+					],
+					[
 						'id'          => self::OPTION_MODERATE_WORDS,
 						'title'       => __( 'Spam Words', "anycomment" ),
 						'callback'    => 'input_textarea',
@@ -1010,6 +1021,15 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 */
 		public static function isLoadOnScroll() {
 			return static::instance()->getOption( self::OPTION_LOAD_ON_SCROLL ) !== null;
+		}
+
+		/**
+		 * Check whether it is required to hold comments with links for moderation.
+		 *
+		 * @return bool
+		 */
+		public static function isLinksOnHold() {
+			return static::instance()->getOption( self::OPTION_LINKS_ON_HOLD ) !== null;
 		}
 
 		/**

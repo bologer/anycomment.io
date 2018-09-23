@@ -622,7 +622,8 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		}
 
 		if ( ! current_user_can( 'moderate_comments' ) && AnyCommentGenericSettings::isModerateFirst() ||
-		     AnyCommentComments::hasModerateWords( $comment_id ) ) {
+		     AnyCommentComments::hasModerateWords( $comment_id ) ||
+		     AnyCommentGenericSettings::isLinksOnHold() && AnyCommentComments::has_links( $comment_id ) ) {
 			$this->handle_status_param( 'hold', $comment_id );
 		}
 

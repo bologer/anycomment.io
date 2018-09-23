@@ -183,6 +183,8 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 > The support of dark theme was a bit pain in the ass. So we sat and thought it would be better if give control over the theme to you.
 > Give ability to drag & drop some of the elements, change colors, sized, etc. However it will come a bit further, for now a few new design options will be added.
 
+* Added option to premoderate comments with links, #84
+
 
 **Fixes:**
 
