@@ -112,7 +112,6 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 						'limit'                  => AnyCommentGenericSettings::getPerPage(),
 						'isCopyright'            => AnyCommentGenericSettings::isCopyrightOn(),
 						'socials'                => anycomment_login_with( false, get_permalink( $postId ) ),
-						'theme'                  => AnyCommentGenericSettings::getTheme(),
 						'sort_order'             => AnyCommentGenericSettings::getSortOrder(),
 						'guestInputs'            => AnyCommentGenericSettings::getGuestFields( true ),
 						'isShowProfileUrl'       => AnyCommentGenericSettings::isShowProfileUrl(),

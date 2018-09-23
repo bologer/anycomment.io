@@ -149,27 +149,6 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		/**
 		 * DESIGN
 		 */
-
-		/**
-		 * Theme chosen for comments.
-		 */
-		const OPTION_THEME = 'option_theme';
-
-		/**
-		 * Dark theme.
-		 */
-		const THEME_DARK = 'dark';
-
-		/**
-		 * Light theme.
-		 */
-		const THEME_LIGHT = 'light';
-
-		/**
-		 * Custom theme.
-		 */
-		const THEME_CUSTOM = 'custom';
-
 		/**
 		 * Define form type: only guest users, only social networks or both of it.
 		 */
@@ -268,7 +247,6 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 			self::OPTION_NOTIFY_ADMIN_EMAIL_TEMPLATE           => "New comment posted in {blogUrlHtml}.\nFor post {postUrlHtml}.\n\n{commentFormatted}\n{replyButton}",
 
 			// Other design
-			self::OPTION_THEME                                 => self::THEME_LIGHT,
 			self::OPTION_FORM_TYPE                             => self::FORM_OPTION_SOCIALS_ONLY,
 			self::OPTION_GUEST_FIELDS                          => '{name} {email} {website}',
 
@@ -484,18 +462,6 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 				$this->page_slug,
 				'section_design',
 				[
-					[
-						'id'          => self::OPTION_THEME,
-						'title'       => __( 'Theme', "anycomment" ),
-						'callback'    => 'input_select',
-						'args'        => [
-							'options' => [
-								self::THEME_DARK  => __( 'Dark', 'anycomment' ),
-								self::THEME_LIGHT => __( 'Light', 'anycomment' ),
-							]
-						],
-						'description' => esc_html( __( 'Choose comments theme.', "anycomment" ) )
-					],
 					[
 						'id'          => self::OPTION_FORM_TYPE,
 						'title'       => __( 'Comment form', "anycomment" ),
@@ -1444,28 +1410,6 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 
 			if ( $value < 5 ) {
 				$value = 5;
-			}
-
-			return $value;
-		}
-
-		/**
-		 * Get currently chosen theme.
-		 * When value store is not matching any of the existing
-		 * themes -> returns `dark` as default.
-		 *
-		 * @return string|null
-		 */
-		public static function getTheme() {
-
-			if ( static::isDesignCustom() ) {
-				return self::THEME_CUSTOM;
-			}
-
-			$value = static::instance()->getOption( self::OPTION_THEME );
-
-			if ( $value === null || $value !== self::THEME_DARK && $value !== self::THEME_LIGHT ) {
-				return self::THEME_LIGHT;
 			}
 
 			return $value;

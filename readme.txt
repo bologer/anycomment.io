@@ -172,7 +172,16 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 **Enhancements:**
 
 * Added ability to disable WordPress from login options in "Socials" -> "WordPress", #154
-* Now uploaded images will be having thumbnail and clicking on it will open original image in gallery viewer, #147
+
+* [Gallery] Ability to preview image in the gallery (can use LEFT-RIGHT arrow keys to iterate through images, ESC to close gallery), #147
+* [Gallery] After image or file is uploaded, they will be added as small block below the comment box, #147
+* [Gallery] Images are now handled smarter: original source is kept as it is and small thumbnail is cropped from original source as a preview, #147
+* [Gallery] Ability to delete file when adding/updating comment (file will be erased from DB and filesystem), #147
+
+* Removed ability to choose predefined themes and no more support for dark theme in favor of customizer. However, white theme is kept as the default one, #155
+
+> The support of dark theme was a bit pain in the ass. So we sat and thought it would be better if give control over the theme to you.
+> Give ability to drag & drop some of the elements, change colors, sized, etc. However it will come a bit further, for now a few new design options will be added.
 
 
 **Fixes:**
