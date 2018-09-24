@@ -212,15 +212,17 @@ if ( ! class_exists( 'AnyComment' ) ) :
 		 */
 		public function includes() {
 
-			/**
-			 * Cache loading
-			 */
 			require_once( ANYCOMMENT_ABSPATH . 'vendor/autoload.php' );
 
 			// Helpers
 			include_once( ANYCOMMENT_ABSPATH . 'includes/helpers/AnyCommentInputHelper.php' );
 
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentOptions.php' );
+
+			// Cache
+			include_once( ANYCOMMENT_ABSPATH . 'includes/cache/AnyCommentCacheManager.php' );
+			include_once( ANYCOMMENT_ABSPATH . 'includes/cache/AnyCommentRestCacheManager.php' );
+
 
 			// Rest
 			include_once( ANYCOMMENT_ABSPATH . 'includes/rest/AnyCommentRestController.php' );
