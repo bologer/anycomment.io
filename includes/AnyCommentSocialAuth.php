@@ -74,7 +74,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 			self::SOCIAL_TWITCH        => 'TwitchTV',
 			self::SOCIAL_DRIBBBLE      => 'Dribbble',
 			self::SOCIAL_YAHOO         => 'Yahoo',
-			self::SOCIAL_WORDPRESS         => 'WordPress',
+			self::SOCIAL_WORDPRESS     => 'WordPress',
 		];
 
 		protected static $rest_prefix = 'anycomment';
@@ -181,13 +181,13 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		}
 
 		/**
-		 * Get provider name from lowercased name.
+		 * Get provider name based on provided social key.
 		 *
 		 * @param string $social Social name, usually lowercase, which comes from REST API.
 		 *
 		 * @return null|string NULL when unable to get provider name.
 		 */
-		public function getProviderName( $social ) {
+		public function get_provider_name( $social ) {
 			if ( ! $this->social_exists( $social ) ) {
 				return null;
 			}
@@ -210,6 +210,33 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 			}
 
 			return false;
+		}
+
+		/**
+		 * Get verbal name based on provided social key.
+		 *
+		 * @param string $social Social media key.
+		 *
+		 * @return mixed
+		 */
+		public function get_verbal_name( $social ) {
+			$verbals = [
+				self::SOCIAL_VKONTAKTE     => __( 'Vkontakte', 'anycomment' ),
+				self::SOCIAL_FACEBOOK      => __( 'Facebook', 'anycomment' ),
+				self::SOCIAL_TWITTER       => __( 'Twitter', 'anycomment' ),
+				self::SOCIAL_GOOGLE        => __( 'Google', 'anycomment' ),
+				self::SOCIAL_GITHUB        => __( 'GitHub', 'anycomment' ),
+				self::SOCIAL_ODNOKLASSNIKI => __( 'Odnoklassniki', 'anycomment' ),
+				self::SOCIAL_INSTAGRAM     => __( 'Instagram', 'anycomment' ),
+				self::SOCIAL_TWITCH        => __( 'Twitch', 'anycomment' ),
+				self::SOCIAL_DRIBBBLE      => __( 'Dribbble', 'anycomment' ),
+				self::SOCIAL_YAHOO         => __( 'Yahoo', 'anycomment' ),
+				self::SOCIAL_WORDPRESS     => __( 'WordPress', 'anycomment' ),
+			];
+
+			return isset( $verbals[ $social ] ) ?
+				$verbals[ $social ] :
+				$social;
 		}
 
 		/**
@@ -322,7 +349,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 				return false;
 			}
 
-			$providerName = $this->getProviderName( $social );
+			$providerName = $this->get_provider_name( $social );
 
 			return $this->_auth->authenticate( $providerName );
 		}
@@ -555,6 +582,15 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 
 			if ( $user !== false && ! AnyCommentUserMeta::isSocialLogin( $user ) ) {
 				return new WP_Error( 'use_wordpress_to_login', __( "Please use normal login form, as this email is associated with a WordPress user.", "anycomment" ) );
+			}
+
+			$found_user_social = AnyCommentUserMeta::getSocialType( $user );
+
+			if ( $found_user_social !== null && $field === 'email' && $found_user_social !== $social ) {
+				return new WP_Error( 'use_original_social_account', sprintf( __( "Please use %s to login as this %s seems to be already taken.", "anycomment" ),
+					$this->get_verbal_name( $found_user_social ),
+					( $field === 'email' ? __( "email", 'anycomment' ) : __( "login", 'anycomment' ) )
+				) );
 			}
 
 			if ( $user === false ) {
@@ -869,10 +905,11 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		 * Get list of errors stored in cookies.
 		 *
 		 * @param bool $decode If required to return decoded JSON.
+		 * @param bool $andClean Will clean cookie before errors returned.
 		 *
 		 * @return string|array|null
 		 */
-		public static function getErrors( $decode = true ) {
+		public static function getErrors( $decode = true, $andClean = false ) {
 			$errors = isset( $_COOKIE[ self::COOKIE_ERROR_STORAGE ] ) ? $_COOKIE[ self::COOKIE_ERROR_STORAGE ] : null;
 
 			if ( $errors === null ) {
@@ -881,6 +918,10 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 
 			if ( $decode ) {
 				return json_decode( stripslashes( $errors ) );
+			}
+
+			if ( $andClean ) {
+				static::cleanErrors();
 			}
 
 			return $errors;
@@ -904,7 +945,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 				$errors[] = $errorMessage;
 			}
 
-			$errorsJson = json_encode( $errors, JSON_HEX_QUOT | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT );
+			$errorsJson = json_encode( $errors, JSON_HEX_QUOT | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE );
 
 			return setcookie( self::COOKIE_ERROR_STORAGE, $errorsJson, 0, "/" );
 		}

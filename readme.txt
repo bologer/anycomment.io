@@ -189,6 +189,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 **Fixes:**
 
 * Added missing Russian translation for "Sorting"
+* Fixed situation when one user with two social networks and same email address was always logged in with the first recorded social
 
 
 = 0.0.56 – 17.09.2018 =
