@@ -595,8 +595,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		}
 
 		// Flush comment when reply sent, etc
-		$comment_flush_id = isset( $request['parent'] ) ? $request['parent'] : $comment_id;
-		\anycomment\cache\rest\AnyCommentRestCacheManager::flushComment( $request['post'], $comment_flush_id );
+		\anycomment\cache\rest\AnyCommentRestCacheManager::flushComment( $request['post'], $comment_id );
 
 
 		$comment = get_comment( $comment_id );
@@ -758,8 +757,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		$request->set_param( 'context', 'edit' );
 
 		// Need to flush specific comment on update
-		$comment_flush_id = (int) $comment->comment_parent !== 0 ? $comment->comment_parent : $comment->comment_ID;
-		\anycomment\cache\rest\AnyCommentRestCacheManager::flushComment( $comment->comment_post_ID, $comment_flush_id );
+		\anycomment\cache\rest\AnyCommentRestCacheManager::flushComment( $comment->comment_post_ID, $comment->comment_ID );
 
 		$response = $this->prepare_item_for_response( $comment, $request );
 
@@ -858,34 +856,31 @@ class AnyCommentRestComment extends AnyCommentRestController {
 
 		$child_comments = AnyComment()->render->get_child_comments( $comment->comment_ID );
 
-		$childMissCount = 0;
-
 		if ( ! empty( $child_comments ) ) {
 
 			foreach ( $child_comments as $key => $child_comment ) {
 
 				// Check whether child comment is cache or not
-//				$childCachedComment = AnyCommentRestCacheManager::getComment( $comment->comment_post_ID, $child_comment->comment_ID );
-//
-//				if ( ! $cachedComment->isMiss() ) {
-//					$child_comments[ $key ] = $childCachedComment->get();
-//				} else {
-//					$childMissCount ++;
+				$childCachedComment = \anycomment\cache\rest\AnyCommentRestCacheManager::getComment( $child_comment->comment_post_ID, $child_comment->comment_ID );
 
-				$prepared_child_comment = $this->prepare_item_for_response( $child_comment, $request );
-				if ( isset( $prepared_child_comment->data ) ) {
-					$prepared_child_comment = $prepared_child_comment->data;
+				if ( ! $childCachedComment->isMiss() ) {
+					$childCache             = $childCachedComment->get();
+					$child_comments[ $key ] = isset( $childCache->data ) ? $childCache->data : $childCache;
+				} else {
+					$prepared_child_comment = $this->prepare_item_for_response( $child_comment, $request );
+					if ( isset( $prepared_child_comment->data ) ) {
+						$prepared_child_comment = $prepared_child_comment->data;
+					}
+
+					// Cache child comment
+					$childCachedComment->set( $prepared_child_comment )->save();
+
+					$child_comments[ $key ] = $prepared_child_comment;
 				}
-
-				// Cache child comment
-//				$childCachedComment->set( $prepared_child_comment )->save();
-
-				$child_comments[ $key ] = $prepared_child_comment;
-//				}
 			}
 		}
 
-		if ( $childMissCount === 0 && ! $cachedComment->isMiss() ) {
+		if ( ! $cachedComment->isMiss() ) {
 			return $cachedComment->get();
 		}
 
