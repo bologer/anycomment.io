@@ -167,7 +167,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 == Changelog ==
 
-= 0.0.57 – 17.09.2018 =
+= 0.0.57 – 24.09.2018 =
 
 **Enhancements:**
 
@@ -184,7 +184,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 > Give ability to drag & drop some of the elements, change colors, sized, etc. However it will come a bit further, for now a few new design options will be added.
 
 * Added option to premoderate comments with links, #84
-
+* Improved comments caching, they should be working x1.5 faster now, #151
 
 **Fixes:**
 
