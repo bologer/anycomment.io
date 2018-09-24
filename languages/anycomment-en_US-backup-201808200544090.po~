@@ -1,0 +1,1049 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: AnyComment\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-08-19 15:20+0000\n"
+"PO-Revision-Date: 2018-08-19 15:23+0000\n"
+"Last-Translator: admin <sasha.tesh@gmail.com>\n"
+"Language-Team: English (United States)\n"
+"Language: en_US\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/"
+
+#: includes/AnyCommentEmailQueue.php:239
+#, php-format
+msgid "New reply was posted in <a href=\"%s\">%s</a>"
+msgstr ""
+
+#: includes/AnyCommentEmailQueue.php:242
+#, php-format
+msgid "For post <a href=\"%s\">%s</a>"
+msgstr ""
+
+#: includes/AnyCommentEmailQueue.php:252 includes/AnyCommentRender.php:83
+#: includes/AnyCommentRender.php:91
+msgid "Reply"
+msgstr ""
+
+#: includes/AnyCommentSocialAuth.php:112
+msgid "Unable to authorize, please try again later"
+msgstr ""
+
+#: includes/ac-core-functions.php:35
+#: includes/admin/AnyCommentSocialSettings.php:141
+msgid "VK"
+msgstr ""
+
+#: includes/ac-core-functions.php:41
+#: includes/admin/AnyCommentSocialSettings.php:188
+msgid "Twitter"
+msgstr ""
+
+#: includes/ac-core-functions.php:47
+#: includes/admin/AnyCommentSocialSettings.php:234
+msgid "Facebook"
+msgstr ""
+
+#: includes/ac-core-functions.php:53
+#: includes/admin/AnyCommentSocialSettings.php:280
+msgid "Google"
+msgstr ""
+
+#: includes/ac-core-functions.php:59
+#: includes/admin/AnyCommentSocialSettings.php:326
+msgid "Github"
+msgstr ""
+
+#: includes/ac-core-functions.php:65
+#: includes/admin/AnyCommentSocialSettings.php:372
+msgid "Odnoklassniki"
+msgstr ""
+
+#: includes/ac-core-functions.php:71
+#: includes/admin/AnyCommentSocialSettings.php:426
+msgid "Instagram"
+msgstr ""
+
+#: includes/ac-core-functions.php:77
+#: includes/admin/AnyCommentSocialSettings.php:473
+msgid "Twitch"
+msgstr ""
+
+#: includes/ac-core-functions.php:83
+#: includes/admin/AnyCommentSocialSettings.php:519
+msgid "Dribbble"
+msgstr ""
+
+#: includes/ac-core-functions.php:89
+#: includes/admin/AnyCommentSocialSettings.php:565
+msgid "Yahoo"
+msgstr ""
+
+#: includes/AnyCommentRender.php:78
+msgid "Oops, something went wrong..."
+msgstr ""
+
+#: includes/AnyCommentRender.php:79
+msgid "Loading..."
+msgstr ""
+
+#: includes/AnyCommentRender.php:80
+msgid "Load more"
+msgstr ""
+
+#: includes/AnyCommentRender.php:81
+msgid "Send"
+msgstr ""
+
+#: includes/AnyCommentRender.php:82
+#: includes/admin/AnyCommentAdminOptions.php:209
+#: includes/admin/AnyCommentSocialSettings.php:642
+msgid "Save"
+msgstr ""
+
+#: includes/AnyCommentRender.php:84
+msgid "Sort By"
+msgstr ""
+
+#: includes/AnyCommentRender.php:85
+msgid "Oldest"
+msgstr ""
+
+#: includes/AnyCommentRender.php:86
+msgid "Newest"
+msgstr ""
+
+#: includes/AnyCommentRender.php:87
+msgid "Reply to"
+msgstr ""
+
+#: includes/AnyCommentRender.php:88
+msgid "Your comment..."
+msgstr ""
+
+#: includes/AnyCommentRender.php:89
+msgid "No comments to display"
+msgstr ""
+
+#: includes/AnyCommentRender.php:90
+msgid "Add Anycomment to your site"
+msgstr ""
+
+#: includes/AnyCommentRender.php:92
+msgid "Edit"
+msgstr ""
+
+#: includes/AnyCommentRender.php:93
+msgid "Delete"
+msgstr ""
+
+#: includes/AnyCommentRender.php:94
+msgid "Cancel"
+msgstr ""
+
+#: includes/AnyCommentRender.php:95
+msgid "Quick Login"
+msgstr ""
+
+#: includes/AnyCommentRender.php:96
+msgid "New comment was added"
+msgstr ""
+
+#: includes/AnyCommentRender.php:97
+msgid "Author"
+msgstr ""
+
+#: includes/AnyCommentRender.php:99
+#, php-format
+msgid "I accept the <a href=\"%s\"%s>User Agreement</a>"
+msgstr ""
+
+#: includes/AnyCommentRender.php:171
+#, php-format
+msgid "%s Comments"
+msgstr ""
+
+#: includes/admin/AnyCommentIntegrationSettings.php:72
+#: includes/admin/AnyCommentIntegrationSettings.php:73
+#: templates/admin/tabs.php:15
+msgid "Integration"
+msgstr ""
+
+#: includes/admin/AnyCommentIntegrationSettings.php:87
+#: includes/admin/AnyCommentGenericSettings.php:170
+msgid "Generic"
+msgstr ""
+
+#: includes/admin/AnyCommentIntegrationSettings.php:90
+msgid ""
+"Integration with other plugin and/or services. Integration options will "
+"automatically appear down below once you install one of the supported "
+"plugins."
+msgstr ""
+
+#: includes/admin/AnyCommentIntegrationSettings.php:102
+msgid "Akismet Anti-Spam"
+msgstr ""
+
+#: includes/admin/AnyCommentIntegrationSettings.php:104
+#, php-format
+msgid ""
+"Filter all new comments through <a href=\"%s\">Akismet Anti-Spam</a> plugin."
+msgstr ""
+
+#: includes/admin/AnyCommentIntegrationSettings.php:111
+msgid "WP User Avatar"
+msgstr ""
+
+#: includes/admin/AnyCommentIntegrationSettings.php:113
+#, php-format
+msgid ""
+"Use <a href=\"%s\">WP User Avatar</a> for handling avatars in the plugin."
+msgstr ""
+
+#: includes/admin/AnyCommentAdminOptions.php:196
+#: includes/admin/AnyCommentSocialSettings.php:620
+msgid "Settings Saved"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:141
+#: includes/admin/AnyCommentGenericSettings.php:207
+msgid "Social Network Subscriber"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:156
+#: includes/admin/AnyCommentGenericSettings.php:157 templates/admin/tabs.php:11
+msgid "Settings"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:172
+msgid "Generic settings."
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:183
+msgid "Enable Comments"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:185
+msgid ""
+"When on, comments are visible. When off, default WordPress' comments shown. "
+"This can be used to configure social networks on fresh installation."
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:189
+msgid "Theme"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:193
+msgid "Dark"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:194
+msgid "Light"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:197
+msgid "Choose comments theme."
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:201
+msgid "Register User Group"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:203
+msgid ""
+"When users will authorize via plugin, they are being registered and be "
+"assigned with group selected above."
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:206
+msgid "Subscriber"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:213
+msgid "Number of Comments Loaded"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:215
+msgid ""
+"Number of comments loaded on initial page load. For example, \"20\" will "
+"display 20 comments on the page and if you have 40 in total, at the very "
+"bottom you will see button to load more. Min 5, max as defined."
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:219
+msgid "New Comment Alert"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:221
+msgid ""
+"Show alert on new comment. Once clicked on alert, new comment will be shown."
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:225
+msgid "New Comment Interval Checking"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:227
+msgid ""
+"Interval (in seconds) to check for new comments. Minimum 5 and maximum is "
+"100 seconds."
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:231
+msgid "Email Notifications"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:233
+msgid ""
+"Notify users by email (if specified) about new replies. Make sure you have "
+"proper SMTP configurations in order to send emails."
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:237
+msgid "Load on Scroll"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:239
+msgid "Load comments when user scrolls to it."
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:243
+msgid "Moderate First"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:245
+msgid ""
+"Comment are not shown until they are approved by moderator. Users with "
+"ability to moderate comments will be ignored by filter."
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:249
+msgid "Show Profile URL"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:251
+msgid ""
+"Show link to user in the social media when available (name of the user will "
+"be clickable)."
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:255
+msgid "User Agreement Link"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:257
+msgid ""
+"Link to User Agreement, where described how your process users data once "
+"they authorize via social network and/or add new comment."
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:261
+msgid "Thanks"
+msgstr ""
+
+#: includes/admin/AnyCommentGenericSettings.php:263
+msgid ""
+"Show AnyComment's link in the footer of comments. Copyright helps to bring "
+"awareness of such plugin and bring people to allow us to understand that it "
+"is a wanted product and give more often updated."
+msgstr ""
+
+#: includes/admin/AnyCommentWPComments.php:31
+#: includes/admin/AnyCommentWPComments.php:56
+msgid "Likes"
+msgstr ""
+
+#: includes/admin/AnyCommentWPComments.php:57
+msgid "Social URL"
+msgstr ""
+
+#. Name of the plugin
+#: includes/admin/AnyCommentAdminPages.php:76
+#: includes/admin/AnyCommentAdminPages.php:77 templates/admin/dashboard.php:21
+#: templates/admin/dashboard.php:22
+msgid "AnyComment"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:124
+#: includes/admin/AnyCommentSocialSettings.php:125
+msgid "Social Settings"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:144
+msgid "VK authorization settings."
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:148
+#: includes/admin/AnyCommentSocialSettings.php:194
+#: includes/admin/AnyCommentSocialSettings.php:240
+#: includes/admin/AnyCommentSocialSettings.php:286
+#: includes/admin/AnyCommentSocialSettings.php:332
+#: includes/admin/AnyCommentSocialSettings.php:378
+#: includes/admin/AnyCommentSocialSettings.php:432
+#: includes/admin/AnyCommentSocialSettings.php:479
+#: includes/admin/AnyCommentSocialSettings.php:525
+#: includes/admin/AnyCommentSocialSettings.php:571
+#: includes/admin/AnyCommentSocialSettings.php:755
+msgid "Callback URL"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:164
+#: includes/admin/AnyCommentSocialSettings.php:210
+#: includes/admin/AnyCommentSocialSettings.php:256
+#: includes/admin/AnyCommentSocialSettings.php:302
+#: includes/admin/AnyCommentSocialSettings.php:348
+#: includes/admin/AnyCommentSocialSettings.php:396
+#: includes/admin/AnyCommentSocialSettings.php:448
+#: includes/admin/AnyCommentSocialSettings.php:495
+#: includes/admin/AnyCommentSocialSettings.php:541
+#: includes/admin/AnyCommentSocialSettings.php:587
+msgid "Enable"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:166
+msgid "Allow VK authorization"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:170
+msgid "Application ID"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:172
+#, php-format
+msgid ""
+"Enter app id. Can be found in <a href=\"%s\" target=\"_blank\">apps</a> page"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:176
+msgid "Secure key"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:178
+#, php-format
+msgid ""
+"Enter secure key. Can be found in <a href=\"%s\" target=\"_blank\">apps</a> "
+"page"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:191
+msgid "Twitter authorization settings."
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:212
+msgid "Allow Twitter authorization"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:216
+msgid "Consumer Key"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:218
+#, php-format
+msgid ""
+"Enter consumer key. Can be found in the list of <a href=\"%s\" "
+"target=\"_blank\">apps</a>"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:222
+msgid "Consumer Secret"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:224
+#, php-format
+msgid ""
+"Enter consumer secret. Can be found in the list of <a href=\"%s\" "
+"target=\"_blank\">apps</a>"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:237
+msgid "Facebook authorization settings."
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:258
+msgid "Allow Facebook authorization"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:262
+#: includes/admin/AnyCommentSocialSettings.php:402
+#: includes/admin/AnyCommentSocialSettings.php:593
+msgid "App ID"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:264
+#, php-format
+msgid ""
+"Enter app id. Can be found in the list of <a href=\"%s\" target=\"_blank\">"
+"apps</a>"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:268
+#: includes/admin/AnyCommentSocialSettings.php:414
+msgid "App Secret"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:270
+msgid ""
+"Enter app secret. Can be found in the list of <a href=\"%\" "
+"target=\"_blank\">apps</a>"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:283
+msgid "Google authorization settings."
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:304
+msgid "Allow Google authorization"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:308
+#: includes/admin/AnyCommentSocialSettings.php:354
+#: includes/admin/AnyCommentSocialSettings.php:454
+#: includes/admin/AnyCommentSocialSettings.php:501
+#: includes/admin/AnyCommentSocialSettings.php:547
+msgid "Client ID"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:310
+#: includes/admin/AnyCommentSocialSettings.php:356
+#, php-format
+msgid ""
+"Enter client id. Can be found in the list of <a href=\"%s\" "
+"target=\"_blank\">apps</a>"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:314
+#: includes/admin/AnyCommentSocialSettings.php:360
+#: includes/admin/AnyCommentSocialSettings.php:460
+#: includes/admin/AnyCommentSocialSettings.php:507
+#: includes/admin/AnyCommentSocialSettings.php:553
+#: includes/admin/AnyCommentSocialSettings.php:599
+msgid "Client Secret"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:316
+#: includes/admin/AnyCommentSocialSettings.php:362
+#, php-format
+msgid ""
+"Enter client secret. Can be found in the list of <a href=\"%s\" "
+"target=\"_blank\">apps</a>"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:329
+msgid "Github authorization settings."
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:350
+msgid "Allow GitHub authorization"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:375
+msgid "Odnoklassniki authorization settings."
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:398
+msgid "Allow Odnoklassniki authorization"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:404
+msgid "Enter app id. Can be found in the email sent to you by Odnoklassniki"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:408
+msgid "App Key"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:410
+msgid "Enter app key. Can be found in the email sent to you by Odnoklassniki"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:416
+msgid ""
+"Enter client secret. Can be found in the email sent to you by Odnoklassniki"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:429
+msgid "Instagram authorization settings."
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:450
+msgid "Allow Instagram authorization"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:456
+#, php-format
+msgid ""
+"Enter client id. Can be found in <a href=\"%s\" target=\"_blank\">Manage "
+"Clients</a>"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:462
+#, php-format
+msgid ""
+"Enter client secret. Can be found in <a href=\"%s\" target=\"_blank\">Manage "
+"Clients</a>"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:476
+msgid "Twitch authorization settings."
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:497
+msgid "Allow Twitch authorization"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:503
+#, php-format
+msgid ""
+"Enter client id. It can be found in the <a href=\"%s\" target=\"_blank\">"
+"apps</a>"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:509
+#, php-format
+msgid ""
+"Enter client secret. It can be found in the <a href=\"%s\" target=\"_blank\">"
+"apps</a>"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:522
+msgid "Dribbble authorization settings."
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:543
+msgid "Allow Dribbble authorization"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:549
+#, php-format
+msgid ""
+"Enter client id. It can be found in the <a href=\"%s\" target=\"_blank\">"
+"your applications</a>"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:555
+#, php-format
+msgid ""
+"Enter client secret. It can be found in the <a href=\"%s\" target=\"_blank\">"
+"your applications</a>"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:568
+msgid "Yahoo authorization settings."
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:589
+msgid "Allow Yahoo authorization"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:595
+#, php-format
+msgid ""
+"Enter app id. It can be found in the <a href=\"%s\" target=\"_blank\">my "
+"apps</a>"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:601
+#, php-format
+msgid ""
+"Enter client secret. It can be found in the <a href=\"%s\" target=\"_blank\">"
+"my apps</a>"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:770
+#, php-format
+msgid "How To Set-Up %s"
+msgstr ""
+
+#: includes/admin/AnyCommentSocialSettings.php:772
+msgid "Read"
+msgstr ""
+
+#: includes/rest/AnyCommentRestLikes.php:37
+#: includes/rest/AnyCommentRestComment.php:76
+#: includes/rest/AnyCommentRestComment.php:1081
+msgid "Unique identifier for the object."
+msgstr ""
+
+#: includes/rest/AnyCommentRestLikes.php:56
+msgid "Login to like comment"
+msgstr ""
+
+#: includes/rest/AnyCommentRestLikes.php:60
+#: includes/rest/AnyCommentRestLikes.php:78
+msgid "Sorry, post does not exist."
+msgstr ""
+
+#: includes/rest/AnyCommentRestLikes.php:64
+#: includes/rest/AnyCommentRestLikes.php:72
+msgid "Sorry, comment that you liked does not exist."
+msgstr ""
+
+#: includes/rest/AnyCommentRestLikes.php:82
+#: includes/rest/AnyCommentRestLikes.php:86
+#: includes/rest/AnyCommentRestComment.php:484
+#: includes/rest/AnyCommentRestComment.php:488
+msgid "Sorry, you are not allowed to create a comment on this post."
+msgstr ""
+
+#: includes/rest/AnyCommentRestLikes.php:105
+msgid "Cannot create existing like."
+msgstr ""
+
+#: includes/rest/AnyCommentRestLikes.php:121
+msgid "Failed to like"
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:43
+msgid "Unique post ID"
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:87
+msgid ""
+"The password for the parent post of the comment (if the post is password "
+"protected)."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:123
+#: includes/rest/AnyCommentRestComment.php:385
+#: includes/rest/AnyCommentRestComment.php:492
+msgid "Sorry, you are not allowed to read the post for this comment."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:125
+msgid "Sorry, you are not allowed to read comments without a post."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:131
+#: includes/rest/AnyCommentRestComment.php:375
+msgid "Sorry, you are not allowed to edit comments."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:153
+#, php-format
+msgid "Query parameter not permitted: %s"
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:338
+msgid "Invalid comment ID."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:352
+#: includes/rest/AnyCommentRestComment.php:683
+msgid "Invalid post ID."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:381
+msgid "Sorry, you are not allowed to read this comment."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:426
+#: includes/rest/AnyCommentRestComment.php:443
+msgid "Sorry, you must be logged in to comment."
+msgstr ""
+
+#. %s: request parameter
+#: includes/rest/AnyCommentRestComment.php:451
+#: includes/rest/AnyCommentRestComment.php:460
+#: includes/rest/AnyCommentRestComment.php:469
+#, php-format
+msgid "Sorry, you are not allowed to edit '%s' for comments."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:475
+#: includes/rest/AnyCommentRestComment.php:480
+msgid "Sorry, you are not allowed to create this comment without a post."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:496
+msgid "Sorry, comments are closed for this item."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:514
+msgid "Cannot create existing comment."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:534
+#: includes/rest/AnyCommentRestComment.php:700
+msgid "Invalid comment content."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:573
+#: includes/rest/AnyCommentRestComment.php:709
+msgid "Comment field exceeds maximum length allowed."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:579
+msgid "Creating comment failed."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:645
+msgid "Sorry, you are not allowed to edit this comment."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:671
+msgid "Sorry, you are not allowed to change the comment type."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:692
+msgid "Updating comment status failed."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:715
+msgid "Updating comment failed."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:767
+msgid "Sorry, you are not allowed to delete this comment."
+msgstr ""
+
+#. %s: force=true
+#: includes/rest/AnyCommentRestComment.php:805
+#, php-format
+msgid "The comment does not support trashing. Set '%s' to delete."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:809
+msgid "The comment has already been trashed."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:818
+msgid "The comment cannot be deleted."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1010
+msgid "Invalid comment author ID."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1087
+msgid "The ID of the user object, if author was a user."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1092
+msgid "Email address for the object author."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1102
+msgid "IP address for the object author."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1108
+msgid "Display name for the object author."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1116
+msgid "URL for the object author."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1122
+msgid "User agent for the object author."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1130
+msgid "The content for the object."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1141
+msgid "Content for the object, as it exists in the database."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1146
+msgid "HTML content for the object, transformed for display."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1154
+msgid "The date the object was published, in the site's timezone."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1160
+msgid "The date the object was published, as GMT."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1166
+msgid "URL to the object."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1173
+msgid "The ID for the parent of the object."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1179
+msgid "The ID of the associated post object."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1185
+msgid "State of the object."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1193
+msgid "Type of Comment for the object."
+msgstr ""
+
+#. %d: avatar image size in pixels
+#: includes/rest/AnyCommentRestComment.php:1208
+#, php-format
+msgid "Avatar URL with image size of %d pixels."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1216
+msgid "Avatar URLs for the object author."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1242
+msgid ""
+"Limit response to comments published after a given ISO8601 compliant date."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1248
+msgid ""
+"Limit result set to comments assigned to specific user IDs. Requires "
+"authorization."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1256
+msgid ""
+"Ensure result set excludes comments assigned to specific user IDs. Requires "
+"authorization."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1265
+msgid ""
+"Limit result set to that from a specific author email. Requires "
+"authorization."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1271
+msgid ""
+"Limit response to comments published before a given ISO8601 compliant date."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1277
+msgid "Ensure result set excludes specific IDs."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1286
+msgid "Limit result set to specific IDs."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1295
+msgid "Offset the result set by a specific number of items."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1300
+msgid "Order sort attribute ascending or descending."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1310
+msgid "Sort collection by object attribute."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1326
+msgid "Limit result set to comments of specific parent IDs."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1335
+msgid "Ensure result set excludes specific parent IDs."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1344
+msgid "Limit result set to comments assigned to specific post IDs."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1353
+msgid ""
+"Limit result set to comments assigned a specific status. Requires "
+"authorization."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1361
+msgid ""
+"Limit result set to comments assigned a specific type. Requires "
+"authorization."
+msgstr ""
+
+#: includes/rest/AnyCommentRestComment.php:1368
+msgid "The password for the post if it is password protected."
+msgstr ""
+
+#: templates/admin/dashboard.php:8 templates/admin/tabs.php:4
+msgid "Dashboard"
+msgstr ""
+
+#: templates/admin/dashboard.php:12
+#, php-format
+msgid ""
+"Please take a few seconds and <a href=\"%s\" target=\"_blank\">rate us on "
+"WordPress.org</a>. You are the one who can help to grow and make thus plugin "
+"better!"
+msgstr ""
+
+#: templates/admin/dashboard.php:26
+msgid "Official Website"
+msgstr ""
+
+#: templates/admin/dashboard.php:35
+msgid "News"
+msgstr ""
+
+#: templates/admin/dashboard.php:55
+msgid "New"
+msgstr ""
+
+#: templates/admin/dashboard.php:79
+msgid "No news yet"
+msgstr ""
+
+#: templates/admin/dashboard.php:86
+msgid "All News"
+msgstr ""
+
+#: templates/admin/tab-dashboard.php:6 templates/admin/tab-dashboard.php:10
+msgid "Commentators"
+msgstr ""
+
+#: templates/admin/tab-dashboard.php:17 templates/admin/tab-dashboard.php:20
+msgid "All Comments"
+msgstr ""
+
+#: templates/admin/tab-dashboard.php:30
+msgid "Overal Statistics"
+msgstr ""
+
+#: templates/admin/tab-dashboard.php:54
+msgid "Comments"
+msgstr ""
+
+#: templates/admin/tab-dashboard.php:65
+msgid "Users"
+msgstr ""
+
+#: templates/admin/tab-dashboard.php:106
+msgid "Most Active Users"
+msgstr ""
+
+#: templates/admin/tab-dashboard.php:119
+msgid "No users yet"
+msgstr ""
+
+#: templates/admin/tabs.php:7
+msgid "Social"
+msgstr ""
+
+#. Description of the plugin
+msgid "AnyComment is an advanced commenting system for WordPress."
+msgstr ""
+
+#. URI of the plugin
+msgid "https://anycomment.io"
+msgstr ""
+
+#. Author of the plugin
+msgid "Bologer"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "http://bologer.ru"
+msgstr ""
