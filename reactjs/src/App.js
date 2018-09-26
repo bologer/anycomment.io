@@ -110,13 +110,14 @@ class App extends AnyCommentComponent {
         }
 
         return (
-            <div id={this.state.rootElement} className={'anycomment anycomment-' + this.props.settings.options.theme}>
+            <div id={this.state.rootElement} className="anycomment">
                 <ToastContainer/>
                 <CommentList/>
                 <CommentCopyright/>
             </div>
         );
     }
+
 }
 
 export default App;

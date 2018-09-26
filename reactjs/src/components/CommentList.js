@@ -5,6 +5,7 @@ import AnyCommentComponent from "./AnyCommentComponent";
 import {toast} from 'react-toastify';
 import $ from 'jquery';
 
+
 /**
  * CommentList displays list of comments.
  */
@@ -34,6 +35,7 @@ class CommentList extends AnyCommentComponent {
             isJustAdded: false,
 
             commentText: '',
+            attachments: [],
             buttonText: settings.i18.button_send,
             isReply: false,
             replyId: 0,
@@ -62,6 +64,7 @@ class CommentList extends AnyCommentComponent {
         this.handleAddComment = this.handleAddComment.bind(this);
         this.handleSort = this.handleSort.bind(this);
 
+        this.handleAttachmentChange = this.handleAttachmentChange.bind(this);
         this.handleCommentTextChange = this.handleCommentTextChange.bind(this);
         this.handleReplyIdChange = this.handleReplyIdChange.bind(this);
         this.handleReplyCancel = this.handleReplyCancel.bind(this);
@@ -102,6 +105,15 @@ class CommentList extends AnyCommentComponent {
      */
     focusCommentField() {
         this.commentFieldRef.current.focus();
+    }
+
+    /**
+     * Handle attachment change.
+     *
+     * @param attachments
+     */
+    handleAttachmentChange(attachments) {
+        this.setState({attachments: attachments});
     }
 
     /**
@@ -178,13 +190,20 @@ class CommentList extends AnyCommentComponent {
      * @param comment
      */
     handleEditIdChange(comment) {
-        this.setState({
+
+        let states = {
             isReply: false,
             replyName: '',
             editId: comment.id,
             buttonText: this.props.settings.i18.button_save,
             commentText: comment.content
-        });
+        };
+
+        if (comment.attachments || comment.attachments.length > 0 ) {
+            states.attachments = comment.attachments;
+        }
+
+        this.setState(states);
         this.focusCommentField(true);
     }
 
@@ -355,6 +374,7 @@ class CommentList extends AnyCommentComponent {
     handleAddComment() {
         this.setState({
             commentText: '',
+            attachments: [],
             replyName: '',
             isReply: false,
             buttonText: this.props.settings.i18.button_send,
@@ -425,6 +445,7 @@ class CommentList extends AnyCommentComponent {
         }
     }
 
+
     render() {
         const {isError, isLoaded, comments} = this.state;
         const settings = this.props.settings;
@@ -432,6 +453,7 @@ class CommentList extends AnyCommentComponent {
         const sendComment = <SendComment
             commentFieldRef={this.commentFieldRef}
             commentText={this.state.commentText}
+            attachments={this.state.attachments}
             buttonText={this.state.buttonText}
             commentCountText={this.state.commentCountText}
             replyId={this.state.replyId}
@@ -443,6 +465,7 @@ class CommentList extends AnyCommentComponent {
             authorWebsite={this.state.authorWebsite}
             onSort={this.handleSort}
             onCommentTextChange={this.handleCommentTextChange}
+            onAttachmentChange={this.handleAttachmentChange}
             onReplyIdChange={this.handleReplyIdChange}
             onReplyCancel={this.handleReplyCancel}
             onEditIdChange={this.handleEditIdChange}
@@ -450,6 +473,7 @@ class CommentList extends AnyCommentComponent {
             onAuthorEmailChange={this.handleAuthorEmailChange}
             onAuthorWebsiteChange={this.handleAuthorWebsiteChange}
             onSend={this.handleAddComment}/>;
+
 
         if (isError) {
             return <React.Fragment>

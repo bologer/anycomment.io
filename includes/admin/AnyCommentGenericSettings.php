@@ -112,6 +112,11 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		const OPTION_MODERATE_WORDS = 'options_moderate_words';
 
 		/**
+		 * Put comments with links on hold.
+		 */
+		const OPTION_LINKS_ON_HOLD = 'options_links_on_hold';
+
+		/**
 		 * Show/hide profile URL on client mini social icon.
 		 */
 		const OPTION_SHOW_PROFILE_URL = 'options_show_profile_url';
@@ -149,27 +154,6 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		/**
 		 * DESIGN
 		 */
-
-		/**
-		 * Theme chosen for comments.
-		 */
-		const OPTION_THEME = 'option_theme';
-
-		/**
-		 * Dark theme.
-		 */
-		const THEME_DARK = 'dark';
-
-		/**
-		 * Light theme.
-		 */
-		const THEME_LIGHT = 'light';
-
-		/**
-		 * Custom theme.
-		 */
-		const THEME_CUSTOM = 'custom';
-
 		/**
 		 * Define form type: only guest users, only social networks or both of it.
 		 */
@@ -268,7 +252,6 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 			self::OPTION_NOTIFY_ADMIN_EMAIL_TEMPLATE           => "New comment posted in {blogUrlHtml}.\nFor post {postUrlHtml}.\n\n{commentFormatted}\n{replyButton}",
 
 			// Other design
-			self::OPTION_THEME                                 => self::THEME_LIGHT,
 			self::OPTION_FORM_TYPE                             => self::FORM_OPTION_SOCIALS_ONLY,
 			self::OPTION_GUEST_FIELDS                          => '{name} {email} {website}',
 
@@ -485,18 +468,6 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 				'section_design',
 				[
 					[
-						'id'          => self::OPTION_THEME,
-						'title'       => __( 'Theme', "anycomment" ),
-						'callback'    => 'input_select',
-						'args'        => [
-							'options' => [
-								self::THEME_DARK  => __( 'Dark', 'anycomment' ),
-								self::THEME_LIGHT => __( 'Light', 'anycomment' ),
-							]
-						],
-						'description' => esc_html( __( 'Choose comments theme.', "anycomment" ) )
-					],
-					[
 						'id'          => self::OPTION_FORM_TYPE,
 						'title'       => __( 'Comment form', "anycomment" ),
 						'callback'    => 'input_select',
@@ -638,6 +609,12 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'title'       => __( 'Moderate First', "anycomment" ),
 						'callback'    => 'input_checkbox',
 						'description' => esc_html( __( 'Moderators should check comment before it appears.', "anycomment" ) )
+					],
+					[
+						'id'          => self::OPTION_LINKS_ON_HOLD,
+						'title'       => __( 'Links on Hold', "anycomment" ),
+						'callback'    => 'input_checkbox',
+						'description' => esc_html( __( 'Comment with links should be marked for moderation.', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_MODERATE_WORDS,
@@ -1047,6 +1024,15 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		}
 
 		/**
+		 * Check whether it is required to hold comments with links for moderation.
+		 *
+		 * @return bool
+		 */
+		public static function isLinksOnHold() {
+			return static::instance()->getOption( self::OPTION_LINKS_ON_HOLD ) !== null;
+		}
+
+		/**
 		 * Check whether it is required to mark comments for moderation.
 		 *
 		 * @return bool
@@ -1220,20 +1206,27 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 			$fileName     = isset( $file['name'] ) ? $file['name'] : null;
 			$mimeType     = isset( $file['type'] ) ? $file['type'] : null;
 			$baseMimeType = preg_replace( '/\/.*$/', '', $mimeType );
+			$successCount = 0;
 
 			foreach ( $acceptedFilesArray as $key => $type ) {
 				$validType = trim( $type );
 				if ( $validType{0} === '.' ) {
-					return strpos( strtolower( $fileName ), strtolower( $validType ) ) !== false;
+					if ( strpos( strtolower( $fileName ), strtolower( $validType ) ) !== false ) {
+						$successCount ++;
+					}
 				} else if ( strpos( $validType, '/*' ) !== false ) {
 					// This is something like a image/* mime type
-					return $baseMimeType === preg_replace( '/\/.*$/', '', $validType );
+					if ( $baseMimeType === preg_replace( '/\/.*$/', '', $validType ) ) {
+						$successCount ++;
+					}
 				}
 
-				return $mimeType === $validType;
+				if ( $mimeType === $validType ) {
+					$successCount ++;
+				}
 			}
 
-			return true;
+			return $successCount > 0;
 		}
 
 		/**
@@ -1437,28 +1430,6 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 
 			if ( $value < 5 ) {
 				$value = 5;
-			}
-
-			return $value;
-		}
-
-		/**
-		 * Get currently chosen theme.
-		 * When value store is not matching any of the existing
-		 * themes -> returns `dark` as default.
-		 *
-		 * @return string|null
-		 */
-		public static function getTheme() {
-
-			if ( static::isDesignCustom() ) {
-				return self::THEME_CUSTOM;
-			}
-
-			$value = static::instance()->getOption( self::OPTION_THEME );
-
-			if ( $value === null || $value !== self::THEME_DARK && $value !== self::THEME_LIGHT ) {
-				return self::THEME_LIGHT;
 			}
 
 			return $value;

@@ -3,7 +3,7 @@
  * Plugin Name: AnyComment
  * Plugin URI: https://anycomment.io
  * Description: AnyComment is an advanced commenting system for WordPress.
- * Version: 0.0.56
+ * Version: 0.0.57
  * Author: Bologer
  * Author URI: http://bologer.ru
  * Requires at least: 4.4
@@ -31,7 +31,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 		 *
 		 * @var string
 		 */
-		public $version = '0.0.56';
+		public $version = '0.0.57';
 
 		/**
 		 * Instance of render class.
@@ -212,15 +212,17 @@ if ( ! class_exists( 'AnyComment' ) ) :
 		 */
 		public function includes() {
 
-			/**
-			 * Cache loading
-			 */
 			require_once( ANYCOMMENT_ABSPATH . 'vendor/autoload.php' );
 
 			// Helpers
 			include_once( ANYCOMMENT_ABSPATH . 'includes/helpers/AnyCommentInputHelper.php' );
 
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentOptions.php' );
+
+			// Cache
+			include_once( ANYCOMMENT_ABSPATH . 'includes/cache/AnyCommentCacheManager.php' );
+			include_once( ANYCOMMENT_ABSPATH . 'includes/cache/AnyCommentRestCacheManager.php' );
+
 
 			// Rest
 			include_once( ANYCOMMENT_ABSPATH . 'includes/rest/AnyCommentRestController.php' );
@@ -246,6 +248,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentUserMeta.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentAvatars.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentComments.php' );
+			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentCommentMeta.php' );
 
 			/**
 			 * Admin related
@@ -294,7 +297,9 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			$this->admin_pages = new AnyCommentAdminPages();
 
 
-			$cacheDriver = new Stash\Driver\FileSystem();
+			$cacheDriver = new Stash\Driver\FileSystem( [
+				'path' => ANYCOMMENT_ABSPATH . 'cache/'
+			] );
 
 			$this->cache = new Stash\Pool( $cacheDriver );
 

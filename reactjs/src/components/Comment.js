@@ -4,7 +4,7 @@ import CommentAvatar from './CommentAvatar';
 import CommentHeader from './CommentHeader';
 import CommentFooter from './CommentFooter';
 import CommentBody from './CommentBody';
-import CommentAttachments from './CommentAttachments';
+import CommentAttachments from "./CommentAttachments";
 
 /**
  * Comment is rendering single comment entry.
@@ -111,7 +111,7 @@ class Comment extends AnyCommentComponent {
 
                     <CommentBody comment={comment}/>
 
-                    <CommentAttachments comment={comment}/>
+                    <CommentAttachments attachments={comment.attachments}/>
 
                     <CommentFooter
                         onEdit={this.onEdit}

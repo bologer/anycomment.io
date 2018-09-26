@@ -12,6 +12,7 @@
     "react-dom": "^16.4.2",
     "react-dropzone": "^5.0.1",
     "react-google-recaptcha": "^1.0.2",
+    "react-images": "^0.5.19",
     "react-inlinesvg": "^0.8.1",
     "react-scripts": "1.1.4",
     "react-select": "^2.0.0",

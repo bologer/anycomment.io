@@ -4,7 +4,6 @@ import buildFormatter from 'react-timeago/lib/formatters/buildFormatter'
 import i18En from 'react-timeago/lib/language-strings/en'
 import i18Ru from 'react-timeago/lib/language-strings/ru'
 import TimeAgo from 'react-timeago'
-import $ from 'jquery'
 
 /**
  * Used to render partial header of a comment.

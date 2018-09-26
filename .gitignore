@@ -1,5 +1,6 @@
 .sass-cache
 *.css.map
 node_modules
-cache
+cache/*
+!cache/index.php
 static/css/main-custom-*.min.css

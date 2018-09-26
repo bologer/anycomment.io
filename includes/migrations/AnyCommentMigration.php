@@ -37,6 +37,10 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 			'version'     => '0.0.56',
 			'description' => 'Reupload avatars to make them smaller in size and therefore speed-up comments loading'
 		],
+		'0.0.57' => [
+			'version'     => '0.0.57',
+			'description' => 'Add "url_thumbnail" column to keep image thumbnail together with original url and type for MIME type'
+		]
 	];
 
 	/**

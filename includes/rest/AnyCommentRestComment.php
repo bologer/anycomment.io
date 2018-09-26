@@ -184,24 +184,6 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	}
 
 	/**
-	 * Get cache key based on provided data.
-	 *
-	 * @param int $postId Post ID to get cached data for.
-	 * @param mixed $args List of additional params to be used within cash. Will be passed into serialize() and then md5().
-	 *
-	 * @return string
-	 */
-	public function get_cache_key( $postId, $args = null ) {
-		$cache_namespace = sprintf( '/anycomment/rest/comments/%s', $postId );
-
-		if ( $args !== null ) {
-			$cache_namespace .= '/' . md5( serialize( $args ) );
-		}
-
-		return $cache_namespace;
-	}
-
-	/**
 	 * Retrieves a list of comment items.
 	 *
 	 * @since 4.7.0
@@ -214,19 +196,6 @@ class AnyCommentRestComment extends AnyCommentRestController {
 
 		// Retrieve the list of registered collection query parameters.
 		$registered = $this->get_collection_params();
-
-		$cacheKey = $this->get_cache_key( $request['post'][0], $request->get_params() );
-
-		$cachedPost = AnyComment()->cache->getItem( $cacheKey );
-
-		/**
-		 * @var $cachedResponse WP_REST_Response
-		 */
-		$cachedResponse = $cachedPost->get();
-
-		if ( ! $cachedPost->isMiss() ) {
-			return $cachedResponse;
-		}
 
 		/*
 		 * This array defines mappings between public API query parameters whose
@@ -347,8 +316,6 @@ class AnyCommentRestComment extends AnyCommentRestController {
 
 			$response->link_header( 'next', $next_link );
 		}
-
-		$cachedPost->set( $response )->save();
 
 		return $response;
 	}
@@ -529,8 +496,6 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			return new WP_Error( 'rest_comment_exists', __( 'Cannot create existing comment.', 'anycomment' ), array( 'status' => 400 ) );
 		}
 
-		//options.reCaptchaOn && (options.reCaptchaUserAll || (this.isGuest() && options.reCaptchaUserGuest) || (!this.isGuest() && options.reCaptchaUserAuth))
-
 		$checkCaptcha = AnyCommentIntegrationSettings::isRecaptchaOn() && (
 				( AnyCommentIntegrationSettings::isRecaptchaUserAll() ) ||
 				( ! is_user_logged_in() && AnyCommentIntegrationSettings::isRecaptchaUserGuest() ) ||
@@ -618,10 +583,20 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			return new WP_Error( 'rest_comment_failed_create', __( 'Creating comment failed.', 'anycomment' ), array( 'status' => 500 ) );
 		}
 
+		// Process attachments
+		if ( ! empty( $request['attachments'] ) ) {
+			AnyCommentCommentMeta::addAttachments( $comment_id, $request['attachments'] );
+		}
+
 		if ( ! current_user_can( 'moderate_comments' ) && AnyCommentGenericSettings::isModerateFirst() ||
-		     AnyCommentComments::hasModerateWords( $comment_id ) ) {
+		     AnyCommentComments::hasModerateWords( $comment_id ) ||
+		     AnyCommentGenericSettings::isLinksOnHold() && AnyCommentComments::has_links( $comment_id ) ) {
 			$this->handle_status_param( 'hold', $comment_id );
 		}
+
+		// Flush comment when reply sent, etc
+		\anycomment\cache\rest\AnyCommentRestCacheManager::flushComment( $request['post'], $comment_id );
+
 
 		$comment = get_comment( $comment_id );
 
@@ -658,8 +633,6 @@ class AnyCommentRestComment extends AnyCommentRestController {
 
 		$response->set_status( 201 );
 		$response->header( 'Location', rest_url( sprintf( '%s/%s/%d', $this->namespace, $this->rest_base, $comment_id ) ) );
-
-		AnyComment()->cache->deleteItem( $this->get_cache_key( $request['post'] ) );
 
 		return $response;
 	}
@@ -758,10 +731,12 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			}
 		}
 
-		$comment = get_comment( $id );
+		// Process attachments
+		if ( ! empty( $request['attachments'] ) ) {
+			AnyCommentCommentMeta::addAttachments( $id, $request['attachments'] );
+		}
 
-		/** This action is documented in wp-includes/rest-api/endpoints/class-wp-rest-comments-controller.php */
-		do_action( 'rest_insert_comment', $comment, $request, false );
+		$comment = get_comment( $id );
 
 		$schema = $this->get_item_schema();
 
@@ -781,9 +756,10 @@ class AnyCommentRestComment extends AnyCommentRestController {
 
 		$request->set_param( 'context', 'edit' );
 
-		$response = $this->prepare_item_for_response( $comment, $request );
+		// Need to flush specific comment on update
+		\anycomment\cache\rest\AnyCommentRestCacheManager::flushComment( $comment->comment_post_ID, $comment->comment_ID );
 
-		AnyComment()->cache->deleteItem( $this->get_cache_key( $request['post'] ) );
+		$response = $this->prepare_item_for_response( $comment, $request );
 
 		return rest_ensure_response( $response );
 	}
@@ -858,7 +834,8 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			return new WP_Error( 'rest_cannot_delete', __( 'The comment cannot be deleted.', 'anycomment' ), array( 'status' => 500 ) );
 		}
 
-		AnyComment()->cache->deleteItem( $this->get_cache_key( $request['post'] ) );
+
+//		AnyComment()->cache->deleteItem( $this->get_cache_key( $request['post'] ) );
 
 		return $response;
 	}
@@ -875,17 +852,38 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	 */
 	public function prepare_item_for_response( $comment, $request ) {
 
+		$cachedComment = \anycomment\cache\rest\AnyCommentRestCacheManager::getComment( $comment->comment_post_ID, $comment->comment_ID );
+
 		$child_comments = AnyComment()->render->get_child_comments( $comment->comment_ID );
 
 		if ( ! empty( $child_comments ) ) {
+
 			foreach ( $child_comments as $key => $child_comment ) {
-				$prepared_child_comment = $this->prepare_item_for_response( $child_comment, $request );
-				if ( isset( $prepared_child_comment->data ) ) {
-					$prepared_child_comment = $prepared_child_comment->data;
+
+				// Check whether child comment is cache or not
+				$childCachedComment = \anycomment\cache\rest\AnyCommentRestCacheManager::getComment( $child_comment->comment_post_ID, $child_comment->comment_ID );
+
+				if ( ! $childCachedComment->isMiss() ) {
+					$childCache             = $childCachedComment->get();
+					$child_comments[ $key ] = isset( $childCache->data ) ? $childCache->data : $childCache;
+				} else {
+					$prepared_child_comment = $this->prepare_item_for_response( $child_comment, $request );
+					if ( isset( $prepared_child_comment->data ) ) {
+						$prepared_child_comment = $prepared_child_comment->data;
+					}
+
+					// Cache child comment
+					$childCachedComment->set( $prepared_child_comment )->save();
+
+					$child_comments[ $key ] = $prepared_child_comment;
 				}
-				$child_comments[ $key ] = $prepared_child_comment;
 			}
 		}
+
+		if ( ! $cachedComment->isMiss() ) {
+			return $cachedComment->get();
+		}
+
 		$is_post_author = false;
 
 		if ( ( $post = get_post( $comment->comment_post_ID ) ) !== null ) {
@@ -922,6 +920,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			'avatar_url'         => AnyComment()->auth->get_user_avatar_url( (int) $comment->user_id !== 0 ? $comment->user_id : $comment->comment_author_email ),
 			'children'           => $child_comments,
 			'owner'              => $owner,
+			'attachments'        => AnyCommentCommentMeta::getAttachments( $comment->comment_ID ),
 			'permissions'        => [
 				'can_edit_comment' => AnyComment()->render->can_edit_comment( $comment ),
 			],
@@ -939,6 +938,8 @@ class AnyCommentRestComment extends AnyCommentRestController {
 
 		// Wrap the data in a response object.
 		$response = rest_ensure_response( $data );
+
+		$cachedComment->set( $response )->save();
 
 		return $response;
 	}

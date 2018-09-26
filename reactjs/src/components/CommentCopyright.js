@@ -7,6 +7,11 @@ import SVG from 'react-inlinesvg'
  * Display plugin copyright in the very bottom of comments.
  */
 class CommentCopyright extends AnyCommentComponent {
+
+    shouldComponentUpdate() {
+        return false;
+    }
+
     render() {
         const settings = this.getSettings();
 

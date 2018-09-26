@@ -89,10 +89,6 @@ function anycomment_login_with( $html = false, $redirectUrl = null ) {
 			'label'   => __( 'Yahoo', "anycomment" ),
 			'visible' => AnyCommentSocialSettings::isYahooOn()
 		],
-		'wordpress'                                => [
-
-			'url' => wp_login_url()
-		]
 	];
 
 
@@ -103,11 +99,11 @@ function anycomment_login_with( $html = false, $redirectUrl = null ) {
 		$wordpress_login_url = add_query_arg( 'redirect_to', urlencode( $redirectUrl ), $wordpress_login_url );
 	}
 
-	$socials['wordpress'] = [
+	$socials[AnyCommentSocialAuth::SOCIAL_WORDPRESS] = [
 		'slug'    => 'wordpress',
 		'url'     => $wordpress_login_url,
 		'label'   => __( "WordPress", 'anycomment' ),
-		'visible' => true
+		'visible' => AnyCommentSocialSettings::isWordPressOn()
 	];
 
 	if ( count( $socials ) <= 0 ) {

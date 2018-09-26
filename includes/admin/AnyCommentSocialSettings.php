@@ -94,6 +94,11 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		const OPTION_YAHOO_APP_ID = 'social_yahoo_app_id_field';
 		const OPTION_YAHOO_CLIENT_SECRET = 'social_yahoo_client_secret_field';
 
+		/**
+		 * WordPress.
+		 */
+		const OPTION_WORDPRESS_NATIVE_TOGGLE = 'social_wordpress_toggle_field';
+
 
 		/**
 		 * AC_SocialSettingPage constructor.
@@ -585,6 +590,41 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 						'callback'    => 'input_text',
 						'description' => sprintf( __( 'Enter client secret. It can be found in the <a href="%s" target="_blank">my apps</a>', "anycomment" ), 'https://developer.yahoo.com/apps/' )
 					]
+				]
+			);
+
+
+			/**
+			 * WordPress
+			 */
+			add_settings_section(
+				'section_wordpress',
+				__( 'WordPress', "anycomment" ),
+				function () {
+					?>
+                    <p><?= __( 'WordPress authorization settings.', "anycomment" ) ?></p>
+                    <table class="form-table">
+                        <tr>
+                            <th><label for="yahoo-wordpress"><?= __( 'Callback URL', 'anycomment' ) ?></label></th>
+                            <td><input type="text" id="yahoo-callback" onclick="this.select()" readonly="readonly"
+                                       value="<?= AnyCommentSocialAuth::get_wordpress_callback() ?>"></td>
+                        </tr>
+                    </table>
+					<?php
+				},
+				$this->page_slug
+			);
+
+			$this->render_fields(
+				$this->page_slug,
+				'section_wordpress',
+				[
+					[
+						'id'          => self::OPTION_WORDPRESS_NATIVE_TOGGLE,
+						'title'       => __( 'Enable Native', "anycomment" ),
+						'callback'    => 'input_checkbox',
+						'description' => __( 'Allow WordPress native authorization', "anycomment" )
+					],
 				]
 			);
 		}
@@ -1148,6 +1188,15 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 */
 		public static function getOkAppSecret() {
 			return static::instance()->getOption( self::OPTION_OK_APP_SECRET );
+		}
+
+		/**
+		 * Check whether WordPress in-build login is on.
+		 *
+		 * @return bool
+		 */
+		public static function isWordPressOn() {
+			return static::instance()->getOption( self::OPTION_WORDPRESS_NATIVE_TOGGLE ) !== null;
 		}
 
 		/**

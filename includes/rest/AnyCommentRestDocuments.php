@@ -1,7 +1,6 @@
 <?php
 
 class AnyCommentRestDocuments extends AnyCommentRestController {
-
 	/**
 	 * Constructor.
 	 *
@@ -36,6 +35,65 @@ class AnyCommentRestDocuments extends AnyCommentRestController {
 			],
 			'schema' => [ $this, 'get_public_item_schema' ],
 		] );
+
+		register_rest_route( $this->namespace, '/' . $this->rest_base . '/delete', [
+			[
+				'methods'             => WP_REST_Server::CREATABLE,
+				'callback'            => [ $this, 'delete_item' ],
+				'permission_callback' => [ $this, 'delete_item_permissions_check' ],
+				'args'                => $this->get_endpoint_args_for_item_schema( WP_REST_Server::CREATABLE ),
+			],
+			'args'   => [
+				'id' => [
+					'description' => __( 'File ID', 'anycomment' ),
+					'type'        => 'int'
+				],
+			],
+			'schema' => [ $this, 'get_public_item_schema' ],
+		] );
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function delete_item( $request ) {
+		AnyCommentUploadedFiles::delete( $request['id'] );
+
+		$data = [
+			'success' => true
+		];
+		
+		// Wrap the data in a response object.
+		$response = rest_ensure_response( $data );
+
+		return $response;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function delete_item_permissions_check( $request ) {
+
+		$user = wp_get_current_user();
+
+		// Make sure action is NOT done by guest
+		if ( ! isset( $user->ID ) || isset( $user->ID ) && (int) $user->ID === 0 ) {
+			return new WP_Error( 'rest_no_guests_allowed', __( 'Sorry, guests unable to delete files.', 'anycomment' ), [ 'status' => 403 ] );
+		}
+
+		$file = AnyCommentUploadedFiles::findOne( $request['id'] );
+
+		// Make sure file can be found
+		if ( $file === null ) {
+			return new WP_Error( 'rest_file_not_found', __( 'File does not exist.', 'anycomment' ), [ 'status' => 403 ] );
+		}
+
+		// If file has user ID, check to make sure it is the same user trying to delete the file
+		if ( $file->user_ID !== null && (int) $file->user_ID !== (int) $user->ID ) {
+			return new WP_Error( 'rest_wrong_user', __( 'Sorry, such file is unavailable', 'anycomment' ), [ 'status' => 403 ] );
+		}
+
+		return true;
 	}
 
 	/**
@@ -43,7 +101,7 @@ class AnyCommentRestDocuments extends AnyCommentRestController {
 	 */
 	public function create_item_permissions_check( $request ) {
 		if ( ! is_user_logged_in() && ! AnyCommentGenericSettings::isGuestCanUpload() ) {
-			return new WP_Error( 'rest_guest_unable_to_uplaod', __( 'Sorry, guest users cannot upload files', 'anycomment' ), [ 'status' => 403 ] );
+			return new WP_Error( 'rest_guest_unable_to_upload', __( 'Sorry, guest users cannot upload files', 'anycomment' ), [ 'status' => 403 ] );
 		}
 
 		if ( empty( $request['post'] ) ) {
@@ -95,7 +153,7 @@ class AnyCommentRestDocuments extends AnyCommentRestController {
 
 
 		$max_size_allowed = AnyCommentGenericSettings::getFileMaxSize() * 1000000;
-		$uploaded_urls    = [];
+		$uploaded_files   = [];
 
 		foreach ( $files as $key => $file ) {
 			// When size is bigger then allowed, skip it
@@ -107,41 +165,81 @@ class AnyCommentRestDocuments extends AnyCommentRestController {
 				continue;
 			}
 
-			$check_file_type = wp_check_filetype( $file['name'] );
+			$original_file = AnyCommentUploadHandler::save( $file );
 
-			// When unable to get extension, should skip
-			if ( ! $check_file_type['ext'] ) {
+			if ( is_wp_error( $original_file ) ) {
 				continue;
 			}
 
-			$file['name'] = sprintf( '%s.%s', md5( serialize( $file ) ), $check_file_type['ext'] );
+			$file_mime_type = $file['type'];
 
-			$moved_file = wp_handle_upload( $file, [ 'test_form' => false ] );
+			$uploaded_files[ $key ] = [
+				'type' => AnyCommentUploadedFiles::get_image_type( $file_mime_type ),
+				'mime' => $file_mime_type,
+				'src'  => $original_file['url']
+			];
 
-			if ( $moved_file && ! isset( $moved_file['error'] ) ) {
-				$uploaded_urls[] = $moved_file['url'];
+			if ( AnyCommentUploadedFiles::can_crop( $file_mime_type ) ) {
+				// Get smaller version of file
+				$imageEditor = wp_get_image_editor( $original_file['file'], [ 'mime_type' => $file_mime_type ] );
+
+				if ( is_wp_error( $imageEditor ) ) {
+					continue;
+				}
+
+				$imageEditor->resize( 60, 60, true );
+
+				$thumbnail_name = AnyCommentUploadHandler::get_file_name( 'thumbnail_' . $file['name'] );
+
+				$upload_dir = wp_get_upload_dir();
+
+				// When unable to get upload dir, should delete original file as well
+				if ( $upload_dir['error'] !== false ) {
+					wp_delete_file( $original_file['file'] );
+					continue;
+				}
+
+				$savePath = $upload_dir['path'] . DIRECTORY_SEPARATOR . $thumbnail_name;
+
+				$croppedImage = $imageEditor->save( $savePath, $file_mime_type );
+
+				if ( ! is_wp_error( $croppedImage ) ) {
+					$uploaded_files[ $key ]['thumbnail'] = $upload_dir['url'] . DIRECTORY_SEPARATOR . $croppedImage['file'];
+				}
 			}
 		}
 
-		if ( ! empty( $uploaded_urls ) ) {
-			foreach ( $uploaded_urls as $key => $uploaded_url ) {
+		// Process saving uploaded files into the database
+		if ( ! empty( $uploaded_files ) ) {
+			foreach ( $uploaded_files as $key => $upload ) {
 				$model          = new AnyCommentUploadedFiles();
 				$model->post_ID = $request['post'];
 
-				if ( ( $user = wp_get_current_user() ) !== null ) {
+				$user = wp_get_current_user();
+
+				if ( isset( $user->ID ) && (int) $user->ID !== 0 ) {
 					$model->user_ID = $user->ID;
 				}
-				$model->url = $uploaded_url;
+				$model->type = $upload['mime'];
+				$model->url  = $upload['src'];
+
+				if ( isset( $upload['thumbnail'] ) ) {
+					$model->url_thumbnail = $upload['thumbnail'];
+				}
 
 				if ( ! $model->save() ) {
-					$path      = parse_url( $uploaded_url, PHP_URL_PASS );
-					$full_path = get_home_path() . $path;
-					wp_delete_file( $full_path );
+					wp_delete_file( AnyCommentUploadedFiles::get_path_from_url( $model->url ) );
+
+					if ( isset( $upload['thumbnail'] ) ) {
+						wp_delete_file( AnyCommentUploadedFiles::get_path_from_url( $model->url_thumbnail ) );
+					}
+				} else {
+					$uploaded_files[ $key ]['file_id'] = $model->ID;
 				}
 			}
 		}
 
-		$response = $this->prepare_item_for_response( $uploaded_urls, $request );
+		$response = $this->prepare_item_for_response( $uploaded_files, $request );
 		$response = rest_ensure_response( $response );
 
 		$response->set_status( 201 );
@@ -163,7 +261,7 @@ class AnyCommentRestDocuments extends AnyCommentRestController {
 
 		$data = [];
 
-		$data['urls'] = $uploadedUrls;
+		$data['files'] = $uploadedUrls;
 
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 		$data    = $this->add_additional_fields_to_object( $data, $request );
@@ -174,5 +272,4 @@ class AnyCommentRestDocuments extends AnyCommentRestController {
 
 		return $response;
 	}
-
 }

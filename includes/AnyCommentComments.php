@@ -49,4 +49,37 @@ class AnyCommentComments {
 
 		return false;
 	}
+
+	/**
+	 * Check whether comment contains link(s) or not.
+	 *
+	 * @param mixed $comment Comment to be checked for links.
+	 *
+	 * @return bool
+	 */
+	public static function has_links( $comment ) {
+		$comment = get_comment( $comment );
+
+		if ( ! $comment ) {
+			return false;
+		}
+
+		$comment_text = $comment->comment_content;
+
+		$link_matcher_array = [
+			'http',
+			'https',
+			'www.',
+			'://'
+		];
+
+		$hasCount = 0;
+		foreach ( $link_matcher_array as $link_matcher ) {
+			if ( strpos( $comment_text, $link_matcher ) !== false ) {
+				$hasCount ++;
+			}
+		}
+
+		return $hasCount > 0;
+	}
 }

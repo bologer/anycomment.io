@@ -10,19 +10,19 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 	 */
 	class AnyCommentRender {
 		/**
-		 * Default comment limit.
-		 */
-		const LIMIT = 20;
-
-		/**
 		 * Sort old.
 		 */
-		const SORT_OLD = 'old';
+		const SORT_DESC = 'desc';
 
 		/**
 		 * Sort new.
 		 */
-		const SORT_NEW = 'new';
+		const SORT_ASC = 'asc';
+
+		/**
+		 * @var array|null Array list of error when there are such.
+		 */
+		public $errors = null;
 
 		/**
 		 * AC_Render constructor.
@@ -35,19 +35,20 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 			}
 
 			add_filter( 'logout_url', [ $this, 'logout_redirect' ], 10, 2 );
+
+			$this->errors = AnyCommentSocialAuth::getErrors();
 		}
 
 		/**
 		 * Custom logout URL to redirect user back to post on logout.
 		 *
 		 * @param string $logout_url Generated logout URL by WordPress.
-		 * @param string|null $redirect Redirect URL.
 		 *
 		 * @since 0.0.52
 		 *
 		 * @return string
 		 */
-		function logout_redirect( $logout_url, $redirect ) {
+		function logout_redirect( $logout_url ) {
 			$permaLink = get_permalink();
 			if ( $permaLink !== false && is_singular() ) {
 				$query = parse_url( $logout_url, PHP_URL_QUERY );
@@ -90,9 +91,6 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 					wp_enqueue_style( 'anycomment-google-font', 'https://fonts.googleapis.com/css?family=Noto+Sans:400,700&amp;subset=cyrillic', [], AnyComment()->version );
 				}
 
-				$errors = AnyCommentSocialAuth::getErrors( true );
-				AnyCommentSocialAuth::cleanErrors();
-
 				$postId        = get_the_ID();
 				$postPermalink = get_permalink( $postId );
 
@@ -102,7 +100,7 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 					'locale'       => get_locale(),
 					'restUrl'      => esc_url_raw( rest_url( 'anycomment/v1/' ) ),
 					'commentCount' => ( $res = get_comment_count( $postId ) ) !== null ? (int) $res['all'] : 0,
-					'errors'       => $errors,
+					'errors'       => $this->errors,
 					'urls'         => [
 						'logout'  => wp_logout_url(),
 						'postUrl' => $postPermalink,
@@ -112,7 +110,6 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 						'limit'                  => AnyCommentGenericSettings::getPerPage(),
 						'isCopyright'            => AnyCommentGenericSettings::isCopyrightOn(),
 						'socials'                => anycomment_login_with( false, get_permalink( $postId ) ),
-						'theme'                  => AnyCommentGenericSettings::getTheme(),
 						'sort_order'             => AnyCommentGenericSettings::getSortOrder(),
 						'guestInputs'            => AnyCommentGenericSettings::getGuestFields( true ),
 						'isShowProfileUrl'       => AnyCommentGenericSettings::isShowProfileUrl(),
@@ -149,6 +146,7 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 						'button_send'                    => __( 'Send', 'anycomment' ),
 						'button_save'                    => __( 'Save', 'anycomment' ),
 						'button_reply'                   => __( 'Reply', 'anycomment' ),
+						'sorting'                        => __( 'Sorting', 'anycomment' ),
 						'sort_by'                        => __( 'Sort By', 'anycomment' ),
 						'sort_oldest'                    => __( 'Oldest', 'anycomment' ),
 						'sort_newest'                    => __( 'Newest', 'anycomment' ),
@@ -184,8 +182,6 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 				] );
 			}
 
-			AnyCommentSocialAuth::cleanErrors();
-
 			$path = ANYCOMMENT_ABSPATH . 'templates/comments.php';
 
 			if ( $isInclude ) {
@@ -210,8 +206,8 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 				$limit = AnyCommentGenericSettings::getPerPage();
 			}
 
-			if ( $sort === null || ( $sort !== self::SORT_NEW && $sort !== self::SORT_OLD ) ) {
-				$sort = self::SORT_NEW;
+			if ( $sort === null || ( $sort !== self::SORT_ASC && $sort !== self::SORT_DESC ) ) {
+				$sort = self::SORT_DESC;
 			}
 
 			$options = [
@@ -220,7 +216,7 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 				'comment_status' => 1,
 				'number'         => $limit,
 				'orderby'        => 'comment_ID',
-				'order'          => $sort === self::SORT_NEW ? 'DESC' : 'ASC'
+				'order'          => $sort
 			];
 
 			$comments = get_comments( $options );

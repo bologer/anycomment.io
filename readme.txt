@@ -4,7 +4,7 @@ Tags: anycomment, comments, ajax comments, comment, comment moderation, custom c
 Requires at least: 4.7
 Tested up to: 4.9.8
 Requires PHP: 5.4
-Stable tag: 0.0.56
+Stable tag: 0.0.57
 License: GPLv2 or later
 License URI: http://www.gnu.org/
 
@@ -166,6 +166,31 @@ Most of the hosting providers support single button-like installation of SSL cer
 It could only be difficult for website who have HTTP only and hight traffic as transfer to HTTPs can cause some traffic lose.
 
 == Changelog ==
+
+= 0.0.57 – 25.09.2018 =
+
+**Enhancements:**
+
+* Added ability to disable WordPress from login options in "Socials" -> "WordPress", #154
+
+* [Gallery] Ability to preview image in the gallery (can use LEFT-RIGHT arrow keys to iterate through images, ESC to close gallery), #147
+* [Gallery] After image or file is uploaded, they will be added as small block below the comment box, #147
+* [Gallery] Images are now handled smarter: original source is kept as it is and small thumbnail is cropped from original source as a preview, #147
+* [Gallery] Ability to delete file when adding/updating comment (file will be erased from DB and filesystem), #147
+
+* Removed ability to choose predefined themes and no more support for dark theme in favor of customizer. However, white theme is kept as the default one, #155
+
+> The support of dark theme was a bit pain in the ass. So we sat and thought it would be better if give control over the theme to you.
+> Give ability to drag & drop some of the elements, change colors, sized, etc. However it will come a bit further, for now a few new design options will be added.
+
+* Added option to premoderate comments with links, #84
+* Improved comments caching, they should be working even faster now, #151
+
+**Fixes:**
+
+* Added missing Russian translation for "Sorting"
+* Fixed situation when one user with two social networks and same email address was always logged in with the first recorded social
+
 
 = 0.0.56 – 17.09.2018 =
 

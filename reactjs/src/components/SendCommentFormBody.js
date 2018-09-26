@@ -5,6 +5,7 @@ import Dropzone from 'react-dropzone'
 import {toast} from 'react-toastify'
 import SVG from 'react-inlinesvg';
 import selectFileSvg from '../img/select-file.svg'
+import CommentAttachments from './CommentAttachments'
 
 /**
  * Display comment field of the form.
@@ -15,13 +16,12 @@ class SendCommentFormBody extends AnyCommentComponent {
         super();
 
         this.state = {
-            dropzoneActive: false
+            dropzoneActive: false,
         };
 
         this.onDragEnter = this.onDragEnter.bind(this);
         this.onDragLeave = this.onDragLeave.bind(this);
         this.onDrop = this.onDrop.bind(this);
-        this.addImageLinks = this.addImageLinks.bind(this);
     }
 
     onDragEnter() {
@@ -64,14 +64,15 @@ class SendCommentFormBody extends AnyCommentComponent {
         }
 
         const filesToUpload = new FormData();
-        files.map((file, i) => {
+
+        files.forEach((file, i) => {
             filesToUpload.append(i, file, file.name);
         });
 
         filesToUpload.append('post', settings.postId);
 
-        this.uploadFiles(filesToUpload);
         this.setState({dropzoneActive: false});
+        this.uploadFiles(filesToUpload);
     }
 
     /**
@@ -81,9 +82,8 @@ class SendCommentFormBody extends AnyCommentComponent {
      */
     uploadFiles(filesToUpload) {
         const self = this,
-            settings = this.getSettings();
-
-        const toastId = toast(settings.i18.file_upload_in_progress, {autoClose: false});
+            settings = this.getSettings(),
+            toastId = toast(settings.i18.file_upload_in_progress, {autoClose: false});
 
         self.props.axios
             .post('/documents',
@@ -96,7 +96,20 @@ class SendCommentFormBody extends AnyCommentComponent {
                     timeout: 30000,
                 })
             .then(function (response) {
-                self.addImageLinks(response.data.urls);
+
+                const files = response.data.files,
+                    attachments = self.props.attachments;
+
+                if (!attachments || !attachments.length) {
+                    self.props.onAttachmentChange(files);
+                } else {
+                    let newAttachments = attachments;
+                    response.data.files.forEach((item) => {
+                        newAttachments.push(item);
+                    });
+                    self.props.onAttachmentChange(newAttachments);
+                }
+
                 toast.update(toastId, {
                     render: settings.i18.file_uploaded,
                     type: toast.TYPE.SUCCESS,
@@ -105,44 +118,22 @@ class SendCommentFormBody extends AnyCommentComponent {
                 });
             })
             .catch(function (error) {
+                console.log(error);
                 self.showError(error, {
                     autoClose: 1500
                 }, toastId);
             });
     }
 
-    /**
-     * Add image links to comment text.
-     * @param links {Array} List of image links.
-     * @returns {boolean}
-     */
-    addImageLinks(links) {
-        if (!links) {
-            return false;
-        }
-
-        let text = '';
-        links.map(url => {
-            text += url + ' ';
-        });
-
-        if (text.trim() === '') {
-            return false;
-        }
-
-        this.props.changeCommenText(text, true);
-
-        return true;
-    }
-
     render() {
         const settings = this.getSettings();
         const options = settings.options;
         const {dropzoneActive} = this.state;
+        const {attachments} = this.props;
 
         let dropzoneRef;
 
-        const canUpload = !this.isGuest() || this.isGuest() && options.isGuestCanUpload;
+        const canUpload = !this.isGuest() || (this.isGuest() && options.isGuestCanUpload);
 
         const outliner = <div
             className={"anycomment anycomment-send-comment-body-outliner" + (dropzoneActive ? ' anycomment-send-comment-body-outliner-dropzone-active' : '')}>
@@ -185,6 +176,10 @@ class SendCommentFormBody extends AnyCommentComponent {
             onDragEnter={this.onDragEnter.bind(this)}
             onDragLeave={this.onDragLeave.bind(this)}>
             {outliner}
+            <CommentAttachments
+                onAttachmentChange={this.props.onAttachmentChange}
+                attachments={attachments}
+                showDeleteAction={!this.isGuest()}/>
         </Dropzone>
     }
 }

@@ -102,7 +102,7 @@ msgstr "почта"
 
 #: includes/AnyCommentSocialAuth.php:594
 msgid "login"
-msgstr "логин"
+msgstr ""
 
 #: includes/ac-core-functions.php:35
 #: includes/admin/AnyCommentSocialSettings.php:131
