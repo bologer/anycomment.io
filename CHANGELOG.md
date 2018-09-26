@@ -1,173 +1,4 @@
-=== AnyComment ===
-Contributors: ateshabaev
-Tags: anycomment, comments, ajax comments, comment, comment moderation, custom comment form, comment email, anycomment.io
-Requires at least: 4.7
-Tested up to: 4.9.8
-Requires PHP: 5.4
-Stable tag: 0.0.58
-License: GPLv2 or later
-License URI: http://www.gnu.org/
-
-AnyComment is blazing-fast commenting plugin for WordPress.
-
-== Description ==
-
-AnyComment is blazing-fast commenting plugin for WordPress.
-
-It stands for simplicity & speed. We value feedback, so if you have any failures or suggestions - please let us know in [support forum](https://wordpress.org/support/plugin/anycomment) or [GitHub](https://github.com/bologer/anycomment.io/issues)!
-
-= Resources =
-* [Official website](http://anycomment.io/en/)
-* [All guides](https://anycomment.io/en/category/tutorials/)
-* [Configure socials](https://anycomment.io/en/category/tutorials/socials/)
-* [GitHub repository](https://github.com/bologer/anycomment.io)
-* [VK.com group](http://vk.com/anycomment)
-* [Telegram group](https://t.me/joinchat/BEUJEQ9aMmQsFX65MNRCDg)
-
-= Demo =
-Feel free to use [this demo page](https://anycomment.io/demo/). Every time new version is released, demo plugin will be updated as well, so you always see the latest version.
-
-= Get Started =
-
-In order to start, you need:
-
-* Install plugin
-* Choose social networks you prefer
-* Configure social networks you need (we have guides English & Russian to help you with this)
-* You are good to go!
-
-And good new is AnyComment is free & no dependency on third party services, all comments stored in your database.
-
-= Features =
-* All comments stored in your own database. We reuse native comment's table, so all of the default WordPress functionality comes out of the box.
-* Social network authorization via Facebook, VK, Twitter, Google, Odnoklassniki, GitHub, Instagram, Twitch or Dribble
-* Ability to define form type: guests only, with social authorization or both
-* Ability to upload files (define allowed extensions, limit, who can upload, etc)
-* When user leaves a tweet link in the comment, plugin can embed it as external Twitter widget (can be disabled)
-* Plugin is translated into English & Russian
-* Suitable for dark & light themes or customize it yourself
-* Blazing-fast comments based on React & WordPress REST API
-* Alert notification in comment area when new comment was added (by clicking on alert, new comment will be shown)
-* Ability to send email on new comment reply
-* Ability to send email notification about new comment to administrator
-* Ability to specify comma-separated list of words to be used to hold comments for moderators
-* Clickable links in comment (control via admin)
-* Image and video URLs as attachment (control via admin)
-* Provide `Privacy Policy` link, so users know how their data processed and used (when not provided, no checkbox will be shown to users)
-* Social avatars shown globally
-* Likes (see likes count per comment/user in admin)
-* Edit/delete comments when you are the owner or have moderate permission(s) directly in client area
-* Assign default group for users who authorize via social network
-* See user's social profile URL in admin
-* Simple & informative dashboard with graphs to display number of comments over number of users who were engaged in the conversation per certain period & most active users
-* Comments do no inherit any of the currently active theme styles. Meaning that comments will not be broken by styles you have
-* Get latest plugin update news directly in the dashboard, don't miss a thing
-
-= Integrations =
-* [Akismet](https://wordpress.org/plugins/akismet/) to fight spam messages
-* [WP Mail SMTP](https://wordpress.org/plugins/wp-mail-smtp/) to set-up SMTP server
-* [WP User Avatar](https://wordpress.org/plugins/wp-user-avatar/) to upload global or personal avatar
-* [reCAPTCHA](https://www.google.com/recaptcha) to fight spam messages
-
-= TODO features =
-* Option: ability to specify thanks message and/or page when user left his first comment, #88
-* Option: ability to premoderate comments with links, #84
-* Option: when user does not have email after registration via social, ask for it somewhere in the comments again
-* Option: notify moderators about new comments, #77
-* Option: embed Instagram photos, #115
-* Option: embed Instafeed, #116
-* Ability to choose comment to make it sticky at the very top of all comments, #76
-* Add checkbox to subscribe to new replies, #73 (now it is mandatory)
-* Option: Ability to ban user or by IP address, #70
-* Support more languages
-* Code highlighting
-* Markdown support
-* Add more guides on how to set-up certain services, Google SMTP, Amazon SES, etc
-* Cross sharing of comments, when user posts a comment, duplicate it on their wall
-* Add Yahoo as authorization option
-* More widgets to be added on the page (sidebar, custom pages, etc)
-* Special moderator panel integrated into custom AnyComment pages (for easy comment moderation)
-* More statistics and analytics...
-* [And a lot more...](https://github.com/bologer/anycomment.io/issues)
-
-== Screenshots ==
-
-1. Plugin dashboard. Analytics on current month and most active users.
-2. Social settings view.
-3. Settings view.
-4. White theme.
-5. Dark theme.
-
-== Frequently Asked Questions ==
-
-= Installation Instructions =
-
-* Install via WordPress admin panel directly (or [download plugin](https://downloads.wordpress.org/plugin/anycomment.zip) and upload into the `/wp-content/plugins/` directory)
-* Activate it from `Plugins` section in admin panel
-* Go to preferred social media and register to get API access (API key, secrets, etc)
-* Specify required API details in special social network settings
-* Go to some post and try to authorize using any of the enabled social networks and leave a comment!
-
-= What social networks does AnyComment support? =
-
-So far we support the following:
-
-* Facebook
-* Google
-* Twitter
-* VK
-* Odnoklassniki
-* GitHub
-* Instagram
-* Twitch
-* Dribbble
-
-= Can I contribute? =
-
-Yes you can! Join in on our [GitHub repository](https://github.com/bologer/anycomment.io)
-
-= Comment form does not load or gives an error? =
-
-AnyComment uses WordPress' REST API.
-
-Please confirm two things:
-
-1. You WordPress is 4.7 or higher (this is when WordPress introduced REST API)
-2. Going to `http://yourdomain.com/wp-json/` SHOULD NOT redirected to `http://yourdomain.com` or it give 404 Not Found page
-
-For the first step - just upgrade WordPress, it is good idea anyways.
-
-For the second, check for plugins which make "optimization" of website. Most of them disable REST API.
-
-For example, [Clearfy](https://wordpress.org/plugins/clearfy/) has option "Disable Rest API". Having this option "On" will fail to load comments in AnyComment.
-
-Not yet working?
-
-Use one the links mentioned in the description above to contact us, we will be happy to help you!
-
-= Why Do Socials Ask For Privacy Policy link? =
-
-It is now one of the requirements to have Privacy Policy link on your website due to GDRP regulation.
-
-AnyComment is GDRP compliant.
-
-You can read more about General Data Protection Regulation on [Wikipedia](https://en.wikipedia.org/wiki/General_Data_Protection_Regulation).
-
-Read guide on how to create "Privacy Policy" page:
-- [English version](https://anycomment.io/how-to-create-privacy-policy-page-in-wordpress/)
-- [Russian version](https://anycomment.io/ru/kak-sozdat-stranitsu-politiki-konfidentsialnosti-v-wordpress/)
-
-= Why Does Facebook Require HTTPs? =
-
-From some recent time, Facebook now required website to have HTTPs connection in order to work with their API and we cannot do anything about it.
-
-Most of the hosting providers support single button-like installation of SSL certificate, so it should not be that difficult.
-
-It could only be difficult for website who have HTTP only and hight traffic as transfer to HTTPs can cause some traffic lose.
-
-== Changelog ==
-
-= 0.0.58 – 26.09.2018 =
+## 0.0.58 – 26.09.2018
 
 **Enhancements:**
 
@@ -178,7 +9,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Fixed issue when "Login with:" was displayed even thought none of the socials were enabled, #166
 
 
-= 0.0.57 – 25.09.2018 =
+## 0.0.57 – 25.09.2018
 
 **Enhancements:**
 
@@ -203,7 +34,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Fixed situation when one user with two social networks and same email address was always logged in with the first recorded social
 
 
-= 0.0.56 – 17.09.2018 =
+## 0.0.56 – 17.09.2018
 
 **Enhancements:**
 
@@ -227,7 +58,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Logout link does not ask extra confirmation
 * Sorting dropdown will close when clicked outside the element. Previously it was always open
 
-= 0.0.55 – 10.09.2018 =
+## 0.0.55 – 10.09.2018
 
 **Enhancements:**
 
@@ -250,7 +81,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Fixed issue when user was trying to login using the social network with same email as one of the existing account. It caused no problem, but redirect to page and user was not logged in, #29
 
 
-= 0.0.54 – 06.09.2018 =
+## 0.0.54 – 06.09.2018
 
 **Enhancements:**
 
@@ -266,14 +97,14 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Fixed issue with file input icon (was displaying as black square instead), #128
 * Fixed issue when send comment button was too close to the "accept privacy policy" checkbox
 
-= 0.0.53 – 04.09.2018 =
+## 0.0.53 – 04.09.2018
 
 **Fixes:**
 
 * Small fixes to translations regarding options to show/hide user URL
 * Fix for main plugin shortcode, now use `[anycomment include="true"]` to include comments on custom place (reported by Ivan)
 
-= 0.0.52 – 03.09.2018 =
+## 0.0.52 – 03.09.2018
 
 **Enhancements:**
 
@@ -299,7 +130,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Some themes have hash navigation to comments as "#respond", so it was added, #124
 * Removed hash from "Callback URL" as Google does not allow it, #119
 
-= 0.0.51 – 28.08.2018 =
+## 0.0.51 – 28.08.2018
 
 **Enhancements:**
 
@@ -308,7 +139,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Fixed issue when reply user dialog was in dark color in dark theme (invisible), #114
 * Fixed issue when guest inputs (name, email, website) were white in dark theme
 
-= 0.0.50 – 27.08.2018 =
+## 0.0.50 – 27.08.2018
 
 **Enhancements**
 
@@ -338,12 +169,12 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 * Added new entry to FAQ about Facebook forcing websites to have HTTPs in order to use API
 
-= 0.0.49 – 24.08.2018 =
+## 0.0.49 – 24.08.2018
 
 * Cosmetic fixes of form: avatar was not shown for logged in user & button was not properly aligned
 
 
-= 0.0.48 – 23.08.2018 =
+## 0.0.48 – 23.08.2018
 
 > I will try to deliver more fixes and features over next release. Thanks for using AnyComment <3.
 > Please give us short review if you like it.
@@ -354,13 +185,13 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Fixed some style conflict issues
 * Other small fixes & improvements
 
-= 0.0.47 – 23.08.2018 =
+## 0.0.47 – 23.08.2018
 
 **Fixes:**
 
 * Fixed issue when selecting both types did not allow guests to leave a comment
 
-= 0.0.46 – 23.08.2018 =
+## 0.0.46 – 23.08.2018
 
 **Enhancements:**
 
@@ -378,7 +209,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Comment text is now stored safely even when you close tab or switch tabs, so you can continue typing it
 * Added user's website to the comment when submitted as guest, #93
 
-= 0.0.45 – 21.08.2018 =
+## 0.0.45 – 21.08.2018
 
 > *IMPORTANT NOTE 1:* Please if you find any bugs report on the [support forum](https://wordpress.org/support/plugin/anycomment) or the [issue tracker](https://github.com/bologer/anycomment.io/issues)
 
@@ -420,11 +251,11 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Fixed issue when limit of number of comments per page was ignored and maximum number of comments displayed
 * Fixed overlapping sidebar news in admin on screens smaller then 1000px
 
-= 0.0.41 – 29.07.2018 =
+## 0.0.41 – 29.07.2018
 
 * Fix issue when User Agreement checkbox was not shown
 
-= 0.0.40 – 29.07.2018 =
+## 0.0.40 – 29.07.2018
 
 **Enhancements:**
 
@@ -440,7 +271,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Guest user is not redirected back to post as redirect param is missing in social authentication URL, #58
 * Options to enable/disabled show user social profile URL was ignored
 
-= 0.0.35 – 20.07.2018 =
+## 0.0.35 – 20.07.2018
 > **Important note:**
 > Plugin was completely rewritten to React. It was required as on the very early stage it had a lot of JavaScript, partly merged with HTML).
 > Logic behind plugin stays the same, we even added a few improvements and fixes, hope you like the change.
@@ -462,11 +293,11 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Fixed issue when it was not possible to disabled footer copyright ("Thanks" option in admin), #46
 * Fixed issue when first & last name was not recorded in user profile
 
-= 0.0.33 – 16.07.2018 =
+## 0.0.33 – 16.07.2018
 * Fixed problem with array syntax support on PHP version 5.5, #49
 * Fixed possible XSS in the comment
 
-= 0.0.32 – 10.07.2018 =
+## 0.0.32 – 10.07.2018
 * introducing comment likes, #35
 * minified CSS, to save some loading time
 * ability to define default user role on creation (registration via plugin), #37
@@ -475,7 +306,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * load commnets on scroll (new options to load comments when user scroll to it), #36
 * and other small bug fixes & improvements
 
-= 0.0.2 – 01.07.2018 =
+## 0.0.2 – 01.07.2018
 * admin OR moderator was unable to edit comment as it was too old
 * ability to specify number of default comments to load. The same settings applies to number of comment loaded per page, when there are more comments on post/page then specified in settings
 * plugin is not enabled until you specify at least one social network, even thought you set plugin to be ON in general settings, #11
@@ -491,7 +322,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * other small bug fixes and improvements
 * moved completely towards REST architecture
 
-= 0.0.1 - 24.06.2018 =
+## 0.0.1 - 24.06.2018
 * First Release
 * Options to specify API details (secrets, etc) for social authorization: Vk, Twitter, Facebook, Google
 * Integrated with [WP User Avatar](https://wordpress.org/plugins/wp-user-avatar/)

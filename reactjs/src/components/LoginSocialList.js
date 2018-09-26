@@ -8,11 +8,12 @@ import AnyCommentComponent from "./AnyCommentComponent"
 class LoginSocialList extends AnyCommentComponent {
     render() {
         const settings = this.props.settings;
-        const socials = settings.options.socials;
 
-        if (!socials) {
+        if (!this.hasAtLeastOneSocial()) {
             return (null);
         }
+
+        const socials = settings.options.socials;
 
         return [
             <div className="anycomment anycomment-form-guest__header">{settings.i18.quick_login}:</div>,
@@ -22,6 +23,29 @@ class LoginSocialList extends AnyCommentComponent {
                 ))}
             </ul>
         ];
+    }
+
+    /**
+     * Check whether at least one social is enabled.
+     *
+     * @returns {boolean}
+     */
+    hasAtLeastOneSocial() {
+        const settings = this.getSettings();
+        const socials = settings.options.socials;
+
+        if (!socials) {
+            return false;
+        }
+
+        let visibleCount = 0;
+        for (let key in socials) {
+            if (socials.hasOwnProperty(key) && socials[key].visible) {
+                visibleCount++;
+            }
+        }
+
+        return visibleCount > 0;
     }
 }
 
