@@ -1,3 +1,5 @@
+# Changelog
+
 ## 0.0.58 – 26.09.2018
 
 **Enhancements:**

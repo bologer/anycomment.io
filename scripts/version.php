@@ -32,6 +32,12 @@ $paths = [
 			'regex'       => '/==\sChangelog\s==/',
 			'replacement' => "== Changelog ==\n\n= $version – $date =\n\n**Enhancements:**\n\n\n\n**Fixes:**\n\n"
 		]
+	],
+	__DIR__ . '/../CHANGELOG.md'   => [
+		[
+			'regex'       => '/\#\sChangelog/',
+			'replacement' => "# Changelog\n\n## $version – $date\n\n**Enhancements:**\n\n\n\n**Fixes:**\n\n"
+		]
 	]
 ];
 
