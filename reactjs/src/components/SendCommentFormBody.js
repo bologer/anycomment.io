@@ -118,7 +118,6 @@ class SendCommentFormBody extends AnyCommentComponent {
                 });
             })
             .catch(function (error) {
-                console.log(error);
                 self.showError(error, {
                     autoClose: 1500
                 }, toastId);

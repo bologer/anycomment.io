@@ -154,7 +154,8 @@ WHERE `meta`.`comment_id`=%d AND `meta`.`meta_key`=%s AND `meta`.`meta_value` IS
 	}
 
 	/**
-	 * Add attachment for a comment.
+	 * Add attachment for a comment. Method is quite smart, it
+	 * will skip attachments if they were previously added already.
 	 *
 	 * @param int $comment_id
 	 * @param string|array $attachments List of attachments to process.

@@ -3,11 +3,10 @@
 **Enhancements:**
 
 
-
 **Fixes:**
 
 * Fixed issue when "Login with:" was displayed even thought none of the socials were enabled, #166
-
+* Fixed issue when guest users were not able to submit uploaded documents, #175
 
 ## 0.0.57 – 25.09.2018
 

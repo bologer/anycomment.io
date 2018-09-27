@@ -79,10 +79,9 @@ class SendCommentForm extends AnyCommentComponent {
             return false;
         }
 
-        const {settings, editId, replyId, attachments} = this.props;
-        const self = this;
-
-        const url = '/comments' + (editId ? ('/' + editId) : '');
+        const {settings, editId, replyId, attachments} = this.props,
+            self = this,
+            url = '/comments' + (editId ? ('/' + editId) : '');
 
         let params = {
             content: this.props.commentText,
@@ -146,24 +145,22 @@ class SendCommentForm extends AnyCommentComponent {
             content: this.props.commentText,
         };
 
-        const name = this.props.authorName;
-        const email = this.props.authorEmail;
-        const website = this.props.authorWebsite;
+        const {authorName, authorEmail, authorWebsite, attachments} = this.props;
 
         if (!settings.options.isFormTypeSocials) {
-            params.author_name = name;
+            params.author_name = authorName;
 
-            if (email !== '') {
-                params.author_email = email;
+            if (authorEmail !== '') {
+                params.author_email = authorEmail;
             }
 
-            if (website !== '') {
-                params.author_url = website;
+            if (authorWebsite !== '') {
+                params.author_url = authorWebsite;
             }
 
-            this.storeAuthorName(name);
-            this.storeAuthorEmail(email);
-            this.storeAuthorWebsite(website);
+            this.storeAuthorName(authorName);
+            this.storeAuthorEmail(authorEmail);
+            this.storeAuthorWebsite(authorWebsite);
         }
 
         if (!this.props.editId) {
@@ -178,6 +175,10 @@ class SendCommentForm extends AnyCommentComponent {
             if (!params.captcha) {
                 return false;
             }
+        }
+
+        if (attachments || attachments.length > 0) {
+            params.attachments = JSON.stringify(attachments);
         }
 
         this.props.axios
