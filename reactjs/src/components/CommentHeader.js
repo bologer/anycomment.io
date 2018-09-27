@@ -35,7 +35,7 @@ class CommentHeader extends AnyCommentComponent {
 
         if (comment.parent_author_name.trim() !== '') {
             let commentHash = '#comment-' + comment.parent;
-            let replyText = <a onClick={() => this.moveToElement(commentHash)}
+            let replyText = <a onClick={() => this.moveToCommentAndHighlight(commentHash, 1500)}
                                href={commentHash}>{settings.i18.reply_to + ' ' + comment.parent_author_name}</a>;
             additionalTags.push(<span
                 className="anycomment comment-single-body-header__author-reply">{replyText}</span>);

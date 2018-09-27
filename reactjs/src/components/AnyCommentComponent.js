@@ -17,10 +17,43 @@ class AnyCommentComponent extends React.Component {
         }),
     };
 
-    moveToElement(id) {
+    /**
+     * Move to comment and highlight it for some period.
+     *
+     * @param id
+     * @param highlightTime
+     * @param e
+     * @returns {boolean}
+     */
+    moveToCommentAndHighlight(id, highlightTime = 2500, e) {
+        const element = $(id);
+        const highlightClass = 'comment-single-highlight';
+
+        if (!element || element && !element.length) {
+            return false;
+        }
+
+        this.moveToElement(id, function () {
+            element.addClass(highlightClass);
+
+            setTimeout(function () {
+                element.removeClass(highlightClass);
+            }, highlightTime);
+        });
+
+        return false;
+    }
+
+    /**
+     * Move to specified element.
+     *
+     * @param id
+     * @param callback
+     */
+    moveToElement(id, callback) {
         $([document.documentElement, document.body]).animate({
-            scrollTop: $(id).offset().top - 60
-        }, 500);
+            scrollTop: $(id).offset().top - 60,
+        }, 500, callback);
     }
 
     /**

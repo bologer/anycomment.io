@@ -199,7 +199,7 @@ class CommentList extends AnyCommentComponent {
             commentText: comment.content
         };
 
-        if (comment.attachments || comment.attachments.length > 0 ) {
+        if (comment.attachments || comment.attachments.length > 0) {
             states.attachments = comment.attachments;
         }
 
@@ -400,12 +400,13 @@ class CommentList extends AnyCommentComponent {
         if (this.hasSpecificCommentAnchor()) {
             const interval = setInterval(function () {
 
-                let commentElement = $(hash).length;
+                const element = $(hash);
+                const commentElement = element.length;
 
                 if (!commentElement) {
                     self.handleLoadMore();
                 } else {
-                    self.moveToElement(hash);
+                    self.moveToCommentAndHighlight(hash);
                     clearInterval(interval);
                 }
             }, 1000);

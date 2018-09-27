@@ -171,6 +171,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Enhancements:**
 
+* Added left side highlight of a comment when clicked on "replied to" link and when user comes from email, #170
 
 
 **Fixes:**

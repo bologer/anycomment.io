@@ -4,6 +4,8 @@
 
 **Enhancements:**
 
+* Added left side highlight of a comment when clicked on "replied to" link and when user comes from email, #170
+
 
 **Fixes:**
 

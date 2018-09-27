@@ -410,6 +410,20 @@
       list-style: none;
     }
 
+    .comment-single-highlight {
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: -8px;
+        top: 0;
+        height: 100%;
+        width: 5px;
+        background-color: $btn-background-color;
+      }
+    }
+
     .comment-single {
       margin-bottom: $medium-space;
 
