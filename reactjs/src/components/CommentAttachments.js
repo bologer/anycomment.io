@@ -1,6 +1,5 @@
-import React, {Component} from 'react'
+import React from 'react'
 import Lightbox from 'react-images'
-import {toast} from 'react-toastify'
 import AnyCommentComponent from "./AnyCommentComponent";
 import SVG from 'react-inlinesvg'
 import audioIcon from '../img/icons/icon-audio.svg'
@@ -87,9 +86,11 @@ class CommentAttachments extends AnyCommentComponent {
             })
             .then(function (response) {
                 if (response.data.success) {
-                    self.props.onAttachmentChange(self.props.attachments.filter((obj, i) => {
+                    const cleanDeletedAttachment = self.props.attachments.filter((obj, i) => {
                         return i !== index;
-                    }));
+                    });
+
+                    self.props.onAttachmentChange(cleanDeletedAttachment);
                 }
             })
             .catch(function (error) {
@@ -106,7 +107,7 @@ class CommentAttachments extends AnyCommentComponent {
             return (null);
 
         const renderedGallery = attachments.map((obj, i) => {
-            const type = (obj.type || ''),
+            const type = (obj.file_type || ''),
                 isImage = type === 'image',
                 isAudio = type === 'audio';
 
@@ -118,7 +119,7 @@ class CommentAttachments extends AnyCommentComponent {
                     {this.state.showDeleteAction ?
                         <span className="anycomment anycomment-uploads__item-close"
                               onClick={(e) => this.handleDelete(i, obj, e)}>&times;</span> : ''}
-                    <img className="anycomment anycomment-uploads__item-thumbnail" src={obj.thumbnail}/>
+                    <img className="anycomment anycomment-uploads__item-thumbnail" src={obj.file_thumbnail}/>
                 </li>;
             } else if (isAudio) {
                 return <li
@@ -127,7 +128,7 @@ class CommentAttachments extends AnyCommentComponent {
                     {this.state.showDeleteAction ?
                         <span className="anycomment anycomment-uploads__item-close"
                               onClick={(e) => this.handleDelete(i, obj, e)}>&times;</span> : ''}
-                    <a href={obj.src} target="_blank">
+                    <a href={obj.file_url} target="_blank">
                         <SVG
                             src={audioIcon}
                             preloader={false}
@@ -142,7 +143,7 @@ class CommentAttachments extends AnyCommentComponent {
                 {this.state.showDeleteAction ?
                     <span className="anycomment anycomment-uploads__item-close"
                           onClick={(e) => this.handleDelete(i, obj, e)}>&times;</span> : ''}
-                <a href={obj.src} target="_blank">
+                <a href={obj.file_url} target="_blank">
                     <SVG
                         src={documentIcon}
                         preloader={false}
@@ -160,13 +161,20 @@ class CommentAttachments extends AnyCommentComponent {
      * @returns {Array}
      */
     filterImages() {
-        const {attachments} = this.props;
+        let {attachments} = this.props;
 
         if (!attachments.length) {
             return [];
         }
 
-        return attachments.filter(item => (item.type === 'image'));
+        attachments = attachments.filter(item => (item.file_type === 'image'));
+
+        return attachments.map((item) => {
+            item['src'] = item.file_url;
+            item['thumbnail'] = item.file_thumbnail;
+
+            return item;
+        });
     }
 
     render() {

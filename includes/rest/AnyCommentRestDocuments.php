@@ -62,7 +62,7 @@ class AnyCommentRestDocuments extends AnyCommentRestController {
 		$data = [
 			'success' => true
 		];
-		
+
 		// Wrap the data in a response object.
 		$response = rest_ensure_response( $data );
 
@@ -174,9 +174,9 @@ class AnyCommentRestDocuments extends AnyCommentRestController {
 			$file_mime_type = $file['type'];
 
 			$uploaded_files[ $key ] = [
-				'type' => AnyCommentUploadedFiles::get_image_type( $file_mime_type ),
-				'mime' => $file_mime_type,
-				'src'  => $original_file['url']
+				'file_type' => AnyCommentUploadedFiles::get_image_type( $file_mime_type ),
+				'file_mime'      => $file_mime_type,
+				'file_url'  => $original_file['url']
 			];
 
 			if ( AnyCommentUploadedFiles::can_crop( $file_mime_type ) ) {
@@ -204,7 +204,7 @@ class AnyCommentRestDocuments extends AnyCommentRestController {
 				$croppedImage = $imageEditor->save( $savePath, $file_mime_type );
 
 				if ( ! is_wp_error( $croppedImage ) ) {
-					$uploaded_files[ $key ]['thumbnail'] = $upload_dir['url'] . DIRECTORY_SEPARATOR . $croppedImage['file'];
+					$uploaded_files[ $key ]['file_thumbnail'] = $upload_dir['url'] . DIRECTORY_SEPARATOR . $croppedImage['file'];
 				}
 			}
 		}
@@ -220,17 +220,17 @@ class AnyCommentRestDocuments extends AnyCommentRestController {
 				if ( isset( $user->ID ) && (int) $user->ID !== 0 ) {
 					$model->user_ID = $user->ID;
 				}
-				$model->type = $upload['mime'];
-				$model->url  = $upload['src'];
+				$model->type = $upload['file_mime'];
+				$model->url  = $upload['file_url'];
 
-				if ( isset( $upload['thumbnail'] ) ) {
-					$model->url_thumbnail = $upload['thumbnail'];
+				if ( isset( $upload['file_thumbnail'] ) ) {
+					$model->url_thumbnail = $upload['file_thumbnail'];
 				}
 
 				if ( ! $model->save() ) {
 					wp_delete_file( AnyCommentUploadedFiles::get_path_from_url( $model->url ) );
 
-					if ( isset( $upload['thumbnail'] ) ) {
+					if ( isset( $upload['file_thumbnail'] ) ) {
 						wp_delete_file( AnyCommentUploadedFiles::get_path_from_url( $model->url_thumbnail ) );
 					}
 				} else {
