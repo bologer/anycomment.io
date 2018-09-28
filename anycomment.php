@@ -251,6 +251,11 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentCommentMeta.php' );
 
 			/**
+			 * Hooks
+			 */
+			include_once( ANYCOMMENT_ABSPATH . 'includes/hooks/AnyCommentCommentHooks.php' );
+
+			/**
 			 * Admin related
 			 */
 			include_once( ANYCOMMENT_ABSPATH . 'includes/admin/AnyCommentStatistics.php' );
@@ -287,6 +292,11 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			new AnyCommentRestDocuments();
 			new AnyCommentWPComments();
 			new AnyCommentAvatars();
+
+			/**
+			 * Hooks init.
+			 */
+			new AnyCommentCommentHooks();
 
 			/**
 			 * Cron tabs.

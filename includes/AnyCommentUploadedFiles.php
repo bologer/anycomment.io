@@ -106,7 +106,7 @@ class AnyCommentUploadedFiles {
 	/**
 	 * Delete single file or multiple files at once.
 	 *
-	 * @param $data
+	 * @param array|string $data Single or list of IDs to delete.
 	 *
 	 * @return bool
 	 */
@@ -135,11 +135,10 @@ class AnyCommentUploadedFiles {
 
 		$deletedCount = 0;
 
+		/**
+		 * @var AnyCommentUploadedFiles $file
+		 */
 		foreach ( $files as $file ) {
-			/**
-			 * @var AnyCommentUploadedFiles $file
-			 */
-
 			// Delete original file
 			$path = static::get_path_from_url( $file->url );
 			@unlink( $path );
@@ -150,7 +149,7 @@ class AnyCommentUploadedFiles {
 				@unlink( $thumbnail_path );
 			}
 
-			// Delete attachments of file, if there are such
+			// Delete file attachment from comment meta (if there are such)
 			AnyCommentCommentMeta::deleteAttachmentByFileId( $file->ID );
 
 			// Delete files from table

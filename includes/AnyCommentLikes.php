@@ -109,6 +109,34 @@ class AnyCommentLikes {
 	}
 
 	/**
+	 * Delete all like by provided comment ID.
+	 *
+	 * @since 0.0.3
+	 *
+	 * @param int $commentId ID of the comment to delete like from.
+	 *
+	 * @return bool
+	 */
+	public static function deleteLikes( $commentId ) {
+		if ( empty( $commentId ) ) {
+			return false;
+		}
+
+		$userId = get_current_user_id();
+
+		if ( (int) $userId === 0 ) {
+			return false;
+		}
+
+		global $wpdb;
+
+		$rows = $wpdb->delete( static::tableName(), [ 'comment_ID' => $commentId ] );
+
+		return $rows !== false && $rows >= 0;
+	}
+
+
+	/**
 	 * Delete single like.
 	 *
 	 * @since 0.0.3
@@ -132,7 +160,7 @@ class AnyCommentLikes {
 
 		$rows = $wpdb->delete( static::tableName(), [ 'user_ID' => $userId, 'comment_ID' => $commentId ] );
 
-		return $rows !== false && $rows > 0;
+		return $rows !== false && $rows >= 0;
 	}
 
 	/**

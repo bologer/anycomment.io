@@ -35,6 +35,8 @@ class AnyCommentCommentMeta {
 	public static function deleteAttachmentByFileId( $file_id ) {
 		global $wpdb;
 
+		$file_id = trim( $file_id );
+
 		$rowsAffected = $wpdb->delete( $wpdb->commentmeta, [
 			'meta_key'   => self::META_ATTACHMENT,
 			'meta_value' => $file_id
@@ -52,6 +54,8 @@ class AnyCommentCommentMeta {
 	 */
 	public static function existByAttachmentFileId( $file_id ) {
 		global $wpdb;
+
+		$file_id = trim( $file_id );
 
 		$sql = "SELECT * FROM `{$wpdb->commentmeta}` WHERE `meta_key` = %s AND `meta_value` = %d";
 
@@ -104,15 +108,13 @@ class AnyCommentCommentMeta {
 	}
 
 	/**
-	 * Get attachments as plain string or array.
+	 * Get attachments joined with files table.
 	 *
-	 * @param int $comment_id Comment ID.
+	 * @param int $comment_id
 	 *
-	 * @param bool $asObject If true, plain text will be returned, false will return array when value is not empty.
-	 *
-	 * @return string|array string when returned as plain text and array when returned as array.
+	 * @return array|null|object
 	 */
-	public static function getAttachments( $comment_id, $asObject = true ) {
+	public static function getAttachments( $comment_id ) {
 		global $wpdb;
 
 		$commentTable = $wpdb->commentmeta;
@@ -128,7 +130,21 @@ FROM `$commentTable` `meta`
 LEFT JOIN `$filesTable` `files` ON `meta`.`meta_value`=`files`.`id`
 WHERE `meta`.`comment_id`=%d AND `meta`.`meta_key`=%s AND `meta`.`meta_value` IS NOT NULL AND `meta`.`meta_value` != '' AND `meta`.`meta_value` != '[]'";
 
-		$res = $wpdb->get_results( $wpdb->prepare( $sql, [ $comment_id, self::META_ATTACHMENT ] ) );
+		return $wpdb->get_results( $wpdb->prepare( $sql, [ $comment_id, self::META_ATTACHMENT ] ) );
+	}
+
+	/**
+	 * Get attachments as plain string or array.
+	 *
+	 * @param int $comment_id Comment ID.
+	 *
+	 * @param bool $asObject If true, plain text will be returned, false will return array when value is not empty.
+	 *
+	 * @return string|array string when returned as plain text and array when returned as array.
+	 */
+	public static function getAttachmentsForApi( $comment_id, $asObject = true ) {
+
+		$res = static::getAttachments( $comment_id );
 
 		$objectToReturn = [];
 

@@ -733,6 +733,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 
 		// Process attachments
 		if ( ! empty( $request['attachments'] ) ) {
+			// Would add non existing ones, add keep old ones
 			AnyCommentCommentMeta::addAttachments( $id, $request['attachments'] );
 		}
 
@@ -755,9 +756,6 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		}
 
 		$request->set_param( 'context', 'edit' );
-
-		// Need to flush specific comment on update
-		\anycomment\cache\rest\AnyCommentRestCacheManager::flushComment( $comment->comment_post_ID, $comment->comment_ID );
 
 		$response = $this->prepare_item_for_response( $comment, $request );
 
@@ -834,9 +832,6 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			return new WP_Error( 'rest_cannot_delete', __( 'The comment cannot be deleted.', 'anycomment' ), array( 'status' => 500 ) );
 		}
 
-
-//		AnyComment()->cache->deleteItem( $this->get_cache_key( $request['post'] ) );
-
 		return $response;
 	}
 
@@ -853,6 +848,10 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	public function prepare_item_for_response( $comment, $request ) {
 
 		$cachedComment = \anycomment\cache\rest\AnyCommentRestCacheManager::getComment( $comment->comment_post_ID, $comment->comment_ID );
+
+		if ( ! $cachedComment->isMiss() ) {
+			return $cachedComment->get();
+		}
 
 		$child_comments = AnyComment()->render->get_child_comments( $comment->comment_ID );
 
@@ -878,10 +877,6 @@ class AnyCommentRestComment extends AnyCommentRestController {
 					$child_comments[ $key ] = $prepared_child_comment;
 				}
 			}
-		}
-
-		if ( ! $cachedComment->isMiss() ) {
-			return $cachedComment->get();
 		}
 
 		$is_post_author = false;
