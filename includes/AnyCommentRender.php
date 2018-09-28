@@ -253,7 +253,9 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 		 * @return string
 		 */
 		public function get_comment_count( $post_id ) {
-			return sprintf( __( '%s Comments', 'anycomment' ), get_comments_number( $post_id ) );
+			$count = get_comments_number( $post_id );
+
+			return sprintf( _nx( '%s comment', '%s comments', $count, 'REST API Comments Count', 'anycomment' ), number_format_i18n( $count ) );
 		}
 
 		/**

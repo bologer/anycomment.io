@@ -9,6 +9,7 @@
 
 **Fixes:**
 
+* Fixed issue with translations on number of comments in the header in Russian language, #178
 * Fixed issue when some websites had broken CSS styles after activating plugin, #177
 * Now when comments is deleted, trashed/untrashed, marked as spam, status changed, its cache will be dropped and it will display on frontend accordingly, #162
 * Fixed issue when guest users were not able to submit uploaded documents, #175

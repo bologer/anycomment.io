@@ -176,6 +176,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Fixes:**
 
+* Fixed issue with translations on number of comments in the header in Russian language, #178
 * Fixed issue when some websites had broken CSS styles after activating plugin, #177
 * Fixed issue when guest users were not able to submit uploaded documents, #175
 * Fixed issue when "Login with:" was displayed even thought none of the socials were enabled, #166
