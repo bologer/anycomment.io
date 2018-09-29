@@ -5,7 +5,7 @@
 **Enhancements:**
 
 * Added left side highlight of a comment when clicked on "replied to" link and when user comes from email, #170
-
+Enhanced editor, now possible to use : bold, italics, underscore, strike through, quote, order/unordered list, link and embed image (all customizable), #47
 
 **Fixes:**
 
