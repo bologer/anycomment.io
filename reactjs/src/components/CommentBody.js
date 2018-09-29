@@ -61,11 +61,6 @@ class CommentBody extends AnyCommentComponent {
 
         let content = this.props.comment.content;
 
-        // Replace new lines
-        content = reactStringReplace(content, newLineRe, () => (
-            <br/>
-        ));
-
         if (!settings.isLinkClickable) {
             return content;
         }
@@ -145,7 +140,7 @@ class CommentBody extends AnyCommentComponent {
         const bodyClasses = 'anycomment comment-single-body__text ' + (this.state.hideAsLong ? ' comment-single-body__shortened' : '');
 
         return <div className={bodyClasses} onClick={() => this.toggleLongComment()}>
-            <div className="comment-single-body__text-content">{this.processContent()}</div>
+            <div className="comment-single-body__text-content" dangerouslySetInnerHTML={{__html: this.processContent()}}></div>
             {this.isLongComment() ? <p className="comment-single-body__text-readmore"
                                        onClick={() => this.toggleLongComment()}>{this.state.hideAsLong ? settings.i18.read_more : settings.i18.show_less}</p> : ''}
         </div>

@@ -84,8 +84,6 @@
         border: 2px solid $semi-hidden-color;
         min-height: 64px;
         position: relative;
-        overflow: hidden;
-        max-height: 300px;
         background-color: $form-field-background-color;
         margin-bottom: 10px;
         @include border-radius($global-radius);

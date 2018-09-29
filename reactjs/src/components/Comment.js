@@ -25,6 +25,7 @@ class Comment extends AnyCommentComponent {
         this.onDelete = this.onDelete.bind(this);
     }
 
+
     /**
      * On comment reply action.
      * @param e
@@ -32,7 +33,17 @@ class Comment extends AnyCommentComponent {
      */
     onReply(e, comment) {
         e.preventDefault();
-        this.props.changeReplyId(comment);
+        this.props.handleReplyIdChange(comment);
+    }
+
+    /**
+     * On comment edit action.
+     * @param e
+     * @param comment
+     */
+    onEdit(e, comment) {
+        e.preventDefault();
+        this.props.handleEditIdChange(comment);
     }
 
     onLike(e) {
@@ -62,16 +73,6 @@ class Comment extends AnyCommentComponent {
     }
 
     /**
-     * On comment edit action.
-     * @param e
-     * @param comment
-     */
-    onEdit(e, comment) {
-        e.preventDefault();
-        this.props.changeEditId(comment);
-    }
-
-    /**
      * On comment delete.
      *
      * @param e
@@ -91,9 +92,9 @@ class Comment extends AnyCommentComponent {
                 <ul className="anycomment anycomment-list anycomment-list-child">
                     {comment.children.map(childrenComment => (
                         <Comment
-                            changeReplyId={this.props.changeReplyId}
-                            changeEditId={this.props.changeEditId}
-                            handleDelete={this.props.handleDelete}
+                            handleReplyIdChange={(e) => this.onReply(e, comment)}
+                            handleEditIdChange={(e) => this.onEdit(e, comment)}
+                            handleDelete={this.handleDelete}
                             key={childrenComment.id}
                             comment={childrenComment}/>
                     ))}

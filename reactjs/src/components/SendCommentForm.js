@@ -4,6 +4,9 @@ import SendCommentFormBody from './SendCommentFormBody';
 import AnyCommentComponent from "./AnyCommentComponent";
 import ReCAPTCHA from "react-google-recaptcha";
 import {toast} from 'react-toastify';
+import $ from "jquery";
+import {EditorState} from "draft-js";
+import {stateToHTML} from 'draft-js-export-html';
 
 
 const recapchaRef = React.createRef();
@@ -16,45 +19,178 @@ class SendCommentForm extends AnyCommentComponent {
     constructor(props) {
         super(props);
 
-        const options = this.getOptions();
+
+        const options = this.props.settings.options,
+            settings = this.props.settings;
+
 
         this.state = {
             isAgreementAccepted: true,
             reCaptchaSiteKey: options.reCaptchaSiteKey,
             reCaptchaTheme: options.reCaptchaTheme,
             reCaptchaBadge: options.reCaptchaBadge,
+
+            commentText: '',
+            attachments: [],
+            buttonText: settings.i18.button_send,
+            replyId: 0,
+            authorName: '',
+            authorEmail: '',
+            authorWebsite: '',
+            replyName: '',
+            editId: '',
+            editorState: EditorState.createEmpty(),
         };
 
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleContentChange = this.handleContentChange.bind(this);
-        this.handleReplyIdChange = this.handleReplyIdChange.bind(this);
-        this.handleEditIdChange = this.handleEditIdChange.bind(this);
-
-        this.handleAgreement = this.handleAgreement.bind(this);
     }
+
+    isReply = () => {
+        return this.props.action === 'reply';
+    };
+
+    isUpdate = () => {
+        return this.props.action === 'update';
+    };
+
+    prepareForm = () => {
+        const comment = this.props.comment;
+        switch (this.props.action) {
+            case 'reply':
+                this.prepareReplyForm(comment);
+                break;
+            case 'update':
+                this.prepareUpdateForm(comment);
+                break;
+            default:
+                this.prepareInitialForm();
+                break;
+        }
+    };
+
+    prepareInitialForm = () => {
+        this.setState({
+            commentText: '',
+            attachments: [],
+            replyName: '',
+            isReply: false,
+            buttonText: this.props.settings.i18.button_send,
+            replyId: 0,
+            editId: '',
+        });
+
+        this.props.handleUnsetAction();
+    };
+
+    prepareReplyForm = (comment) => {
+        this.setState({
+            replyName: comment.author_name,
+            buttonText: this.props.settings.i18.button_reply,
+            replyId: comment.id
+        });
+    };
+
+    prepareUpdateForm = (comment) => {
+        let states = {
+            replyName: '',
+            editId: comment.id,
+            buttonText: this.props.settings.i18.button_save,
+            commentText: comment.content
+        };
+
+        if (comment.attachments || comment.attachments.length > 0) {
+            states.attachments = comment.attachments;
+        }
+
+        this.setState(states);
+    };
+
+    /**
+     * Toggle expand/shrink animation of textarea.
+     * @returns {boolean}
+     */
+    expandCommentField = () => {
+        const el = $(this.commentFieldRef.current);
+
+        if (el.hasClass('expanded')) {
+            return false;
+        }
+
+        el.addClass('expanded');
+        el.animate({height: 150}, 300);
+    };
+
+    /**
+     * Check whether comment text is not empty.
+     *
+     * @returns {boolean}
+     */
+    isCommentTextEmpty = () => {
+        return this.state.commentText.trim() === '';
+    };
+
+    /**
+     * Focus on comment field.
+     */
+    focusCommentField = () => {
+        this.state.editorState.focusEditor();
+    };
+
+    /**
+     * Handle attachment change.
+     *
+     * @param attachments
+     */
+    handleAttachmentChange = (attachments) => {
+        this.setState({attachments: attachments});
+    };
+
+    /**
+     * Handle comment text change.
+     * @param text {String} Text to bet set.
+     * @param append {Boolean} If true, specified text will be appended to the comment text if not empty.
+     */
+    handleCommentTextChange = (text, append = false) => {
+
+        // When append and comment text is already not empty, should be current text + the specified one
+        if (append && !this.isCommentTextEmpty()) {
+            text = this.state.commentText + text;
+        }
+
+        this.setState({commentText: text});
+        this.storeComment(text);
+        this.expandCommentField();
+    };
+
+    /**
+     * Handle author name change.
+     * @param event
+     */
+    handleAuthorNameChange = (event) => {
+        this.setState({authorName: event.target.value});
+    };
+
+    /**
+     * Handle author email change.
+     * @param event
+     */
+    handleAuthorEmailChange = (event) => {
+        this.setState({authorEmail: event.target.value});
+    };
+
+    /**
+     * Handle author website change.
+     * @param event
+     */
+    handleAuthorWebsiteChange = (event) => {
+        this.setState({authorWebsite: event.target.value})
+    };
 
     /**
      * Handle comment change.
      * @param e
      */
-    handleContentChange(e) {
+    handleContentChange = (e) => {
         this.props.onCommentTextChange(e.target.value);
-    };
-
-    /**
-     * Handle change of parent comment (reply).
-     * @param e
-     */
-    handleReplyIdChange(e) {
-        this.props.onReplyIdChange(e.target.value);
-    };
-
-    /**
-     * Handle edit ID change.
-     * @param e
-     */
-    handleEditIdChange(e) {
-        this.props.onEditIdChange(e.target.value);
     };
 
     /**
@@ -62,9 +198,15 @@ class SendCommentForm extends AnyCommentComponent {
      *
      * @param e
      */
-    handleAgreement(e) {
+    handleAgreement = (e) => {
         this.setState({isAgreementAccepted: e.target.checked});
-    }
+    };
+
+    handleEditorStateChange = (editorState) => {
+        this.setState({
+            editorState,
+        });
+    };
 
     /**
      * Authorized form.
@@ -72,19 +214,24 @@ class SendCommentForm extends AnyCommentComponent {
      * @param event
      * @returns {boolean}
      */
-    handleAuthorized(event) {
+    handleAuthorized = (event) => {
         event.preventDefault();
 
         if (this.isGuest()) {
             return false;
         }
 
-        const {settings, editId, replyId, attachments} = this.props,
+        const {settings} = this.props,
+            {editId, replyId, attachments, editorState} = this.state,
             self = this,
             url = '/comments' + (editId ? ('/' + editId) : '');
 
+        const content = stateToHTML(editorState.getCurrentContent());
+
+        console.log('HTML:', content);
+
         let params = {
-            content: this.props.commentText,
+            content: content,
         };
 
         if (!editId) {
@@ -108,21 +255,22 @@ class SendCommentForm extends AnyCommentComponent {
             .request({
                 method: 'post',
                 url: url,
-                params: params,
+                data: params,
                 headers: {'X-WP-Nonce': settings.nonce}
             })
             .then(function (response) {
-                self.props.onSend(response.data);
-
+                self.prepareInitialForm();
+                self.props.loadComments();
                 return true;
             })
             .catch(function (error) {
+                console.log(error);
                 self.showError(error);
-
             });
 
         return false;
-    }
+    };
+
 
     /**
      * Handle guest form.
@@ -206,7 +354,7 @@ class SendCommentForm extends AnyCommentComponent {
      * @param event
      * @returns {boolean}
      */
-    handleSubmit(event) {
+    handleSubmit = (event) => {
         event.preventDefault();
 
         const self = this;
@@ -253,8 +401,15 @@ class SendCommentForm extends AnyCommentComponent {
     onCaptchaChange(value) {
     }
 
-    onCaptchaError(error) {
+    static onCaptchaError(error) {
         toast.error(error);
+    }
+
+    componentDidUpdate(prevProps) {
+        // Typical usage (don't forget to compare props):
+        if (this.props.action !== prevProps.action) {
+            this.prepareForm();
+        }
     }
 
     render() {
@@ -279,19 +434,17 @@ class SendCommentForm extends AnyCommentComponent {
             <div className="anycomment anycomment-send-comment-body">
                 <form onSubmit={this.handleSubmit}>
 
-                    <SendCommentFormBody {...this.props}
-                                         handleContentChange={this.handleContentChange}
-                                         onAttachmentChange={this.props.onAttachmentChange}
-                                         changeCommenText={this.props.onCommentTextChange}/>
+                    <SendCommentFormBody {...this.props} attachments={this.state.attachments}
+                                         editorState={this.state.editorState}
+                                         handleEditorStateChange={this.handleEditorStateChange}
+                                         handleAttachmentChange={this.props.handleAttachmentChange}/>
 
                     {this.isGuest() ?
-                        <SendCommentGuest {...this.props} handleAgreement={this.handleAgreement}
+                        <SendCommentGuest {...this.props}
                                           isAgreementAccepted={this.state.isAgreementAccepted}/> :
                         <input type="submit" className="anycomment-btn anycomment-send-comment-body__btn"
-                               value={this.props.buttonText}/>
+                               value={this.state.buttonText}/>
                     }
-
-                    {/*<input type="text" value={this.props.}/>*/}
 
                     <input
                         type="hidden"
@@ -300,12 +453,12 @@ class SendCommentForm extends AnyCommentComponent {
                         className="anycomment"
                         onChange={this.handleReplyIdChange}/>
 
-                    {this.props.isReply ? <div className="clearfix"></div> : ''}
+                    {this.isReply() ? <div className="clearfix"></div> : ''}
 
-                    {this.props.isReply ?
+                    {this.isReply() ?
                         <div
                             className="anycomment anycomment-send-comment-body-reply">{translations.reply_to} {this.props.replyName}
-                            <span onClick={this.props.onReplyCancel}>{translations.cancel}</span></div>
+                            <span onClick={this.prepareInitialForm}>{translations.cancel}</span></div>
                         : ''}
 
                     {!this.isGuest() ? <input type="hidden" name="edit_id" value={this.props.editId}

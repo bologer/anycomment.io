@@ -90,7 +90,7 @@ class CommentAttachments extends AnyCommentComponent {
                         return i !== index;
                     });
 
-                    self.props.onAttachmentChange(cleanDeletedAttachment);
+                    self.props.handleAttachmentChange(cleanDeletedAttachment);
                 }
             })
             .catch(function (error) {

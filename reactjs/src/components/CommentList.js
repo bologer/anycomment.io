@@ -34,177 +34,21 @@ class CommentList extends AnyCommentComponent {
             // primarily used to track toast of added new comments
             isJustAdded: false,
 
-            commentText: '',
-            attachments: [],
-            buttonText: settings.i18.button_send,
-            isReply: false,
-            replyId: 0,
-            authorName: '',
-            authorEmail: '',
-            authorWebsite: '',
-            replyName: '',
-            editId: '',
+            action: '',
+            comment: '',
+
+            order: settings.options.sort_order
         };
-
-        this.state.order = settings.options.sort_order;
-
-        /**
-         * Form states.
-         * @type {string}
-         */
-        this.commentFieldRef = React.createRef();
 
         /**
          * Bindings
          */
-        this.focusCommentField = this.focusCommentField.bind(this);
-        this.expandCommentField = this.expandCommentField.bind(this);
         this.loadComments = this.loadComments.bind(this);
         this.handleLoadMore = this.handleLoadMore.bind(this);
-        this.handleAddComment = this.handleAddComment.bind(this);
         this.handleSort = this.handleSort.bind(this);
 
-        this.handleAttachmentChange = this.handleAttachmentChange.bind(this);
-        this.handleCommentTextChange = this.handleCommentTextChange.bind(this);
-        this.handleReplyIdChange = this.handleReplyIdChange.bind(this);
-        this.handleReplyCancel = this.handleReplyCancel.bind(this);
-        this.handleEditIdChange = this.handleEditIdChange.bind(this);
-        this.handleAuthorNameChange = this.handleAuthorNameChange.bind(this);
-        this.handleAuthorEmailChange = this.handleAuthorEmailChange.bind(this);
-        this.handleAuthorWebsiteChange = this.handleAuthorWebsiteChange.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
         this.checkForAnchor = this.checkForAnchor.bind(this);
-    }
-
-    /**
-     * Toggle expand/shrink animation of textarea.
-     * @returns {boolean}
-     */
-    expandCommentField() {
-        const el = $(this.commentFieldRef.current);
-
-        if (el.hasClass('expanded')) {
-            return false;
-        }
-
-        el.addClass('expanded');
-        el.animate({height: 150}, 300);
-    }
-
-    /**
-     * Check whether comment text is not empty.
-     *
-     * @returns {boolean}
-     */
-    isCommentTextEmpty() {
-        return this.state.commentText.trim() === '';
-    }
-
-    /**
-     * Focus on comment field.
-     */
-    focusCommentField() {
-        this.commentFieldRef.current.focus();
-    }
-
-    /**
-     * Handle attachment change.
-     *
-     * @param attachments
-     */
-    handleAttachmentChange(attachments) {
-        this.setState({attachments: attachments});
-    }
-
-    /**
-     * Handle comment text change.
-     * @param text {String} Text to bet set.
-     * @param append {Boolean} If true, specified text will be appended to the comment text if not empty.
-     */
-    handleCommentTextChange(text, append = false) {
-
-        // When append and comment text is already not empty, should be current text + the specified one
-        if (append && !this.isCommentTextEmpty()) {
-            text = this.state.commentText + text;
-        }
-
-        this.setState({commentText: text});
-        this.storeComment(text);
-        this.expandCommentField();
-    }
-
-    /**
-     * Handle reply ID change.
-     * @param comment
-     */
-    handleReplyIdChange(comment) {
-        this.setState({
-            isReply: true,
-            replyName: comment.author_name,
-            buttonText: this.props.settings.i18.button_reply,
-            replyId: comment.id
-        });
-
-        this.focusCommentField();
-    }
-
-    /**
-     * Handle author name change.
-     * @param event
-     */
-    handleAuthorNameChange(event) {
-        this.setState({authorName: event.target.value});
-    }
-
-    /**
-     * Handle author email change.
-     * @param event
-     */
-    handleAuthorEmailChange(event) {
-        this.setState({authorEmail: event.target.value});
-    }
-
-    /**
-     * Handle author website change.
-     * @param event
-     */
-    handleAuthorWebsiteChange(event) {
-        this.setState({authorWebsite: event.target.value})
-    };
-
-    /**
-     * Handel cancel of the reply.
-     */
-    handleReplyCancel() {
-        this.setState({
-            isReply: false,
-            replyName: '',
-            buttonText: this.props.settings.i18.button_send,
-            replyId: 0
-        });
-        this.expandCommentField();
-    }
-
-    /**
-     * Handle edit ID change.
-     * @param comment
-     */
-    handleEditIdChange(comment) {
-
-        let states = {
-            isReply: false,
-            replyName: '',
-            editId: comment.id,
-            buttonText: this.props.settings.i18.button_save,
-            commentText: comment.content
-        };
-
-        if (comment.attachments || comment.attachments.length > 0) {
-            states.attachments = comment.attachments;
-        }
-
-        this.setState(states);
-        this.focusCommentField(true);
     }
 
     /**
@@ -369,26 +213,6 @@ class CommentList extends AnyCommentComponent {
     }
 
     /**
-     * Add new comment to the list.
-     */
-    handleAddComment() {
-        this.setState({
-            commentText: '',
-            attachments: [],
-            replyName: '',
-            isReply: false,
-            buttonText: this.props.settings.i18.button_send,
-            replyId: 0,
-            editId: '',
-            isJustAdded: true,
-        });
-
-        this.dropComment();
-        this.loadComments();
-        this.focusCommentField();
-    };
-
-    /**
      * Checks for anchors in the link.
      * If there are some, it could be user who came from the
      * email and trying to read his reply.
@@ -446,35 +270,38 @@ class CommentList extends AnyCommentComponent {
         }
     }
 
+    handleReplyIdChange = (comment) => {
+        this.setState({
+            action: 'reply',
+            comment: comment
+        });
+    };
+
+    handleEditIdChange = (comment) => {
+        this.setState({
+            action: 'update',
+            comment: comment
+        });
+    };
+
+    handleUnsetAction = () => {
+        this.setState({
+            action: '',
+            comment: ''
+        });
+    };
+
 
     render() {
-        const {isError, isLoaded, comments} = this.state;
+        const {isError, action, comment, isLoaded, comments, isLastPage} = this.state;
         const settings = this.props.settings;
 
         const sendComment = <SendComment
-            commentFieldRef={this.commentFieldRef}
-            commentText={this.state.commentText}
-            attachments={this.state.attachments}
-            buttonText={this.state.buttonText}
-            commentCountText={this.state.commentCountText}
-            replyId={this.state.replyId}
-            replyName={this.state.replyName}
-            isReply={this.state.isReply}
-            editId={this.state.editId}
-            authorName={this.state.authorName}
-            authorEmail={this.state.authorEmail}
-            authorWebsite={this.state.authorWebsite}
-            onSort={this.handleSort}
-            onCommentTextChange={this.handleCommentTextChange}
-            onAttachmentChange={this.handleAttachmentChange}
-            onReplyIdChange={this.handleReplyIdChange}
-            onReplyCancel={this.handleReplyCancel}
-            onEditIdChange={this.handleEditIdChange}
-            onAuthorNameChange={this.handleAuthorNameChange}
-            onAuthorEmailChange={this.handleAuthorEmailChange}
-            onAuthorWebsiteChange={this.handleAuthorWebsiteChange}
-            onSend={this.handleAddComment}/>;
-
+            action={action}
+            comment={comment}
+            handleUnsetAction={this.handleUnsetAction}
+            loadComments={this.loadComments}
+            onSort={this.handleSort}/>;
 
         if (isError) {
             return <React.Fragment>
@@ -504,15 +331,15 @@ class CommentList extends AnyCommentComponent {
                     <ul id="anycomment-load-container" className="anycomment anycomment-list">
                         {comments.map(comment => (
                             <Comment
-                                changeReplyId={this.handleReplyIdChange}
-                                changeEditId={this.handleEditIdChange}
+                                handleReplyIdChange={this.handleReplyIdChange}
+                                handleEditIdChange={this.handleEditIdChange}
                                 handleDelete={this.handleDelete}
                                 key={comment.id}
                                 comment={comment}
                             />
                         ))}
 
-                        {!this.state.isLastPage ?
+                        {!isLastPage ?
                             <div className="anycomment comment-single-load-more">
                             <span onClick={(e) => this.handleLoadMore(e)}
                                   className="anycomment anycomment-btn">{settings.i18.load_more}</span>

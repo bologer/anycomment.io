@@ -20,7 +20,7 @@ class SendCommentGuest extends AnyCommentComponent {
                         <input type="text" name="author_name" id="anycomment-author-name"
                                value={this.props.authorName}
                                required={true}
-                               onChange={this.props.onAuthorNameChange}
+                               onChange={this.props.handleAuthorNameChange}
                         />
                     </div>);
             } else if (el === 'email') {
@@ -30,7 +30,7 @@ class SendCommentGuest extends AnyCommentComponent {
                         <input type="email" name="author_email" id="anycomment-author-email"
                                value={this.props.authorEmail}
                                required={true}
-                               onChange={this.props.onAuthorEmailChange}
+                               onChange={this.props.handleAuthorNameChange}
                         />
                     </div>);
             } else if (el === 'website') {
@@ -39,7 +39,7 @@ class SendCommentGuest extends AnyCommentComponent {
                         <label form="anycomment-author-website">{translations.website}</label>
                         <input type="text" name="author_url" id="anycomment-author-website"
                                value={this.props.authorWebsite}
-                               onChange={this.props.onAuthorWebsiteChange}
+                               onChange={this.props.handleAuthorNameChange}
                         />
                     </div>);
             }

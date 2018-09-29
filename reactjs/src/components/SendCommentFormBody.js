@@ -1,23 +1,24 @@
 import React from 'react'
-import SendCommentFormBodyAvatar from './SendCommentFormBodyAvatar'
 import AnyCommentComponent from "./AnyCommentComponent"
 import Dropzone from 'react-dropzone'
 import {toast} from 'react-toastify'
 import SVG from 'react-inlinesvg';
 import selectFileSvg from '../img/select-file.svg'
 import CommentAttachments from './CommentAttachments'
+import CommentEditor from './CommentEditor';
 
 /**
  * Display comment field of the form.
  */
 class SendCommentFormBody extends AnyCommentComponent {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
             dropzoneActive: false,
         };
+
 
         this.onDragEnter = this.onDragEnter.bind(this);
         this.onDragLeave = this.onDragLeave.bind(this);
@@ -101,13 +102,13 @@ class SendCommentFormBody extends AnyCommentComponent {
                     attachments = self.props.attachments;
 
                 if (!attachments || !attachments.length) {
-                    self.props.onAttachmentChange(files);
+                    self.props.handleAttachmentChange(files);
                 } else {
                     let newAttachments = attachments;
                     response.data.files.forEach((item) => {
                         newAttachments.push(item);
                     });
-                    self.props.onAttachmentChange(newAttachments);
+                    self.props.handleAttachmentChange(newAttachments);
                 }
 
                 toast.update(toastId, {
@@ -137,8 +138,6 @@ class SendCommentFormBody extends AnyCommentComponent {
         const outliner = <div
             className={"anycomment anycomment-send-comment-body-outliner" + (dropzoneActive ? ' anycomment-send-comment-body-outliner-dropzone-active' : '')}>
 
-            <SendCommentFormBodyAvatar user={this.props.user}/>
-
             {canUpload ?
                 <div className="anycomment anycomment-send-comment-body-outliner__select-file"
                      title={settings.i18.upload_file}
@@ -148,14 +147,7 @@ class SendCommentFormBody extends AnyCommentComponent {
                              preloader={false}
                 /></div> : ''}
 
-            <textarea name="content"
-                      value={this.props.commentText}
-                      required="required"
-                      className="anycomment anycomment-send-comment-body-outliner__textfield"
-                      placeholder={settings.i18.add_comment}
-                      onChange={this.props.handleContentChange}
-                      ref={this.props.commentFieldRef}
-            ></textarea>
+            <CommentEditor {...this.props} />
         </div>;
 
         if (!canUpload) {
@@ -176,7 +168,7 @@ class SendCommentFormBody extends AnyCommentComponent {
             onDragLeave={this.onDragLeave.bind(this)}>
             {outliner}
             <CommentAttachments
-                onAttachmentChange={this.props.onAttachmentChange}
+                handleAttachmentChange={this.props.handleAttachmentChange}
                 attachments={attachments}
                 showDeleteAction={!this.isGuest()}/>
         </Dropzone>
