@@ -6,6 +6,7 @@
 
 * Added left side highlight of a comment when clicked on "replied to" link and when user comes from email, #170
 * Enhanced editor, now possible to use : bold, italics, underscore, quote, order/unordered list, link and embed image (all customizable), #47
+* Comment read more now considers content height instead of length as it includes HTML and website can be wide, which breaks logic of content length, #105
 
 **Fixes:**
 
