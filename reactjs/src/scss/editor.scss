@@ -1,4 +1,16 @@
 @import "variables";
+@import "mixins";
+
+@mixin modalButton() {
+  margin: 0 5px;
+  padding: 0;
+  height: 30px;
+  font-size: $font-size - 3;
+  cursor: pointer;
+  background-color: $btn-background-color;
+  text-transform: capitalize;
+  @include border-radius($btn-radius);
+}
 
 #{$root} {
   .anycomment-editor {
@@ -46,7 +58,6 @@
     border-radius: 2px;
     margin: 0 3px;
     text-transform: capitalize;
-    background: white;
   }
 
   .rdw-dropdown-wrapper:focus {
@@ -272,7 +283,6 @@
     display: flex;
     flex-direction: column;
     width: 175px;
-    height: 175px;
     border: 1px solid #F1F1F1;
     padding: 15px;
     border-radius: 2px;
@@ -364,7 +374,6 @@
     display: flex;
     flex-direction: column;
     width: 235px;
-    height: 205px;
     border: 1px solid #F1F1F1;
     padding: 15px;
     border-radius: 2px;
@@ -374,7 +383,9 @@
   }
 
   .rdw-link-modal-label {
-    font-size: 15px;
+    font-size: $font-size - 2;
+    margin-bottom: 0;
+    padding: 0;
   }
 
   .rdw-link-modal-input {
@@ -403,22 +414,13 @@
   }
 
   .rdw-link-modal-btn {
-    margin-left: 10px;
+    @include modalButton();
     width: 75px;
-    height: 30px;
-    border: 1px solid #F1F1F1;
-    border-radius: 2px;
-    cursor: pointer;
-    background: white;
-    text-transform: capitalize;
-  }
 
-  .rdw-link-modal-btn:hover {
-    box-shadow: 1px 1px 0 #BFBDBD;
-  }
-
-  .rdw-link-modal-btn:active {
-    box-shadow: 1px 1px 0 #BFBDBD inset;
+    &:hover,
+    &:focus {
+      background-color: $btn-background-color-active;
+    }
   }
 
   .rdw-link-modal-btn:focus {
@@ -453,7 +455,6 @@
     display: flex;
     flex-direction: column;
     width: 235px;
-    height: 180px;
     border: 1px solid #F1F1F1;
     padding: 15px;
     border-radius: 2px;
@@ -515,26 +516,14 @@
   }
 
   .rdw-embedded-modal-btn {
-    margin: 0 3px;
     width: 75px;
-    height: 30px;
-    border: 1px solid #F1F1F1;
-    border-radius: 2px;
-    cursor: pointer;
-    background: white;
-    text-transform: capitalize;
-  }
+    @include modalButton();
 
-  .rdw-embedded-modal-btn:hover {
-    box-shadow: 1px 1px 0 #BFBDBD;
-  }
-
-  .rdw-embedded-modal-btn:active {
-    box-shadow: 1px 1px 0 #BFBDBD inset;
-  }
-
-  .rdw-embedded-modal-btn:focus {
-    outline: none !important;
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: $btn-background-color-active;
+    }
   }
 
   .rdw-embedded-modal-btn:disabled {
@@ -765,22 +754,13 @@
   }
 
   .rdw-image-modal-btn {
-    margin: 0 5px;
     width: 75px;
-    height: 30px;
-    border: 1px solid #F1F1F1;
-    border-radius: 2px;
-    cursor: pointer;
-    background: white;
-    text-transform: capitalize;
-  }
+    @include modalButton();
 
-  .rdw-image-modal-btn:hover {
-    box-shadow: 1px 1px 0 #BFBDBD;
-  }
-
-  .rdw-image-modal-btn:active {
-    box-shadow: 1px 1px 0 #BFBDBD inset;
+    &:hover,
+    &:active {
+      background-color: $btn-background-color-active;
+    }
   }
 
   .rdw-image-modal-btn:focus {

@@ -269,6 +269,25 @@ class AnyCommentComponent extends React.Component {
             return false;
         }
     }
+
+    /**
+     * Get short or full version of  locale.
+     *
+     * Short: e.g. ru, whereas long: ru_RU
+     *
+     * @param full {Boolean}
+     * @returns {*}
+     */
+    getLocale(full = false) {
+        const settings = this.getSettings(),
+            locale = settings.locale;
+
+        if (full) {
+            return locale;
+        }
+
+        return locale.substring(0, 2);
+    }
 }
 
 export default AnyCommentComponent;

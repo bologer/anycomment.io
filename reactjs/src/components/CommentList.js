@@ -242,22 +242,6 @@ class CommentList extends AnyCommentComponent {
 
         this.checkForAnchor();
 
-        // Expand comment field when not empty
-        // This can happen when text was saved in the local storage
-        // in order not to lose it
-        const localStorageComment = this.getComment();
-
-        if (localStorageComment !== '') {
-            this.expandCommentField();
-        }
-
-        this.setState({
-            commentText: localStorageComment,
-            authorName: this.getAuthorName(),
-            authorEmail: this.getAuthorEmail(),
-            authorWebsite: this.getAuthorWebsite(),
-        });
-
         const options = this.getOptions();
 
         if (options.notifyOnNewComment) {
@@ -270,6 +254,11 @@ class CommentList extends AnyCommentComponent {
         }
     }
 
+    /**
+     * Propage reply action.
+     *
+     * @param comment
+     */
     handleReplyIdChange = (comment) => {
         this.setState({
             action: 'reply',
@@ -277,6 +266,11 @@ class CommentList extends AnyCommentComponent {
         });
     };
 
+    /**
+     * Propagate edit action.
+     *
+     * @param comment
+     */
     handleEditIdChange = (comment) => {
         this.setState({
             action: 'update',
@@ -284,6 +278,10 @@ class CommentList extends AnyCommentComponent {
         });
     };
 
+    /**
+     * Handle action unsetting.
+     * Unset any previously set action.
+     */
     handleUnsetAction = () => {
         this.setState({
             action: '',

@@ -4,7 +4,6 @@ import SendCommentFormBody from './SendCommentFormBody';
 import AnyCommentComponent from "./AnyCommentComponent";
 import ReCAPTCHA from "react-google-recaptcha";
 import {toast} from 'react-toastify';
-import $ from "jquery";
 import {EditorState} from "draft-js";
 import {stateToHTML} from 'draft-js-export-html';
 import {stateFromHTML} from 'draft-js-import-html';
@@ -19,10 +18,8 @@ class SendCommentForm extends AnyCommentComponent {
     constructor(props) {
         super(props);
 
-
         const options = this.props.settings.options,
             settings = this.props.settings;
-
 
         this.state = {
             isAgreementAccepted: true,
@@ -45,14 +42,31 @@ class SendCommentForm extends AnyCommentComponent {
         this.setDomEditorRef = ref => this.domEditor = ref;
     }
 
+    /**
+     * Check whether reply to comment action is called.
+     *
+     * @returns {boolean}
+     */
     isReply = () => {
         return this.props.action === 'reply';
     };
 
+    /**
+     * Check whether update comment action is called.
+     *
+     * @returns {boolean}
+     */
     isUpdate = () => {
         return this.props.action === 'update';
     };
 
+    /**
+     * Generic method invoked when action changes.
+     * Action can be either reply, update or default.
+     *
+     * Default being re initiate default comment form state.
+     * @see prepareInitialForm
+     */
     prepareForm = () => {
         const comment = this.props.comment;
         switch (this.props.action) {
@@ -68,6 +82,9 @@ class SendCommentForm extends AnyCommentComponent {
         }
     };
 
+    /**
+     * Reinit comment form. Initial comment form state.
+     */
     prepareInitialForm = () => {
         this.setState({
             commentText: '',
@@ -80,9 +97,15 @@ class SendCommentForm extends AnyCommentComponent {
             editorState: EditorState.createEmpty()
         });
 
+        this.dropComment();
         this.props.handleUnsetAction();
     };
 
+    /**
+     * Prepare comment form for comment reply state.
+     *
+     * @param comment
+     */
     prepareReplyForm = (comment) => {
         this.setState({
             replyName: comment.author_name,
@@ -93,12 +116,16 @@ class SendCommentForm extends AnyCommentComponent {
         this.focusCommentField();
     };
 
+    /**
+     * Prepare comment form for comment update state.
+     *
+     * @param comment
+     */
     prepareUpdateForm = (comment) => {
 
-        const contentBlock = stateFromHTML(comment.content);
+        const editorState = this.getEditorStateFromHTML(comment.content);
 
-        if (contentBlock) {
-            const editorState = EditorState.createWithContent(contentBlock);
+        if (editorState !== null) {
 
             let states = {
                 replyName: '',
@@ -107,41 +134,40 @@ class SendCommentForm extends AnyCommentComponent {
                 editorState: editorState
             };
 
-
-            if (comment.attachments || comment.attachments.length > 0) {
+            if (comment.attachments || comment.attachments && comment.attachments.length > 0) {
                 states.attachments = comment.attachments;
             }
 
             this.setState(states, () => {
                 this.focusCommentField();
             });
-
         }
     };
 
     /**
-     * Toggle expand/shrink animation of textarea.
-     * @returns {boolean}
+     * Parse editor state from HTML.
+     * @param html
+     * @returns {*}
      */
-    expandCommentField = () => {
-        const el = $(this.commentFieldRef.current);
+    getEditorStateFromHTML(html) {
+        const contentBlock = stateFromHTML(html);
 
-        if (el.hasClass('expanded')) {
-            return false;
+        if (contentBlock) {
+            return EditorState.createWithContent(contentBlock);
         }
 
-        el.addClass('expanded');
-        el.animate({height: 150}, 300);
-    };
+        return null;
+    }
 
     /**
-     * Check whether comment text is not empty.
+     * Get HTML from editor state.
      *
-     * @returns {boolean}
+     * @param editorState
+     * @returns {string}
      */
-    isCommentTextEmpty = () => {
-        return this.state.commentText.trim() === '';
-    };
+    getHTMLFromEditorState(editorState) {
+        return stateToHTML(editorState.getCurrentContent())
+    }
 
     /**
      * Focus on comment field.
@@ -157,23 +183,6 @@ class SendCommentForm extends AnyCommentComponent {
      */
     handleAttachmentChange = (attachments) => {
         this.setState({attachments: attachments});
-    };
-
-    /**
-     * Handle comment text change.
-     * @param text {String} Text to bet set.
-     * @param append {Boolean} If true, specified text will be appended to the comment text if not empty.
-     */
-    handleCommentTextChange = (text, append = false) => {
-
-        // When append and comment text is already not empty, should be current text + the specified one
-        if (append && !this.isCommentTextEmpty()) {
-            text = this.state.commentText + text;
-        }
-
-        this.setState({commentText: text});
-        this.storeComment(text);
-        this.expandCommentField();
     };
 
     /**
@@ -201,15 +210,7 @@ class SendCommentForm extends AnyCommentComponent {
     };
 
     /**
-     * Handle comment change.
-     * @param e
-     */
-    handleContentChange = (e) => {
-        this.props.onCommentTextChange(e.target.value);
-    };
-
-    /**
-     * Handle agreement check.
+     * Handle agreement checkbox change.
      *
      * @param e
      */
@@ -217,10 +218,17 @@ class SendCommentForm extends AnyCommentComponent {
         this.setState({isAgreementAccepted: e.target.checked});
     };
 
+    /**
+     * Handle comment text change.
+     *
+     * @param editorState
+     */
     handleEditorStateChange = (editorState) => {
         this.setState({
             editorState,
         });
+
+        this.storeComment(this.getHTMLFromEditorState(editorState));
     };
 
     /**
@@ -241,7 +249,7 @@ class SendCommentForm extends AnyCommentComponent {
             self = this,
             url = '/comments' + (editId ? ('/' + editId) : '');
 
-        const content = stateToHTML(editorState.getCurrentContent());
+        const content = this.getHTMLFromEditorState(editorState);
 
         let params = {
             content: content,
@@ -289,23 +297,24 @@ class SendCommentForm extends AnyCommentComponent {
      * @param event
      * @returns {boolean}
      */
-    handleGuest(event) {
+    handleGuest = (event) => {
         event.preventDefault();
 
         if (!this.isGuest()) {
             return false;
         }
 
-        const settings = this.getSettings();
-        const self = this;
+        const settings = this.getSettings(),
+            {editId, replyId, attachments, authorName, authorEmail, authorWebsite, editorState} = this.state,
+            self = this;
 
         const url = '/comments';
 
-        let params = {
-            content: this.props.commentText,
-        };
+        const content = this.getHTMLFromEditorState(editorState);
 
-        const {authorName, authorEmail, authorWebsite, attachments} = this.props;
+        let params = {
+            content: content,
+        };
 
         if (!settings.options.isFormTypeSocials) {
             params.author_name = authorName;
@@ -323,10 +332,10 @@ class SendCommentForm extends AnyCommentComponent {
             this.storeAuthorWebsite(authorWebsite);
         }
 
-        if (!this.props.editId) {
+        if (!editId) {
 
             params.post = settings.postId;
-            params.parent = this.props.replyId;
+            params.parent = replyId;
         }
 
         if (this.isCaptchaOn()) {
@@ -349,8 +358,8 @@ class SendCommentForm extends AnyCommentComponent {
                 headers: {'X-WP-Nonce': settings.nonce}
             })
             .then(function (response) {
-                self.props.onSend(response.data);
-
+                self.prepareInitialForm();
+                self.props.loadComments();
                 return true;
             })
             .catch(function (error) {
@@ -359,7 +368,7 @@ class SendCommentForm extends AnyCommentComponent {
             });
 
         return false;
-    }
+    };
 
     /**
      * Handle form submit for guest and authorized clients.
@@ -417,6 +426,47 @@ class SendCommentForm extends AnyCommentComponent {
         toast.error(error);
     }
 
+    /**
+     * Prepare remembered fields.
+     */
+    prepareRemembered = () => {
+        const email = this.getAuthorEmail(),
+            name = this.getAuthorName(),
+            website = this.getAuthorWebsite(),
+            commentText = this.getComment();
+
+        let state = {};
+
+        if (email !== '') {
+            state.authorEmail = email;
+        }
+
+        if (name !== '') {
+            state.authorName = name;
+        }
+
+        if (website !== '') {
+            state.authorWebsite = website;
+        }
+
+        if (commentText) {
+            const editorState = this.getEditorStateFromHTML(commentText);
+
+            if (editorState !== null) {
+                state.editorState = editorState;
+            }
+        }
+
+
+        if (state !== {}) {
+            this.setState(state);
+        }
+    };
+
+    componentDidMount() {
+        this.prepareRemembered();
+    }
+
     componentDidUpdate(prevProps) {
         // Typical usage (don't forget to compare props):
         if (this.props.action !== prevProps.action || this.props.comment.id !== prevProps.comment.id) {
@@ -454,7 +504,10 @@ class SendCommentForm extends AnyCommentComponent {
                                          handleAttachmentChange={this.handleAttachmentChange}/>
 
                     {this.isGuest() ?
-                        <SendCommentGuest {...this.props}
+                        <SendCommentGuest {...this.state}
+                                          handleAuthorNameChange={this.handleAuthorNameChange}
+                                          handleAuthorEmailChange={this.handleAuthorEmailChange}
+                                          handleAuthorWebsiteChange={this.handleAuthorWebsiteChange}
                                           isAgreementAccepted={this.state.isAgreementAccepted}/> :
                         <input type="submit" className="anycomment-btn anycomment-send-comment-body__btn"
                                value={this.state.buttonText}/>

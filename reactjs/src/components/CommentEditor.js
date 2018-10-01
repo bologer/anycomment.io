@@ -49,16 +49,21 @@ class CommentEditor extends AnyCommentComponent {
     render() {
         const {editorState} = this.props;
 
+
         return (
             <Fragment>
                 <SendCommentFormBodyAvatar/>
                 <Editor
+                    placeholder={"123"}
                     editorState={editorState}
                     toolbar={this.editorOptions()}
                     wrapperClassName="anycomment-editor-wrapper"
                     toolbarClassName="anycomment-toolbar-wrapper"
                     editorClassName="anycomment-editor"
                     editorRef={this.props.domEditorRef}
+                    localization={{
+                        locale: this.getLocale()
+                    }}
                     onEditorStateChange={this.props.handleEditorStateChange}
                 />
             </Fragment>

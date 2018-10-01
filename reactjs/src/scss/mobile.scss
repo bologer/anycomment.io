@@ -125,57 +125,10 @@ $btn-padding: 0 40px;
           }
         }
 
-        &__logo {
-          position: absolute;
-          left: 33px;
-          top: 36px;
-          width: 26px;
-          height: 26px;
-          background: url('../img/comment-logo.svg') no-repeat;
-          z-index: 2;
-        }
-
-        &__select-file {
-          position: absolute;
-          top: 2px;
-          right: 18px;
-          height: 25px;
-          width: 25px;
-          cursor: pointer;
-          opacity: 0.6;
-          z-index: 2;
-
-          &:hover,
-          &:active,
-          &:focus {
-            opacity: 1;
-          }
-        }
-
         &__textfield {
           font-size: $font-size;
           padding: $comment-field-padding !important;
           min-height: $comment-field-default-height;
-        }
-      }
-
-      // Dropzone
-      &-outliner-dropzone-active {
-        border-style: dashed;
-
-        &::before {
-          content: '';
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          background: url('../img/dropzone.svg');
-          background-size: cover;
-          width: 60px;
-          height: 60px;
-          z-index: 4;
-          opacity: 0.5;
-          margin-left: -30px;
-          margin-top: -30px;
         }
       }
 

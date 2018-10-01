@@ -13,9 +13,8 @@ class CommentHeader extends AnyCommentComponent {
         const {comment, settings} = this.props;
 
         let languageStrings = i18En;
-        const locale = settings.locale.substring(0, 2);
 
-        if (locale === 'ru') {
+        if (this.getLocale() === 'ru') {
             languageStrings = i18Ru;
         }
 
