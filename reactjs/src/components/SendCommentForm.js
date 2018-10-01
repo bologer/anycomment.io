@@ -7,7 +7,7 @@ import {toast} from 'react-toastify';
 import $ from "jquery";
 import {EditorState} from "draft-js";
 import {stateToHTML} from 'draft-js-export-html';
-
+import {stateFromHTML} from 'draft-js-import-html';
 
 const recapchaRef = React.createRef();
 
@@ -42,6 +42,7 @@ class SendCommentForm extends AnyCommentComponent {
             editorState: EditorState.createEmpty(),
         };
 
+        this.setDomEditorRef = ref => this.domEditor = ref;
     }
 
     isReply = () => {
@@ -76,6 +77,7 @@ class SendCommentForm extends AnyCommentComponent {
             buttonText: this.props.settings.i18.button_send,
             replyId: 0,
             editId: '',
+            editorState: EditorState.createEmpty()
         });
 
         this.props.handleUnsetAction();
@@ -87,21 +89,34 @@ class SendCommentForm extends AnyCommentComponent {
             buttonText: this.props.settings.i18.button_reply,
             replyId: comment.id
         });
+
+        this.focusCommentField();
     };
 
     prepareUpdateForm = (comment) => {
-        let states = {
-            replyName: '',
-            editId: comment.id,
-            buttonText: this.props.settings.i18.button_save,
-            commentText: comment.content
-        };
 
-        if (comment.attachments || comment.attachments.length > 0) {
-            states.attachments = comment.attachments;
+        const contentBlock = stateFromHTML(comment.content);
+
+        if (contentBlock) {
+            const editorState = EditorState.createWithContent(contentBlock);
+
+            let states = {
+                replyName: '',
+                editId: comment.id,
+                buttonText: this.props.settings.i18.button_save,
+                editorState: editorState
+            };
+
+
+            if (comment.attachments || comment.attachments.length > 0) {
+                states.attachments = comment.attachments;
+            }
+
+            this.setState(states, () => {
+                this.focusCommentField();
+            });
+
         }
-
-        this.setState(states);
     };
 
     /**
@@ -132,7 +147,7 @@ class SendCommentForm extends AnyCommentComponent {
      * Focus on comment field.
      */
     focusCommentField = () => {
-        this.state.editorState.focusEditor();
+        this.domEditor.focus();
     };
 
     /**
@@ -228,8 +243,6 @@ class SendCommentForm extends AnyCommentComponent {
 
         const content = stateToHTML(editorState.getCurrentContent());
 
-        console.log('HTML:', content);
-
         let params = {
             content: content,
         };
@@ -264,7 +277,6 @@ class SendCommentForm extends AnyCommentComponent {
                 return true;
             })
             .catch(function (error) {
-                console.log(error);
                 self.showError(error);
             });
 
@@ -407,7 +419,7 @@ class SendCommentForm extends AnyCommentComponent {
 
     componentDidUpdate(prevProps) {
         // Typical usage (don't forget to compare props):
-        if (this.props.action !== prevProps.action) {
+        if (this.props.action !== prevProps.action || this.props.comment.id !== prevProps.comment.id) {
             this.prepareForm();
         }
     }
@@ -434,10 +446,12 @@ class SendCommentForm extends AnyCommentComponent {
             <div className="anycomment anycomment-send-comment-body">
                 <form onSubmit={this.handleSubmit}>
 
-                    <SendCommentFormBody {...this.props} attachments={this.state.attachments}
+                    <SendCommentFormBody {...this.props}
+                                         attachments={this.state.attachments}
                                          editorState={this.state.editorState}
                                          handleEditorStateChange={this.handleEditorStateChange}
-                                         handleAttachmentChange={this.props.handleAttachmentChange}/>
+                                         domEditorRef={this.setDomEditorRef}
+                                         handleAttachmentChange={this.handleAttachmentChange}/>
 
                     {this.isGuest() ?
                         <SendCommentGuest {...this.props}
@@ -449,7 +463,7 @@ class SendCommentForm extends AnyCommentComponent {
                     <input
                         type="hidden"
                         name="parent"
-                        value={this.props.replyId}
+                        value={this.state.replyId}
                         className="anycomment"
                         onChange={this.handleReplyIdChange}/>
 
@@ -457,11 +471,11 @@ class SendCommentForm extends AnyCommentComponent {
 
                     {this.isReply() ?
                         <div
-                            className="anycomment anycomment-send-comment-body-reply">{translations.reply_to} {this.props.replyName}
+                            className="anycomment anycomment-send-comment-body-reply">{translations.reply_to} {this.state.replyName}
                             <span onClick={this.prepareInitialForm}>{translations.cancel}</span></div>
                         : ''}
 
-                    {!this.isGuest() ? <input type="hidden" name="edit_id" value={this.props.editId}
+                    {!this.isGuest() ? <input type="hidden" name="edit_id" value={this.state.editId}
                                               onChange={this.handleEditIdChange}/> : ''}
 
                     {reCaptcha}

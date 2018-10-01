@@ -12,12 +12,12 @@
       &-outliner {
         &__avatar {
           position: absolute;
-          top: 50%;
-          margin-top: -($parent-avatar-size/2);
+          top: 60%;
+          margin-top: -($child-avatar-size/2);
           left: 15px;
           z-index: 2;
           @include avatar();
-          @include avatar_parent();
+          @include avatar_child();
         }
       }
     }
@@ -117,23 +117,6 @@
           &:focus {
             opacity: 1;
           }
-        }
-
-        &__textfield {
-          background-color: $form-field-background-color;
-          border: 0 !important;
-          outline: 0 !important;
-          font-size: $font-size;
-          float: left;
-          width: 100%;
-          min-width: 100% !important;
-          max-width: 100% !important;
-          max-height: 300px !important;
-          padding: $comment-field-padding !important;
-          min-height: 96px;
-          position: relative;
-          z-index: 1;
-          resize: vertical;
         }
       }
 
@@ -517,7 +500,6 @@
         &__shortened {
           .comment-single-body__text {
             &-content {
-              height: 100px;
               position: relative;
               cursor: pointer;
               overflow: hidden;
@@ -539,7 +521,6 @@
             margin: 0;
             word-break: break-word;
             word-wrap: break-word;
-            white-space: pre-wrap;
 
             a {
               &,
@@ -550,13 +531,52 @@
                 background-color: transparent;
               }
             }
+
+            & > *:last-child {
+              margin-bottom: 0;
+            }
+
+            // blockTypes
+            ul, ol {
+              padding-left: 21px;
+            }
+
+            // quotes
+            blockquote {
+              position: relative;
+              padding: 5px 8px 8px 41px;
+              font-size: $font-size + 5;
+              font-weight: 400;
+              font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+              background-color: #efefef;
+              line-height: 1.48;
+              letter-spacing: -.012em;
+              @include border-radius($global-radius);
+
+              &::before {
+                position: absolute;
+                top: 5px;
+                left: 10px;
+                content: "\201C";
+                font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+                font-size: $font-size + 25;
+                font-weight: bold;
+                line-height: $font-size +25;
+              }
+            }
+
+            // images
+            img {
+              max-width: 100%;
+              width: auto;
+            }
           }
 
           &-readmore {
             color: $link-color;
             font-size: $font-size - 2;
             text-decoration: none;
-            text-align: center;
+            text-align: left;
             padding: 5px 0 0;
             margin: 0;
             cursor: pointer;

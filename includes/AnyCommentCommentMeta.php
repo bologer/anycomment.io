@@ -153,12 +153,12 @@ WHERE `meta`.`comment_id`=%d AND `meta`.`meta_key`=%s AND `meta`.`meta_value` IS
 			 * @var $meta
 			 */
 			foreach ( $res as $meta ) {
-				$arr              = [];
-				$arr['type']      = AnyCommentUploadedFiles::get_image_type( $meta->file_type );
-				$arr['src']       = $meta->file_url;
-				$arr['thumbnail'] = $meta->file_thumbnail;
-				$arr['file_id']   = $meta->file_id;
-				$objectToReturn[] = $arr;
+				$arr                   = [];
+				$arr['file_type']      = AnyCommentUploadedFiles::get_image_type( $meta->file_type );
+				$arr['file_url']       = $meta->file_url;
+				$arr['file_thumbnail'] = $meta->file_thumbnail;
+				$arr['file_id']        = $meta->file_id;
+				$objectToReturn[]      = $arr;
 			}
 		}
 

@@ -2,7 +2,6 @@ import React, {Fragment} from 'react';
 import AnyCommentComponent from "./AnyCommentComponent";
 import SendCommentFormBodyAvatar from './SendCommentFormBodyAvatar'
 import {Editor} from 'react-draft-wysiwyg';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 class CommentEditor extends AnyCommentComponent {
 
@@ -11,11 +10,11 @@ class CommentEditor extends AnyCommentComponent {
             options: ['inline', 'blockType', 'list', 'link', 'image'],
             inline: {
                 inDropdown: false,
-                options: ['bold', 'italic', 'underline', 'strikethrough'],
+                options: ['bold', 'italic', 'underline'],
             },
             blockType: {
                 inDropdown: false,
-                options: ['Blockquote', 'Code'],
+                options: ['Blockquote'],
             },
             list: {
                 inDropdown: false,
@@ -56,9 +55,10 @@ class CommentEditor extends AnyCommentComponent {
                 <Editor
                     editorState={editorState}
                     toolbar={this.editorOptions()}
-                    toolbarClassName="toolbarClassName"
-                    wrapperClassName="wrapperClassName"
-                    editorClassName="editorClassName"
+                    wrapperClassName="anycomment-editor-wrapper"
+                    toolbarClassName="anycomment-toolbar-wrapper"
+                    editorClassName="anycomment-editor"
+                    editorRef={this.props.domEditorRef}
                     onEditorStateChange={this.props.handleEditorStateChange}
                 />
             </Fragment>

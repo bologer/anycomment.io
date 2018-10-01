@@ -92,9 +92,9 @@ class Comment extends AnyCommentComponent {
                 <ul className="anycomment anycomment-list anycomment-list-child">
                     {comment.children.map(childrenComment => (
                         <Comment
-                            handleReplyIdChange={(e) => this.onReply(e, comment)}
-                            handleEditIdChange={(e) => this.onEdit(e, comment)}
-                            handleDelete={this.handleDelete}
+                            handleReplyIdChange={this.props.handleReplyIdChange}
+                            handleEditIdChange={this.props.handleEditIdChange}
+                            handleDelete={this.props.handleDelete}
                             key={childrenComment.id}
                             comment={childrenComment}/>
                     ))}

@@ -441,12 +441,12 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'description' => esc_html( __( 'Display image link from comment as attachment.', "anycomment" ) )
 					],
 
-					[
-						'id'          => self::OPTION_MAKE_LINKS_CLICKABLE,
-						'title'       => __( 'Links Clickable', "anycomment" ),
-						'callback'    => 'input_checkbox',
-						'description' => esc_html( __( 'Links in comment are clickable.', "anycomment" ) )
-					],
+//					[
+//						'id'          => self::OPTION_MAKE_LINKS_CLICKABLE,
+//						'title'       => __( 'Links Clickable', "anycomment" ),
+//						'callback'    => 'input_checkbox',
+//						'description' => esc_html( __( 'Links in comment are clickable.', "anycomment" ) )
+//					],
 
 					[
 						'id'          => self::OPTION_USER_AGREEMENT_LINK,

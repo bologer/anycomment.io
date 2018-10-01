@@ -116,7 +116,6 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 						'isShowImageAttachments' => AnyCommentGenericSettings::isShowImageAttachments(),
 						'isShowVideoAttachments' => AnyCommentGenericSettings::isShowVideoAttachments(),
 						'isShowTwitterEmbeds'    => AnyCommentGenericSettings::isShowTwitterEmbeds(),
-						'isLinkClickable'        => AnyCommentGenericSettings::isLinkClickable(),
 						'userAgreementLink'      => AnyCommentGenericSettings::getUserAgreementLink(),
 						'notifyOnNewComment'     => AnyCommentGenericSettings::isNotifyOnNewComment(),
 						'intervalCommentsCheck'  => AnyCommentGenericSettings::getIntervalCommentsCheck(),

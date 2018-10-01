@@ -915,7 +915,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			'avatar_url'         => AnyComment()->auth->get_user_avatar_url( (int) $comment->user_id !== 0 ? $comment->user_id : $comment->comment_author_email ),
 			'children'           => $child_comments,
 			'owner'              => $owner,
-			'attachments'        => AnyCommentCommentMeta::getAttachments( $comment->comment_ID ),
+			'attachments'        => AnyCommentCommentMeta::getAttachmentsForApi( $comment->comment_ID ),
 			'permissions'        => [
 				'can_edit_comment' => AnyComment()->render->can_edit_comment( $comment ),
 			],
