@@ -29,7 +29,7 @@ class CommentBody extends AnyCommentComponent {
     processContent() {
         let content = this.props.comment.content;
 
-        let clean = sanitizeHtml(content, {
+        return sanitizeHtml(content, {
             allowedTags: ['p', 'a', 'ul', 'ol', 'blockquote', 'li', 'b', 'i', 'u', 'strong', 'em', 'br', 'img', 'figure', 'iframe'],
             allowedAttributes: {
                 a: ['href', 'target'],
@@ -38,36 +38,34 @@ class CommentBody extends AnyCommentComponent {
             },
             allowedIframeHostnames: ['twitter.com']
         });
-
-        clean = this.processThirdParties(clean);
-
-        return clean;
     };
 
     /**
      * Process third party apps, such as Tweets.
      * @param content
-     * @returns String
+     * @returns Array
      */
     processThirdParties(content) {
-        const twitterRe = /https:\/\/twitter\.com\/.*\/([0-9]{1,})/gm,
-            options = this.getOptions();
+
+        const options = this.getOptions();
 
         if (!options.isShowTwitterEmbeds) {
-            return content;
+            return [];
         }
 
-        const matches = twitterRe.exec(content);
+        let embedsToRender = [];
+        const twitterRe = /https:\/\/twitter\.com\/.*\/([0-9]{1,})/gm,
+            twitterMatches = twitterRe.exec(content);
 
+        console.log(twitterMatches);
 
-        if (matches !== null) {
-            const twitter = renderToString(<TweetEmbed id={matches[1]}/>);
-            console.log(matches);
-            console.log(twitter);
-            content = content.replace(matches[0], twitter);
+        if (twitterMatches !== null) {
+            embedsToRender.push(<TweetEmbed id={twitterMatches[1]}/>);
         }
 
-        return content;
+        console.log(embedsToRender);
+
+        return embedsToRender;
     }
 
     /**
@@ -101,14 +99,18 @@ class CommentBody extends AnyCommentComponent {
     }
 
     render() {
-        const settings = this.getSettings();
-        const bodyClasses = 'anycomment comment-single-body__text';
+        const settings = this.getSettings(),
+            bodyClasses = 'anycomment comment-single-body__text',
+            cleanContent = this.processContent(),
+            thirdParty = this.processThirdParties(cleanContent);
 
         return <div className={bodyClasses} onClick={() => this.toggleLongComment()}
                     id={"comment-content-" + this.props.comment.id}>
-            <div className={"comment-single-body__text-content" + (this.state.hideAsLong ? ' comment-single-body__shortened' : '')}
-                 style={this.state.hideAsLong ? {'height': MAX_BODY_HEIGHT} : null}
-                 dangerouslySetInnerHTML={{__html: this.processContent()}}></div>
+            <div
+                className={"comment-single-body__text-content" + (this.state.hideAsLong ? ' comment-single-body__shortened' : '')}
+                style={this.state.hideAsLong ? {'height': MAX_BODY_HEIGHT} : null}
+                dangerouslySetInnerHTML={{__html: cleanContent}}></div>
+            <div className="comment-single-body__text-embeds">{thirdParty}</div>
             {this.state.isLong ? <p className="comment-single-body__text-readmore"
                                     onClick={() => this.toggleLongComment()}>{this.state.hideAsLong ? settings.i18.read_more : settings.i18.show_less}</p> : ''}
         </div>
