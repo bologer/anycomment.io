@@ -12,9 +12,9 @@ if ( ! defined( 'ABSPATH' ) ) {
     </div>
 
     <div class="anycomment-notice anycomment-success"><?= sprintf( __( 'Follow us on <a href="%s" %s>VK.com</a> or join our group in <a href="%s" %s>Telegram</a>', 'anycomment' ),
-			'https://vk.com/anycomment',
+			AnyCommentLinkHelper::getVkontakte(),
 			'target="_blank"',
-			'https://t.me/joinchat/BEUJEQ9aMmQsFX65MNRCDg',
+			AnyCommentLinkHelper::getTelegram(),
 			'target="_blank"' ) ?></div>
 
     <div class="anycomment-dashboard">
@@ -27,7 +27,8 @@ if ( ! defined( 'ABSPATH' ) ) {
                 </div>
 
                 <div class="anycomment-dashboard__header-official">
-                    <a href="https://anycomment.io" target="_blank"><?= __( 'Official Website', 'anycomment' ) ?></a>
+                    <a href="<?= AnyCommentLinkHelper::getOfficialWebsite() ?>"
+                       target="_blank"><?= __( 'Official Website', 'anycomment' ) ?></a>
                 </div>
 
                 <div class="clearfix"></div>

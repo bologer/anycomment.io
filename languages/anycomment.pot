@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-28 16:09+0000\n"
+"POT-Creation-Date: 2018-10-02 19:52+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -110,146 +110,146 @@ msgstr ""
 msgid "Github"
 msgstr ""
 
-#: includes/AnyCommentRender.php:143
+#: includes/AnyCommentRender.php:142
 msgid "Oops, something went wrong..."
 msgstr ""
 
-#: includes/AnyCommentRender.php:144
+#: includes/AnyCommentRender.php:143
 msgid "Loading..."
 msgstr ""
 
-#: includes/AnyCommentRender.php:145
+#: includes/AnyCommentRender.php:144
 msgid "Load more"
 msgstr ""
 
-#: includes/AnyCommentRender.php:146
+#: includes/AnyCommentRender.php:145
 msgid "Send"
 msgstr ""
 
-#: includes/AnyCommentRender.php:147
+#: includes/AnyCommentRender.php:146
 #: includes/admin/AnyCommentAdminOptions.php:251
 #: includes/admin/AnyCommentGenericSettings.php:813
 #: includes/admin/AnyCommentSocialSettings.php:667
 msgid "Save"
 msgstr ""
 
-#: includes/AnyCommentRender.php:148 includes/AnyCommentRender.php:157
+#: includes/AnyCommentRender.php:147 includes/AnyCommentRender.php:156
 msgid "Reply"
 msgstr ""
 
-#: includes/AnyCommentRender.php:149
+#: includes/AnyCommentRender.php:148
 msgid "Sorting"
 msgstr ""
 
-#: includes/AnyCommentRender.php:150
+#: includes/AnyCommentRender.php:149
 msgid "Sort By"
 msgstr ""
 
-#: includes/AnyCommentRender.php:151
+#: includes/AnyCommentRender.php:150
 msgid "Oldest"
 msgstr ""
 
-#: includes/AnyCommentRender.php:152
+#: includes/AnyCommentRender.php:151
 msgid "Newest"
 msgstr ""
 
-#: includes/AnyCommentRender.php:153
+#: includes/AnyCommentRender.php:152
 msgid "reply to"
 msgstr ""
 
-#: includes/AnyCommentRender.php:154
+#: includes/AnyCommentRender.php:153
 msgid "Your comment..."
 msgstr ""
 
-#: includes/AnyCommentRender.php:155
+#: includes/AnyCommentRender.php:154
 msgid "No comments to display"
 msgstr ""
 
-#: includes/AnyCommentRender.php:156
+#: includes/AnyCommentRender.php:155
 msgid "Add Anycomment to your site"
 msgstr ""
 
-#: includes/AnyCommentRender.php:158
+#: includes/AnyCommentRender.php:157
 msgid "Edit"
 msgstr ""
 
-#: includes/AnyCommentRender.php:159
+#: includes/AnyCommentRender.php:158
 #: includes/admin/tables/AnyCommentUploadedFilesTable.php:145
 msgid "Delete"
 msgstr ""
 
-#: includes/AnyCommentRender.php:160
+#: includes/AnyCommentRender.php:159
 msgid "Cancel"
 msgstr ""
 
-#: includes/AnyCommentRender.php:161
+#: includes/AnyCommentRender.php:160
 msgid "Quick Login"
 msgstr ""
 
-#: includes/AnyCommentRender.php:162
+#: includes/AnyCommentRender.php:161
 msgid "Logout"
 msgstr ""
 
-#: includes/AnyCommentRender.php:163
+#: includes/AnyCommentRender.php:162
 msgid "New comment was added"
 msgstr ""
 
-#: includes/AnyCommentRender.php:164
+#: includes/AnyCommentRender.php:163
 msgid "Author"
 msgstr ""
 
-#: includes/AnyCommentRender.php:165
+#: includes/AnyCommentRender.php:164
 msgid "Name"
 msgstr ""
 
-#: includes/AnyCommentRender.php:166
+#: includes/AnyCommentRender.php:165
 msgid "Email"
 msgstr ""
 
-#: includes/AnyCommentRender.php:167
+#: includes/AnyCommentRender.php:166
 msgid "Website"
 msgstr ""
 
-#: includes/AnyCommentRender.php:169
+#: includes/AnyCommentRender.php:168
 #, php-format
 msgid "I accept the <a href=\"%s\"%s>User Agreement</a>"
 msgstr ""
 
-#: includes/AnyCommentRender.php:173
+#: includes/AnyCommentRender.php:172
 msgid "Upload file"
 msgstr ""
 
-#: includes/AnyCommentRender.php:174
+#: includes/AnyCommentRender.php:173
 msgid "Uploading..."
 msgstr ""
 
-#: includes/AnyCommentRender.php:175
+#: includes/AnyCommentRender.php:174
 msgid "Uploaded!"
 msgstr ""
 
-#: includes/AnyCommentRender.php:176
+#: includes/AnyCommentRender.php:175
 #, php-format
 msgid "File %s is too big"
 msgstr ""
 
-#: includes/AnyCommentRender.php:177
+#: includes/AnyCommentRender.php:176
 #, php-format
 msgid "You may upload %s file(s) at maximum"
 msgstr ""
 
-#: includes/AnyCommentRender.php:178
+#: includes/AnyCommentRender.php:177
 msgid "No file selected or select proper extension"
 msgstr ""
 
-#: includes/AnyCommentRender.php:179
+#: includes/AnyCommentRender.php:178
 msgid "Read more"
 msgstr ""
 
-#: includes/AnyCommentRender.php:180
+#: includes/AnyCommentRender.php:179
 msgid "Show less"
 msgstr ""
 
-#: includes/AnyCommentRender.php:258
+#: includes/AnyCommentRender.php:257
 #, php-format
 msgctxt "REST API Comments Count"
 msgid "%s comment"
@@ -532,14 +532,6 @@ msgstr ""
 
 #: includes/admin/AnyCommentGenericSettings.php:441
 msgid "Display image link from comment as attachment."
-msgstr ""
-
-#: includes/admin/AnyCommentGenericSettings.php:446
-msgid "Links Clickable"
-msgstr ""
-
-#: includes/admin/AnyCommentGenericSettings.php:448
-msgid "Links in comment are clickable."
 msgstr ""
 
 #: includes/admin/AnyCommentGenericSettings.php:453
@@ -1682,7 +1674,7 @@ msgid ""
 "href=\"%s\" %s>Telegram</a>"
 msgstr ""
 
-#: templates/admin/dashboard.php:30
+#: templates/admin/dashboard.php:30 templates/admin/tab-help.php:16
 msgid "Official Website"
 msgstr ""
 
@@ -1759,6 +1751,42 @@ msgstr ""
 msgid "No users yet"
 msgstr ""
 
+#: templates/admin/tab-help.php:2
+msgid "Need Help"
+msgstr ""
+
+#: templates/admin/tab-help.php:3
+msgid "Easiest way to get help is to use one of the links below"
+msgstr ""
+
+#: templates/admin/tab-help.php:6
+msgid "Vkontakte Group"
+msgstr ""
+
+#: templates/admin/tab-help.php:8
+msgid "Telegram Channel"
+msgstr ""
+
+#: templates/admin/tab-help.php:10
+msgid "GitHub Repository"
+msgstr ""
+
+#: templates/admin/tab-help.php:13
+msgid "Resources"
+msgstr ""
+
+#: templates/admin/tab-help.php:18
+msgid "Set-up Socials"
+msgstr ""
+
+#: templates/admin/tab-help.php:20
+msgid "All Guides"
+msgstr ""
+
+#: templates/admin/tab-help.php:23
+msgid "Support us"
+msgstr ""
+
 #: templates/admin/tabs.php:7
 msgid "Social"
 msgstr ""
@@ -1773,6 +1801,10 @@ msgstr ""
 
 #: templates/admin/tabs.php:19
 msgid "Shortcodes"
+msgstr ""
+
+#: templates/admin/tabs.php:23
+msgid "Help"
 msgstr ""
 
 #: includes/admin/tables/AnyCommentUploadedFilesTable.php:82

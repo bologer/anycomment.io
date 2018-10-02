@@ -15,6 +15,7 @@
 * Now when comments is deleted, trashed/untrashed, marked as spam, status changed, its cache will be dropped and it will display on frontend accordingly, #162
 * Fixed issue when guest users were not able to submit uploaded documents, #175
 * Fixed issue when "Login with:" was displayed even thought none of the socials were enabled, #166
+* Fixed broken header message on fresh installation
 
 ## 0.0.57 – 25.09.2018
 

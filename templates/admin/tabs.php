@@ -17,6 +17,10 @@ $tabs       = [
 	'shortcodes'  => [
 		'url'  => menu_page_url( $_GET['page'], false ) . '&tab=shortcodes',
 		'text' => __( 'Shortcodes', 'anycomment' )
+	],
+	'help'  => [
+		'url'  => menu_page_url( $_GET['page'], false ) . '&tab=help',
+		'text' => __( 'Help', 'anycomment' )
 	]
 ]
 ?>
