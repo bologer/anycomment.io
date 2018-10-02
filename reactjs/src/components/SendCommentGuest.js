@@ -16,7 +16,8 @@ class SendCommentGuest extends AnyCommentComponent {
             if (el === 'name') {
                 elementInputs.push(
                     <div className="anycomment anycomment-input-list-single anycomment-input-list-single-name">
-                        <label form="anycomment-author-name">{translations.name}</label>
+                        <label form="anycomment-author-name">{translations.name} <span
+                            class="anycomment-label-import">*</span></label>
                         <input type="text" name="author_name" id="anycomment-author-name"
                                value={this.props.authorName}
                                required={true}
@@ -26,7 +27,8 @@ class SendCommentGuest extends AnyCommentComponent {
             } else if (el === 'email') {
                 elementInputs.push(
                     <div className="anycomment anycomment-input-list-single anycomment-input-list-single-email">
-                        <label form="anycomment-author-email">{translations.email}</label>
+                        <label form="anycomment-author-email">{translations.email} <span
+                            className="anycomment-label-import">*</span></label>
                         <input type="email" name="author_email" id="anycomment-author-email"
                                value={this.props.authorEmail}
                                required={true}
