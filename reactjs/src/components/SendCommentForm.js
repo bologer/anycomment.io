@@ -4,9 +4,6 @@ import SendCommentFormBody from './SendCommentFormBody';
 import AnyCommentComponent from "./AnyCommentComponent";
 import ReCAPTCHA from "react-google-recaptcha";
 import {toast} from 'react-toastify';
-import {EditorState} from "draft-js";
-import {stateToHTML} from 'draft-js-export-html';
-import {stateFromHTML} from 'draft-js-import-html';
 
 const recapchaRef = React.createRef();
 
@@ -487,8 +484,9 @@ class SendCommentForm extends AnyCommentComponent {
                                           handleAuthorNameChange={this.handleAuthorNameChange}
                                           handleAuthorEmailChange={this.handleAuthorEmailChange}
                                           handleAuthorWebsiteChange={this.handleAuthorWebsiteChange}
+                                          handleAgreement={this.handleAgreement}
                                           isAgreementAccepted={this.state.isAgreementAccepted}/> :
-                        <input type="submit" className="anycomment-btn anycomment-send-comment-body__btn"
+                        <input type="submit" disabled={!this.state.isAgreementAccepted} className="anycomment-btn anycomment-send-comment-body__btn"
                                value={this.state.buttonText}/>
                     }
 

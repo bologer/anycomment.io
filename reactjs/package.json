@@ -6,9 +6,6 @@
   "dependencies": {
     "ajv": "^6.5.3",
     "axios": "^0.18.0",
-    "draft-js": "^0.10.5",
-    "draft-js-export-html": "^1.2.0",
-    "draft-js-import-html": "^1.2.1",
     "htmlparser2": "^3.9.2",
     "immutable": "^3.8.2",
     "jquery": "^3.3.1",

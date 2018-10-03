@@ -175,6 +175,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Enhanced editor, now possible to use : bold, italics, underscore, quote, order/unordered list, link and embed image (all customizable), #47
 * Comment read more now considers content height instead of length as it includes HTML and website can be wide, which breaks logic of content length, #105
 * Added "*" for name and email fields to point that they are important to enter
+* Send comment button is toggled as disabled when agreement is not accepted (for guest and authorized users)
 
 
 **Fixes:**
@@ -184,7 +185,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Fixed issue when guest users were not able to submit uploaded documents, #175
 * Fixed issue when "Login with:" was displayed even thought none of the socials were enabled, #166
 * Now when comments is deleted, trashed/untrashed, marked as spam, status changed, its cache will be dropped and it will display on frontend accordingly, #162
-* Fixed broken header message on fresh installation
+* Fixed broken header notice on installation (sorry guys, I know it sucks)
 
 
 = 0.0.57 – 25.09.2018 =

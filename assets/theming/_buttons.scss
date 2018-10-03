@@ -11,4 +11,14 @@
       background-color: $btn-background-color-active !important;
     }
   }
+
+  .anycomment-btn[disabled] {
+    background-color: $semi-hidden-color;
+
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: darken($semi-hidden-color, 5%);
+    }
+  }
 }

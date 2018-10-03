@@ -1,9 +1,7 @@
 import React from 'react';
 import AnyCommentComponent from './AnyCommentComponent'
-import reactStringReplace from 'react-string-replace';
 import TweetEmbed from 'react-tweet-embed';
 import sanitizeHtml from 'sanitize-html';
-import {renderToString} from 'react-dom/server'
 
 const MAX_BODY_HEIGHT = 250;
 
