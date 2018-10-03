@@ -15,7 +15,7 @@
           top: 60%;
           margin-top: -($child-avatar-size/2);
           left: 15px;
-          z-index: 2;
+          z-index: 0;
           @include avatar();
           @include avatar_child();
         }

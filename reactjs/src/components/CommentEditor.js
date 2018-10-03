@@ -21,7 +21,7 @@ class CommentEditor extends AnyCommentComponent {
             'bold', 'italic', 'underline', 'blockquote',
             'list', 'bullet',
             'link', 'image', 'video'
-        ]
+        ];
     }
 
     render() {
