@@ -57,13 +57,9 @@ class CommentBody extends AnyCommentComponent {
         const twitterRe = /https:\/\/twitter\.com\/.*\/([0-9]{1,})/gm,
             twitterMatches = twitterRe.exec(content);
 
-        console.log(twitterMatches);
-
         if (twitterMatches !== null) {
             embedsToRender.push(<TweetEmbed id={twitterMatches[1]}/>);
         }
-
-        console.log(embedsToRender);
 
         return embedsToRender;
     }

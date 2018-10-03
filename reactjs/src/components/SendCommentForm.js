@@ -23,10 +23,6 @@ class SendCommentForm extends AnyCommentComponent {
 
         this.state = {
             isAgreementAccepted: true,
-            reCaptchaSiteKey: options.reCaptchaSiteKey,
-            reCaptchaTheme: options.reCaptchaTheme,
-            reCaptchaBadge: options.reCaptchaBadge,
-
             commentText: '',
             attachments: [],
             buttonText: settings.i18.button_send,
@@ -36,10 +32,15 @@ class SendCommentForm extends AnyCommentComponent {
             authorWebsite: '',
             replyName: '',
             editId: '',
-            editorState: EditorState.createEmpty(),
+            commentHTML: '',
         };
 
-        this.setDomEditorRef = ref => this.domEditor = ref;
+        this.reCaptchaSiteKey = options.reCaptchaSiteKey;
+        this.reCaptchaTheme = options.reCaptchaTheme;
+        this.reCaptchaBadge = options.reCaptchaBadge;
+
+        this.quillRef = React.createRef();
+        this.editorRef = null;
     }
 
     /**
@@ -94,7 +95,7 @@ class SendCommentForm extends AnyCommentComponent {
             buttonText: this.props.settings.i18.button_send,
             replyId: 0,
             editId: '',
-            editorState: EditorState.createEmpty()
+            commentHTML: ''
         });
 
         this.dropComment();
@@ -123,15 +124,15 @@ class SendCommentForm extends AnyCommentComponent {
      */
     prepareUpdateForm = (comment) => {
 
-        const editorState = this.getEditorStateFromHTML(comment.content);
+        const commentHtml = comment.content;
 
-        if (editorState !== null) {
+        if (commentHtml !== '') {
 
             let states = {
                 replyName: '',
                 editId: comment.id,
                 buttonText: this.props.settings.i18.button_save,
-                editorState: editorState
+                commentHTML: commentHtml
             };
 
             if (comment.attachments || comment.attachments && comment.attachments.length > 0) {
@@ -145,35 +146,21 @@ class SendCommentForm extends AnyCommentComponent {
     };
 
     /**
-     * Parse editor state from HTML.
-     * @param html
-     * @returns {*}
-     */
-    getEditorStateFromHTML(html) {
-        const contentBlock = stateFromHTML(html);
-
-        if (contentBlock) {
-            return EditorState.createWithContent(contentBlock);
-        }
-
-        return null;
-    }
-
-    /**
-     * Get HTML from editor state.
-     *
-     * @param editorState
-     * @returns {string}
-     */
-    getHTMLFromEditorState(editorState) {
-        return stateToHTML(editorState.getCurrentContent())
-    }
-
-    /**
      * Focus on comment field.
      */
     focusCommentField = () => {
-        this.domEditor.focus();
+        console.log(this.quillRef);
+        // this.editorRef.current.focus();
+    };
+
+    attachQuillRefs = () => {
+        // Ensure React-Quill reference is available:
+        if (typeof this.quillRef.getEditor !== 'function') return;
+        // Skip if Quill reference is defined:
+        if (this.editorRef != null) return;
+
+        const editorRef = this.quillRef.getEditor();
+        if (editorRef != null) this.editorRef = editorRef;
     };
 
     /**
@@ -221,14 +208,14 @@ class SendCommentForm extends AnyCommentComponent {
     /**
      * Handle comment text change.
      *
-     * @param editorState
+     * @param text
      */
-    handleEditorStateChange = (editorState) => {
+    handleEditorChange = (text) => {
         this.setState({
-            editorState,
+            commentHTML: text,
         });
 
-        this.storeComment(this.getHTMLFromEditorState(editorState));
+        this.storeComment(text);
     };
 
     /**
@@ -245,14 +232,12 @@ class SendCommentForm extends AnyCommentComponent {
         }
 
         const {settings} = this.props,
-            {editId, replyId, attachments, editorState} = this.state,
+            {editId, replyId, attachments, commentHTML} = this.state,
             self = this,
             url = '/comments' + (editId ? ('/' + editId) : '');
 
-        const content = this.getHTMLFromEditorState(editorState);
-
         let params = {
-            content: content,
+            content: commentHTML,
         };
 
         if (!editId) {
@@ -305,15 +290,13 @@ class SendCommentForm extends AnyCommentComponent {
         }
 
         const settings = this.getSettings(),
-            {editId, replyId, attachments, authorName, authorEmail, authorWebsite, editorState} = this.state,
+            {editId, replyId, attachments, authorName, authorEmail, authorWebsite, commentHTML} = this.state,
             self = this;
 
         const url = '/comments';
 
-        const content = this.getHTMLFromEditorState(editorState);
-
         let params = {
-            content: content,
+            content: commentHTML,
         };
 
         if (!settings.options.isFormTypeSocials) {
@@ -433,7 +416,7 @@ class SendCommentForm extends AnyCommentComponent {
         const email = this.getAuthorEmail(),
             name = this.getAuthorName(),
             website = this.getAuthorWebsite(),
-            commentText = this.getComment();
+            commentHtml = this.getComment();
 
         let state = {};
 
@@ -449,12 +432,8 @@ class SendCommentForm extends AnyCommentComponent {
             state.authorWebsite = website;
         }
 
-        if (commentText) {
-            const editorState = this.getEditorStateFromHTML(commentText);
-
-            if (editorState !== null) {
-                state.editorState = editorState;
-            }
+        if (commentHtml !== '') {
+            state.commentHtml = commentHtml;
         }
 
 
@@ -483,9 +462,9 @@ class SendCommentForm extends AnyCommentComponent {
         if (this.isCaptchaOn()) {
             reCaptcha = <ReCAPTCHA
                 ref={recapchaRef}
-                theme={this.state.reCaptchaTheme}
-                sitekey={this.state.reCaptchaSiteKey}
-                badge={this.state.reCaptchaBadge}
+                theme={this.reCaptchaTheme}
+                sitekey={this.reCaptchaSiteKey}
+                badge={this.reCaptchaBadge}
                 onErrored={this.onCaptchaError}
                 onChange={this.onCaptchaChange}
                 size="invisible"
@@ -498,9 +477,9 @@ class SendCommentForm extends AnyCommentComponent {
 
                     <SendCommentFormBody {...this.props}
                                          attachments={this.state.attachments}
-                                         editorState={this.state.editorState}
-                                         handleEditorStateChange={this.handleEditorStateChange}
-                                         domEditorRef={this.setDomEditorRef}
+                                         handleEditorChange={this.handleEditorChange}
+                                         editorRef={this.quillRef}
+                                         commentHTML={this.state.commentHTML}
                                          handleAttachmentChange={this.handleAttachmentChange}/>
 
                     {this.isGuest() ?
