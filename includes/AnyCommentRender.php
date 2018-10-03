@@ -123,6 +123,7 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 						'isFormTypeAll'          => AnyCommentGenericSettings::isFormTypeAll(),
 						'isFormTypeGuests'       => AnyCommentGenericSettings::isFormTypeGuests(),
 						'isFormTypeSocials'      => AnyCommentGenericSettings::isFormTypeSocials(),
+						'isFileUploadAllowed'       => AnyCommentGenericSettings::isFileUploadAllowed(),
 						'isGuestCanUpload'       => AnyCommentGenericSettings::isGuestCanUpload(),
 						'fileMimeTypes'          => AnyCommentGenericSettings::getFileMimeTypes(),
 						'fileLimit'              => AnyCommentGenericSettings::getFileLimit(),

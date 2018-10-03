@@ -100,7 +100,7 @@ class AnyCommentRestDocuments extends AnyCommentRestController {
 	 * {@inheritdoc}
 	 */
 	public function create_item_permissions_check( $request ) {
-		if ( ! is_user_logged_in() && ! AnyCommentGenericSettings::isGuestCanUpload() ) {
+		if ( !$this->can_upload() ) {
 			return new WP_Error( 'rest_guest_unable_to_upload', __( 'Sorry, guest users cannot upload files', 'anycomment' ), [ 'status' => 403 ] );
 		}
 
@@ -175,7 +175,7 @@ class AnyCommentRestDocuments extends AnyCommentRestController {
 
 			$uploaded_files[ $key ] = [
 				'file_type' => AnyCommentUploadedFiles::get_image_type( $file_mime_type ),
-				'file_mime'      => $file_mime_type,
+				'file_mime' => $file_mime_type,
 				'file_url'  => $original_file['url']
 			];
 
@@ -271,5 +271,23 @@ class AnyCommentRestDocuments extends AnyCommentRestController {
 		$response = rest_ensure_response( $data );
 
 		return $response;
+	}
+
+	/**
+	 * Check whether current user can upload files or not.
+	 *
+	 * @return bool
+	 */
+	public function can_upload() {
+		$is_file_upload_allowed = AnyCommentGenericSettings::isFileUploadAllowed();
+		$is_guest               = ! is_user_logged_in();
+
+		if ( $is_file_upload_allowed && ! $is_guest ) {
+			return true;
+		} else if ( $is_file_upload_allowed && $is_guest && AnyCommentGenericSettings::isGuestCanUpload() ) {
+			return true;
+		}
+
+		return false;
 	}
 }

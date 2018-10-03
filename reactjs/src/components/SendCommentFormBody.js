@@ -125,6 +125,23 @@ class SendCommentFormBody extends AnyCommentComponent {
             });
     }
 
+    /**
+     * Check whether user can upload files.
+     *
+     * @returns {boolean}
+     */
+    canUpload = () => {
+        const options = this.getOptions();
+
+        if (options.isFileUploadAllowed && !this.isGuest()) {
+            return true;
+        } else if (options.isFileUploadAllowed && this.isGuest() && options.isGuestCanUpload) {
+            return true;
+        }
+
+        return false;
+    };
+
     render() {
         const settings = this.getSettings();
         const options = settings.options;
@@ -133,7 +150,7 @@ class SendCommentFormBody extends AnyCommentComponent {
 
         let dropzoneRef;
 
-        const canUpload = !this.isGuest() || (this.isGuest() && options.isGuestCanUpload);
+        const canUpload = this.canUpload();
 
         const outliner = <div
             className={"anycomment anycomment-send-comment-body-outliner" + (dropzoneActive ? ' anycomment-send-comment-body-outliner-dropzone-active' : '')}>

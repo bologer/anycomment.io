@@ -145,6 +145,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		/**
 		 * FILES UPLOAD
 		 */
+		const OPTION_FILES_TOGGLE = 'options_files_toggle';
 		const OPTION_FILES_GUEST_CAN_UPLOAD = 'options_files_guest_can_upload';
 		const OPTION_FILES_MIME_TYPES = 'options_files_mime_types';
 		const OPTION_FILES_LIMIT = 'options_files_limit';
@@ -739,6 +740,12 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 				'section_files',
 				[
 					[
+						'id'          => self::OPTION_FILES_TOGGLE,
+						'title'       => __( 'Allow File Uploads', "anycomment" ),
+						'callback'    => 'input_checkbox',
+						'description' => esc_html( __( 'Allow to upload files.', "anycomment" ) )
+					],
+					[
 						'id'          => self::OPTION_FILES_GUEST_CAN_UPLOAD,
 						'title'       => __( 'File Upload By Guests', "anycomment" ),
 						'callback'    => 'input_checkbox',
@@ -1140,6 +1147,14 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 			return static::instance()->getOption( self::OPTION_MODERATE_WORDS );
 		}
 
+		/**
+		 * Check whether file upload is allowed.
+		 *
+		 * @return bool
+		 */
+		public static function isFileUploadAllowed() {
+			return static::instance()->getOption( self::OPTION_FILES_TOGGLE ) !== null;
+		}
 
 		/**
 		 * Check whether guests uses can upload files.

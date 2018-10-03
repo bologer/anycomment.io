@@ -9,15 +9,18 @@
 * Comment read more now considers content height instead of length as it includes HTML and website can be wide, which breaks logic of content length, #105
 * Added "*" for name and email fields to point that they are important to enter
 * Send comment button is toggled as disabled when agreement is not accepted (for guest and authorized users)
+* Added ability to disable file upload completely
+
 
 **Fixes:**
 
 * Fixed issue with translations on number of comments in the header in Russian language, #178
 * Fixed issue when some websites had broken CSS styles after activating plugin, #177
-* Now when comments is deleted, trashed/untrashed, marked as spam, status changed, its cache will be dropped and it will display on frontend accordingly, #162
 * Fixed issue when guest users were not able to submit uploaded documents, #175
 * Fixed issue when "Login with:" was displayed even thought none of the socials were enabled, #166
-* Fixed broken header message on fresh installation
+* Now when comments is deleted, trashed/untrashed, marked as spam, status changed, its cache will be dropped and it will display on frontend accordingly, #162
+* Fixed broken header notice on installation (sorry guys, I know it sucks)
+* Fixed issue when comment attachment was not really deleted when comment was permanently deleted
 
 ## 0.0.57 – 25.09.2018
 

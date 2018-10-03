@@ -34,6 +34,7 @@ class CommentBody extends AnyCommentComponent {
                 blockquote: ['class'],
                 img: ['class', 'src', 'alt'],
             },
+            allowedSchemes: [ 'http', 'https', 'data' ],
             allowedIframeHostnames: ['twitter.com']
         });
     };
