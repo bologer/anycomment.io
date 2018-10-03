@@ -186,6 +186,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Fixed issue when "Login with:" was displayed even thought none of the socials were enabled, #166
 * Now when comments is deleted, trashed/untrashed, marked as spam, status changed, its cache will be dropped and it will display on frontend accordingly, #162
 * Fixed broken header notice on installation (sorry guys, I know it sucks)
+* Fixed issue when comment attachment was not really deleted when comment was permanently deleted
 
 
 = 0.0.57 – 25.09.2018 =

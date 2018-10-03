@@ -16,8 +16,12 @@ class AnyCommentCommentHooks {
 	 * Init method of all related hooks.
 	 */
 	private function init() {
-		// After comment was deleted
-		add_action( 'deleted_comment', [ $this, 'process_deleted_comment' ], 10, 2 );
+		// Should delete files, likes, etc before comment is deleted
+		// as WP by default remove comment meta, which is required to determine attachments IDs
+		add_action( 'delete_comment', [ $this, 'process_deleted_comment' ], 10, 2 );
+
+		// Should drop comment cache after it was deleted, just in case
+		add_action( 'deleted_comment', [ $this, 'process_soft_comment' ], 10, 2 );
 
 		// After comment was updated
 		add_action( 'edit_comment', [ $this, 'process_edit_comment' ], 10, 2 );
@@ -33,15 +37,12 @@ class AnyCommentCommentHooks {
 	}
 
 	/**
-	 * Process already deleted comment to clean-up.
+	 * Process comment which will be deleted soon in order to clean-up after it.
 	 *
 	 * @param int $comment_id Comment ID.
 	 * @param WP_Comment $comment Comment object.
 	 */
 	public function process_deleted_comment( $comment_id, $comment ) {
-		// Need to drop comments cache
-		\anycomment\cache\rest\AnyCommentRestCacheManager::flushComment( $comment->comment_post_ID, $comment_id );
-
 		// Delete likes of a comment
 		AnyCommentLikes::deleteLikes( $comment_id );
 
