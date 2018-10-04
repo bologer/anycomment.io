@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.0.59 – 04.10.2018
+
+**Enhancements:**
+
+
+
+**Fixes:**
+
+* Fixed issue when "Read more" was overflowing text
+
+
 ## 0.0.58 – 04.10.2018
 
 **Enhancements:**

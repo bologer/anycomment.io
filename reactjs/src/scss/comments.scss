@@ -511,7 +511,6 @@
         &__text {
           width: 100%;
           margin: 5px 0;
-          overflow: hidden;
           transition: height 1s ease-out;
 
           &-content {
@@ -522,6 +521,7 @@
             margin: 0;
             word-break: break-word;
             word-wrap: break-word;
+            overflow: hidden;
 
             a {
               &,
