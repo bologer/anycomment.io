@@ -123,7 +123,7 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 						'isFormTypeAll'          => AnyCommentGenericSettings::isFormTypeAll(),
 						'isFormTypeGuests'       => AnyCommentGenericSettings::isFormTypeGuests(),
 						'isFormTypeSocials'      => AnyCommentGenericSettings::isFormTypeSocials(),
-						'isFileUploadAllowed'       => AnyCommentGenericSettings::isFileUploadAllowed(),
+						'isFileUploadAllowed'    => AnyCommentGenericSettings::isFileUploadAllowed(),
 						'isGuestCanUpload'       => AnyCommentGenericSettings::isGuestCanUpload(),
 						'fileMimeTypes'          => AnyCommentGenericSettings::getFileMimeTypes(),
 						'fileLimit'              => AnyCommentGenericSettings::getFileLimit(),
@@ -178,6 +178,14 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 						'file_not_selected_or_extension' => __( "No file selected or select proper extension", 'anycomment' ),
 						'read_more'                      => __( 'Read more', 'anycomment' ),
 						'show_less'                      => __( 'Show less', 'anycomment' ),
+
+						/**
+						 * Lightbox
+						 */
+						'lighbox_close'                  => __( 'Close (Esc)', 'anycomment' ),
+						'lighbox_left_arrow'             => __( 'Previous (Left arrow key)', 'anycomment' ),
+						'lighbox_right_arrow'            => __( 'Next (Right arrow key)', 'anycomment' ),
+						'lighbox_image_count_separator'  => __( ' of ', 'anycomment' ),
 					]
 				] );
 			}

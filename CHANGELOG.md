@@ -10,6 +10,7 @@
 * Added "*" for name and email fields to point that they are important to enter
 * Send comment button is toggled as disabled when agreement is not accepted (for guest and authorized users)
 * Added ability to disable file upload completely
+* Added Russian translation for lightbox, #187
 
 
 **Fixes:**

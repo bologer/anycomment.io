@@ -4,6 +4,7 @@ import SendCommentFormBody from './SendCommentFormBody';
 import AnyCommentComponent from "./AnyCommentComponent";
 import ReCAPTCHA from "react-google-recaptcha";
 import {toast} from 'react-toastify';
+import CommentSanitization from "./CommentSanitization";
 
 const recapchaRef = React.createRef();
 
@@ -229,12 +230,14 @@ class SendCommentForm extends AnyCommentComponent {
         }
 
         const {settings} = this.props,
-            {editId, replyId, attachments, commentHTML} = this.state,
+            {editId, replyId, attachments, commentHtml} = this.state,
             self = this,
             url = '/comments' + (editId ? ('/' + editId) : '');
 
+        const cleanCommentHtml = CommentSanitization.sanitize(commentHtml);
+
         let params = {
-            content: commentHTML,
+            content: cleanCommentHtml,
         };
 
         if (!editId) {
@@ -287,13 +290,15 @@ class SendCommentForm extends AnyCommentComponent {
         }
 
         const settings = this.getSettings(),
-            {editId, replyId, attachments, authorName, authorEmail, authorWebsite, commentHTML} = this.state,
+            {editId, replyId, attachments, authorName, authorEmail, commentHtml, authorWebsite} = this.state,
             self = this;
 
         const url = '/comments';
 
+        const cleanCommentHtml = CommentSanitization.sanitize(commentHtml);
+
         let params = {
-            content: commentHTML,
+            content: cleanCommentHtml,
         };
 
         if (!settings.options.isFormTypeSocials) {
@@ -486,7 +491,8 @@ class SendCommentForm extends AnyCommentComponent {
                                           handleAuthorWebsiteChange={this.handleAuthorWebsiteChange}
                                           handleAgreement={this.handleAgreement}
                                           isAgreementAccepted={this.state.isAgreementAccepted}/> :
-                        <input type="submit" disabled={!this.state.isAgreementAccepted} className="anycomment-btn anycomment-send-comment-body__btn"
+                        <input type="submit" disabled={!this.state.isAgreementAccepted}
+                               className="anycomment-btn anycomment-send-comment-body__btn"
                                value={this.state.buttonText}/>
                     }
 

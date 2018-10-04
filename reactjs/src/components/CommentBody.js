@@ -1,7 +1,7 @@
 import React from 'react';
 import AnyCommentComponent from './AnyCommentComponent'
 import TweetEmbed from 'react-tweet-embed';
-import sanitizeHtml from 'sanitize-html';
+import CommentSanitization from "./CommentSanitization";
 
 const MAX_BODY_HEIGHT = 250;
 
@@ -27,16 +27,7 @@ class CommentBody extends AnyCommentComponent {
     processContent() {
         let content = this.props.comment.content;
 
-        return sanitizeHtml(content, {
-            allowedTags: ['p', 'a', 'ul', 'ol', 'blockquote', 'code', 'li', 'b', 'i', 'u', 'strong', 'em', 'br', 'img', 'figure', 'iframe'],
-            allowedAttributes: {
-                a: ['href', 'target'],
-                blockquote: ['class'],
-                img: ['class', 'src', 'alt'],
-            },
-            allowedSchemes: ['http', 'https', 'data'],
-            allowedIframeHostnames: ['twitter.com']
-        });
+        return CommentSanitization.sanitize(content);
     };
 
     /**

@@ -179,7 +179,7 @@ class CommentAttachments extends AnyCommentComponent {
 
     render() {
         const images = this.filterImages(),
-            {attachments} = this.props;
+            {attachments, settings} = this.props;
 
         if (!attachments || attachments.length <= 0) {
             return (null);
@@ -189,6 +189,10 @@ class CommentAttachments extends AnyCommentComponent {
             <ul className="anycomment anycomment-uploads">
                 {this.renderGallery()}
                 <Lightbox
+                    closeButtonTitle={settings.i18.lightbox_close}
+                    imageCountSeparator={settings.i18.lighbox_image_count_separator}
+                    leftArrowTitle={settings.i18.lighbox_left_arrow}
+                    rightArrowTitle={settings.i18.lighbox_right_arrow}
                     currentImage={this.state.currentImage}
                     images={images}
                     isOpen={this.state.lightboxIsOpen}
