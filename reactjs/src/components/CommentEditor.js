@@ -12,16 +12,10 @@ class CommentEditor extends AnyCommentComponent {
             toolbar: [
                 ['bold', 'italic', 'underline', 'blockquote'],
                 [{'list': 'ordered'}, {'list': 'bullet'}],
-                ['link', 'image'],
+                ['link',], //'code', 'image'
                 ['clean'],
             ],
         };
-
-        this.formats = [
-            'bold', 'italic', 'underline', 'blockquote',
-            'list', 'bullet',
-            'link', 'image', 'video'
-        ];
     }
 
     render() {
@@ -32,13 +26,15 @@ class CommentEditor extends AnyCommentComponent {
         return (
             <Fragment>
                 <SendCommentFormBodyAvatar/>
-                <ReactQuill value={commentHTML}
-                            placeholder={settings.i18.add_comment}
-                            ref={(el) => {
-                                editorRef = el
-                            }}
-                            modules={this.modules}
-                            onChange={handleEditorChange}/>
+                <ReactQuill
+                    className={'anycomment-quill-editor anycomment-lang-' + this.getLocale()}
+                    value={commentHTML}
+                    placeholder={settings.i18.add_comment}
+                    ref={(el) => {
+                        editorRef = el
+                    }}
+                    modules={this.modules}
+                    onChange={handleEditorChange}/>
             </Fragment>
         );
     }

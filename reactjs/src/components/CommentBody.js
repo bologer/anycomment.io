@@ -28,13 +28,13 @@ class CommentBody extends AnyCommentComponent {
         let content = this.props.comment.content;
 
         return sanitizeHtml(content, {
-            allowedTags: ['p', 'a', 'ul', 'ol', 'blockquote', 'li', 'b', 'i', 'u', 'strong', 'em', 'br', 'img', 'figure', 'iframe'],
+            allowedTags: ['p', 'a', 'ul', 'ol', 'blockquote', 'code', 'li', 'b', 'i', 'u', 'strong', 'em', 'br', 'img', 'figure', 'iframe'],
             allowedAttributes: {
                 a: ['href', 'target'],
                 blockquote: ['class'],
                 img: ['class', 'src', 'alt'],
             },
-            allowedSchemes: [ 'http', 'https', 'data' ],
+            allowedSchemes: ['http', 'https', 'data'],
             allowedIframeHostnames: ['twitter.com']
         });
     };

@@ -736,7 +736,7 @@
     float: left;
     height: 16px;
     margin: 2px;
-    padding: 0px;
+    padding:0;
     width: 16px;
   }
   .ql-snow .ql-picker:not(.ql-color-picker):not(.ql-icon-picker) svg {
@@ -885,7 +885,7 @@
     border-color: #000;
   }
   .ql-toolbar.ql-snow + .ql-container.ql-snow {
-    border-top: 0px;
+    border-top:0;
   }
   .ql-snow .ql-tooltip {
     background-color: #fff;
@@ -905,7 +905,7 @@
     border: 1px solid #ccc;
     font-size: 13px;
     height: 26px;
-    margin: 0px;
+    margin:0;
     padding: 3px 5px;
     width: 170px;
   }
@@ -956,4 +956,82 @@
   .ql-container.ql-snow {
     border: 1px solid #ccc;
   }
+
+  .anycomment-lang-ru {
+
+    // Headers
+    .ql-snow .ql-picker.ql-header .ql-picker-label::before,
+    .ql-snow .ql-picker.ql-header .ql-picker-item::before {
+      content: 'Обычный';
+    }
+    .ql-snow .ql-picker.ql-header .ql-picker-label[data-value="1"]::before,
+    .ql-snow .ql-picker.ql-header .ql-picker-item[data-value="1"]::before {
+      content: 'Заголовок 1';
+    }
+    .ql-snow .ql-picker.ql-header .ql-picker-label[data-value="2"]::before,
+    .ql-snow .ql-picker.ql-header .ql-picker-item[data-value="2"]::before {
+      content: 'Заголовок 2';
+    }
+    .ql-snow .ql-picker.ql-header .ql-picker-label[data-value="3"]::before,
+    .ql-snow .ql-picker.ql-header .ql-picker-item[data-value="3"]::before {
+      content: 'Заголовок 3';
+    }
+    .ql-snow .ql-picker.ql-header .ql-picker-label[data-value="4"]::before,
+    .ql-snow .ql-picker.ql-header .ql-picker-item[data-value="4"]::before {
+      content: 'Заголовок 4';
+    }
+    .ql-snow .ql-picker.ql-header .ql-picker-label[data-value="5"]::before,
+    .ql-snow .ql-picker.ql-header .ql-picker-item[data-value="5"]::before {
+      content: 'Заголовок 5';
+    }
+    .ql-snow .ql-picker.ql-header .ql-picker-label[data-value="6"]::before,
+    .ql-snow .ql-picker.ql-header .ql-picker-item[data-value="6"]::before {
+      content: 'Заголовок 6';
+    }
+
+    // Font
+    .ql-snow .ql-picker.ql-size .ql-picker-label::before,
+    .ql-snow .ql-picker.ql-size .ql-picker-item::before {
+      content: 'Обычный';
+    }
+    .ql-snow .ql-picker.ql-size .ql-picker-label[data-value=small]::before,
+    .ql-snow .ql-picker.ql-size .ql-picker-item[data-value=small]::before {
+      content: 'Маленький';
+    }
+    .ql-snow .ql-picker.ql-size .ql-picker-label[data-value=large]::before,
+    .ql-snow .ql-picker.ql-size .ql-picker-item[data-value=large]::before {
+      content: 'Большой';
+    }
+    .ql-snow .ql-picker.ql-size .ql-picker-label[data-value=huge]::before,
+    .ql-snow .ql-picker.ql-size .ql-picker-item[data-value=huge]::before {
+      content: 'Огромный';
+    }
+
+    .ql-snow .ql-tooltip::before {
+      content: "Перейти по URL:";
+      line-height: 26px;
+      margin-right: 8px;
+    }
+
+    .ql-snow .ql-tooltip a.ql-action::after {
+      border-right: 1px solid #ccc;
+      content: 'Изменить';
+      margin-left: 16px;
+      padding-right: 8px;
+    }
+    .ql-snow .ql-tooltip a.ql-remove::before {
+      content: 'Удалить';
+      margin-left: 8px;
+    }
+
+    .ql-snow .ql-tooltip.ql-editing a.ql-action::after {
+      border-right: 0px;
+      content: 'Сохранить';
+      padding-right:0;
+    }
+    .ql-snow .ql-tooltip[data-mode=link]::before {
+      content: "Ввести ссылку:";
+    }
+  }
 }
+
