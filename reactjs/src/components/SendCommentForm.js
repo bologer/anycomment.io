@@ -230,11 +230,11 @@ class SendCommentForm extends AnyCommentComponent {
         }
 
         const {settings} = this.props,
-            {editId, replyId, attachments, commentHtml} = this.state,
+            {editId, replyId, attachments, commentHTML} = this.state,
             self = this,
             url = '/comments' + (editId ? ('/' + editId) : '');
 
-        const cleanCommentHtml = CommentSanitization.sanitize(commentHtml);
+        const cleanCommentHtml = CommentSanitization.sanitize(commentHTML);
 
         let params = {
             content: cleanCommentHtml,
@@ -290,12 +290,12 @@ class SendCommentForm extends AnyCommentComponent {
         }
 
         const settings = this.getSettings(),
-            {editId, replyId, attachments, authorName, authorEmail, commentHtml, authorWebsite} = this.state,
+            {editId, replyId, attachments, authorName, authorEmail, commentHTML, authorWebsite} = this.state,
             self = this;
 
         const url = '/comments';
 
-        const cleanCommentHtml = CommentSanitization.sanitize(commentHtml);
+        const cleanCommentHtml = CommentSanitization.sanitize(commentHTML);
 
         let params = {
             content: cleanCommentHtml,

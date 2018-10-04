@@ -172,7 +172,8 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 **Enhancements:**
 
 * Added left side highlight of a comment when clicked on "replied to" link and when user comes from email, #170
-* Enhanced editor, now possible to use : bold, italics, underscore, quote, order/unordered list, link and embed image (all customizable), #47
+* [Comment editor] Enhanced editor, now possible to use: bold, italics, underline, quote, order/unordered list and link, #47
+* [Comment editor] Ability to choose what editor options are available or disable toolbar completely, #47
 * Comment read more now considers content height instead of length as it includes HTML and website can be wide, which breaks logic of content length, #105
 * Added "*" for name and email fields to point that they are important to enter
 * Send comment button is toggled as disabled when agreement is not accepted (for guest and authorized users)

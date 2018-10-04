@@ -130,6 +130,9 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 						'fileMaxSize'            => AnyCommentGenericSettings::getFileMaxSize(),
 						'fileUploadLimit'        => AnyCommentGenericSettings::getFileUploadLimit(),
 
+						'isEditorOn'           => AnyCommentGenericSettings::isEditorToolbarOn(),
+						'editorToolbarOptions' => AnyCommentGenericSettings::getEditorToolbarOptions(),
+
 						'reCaptchaOn'        => AnyCommentIntegrationSettings::isRecaptchaOn(),
 						'reCaptchaUserAll'   => AnyCommentIntegrationSettings::isRecaptchaUserAll(),
 						'reCaptchaUserGuest' => AnyCommentIntegrationSettings::isRecaptchaUserGuest(),

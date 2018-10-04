@@ -69,6 +69,19 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		const OPTION_DEFAULT_AVATAR_RETRO = 'retro';
 		const OPTION_DEFAULT_AVATAR_ROBOHASH = 'robohash';
 
+		/**
+		 * Editor
+		 */
+		const OPTION_EDITOR_TOOLBAR_TOGGLE = 'option_editor_toggle';
+		const OPTION_EDITOR_TOOLBAR_BOLD = 'option_editor_toolbar_bold';
+		const OPTION_EDITOR_TOOLBAR_ITALIC = 'option_editor_toolbar_italic';
+		const OPTION_EDITOR_TOOLBAR_UNDERLINE = 'option_editor_toolbar_underline';
+		const OPTION_EDITOR_TOOLBAR_QUOTE = 'option_editor_toolbar_blockquote';
+		const OPTION_EDITOR_TOOLBAR_ORDERED = 'option_editor_toolbar_ordered';
+		const OPTION_EDITOR_TOOLBAR_BULLET = 'option_editor_toolbar_bullet';
+		const OPTION_EDITOR_TOOLBAR_LINK = 'option_editor_toolbar_link';
+		const OPTION_EDITOR_TOOLBAR_CLEAN = 'option_editor_toolbar_clean';
+
 
 		/**
 		 * Default user group on register.
@@ -255,6 +268,17 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 			// Other design
 			self::OPTION_FORM_TYPE                             => self::FORM_OPTION_SOCIALS_ONLY,
 			self::OPTION_GUEST_FIELDS                          => '{name} {email} {website}',
+
+			// Editor
+//			self::OPTION_EDITOR_TOOLBAR_TOGGLE                 => 'on',
+//			self::OPTION_EDITOR_TOOLBAR_BOLD                   => 'on',
+//			self::OPTION_EDITOR_TOOLBAR_ITALIC                 => 'on',
+//			self::OPTION_EDITOR_TOOLBAR_UNDERLINE              => 'on',
+//			self::OPTION_EDITOR_TOOLBAR_QUOTE                  => 'on',
+//			self::OPTION_EDITOR_TOOLBAR_ORDERED                => 'on',
+//			self::OPTION_EDITOR_TOOLBAR_BULLET                 => 'on',
+//			self::OPTION_EDITOR_TOOLBAR_LINK                   => 'on',
+//			self::OPTION_EDITOR_TOOLBAR_CLEAN                  => 'on',
 
 			// Custom design
 			self::OPTION_DESIGN_FONT_SIZE                      => '15px',
@@ -486,6 +510,73 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'title'       => __( 'Guest Fields', "anycomment" ),
 						'callback'    => 'input_text',
 						'description' => esc_html( __( 'Use this rearrange guest form fields or remove something. {name} is required and if you do not add it, it will be added by plugin. {name} is name field, {email} is email field, {website} is website field.', "anycomment" ) )
+					],
+
+
+					/**
+					 * Editor options
+					 */
+					[
+						'id'          => self::OPTION_EDITOR_TOOLBAR_TOGGLE,
+						'title'       => __( 'Enable Toolbar', "anycomment" ),
+						'callback'    => 'input_checkbox',
+						'description' => esc_html( __( 'Enable editor toolbar (show options to modify comment text - bold, italics, etc).', "anycomment" ) )
+					],
+
+					[
+						'id'          => self::OPTION_EDITOR_TOOLBAR_BOLD,
+						'title'       => __( 'Bold', "anycomment" ),
+						'callback'    => 'input_checkbox',
+						'description' => esc_html( __( 'Show bold option in editor toolbar.', "anycomment" ) )
+					],
+
+					[
+						'id'          => self::OPTION_EDITOR_TOOLBAR_ITALIC,
+						'title'       => __( 'Italic', "anycomment" ),
+						'callback'    => 'input_checkbox',
+						'description' => esc_html( __( 'Show italic option in editor toolbar.', "anycomment" ) )
+					],
+
+					[
+						'id'          => self::OPTION_EDITOR_TOOLBAR_UNDERLINE,
+						'title'       => __( 'Underline', "anycomment" ),
+						'callback'    => 'input_checkbox',
+						'description' => esc_html( __( 'Show underline option in editor toolbar.', "anycomment" ) )
+					],
+
+					[
+						'id'          => self::OPTION_EDITOR_TOOLBAR_QUOTE,
+						'title'       => __( 'Quote', "anycomment" ),
+						'callback'    => 'input_checkbox',
+						'description' => esc_html( __( 'Show quote option in editor toolbar.', "anycomment" ) )
+					],
+
+					[
+						'id'          => self::OPTION_EDITOR_TOOLBAR_ORDERED,
+						'title'       => __( 'Ordered list', "anycomment" ),
+						'callback'    => 'input_checkbox',
+						'description' => esc_html( __( 'Show ordered list option in editor toolbar.', "anycomment" ) )
+					],
+
+					[
+						'id'          => self::OPTION_EDITOR_TOOLBAR_BULLET,
+						'title'       => __( 'Unordered list', "anycomment" ),
+						'callback'    => 'input_checkbox',
+						'description' => esc_html( __( 'Show unordered list option in editor toolbar.', "anycomment" ) )
+					],
+
+					[
+						'id'          => self::OPTION_EDITOR_TOOLBAR_LINK,
+						'title'       => __( 'Link', "anycomment" ),
+						'callback'    => 'input_checkbox',
+						'description' => esc_html( __( 'Show link option in editor toolbar.', "anycomment" ) )
+					],
+
+					[
+						'id'          => self::OPTION_EDITOR_TOOLBAR_CLEAN,
+						'title'       => __( 'Clean formatting', "anycomment" ),
+						'callback'    => 'input_checkbox',
+						'description' => esc_html( __( 'Show clean formatting option in editor toolbar.', "anycomment" ) )
 					],
 
 					[
@@ -1243,6 +1334,145 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 
 			return $successCount > 0;
 		}
+
+		/**
+		 * Get list of enabled options to react editor.
+		 *
+		 * @return array
+		 */
+		public static function getEditorToolbarOptions() {
+
+			$toolbar_option = [];
+			if ( static::isEditorToolbarBold() ) {
+				$toolbar_option[] = 'bold';
+			}
+
+			if ( static::isEditorToolbarItalic() ) {
+				$toolbar_option[] = 'italic';
+			}
+
+			if ( static::isEditorToolbarUnderline() ) {
+				$toolbar_option[] = 'underline';
+			}
+
+			if ( static::isEditorToolbarBlockQuote() ) {
+				$toolbar_option[] = 'blockquote';
+			}
+
+			if ( static::isEditorToolbarOrderedList() ) {
+				$toolbar_option[] = 'ordered';
+			}
+
+			if ( static::isEditorToolbarBulletList() ) {
+				$toolbar_option[] = 'bullet';
+			}
+
+			if ( static::isEditorToolbarLink() ) {
+				$toolbar_option[] = 'link';
+			}
+
+			if ( static::isEditorToolbarClean() ) {
+				$toolbar_option[] = 'clean';
+			}
+
+			return $toolbar_option;
+		}
+
+		/**
+		 * Check whether editor toolbar is on.
+		 *
+		 * @return bool
+		 */
+		public static function isEditorToolbarOn() {
+			$is_toolbar_on                 = static::instance()->getOption( self::OPTION_EDITOR_TOOLBAR_TOGGLE ) !== null;
+			$has_at_least_one_toolbar_item = static::isEditorToolbarBold() ||
+			                                 static::isEditorToolbarItalic() ||
+			                                 static::isEditorToolbarUnderline() ||
+			                                 static::isEditorToolbarBlockQuote() ||
+			                                 static::isEditorToolbarOrderedList() ||
+			                                 static::isEditorToolbarBulletList() ||
+			                                 static::isEditorToolbarLink() ||
+			                                 static::isEditorToolbarClean();
+
+			if ( $is_toolbar_on && $has_at_least_one_toolbar_item ) {
+				return true;
+			}
+
+			return false;
+		}
+
+		/**
+		 * Check whether bold option should be seen in editor toolbar.
+		 *
+		 * @return bool
+		 */
+		public static function isEditorToolbarBold() {
+			return static::instance()->getOption( self::OPTION_EDITOR_TOOLBAR_BOLD ) !== null;
+		}
+
+		/**
+		 * Check whether italic option should be seen in editor toolbar.
+		 *
+		 * @return bool
+		 */
+		public static function isEditorToolbarItalic() {
+			return static::instance()->getOption( self::OPTION_EDITOR_TOOLBAR_ITALIC ) !== null;
+		}
+
+		/**
+		 * Check whether underline option should be seen in editor toolbar.
+		 *
+		 * @return bool
+		 */
+		public static function isEditorToolbarUnderline() {
+			return static::instance()->getOption( self::OPTION_EDITOR_TOOLBAR_UNDERLINE ) !== null;
+		}
+
+		/**
+		 * Check whether blockquote option should be seen in editor toolbar.
+		 *
+		 * @return bool
+		 */
+		public static function isEditorToolbarBlockQuote() {
+			return static::instance()->getOption( self::OPTION_EDITOR_TOOLBAR_QUOTE ) !== null;
+		}
+
+		/**
+		 * Check whether ordered list option should be seen in editor toolbar.
+		 *
+		 * @return bool
+		 */
+		public static function isEditorToolbarOrderedList() {
+			return static::instance()->getOption( self::OPTION_EDITOR_TOOLBAR_ORDERED ) !== null;
+		}
+
+		/**
+		 * Check whether bullet list option should be seen in editor toolbar.
+		 *
+		 * @return bool
+		 */
+		public static function isEditorToolbarBulletList() {
+			return static::instance()->getOption( self::OPTION_EDITOR_TOOLBAR_BULLET ) !== null;
+		}
+
+		/**
+		 * Check whether link option should be seen in editor toolbar.
+		 *
+		 * @return bool
+		 */
+		public static function isEditorToolbarLink() {
+			return static::instance()->getOption( self::OPTION_EDITOR_TOOLBAR_LINK ) !== null;
+		}
+
+		/**
+		 * Check whether clean option should be seen in editor toolbar.
+		 *
+		 * @return bool
+		 */
+		public static function isEditorToolbarClean() {
+			return static::instance()->getOption( self::OPTION_EDITOR_TOOLBAR_CLEAN ) !== null;
+		}
+
 
 		/**
 		 * Enable custom design.
