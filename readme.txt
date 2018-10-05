@@ -176,6 +176,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 **Fixes:**
 
 * Fixed issue when "Read more" was overflowing text
+* Fixed issue when logged in user did not see his avatar in editor
 
 
 

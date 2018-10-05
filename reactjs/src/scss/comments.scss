@@ -15,9 +15,9 @@
           top: 60%;
           margin-top: -($child-avatar-size/2);
           left: 15px;
-          z-index: 0;
           @include avatar();
           @include avatar_child();
+          z-index: 1;
         }
       }
     }

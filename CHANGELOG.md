@@ -9,6 +9,7 @@
 **Fixes:**
 
 * Fixed issue when "Read more" was overflowing text
+* Fixed issue when logged in user did not see his avatar in editor 
 
 
 ## 0.0.58 – 04.10.2018
