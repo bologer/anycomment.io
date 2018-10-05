@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class AnyCommentMigration_0_0_56 is used to re upload big avatars and make them smaller in favor of speed.
+ * Class AnyCommentMigration_0_0_57 is used to re upload big avatars and make them smaller in favor of speed.
  */
 class AnyCommentMigration_0_0_57 extends AnyCommentMigration {
 	public $table = 'uploaded_files';

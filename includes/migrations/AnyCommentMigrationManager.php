@@ -49,6 +49,8 @@ class AnyCommentMigrationManager {
 
 			if ( ! $model->isApplied() && $model->up() ) {
 				AnyCommentOptions::updateMigration( $migrationVersion );
+			} elseif ( $model->isApplied() ) {
+				AnyCommentOptions::updateMigration( $migrationVersion );
 			}
 		}
 

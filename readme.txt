@@ -171,13 +171,13 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Enhancements:**
 
-
-
 **Fixes:**
 
 * Fixed issue when "Read more" was overflowing text
 * Fixed issue when logged in user did not see his avatar in editor
 * Fixed issue when comment count header was not showing after recent update, #199
+* Fixed issue when table for managing notification emails was not created, #196
+* All tables which come from plugin now prefixed as defined by config, #200
 
 **Other:**
 

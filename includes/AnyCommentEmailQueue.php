@@ -45,7 +45,9 @@ class AnyCommentEmailQueue {
 	 * @return string
 	 */
 	public static function tableName() {
-		return 'anycomment_email_queue';
+		global $wpdb;
+
+		return $wpdb->prefix . 'anycomment_email_queue';
 	}
 
 	/**

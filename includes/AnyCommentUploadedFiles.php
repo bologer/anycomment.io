@@ -40,7 +40,9 @@ class AnyCommentUploadedFiles {
 	 * @return string
 	 */
 	public static function tableName() {
-		return 'anycomment_uploaded_files';
+		global $wpdb;
+
+		return $wpdb->prefix . 'anycomment_uploaded_files';
 	}
 
 	/**

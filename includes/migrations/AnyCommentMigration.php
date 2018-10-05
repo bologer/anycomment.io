@@ -40,6 +40,10 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 		'0.0.57' => [
 			'version'     => '0.0.57',
 			'description' => 'Add "url_thumbnail" column to keep image thumbnail together with original url and type for MIME type'
+		],
+		'0.0.59' => [
+			'version'     => '0.0.59',
+			'description' => 'Create anycomment_email_queue table if does not exist and prefix every custom table from plugin with WordPress\'s default wpdb prefix'
 		]
 	];
 
@@ -170,9 +174,6 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 		if ( $currentVersion === null ) {
 			return $list;
 		}
-
-		// 0.0.1, 0.0.2, etc
-		$list = array_reverse( $list );
 
 		foreach ( $list as $key => $listVersion ) {
 			if ( version_compare( $listVersion, $currentVersion, '<=' ) ) {

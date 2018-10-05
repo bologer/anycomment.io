@@ -17,7 +17,7 @@ class AnyCommentMigration_0_0_45 extends AnyCommentMigration {
 
 		$option = get_option( 'anycomment-social', true );
 
-		if ( $option === true ) {
+		if ( $option) {
 			return true;
 		}
 
@@ -26,7 +26,7 @@ class AnyCommentMigration_0_0_45 extends AnyCommentMigration {
 		               ! isset( $option['social_vk_app_secret_field'] );
 
 		global $wpdb;
-		$res            = $wpdb->get_results( "SHOW TABLES LIKE '{$this->getTable()}';", 'ARRAY_A' );
+		$res            = $wpdb->get_results( "SHOW TABLES LIKE 'anycomment_email_queue';", 'ARRAY_A' );
 		$isTableCreated = $res === null || count( $res ) > 0;
 
 		return $isVKApplied && $isTableCreated;
@@ -55,7 +55,7 @@ class AnyCommentMigration_0_0_45 extends AnyCommentMigration {
 
 		global $wpdb;
 
-		$table = $this->getTable();
+		$table = 'anycomment_email_queue';
 
 		/**
 		 * Create email queue table

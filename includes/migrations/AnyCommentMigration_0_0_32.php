@@ -1,7 +1,6 @@
 <?php
 
 class AnyCommentMigration_0_0_32 extends AnyCommentMigration {
-	public $table = 'likes';
 	public $version = '0.0.32';
 
 	/**
@@ -25,7 +24,7 @@ class AnyCommentMigration_0_0_32 extends AnyCommentMigration {
 	public function up() {
 		global $wpdb;
 
-		$table = $this->getTable();
+		$table = 'anycomment_likes';
 
 		$sql = "CREATE TABLE `$table` (
   `ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -56,7 +55,7 @@ class AnyCommentMigration_0_0_32 extends AnyCommentMigration {
 	public function down() {
 		global $wpdb;
 
-		$sql = "DROP TABLE IF EXISTS `{$this->getTable()}`;";
+		$sql = "DROP TABLE IF EXISTS `anycomment_likes`;";
 		$wpdb->query( $sql );
 
 		return true;

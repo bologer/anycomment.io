@@ -33,7 +33,9 @@ class AnyCommentLikes {
 	 * @return string
 	 */
 	public static function tableName() {
-		return 'anycomment_likes';
+		global $wpdb;
+
+		return $wpdb->prefix . 'anycomment_likes';
 	}
 
 	/**

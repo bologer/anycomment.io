@@ -11,8 +11,8 @@ class AnyCommentMigration_0_0_50 extends AnyCommentMigration {
 		global $wpdb;
 
 
-		$res  = $wpdb->get_results( "SHOW COLUMNS FROM `{$this->getTable()}` LIKE 'subject';", 'ARRAY_A' );
-		$res2 = $wpdb->get_results( "SHOW COLUMNS FROM `{$this->getTable()}` LIKE 'email';", 'ARRAY_A' );
+		$res  = $wpdb->get_results( "SHOW COLUMNS FROM `anycomment_email_queue` LIKE 'subject';", 'ARRAY_A' );
+		$res2 = $wpdb->get_results( "SHOW COLUMNS FROM `anycomment_email_queue` LIKE 'email';", 'ARRAY_A' );
 
 		return $res !== null && count( $res ) > 0 &&
 		       $res2 !== null && count( $res2 ) > 0;
@@ -55,7 +55,7 @@ class AnyCommentMigration_0_0_50 extends AnyCommentMigration {
 	public function down() {
 		global $wpdb;
 
-		$table = $this->getTable();
+		$table = 'anycomment_email_queue';
 
 		$arr   = [];
 		$arr[] = sprintf( "ALTER TABLE `%s` DROP COLUMN `%s`;", $table, 'subject' );
