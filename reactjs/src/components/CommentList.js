@@ -22,7 +22,7 @@ class CommentList extends AnyCommentComponent {
             isLoaded: false,
 
             commentCount: parseInt(settings.commentCount, 10),
-            commentCountText: null,
+            commentCountText: '',
             comments: [],
 
             isLastPage: false,
@@ -299,6 +299,7 @@ class CommentList extends AnyCommentComponent {
             comment={comment}
             handleUnsetAction={this.handleUnsetAction}
             loadComments={this.loadComments}
+            commentCountText={this.state.commentCountText}
             onSort={this.handleSort}/>;
 
         if (isError) {
