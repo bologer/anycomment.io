@@ -9,10 +9,10 @@
    */
   .ql-container {
     box-sizing: border-box;
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 13px;
+    font-family: $font-family;
+    font-size: $font-size - 2;
     height: 100%;
-    margin: 0px;
+    margin: 0;
     position: relative;
   }
   .ql-container.ql-disabled .ql-tooltip {
@@ -658,7 +658,7 @@
     color: #444;
     display: inline-block;
     float: left;
-    font-size: 14px;
+    font-size: $font-size - 1;
     font-weight: 500;
     height: 24px;
     position: relative;
@@ -720,7 +720,7 @@
     right: 4px;
   }
   .ql-snow .ql-icon-picker .ql-picker-options {
-    padding: 4px 0px;
+    padding: 4px 0;
   }
   .ql-snow .ql-icon-picker .ql-picker-item {
     height: 24px;
@@ -844,13 +844,13 @@
     content: 'Huge';
   }
   .ql-snow .ql-picker.ql-size .ql-picker-item[data-value=small]::before {
-    font-size: 10px;
+    font-size: $font-size - 5;
   }
   .ql-snow .ql-picker.ql-size .ql-picker-item[data-value=large]::before {
-    font-size: 18px;
+    font-size: $font-size + 2;
   }
   .ql-snow .ql-picker.ql-size .ql-picker-item[data-value=huge]::before {
-    font-size: 32px;
+    font-size: $font-size + (32 - $font-size);
   }
   .ql-snow .ql-color-picker.ql-background .ql-picker-item {
     background-color: #fff;
@@ -860,7 +860,7 @@
   }
   .ql-toolbar.ql-snow {
     box-sizing: border-box;
-    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    font-family: $font-family;
     padding: 8px;
   }
   .ql-toolbar.ql-snow .ql-formats {
@@ -889,10 +889,11 @@
   .ql-snow .ql-tooltip {
     background-color: #fff;
     border: 1px solid #ccc;
-    box-shadow: 0px 0px 5px #ddd;
+    box-shadow: 0 0 5px #ddd;
     color: #444;
     padding: 5px 12px;
     white-space: nowrap;
+    z-index: 2;
   }
   .ql-snow .ql-tooltip::before {
     content: "Visit URL:";
@@ -902,7 +903,7 @@
   .ql-snow .ql-tooltip input[type=text] {
     display: none;
     border: 1px solid #ccc;
-    font-size: 13px;
+    font-size: $font-size - 2;
     height: 26px;
     margin: 0;
     padding: 3px 5px;
@@ -936,9 +937,9 @@
     display: inline-block;
   }
   .ql-snow .ql-tooltip.ql-editing a.ql-action::after {
-    border-right: 0px;
+    border-right: 0;
     content: 'Save';
-    padding-right: 0px;
+    padding-right: 0;
   }
   .ql-snow .ql-tooltip[data-mode=link]::before {
     content: "Enter link:";
