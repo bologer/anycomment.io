@@ -11,6 +11,10 @@
 * Fixed issue when "Read more" was overflowing text
 * Fixed issue when logged in user did not see his avatar in editor 
 
+**Other:**
+
+* Corrected Russian translation for option to clean editor formatting, #192
+
 
 ## 0.0.58 – 04.10.2018
 

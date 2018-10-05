@@ -3,9 +3,9 @@ msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-04 06:01+0000\n"
-"PO-Revision-Date: 2018-10-04 06:07+0000\n"
+"PO-Revision-Date: 2018-10-05 05:21+0000\n"
 "Last-Translator: admin <sasha.tesh@gmail.com>\n"
-"Language-Team: Russian\n"
+"Language-Team: Русский\n"
 "Language: ru_RU\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10 >= 2 && "
 "n%10<=4 &&(n%100<10||n%100 >= 20)? 1 : 2);\n"
@@ -711,7 +711,7 @@ msgstr "Чистить форматирование"
 
 #: includes/admin/AnyCommentGenericSettings.php:579
 msgid "Show clean formatting option in editor toolbar."
-msgstr "Показывать возможность почистит форма в списке опций редактора."
+msgstr "Показывать возможность почистить формат в списке опций редактора."
 
 #: includes/admin/AnyCommentGenericSettings.php:584
 msgid "Custom Design"
