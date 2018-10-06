@@ -67,9 +67,7 @@ class CommentEditor extends AnyCommentComponent {
                     className={'anycomment-quill-editor anycomment-lang-' + this.getLocale()}
                     value={commentHTML}
                     placeholder={settings.i18.add_comment}
-                    ref={(el) => {
-                        editorRef = el
-                    }}
+                    ref={editorRef}
                     modules={this.getModules()}
                     onChange={handleEditorChange}/>
             </Fragment>

@@ -537,9 +537,14 @@
               margin-bottom: 0;
             }
 
+            & > p:last-child {
+              padding-bottom: 0;
+            }
+
             // blockTypes
             ul, ol {
               padding-left: 21px;
+              margin-left: 0;
             }
 
             // quotes

@@ -37,8 +37,7 @@ class SendCommentForm extends AnyCommentComponent {
         this.reCaptchaTheme = options.reCaptchaTheme;
         this.reCaptchaBadge = options.reCaptchaBadge;
 
-        this.quillRef = React.createRef();
-        this.editorRef = null;
+        this.editorRef = React.createRef();
     }
 
     /**
@@ -122,7 +121,7 @@ class SendCommentForm extends AnyCommentComponent {
      */
     prepareUpdateForm = (comment) => {
 
-        const commentHtml = comment.content;
+        const commentHtml = CommentSanitization.sanitize(comment.content);
 
         if (commentHtml !== '') {
 
@@ -147,18 +146,11 @@ class SendCommentForm extends AnyCommentComponent {
      * Focus on comment field.
      */
     focusCommentField = () => {
-        console.log(this.quillRef);
-        // this.editorRef.current.focus();
-    };
+        const editor = this.editorRef.current;
 
-    attachQuillRefs = () => {
-        // Ensure React-Quill reference is available:
-        if (typeof this.quillRef.getEditor !== 'function') return;
-        // Skip if Quill reference is defined:
-        if (this.editorRef != null) return;
-
-        const editorRef = this.quillRef.getEditor();
-        if (editorRef != null) this.editorRef = editorRef;
+        if (editor) {
+            editor.focus();
+        }
     };
 
     /**
@@ -215,6 +207,7 @@ class SendCommentForm extends AnyCommentComponent {
 
         this.storeComment(text);
     };
+
 
     /**
      * Authorized form.
@@ -480,7 +473,7 @@ class SendCommentForm extends AnyCommentComponent {
                     <SendCommentFormBody {...this.props}
                                          attachments={this.state.attachments}
                                          handleEditorChange={this.handleEditorChange}
-                                         editorRef={this.quillRef}
+                                         editorRef={this.editorRef}
                                          commentHTML={this.state.commentHTML}
                                          handleAttachmentChange={this.handleAttachmentChange}/>
 
