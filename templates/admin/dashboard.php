@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <div class="anycomment-dashboard__header-logo">
                     <img src="<?= AnyComment()->plugin_url() . '/assets/img/mini-logo.svg' ?>"
                          alt="<?= __( 'AnyComment', 'anycomment' ) ?>">
-                    <h2><?= __( 'AnyComment', 'anycomment' ) ?></h2>
+                    <h2><?= __( 'AnyComment', 'anycomment' ) ?>&nbsp;<sup><?= AnyComment()->version ?></sup></h2>
                 </div>
 
                 <div class="anycomment-dashboard__header-official">

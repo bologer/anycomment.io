@@ -21,6 +21,10 @@ $tabs       = [
 	'help'  => [
 		'url'  => menu_page_url( $_GET['page'], false ) . '&tab=help',
 		'text' => __( 'Help', 'anycomment' )
+	],
+	'tools'  => [
+		'url'  => menu_page_url( $_GET['page'], false ) . '&tab=tools',
+		'text' => __( 'Tools', 'anycomment' )
 	]
 ]
 ?>

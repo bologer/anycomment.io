@@ -217,6 +217,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			// Helpers
 			include_once( ANYCOMMENT_ABSPATH . 'includes/helpers/AnyCommentInputHelper.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/helpers/AnyCommentLinkHelper.php' );
+			include_once( ANYCOMMENT_ABSPATH . 'includes/helpers/AnyCommentManipulatorHelper.php' );
 
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentOptions.php' );
 

@@ -172,6 +172,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 **Enhancements:**
 
 * Now when option "show alert on new comment" is on, new comment will be show automatically, without a need to click on the alert message
+* Added "Tools" tab for having different helpers from plugin. Ability to drop cache, open comments for all posts, pages, any post type, WooCommerce and see debug information
 
 **Fixes:**
 

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-06 06:27+0000\n"
+"POT-Creation-Date: 2018-10-06 10:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -1531,6 +1531,7 @@ msgid "Captcha is incorrect. Please try again."
 msgstr ""
 
 #: includes/rest/AnyCommentRestComment.php:526
+#: includes/rest/AnyCommentRestComment.php:711
 msgid "Comment cannot be empty."
 msgstr ""
 
@@ -1569,10 +1570,6 @@ msgstr ""
 
 #: includes/rest/AnyCommentRestComment.php:703
 msgid "Updating comment status failed."
-msgstr ""
-
-#: includes/rest/AnyCommentRestComment.php:711
-msgid "Invalid comment content."
 msgstr ""
 
 #: includes/rest/AnyCommentRestComment.php:726
@@ -1749,6 +1746,96 @@ msgstr ""
 
 #: includes/rest/AnyCommentRestComment.php:1374
 msgid "The password for the post if it is password protected."
+msgstr ""
+
+#: templates/admin/tab-tools.php:31 templates/admin/tabs.php:27
+msgid "Tools"
+msgstr ""
+
+#: templates/admin/tab-tools.php:32
+msgid ""
+"This page will have helpers and debug information related to the plugin. For "
+"example, version of plugin, WordPress or PHP. Also you may drop comments or "
+"global plugins cache, open comments for all posts, pages or WooCommerce "
+"products (when plugin activated)."
+msgstr ""
+
+#: templates/admin/tab-tools.php:35
+msgid "Debug Information"
+msgstr ""
+
+#: templates/admin/tab-tools.php:42
+msgid "AnyComment Version"
+msgstr ""
+
+#: templates/admin/tab-tools.php:43
+msgid "WordPress Version"
+msgstr ""
+
+#: templates/admin/tab-tools.php:44
+msgid "PHP Version"
+msgstr ""
+
+#: templates/admin/tab-tools.php:45
+msgid "Locale"
+msgstr ""
+
+#: templates/admin/tab-tools.php:47
+msgid "Using Custom Design"
+msgstr ""
+
+#: templates/admin/tab-tools.php:48
+msgid "Yes"
+msgstr ""
+
+#: templates/admin/tab-tools.php:48
+msgid "No"
+msgstr ""
+
+#: templates/admin/tab-tools.php:50
+msgid "Generated at"
+msgstr ""
+
+#: templates/admin/tab-tools.php:72
+msgid "Summary"
+msgstr ""
+
+#: templates/admin/tab-tools.php:78
+msgid ""
+"Copy and paste this information to developer as it may be helpful for "
+"problem investigation."
+msgstr ""
+
+#: templates/admin/tab-tools.php:85
+msgid "Cache Manager"
+msgstr ""
+
+#: templates/admin/tab-tools.php:87
+msgid "Flush All"
+msgstr ""
+
+#: templates/admin/tab-tools.php:89
+msgid "Flush Comments"
+msgstr ""
+
+#: templates/admin/tab-tools.php:92
+msgid "Other Helpers"
+msgstr ""
+
+#: templates/admin/tab-tools.php:94
+msgid "Open All Comments"
+msgstr ""
+
+#: templates/admin/tab-tools.php:96
+msgid "Open Posts Comments"
+msgstr ""
+
+#: templates/admin/tab-tools.php:98
+msgid "Open Pages Comments"
+msgstr ""
+
+#: templates/admin/tab-tools.php:100
+msgid "Open WooCommerce Product Comments"
 msgstr ""
 
 #: templates/admin/dashboard.php:8 templates/admin/tabs.php:4
