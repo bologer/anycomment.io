@@ -213,10 +213,7 @@ AND `comments`.`comment_ID`=%d";
 			return false;
 		}
 
-		$db            = static::db();
-		$usersTable    = $db->users;
-		$commentsTable = $db->comments;
-		$adminEmail    = get_option( 'new_admin_email' );
+		$adminEmail = get_option( 'new_admin_email' );
 
 		$user = get_user_by( 'email', $adminEmail );
 
@@ -224,14 +221,7 @@ AND `comments`.`comment_ID`=%d";
 			return false;
 		}
 
-		$query = "SELECT `comments`.* FROM `$commentsTable` `comments` 
-LEFT JOIN `$usersTable` `users` ON `users`.`ID` = `comments`.`user_ID` 
-WHERE `users`.`user_email` != %s AND `comments`.`comment_ID`=%d";
-
-
-		$result = static::db()->get_row( static::db()->prepare( $query, [ $adminEmail, $comment->comment_ID ] ) );
-
-		if ( empty( $result ) ) {
+		if ( $comment->comment_author_email === $adminEmail ) {
 			return false;
 		}
 
