@@ -179,6 +179,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Fixed issue when table for managing notification emails was not created, #196
 * All tables which come from plugin now prefixed as defined by config, #200
 * Now editor styles also adapt to custom styles defined in "Design" tag (e.g. font family, font size, etc), #195
+* Fixed issue when some themes have special styles for `<p>` or `<ul>` tag which caused comment text to be weirdly formatted, #202
 
 **Other:**
 
