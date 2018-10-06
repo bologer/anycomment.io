@@ -4,6 +4,8 @@
 
 **Enhancements:**
 
+* Now when option "show alert on new comment" is on, new comment will be show automatically, without a need to click on the alert message
+
 **Fixes:**
 
 * Fixed issue when "Read more" was overflowing text
@@ -13,7 +15,8 @@
 * All tables which come from plugin now prefixed as defined by config, #200
 * Now editor styles also adapt to custom styles defined in "Design" tag (e.g. font family, font size, etc), #195
 * Fixed issue when some themes have special styles for `<p>` or `<ul>` tag which caused comment text to be weirdly formatted, #202
-* Fixed issue when user was not moved to the editor on reply/edit/update comment action, #191 
+* Fixed issue when user was not moved to the editor on reply/edit/update comment action, #191
+* Fixed issue when option "show alert on new comment" was shown to the user who sent the comment, #193
 
 **Other:**
 

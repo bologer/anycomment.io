@@ -725,7 +725,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'id'          => self::OPTION_NOTIFY_ON_NEW_COMMENT,
 						'title'       => __( 'New Comment Alert', "anycomment" ),
 						'callback'    => 'input_checkbox',
-						'description' => esc_html( __( 'Show hint about new comment when user is on the comments page. Once clicked on alert, new comment will be displayed.', "anycomment" ) )
+						'description' => esc_html( __( 'Show alert about new comment when user is on the page.', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_INTERVAL_COMMENTS_CHECK,

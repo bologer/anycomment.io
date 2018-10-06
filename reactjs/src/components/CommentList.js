@@ -153,9 +153,9 @@ class CommentList extends AnyCommentComponent {
                     // Show toast only if new comment was added, not deleted or
                     // something like this
                     if (!self.state.isJustAdded && currentCount > stateCount) {
+                        self.loadComments();
                         self.showSuccess(settings.i18.new_comment_was_added, {
-                            onClose: () => self.loadComments(),
-                            autoClose: false,
+                            autoClose: true,
                             position: toast.POSITION.TOP_CENTER,
                             draggable: false,
                         });
@@ -255,6 +255,14 @@ class CommentList extends AnyCommentComponent {
     }
 
     /**
+     * Trigger whether comment was just added by user, to investigate whether comment was
+     * added by current user or someone else.
+     */
+    handleJustAdded = () => {
+        this.setState({isJustAdded: true});
+    };
+
+    /**
      * Propage reply action.
      *
      * @param comment
@@ -298,6 +306,7 @@ class CommentList extends AnyCommentComponent {
             action={action}
             comment={comment}
             handleUnsetAction={this.handleUnsetAction}
+            handleJustAdded={this.handleJustAdded}
             loadComments={this.loadComments}
             commentCountText={this.state.commentCountText}
             onSort={this.handleSort}/>;

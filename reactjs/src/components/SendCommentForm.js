@@ -259,6 +259,7 @@ class SendCommentForm extends AnyCommentComponent {
             })
             .then(function (response) {
                 self.prepareInitialForm();
+                self.props.handleJustAdded();
                 self.props.loadComments();
                 return true;
             })
@@ -337,6 +338,7 @@ class SendCommentForm extends AnyCommentComponent {
             })
             .then(function (response) {
                 self.prepareInitialForm();
+                self.props.handleJustAdded();
                 self.props.loadComments();
                 return true;
             })

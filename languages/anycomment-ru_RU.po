@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-04 06:01+0000\n"
-"PO-Revision-Date: 2018-10-05 05:21+0000\n"
+"POT-Creation-Date: 2018-10-06 06:27+0000\n"
+"PO-Revision-Date: 2018-10-06 06:28+0000\n"
 "Last-Translator: admin <sasha.tesh@gmail.com>\n"
 "Language-Team: Русский\n"
 "Language: ru_RU\n"
@@ -14,17 +14,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/"
 
-#: includes/AnyCommentEmailQueue.php:186 includes/AnyCommentEmailQueue.php:188
+#: includes/AnyCommentEmailQueue.php:188 includes/AnyCommentEmailQueue.php:190
 #, php-format
 msgid "Re: Comment on %s"
 msgstr "Новый ответ на комментарий в %s"
 
-#: includes/AnyCommentEmailQueue.php:241 includes/AnyCommentEmailQueue.php:243
+#: includes/AnyCommentEmailQueue.php:243 includes/AnyCommentEmailQueue.php:245
 #, php-format
 msgid "New Comment on %s"
 msgstr "Новый комментарий в %s"
 
-#: includes/AnyCommentEmailQueue.php:366 includes/AnyCommentEmailQueue.php:449
+#: includes/AnyCommentEmailQueue.php:368 includes/AnyCommentEmailQueue.php:451
 msgid "See"
 msgstr "Посмотреть"
 
@@ -114,162 +114,162 @@ msgstr "ВК"
 msgid "Github"
 msgstr "Github"
 
-#: includes/AnyCommentRender.php:143
+#: includes/AnyCommentRender.php:146
 msgid "Oops, something went wrong..."
 msgstr "Упс, что-то пошло не так. Попробуйте перезагрузить страницу."
 
-#: includes/AnyCommentRender.php:144
+#: includes/AnyCommentRender.php:147
 msgid "Loading..."
 msgstr "Загрузка..."
 
-#: includes/AnyCommentRender.php:145
+#: includes/AnyCommentRender.php:148
 msgid "Load more"
 msgstr "Загрузить еще"
 
-#: includes/AnyCommentRender.php:146
+#: includes/AnyCommentRender.php:149
 msgid "Send"
 msgstr "Отправить"
 
-#: includes/AnyCommentRender.php:147
+#: includes/AnyCommentRender.php:150
 #: includes/admin/AnyCommentAdminOptions.php:251
 #: includes/admin/AnyCommentGenericSettings.php:911
 #: includes/admin/AnyCommentSocialSettings.php:667
 msgid "Save"
 msgstr "Сохранить"
 
-#: includes/AnyCommentRender.php:148 includes/AnyCommentRender.php:157
+#: includes/AnyCommentRender.php:151 includes/AnyCommentRender.php:160
 msgid "Reply"
 msgstr "Ответить"
 
-#: includes/AnyCommentRender.php:149
+#: includes/AnyCommentRender.php:152
 msgid "Sorting"
 msgstr "Сортировка"
 
-#: includes/AnyCommentRender.php:150
+#: includes/AnyCommentRender.php:153
 msgid "Sort By"
 msgstr "Сортировка"
 
-#: includes/AnyCommentRender.php:151
+#: includes/AnyCommentRender.php:154
 msgid "Oldest"
 msgstr "Старые"
 
-#: includes/AnyCommentRender.php:152
+#: includes/AnyCommentRender.php:155
 msgid "Newest"
 msgstr "Новые"
 
-#: includes/AnyCommentRender.php:153
+#: includes/AnyCommentRender.php:156
 msgid "reply to"
 msgstr "ответ для"
 
-#: includes/AnyCommentRender.php:154
+#: includes/AnyCommentRender.php:157
 msgid "Your comment..."
 msgstr "Ваш комментарий..."
 
-#: includes/AnyCommentRender.php:155
+#: includes/AnyCommentRender.php:158
 msgid "No comments to display"
 msgstr "Пока еще не было комментариев"
 
-#: includes/AnyCommentRender.php:156
+#: includes/AnyCommentRender.php:159
 msgid "Add Anycomment to your site"
 msgstr "Добавить AnyComment на свой сайт"
 
-#: includes/AnyCommentRender.php:158
+#: includes/AnyCommentRender.php:161
 msgid "Edit"
 msgstr "Изменить"
 
-#: includes/AnyCommentRender.php:159
+#: includes/AnyCommentRender.php:162
 #: includes/admin/tables/AnyCommentUploadedFilesTable.php:145
 msgid "Delete"
 msgstr "Удалить"
 
-#: includes/AnyCommentRender.php:160
+#: includes/AnyCommentRender.php:163
 msgid "Cancel"
 msgstr "Отменить"
 
-#: includes/AnyCommentRender.php:161
+#: includes/AnyCommentRender.php:164
 msgid "Quick Login"
 msgstr "Быстрый вход"
 
-#: includes/AnyCommentRender.php:162
+#: includes/AnyCommentRender.php:165
 msgid "Logout"
 msgstr "Выйти"
 
-#: includes/AnyCommentRender.php:163
+#: includes/AnyCommentRender.php:166
 msgid "New comment was added"
 msgstr "Был добавлен новый комментарий"
 
-#: includes/AnyCommentRender.php:164
+#: includes/AnyCommentRender.php:167
 msgid "Author"
 msgstr "Автор"
 
-#: includes/AnyCommentRender.php:165
+#: includes/AnyCommentRender.php:168
 msgid "Name"
 msgstr "Имя"
 
-#: includes/AnyCommentRender.php:166
+#: includes/AnyCommentRender.php:169
 msgid "Email"
 msgstr "Почта"
 
-#: includes/AnyCommentRender.php:167
+#: includes/AnyCommentRender.php:170
 msgid "Website"
 msgstr "Веб-сайт"
 
-#: includes/AnyCommentRender.php:169
+#: includes/AnyCommentRender.php:172
 #, php-format
 msgid "I accept the <a href=\"%s\"%s>User Agreement</a>"
 msgstr "Я даю согласие на обработку <a href=\"%s\"%s>персональных данных</a>"
 
-#: includes/AnyCommentRender.php:173
+#: includes/AnyCommentRender.php:176
 msgid "Upload file"
 msgstr "Загрузить файл"
 
-#: includes/AnyCommentRender.php:174
+#: includes/AnyCommentRender.php:177
 msgid "Uploading..."
 msgstr "Идет загрузка..."
 
-#: includes/AnyCommentRender.php:175
+#: includes/AnyCommentRender.php:178
 msgid "Uploaded!"
 msgstr "Загружено!"
 
-#: includes/AnyCommentRender.php:176
+#: includes/AnyCommentRender.php:179
 #, php-format
 msgid "File %s is too big"
 msgstr "Файл %s слишком большой"
 
-#: includes/AnyCommentRender.php:177
+#: includes/AnyCommentRender.php:180
 #, php-format
 msgid "You may upload %s file(s) at maximum"
 msgstr "Вы можете загрузить максимум %s файл(-ов)"
 
-#: includes/AnyCommentRender.php:178
+#: includes/AnyCommentRender.php:181
 msgid "No file selected or select proper extension"
 msgstr "Не выбраны файлы или не правильное расширение"
 
-#: includes/AnyCommentRender.php:179
+#: includes/AnyCommentRender.php:182
 msgid "Read more"
 msgstr "Читать далее"
 
-#: includes/AnyCommentRender.php:180
+#: includes/AnyCommentRender.php:183
 msgid "Show less"
 msgstr "Показать меньше"
 
-#: includes/AnyCommentRender.php:185
+#: includes/AnyCommentRender.php:188
 msgid "Close (Esc)"
 msgstr "Закрыть (Esc)"
 
-#: includes/AnyCommentRender.php:186
+#: includes/AnyCommentRender.php:189
 msgid "Previous (Left arrow key)"
 msgstr "Предыдущая (левая стрелка)"
 
-#: includes/AnyCommentRender.php:187
+#: includes/AnyCommentRender.php:190
 msgid "Next (Right arrow key)"
 msgstr "Следующая (правая стрелка)"
 
-#: includes/AnyCommentRender.php:188
+#: includes/AnyCommentRender.php:191
 msgid " of "
 msgstr " из "
 
-#: includes/AnyCommentRender.php:266
+#: includes/AnyCommentRender.php:269
 #, php-format
 msgctxt "REST API Comments Count"
 msgid "%s comment"
@@ -659,7 +659,7 @@ msgstr "Показывать жирный в списке опций редак�
 
 #: includes/admin/AnyCommentGenericSettings.php:535
 msgid "Italic"
-msgstr ""
+msgstr "Курсив"
 
 #: includes/admin/AnyCommentGenericSettings.php:537
 msgid "Show italic option in editor toolbar."
@@ -667,7 +667,7 @@ msgstr "Показывать курсив в списке опций редак�
 
 #: includes/admin/AnyCommentGenericSettings.php:542
 msgid "Underline"
-msgstr ""
+msgstr "Подчеркивание"
 
 #: includes/admin/AnyCommentGenericSettings.php:544
 msgid "Show underline option in editor toolbar."
@@ -900,13 +900,10 @@ msgid "New Comment Alert"
 msgstr "Уведомление при новом комментарии"
 
 #: includes/admin/AnyCommentGenericSettings.php:728
-msgid ""
-"Show hint about new comment when user is on the comments page. Once clicked "
-"on alert, new comment will be displayed."
+msgid "Show alert about new comment when user is on the page."
 msgstr ""
-"Показывать подсказку о новых комментариях когда пользователь находится на "
-"странице с комментариями. После нажатия на подсказку комментарий будет "
-"показан."
+"Показывать подсказку о новом комментарии когда пользователь находится на "
+"странице."
 
 #: includes/admin/AnyCommentGenericSettings.php:732
 msgid "New Comment Interval Checking"
