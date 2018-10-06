@@ -66,9 +66,8 @@ class SendCommentForm extends AnyCommentComponent {
     isCommentEmpty = () => {
         let {commentHTML} = this.state;
 
-        commentHTML = commentHTML.trim();
-
-        return !commentHTML || commentHTML === '' || commentHTML === '<p><br></p>';
+        const re = /^<p>(<br>|<br\/>|<br\s\/>|\s+|)<\/p>$/gm;
+        return re.test(commentHTML);
     };
 
     /**
