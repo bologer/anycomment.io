@@ -15,8 +15,8 @@ class AnyCommentMigration_0_0_57 extends AnyCommentMigration {
 		$queryRes  = $wpdb->get_results( "SHOW COLUMNS FROM `{$this->getTable()}` LIKE 'url_thumbnail';", 'ARRAY_A' );
 		$queryRes2 = $wpdb->get_results( "SHOW COLUMNS FROM `{$this->getTable()}` LIKE 'type';", 'ARRAY_A' );
 
-		return $queryRes !== null && count( $queryRes ) > 0 &&
-		       $queryRes2 !== null && count( $queryRes2 ) > 0;
+		return ! empty( $queryRes ) && count( $queryRes ) > 0 &&
+		       ! empty( $queryRes2 ) && count( $queryRes2 ) > 0;
 	}
 
 	/**

@@ -9,9 +9,9 @@ class AnyCommentMigration_0_0_32 extends AnyCommentMigration {
 	public function isApplied() {
 		global $wpdb;
 
-		$res = $wpdb->get_results( "SHOW TABLES LIKE '{$this->getTable()}';", 'ARRAY_A' );
+		$res = $wpdb->get_results( "SHOW TABLES LIKE 'anycomment_likes';", 'ARRAY_A' );
 
-		if ( $res === null || count( $res ) > 0 ) {
+		if ( ! empty( $res ) && count( $res ) == 1 ) {
 			return true;
 		}
 

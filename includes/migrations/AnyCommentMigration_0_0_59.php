@@ -44,11 +44,7 @@ class AnyCommentMigration_0_0_59 extends AnyCommentMigration {
 	public function up() {
 		global $wpdb;
 
-		$create_email_queue_table = '
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
-CREATE TABLE IF NOT EXISTS `anycomment_email_queue` (
+		$create_email_queue_table = 'CREATE TABLE IF NOT EXISTS `anycomment_email_queue` (
   `ID` bigint(20) UNSIGNED NOT NULL,
   `post_ID` bigint(20) UNSIGNED NOT NULL,
   `comment_ID` bigint(20) UNSIGNED NOT NULL,
@@ -59,8 +55,10 @@ CREATE TABLE IF NOT EXISTS `anycomment_email_queue` (
   `subject` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
   `is_sent` tinyint(1) DEFAULT \'0\'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
-';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;';
+
+		// Do not care much about result, as table is create if does not exist only
+		$wpdb->query( $create_email_queue_table );
 
 		$tables_to_rename     = $this->_tables_to_rename;
 		$tables_renamed_count = 0;
@@ -70,13 +68,13 @@ CREATE TABLE IF NOT EXISTS `anycomment_email_queue` (
 			$is_renamed = $wpdb->query( "RENAME TABLE `$old_name` TO `$new_name`;" ) !== false;
 
 			if ( $is_renamed ) {
-				$wpdb->query( "DROP TABLE IF EXISTS `$old_name`" );
 				$tables_renamed_count ++;
 			}
+
+			$wpdb->query( "DROP TABLE IF EXISTS `$old_name`" );
 		}
 
-		// Do not care much about result, as table is create if does not exist only
-		$wpdb->query( $create_email_queue_table );
+
 
 		return $tables_renamed_count === count( $tables_to_rename );
 	}

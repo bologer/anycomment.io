@@ -14,8 +14,9 @@ class AnyCommentMigration_0_0_50 extends AnyCommentMigration {
 		$res  = $wpdb->get_results( "SHOW COLUMNS FROM `anycomment_email_queue` LIKE 'subject';", 'ARRAY_A' );
 		$res2 = $wpdb->get_results( "SHOW COLUMNS FROM `anycomment_email_queue` LIKE 'email';", 'ARRAY_A' );
 
-		return $res !== null && count( $res ) > 0 &&
-		       $res2 !== null && count( $res2 ) > 0;
+
+		return ! empty( $res ) && count( $res ) > 0 &&
+		       ! empty( $res2 ) && count( $res2 ) > 0;
 	}
 
 	/**

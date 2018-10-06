@@ -11,7 +11,7 @@ class AnyCommentMigration_0_0_52 extends AnyCommentMigration {
 		global $wpdb;
 		$res = $wpdb->get_results( "SHOW TABLES LIKE 'anycomment_uploaded_files';", 'ARRAY_A' );
 
-		return count( $res ) > 0;
+		return ! empty( $res ) && count( $res ) == 1;
 	}
 
 	/**
@@ -19,7 +19,7 @@ class AnyCommentMigration_0_0_52 extends AnyCommentMigration {
 	 */
 	public function up() {
 		global $wpdb;
-		
+
 		/**
 		 * Create email queue table
 		 */
@@ -44,7 +44,7 @@ class AnyCommentMigration_0_0_52 extends AnyCommentMigration {
 	 */
 	public function down() {
 		global $wpdb;
-		$sql = sprintf( "DROP TABLE IF EXISTS `%s`;", 'anycomment_uploaded_files');
+		$sql = sprintf( "DROP TABLE IF EXISTS `%s`;", 'anycomment_uploaded_files' );
 		$wpdb->query( $sql );
 	}
 }

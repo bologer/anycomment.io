@@ -14,22 +14,11 @@ class AnyCommentMigration_0_0_45 extends AnyCommentMigration {
 	 * {@inheritdoc}
 	 */
 	public function isApplied() {
-
-		$option = get_option( 'anycomment-social', true );
-
-		if ( $option) {
-			return true;
-		}
-
-		$isVKApplied = ! isset( $option['social_vk_toggle_field'] ) &&
-		               ! isset( $option['social_vk_app_id_field'] ) &&
-		               ! isset( $option['social_vk_app_secret_field'] );
-
 		global $wpdb;
 		$res            = $wpdb->get_results( "SHOW TABLES LIKE 'anycomment_email_queue';", 'ARRAY_A' );
-		$isTableCreated = $res === null || count( $res ) > 0;
+		$isTableCreated = ! empty( $res ) && count( $res ) == 1;
 
-		return $isVKApplied && $isTableCreated;
+		return $isTableCreated;
 	}
 
 	/**
@@ -51,7 +40,7 @@ class AnyCommentMigration_0_0_45 extends AnyCommentMigration {
 		unset( $option['social_vk_app_id_field'] );
 		unset( $option['social_vk_app_secret_field'] );
 
-		$isVkUpdated = update_option( 'anycomment-social', $option );
+		update_option( 'anycomment-social', $option );
 
 		global $wpdb;
 
@@ -83,7 +72,7 @@ class AnyCommentMigration_0_0_45 extends AnyCommentMigration {
 			                            $wpdb->query( $comment_id_index ) !== false;
 		}
 
-		return $isVkUpdated && $isEmailQueueTableCreated;
+		return $isEmailQueueTableCreated;
 	}
 
 	/**
