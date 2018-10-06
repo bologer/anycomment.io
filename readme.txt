@@ -41,17 +41,16 @@ And good new is AnyComment is free & no dependency on third party services, all 
 = Features =
 * All comments stored in your own database. We reuse native comment's table, so all of the default WordPress functionality comes out of the box.
 * Social network authorization via Facebook, VK, Twitter, Google, Odnoklassniki, GitHub, Instagram, Twitch or Dribble
-* Ability to define form type: guests only, with social authorization or both
+* Ability to define who can leave comment: guests only, with social authorization or both
 * Ability to upload files (define allowed extensions, limit, who can upload, etc)
 * When user leaves a tweet link in the comment, plugin can embed it as external Twitter widget (can be disabled)
-* Plugin is translated into English & Russian
-* Suitable for dark & light themes or customize it yourself
+* Ability to customize  design
 * Blazing-fast comments based on React & WordPress REST API
-* Alert notification in comment area when new comment was added (by clicking on alert, new comment will be shown)
+* Alert notification in comment area when new comment was added
 * Ability to send email on new comment reply
 * Ability to send email notification about new comment to administrator
 * Ability to specify comma-separated list of words to be used to hold comments for moderators
-* Clickable links in comment (control via admin)
+* Ability to have bold, italics, underline, quotes, links or clear formatting. Each type can be disabled separately or the whole toolbar together
 * Image and video URLs as attachment (control via admin)
 * Provide `Privacy Policy` link, so users know how their data processed and used (when not provided, no checkbox will be shown to users)
 * Social avatars shown globally
@@ -60,7 +59,6 @@ And good new is AnyComment is free & no dependency on third party services, all 
 * Assign default group for users who authorize via social network
 * See user's social profile URL in admin
 * Simple & informative dashboard with graphs to display number of comments over number of users who were engaged in the conversation per certain period & most active users
-* Comments do no inherit any of the currently active theme styles. Meaning that comments will not be broken by styles you have
 * Get latest plugin update news directly in the dashboard, don't miss a thing
 
 = Integrations =
@@ -71,7 +69,6 @@ And good new is AnyComment is free & no dependency on third party services, all 
 
 = TODO features =
 * Option: ability to specify thanks message and/or page when user left his first comment, #88
-* Option: ability to premoderate comments with links, #84
 * Option: when user does not have email after registration via social, ask for it somewhere in the comments again
 * Option: notify moderators about new comments, #77
 * Option: embed Instagram photos, #115
@@ -187,7 +184,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Fixed issue when option "show alert on new comment" was shown to the user who sent the comment, #193
 * Fixed issue when user was able to send empty comment text because editor leaves some underlying `<p>` tag which is visually invisible and therefore looks like empty comment, #197
 * Fixed issue when remembered comment did not recover after page refresh, #201
-* Fixed issue when admin did not receive email notification about new comment from guest users, #203
+* Fixed issue when admin did not receive email notification about new comment from guest users, #194
 
 **Other:**
 

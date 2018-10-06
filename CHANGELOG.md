@@ -20,7 +20,7 @@
 * Fixed issue when option "show alert on new comment" was shown to the user who sent the comment, #193
 * Fixed issue when user was able to send empty comment text because editor leaves some underlying `<p>` tag which is visually invisible and therefore looks like empty comment, #197
 * Fixed issue when remembered comment did not recover after page refresh, #201
-* Fixed issue when admin did not receive email notification about new comment from guest users, #203
+* Fixed issue when admin did not receive email notification about new comment from guest users, #194
 
 **Other:**
 
