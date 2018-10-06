@@ -4,7 +4,7 @@ Tags: anycomment, comments, ajax comments, comment, comment moderation, custom c
 Requires at least: 4.7
 Tested up to: 4.9.8
 Requires PHP: 5.4
-Stable tag: 0.0.59
+Stable tag: 0.0.60
 License: GPLv2 or later
 License URI: http://www.gnu.org/
 
@@ -163,6 +163,17 @@ Most of the hosting providers support single button-like installation of SSL cer
 It could only be difficult for website who have HTTP only and hight traffic as transfer to HTTPs can cause some traffic lose.
 
 == Changelog ==
+
+= 0.0.60 – 06.10.2018 =
+
+**Enhancements:**
+
+
+
+**Fixes:**
+
+* Fixed issue when update comment and then reply action still was on the update action when sending comment, #205
+
 
 = 0.0.59 – 06.10.2018 =
 

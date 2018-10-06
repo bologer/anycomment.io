@@ -100,7 +100,6 @@ class SendCommentForm extends AnyCommentComponent {
             commentText: '',
             attachments: [],
             replyName: '',
-            isReply: false,
             buttonText: this.props.settings.i18.button_send,
             replyId: 0,
             editId: '',
@@ -120,7 +119,9 @@ class SendCommentForm extends AnyCommentComponent {
         this.setState({
             replyName: comment.author_name,
             buttonText: this.props.settings.i18.button_reply,
-            replyId: comment.id
+            replyId: comment.id,
+            editId: '',
+            commentHTML: ''
         });
 
         this.focusCommentField();
