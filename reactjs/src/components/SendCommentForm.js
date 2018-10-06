@@ -425,30 +425,36 @@ class SendCommentForm extends AnyCommentComponent {
         const email = this.getAuthorEmail(),
             name = this.getAuthorName(),
             website = this.getAuthorWebsite(),
-            commentHtml = this.getComment();
+            commentHtml = this.getComment(),
+            self = this;
 
         let state = {};
 
-        if (email !== '') {
-            state.authorEmail = email;
-        }
+        let editorAvailabilityInterval = setInterval(function () {
+            if (self.editorRef.current) {
+                if (email !== '') {
+                    state.authorEmail = email;
+                }
 
-        if (name !== '') {
-            state.authorName = name;
-        }
+                if (name !== '') {
+                    state.authorName = name;
+                }
 
-        if (website !== '') {
-            state.authorWebsite = website;
-        }
+                if (website !== '') {
+                    state.authorWebsite = website;
+                }
 
-        if (commentHtml !== '') {
-            state.commentHtml = commentHtml;
-        }
+                if (commentHtml !== '') {
+                    state.commentHTML = commentHtml;
+                }
 
+                if (state !== {}) {
+                    self.setState(state);
+                }
 
-        if (state !== {}) {
-            this.setState(state);
-        }
+                clearInterval(editorAvailabilityInterval);
+            }
+        }, 300);
     };
 
     componentDidMount() {
