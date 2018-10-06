@@ -59,6 +59,19 @@ class SendCommentForm extends AnyCommentComponent {
     };
 
     /**
+     * Check whether comment field is empty or not.
+     *
+     * @returns {boolean}
+     */
+    isCommentEmpty = () => {
+        let {commentHTML} = this.state;
+
+        commentHTML = commentHTML.trim();
+
+        return !commentHTML || commentHTML === '' || commentHTML === '<p><br></p>';
+    };
+
+    /**
      * Generic method invoked when action changes.
      * Action can be either reply, update or default.
      *

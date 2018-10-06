@@ -522,7 +522,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		 * Do not allow a comment to be created with missing or empty
 		 * comment_content. See wp_handle_comment_submission().
 		 */
-		if ( empty( $prepared_comment['comment_content'] ) ) {
+		if ( $this->is_comment_empty( $prepared_comment['comment_content'] ) ) {
 			return new WP_Error( 'rest_comment_content_invalid', __( 'Comment cannot be empty.', 'anycomment' ), [ 'status' => 400 ] );
 		}
 
@@ -707,8 +707,8 @@ class AnyCommentRestComment extends AnyCommentRestController {
 				return $prepared_args;
 			}
 
-			if ( isset( $prepared_args['comment_content'] ) && empty( $prepared_args['comment_content'] ) ) {
-				return new WP_Error( 'rest_comment_content_invalid', __( 'Invalid comment content.', 'anycomment' ), array( 'status' => 400 ) );
+			if ( $this->is_comment_empty( $prepared_args['comment_content'] ) ) {
+				return new WP_Error( 'rest_comment_content_invalid', __( 'Comment cannot be empty.', 'anycomment' ), [ 'status' => 400 ] );
 			}
 
 			$prepared_args['comment_ID'] = $id;
@@ -1542,6 +1542,24 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		}
 
 		return (int) $comment->user_id === (int) $user->ID;
+	}
+
+	/**
+	 * Check whether comment field is empty or not.
+	 *
+	 * @param string $comment_text Comment text to be tested.
+	 *
+	 * @return bool
+	 */
+	public function is_comment_empty( $comment_text ) {
+		$comment_text = trim( $comment_text );
+
+		/**
+		 * @link https://regex101.com/r/tlvIcV/1
+		 */
+		$empty_regex = '/^<p>(<br>|<br\/>|<br\s\/>|\s+|)<\/p>$/m';
+
+		return preg_match( $empty_regex, $comment_text );
 	}
 
 	/**
