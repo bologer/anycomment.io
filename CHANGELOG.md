@@ -4,6 +4,7 @@
 
 **Enhancements:**
 
+* Cosmetics CSS changes to the list of socials on user side
 
 
 **Fixes:**

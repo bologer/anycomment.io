@@ -168,6 +168,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Enhancements:**
 
+* Cosmetics CSS changes to the list of socials on user side
 
 
 **Fixes:**
