@@ -10,7 +10,7 @@
 **Fixes:**
 
 * Fixed issue when update comment and then reply action still was on the update action when sending comment, #205
-
+* Fixed issue with news description having "?" in Russian language
 
 ## 0.0.59 – 06.10.2018
 

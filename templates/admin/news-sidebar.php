@@ -34,9 +34,7 @@
 					if ( $content !== null ) {
 						$content = wp_strip_all_tags( $content, true );
 
-						if ( strlen( $content ) > 150 ) {
-							$content = substr( $content, 0, 150 ) . '...';
-						}
+						$content = wp_trim_words( $content, 10, '...' );
 
 						echo $content;
 					}
