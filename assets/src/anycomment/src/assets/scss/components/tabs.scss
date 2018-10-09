@@ -46,7 +46,6 @@
   }
 
   &__container {
-    width: 70%;
     padding: 0 20px;
 
     &__tab.current {
@@ -55,8 +54,6 @@
 
     &__tab {
       display: none;
-      border: 2px solid #e5e5e5;
-      @include border-radius(6px);
     }
   }
 }

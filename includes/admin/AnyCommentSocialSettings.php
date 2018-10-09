@@ -669,8 +669,6 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
                     </div>
                 </div>
             </form>
-            <script src="<?= AnyComment()->plugin_url() ?>/assets/js/forms.js"></script>
-            <script src="<?= AnyComment()->plugin_url() ?>/assets/js/select2.min.js"></script>
 			<?php if ( $wrapper ): ?>
                 </div>
 			<?php endif; ?>

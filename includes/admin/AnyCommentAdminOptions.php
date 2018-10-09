@@ -118,17 +118,20 @@ if ( ! class_exists( 'AnyCommentAdminOptions' ) ) :
 			$name    = $args['name'];
 			$options = $args['options'];
 
+
 			$options_html = '';
 			foreach ( $options as $key => $value ) {
+				$option_value = $this->getOption( $for );
+				$selected     = isset( $this->getOptions()[ $for ] ) ? ( selected( $option_value, $key, false ) ) : ( '' );
 				$options_html .= <<<EOL
-                <option value="<?= $key ?>" <?= isset( $this->getOptions()[ $for ] ) ? ( selected( $this->getOption( $for ), $key, false ) ) : ( '' ); ?>><?= $value ?></option>
+                <option value="$key" $selected>$value</option>
 EOL;
 			}
 
 			return <<<EOL
             <select name="$name"
                     class="anycomment-select2"
-                    id="<?= $for ?>">$options_html</select>
+                    id="$for">$options_html</select>
 EOL;
 		}
 
@@ -149,7 +152,7 @@ EOL;
 
 			return <<<EOL
 			<div class="grid-x">
-			    <div class="cell auto shrink">
+			    <div class="cell auto shrink align-self-middle">
                     <div class="switch tiny">
                         <input class="switch-input" id="$for" type="checkbox"
                                name="$name"
@@ -250,7 +253,6 @@ EOT;
 				?>
             </form>
             <script src="<?= AnyComment()->plugin_url() ?>/assets/js/forms.js"></script>
-            <script src="<?= AnyComment()->plugin_url() ?>/assets/js/select2.min.js"></script>
 			<?php if ( $wrapper ): ?>
                 </div>
 			<?php endif; ?>
@@ -284,7 +286,9 @@ EOT;
             <script>
                 var $ = jQuery;
                 $('.anycomment-tabs__menu li').on('click', function (e) {
+                    e.preventDefault();
                     doTab($(this));
+                    return false;
                 });
 
 
@@ -312,8 +316,6 @@ EOT;
                         doTab($('[data-tab="' + cleanedHash + '"]'));
                     }
                 });
-
-
             </script>
 			<?php
 		}
@@ -354,7 +356,7 @@ EOT;
 				}
 
 				echo '<div id="tab-' . $section['id'] . '" class="anycomment-tabs__container__tab ' . ( $i === 0 ? 'current' : '' ) . '">';
-				echo '<div class="grid-x form-wrapper">';
+				echo '<div class="grid-x anycomment-form-wrapper">';
 				$this->do_settings_fields( $page, $section['id'] );
 				echo '</div>';
 
@@ -387,10 +389,7 @@ EOT;
 
 			foreach ( (array) $wp_settings_fields[ $page ][ $section ] as $field ) {
 
-				echo '<div class="cell">';
-
-				$tdAttrs = '';
-				echo "<td{$tdAttrs}>";
+				echo '<div class="cell anycomment-form-wrapper__field">';
 				echo $this->do_field( $field );
 				echo '</div>';
 			}
@@ -409,7 +408,7 @@ EOT;
 				'description' => isset( $args['description'] ) ? trim( $args['description'] ) : '',
 				'value'       => $this->getOption( $args['label_for'] ),
 				'name'        => $this->option_name . '[' . $args['label_for'] . ']',
-				'options'     => $options = isset( $field['options'] ) ? $args['options'] : null
+				'options'     => isset( $args['options'] ) ? $args['options'] : null
 			];
 
 			$label       = '<label for="' . $field_data['for'] . '">' . $field_data['title'] . '</label>';
@@ -437,7 +436,8 @@ EOT;
 					break;
 				case 'dropdown':
 				case 'list':
-					if ( $field_data['options'] !== null ) {
+				case 'select':
+					if ( isset( $field_data['options'] ) ) {
 						$html .= $label;
 						$html .= $description;
 						$html .= $this->input_select( $field_data );

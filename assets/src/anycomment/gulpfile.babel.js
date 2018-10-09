@@ -129,7 +129,8 @@ function javascript() {
             })
         ))
         .pipe($.if(!PRODUCTION, $.sourcemaps.write()))
-        .pipe(gulp.dest(PATHS.dist + '/assets/js'));
+        .pipe(rename({basename: 'admin', suffix: '.min'}))
+        .pipe(gulp.dest(PATHS.dist + '/../../../js'));
 }
 
 // Copy images to the "dist" folder

@@ -37,106 +37,117 @@ $border-color: #b6c1c6;
 
 .anycomment-form {
 
-  select.anycomment-select2 {
-    display: none;
-  }
+  &-wrapper {
 
-  .select2 {
-    border: 1px solid $border-color;
-    background-color: #fff;
-    @include border-radius(6px);
-    color: $description-color;
-    cursor: pointer;
-    display: block;
-    position: relative;
+    &__field {
 
-    .select2-selection {
+      &:first-child {
+        margin-top: 0;
+      }
+
+      &:last-child {
+        border-bottom: 0;
+        padding-bottom: 0;
+      }
+
+      margin-top: 25px;
+      border-bottom: 1px solid #c4c4c4;
+      padding-bottom: 25px;
+    }
+
+    label {
+      font-size: $global-font-size;
+      font-weight: bold;
+      color: #686868;
+      line-height: 1;
+    }
+
+    .description {
+      font-size: $global-font-size - 4;
+      font-weight: 200;
+      margin: 5px 0 0;
+      font-style: normal;
+      padding: 0;
+      color: $description-color;
+    }
+
+    select.anycomment-select2 {
+      display: none;
+    }
+
+    .select2 {
+      border: 1px solid $border-color;
+      background-color: #fff;
+      @include border-radius(6px);
+      color: $description-color;
+      cursor: pointer;
       display: block;
-      padding: 15px;
-    }
+      position: relative;
 
-    .select2-selection__arrow {
-      width: 0;
-      height: 0;
-      border-left: 10px solid transparent;
-      border-right: 10px solid transparent;
-      border-top: 10px solid #7a7474;
-      position: absolute;
-      right: 15px;
-      top: 50%;
-      margin-top: -5px;
-    }
-  }
+      .select2-selection {
+        display: block;
+        padding: 10px 15px;
+      }
 
-  textarea {
-    width: 100%;
-    max-width: 100%;
-    min-width: 100%;
-  }
-
-  textarea,
-  input[type="text"],
-  input[type="number"] {
-    border: 1px solid $border-color;
-    padding: 10px 17px;
-    background-color: #fff;
-    @include border-radius(6px);
-    color: $description-color;
-    box-shadow: none;
-  }
-
-  input[type="text"],
-  input[type="number"],
-  select {
-    height: 50px;
-  }
-
-  .form-table-wrapper {
-    width: 100%;
-  }
-
-  .form-table {
-    tbody {
-      tr {
-        td {
-          label {
-            font-size: $global-font-size;
-          }
-          .description {
-            font-size: $global-font-size - 4;
-            font-weight: 200;
-            margin: 5px 0 0;
-            font-style: normal;
-            padding: 0;
-            color: $description-color;
-          }
-        }
+      .select2-selection__arrow {
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-top: 10px solid #7a7474;
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        margin-top: -5px;
       }
     }
-  }
 
-  input[type="submit"] {
-    background: $green;
-    color: #fff;
-    font-size: 21px;
-    font-weight: 400;
-    height: 50px;
-    line-height: 50px;
-    padding: 0 30px;
-    text-align: center;
-    @include border-radius(38px);
-
-    &,
-    &:hover,
-    &:focus,
-    &:active {
-      border-color: transparent;
-      box-shadow: none;
-      text-shadow: none;
+    textarea {
+      width: 100%;
+      max-width: 100%;
+      min-width: 100%;
     }
 
-    &:hover {
-      background: lighten($green, 5%);
+    textarea,
+    input[type="text"],
+    input[type="number"] {
+      border: 1px solid $border-color;
+      padding: 10px 17px;
+      background-color: #fff;
+      @include border-radius(6px);
+      color: $description-color;
+      box-shadow: none;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select {
+      height: 50px;
+    }
+
+    input[type="submit"] {
+      background: $green;
+      color: #fff;
+      font-size: 21px;
+      font-weight: 400;
+      height: 50px;
+      line-height: 50px;
+      padding: 0 30px;
+      text-align: center;
+      @include border-radius(38px);
+
+      &,
+      &:hover,
+      &:focus,
+      &:active {
+        border-color: transparent;
+        box-shadow: none;
+        text-shadow: none;
+      }
+
+      &:hover {
+        background: lighten($green, 5%);
+      }
     }
   }
 }

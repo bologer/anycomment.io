@@ -110,6 +110,8 @@ if ( ! class_exists( 'AnyCommentAdminPages' ) ) :
 				wp_enqueue_script( 'anycomment-admin-chartjs', AnyComment()->plugin_url() . '/assets/js/Chart.min.js', [], AnyComment()->version );
 			}
 
+			wp_enqueue_script( 'anycomment-main-admin', AnyComment()->plugin_url() . '/assets/js/admin.min.js', [], AnyComment()->version, true);
+
 			wp_enqueue_style( 'anycomment-admin-styles', AnyComment()->plugin_url() . '/assets/css/admin.min.css', [], AnyComment()->version );
 			wp_enqueue_style( 'anycomment-admin-roboto-font', 'https://fonts.googleapis.com/css?family=Roboto:300,400,700&amp;subset=cyrillic' );
 		}

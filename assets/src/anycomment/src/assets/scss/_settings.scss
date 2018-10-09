@@ -72,8 +72,8 @@ $global-font-size: 16px;
 $global-width: rem-calc(1200);
 $global-lineheight: 1.5;
 $foundation-palette: (
-  primary: #1779ba,
-  secondary: #767676,
+  primary: #53af4a,
+  secondary: #b6c1c6,
   success: #3adb76,
   warning: #ffae00,
   alert: #cc4b37,
@@ -765,7 +765,7 @@ $switch-height-tiny: 1.5rem;
 $switch-height-small: 1.75rem;
 $switch-height-large: 2.5rem;
 $switch-radius: 10px;
-$switch-margin: $global-margin;
+$switch-margin: 0;
 $switch-paddle-background: $white;
 $switch-paddle-offset: 0.25rem;
 $switch-paddle-radius: 10px;
