@@ -81,6 +81,10 @@ if ( ! class_exists( 'AnyCommentAdminOptions' ) ) :
 					$args['label_for'] = $field['id'];
 				}
 
+				if ( isset( $field['type'] ) && ! isset( $args['type'] ) ) {
+					$args['type'] = $field['type'];
+				}
+
 				if ( ! isset( $args['description'] ) ) {
 					$args['description'] = $field['description'];
 				}
@@ -92,7 +96,7 @@ if ( ! class_exists( 'AnyCommentAdminOptions' ) ) :
 				add_settings_field(
 					$field['id'],
 					$field['title'],
-					[ $this, $field['callback'] ],
+					[ $this, 'page_html' ],
 					$page,
 					$section_id,
 					$args
@@ -106,121 +110,115 @@ if ( ! class_exists( 'AnyCommentAdminOptions' ) ) :
 		 * Helper to render select.
 		 *
 		 * @param array $args List of passed arguments.
+		 *
+		 * @return string
 		 */
 		public function input_select( $args ) {
-			?>
-            <select name="<?= $this->option_name ?>[<?= esc_attr( $args['label_for'] ); ?>]"
-                    class="anycomment-select2"
-                    id="<?= esc_attr( $args['label_for'] ); ?>">
-				<?php
-				$options = $args['options'];
+			$for     = $args['for'];
+			$name    = $args['name'];
+			$options = $args['options'];
 
-				if ( isset( $options ) ):
-					foreach ( $options as $key => $value ):
-						?>
-                        <option value="<?= $key ?>" <?= isset( $this->getOptions()[ $args['label_for'] ] ) ? ( selected( $this->getOption( $args['label_for'] ), $key, false ) ) : ( '' ); ?>><?= $value ?></option>
-					<?php
-					endforeach;
-				endif; ?>
-            </select>
-            <div class="clearfix"></div>
-            <p class="description"><?= $args['description'] ?></p>
-			<?php
-
-			if ( isset( $args['callback'] ) ) {
-				echo call_user_func( $args['callback'] );
+			$options_html = '';
+			foreach ( $options as $key => $value ) {
+				$options_html .= <<<EOL
+                <option value="<?= $key ?>" <?= isset( $this->getOptions()[ $for ] ) ? ( selected( $this->getOption( $for ), $key, false ) ) : ( '' ); ?>><?= $value ?></option>
+EOL;
 			}
+
+			return <<<EOL
+            <select name="$name"
+                    class="anycomment-select2"
+                    id="<?= $for ?>">$options_html</select>
+EOL;
 		}
 
 		/**
 		 * Helper to render checkbox.
 		 *
 		 * @param array $args List of passed arguments.
+		 *
+		 * @return string
 		 */
 		public function input_checkbox( $args ) {
-			?>
-            <label class="switch">
-                <input type="checkbox" id="<?= esc_attr( $args['label_for'] ); ?>"
-                       name="<?= $this->option_name ?>[<?= esc_attr( $args['label_for'] ); ?>]" <?= $this->getOption( $args['label_for'] ) !== null ? 'checked="checked"' : '' ?>>
-                <span></span>
-            </label>
-			<?php if ( isset( $args['description'] ) ): ?>
-                <div class="clearfix"></div>
-                <p class="description"><?= $args['description'] ?></p>
-			<?php endif; ?>
-			<?php
+			$for               = $args['for'];
+			$name              = $args['name'];
+			$value             = $args['value'];
+			$title             = $args['title'];
+			$description       = $args['description'];
+			$checked_attribute = $value !== null ? 'checked="checked"' : '';
+
+			return <<<EOL
+			<div class="grid-x">
+			    <div class="cell auto shrink">
+                    <div class="switch tiny">
+                        <input class="switch-input" id="$for" type="checkbox"
+                               name="$name"
+                            $checked_attribute>
+                        <label class="switch-paddle" for="$for"></label>
+                    </div>
+                </div>
+                <div class="cell auto">
+                    <label for="$for">$title</label>
+                    <p class="description">$description</p>
+                </div>
+            </div>
+EOL;
 		}
 
 		/**
 		 * Helper to render input color.
 		 *
 		 * @param array $args List of passed arguments.
+		 *
+		 * @return string
 		 */
 		public function input_color( $args ) {
-			?>
-            <input type="color" id="<?= esc_attr( $args['label_for'] ); ?>"
-                   name="<?= $this->option_name ?>[<?= esc_attr( $args['label_for'] ); ?>]"
-                   value="<?= $this->getOption( $args['label_for'] ) ?>"
+			$for   = $args['for'];
+			$name  = $args['name'];
+			$value = $args['value'];
+
+			return <<<EOL
+            <input type="color" id="$for"
+                   name="$name"
+                   value="$value"
                    pattern="^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
             >
-			<?php if ( isset( $args['description'] ) ): ?>
-                <div class="clearfix"></div>
-                <p class="description"><?= $args['description'] ?></p>
-			<?php endif; ?>
-			<?php
+EOL;
 		}
 
 		/**
 		 * Helper to render input text.
 		 *
 		 * @param array $args List of passed arguments.
+		 *
+		 * @return string
 		 */
 		public function input_text( $args ) {
-			?>
-            <input type="text" id="<?= esc_attr( $args['label_for'] ); ?>"
-                   name="<?= $this->option_name ?>[<?= esc_attr( $args['label_for'] ); ?>]"
-                   value="<?= $this->getOption( $args['label_for'] ) ?>">
-			<?php if ( isset( $args['description'] ) ): ?>
-                <div class="clearfix"></div>
-                <p class="description"><?= $args['description'] ?></p>
-			<?php endif; ?>
-			<?php
+			$type  = $args['type'];
+			$for   = $args['for'];
+			$name  = $args['name'];
+			$value = $args['value'];
+
+			return <<<EOT
+            <input type="$type" id="$for" name="$name" value="$value">
+EOT;
 		}
 
 		/**
 		 * Helper to render textarea.
 		 *
 		 * @param array $args List of passed arguments.
+		 *
+		 * @return string
 		 */
 		public function input_textarea( $args ) {
-			?>
-            <textarea rows="5" id="<?= esc_attr( $args['label_for'] ); ?>"
-                      name="<?= $this->option_name ?>[<?= esc_attr( $args['label_for'] ); ?>]"><?= $this->getOption( $args['label_for'] ) ?></textarea>
-			<?php if ( isset( $args['description'] ) ): ?>
-                <div class="clearfix"></div>
-                <p class="description"><?= $args['description'] ?></p>
-			<?php endif;
+			$for   = $args['for'];
+			$name  = $args['name'];
+			$value = $args['value'];
 
-			if ( isset( $args['callback'] ) ) {
-				echo call_user_func( $args['callback'] );
-			}
-		}
-
-		/**
-		 * Helper to render input of type number.
-		 *
-		 * @param array $args List of passed arguments.
-		 */
-		public function input_number( $args ) {
-			?>
-            <input type="number" id="<?= esc_attr( $args['label_for'] ); ?>"
-                   name="<?= $this->option_name ?>[<?= esc_attr( $args['label_for'] ); ?>]"
-                   value="<?= $this->getOption( $args['label_for'] ) ?>">
-			<?php if ( isset( $args['description'] ) ): ?>
-                <div class="clearfix"></div>
-                <p class="description"><?= $args['description'] ?></p>
-			<?php endif; ?>
-			<?php
+			return <<<EOT
+            <textarea rows="5" id="$for" name="$name">$value</textarea>
+EOT;
 		}
 
 		/**
@@ -344,7 +342,7 @@ if ( ! class_exists( 'AnyCommentAdminOptions' ) ) :
 			$i = 0;
 			foreach ( (array) $wp_settings_sections[ $page ] as $section ) {
 				if ( $includeHeader && $section['title'] ) {
-					echo "<h2>{$section['title']}</h2>\n";
+					echo "<h2>{$section['title']}</h2>";
 				}
 
 				if ( $includeHeader && $section['callback'] ) {
@@ -356,16 +354,120 @@ if ( ! class_exists( 'AnyCommentAdminOptions' ) ) :
 				}
 
 				echo '<div id="tab-' . $section['id'] . '" class="anycomment-tabs__container__tab ' . ( $i === 0 ? 'current' : '' ) . '">';
-				echo '<div class="form-table-wrapper">';
-				echo '<table class="form-table">';
-				do_settings_fields( $page, $section['id'] );
-				echo '</table>';
+				echo '<div class="grid-x form-wrapper">';
+				$this->do_settings_fields( $page, $section['id'] );
 				echo '</div>';
 
-				echo '<div class="clearfix"></div></div>';
+				echo '</div>';
 
 				$i ++;
 			}
+		}
+
+		/**
+		 * Print out the settings fields for a particular settings section
+		 *
+		 * Part of the Settings API. Use this in a settings page to output
+		 * a specific section. Should normally be called by do_settings_sections()
+		 * rather than directly.
+		 *
+		 * @global $wp_settings_fields Storage array of settings fields and their pages/sections
+		 *
+		 * @since 2.7.0
+		 *
+		 * @param string $page Slug title of the admin page who's settings fields you want to show.
+		 * @param string $section Slug title of the settings section who's fields you want to show.
+		 */
+		public function do_settings_fields( $page, $section ) {
+			global $wp_settings_fields;
+
+			if ( ! isset( $wp_settings_fields[ $page ][ $section ] ) ) {
+				return;
+			}
+
+			foreach ( (array) $wp_settings_fields[ $page ][ $section ] as $field ) {
+
+				echo '<div class="cell">';
+
+				$tdAttrs = '';
+				echo "<td{$tdAttrs}>";
+				echo $this->do_field( $field );
+				echo '</div>';
+			}
+		}
+
+		public function do_field( $field ) {
+
+			$html = '';
+			$args = $field['args'];
+			$type = trim( $args['type'] );
+
+			$field_data = [
+				'type'        => $type,
+				'for'         => esc_attr( $args['label_for'] ),
+				'title'       => $field['title'],
+				'description' => isset( $args['description'] ) ? trim( $args['description'] ) : '',
+				'value'       => $this->getOption( $args['label_for'] ),
+				'name'        => $this->option_name . '[' . $args['label_for'] . ']',
+				'options'     => $options = isset( $field['options'] ) ? $args['options'] : null
+			];
+
+			$label       = '<label for="' . $field_data['for'] . '">' . $field_data['title'] . '</label>';
+			$description = ! empty( $field_data['description'] ) ?
+				'<p class="description">' . $field_data['description'] . '</p>' :
+				'';
+
+			if ( isset( $field['before'] ) ) {
+				$html .= is_callable( $field['before'] ) ?
+					call_user_func( $field['before'] ) :
+					$field['before'];
+			}
+
+			switch ( $type ) {
+				case 'text':
+				case 'number':
+				case 'numeric':
+					$html .= $label;
+					$html .= $description;
+					$html .= $this->input_text( $field_data );
+					break;
+				case 'toggle':
+				case 'checkbox':
+					$html = $this->input_checkbox( $field_data );
+					break;
+				case 'dropdown':
+				case 'list':
+					if ( $field_data['options'] !== null ) {
+						$html .= $label;
+						$html .= $description;
+						$html .= $this->input_select( $field_data );
+					} else {
+						$html = '';
+					}
+					break;
+				case 'textarea':
+					$html .= $label;
+					$html .= $description;
+					$html .= $this->input_textarea( $field_data );
+					break;
+				case 'color':
+					$html .= $label;
+					$html .= $description;
+					$html .= $this->input_color( $field_data );
+					break;
+				default:
+					$html = '';
+			}
+
+
+			if ( isset( $field['after'] ) ) {
+				$html .= is_callable( $field['after'] ) ?
+					call_user_func( $field['after'] ) :
+					$field['after'];
+			}
+
+
+			return $html;
 		}
 
 		/**

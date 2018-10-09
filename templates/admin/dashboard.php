@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 
-<div class="wrap">
+<div class="wrap" id="anycomment-wrapper">
     <h2><?= __( 'Dashboard', 'anycomment' ) ?></h2>
 
     <div class="anycomment-notice anycomment-success">
@@ -17,8 +17,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 			AnyCommentLinkHelper::getTelegram(),
 			'target="_blank"' ) ?></div>
 
-    <div class="anycomment-dashboard">
-        <div class="anycomment-dashboard__container">
+    <div class="anycomment-dashboard grid-x">
+        <div class="cell auto anycomment-dashboard__container">
             <header class="anycomment-dashboard__header">
                 <div class="anycomment-dashboard__header-logo">
                     <img src="<?= AnyComment()->plugin_url() . '/assets/img/mini-logo.svg' ?>"
@@ -41,25 +41,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<?= anycomment_get_template( 'admin/notifications' ) ?>
             </div>
         </div>
-        <aside class="anycomment-dashboard__sidebar">
+        <aside class="cell large-3 medium-4 small-12 anycomment-dashboard__sidebar">
 			<?= anycomment_get_template( 'admin/news-sidebar' ) ?>
         </aside>
-
-        <div class="clearfix"></div>
     </div>
 </div>
-
-<script>
-    jQuery(document).on('ready', function () {
-        setInterval(function () {
-            var container = jQuery('.anycomment-dashboard__container');
-            var sidebar = jQuery('.anycomment-dashboard__sidebar');
-            var containerHeight = container.height();
-            var sidebarHeight = jQuery('.anycomment-dashboard__sidebar').height();
-
-            if (containerHeight > sidebarHeight) {
-                sidebar.css('position', 'absolute');
-            }
-        }, 1000);
-    });
-</script>

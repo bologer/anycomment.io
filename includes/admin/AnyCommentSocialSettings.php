@@ -862,7 +862,7 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 * @param string $page Slug title of the admin page who's settings fields you want to show.
 		 * @param string $section Slug title of the settings section who's fields you want to show.
 		 */
-		private function do_settings_fields( $page, $section ) {
+		public function do_settings_fields( $page, $section ) {
 			global $wp_settings_fields;
 
 			if ( ! isset( $wp_settings_fields[ $page ][ $section ] ) ) {

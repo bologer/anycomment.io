@@ -15,18 +15,6 @@ $separator-color: #d8d8d8;
 @import "tabs";
 @import "socials";
 
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-}
-
-//.anycomment-dashboard *,
-//.anycomment-dashboard *:before,
-//.anycomment-dashboard *:after {
-//  box-sizing: border-box;
-//}
-
 .anycomment-tab {
   margin: 30px 0;
 }
@@ -80,21 +68,13 @@ a:focus {
     padding: 0;
   }
 
-  &__container,
-  &__sidebar {
-    display: inline-block;
-    float: left;
-  }
 
   &__container {
-    width: 75%;
     padding: 37px 0 37px 37px;
   }
 
   &__sidebar {
     padding: 37px;
-    width: 25%;
-    height: 100%;
     @include border-radius(0 16px 16px 0);
     background-color: #106ddc;
 
@@ -408,12 +388,4 @@ a:focus {
       @include border-radius(0 0 16px 16px);
     }
   }
-}
-
-.clearfix:after {
-  content: "";
-  visibility: hidden;
-  display: block;
-  height: 0;
-  clear: both;
 }

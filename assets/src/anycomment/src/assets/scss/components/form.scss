@@ -1,8 +1,6 @@
 $green: #53af4a;
-$description-color: #747474;
-$border-color: #979797;
-
-@import "form-checkboxes";
+$description-color: #686868;
+$border-color: #b6c1c6;
 
 .clearfix:after {
   content: "";
@@ -100,12 +98,12 @@ $border-color: #979797;
   .form-table {
     tbody {
       tr {
-        th {
-          display: none;
-        }
         td {
+          label {
+            font-size: $global-font-size;
+          }
           .description {
-            font-size: 18px;
+            font-size: $global-font-size - 4;
             font-weight: 200;
             margin: 5px 0 0;
             font-style: normal;

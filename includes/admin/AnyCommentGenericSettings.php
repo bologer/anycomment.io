@@ -377,92 +377,82 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 					[
 						'id'          => self::OPTION_PLUGIN_TOGGLE,
 						'title'       => __( 'Enable Comments', "anycomment" ),
-						'callback'    => 'input_checkbox',
+						'type'        => 'checkbox',
 						'description' => esc_html( __( 'When on, comments are visible. When off, default WordPress\' comments shown. This can be used to configure social networks on fresh installation.', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_DEFAULT_SORT_BY,
 						'title'       => __( 'Default Sorting', "anycomment" ),
-						'callback'    => 'input_select',
-						'description' => esc_html( __( 'Default sorting.', "anycomment" ) ),
-						'args'        => [
-							'options' => [
-								self::SORT_DESC => __( 'Newest first', 'anycomment' ),
-								self::SORT_ASC  => __( 'Oldest first', 'anycomment' ),
-							]
+						'type'        => 'select',
+						'options'     => [
+							self::SORT_DESC => __( 'Newest first', 'anycomment' ),
+							self::SORT_ASC  => __( 'Oldest first', 'anycomment' ),
 						],
+						'description' => esc_html( __( 'Default sorting.', "anycomment" ) ),
 					],
 					[
 						'id'          => self::OPTION_DEFAULT_AVATAR,
 						'title'       => __( 'Default Avatar', "anycomment" ),
-						'callback'    => 'input_select',
-						'description' => esc_html( __( 'Default avatar when user does not have any.', "anycomment" ) ),
-						'args'        => [
-							'options'  => [
-								self::OPTION_DEFAULT_AVATAR_ANYCOMMENT => __( 'No avatar (from AnyComment)', 'anycomment' ),
-								self::OPTION_DEFAULT_AVATAR_MP         => __( 'No avatar (from Gravatar)', 'anycomment' ),
-								self::OPTION_DEFAULT_AVATAR_IDENTICON  => __( 'Identicon (from Gravatar)', 'anycomment' ),
-								self::OPTION_DEFAULT_AVATAR_MONSTEROID => __( 'Monsteroid (from Gravatar)', 'anycomment' ),
-								self::OPTION_DEFAULT_AVATAR_WAVATAR    => __( 'Wavatar (from Gravatar)', 'anycomment' ),
-								self::OPTION_DEFAULT_AVATAR_RETRO      => __( 'Retro (from Gravatar)', 'anycomment' ),
-								self::OPTION_DEFAULT_AVATAR_ROBOHASH   => __( 'Robohash (from Gravatar)', 'anycomment' ),
-							],
-							'callback' => function () {
-								sprintf( '<img src="%s">', get_avatar_url( 'example@gravatar.com', [ 'default' => static::getDefaultAvatar() ] ) );
-							}
+						'type'        => 'select',
+						'options'     => [
+							self::OPTION_DEFAULT_AVATAR_ANYCOMMENT => __( 'No avatar (from AnyComment)', 'anycomment' ),
+							self::OPTION_DEFAULT_AVATAR_MP         => __( 'No avatar (from Gravatar)', 'anycomment' ),
+							self::OPTION_DEFAULT_AVATAR_IDENTICON  => __( 'Identicon (from Gravatar)', 'anycomment' ),
+							self::OPTION_DEFAULT_AVATAR_MONSTEROID => __( 'Monsteroid (from Gravatar)', 'anycomment' ),
+							self::OPTION_DEFAULT_AVATAR_WAVATAR    => __( 'Wavatar (from Gravatar)', 'anycomment' ),
+							self::OPTION_DEFAULT_AVATAR_RETRO      => __( 'Retro (from Gravatar)', 'anycomment' ),
+							self::OPTION_DEFAULT_AVATAR_ROBOHASH   => __( 'Robohash (from Gravatar)', 'anycomment' ),
 						],
-
+						'description' => esc_html( __( 'Default avatar when user does not have any.', "anycomment" ) ),
 					],
 					[
 						'id'          => self::OPTION_REGISTER_DEFAULT_GROUP,
 						'title'       => __( 'Register User Group', "anycomment" ),
-						'callback'    => 'input_select',
 						'description' => esc_html( __( 'When users will authorize via plugin, they are being registered and be assigned with group selected above.', "anycomment" ) ),
-						'args'        => [
-							'options' => [
-								self::DEFAULT_ROLE_SUBSCRIBER        => __( 'Subscriber', 'anycomment' ),
-								self::DEFAULT_ROLE_SOCIAL_SUBSCRIBER => __( 'Social Network Subscriber', 'anycomment' ),
-							]
-						],
+						'type'        => 'select',
+						'options'     => [
+							self::DEFAULT_ROLE_SUBSCRIBER        => __( 'Subscriber', 'anycomment' ),
+							self::DEFAULT_ROLE_SOCIAL_SUBSCRIBER => __( 'Social Network Subscriber', 'anycomment' ),
+						]
 					],
 					[
 						'id'          => self::OPTION_COUNT_PER_PAGE,
 						'title'       => __( 'Number of Comments Loaded', "anycomment" ),
-						'callback'    => 'input_number',
+						'type'        => 'number',
 						'description' => esc_html( __( 'Number of comments to load initially and per page.', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_LOAD_ON_SCROLL,
 						'title'       => __( 'Load on Scroll', "anycomment" ),
-						'callback'    => 'input_checkbox',
+						'type'        => 'checkbox',
 						'description' => esc_html( __( 'Load comments when user scrolls to it.', "anycomment" ) )
 					],
 
 					[
 						'id'          => self::OPTION_SHOW_PROFILE_URL,
 						'title'       => __( 'Show Profile URL', "anycomment" ),
-						'callback'    => 'input_checkbox',
+						'type'        => 'checkbox',
 						'description' => esc_html( __( 'Show link to user in the social media or website when available (name of the user will be clickable).', "anycomment" ) )
 					],
 
 					[
 						'id'          => self::OPTION_SHOW_TWITTER_EMBEDS,
 						'title'       => __( 'Display Twitter Embeds', "anycomment" ),
-						'callback'    => 'input_checkbox',
+						'type'        => 'checkbox',
 						'description' => esc_html( __( 'Detect & display tweets from Twitter as embedded widget.', "anycomment" ) )
 					],
 
 					[
 						'id'          => self::OPTION_SHOW_VIDEO_ATTACHMENTS,
 						'title'       => __( 'Display Video Attachments', "anycomment" ),
-						'callback'    => 'input_checkbox',
+						'type'        => 'checkbox',
 						'description' => esc_html( __( 'Display video link from comment as attachment.', "anycomment" ) )
 					],
 
 					[
 						'id'          => self::OPTION_SHOW_IMAGE_ATTACHMENTS,
 						'title'       => __( 'Display Image Attachments', "anycomment" ),
-						'callback'    => 'input_checkbox',
+						'type'        => 'checkbox',
 						'description' => esc_html( __( 'Display image link from comment as attachment.', "anycomment" ) )
 					],
 
@@ -476,13 +466,13 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 					[
 						'id'          => self::OPTION_USER_AGREEMENT_LINK,
 						'title'       => __( 'User Agreement Link', "anycomment" ),
-						'callback'    => 'input_text',
+						'type'        => 'text',
 						'description' => esc_html( __( 'Link to User Agreement, where described how your process users data once they authorize via social network and/or add new comment.', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_COPYRIGHT_TOGGLE,
 						'title'       => __( 'Thanks', "anycomment" ),
-						'callback'    => 'input_checkbox',
+						'type'        => 'checkbox',
 						'description' => esc_html( __( 'Show AnyComment\'s link in the footer of comments. Copyright helps to bring awareness of such plugin and bring people to allow us to understand that it is a wanted product and give more often updated.', "anycomment" ) )
 					],
 				]
@@ -495,20 +485,18 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 					[
 						'id'          => self::OPTION_FORM_TYPE,
 						'title'       => __( 'Comment form', "anycomment" ),
-						'callback'    => 'input_select',
-						'description' => esc_html( __( 'Comment form', "anycomment" ) ),
-						'args'        => [
-							'options' => [
-								self::FORM_OPTION_ALL          => __( 'Social, WordPress & guests', 'anycomment' ),
-								self::FORM_OPTION_SOCIALS_ONLY => __( 'Socials & WordPress users only.', 'anycomment' ),
-								self::FORM_OPTION_GUEST_ONLY   => __( 'Guests only. ', 'anycomment' ),
-							]
+						'type'        => 'select',
+						'options'     => [
+							self::FORM_OPTION_ALL          => __( 'Social, WordPress & guests', 'anycomment' ),
+							self::FORM_OPTION_SOCIALS_ONLY => __( 'Socials & WordPress users only.', 'anycomment' ),
+							self::FORM_OPTION_GUEST_ONLY   => __( 'Guests only. ', 'anycomment' ),
 						],
+						'description' => esc_html( __( 'Comment form', "anycomment" ) ),
 					],
 					[
 						'id'          => self::OPTION_GUEST_FIELDS,
 						'title'       => __( 'Guest Fields', "anycomment" ),
-						'callback'    => 'input_text',
+						'type'    => 'text',
 						'description' => esc_html( __( 'Use this rearrange guest form fields or remove something. {name} is required and if you do not add it, it will be added by plugin. {name} is name field, {email} is email field, {website} is website field.', "anycomment" ) )
 					],
 
@@ -519,174 +507,174 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 					[
 						'id'          => self::OPTION_EDITOR_TOOLBAR_TOGGLE,
 						'title'       => __( 'Enable Toolbar', "anycomment" ),
-						'callback'    => 'input_checkbox',
+						'type'    => 'checkbox',
 						'description' => esc_html( __( 'Enable editor toolbar (show options to modify comment text - bold, italics, etc).', "anycomment" ) )
 					],
 
 					[
 						'id'          => self::OPTION_EDITOR_TOOLBAR_BOLD,
 						'title'       => __( 'Bold', "anycomment" ),
-						'callback'    => 'input_checkbox',
+						'type' => 'checkbox',
 						'description' => esc_html( __( 'Show bold option in editor toolbar.', "anycomment" ) )
 					],
 
 					[
 						'id'          => self::OPTION_EDITOR_TOOLBAR_ITALIC,
 						'title'       => __( 'Italic', "anycomment" ),
-						'callback'    => 'input_checkbox',
+						'type' => 'checkbox',
 						'description' => esc_html( __( 'Show italic option in editor toolbar.', "anycomment" ) )
 					],
 
 					[
 						'id'          => self::OPTION_EDITOR_TOOLBAR_UNDERLINE,
 						'title'       => __( 'Underline', "anycomment" ),
-						'callback'    => 'input_checkbox',
+						'type' => 'checkbox',
 						'description' => esc_html( __( 'Show underline option in editor toolbar.', "anycomment" ) )
 					],
 
 					[
 						'id'          => self::OPTION_EDITOR_TOOLBAR_QUOTE,
 						'title'       => __( 'Quote', "anycomment" ),
-						'callback'    => 'input_checkbox',
+						'type' => 'checkbox',
 						'description' => esc_html( __( 'Show quote option in editor toolbar.', "anycomment" ) )
 					],
 
 					[
 						'id'          => self::OPTION_EDITOR_TOOLBAR_ORDERED,
 						'title'       => __( 'Ordered list', "anycomment" ),
-						'callback'    => 'input_checkbox',
+						'type' => 'checkbox',
 						'description' => esc_html( __( 'Show ordered list option in editor toolbar.', "anycomment" ) )
 					],
 
 					[
 						'id'          => self::OPTION_EDITOR_TOOLBAR_BULLET,
 						'title'       => __( 'Unordered list', "anycomment" ),
-						'callback'    => 'input_checkbox',
+						'type' => 'checkbox',
 						'description' => esc_html( __( 'Show unordered list option in editor toolbar.', "anycomment" ) )
 					],
 
 					[
 						'id'          => self::OPTION_EDITOR_TOOLBAR_LINK,
 						'title'       => __( 'Link', "anycomment" ),
-						'callback'    => 'input_checkbox',
+						'type' => 'checkbox',
 						'description' => esc_html( __( 'Show link option in editor toolbar.', "anycomment" ) )
 					],
 
 					[
 						'id'          => self::OPTION_EDITOR_TOOLBAR_CLEAN,
 						'title'       => __( 'Clean formatting', "anycomment" ),
-						'callback'    => 'input_checkbox',
+						'type' => 'checkbox',
 						'description' => esc_html( __( 'Show clean formatting option in editor toolbar.', "anycomment" ) )
 					],
 
 					[
 						'id'          => self::OPTION_DESIGN_CUSTOM_TOGGLE,
 						'title'       => __( 'Custom Design', "anycomment" ),
-						'callback'    => 'input_checkbox',
+						'type' => 'checkbox',
 						'description' => esc_html( __( 'Use custom design. Enable this option to display design changes from below.', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_DESIGN_GLOBAL_RADIUS,
 						'title'       => __( 'Border radius', "anycomment" ),
-						'callback'    => 'input_text',
+						'type'    => 'text',
 						'description' => esc_html( __( 'Border radius. You may use "px" or "%".', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_DESIGN_FONT_SIZE,
 						'title'       => __( 'Text Size', "anycomment" ),
-						'callback'    => 'input_text',
+						'type' => 'text',
 						'description' => esc_html( __( 'Overal text size. You may use "px", "pt", "em" or "%".', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_DESIGN_FONT_FAMILY,
 						'title'       => __( 'Font Choice', "anycomment" ),
-						'callback'    => 'input_text',
+						'type' => 'text',
 						'description' => esc_html( __( 'Global font family.', "anycomment" ) )
 					],
 
 					[
 						'id'          => self::OPTION_DESIGN_TEXT_COLOR,
 						'title'       => __( 'Text Color', "anycomment" ),
-						'callback'    => 'input_color',
+						'type' => 'color',
 						'description' => esc_html( __( 'Global text color.', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_DESIGN_LINK_COLOR,
 						'title'       => __( 'Link Color', "anycomment" ),
-						'callback'    => 'input_color',
+						'type' => 'color',
 						'description' => esc_html( __( 'Links color.', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_DESIGN_SEMI_HIDDEN_COLOR,
 						'title'       => __( 'Semi Hidden Color', "anycomment" ),
-						'callback'    => 'input_color',
+						'type' => 'color',
 						'description' => esc_html( __( 'Semi hidden color. This is used for dates, action links, etc.', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_DESIGN_FORM_FIELD_BACKGROUND_COLOR,
 						'title'       => __( 'Form Fields Background', "anycomment" ),
-						'callback'    => 'input_color',
+						'type' => 'color',
 						'description' => esc_html( __( 'Form fields background color.', "anycomment" ) )
 					],
 
 					[
 						'id'          => self::OPTION_DESIGN_ATTACHMENT_COLOR,
 						'title'       => __( 'Attachment Text Color', "anycomment" ),
-						'callback'    => 'input_color',
+						'type' => 'color',
 						'description' => esc_html( __( 'Attachments text color. For example, YouTube attachments do not have previews, instead they have "YouTube" text over.', "anycomment" ) )
 					],
 
 					[
 						'id'          => self::OPTION_DESIGN_ATTACHMENT_BACKGROUND_COLOR,
 						'title'       => __( 'Attachment Background Color', "anycomment" ),
-						'callback'    => 'input_color',
+						'type' => 'color',
 						'description' => esc_html( __( 'Attachment background color. For example, user may attach PNG image with transparent background. This color will be used as background behind the image.', "anycomment" ) )
 					],
 
 					[
 						'id'          => self::OPTION_DESIGN_AVATAR_RADIUS,
 						'title'       => __( 'Avatar Border Radius', "anycomment" ),
-						'callback'    => 'input_text',
+						'type' => 'text',
 						'description' => esc_html( __( 'Avatar border radius. You may use "px" or "%". "50%" will make avatars rounded.', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_DESIGN_PARENT_AVATAR_SIZE,
 						'title'       => __( 'Avatar Parent Size', "anycomment" ),
-						'callback'    => 'input_text',
+						'type' => 'text',
 						'description' => esc_html( __( 'Parent comment avatar size.', "anycomment" ) )
 					],
 
 					[
 						'id'          => self::OPTION_DESIGN_CHILD_AVATAR_SIZE,
 						'title'       => __( 'Avatar Child Size', "anycomment" ),
-						'callback'    => 'input_text',
+						'type' => 'text',
 						'description' => esc_html( __( 'Child comment avatar size. Usually, this is reply comment.', "anycomment" ) )
 					],
 
 					[
 						'id'          => self::OPTION_DESIGN_BUTTON_RADIUS,
 						'title'       => __( 'Button Radius', "anycomment" ),
-						'callback'    => 'input_text',
+						'type' => 'text',
 						'description' => esc_html( __( 'Button border radius.', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_DESIGN_BUTTON_COLOR,
 						'title'       => __( 'Button Color', "anycomment" ),
-						'callback'    => 'input_color',
+						'type' => 'color',
 						'description' => esc_html( __( 'Button text color.', "anycomment" ) )
 					],
 
 					[
 						'id'          => self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR,
 						'title'       => __( 'Button Background Color', "anycomment" ),
-						'callback'    => 'input_color',
+						'type' => 'color',
 						'description' => esc_html( __( 'Button background color.', "anycomment" ) )
 					],
 
 					[
 						'id'          => self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR_ACTIVE,
 						'title'       => __( 'Button Background Color Active', "anycomment" ),
-						'callback'    => 'input_color',
+						'type' => 'color',
 						'description' => esc_html( __( 'Button background color when hovered or focused.', "anycomment" ) )
 					],
 				]
@@ -699,19 +687,19 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 					[
 						'id'          => self::OPTION_MODERATE_FIRST,
 						'title'       => __( 'Moderate First', "anycomment" ),
-						'callback'    => 'input_checkbox',
+						'type' => 'checkbox',
 						'description' => esc_html( __( 'Moderators should check comment before it appears.', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_LINKS_ON_HOLD,
 						'title'       => __( 'Links on Hold', "anycomment" ),
-						'callback'    => 'input_checkbox',
+						'type' => 'checkbox',
 						'description' => esc_html( __( 'Comment with links should be marked for moderation.', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_MODERATE_WORDS,
 						'title'       => __( 'Spam Words', "anycomment" ),
-						'callback'    => 'input_textarea',
+						'type'    => 'textarea',
 						'description' => esc_html( __( 'Comment should be marked for moderation when matched word from this list of comma-separated values.', "anycomment" ) )
 					],
 				]
@@ -724,104 +712,100 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 					[
 						'id'          => self::OPTION_NOTIFY_ON_NEW_COMMENT,
 						'title'       => __( 'New Comment Alert', "anycomment" ),
-						'callback'    => 'input_checkbox',
+						'type' => 'checkbox',
 						'description' => esc_html( __( 'Show alert about new comment when user is on the page.', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_INTERVAL_COMMENTS_CHECK,
 						'title'       => __( 'New Comment Interval Checking', "anycomment" ),
-						'callback'    => 'input_number',
+						'type'    => 'number',
 						'description' => esc_html( __( 'Interval (in seconds) to check for new comments. Minimum 5 and maximum is 100 seconds.', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_NOTIFY_ADMINISTRATOR,
 						'title'       => __( 'Notify Administrator', "anycomment" ),
-						'callback'    => 'input_checkbox',
+						'type' => 'checkbox',
 						'description' => esc_html( __( 'Notify administrator via email about new comment.', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_NOTIFY_ON_NEW_REPLY,
 						'title'       => __( 'Email Notifications', "anycomment" ),
-						'callback'    => 'input_checkbox',
+						'type' => 'checkbox',
 						'description' => esc_html( __( 'Notify users by email (if specified) about new replies. Make sure you have proper SMTP configurations in order to send emails.', "anycomment" ) ),
 					],
 
 					[
 						'id'          => self::OPTION_NOTIFY_REPLY_EMAIL_TEMPLATE,
 						'title'       => __( 'Reply Email Template', "anycomment" ),
-						'callback'    => 'input_textarea',
+						'type'    => 'textarea',
 						'description' => esc_html( __( 'Email template on new comment reply.', "anycomment" ) ),
-						'args'        => [
-							'callback' => function () {
-								$supportedList = [
-									'{blogName}'         => __( 'Blog name as text', 'anycomment' ),
-									'{blogUrl}'          => __( 'Blog link as text', 'anycomment' ),
-									'{blogUrlHtml}'      => __( 'Blog name in HTML link', 'anycomment' ),
-									'{postTitle}'        => __( 'Post title as text', 'anycomment' ),
-									'{postUrl}'          => __( 'Post URL as text', 'anycomment' ),
-									'{postUrlHtml}'      => __( 'Post title in HTML link', 'anycomment' ),
-									'{commentText}'      => __( 'Comment text', 'anycomment' ),
-									'{commentFormatted}' => __( 'Comment text nicely formatted', 'anycomment' ),
-									'{replyUrl}'         => __( 'Reply link as text', 'anycomment' ),
-									'{replyButton}'      => __( 'Reply link as button', 'anycomment' ),
-								];
+						'after' =>function () {
+							$supportedList = [
+								'{blogName}'         => __( 'Blog name as text', 'anycomment' ),
+								'{blogUrl}'          => __( 'Blog link as text', 'anycomment' ),
+								'{blogUrlHtml}'      => __( 'Blog name in HTML link', 'anycomment' ),
+								'{postTitle}'        => __( 'Post title as text', 'anycomment' ),
+								'{postUrl}'          => __( 'Post URL as text', 'anycomment' ),
+								'{postUrlHtml}'      => __( 'Post title in HTML link', 'anycomment' ),
+								'{commentText}'      => __( 'Comment text', 'anycomment' ),
+								'{commentFormatted}' => __( 'Comment text nicely formatted', 'anycomment' ),
+								'{replyUrl}'         => __( 'Reply link as text', 'anycomment' ),
+								'{replyButton}'      => __( 'Reply link as button', 'anycomment' ),
+							];
 
-								$id = self::OPTION_NOTIFY_REPLY_EMAIL_TEMPLATE . time();
+							$id = self::OPTION_NOTIFY_REPLY_EMAIL_TEMPLATE . time();
 
-								$html = '<div><span class="button button-small" id="' . $id . '">' . __( 'More info', 'anycomment' ) . '</span><ul style="display: none;">';
+							$html = '<div><span class="button button-small" id="' . $id . '">' . __( 'More info', 'anycomment' ) . '</span><ul style="display: none;">';
 
-								foreach ( $supportedList as $code => $description ) {
-									$html .= sprintf( "<li>%s - %s</li>", $code, $description );
-								}
-
-								$html .= '</ul></div>';
-
-								$html .= '<script>jQuery("#' . $id . '").on("click", function() {jQuery(this).next("ul").toggle();});</script>';
-
-								return $html;
-
-
+							foreach ( $supportedList as $code => $description ) {
+								$html .= sprintf( "<li>%s - %s</li>", $code, $description );
 							}
-						]
+
+							$html .= '</ul></div>';
+
+							$html .= '<script>jQuery("#' . $id . '").on("click", function() {jQuery(this).next("ul").toggle();});</script>';
+
+							return $html;
+
+
+						}
 					],
 
 					[
 						'id'          => self::OPTION_NOTIFY_ADMIN_EMAIL_TEMPLATE,
 						'title'       => __( 'Admin Email Template', "anycomment" ),
-						'callback'    => 'input_textarea',
+						'type'    => 'textarea',
 						'description' => esc_html( __( 'Email template sent to admin about new comment.', "anycomment" ) ),
-						'args'        => [
-							'callback' => function () {
-								$supportedList = [
-									'{blogName}'         => __( 'Blog name as text', 'anycomment' ),
-									'{blogUrl}'          => __( 'Blog link as text', 'anycomment' ),
-									'{blogUrlHtml}'      => __( 'Blog name in HTML link', 'anycomment' ),
-									'{postTitle}'        => __( 'Post title as text', 'anycomment' ),
-									'{postUrl}'          => __( 'Post URL as text', 'anycomment' ),
-									'{postUrlHtml}'      => __( 'Post title in HTML link', 'anycomment' ),
-									'{commentText}'      => __( 'Comment text', 'anycomment' ),
-									'{commentFormatted}' => __( 'Comment text nicely formatted', 'anycomment' ),
-									'{replyUrl}'         => __( 'Reply link as text', 'anycomment' ),
-									'{replyButton}'      => __( 'Reply link as button', 'anycomment' ),
-								];
+						'after' => function () {
+							$supportedList = [
+								'{blogName}'         => __( 'Blog name as text', 'anycomment' ),
+								'{blogUrl}'          => __( 'Blog link as text', 'anycomment' ),
+								'{blogUrlHtml}'      => __( 'Blog name in HTML link', 'anycomment' ),
+								'{postTitle}'        => __( 'Post title as text', 'anycomment' ),
+								'{postUrl}'          => __( 'Post URL as text', 'anycomment' ),
+								'{postUrlHtml}'      => __( 'Post title in HTML link', 'anycomment' ),
+								'{commentText}'      => __( 'Comment text', 'anycomment' ),
+								'{commentFormatted}' => __( 'Comment text nicely formatted', 'anycomment' ),
+								'{replyUrl}'         => __( 'Reply link as text', 'anycomment' ),
+								'{replyButton}'      => __( 'Reply link as button', 'anycomment' ),
+							];
 
-								$id = self::OPTION_NOTIFY_ADMIN_EMAIL_TEMPLATE . time();
+							$id = self::OPTION_NOTIFY_ADMIN_EMAIL_TEMPLATE . time();
 
-								$html = '<div><span class="button button-small" id="' . $id . '">' . __( 'More info', 'anycomment' ) . '</span><ul style="display: none;">';
+							$html = '<div><span class="button button-small" id="' . $id . '">' . __( 'More info', 'anycomment' ) . '</span><ul style="display: none;">';
 
-								foreach ( $supportedList as $code => $description ) {
-									$html .= sprintf( "<li>%s - %s</li>", $code, $description );
-								}
-
-								$html .= '</ul></div>';
-
-								$html .= '<script>jQuery("#' . $id . '").on("click", function() {jQuery(this).next("ul").toggle();});</script>';
-
-								return $html;
-
-
+							foreach ( $supportedList as $code => $description ) {
+								$html .= sprintf( "<li>%s - %s</li>", $code, $description );
 							}
-						]
+
+							$html .= '</ul></div>';
+
+							$html .= '<script>jQuery("#' . $id . '").on("click", function() {jQuery(this).next("ul").toggle();});</script>';
+
+							return $html;
+
+
+						}
 					],
 				]
 			);
@@ -833,37 +817,37 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 					[
 						'id'          => self::OPTION_FILES_TOGGLE,
 						'title'       => __( 'Allow File Uploads', "anycomment" ),
-						'callback'    => 'input_checkbox',
+						'type' => 'checkbox',
 						'description' => esc_html( __( 'Allow to upload files.', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_FILES_GUEST_CAN_UPLOAD,
 						'title'       => __( 'File Upload By Guests', "anycomment" ),
-						'callback'    => 'input_checkbox',
+						'type' => 'checkbox',
 						'description' => esc_html( __( 'Guest users can upload documents. Please be careful about this setting as some users may potentially misuse this and periodically upload unwanted files.', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_FILES_MIME_TYPES,
 						'title'       => __( 'File MIME Types', "anycomment" ),
-						'callback'    => 'input_text',
+						'type'    => 'text',
 						'description' => esc_html( __( 'Comman-separated list of allowed MIME types (e.g. .png, .jpg, etc). Alternatively, you may write "image/*" for all image types or "audio/*" for audios.', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_FILES_LIMIT,
 						'title'       => __( 'File Upload Limit', "anycomment" ),
-						'callback'    => 'input_number',
+						'type'    => 'number',
 						'description' => esc_html( __( 'Maximum number of files to upload per period defined in the field below.', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_FILES_LIMIT_PERIOD,
 						'title'       => __( 'File Upload Limit Period', "anycomment" ),
-						'callback'    => 'input_number',
+						'type'    => 'number',
 						'description' => esc_html( __( 'If user will cross the limit (defined above) within specified period (in seconds) in this field, he will be give a warning.', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_FILES_MAX_SIZE,
 						'title'       => __( 'File Size', "anycomment" ),
-						'callback'    => 'input_number',
+						'type'    => 'number',
 						'description' => esc_html( __( 'Maximum allowed file size in megabytes. For example, regular PNG image is about ~ 1.5-2MB, JPEG are even smaller.', "anycomment" ) )
 					],
 				]
@@ -901,11 +885,11 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 				settings_fields( $this->option_group );
 				?>
 
-                <div class="anycomment-tabs">
-                    <aside class="anycomment-tabs__menu">
+                <div class="anycomment-tabs grid-x grid-margin-x">
+                    <aside class="cell large-3 medium-4 small-12 anycomment-tabs__menu">
 						<?php $this->do_tab_menu( $this->page_slug ) ?>
                     </aside>
-                    <div class="anycomment-tabs__container">
+                    <div class="cell auto anycomment-tabs__container">
 						<?php
 						$this->do_tab_sections( $this->page_slug, false );
 						submit_button( __( 'Save', 'anycomment' ) );

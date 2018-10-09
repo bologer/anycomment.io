@@ -1,15 +1,5 @@
 .anycomment-tabs {
-  width: 100%;
-
-  &__menu,
-  &__container {
-    display: inline-block;
-    float: left;
-  }
-
   &__menu {
-    width: 30%;
-
     ul {
       margin: 0;
       padding: 0;
@@ -25,26 +15,29 @@
         &.active,
         &.current {
           a {
-            background-color: #bfbfbf;
+            background-color: #b6c1c6;
+            border: 1px solid #b6c1c6;
             color: #fff;
           }
         }
 
         a {
           padding: 15px;
-          color: #808080;
-          background-color: #e9e9e9;
+          color: #858585;
+          border: 1px solid #b6c1c6;
+          background-color: #e8edef;
           display: block;
           width: 100%;
           font-size: 24px;
           font-weight: 400;
           box-shadow: none;
-          @include border-radius(30px);
+          @include border-radius(10px);
 
           &:hover,
           &:active,
           &:focus {
-            background-color: #bfbfbf;
+            background-color: #b6c1c6;
+            border: 1px solid #b6c1c6;
             color: #fff;
           }
         }
@@ -55,8 +48,6 @@
   &__container {
     width: 70%;
     padding: 0 20px;
-
-
 
     &__tab.current {
       display: block;

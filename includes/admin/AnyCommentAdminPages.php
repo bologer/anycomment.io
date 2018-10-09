@@ -129,7 +129,7 @@ if ( ! class_exists( 'AnyCommentAdminPages' ) ) :
 			$cachedJson = $cachedNews->get();
 
 			if ( $cachedNews->isHit() ) {
-				return json_decode( $cachedJson, true);
+				return json_decode( $cachedJson, true );
 			}
 
 			$locale = get_locale();
