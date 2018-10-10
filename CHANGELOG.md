@@ -1,10 +1,12 @@
 # Changelog
 
-## 0.0.60 – 06.10.2018
+## 0.0.60 – 10.10.2018
 
 **Enhancements:**
 
 * Cosmetics CSS changes to the list of socials on user side
+* New fresh look of admin interface (new look for form fields, fixed font sizes, etc)
+* Added better color picker in admin, #168
 
 
 **Fixes:**
