@@ -172,12 +172,10 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * New fresh look of admin interface (new look for form fields, fixed font sizes, etc)
 * Added better color picker in admin, #168
 
-
 **Fixes:**
 
 * Fixed issue when update comment and then reply action still was on the update action when sending comment, #205
 * Fixed issue with news description having "?" in Russian language
-
 
 = 0.0.59 – 06.10.2018 =
 
@@ -205,8 +203,6 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 * Corrected Russian translation for option to clean editor formatting, #192
 
-
-
 = 0.0.58 – 04.10.2018 =
 
 **Enhancements:**
@@ -229,7 +225,6 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Now when comments is deleted, trashed/untrashed, marked as spam, status changed, its cache will be dropped and it will display on frontend accordingly, #162
 * Fixed broken header notice on installation (sorry guys, I know it sucks)
 * Fixed issue when comment attachment was not really deleted when comment was permanently deleted
-
 
 = 0.0.57 – 25.09.2018 =
 
