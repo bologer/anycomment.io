@@ -19,19 +19,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 
     <div class="anycomment-dashboard grid-x">
         <div class="cell auto anycomment-dashboard__container">
-            <header class="anycomment-dashboard__header">
-                <div class="anycomment-dashboard__header-logo">
+            <header class="grid-x anycomment-dashboard__header">
+                <div class="cell auto anycomment-dashboard__header-logo">
                     <img src="<?= AnyComment()->plugin_url() . '/assets/img/mini-logo.svg' ?>"
                          alt="<?= __( 'AnyComment', 'anycomment' ) ?>">
                     <h2><?= __( 'AnyComment', 'anycomment' ) ?>&nbsp;<sup><?= AnyComment()->version ?></sup></h2>
                 </div>
 
-                <div class="anycomment-dashboard__header-official">
+                <div class="cell auto anycomment-dashboard__header-official">
                     <a href="<?= AnyCommentLinkHelper::getOfficialWebsite() ?>"
                        target="_blank"><?= __( 'Official Website', 'anycomment' ) ?></a>
                 </div>
-
-                <div class="clearfix"></div>
             </header>
 
 			<?= anycomment_get_template( 'admin/tabs' ) ?>
@@ -41,7 +39,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<?= anycomment_get_template( 'admin/notifications' ) ?>
             </div>
         </div>
-        <aside class="cell large-3 medium-4 small-12 anycomment-dashboard__sidebar">
+        <aside class="cell large-3 medium-12 anycomment-dashboard__sidebar">
 			<?= anycomment_get_template( 'admin/news-sidebar' ) ?>
         </aside>
     </div>

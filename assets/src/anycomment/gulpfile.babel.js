@@ -114,7 +114,7 @@ let webpackConfig = {
         ]
     },
     devtool: !PRODUCTION && 'source-map'
-}
+};
 
 // Combine JavaScript into one file
 // In production, the file is minified
@@ -140,7 +140,7 @@ function images() {
         .pipe($.if(PRODUCTION, $.imagemin([
             $.imagemin.jpegtran({progressive: true}),
         ])))
-        .pipe(gulp.dest(PATHS.dist + '/assets/img'));
+        .pipe(gulp.dest(PATHS.dist + '/../../../img'));
 }
 
 // Start a server with BrowserSync to preview the site in

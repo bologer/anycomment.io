@@ -76,19 +76,19 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 			$isInclude = $params['include'];
 
 			if ( ! post_password_required() && comments_open() ) {
-				wp_enqueue_script( 'anycomment-react', AnyComment()->plugin_url() . '/static/js/main.min.js', [], AnyComment()->version );
+				wp_enqueue_script( 'anycomment-react', AnyComment()->plugin_url() . '/static/js/main.min.js', [], sha1( AnyComment()->version ) );
 
 				if ( AnyCommentGenericSettings::isDesignCustom() ) {
 					$url = AnyCommentGenericSettings::getCustomDesignStylesheetUrl();
 
 					wp_enqueue_style( 'anycomment-custom-styles', $url, [], AnyComment()->version );
 				} else {
-					wp_enqueue_style( 'anycomment-styles', AnyComment()->plugin_url() . '/static/css/main.min.css', [], AnyComment()->version );
+					wp_enqueue_style( 'anycomment-styles', AnyComment()->plugin_url() . '/static/css/main.min.css', [], sha1( AnyComment()->version ) );
 				}
 
 
 				if ( strpos( AnyCommentGenericSettings::getDesignFontFamily(), 'Noto-Sans' ) !== false ) {
-					wp_enqueue_style( 'anycomment-google-font', 'https://fonts.googleapis.com/css?family=Noto+Sans:400,700&amp;subset=cyrillic', [], AnyComment()->version );
+					wp_enqueue_style( 'anycomment-google-font', 'https://fonts.googleapis.com/css?family=Noto+Sans:400,700&amp;subset=cyrillic' );
 				}
 
 				$postId        = get_the_ID();

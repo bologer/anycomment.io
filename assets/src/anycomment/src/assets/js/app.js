@@ -1,8 +1,9 @@
-// import jq from 'jquery';
+import $ from 'jquery';
 // import whatInput from 'what-input';
 import 'select2'
+import '@claviska/jquery-minicolors'
 
-// window.$ = $;
+window.$ = $;
 
 // import Foundation from 'foundation-sites';
 // If you want to pick and choose which modules to include, comment out the above and uncomment
@@ -11,8 +12,10 @@ import 'select2'
 
 // jQuery(document).foundation();
 
-jQuery(document).on('ready', function () {
+$(document).ready(function ($) {
     console.log('ready');
-    jQuery('.anycomment-select2').select2();
+    $('.anycomment-select2').select2();
     console.log('should be loaded');
+
+    $('.anycomment-input-color').minicolors();
 });

@@ -54,8 +54,13 @@
   @include motion-ui-animations;
 
   // vendor styles
-  @import "vendor/aos";
-  @import "vendor/slick-carousel";
+  @import "vendor/jqueryminicolors.scss";
 
   @import "components/admin";
+
+  // Select 2
+  @import '../../../node_modules/select2/dist/css/select2.css';
+
+
+  @import "components/buttons";
 }

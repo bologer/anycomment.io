@@ -181,9 +181,10 @@ EOL;
 			$value = $args['value'];
 
 			return <<<EOL
-            <input type="color" id="$for"
+            <input type="text" id="$for"
                    name="$name"
                    value="$value"
+                   class="anycomment-input-color"
                    pattern="^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
             >
 EOL;
@@ -343,7 +344,7 @@ EOT;
 
 			$i = 0;
 			foreach ( (array) $wp_settings_sections[ $page ] as $section ) {
-				if ( $includeHeader && $section['title'] ) {
+				if ( $includeHeader && isset( $section['title'] ) ) {
 					echo "<h2>{$section['title']}</h2>";
 				}
 

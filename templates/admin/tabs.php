@@ -30,18 +30,15 @@ $tabs       = [
 ?>
 
 <?php if ( ! empty( $tabs ) ): ?>
-    <div class="anycomment-dashboard__tabs">
-        <ul>
+    <div class="grid-x grid-margin-x anycomment-dashboard__tabs">
+        <ul class="cell">
 			<?php foreach ( $tabs as $key => $tab ): ?>
                 <li<?= $active_tab === $key ? ' class="active"' : '' ?>><a
                             href="<?= $tab['url'] ?>"><?= $tab['text'] ?></a>
                 </li>
 			<?php endforeach; ?>
         </ul>
-        <div class="clearfix"></div>
     </div>
 <?php endif; ?>
 
 <?= anycomment_get_template( 'admin/tab-' . $active_tab ) ?>
-
-<div class="clearfix"></div>

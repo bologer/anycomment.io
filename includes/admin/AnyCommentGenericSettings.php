@@ -866,7 +866,6 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 			}
 
 			if ( isset( $_GET['settings-updated'] ) ) {
-				AnyComment()->cache->deleteItem( '/anycomment/rest/comments' );
 				add_settings_error( $this->alert_key, 'anycomment_message', __( 'Settings Saved', 'anycomment' ), 'updated' );
 			}
 

@@ -1,6 +1,6 @@
 <div class="anycomment-tab anycomment-dashboard__tab" id="anycomment-dashboard">
-    <div class="anycomment-dashboard__splitter">
-        <div class="anycomment-dashboard__splitter-half anycomment-dashboard__splitter-half-commentators">
+    <div class="grid-x grid-margin-x anycomment-dashboard__splitter">
+        <div class="cell large-6 medium-6 small-12 anycomment-dashboard__splitter-half anycomment-dashboard__splitter-half-commentators">
             <div class="anycomment-dashboard__splitter-half-center">
                 <img src="<?= AnyComment()->plugin_url() . '/assets/img/dashboard-users.svg' ?>"
                      alt="<?= __( 'Commentators', 'anycomment' ) ?>">
@@ -11,7 +11,7 @@
                 </div>
             </div>
         </div>
-        <div class="anycomment-dashboard__splitter-half anycomment-dashboard__splitter-half-comments">
+        <div class="cell large-6 medium-6 small-12 anycomment-dashboard__splitter-half anycomment-dashboard__splitter-half-comments">
             <div class="anycomment-dashboard__splitter-half-center">
                 <img src="<?= AnyComment()->plugin_url() . '/assets/img/dashboard-comments.svg' ?>"
                      alt="<?= __( 'All Comments', 'anycomment' ) ?>">
@@ -21,12 +21,10 @@
                 </div>
             </div>
         </div>
-
-        <div class="clearfix"></div>
     </div>
 
-    <div class="anycomment-dashboard__statistics">
-        <div class="anycomment-dashboard__statistics-graph">
+    <div class="grid-x grid-margin-x anycomment-dashboard__statistics">
+        <div class="cell auto anycomment-dashboard__statistics-graph">
             <h2><?= __( 'Overal Statistics', 'anycomment' ) ?></h2>
 			<?php
 
@@ -102,7 +100,7 @@
                 }, 1000);
             </script>
         </div>
-        <div class="anycomment-dashboard__statistics-userlist">
+        <div class="cell large-4 medium-4 small-12 anycomment-dashboard__statistics-userlist">
             <h2><?= __( 'Most Active Users', 'anycomment' ) ?></h2>
 			<?php
 			$users = AnyComment()->statistics->get_most_active_users();
@@ -110,9 +108,8 @@
 			if ( ! empty( $users ) ): ?>
                 <ul>
 					<?php foreach ( $users as $user ): ?>
-                        <li>
-                                        <span class="anycomment-dashboard__statistics-userlist-avatar"
-                                              style="background-image:url('<?= AnyComment()->auth->get_user_avatar_url( $user->user_id ) ?>')"></span>
+                        <li> <span class="anycomment-dashboard__statistics-userlist-avatar"
+                                   style="background-image:url('<?= AnyComment()->auth->get_user_avatar_url( $user->user_id ) ?>')"></span>
 							<?= $user->name ?>
                             <span class="anycomment-dashboard__statistics-userlist-counter"><?= $user->comment_count ?></span>
                         </li>

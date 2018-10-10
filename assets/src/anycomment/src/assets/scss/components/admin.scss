@@ -68,7 +68,6 @@ a:focus {
     padding: 0;
   }
 
-
   &__container {
     padding: 37px 0 37px 37px;
   }
@@ -153,8 +152,12 @@ a:focus {
     margin-bottom: 30px;
     padding-right: 37px;
 
+    &-logo,
+    &-official {
+      font-size: $global-font-size + 4;
+    }
+
     &-logo {
-      float: left;
       text-align: left;
 
       img {
@@ -170,21 +173,25 @@ a:focus {
       }
 
       h2 {
+        sup {
+          font-size: $global-font-size - 4;
+        }
+      }
+
+      h2 {
         color: $font-color;
         margin: 0;
       }
     }
 
     &-official {
-      float: right;
       text-align: right;
       color: #373737;
-      font-size: 28px;
     }
   }
 
   &__tabs {
-    width: 100%;
+
     ul {
       list-style: none;
       padding: 0;
@@ -201,7 +208,7 @@ a:focus {
 
         a {
           color: #686868;
-          font-size: $font-size + 5;
+          font-size: $global-font-size;
           font-weight: 300;
           display: block;
           padding: 15px 0;
@@ -239,11 +246,10 @@ a:focus {
     border-bottom: 2px solid $separator-color;
     &-half {
       padding: 30px 0;
-      width: 50%;
-      float: left;
 
       &:first-child {
         border-right: 2px solid $separator-color;
+        margin-left: -2px;
       }
 
       &-comments {

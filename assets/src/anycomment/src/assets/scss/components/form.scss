@@ -2,36 +2,9 @@ $green: #53af4a;
 $description-color: #686868;
 $border-color: #b6c1c6;
 
-.clearfix:after {
-  content: "";
-  visibility: hidden;
-  display: block;
-  height: 0;
-  clear: both;
-}
-
-.select2-container {
-  background-color: darken(#fff, 5%);
-
-  .select2-search__field {
-    border: 1px solid $border-color;
-  }
-
-  .select2-results__options {
-    margin: 0;
-    padding: 0;
-
-    li {
-      padding: 10px;
-      font-size: 15px;
-      cursor: pointer;
-
-      &:hover,
-      &:active,
-      &:focus {
-        background-color: #fff;
-      }
-    }
+@mixin colored-switches ($switch-background-active) {
+  input:checked ~ .switch-paddle {
+    background: $switch-background-active;
   }
 }
 
@@ -75,54 +48,73 @@ $border-color: #b6c1c6;
       display: none;
     }
 
-    .select2 {
-      border: 1px solid $border-color;
-      background-color: #fff;
-      @include border-radius(6px);
-      color: $description-color;
-      cursor: pointer;
-      display: block;
-      position: relative;
-
-      .select2-selection {
-        display: block;
-        padding: 10px 15px;
-      }
-
-      .select2-selection__arrow {
-        width: 0;
-        height: 0;
-        border-left: 10px solid transparent;
-        border-right: 10px solid transparent;
-        border-top: 10px solid #7a7474;
-        position: absolute;
-        right: 15px;
-        top: 50%;
-        margin-top: -5px;
-      }
-    }
-
     textarea {
       width: 100%;
       max-width: 100%;
       min-width: 100%;
     }
 
+    input[type="number"],
+    input[type="color"] {
+      max-width: 200px;
+    }
+
+    textarea,
+    input[type="text"],
+    input[type="number"],
+    .select2-container {
+      margin: 10px 0 0;
+    }
+
     textarea,
     input[type="text"],
     input[type="number"] {
       border: 1px solid $border-color;
-      padding: 10px 17px;
+      padding: 9px;
       background-color: #fff;
-      @include border-radius(6px);
-      color: $description-color;
+      color: #000;
       box-shadow: none;
+      @include border-radius(6px);
     }
 
+    input.anycomment-input-color {
+      padding: 9px 10px 10px 36px;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered,
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+      line-height: 39px;
+    }
+
+    .switch {
+      &,
+
+      &.primary {
+        @include colored-switches($primary-color)
+      }
+
+      &.secondary {
+        @include colored-switches($secondary-color)
+      }
+
+      &.success {
+        @include colored-switches($success-color)
+      }
+
+      &.alert {
+        @include colored-switches($alert-color)
+      }
+
+      &.warning {
+        @include colored-switches($warning-color)
+      }
+    }
+
+
+    .select2-container .select2-selection--single,
     input[type="text"],
-    input[type="number"],
-    select {
-      height: 50px;
+    input[type="number"] {
+      height: 39px;
     }
 
     input[type="submit"] {

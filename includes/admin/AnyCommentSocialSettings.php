@@ -152,19 +152,19 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 					[
 						'id'          => self::OPTION_VK_TOGGLE,
 						'title'       => __( 'Enable', "anycomment" ),
-						'callback'    => 'input_checkbox',
+						'type'        => 'checkbox',
 						'description' => esc_html( __( 'Allow VK authorization', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_VK_APP_ID,
 						'title'       => __( 'Application ID', "anycomment" ),
-						'callback'    => 'input_text',
+						'type'        => 'text',
 						'description' => sprintf( __( 'Enter app id. Can be found in <a href="%s" target="_blank">apps</a> page', "anycomment" ), 'https://vk.com/apps?act=manage' )
 					],
 					[
 						'id'          => self::OPTION_VK_SECRET,
 						'title'       => __( 'Secure key', "anycomment" ),
-						'callback'    => 'input_text',
+						'type'        => 'text',
 						'description' => sprintf( __( 'Enter secure key. Can be found in <a href="%s" target="_blank">apps</a> page', "anycomment" ), 'https://vk.com/apps?act=manage' )
 					]
 				]
@@ -198,19 +198,19 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 					[
 						'id'          => self::OPTION_TWITTER_TOGGLE,
 						'title'       => __( 'Enable', "anycomment" ),
-						'callback'    => 'input_checkbox',
+						'type'        => 'checkbox',
 						'description' => __( 'Allow Twitter authorization', "anycomment" )
 					],
 					[
 						'id'          => self::OPTION_TWITTER_CONSUMER_KEY,
 						'title'       => __( 'Consumer Key', "anycomment" ),
-						'callback'    => 'input_text',
+						'type'        => 'text',
 						'description' => sprintf( __( 'Enter consumer key. Can be found in the list of <a href="%s" target="_blank">apps</a>', "anycomment" ), 'https://apps.twitter.com/' )
 					],
 					[
 						'id'          => self::OPTION_TWITTER_CONSUMER_SECRET,
 						'title'       => __( 'Consumer Secret', "anycomment" ),
-						'callback'    => 'input_text',
+						'type'        => 'text',
 						'description' => sprintf( __( 'Enter consumer secret. Can be found in the list of <a href="%s" target="_blank">apps</a>', "anycomment" ), 'https://apps.twitter.com/' )
 					]
 				]
@@ -244,19 +244,19 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 					[
 						'id'          => self::OPTION_FACEBOOK_TOGGLE,
 						'title'       => __( 'Enable', "anycomment" ),
-						'callback'    => 'input_checkbox',
+						'type'        => 'checkbox',
 						'description' => __( 'Allow Facebook authorization', "anycomment" )
 					],
 					[
 						'id'          => self::OPTION_FACEBOOK_APP_ID,
 						'title'       => __( 'App ID', "anycomment" ),
-						'callback'    => 'input_text',
+						'type'        => 'text',
 						'description' => sprintf( __( 'Enter app id. Can be found in the list of <a href="%s" target="_blank">apps</a>', "anycomment" ), 'https://developers.facebook.com/apps/' )
 					],
 					[
 						'id'          => self::OPTION_FACEBOOK_APP_SECRET,
 						'title'       => __( 'App Secret', "anycomment" ),
-						'callback'    => 'input_text',
+						'type'        => 'text',
 						'description' => sprintf( __( 'Enter app secret. Can be found in the list of <a href="%" target="_blank">apps</a>', "anycomment" ), 'https://developers.facebook.com/apps/' )
 					]
 				]
@@ -290,19 +290,19 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 					[
 						'id'          => self::OPTION_GOOGLE_TOGGLE,
 						'title'       => __( 'Enable', "anycomment" ),
-						'callback'    => 'input_checkbox',
+						'type'        => 'checkbox',
 						'description' => __( 'Allow Google authorization', "anycomment" )
 					],
 					[
 						'id'          => self::OPTION_GOOGLE_CLIENT_ID,
 						'title'       => __( 'Client ID', "anycomment" ),
-						'callback'    => 'input_text',
+						'type'        => 'text',
 						'description' => sprintf( __( 'Enter client id. Can be found in the list of <a href="%s" target="_blank">apps</a>', "anycomment" ), 'https://console.developers.google.com/apis/credentials' )
 					],
 					[
 						'id'          => self::OPTION_GOOGLE_SECRET,
 						'title'       => __( 'Client Secret', "anycomment" ),
-						'callback'    => 'input_text',
+						'type'        => 'text',
 						'description' => sprintf( __( 'Enter client secret. Can be found in the list of <a href="%s" target="_blank">apps</a>', "anycomment" ), 'https://console.developers.google.com/apis/credentials' )
 					]
 				]
@@ -336,19 +336,19 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 					[
 						'id'          => self::OPTION_GITHUB_TOGGLE,
 						'title'       => __( 'Enable', "anycomment" ),
-						'callback'    => 'input_checkbox',
+						'type'        => 'checkbox',
 						'description' => __( 'Allow GitHub authorization', "anycomment" )
 					],
 					[
 						'id'          => self::OPTION_GITHUB_CLIENT_ID,
 						'title'       => __( 'Client ID', "anycomment" ),
-						'callback'    => 'input_text',
+						'type'        => 'text',
 						'description' => sprintf( __( 'Enter client id. Can be found in the list of <a href="%s" target="_blank">apps</a>', "anycomment" ), 'https://github.com/settings/developers' )
 					],
 					[
 						'id'          => self::OPTION_GITHUB_SECRET,
 						'title'       => __( 'Client Secret', "anycomment" ),
-						'callback'    => 'input_text',
+						'type'        => 'text',
 						'description' => sprintf( __( 'Enter client secret. Can be found in the list of <a href="%s" target="_blank">apps</a>', "anycomment" ), 'https://github.com/settings/developers' )
 					]
 				]
@@ -384,25 +384,25 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 					[
 						'id'          => self::OPTION_OK_TOGGLE,
 						'title'       => __( 'Enable', "anycomment" ),
-						'callback'    => 'input_checkbox',
+						'type'        => 'checkbox',
 						'description' => __( 'Allow Odnoklassniki authorization', "anycomment" )
 					],
 					[
 						'id'          => self::OPTION_OK_APP_ID,
 						'title'       => __( 'App ID', "anycomment" ),
-						'callback'    => 'input_text',
+						'type'        => 'text',
 						'description' => __( 'Enter app id. Can be found in the email sent to you by Odnoklassniki', "anycomment" ),
 					],
 					[
 						'id'          => self::OPTION_OK_APP_KEY,
 						'title'       => __( 'App Key', "anycomment" ),
-						'callback'    => 'input_text',
+						'type'        => 'text',
 						'description' => __( 'Enter app key. Can be found in the email sent to you by Odnoklassniki', "anycomment" ),
 					],
 					[
 						'id'          => self::OPTION_OK_APP_SECRET,
 						'title'       => __( 'App Secret', "anycomment" ),
-						'callback'    => 'input_text',
+						'type'        => 'text',
 						'description' => __( 'Enter client secret. Can be found in the email sent to you by Odnoklassniki', "anycomment" ),
 					]
 				]
@@ -436,19 +436,19 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 					[
 						'id'          => self::OPTION_INSTAGRAM_TOGGLE,
 						'title'       => __( 'Enable', "anycomment" ),
-						'callback'    => 'input_checkbox',
+						'type'        => 'checkbox',
 						'description' => __( 'Allow Instagram authorization', "anycomment" )
 					],
 					[
 						'id'          => self::OPTION_INSTAGRAM_CLIENT_ID,
 						'title'       => __( 'Client ID', "anycomment" ),
-						'callback'    => 'input_text',
+						'type'        => 'text',
 						'description' => sprintf( __( 'Enter client id. Can be found in <a href="%s" target="_blank">Manage Clients</a>', "anycomment" ), 'https://www.instagram.com/developer/clients/manage/' )
 					],
 					[
 						'id'          => self::OPTION_INSTAGRAM_CLIENT_SECRET,
 						'title'       => __( 'Client Secret', "anycomment" ),
-						'callback'    => 'input_text',
+						'type'        => 'text',
 						'description' => sprintf( __( 'Enter client secret. Can be found in <a href="%s" target="_blank">Manage Clients</a>', "anycomment" ), 'https://www.instagram.com/developer/clients/manage/' )
 					]
 				]
@@ -483,19 +483,19 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 					[
 						'id'          => self::OPTION_TWITCH_TOGGLE,
 						'title'       => __( 'Enable', "anycomment" ),
-						'callback'    => 'input_checkbox',
+						'type'        => 'checkbox',
 						'description' => __( 'Allow Twitch authorization', "anycomment" )
 					],
 					[
 						'id'          => self::OPTION_TWITCH_CLIENT_ID,
 						'title'       => __( 'Client ID', "anycomment" ),
-						'callback'    => 'input_text',
+						'type'        => 'text',
 						'description' => sprintf( __( 'Enter client id. It can be found in the <a href="%s" target="_blank">apps</a>', "anycomment" ), 'https://glass.twitch.tv/console/apps' )
 					],
 					[
 						'id'          => self::OPTION_TWITCH_CLIENT_SECRET,
 						'title'       => __( 'Client Secret', "anycomment" ),
-						'callback'    => 'input_text',
+						'type'        => 'text',
 						'description' => sprintf( __( 'Enter client secret. It can be found in the <a href="%s" target="_blank">apps</a>', "anycomment" ), 'https://glass.twitch.tv/console/apps' )
 					]
 				]
@@ -529,19 +529,19 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 					[
 						'id'          => self::OPTION_DRIBBBLE_TOGGLE,
 						'title'       => __( 'Enable', "anycomment" ),
-						'callback'    => 'input_checkbox',
+						'type'        => 'checkbox',
 						'description' => __( 'Allow Dribbble authorization', "anycomment" )
 					],
 					[
 						'id'          => self::OPTION_DRIBBBLE_CLIENT_ID,
 						'title'       => __( 'Client ID', "anycomment" ),
-						'callback'    => 'input_text',
+						'type'        => 'text',
 						'description' => sprintf( __( 'Enter client id. It can be found in the <a href="%s" target="_blank">your applications</a>', "anycomment" ), 'https://dribbble.com/account/applications' )
 					],
 					[
 						'id'          => self::OPTION_DRIBBBLE_CLIENT_SECRET,
 						'title'       => __( 'Client Secret', "anycomment" ),
-						'callback'    => 'input_text',
+						'type'        => 'text',
 						'description' => sprintf( __( 'Enter client secret. It can be found in the <a href="%s" target="_blank">your applications</a>', "anycomment" ), 'https://dribbble.com/account/applications' )
 					]
 				]
@@ -575,19 +575,19 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 					[
 						'id'          => self::OPTION_YAHOO_TOGGLE,
 						'title'       => __( 'Enable', "anycomment" ),
-						'callback'    => 'input_checkbox',
+						'type'        => 'checkbox',
 						'description' => __( 'Allow Yahoo authorization', "anycomment" )
 					],
 					[
 						'id'          => self::OPTION_YAHOO_APP_ID,
 						'title'       => __( 'App ID', "anycomment" ),
-						'callback'    => 'input_text',
+						'type'        => 'text',
 						'description' => sprintf( __( 'Enter app id. It can be found in the <a href="%s" target="_blank">my apps</a>', "anycomment" ), 'https://developer.yahoo.com/apps/' )
 					],
 					[
 						'id'          => self::OPTION_YAHOO_CLIENT_SECRET,
 						'title'       => __( 'Client Secret', "anycomment" ),
-						'callback'    => 'input_text',
+						'type'        => 'text',
 						'description' => sprintf( __( 'Enter client secret. It can be found in the <a href="%s" target="_blank">my apps</a>', "anycomment" ), 'https://developer.yahoo.com/apps/' )
 					]
 				]
@@ -622,7 +622,7 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 					[
 						'id'          => self::OPTION_WORDPRESS_NATIVE_TOGGLE,
 						'title'       => __( 'Enable Native', "anycomment" ),
-						'callback'    => 'input_checkbox',
+						'type'        => 'checkbox',
 						'description' => __( 'Allow WordPress native authorization', "anycomment" )
 					],
 				]
@@ -652,18 +652,15 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
                 <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 			<?php endif; ?>
             <form action="options.php" method="post" class="anycomment-form">
-				<?php
-				settings_fields( $this->option_group );
+				<?php settings_fields( $this->option_group ) ?>
 
-				?>
-
-                <div class="anycomment-tabs">
-                    <aside class="anycomment-tabs__menu anycomment-tabs__menu-socials">
+                <div class="anycomment-tabs grid-x grid-margin-x">
+                    <aside class="cell large-3 medium-4 small-12 anycomment-tabs__menu anycomment-tabs__menu-socials">
 						<?php $this->do_tab_menu( $this->page_slug ) ?>
                     </aside>
-                    <div class="anycomment-tabs__container">
+                    <div class="cell auto anycomment-tabs__container">
 						<?php
-						$this->do_settings_sections( $this->page_slug, false );
+						$this->do_tab_sections( $this->page_slug, false );
 						submit_button( __( 'Save', 'anycomment' ) );
 						?>
                     </div>
@@ -826,7 +823,7 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 			$i = 0;
 			foreach ( (array) $wp_settings_sections[ $page ] as $section ) {
 				if ( $includeHeader && $section['title'] ) {
-					echo "<h2>{$section['title']}</h2>\n";
+					echo "<h2>{$section['title']}</h2>";
 				}
 
 				if ( $includeHeader && $section['callback'] ) {
@@ -838,54 +835,13 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 				}
 
 				echo '<div id="tab-' . $section['id'] . '" class="anycomment-tabs__container__tab ' . ( $i === 0 ? 'current' : '' ) . '">';
-				echo '<div class="form-table-wrapper">';
-				echo '<table class="form-table">';
-				do_settings_fields( $page, $section['id'] );
-				echo '</table>';
+				echo '<div class="grid-x anycomment-form-wrapper">';
+				$this->do_settings_fields( $page, $section['id'] );
 				echo '</div>';
 
-				echo '<div class="clearfix"></div></div>';
+				echo '</div>';
 
 				$i ++;
-			}
-		}
-
-		/**
-		 * Custom wrapper over original method.
-		 *
-		 * @global $wp_settings_fields Storage array of settings fields and their pages/sections
-		 *
-		 * @since 0.0.45
-		 *
-		 * @param string $page Slug title of the admin page who's settings fields you want to show.
-		 * @param string $section Slug title of the settings section who's fields you want to show.
-		 */
-		public function do_settings_fields( $page, $section ) {
-			global $wp_settings_fields;
-
-			if ( ! isset( $wp_settings_fields[ $page ][ $section ] ) ) {
-				return;
-			}
-
-			foreach ( (array) $wp_settings_fields[ $page ][ $section ] as $field ) {
-				$class = '';
-
-				if ( ! empty( $field['args']['class'] ) ) {
-					$class = ' class="' . esc_attr( $field['args']['class'] ) . '"';
-				}
-
-				echo "<tr{$class}>";
-
-				if ( ! empty( $field['args']['label_for'] ) ) {
-					echo '<th scope="row"><label for="' . esc_attr( $field['args']['label_for'] ) . '">' . $field['title'] . '</label></th>';
-				} else {
-					echo '<th scope="row">' . $field['title'] . '</th>';
-				}
-
-				echo '<td>';
-				call_user_func( $field['callback'], $field['args'] );
-				echo '</td>';
-				echo '</tr>';
 			}
 		}
 
