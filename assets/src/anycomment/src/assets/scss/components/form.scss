@@ -2,7 +2,7 @@ $green: #53af4a;
 $description-color: #686868;
 $border-color: #b6c1c6;
 
-@mixin colored-switches ($switch-background-active) {
+@mixin colored-switches($switch-background-active) {
   input:checked ~ .switch-paddle {
     background: $switch-background-active;
   }
@@ -81,14 +81,16 @@ $border-color: #b6c1c6;
       padding: 9px 10px 10px 36px;
     }
 
-    .select2-container--default .select2-selection--single .select2-selection__rendered,
-    .select2-container--default .select2-selection--single .select2-selection__arrow {
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
       line-height: 39px;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+      height: 39px;
     }
 
     .switch {
       &,
-
       &.primary {
         @include colored-switches($primary-color)
       }
@@ -109,7 +111,6 @@ $border-color: #b6c1c6;
         @include colored-switches($warning-color)
       }
     }
-
 
     .select2-container .select2-selection--single,
     input[type="text"],

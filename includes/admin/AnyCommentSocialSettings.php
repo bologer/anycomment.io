@@ -153,7 +153,7 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 						'id'          => self::OPTION_VK_TOGGLE,
 						'title'       => __( 'Enable', "anycomment" ),
 						'type'        => 'checkbox',
-						'description' => esc_html( __( 'Allow VK authorization', "anycomment" ) )
+						'description' => esc_html( __( 'Allow VK authorization', "anycomment" ) ),
 					],
 					[
 						'id'          => self::OPTION_VK_APP_ID,
@@ -165,8 +165,17 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 						'id'          => self::OPTION_VK_SECRET,
 						'title'       => __( 'Secure key', "anycomment" ),
 						'type'        => 'text',
-						'description' => sprintf( __( 'Enter secure key. Can be found in <a href="%s" target="_blank">apps</a> page', "anycomment" ), 'https://vk.com/apps?act=manage' )
-					]
+						'description' => sprintf( __( 'Enter secure key. Can be found in <a href="%s" target="_blank">apps</a> page', "anycomment" ), 'https://vk.com/apps?act=manage' ),
+						'after'       => function () {
+							?>
+                            <div class="cell anycomment-form-wrapper__field">
+                                <label for="vk-callback"><?= __( 'Callback URL', 'anycomment' ) ?></label>
+                                <input type="text" id="vk-callback" onclick="this.select()" readonly="readonly"
+                                       value="<?= AnyCommentSocialAuth::get_vk_callback() ?>">
+                            </div>
+							<?php
+						}
+					],
 				]
 			);
 
@@ -176,18 +185,7 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 			add_settings_section(
 				'section_twitter',
 				__( 'Twitter', "anycomment" ),
-				function () {
-					?>
-                    <p><?= __( 'Twitter authorization settings.', "anycomment" ) ?></p>
-                    <table class="form-table">
-                        <tr>
-                            <th><label for="twitter-callback"><?= __( 'Callback URL', 'anycomment' ) ?></label></th>
-                            <td><input type="text" id="twitter-callback" onclick="this.select()" readonly="readonly"
-                                       value="<?= AnyCommentSocialAuth::get_twitter_callback() ?>"></td>
-                        </tr>
-                    </table>
-					<?php
-				},
+				null,
 				$this->page_slug
 			);
 
@@ -211,7 +209,16 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 						'id'          => self::OPTION_TWITTER_CONSUMER_SECRET,
 						'title'       => __( 'Consumer Secret', "anycomment" ),
 						'type'        => 'text',
-						'description' => sprintf( __( 'Enter consumer secret. Can be found in the list of <a href="%s" target="_blank">apps</a>', "anycomment" ), 'https://apps.twitter.com/' )
+						'description' => sprintf( __( 'Enter consumer secret. Can be found in the list of <a href="%s" target="_blank">apps</a>', "anycomment" ), 'https://apps.twitter.com/' ),
+						'after'       => function () {
+							?>
+                            <div class="cell anycomment-form-wrapper__field">
+                                <label for="twitter-callback"><?= __( 'Callback URL', 'anycomment' ) ?></label>
+                                <input type="text" id="twitter-callback" onclick="this.select()" readonly="readonly"
+                                       value="<?= AnyCommentSocialAuth::get_twitter_callback() ?>">
+                            </div>
+							<?php
+						}
 					]
 				]
 			);
@@ -222,18 +229,7 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 			add_settings_section(
 				'section_facebook',
 				__( 'Facebook', "anycomment" ),
-				function () {
-					?>
-                    <p><?= __( 'Facebook authorization settings.', "anycomment" ) ?></p>
-                    <table class="form-table">
-                        <tr>
-                            <th><label for="facebook-callback"><?= __( 'Callback URL', 'anycomment' ) ?></label></th>
-                            <td><input type="text" id="facebook-callback" onclick="this.select()" readonly="readonly"
-                                       value="<?= AnyCommentSocialAuth::get_facebook_callback() ?>"></td>
-                        </tr>
-                    </table>
-					<?php
-				},
+				null,
 				$this->page_slug
 			);
 
@@ -257,7 +253,16 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 						'id'          => self::OPTION_FACEBOOK_APP_SECRET,
 						'title'       => __( 'App Secret', "anycomment" ),
 						'type'        => 'text',
-						'description' => sprintf( __( 'Enter app secret. Can be found in the list of <a href="%" target="_blank">apps</a>', "anycomment" ), 'https://developers.facebook.com/apps/' )
+						'description' => sprintf( __( 'Enter app secret. Can be found in the list of <a href="%" target="_blank">apps</a>', "anycomment" ), 'https://developers.facebook.com/apps/' ),
+						'after'       => function () {
+							?>
+                            <div class="cell anycomment-form-wrapper__field">
+                                <label for="facebook-callback"><?= __( 'Callback URL', 'anycomment' ) ?></label>
+                                <input type="text" id="facebook-callback" onclick="this.select()" readonly="readonly"
+                                       value="<?= AnyCommentSocialAuth::get_facebook_callback() ?>">
+                            </div>
+							<?php
+						}
 					]
 				]
 			);
@@ -268,18 +273,7 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 			add_settings_section(
 				'section_google',
 				__( 'Google', "anycomment" ),
-				function () {
-					?>
-                    <p><?= __( 'Google authorization settings.', "anycomment" ) ?></p>
-                    <table class="form-table">
-                        <tr>
-                            <th><label for="google-callback"><?= __( 'Callback URL', 'anycomment' ) ?></label></th>
-                            <td><input type="text" id="google-callback" onclick="this.select()" readonly="readonly"
-                                       value="<?= AnyCommentSocialAuth::get_google_callback() ?>"></td>
-                        </tr>
-                    </table>
-					<?php
-				},
+				null,
 				$this->page_slug
 			);
 
@@ -303,8 +297,17 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 						'id'          => self::OPTION_GOOGLE_SECRET,
 						'title'       => __( 'Client Secret', "anycomment" ),
 						'type'        => 'text',
-						'description' => sprintf( __( 'Enter client secret. Can be found in the list of <a href="%s" target="_blank">apps</a>', "anycomment" ), 'https://console.developers.google.com/apis/credentials' )
-					]
+						'description' => sprintf( __( 'Enter client secret. Can be found in the list of <a href="%s" target="_blank">apps</a>', "anycomment" ), 'https://console.developers.google.com/apis/credentials' ),
+						'after'       => function () {
+							?>
+                            <div class="cell anycomment-form-wrapper__field">
+                                <label for="google-callback"><?= __( 'Callback URL', 'anycomment' ) ?></label>
+                                <input type="text" id="google-callback" onclick="this.select()" readonly="readonly"
+                                       value="<?= AnyCommentSocialAuth::get_google_callback() ?>">
+                            </div>
+							<?php
+						},
+                    ]
 				]
 			);
 
@@ -314,18 +317,7 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 			add_settings_section(
 				'section_github',
 				__( 'Github', "anycomment" ),
-				function () {
-					?>
-                    <p><?= __( 'Github authorization settings.', "anycomment" ) ?></p>
-                    <table class="form-table">
-                        <tr>
-                            <th><label for="github-callback"><?= __( 'Callback URL', 'anycomment' ) ?></label></th>
-                            <td><input type="text" id="github-callback" onclick="this.select()" readonly="readonly"
-                                       value="<?= AnyCommentSocialAuth::get_github_callback() ?>"></td>
-                        </tr>
-                    </table>
-					<?php
-				},
+				null,
 				$this->page_slug
 			);
 
@@ -349,8 +341,17 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 						'id'          => self::OPTION_GITHUB_SECRET,
 						'title'       => __( 'Client Secret', "anycomment" ),
 						'type'        => 'text',
-						'description' => sprintf( __( 'Enter client secret. Can be found in the list of <a href="%s" target="_blank">apps</a>', "anycomment" ), 'https://github.com/settings/developers' )
-					]
+						'description' => sprintf( __( 'Enter client secret. Can be found in the list of <a href="%s" target="_blank">apps</a>', "anycomment" ), 'https://github.com/settings/developers' ),
+						'after'       => function () {
+							?>
+                            <div class="cell anycomment-form-wrapper__field">
+                                <label for="github-callback"><?= __( 'Callback URL', 'anycomment' ) ?></label>
+                                <input type="text" id="github-callback" onclick="this.select()" readonly="readonly"
+                                       value="<?= AnyCommentSocialAuth::get_github_callback() ?>">
+                            </div>
+							<?php
+						},
+                    ]
 				]
 			);
 
@@ -360,20 +361,7 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 			add_settings_section(
 				'section_odnoklassniki',
 				__( 'Odnoklassniki', "anycomment" ),
-				function () {
-					?>
-                    <p><?= __( 'Odnoklassniki authorization settings.', "anycomment" ) ?></p>
-                    <table class="form-table">
-                        <tr>
-                            <th><label for="odnoklassniki-callback"><?= __( 'Callback URL', 'anycomment' ) ?></label>
-                            </th>
-                            <td><input type="text" id="odnoklassniki-callback" onclick="this.select()"
-                                       readonly="readonly"
-                                       value="<?= AnyCommentSocialAuth::get_ok_callback() ?>"></td>
-                        </tr>
-                    </table>
-					<?php
-				},
+				null,
 				$this->page_slug
 			);
 
@@ -404,6 +392,15 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 						'title'       => __( 'App Secret', "anycomment" ),
 						'type'        => 'text',
 						'description' => __( 'Enter client secret. Can be found in the email sent to you by Odnoklassniki', "anycomment" ),
+						'after'       => function () {
+							?>
+                            <div class="cell anycomment-form-wrapper__field">
+                                <label for="ok-callback"><?= __( 'Callback URL', 'anycomment' ) ?></label>
+                                <input type="text" id="ok-callback" onclick="this.select()" readonly="readonly"
+                                       value="<?= AnyCommentSocialAuth::get_ok_callback() ?>">
+                            </div>
+							<?php
+						}
 					]
 				]
 			);
@@ -414,18 +411,7 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 			add_settings_section(
 				'section_instagram',
 				__( 'Instagram', "anycomment" ),
-				function () {
-					?>
-                    <p><?= __( 'Instagram authorization settings.', "anycomment" ) ?></p>
-                    <table class="form-table">
-                        <tr>
-                            <th><label for="instagram-callback"><?= __( 'Callback URL', 'anycomment' ) ?></label></th>
-                            <td><input type="text" id="instagram-callback" onclick="this.select()" readonly="readonly"
-                                       value="<?= AnyCommentSocialAuth::get_instagram_callback() ?>"></td>
-                        </tr>
-                    </table>
-					<?php
-				},
+				null,
 				$this->page_slug
 			);
 
@@ -449,8 +435,18 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 						'id'          => self::OPTION_INSTAGRAM_CLIENT_SECRET,
 						'title'       => __( 'Client Secret', "anycomment" ),
 						'type'        => 'text',
-						'description' => sprintf( __( 'Enter client secret. Can be found in <a href="%s" target="_blank">Manage Clients</a>', "anycomment" ), 'https://www.instagram.com/developer/clients/manage/' )
-					]
+						'description' => sprintf( __( 'Enter client secret. Can be found in <a href="%s" target="_blank">Manage Clients</a>', "anycomment" ), 'https://www.instagram.com/developer/clients/manage/' ),
+						'after'       => function () {
+							?>
+                            <div class="cell anycomment-form-wrapper__field">
+                                <label for="instagram-callback"><?= __( 'Callback URL', 'anycomment' ) ?></label>
+                                <input type="text" id="instagram-callback" onclick="this.select()" readonly="readonly"
+                                       value="<?= AnyCommentSocialAuth::get_instagram_callback() ?>">
+                            </div>
+							<?php
+						},
+
+                    ]
 				]
 			);
 
@@ -461,18 +457,7 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 			add_settings_section(
 				'section_twitch',
 				__( 'Twitch', "anycomment" ),
-				function () {
-					?>
-                    <p><?= __( 'Twitch authorization settings.', "anycomment" ) ?></p>
-                    <table class="form-table">
-                        <tr>
-                            <th><label for="twitch-callback"><?= __( 'Callback URL', 'anycomment' ) ?></label></th>
-                            <td><input type="text" id="twitch-callback" onclick="this.select()" readonly="readonly"
-                                       value="<?= AnyCommentSocialAuth::get_twitch_callback() ?>"></td>
-                        </tr>
-                    </table>
-					<?php
-				},
+				null,
 				$this->page_slug
 			);
 
@@ -496,8 +481,18 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 						'id'          => self::OPTION_TWITCH_CLIENT_SECRET,
 						'title'       => __( 'Client Secret', "anycomment" ),
 						'type'        => 'text',
-						'description' => sprintf( __( 'Enter client secret. It can be found in the <a href="%s" target="_blank">apps</a>', "anycomment" ), 'https://glass.twitch.tv/console/apps' )
-					]
+						'description' => sprintf( __( 'Enter client secret. It can be found in the <a href="%s" target="_blank">apps</a>', "anycomment" ), 'https://glass.twitch.tv/console/apps' ),
+						'after'       => function () {
+							?>
+                            <div class="cell anycomment-form-wrapper__field">
+                                <label for="twitch-callback"><?= __( 'Callback URL', 'anycomment' ) ?></label>
+                                <input type="text" id="twitch-callback" onclick="this.select()" readonly="readonly"
+                                       value="<?= AnyCommentSocialAuth::get_twitch_callback() ?>">
+                            </div>
+							<?php
+						},
+
+                    ]
 				]
 			);
 
@@ -507,18 +502,7 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 			add_settings_section(
 				'section_dribbble',
 				__( 'Dribbble', "anycomment" ),
-				function () {
-					?>
-                    <p><?= __( 'Dribbble authorization settings.', "anycomment" ) ?></p>
-                    <table class="form-table">
-                        <tr>
-                            <th><label for="dribbble-callback"><?= __( 'Callback URL', 'anycomment' ) ?></label></th>
-                            <td><input type="text" id="dribbble-callback" onclick="this.select()" readonly="readonly"
-                                       value="<?= AnyCommentSocialAuth::get_dribbble_callback() ?>"></td>
-                        </tr>
-                    </table>
-					<?php
-				},
+				null,
 				$this->page_slug
 			);
 
@@ -542,8 +526,18 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 						'id'          => self::OPTION_DRIBBBLE_CLIENT_SECRET,
 						'title'       => __( 'Client Secret', "anycomment" ),
 						'type'        => 'text',
-						'description' => sprintf( __( 'Enter client secret. It can be found in the <a href="%s" target="_blank">your applications</a>', "anycomment" ), 'https://dribbble.com/account/applications' )
-					]
+						'description' => sprintf( __( 'Enter client secret. It can be found in the <a href="%s" target="_blank">your applications</a>', "anycomment" ), 'https://dribbble.com/account/applications' ),
+						'after'       => function () {
+							?>
+                            <div class="cell anycomment-form-wrapper__field">
+                                <label for="dribbble-callback"><?= __( 'Callback URL', 'anycomment' ) ?></label>
+                                <input type="text" id="dribbble-callback" onclick="this.select()" readonly="readonly"
+                                       value="<?= AnyCommentSocialAuth::get_dribbble_callback() ?>">
+                            </div>
+							<?php
+						},
+
+                    ]
 				]
 			);
 
@@ -553,18 +547,7 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 			add_settings_section(
 				'section_yahoo',
 				__( 'Yahoo', "anycomment" ),
-				function () {
-					?>
-                    <p><?= __( 'Yahoo authorization settings.', "anycomment" ) ?></p>
-                    <table class="form-table">
-                        <tr>
-                            <th><label for="yahoo-callback"><?= __( 'Callback URL', 'anycomment' ) ?></label></th>
-                            <td><input type="text" id="yahoo-callback" onclick="this.select()" readonly="readonly"
-                                       value="<?= AnyCommentSocialAuth::get_yahoo_callback() ?>"></td>
-                        </tr>
-                    </table>
-					<?php
-				},
+				null,
 				$this->page_slug
 			);
 
@@ -588,8 +571,17 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 						'id'          => self::OPTION_YAHOO_CLIENT_SECRET,
 						'title'       => __( 'Client Secret', "anycomment" ),
 						'type'        => 'text',
-						'description' => sprintf( __( 'Enter client secret. It can be found in the <a href="%s" target="_blank">my apps</a>', "anycomment" ), 'https://developer.yahoo.com/apps/' )
-					]
+						'description' => sprintf( __( 'Enter client secret. It can be found in the <a href="%s" target="_blank">my apps</a>', "anycomment" ), 'https://developer.yahoo.com/apps/' ),
+						'after'       => function () {
+							?>
+                            <div class="cell anycomment-form-wrapper__field">
+                                <label for="yahoo-callback"><?= __( 'Callback URL', 'anycomment' ) ?></label>
+                                <input type="text" id="yahoo-callback" onclick="this.select()" readonly="readonly"
+                                       value="<?= AnyCommentSocialAuth::get_yahoo_callback() ?>">
+                            </div>
+							<?php
+						},
+                    ]
 				]
 			);
 
@@ -600,18 +592,7 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 			add_settings_section(
 				'section_wordpress',
 				__( 'WordPress', "anycomment" ),
-				function () {
-					?>
-                    <p><?= __( 'WordPress authorization settings.', "anycomment" ) ?></p>
-                    <table class="form-table">
-                        <tr>
-                            <th><label for="yahoo-wordpress"><?= __( 'Callback URL', 'anycomment' ) ?></label></th>
-                            <td><input type="text" id="yahoo-callback" onclick="this.select()" readonly="readonly"
-                                       value="<?= AnyCommentSocialAuth::get_wordpress_callback() ?>"></td>
-                        </tr>
-                    </table>
-					<?php
-				},
+				null,
 				$this->page_slug
 			);
 

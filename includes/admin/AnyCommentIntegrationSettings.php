@@ -149,7 +149,7 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 				$integrations[] = [
 					'id'          => self::OPTION_AKISMET,
 					'title'       => __( 'Akismet Anti-Spam', "anycomment" ),
-					'callback'    => 'input_checkbox',
+					'type'        => 'checkbox',
 					'description' => sprintf( __( 'Filter all new comments through <a href="%s">Akismet Anti-Spam</a> plugin.', "anycomment" ), "https://wordpress.org/plugins/akismet/" )
 				];
 			}
@@ -158,7 +158,7 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 				$integrations[] = [
 					'id'          => self::OPTION_WP_USER_AVATAR,
 					'title'       => __( 'WP User Avatar', "anycomment" ),
-					'callback'    => 'input_checkbox',
+					'type'        => 'checkbox',
 					'description' => sprintf( __( 'Use <a href="%s">WP User Avatar</a> for handling avatars in the plugin.', "anycomment" ), "https://wordpress.org/plugins/wp-user-avatar/" )
 				];
 			}
@@ -170,20 +170,18 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 			$integrations[] = [
 				'id'          => self::OPTION_RECAPTCHA_TOGGLE,
 				'title'       => __( 'Enable reCAPTCHA', "anycomment" ),
-				'callback'    => 'input_checkbox',
+				'type'        => 'checkbox',
 				'description' => __( 'Enable reCAPTCHA', "anycomment" )
 			];
 
 			$integrations[] = [
-				'id'          => self::OPTION_RECAPTCHA_USER,
-				'title'       => __( 'reCAPTCHA Users', "anycomment" ),
-				'callback'    => 'input_select',
-				'args'        => [
-					'options' => [
-						self::OPTION_RECAPTCHA_USER_ALL   => __( 'For all', 'anycomment' ),
-						self::OPTION_RECAPTCHA_USER_GUEST => __( 'For guests only', 'anycomment' ),
-						self::OPTION_RECAPTCHA_USER_AUTH  => __( 'For logged in only', 'anycomment' ),
-					]
+				'id'      => self::OPTION_RECAPTCHA_USER,
+				'title'   => __( 'reCAPTCHA Users', "anycomment" ),
+				'type'    => 'select',
+				'options' => [
+					self::OPTION_RECAPTCHA_USER_ALL   => __( 'For all', 'anycomment' ),
+					self::OPTION_RECAPTCHA_USER_GUEST => __( 'For guests only', 'anycomment' ),
+					self::OPTION_RECAPTCHA_USER_AUTH  => __( 'For logged in only', 'anycomment' ),
 				],
 				'description' => __( 'Users affected by reCAPTCHA', "anycomment" )
 			];
@@ -191,26 +189,24 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 			$integrations[] = [
 				'id'          => self::OPTION_RECAPTCHA_SITE_KEY,
 				'title'       => __( 'reCAPTCHA Site Key', "anycomment" ),
-				'callback'    => 'input_text',
+				'type'    => 'text',
 				'description' => sprintf( __( 'reCAPTCHA site key. Can be found <a href="%s">here</a> (register your website if does not exist)', "anycomment" ), "http://www.google.com/recaptcha/admin" )
 			];
 
 			$integrations[] = [
 				'id'          => self::OPTION_RECAPTCHA_SITE_SECRET,
 				'title'       => __( 'reCAPTCHA Site Secret', "anycomment" ),
-				'callback'    => 'input_text',
+				'type'    => 'text',
 				'description' => sprintf( __( 'reCAPTCHA site secret. Can be found <a href="%s">here</a> (register your website if does not exist)', "anycomment" ), "http://www.google.com/recaptcha/admin" )
 			];
 
 			$integrations[] = [
-				'id'          => self::OPTION_RECAPTCHA_THEME,
-				'title'       => __( 'reCAPTCHA Theme', "anycomment" ),
-				'callback'    => 'input_select',
-				'args'        => [
-					'options' => [
-						self::OPTION_RECAPTCHA_THEME_LIGHT => __( 'Light', 'anycomment' ),
-						self::OPTION_RECAPTCHA_THEME_DARK  => __( 'Dark', 'anycomment' ),
-					]
+				'id'      => self::OPTION_RECAPTCHA_THEME,
+				'title'   => __( 'reCAPTCHA Theme', "anycomment" ),
+				'type'    => 'select',
+				'options' => [
+					self::OPTION_RECAPTCHA_THEME_LIGHT => __( 'Light', 'anycomment' ),
+					self::OPTION_RECAPTCHA_THEME_DARK  => __( 'Dark', 'anycomment' ),
 				],
 				'description' => __( 'Theme of reCAPTCHA', "anycomment" )
 			];
@@ -218,7 +214,7 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 			$integrations[] = [
 				'id'          => self::OPTION_RECAPTCHA_BADGE,
 				'title'       => __( 'reCAPTCHA Position', "anycomment" ),
-				'callback'    => 'input_select',
+				'type'        => 'select',
 				'args'        => [
 					'options' => [
 						self::OPTION_RECAPTCHA_BADGE_BOTTOM_RIGHT  => __( 'Bottom right', 'anycomment' ),

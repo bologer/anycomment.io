@@ -93,6 +93,14 @@ if ( ! class_exists( 'AnyCommentAdminOptions' ) ) :
 					$args['options'] = $field['options'];
 				}
 
+				if ( isset( $field['before'] ) ) {
+					$args['before'] = $field['before'];
+				}
+
+				if ( isset( $field['after'] ) ) {
+					$args['after'] = $field['after'];
+				}
+
 				add_settings_field(
 					$field['id'],
 					$field['title'],
@@ -249,7 +257,7 @@ EOT;
             <form action="options.php" method="post" class="anycomment-form">
 				<?php
 				settings_fields( $this->option_group );
-				do_settings_sections( $this->page_slug );
+				$this->do_tab_sections($this->page_slug);
 				submit_button( __( 'Save', 'anycomment' ) );
 				?>
             </form>
@@ -389,10 +397,7 @@ EOT;
 			}
 
 			foreach ( (array) $wp_settings_fields[ $page ][ $section ] as $field ) {
-
-				echo '<div class="cell anycomment-form-wrapper__field">';
 				echo $this->do_field( $field );
-				echo '</div>';
 			}
 		}
 
@@ -417,10 +422,14 @@ EOT;
 				'<p class="description">' . $field_data['description'] . '</p>' :
 				'';
 
-			if ( isset( $field['before'] ) ) {
-				$html .= is_callable( $field['before'] ) ?
-					call_user_func( $field['before'] ) :
-					$field['before'];
+
+
+			$html .= '<div class="cell anycomment-form-wrapper__field">';
+
+			if ( isset( $args['before'] ) ) {
+				$html .= is_callable( $args['before'] ) ?
+					call_user_func( $args['before'] ) :
+					$args['before'];
 			}
 
 			switch ( $type ) {
@@ -433,7 +442,7 @@ EOT;
 					break;
 				case 'toggle':
 				case 'checkbox':
-					$html = $this->input_checkbox( $field_data );
+					$html .= $this->input_checkbox( $field_data );
 					break;
 				case 'dropdown':
 				case 'list':
@@ -442,8 +451,6 @@ EOT;
 						$html .= $label;
 						$html .= $description;
 						$html .= $this->input_select( $field_data );
-					} else {
-						$html = '';
 					}
 					break;
 				case 'textarea':
@@ -457,15 +464,15 @@ EOT;
 					$html .= $this->input_color( $field_data );
 					break;
 				default:
-					$html = '';
 			}
 
-
-			if ( isset( $field['after'] ) ) {
-				$html .= is_callable( $field['after'] ) ?
-					call_user_func( $field['after'] ) :
-					$field['after'];
+			if ( isset( $args['after'] ) ) {
+				$html .= is_callable( $args['after'] ) ?
+					call_user_func( $args['after'] ) :
+					$args['after'];
 			}
+
+			$html .= '</div>';
 
 
 			return $html;
