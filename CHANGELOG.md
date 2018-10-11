@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.0.61 – 11.10.2018
+
+**Enhancements:**
+
+
+
+**Fixes:**
+
+* Fixed bad layout problem in admin after 0.0.60 update
+
+
 ## 0.0.60 – 10.10.2018
 
 **Enhancements:**

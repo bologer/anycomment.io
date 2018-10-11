@@ -885,7 +885,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 				?>
 
                 <div class="anycomment-tabs grid-x grid-margin-x">
-                    <aside class="cell large-3 medium-4 small-12 anycomment-tabs__menu">
+                    <aside class="cell large-4 medium-5 small-12 anycomment-tabs__menu">
 						<?php $this->do_tab_menu( $this->page_slug ) ?>
                     </aside>
                     <div class="cell auto anycomment-tabs__container">

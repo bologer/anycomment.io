@@ -28,7 +28,7 @@
           background-color: #e8edef;
           display: block;
           width: 100%;
-          font-size: 24px;
+          font-size: $global-font-size + 4;
           font-weight: 400;
           box-shadow: none;
           @include border-radius(10px);

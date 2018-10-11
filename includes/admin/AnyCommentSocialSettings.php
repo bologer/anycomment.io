@@ -636,7 +636,7 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 				<?php settings_fields( $this->option_group ) ?>
 
                 <div class="anycomment-tabs grid-x grid-margin-x">
-                    <aside class="cell large-3 medium-4 small-12 anycomment-tabs__menu anycomment-tabs__menu-socials">
+                    <aside class="cell large-5 medium-5 small-12 anycomment-tabs__menu anycomment-tabs__menu-socials">
 						<?php $this->do_tab_menu( $this->page_slug ) ?>
                     </aside>
                     <div class="cell auto anycomment-tabs__container">
