@@ -9,6 +9,7 @@
 **Fixes:**
 
 * Fixed bad layout problem in admin after 0.0.60 update
+* Fixed issue with comment dates when they were displaying e.g. "2 hours ago" even though comment was just posted, #208
 
 
 ## 0.0.60 – 10.10.2018

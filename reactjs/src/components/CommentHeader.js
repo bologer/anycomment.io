@@ -48,7 +48,7 @@ class CommentHeader extends AnyCommentComponent {
                 </div>
                 <a href={'#comment-' + comment.id} className="anycomment">
                     <TimeAgo className="anycomment comment-single-body-header__date"
-                             date={comment.date} formatter={formatter}/>
+                             date={comment.date_gmt} formatter={formatter}/>
                 </a>
             </header>
         );
