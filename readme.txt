@@ -174,6 +174,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 * Fixed bad layout problem in admin after 0.0.60 update
 * Fixed issue with comment dates when they were displaying e.g. "2 hours ago" even though comment was just posted, #208
+* Fixed issue when non-admin user was unable to send some of the custom formatting from editor, #210
 
 = 0.0.60 – 10.10.2018 =
 

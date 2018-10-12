@@ -34,6 +34,39 @@ class AnyCommentCommentHooks {
 
 		// On comment status change
 		add_action( 'wp_set_comment_status', [ $this, 'process_set_status_comment' ], 10, 2 );
+
+
+		// Extend allowed HTML tags to the needs of visual editor
+		add_filter( 'wp_kses_allowed_html', [$this, 'kses_allowed_html_for_quill'] );
+	}
+
+	/**
+	 * Extend list of allowed HTML tags.
+	 *
+	 * @param $allowedtags
+	 *
+	 * @return mixed
+	 */
+	public function kses_allowed_html_for_quill( $allowedtags ) {
+
+		$allowedtags['p']          = [];
+		$allowedtags['a']          = [ 'href', 'target', 'rel' ];
+		$allowedtags['ul']         = [];
+		$allowedtags['ol']         = [];
+		$allowedtags['blockquote'] = [ 'class' ];
+		$allowedtags['code']       = [];
+		$allowedtags['li']         = [];
+		$allowedtags['b']          = [];
+		$allowedtags['i']          = [];
+		$allowedtags['u']          = [];
+		$allowedtags['strong']     = [];
+		$allowedtags['em']         = [];
+		$allowedtags['br']         = [];
+		$allowedtags['img']        = [ 'class', 'src', 'alt' ];
+		$allowedtags['figure']     = [];
+		$allowedtags['iframe']     = [];
+
+		return $allowedtags;
 	}
 
 	/**
