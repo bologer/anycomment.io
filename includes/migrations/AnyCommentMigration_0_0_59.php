@@ -48,14 +48,14 @@ class AnyCommentMigration_0_0_59 extends AnyCommentMigration {
   `ID` bigint(20) UNSIGNED NOT NULL,
   `post_ID` bigint(20) UNSIGNED NOT NULL,
   `comment_ID` bigint(20) UNSIGNED NOT NULL,
-  `content` longtext COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `ip` varchar(255) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
-  `user_agent` varchar(255) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
+  `content` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `user_agent` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT \'0000-00-00 00:00:00\',
-  `subject` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
+  `subject` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `is_sent` tinyint(1) DEFAULT \'0\'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
 
 		// Do not care much about result, as table is create if does not exist only
 		$wpdb->query( $create_email_queue_table );

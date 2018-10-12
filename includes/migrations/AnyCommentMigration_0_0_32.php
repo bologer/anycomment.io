@@ -31,10 +31,10 @@ class AnyCommentMigration_0_0_32 extends AnyCommentMigration {
   `user_ID` bigint(20) UNSIGNED NOT NULL,
   `comment_ID` bigint(20) UNSIGNED NOT NULL,
   `post_ID` bigint(20) UNSIGNED NOT NULL,
-  `user_agent` varchar(255) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
-  `ip` varchar(255) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
+  `user_agent` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `liked_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;";
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
 
 		if ( $wpdb->query( $sql ) !== false ) {
 

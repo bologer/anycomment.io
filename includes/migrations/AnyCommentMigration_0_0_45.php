@@ -32,13 +32,20 @@ class AnyCommentMigration_0_0_45 extends AnyCommentMigration {
 		 */
 		$option = get_option( 'anycomment-social', true );
 
-		$option['social_vkontakte_toggle_field']     = $option['social_vk_toggle_field'];
-		$option['social_vkontakte_app_id_field']     = $option['social_vk_app_id_field'];
-		$option['social_vkontakte_app_secret_field'] = $option['social_vk_app_secret_field'];
+		if ( isset( $option['social_vk_toggle_field'] ) ) {
+			$option['social_vkontakte_toggle_field'] = $option['social_vk_toggle_field'];
+			unset( $option['social_vk_toggle_field'] );
+		}
 
-		unset( $option['social_vk_toggle_field'] );
-		unset( $option['social_vk_app_id_field'] );
-		unset( $option['social_vk_app_secret_field'] );
+		if ( isset( $option['social_vk_app_id_field'] ) ) {
+			$option['social_vkontakte_app_id_field'] = $option['social_vk_app_id_field'];
+			unset( $option['social_vk_app_id_field'] );
+		}
+
+		if ( isset( $option['social_vk_app_secret_field'] ) ) {
+			$option['social_vkontakte_app_secret_field'] = $option['social_vk_app_secret_field'];
+			unset( $option['social_vk_app_secret_field'] );
+		}
 
 		update_option( 'anycomment-social', $option );
 
@@ -54,12 +61,12 @@ class AnyCommentMigration_0_0_45 extends AnyCommentMigration {
   `user_ID` bigint(20) UNSIGNED NOT NULL,
   `post_ID` bigint(20) UNSIGNED NOT NULL,
   `comment_ID` bigint(20) UNSIGNED NOT NULL,
-  `content` LONGTEXT COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `ip` varchar(255) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
-  `user_agent` varchar(255) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
+  `content` LONGTEXT COLLATE utf8_unicode_ci NOT NULL,
+  `ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `user_agent` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `sent_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `created_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;";
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
 
 		if ( $wpdb->query( $sql ) !== false ) {
 
