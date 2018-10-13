@@ -6,7 +6,8 @@ import './css/app.css'
 import {ToastContainer} from 'react-toastify'
 import {toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import $ from 'jquery'
+import $ from 'jquery/src/core';
+import 'jquery/src/offset';
 
 /**
  * App is main compontent of the application.
@@ -49,14 +50,14 @@ class App extends AnyCommentComponent {
         const root = $('#anycomment-root'),
             tillTop = root.offset().top;
 
-        if ($(document).outerHeight() <= $(window).outerHeight()) {
+        if (window.outerHeight <= window.innerHeight) {
             self.setState({shouldLoad: true});
             return false;
         }
 
         $(window).on('scroll', function () {
 
-            let wH = $(window).height(),
+            let wH = window.innerHeight,
                 currentTop = $(this).scrollTop();
 
             wH = wH * 0.9;

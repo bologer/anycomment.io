@@ -1,7 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import {toast} from 'react-toastify';
-import $ from 'jquery';
+import $ from 'jquery/src/core';
+import 'jquery/src/effects';
 
 /**
  * Generic wrapper for React component.

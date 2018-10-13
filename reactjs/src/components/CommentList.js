@@ -3,8 +3,6 @@ import Comment from './Comment'
 import SendComment from './SendComment'
 import AnyCommentComponent from "./AnyCommentComponent";
 import {toast} from 'react-toastify';
-import $ from 'jquery';
-
 
 /**
  * CommentList displays list of comments.
@@ -224,7 +222,7 @@ class CommentList extends AnyCommentComponent {
         if (this.hasSpecificCommentAnchor()) {
             const interval = setInterval(function () {
 
-                const element = $(hash);
+                const element = document.getElementById(hash);
                 const commentElement = element.length;
 
                 if (!commentElement) {
