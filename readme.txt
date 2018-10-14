@@ -55,6 +55,7 @@ And good new is AnyComment is free & no dependency on third party services, all 
 * Provide `Privacy Policy` link, so users know how their data processed and used (when not provided, no checkbox will be shown to users)
 * Social avatars shown globally
 * Likes (see likes count per comment/user in admin)
+* Ability to rate (1-5 stars) page in comments (1-5 stars)
 * Edit/delete comments when you are the owner or have moderate permission(s) directly in client area
 * Assign default group for users who authorize via social network
 * See user's social profile URL in admin
@@ -168,7 +169,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Enhancements:**
 
-* Added ability to rate post from 1 to 5 stars, #156
+* Added ability to rate page in comments as guest or logged in user, #156
 
 
 **Fixes:**

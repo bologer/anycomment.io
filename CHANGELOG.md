@@ -4,7 +4,7 @@
 
 **Enhancements:**
 
-* Added ability to rate post from 1 to 5 stars, #156
+* Added ability to rate page in comments as guest or logged in user, #156
 
 
 **Fixes:**
