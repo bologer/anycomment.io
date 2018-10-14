@@ -4,6 +4,8 @@
   .anycomment-rating {
     display: flex;
     flex-direction: row;
+    border-bottom: 1px solid $border-color;
+    padding-bottom: 10px;
 
     &__stars {
       margin-right: 10px;

@@ -91,28 +91,41 @@ class AnyCommentRating {
 
 
 	/**
-	 * Check whether passed user id rated page or not.
+	 * Check whether passed user id or IP address has rated.
 	 *
-	 * @param $post_id
-	 * @param $user_id
+	 * @param int $post_id Post ID.
+	 * @param int|string|null $user_id_or_ip User ID or IP address. When NULL currnet user's IP address will be used.
 	 *
 	 * @since 0.0.61
 	 *
 	 * @return bool|int
 	 */
-	public static function current_user_rated( $post_id, $user_id ) {
+	public static function current_user_rated( $post_id, $user_id_or_ip ) {
 
 		$post = get_post( $post_id );
-		$user = get_user_by( 'id', $user_id );
 
-		if ( $post === null || $user === false ) {
+		if ( $post === null ) {
 			return false;
+		}
+
+		if ( is_numeric( $user_id_or_ip ) ) {
+			$user = get_user_by( 'id', $user_id_or_ip );
+
+			if ( ! $user ) {
+				return false;
+			}
+
+			$field      = 'user_ID';
+			$field_type = '%d';
+		} else {
+			$field_type = '%s';
+			$field      = 'ip';
 		}
 
 		$table = static::tableName();
 
 		global $wpdb;
-		$sql   = $wpdb->prepare( "SELECT COUNT(*) FROM `$table` WHERE `post_ID` =%d AND `user_ID`=%d", $post_id, $user_id );
+		$sql   = $wpdb->prepare( "SELECT COUNT(*) FROM `$table` WHERE `post_ID` =%d AND `$field`=$field_type", $post_id, $user_id_or_ip );
 		$count = $wpdb->get_var( $sql );
 
 		return $count >= 1;
@@ -125,11 +138,11 @@ class AnyCommentRating {
 	 *
 	 * @param int $rating Rating between 1-5.
 	 * @param int $post_id Post ID for which rate is being added.
-	 * @param int $user_id User ID who is rating.
+	 * @param int|string|null $user_id_or_ip User ID or IP address who is placing rating. When NULL current users IP address will be used.
 	 *
 	 * @return false|AnyCommentRating
 	 */
-	public static function add_rating( $rating, $post_id, $user_id ) {
+	public static function add_rating( $rating, $post_id, $user_id_or_ip = null ) {
 
 		$rating = (int) $rating;
 
@@ -143,18 +156,27 @@ class AnyCommentRating {
 			return false;
 		}
 
-		$user = get_user_by( 'id', $user_id );
+		$model = new self();
 
-		if ( ! $user ) {
-			return false;
+		$user_ip = AnyCommentHelper::get_user_ip();
+
+		if ( is_numeric( $user_id_or_ip ) ) {
+			$user = get_user_by( 'id', $user_id_or_ip );
+
+			if ( ! $user ) {
+				return false;
+			}
+
+			$model->user_ID = $user->ID;
+			$model->ip      = $user_ip;
+		} else {
+			$model->ip = $user_ip;
 		}
 
-		$model             = new self();
-		$model->post_ID    = $post->ID;
-		$model->user_ID    = $user->ID;
+		$model->post_ID = $post->ID;
+
 		$model->rating     = $rating;
 		$model->user_agent = isset( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : null;
-		$model->ip         = isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : null;
 		$model->created_at = time();
 
 		global $wpdb;

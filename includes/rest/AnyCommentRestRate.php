@@ -60,12 +60,6 @@ class AnyCommentRestRate extends AnyCommentRestController {
 			return new WP_Error( 'rest_rate_rating_incorrect_value', __( 'Sorry, rating should be between 1 and 5.' ), [ 'status' => 403 ] );
 		}
 
-		$user = wp_get_current_user();
-
-		if ( (int) $user->ID === 0 ) {
-			return new WP_Error( 'rest_rate_need_to_login', __( 'Sorry, you need to login to rate.', 'anycomment' ), [ 'status' => 403 ] );
-		}
-
 		$post = get_post( (int) $request['post'] );
 
 		if ( ! $post ) {
@@ -80,7 +74,14 @@ class AnyCommentRestRate extends AnyCommentRestController {
 			return new WP_Error( 'rest_rate_trash_post', __( 'Sorry, you are not allowed to create a comment on this post.', 'anycomment' ), [ 'status' => 403 ] );
 		}
 
-		if ( AnyCommentRating::current_user_rated( $post->ID, $user->ID ) ) {
+		$user = wp_get_current_user();
+		$user_id_or_ip = null;
+
+		if ( (int) $user->ID !== 0 ) {
+			$user_id_or_ip = $user->ID;
+		}
+
+		if ( AnyCommentRating::current_user_rated( $post->ID, $user_id_or_ip ) ) {
 			return new WP_Error( 'rest_rate_already_rated', __( 'Sorry, you already rated', 'anycomment' ), [ 'status' => 403 ] );
 		}
 
@@ -99,12 +100,17 @@ class AnyCommentRestRate extends AnyCommentRestController {
 	 */
 	public function create_item( $request ) {
 
-		$user = wp_get_current_user();
-
 		$post_id = $request['post'];
 
+		$user = wp_get_current_user();
+		$user_id_or_ip = null;
 
-		$rate = AnyCommentRating::add_rating( $request['rating'], $post_id, $user->ID );
+		if ( (int) $user->ID !== 0 ) {
+			$user_id_or_ip = $user->ID;
+		}
+
+
+		$rate = AnyCommentRating::add_rating( $request['rating'], $post_id, $user_id_or_ip );
 
 		if ( ! $rate ) {
 			return new WP_Error( 'rest_rate_something_wrong', __( 'Sorry, something went wrong. Please try to rate again.', 'anycomment' ) );
@@ -145,23 +151,5 @@ class AnyCommentRestRate extends AnyCommentRestController {
 		$response = rest_ensure_response( $data );
 
 		return $response;
-	}
-
-	/**
-	 * Check whether current user can upload files or not.
-	 *
-	 * @return bool
-	 */
-	public function can_upload() {
-		$is_file_upload_allowed = AnyCommentGenericSettings::isFileUploadAllowed();
-		$is_guest               = ! is_user_logged_in();
-
-		if ( $is_file_upload_allowed && ! $is_guest ) {
-			return true;
-		} else if ( $is_file_upload_allowed && $is_guest && AnyCommentGenericSettings::isGuestCanUpload() ) {
-			return true;
-		}
-
-		return false;
 	}
 }

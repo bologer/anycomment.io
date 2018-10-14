@@ -215,6 +215,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			require_once( ANYCOMMENT_ABSPATH . 'vendor/autoload.php' );
 
 			// Helpers
+			include_once( ANYCOMMENT_ABSPATH . 'includes/helpers/AnyCommentHelper.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/helpers/AnyCommentInputHelper.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/helpers/AnyCommentLinkHelper.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/helpers/AnyCommentManipulatorHelper.php' );
