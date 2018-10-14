@@ -14,6 +14,7 @@
 * Fixed issue when non-admin user was unable to send some of the custom formatting from editor, #210
 * Fixed issue when some clients have new MySQL version and `utf8mb4_unicode_520_ci` is no longer support, #211
 * Fixed issue when close button of the gallery was not seen because of admin bar being over it (when user is logged in), #209
+* Added missing set-up instructions per social network, #215
 
 ## 0.0.60 – 10.10.2018
 

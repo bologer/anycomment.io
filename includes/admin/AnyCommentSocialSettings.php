@@ -307,7 +307,7 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
                             </div>
 							<?php
 						},
-                    ]
+					]
 				]
 			);
 
@@ -351,7 +351,7 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
                             </div>
 							<?php
 						},
-                    ]
+					]
 				]
 			);
 
@@ -446,7 +446,7 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 							<?php
 						},
 
-                    ]
+					]
 				]
 			);
 
@@ -492,7 +492,7 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 							<?php
 						},
 
-                    ]
+					]
 				]
 			);
 
@@ -537,7 +537,7 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 							<?php
 						},
 
-                    ]
+					]
 				]
 			);
 
@@ -581,7 +581,7 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
                             </div>
 							<?php
 						},
-                    ]
+					]
 				]
 			);
 
@@ -715,85 +715,6 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 * @param string $page The slug name of the page whose settings sections you want to output
 		 * @param bool Whether required to have header or not.
 		 */
-		private function do_settings_sections( $page, $includeHeader = true ) {
-			global $wp_settings_sections, $wp_settings_fields;
-
-			if ( ! isset( $wp_settings_sections[ $page ] ) ) {
-				return;
-			}
-
-			$i = 0;
-			foreach ( (array) $wp_settings_sections[ $page ] as $section ) {
-				if ( $includeHeader && $section['title'] ) {
-					echo "<h2>{$section['title']}</h2>\n";
-				}
-
-				if ( $includeHeader && $section['callback'] ) {
-					call_user_func( $section['callback'], $section );
-				}
-
-				if ( ! isset( $wp_settings_fields ) || ! isset( $wp_settings_fields[ $page ] ) || ! isset( $wp_settings_fields[ $page ][ $section['id'] ] ) ) {
-					continue;
-				}
-
-				$social     = str_replace( 'section_', '', $section['id'] );
-				$guide_link = static::getGuide( [ 'social' => $social ] );
-
-
-				echo '<div id="tab-' . $section['id'] . '" class="anycomment-tabs__container__tab ' . ( $i === 0 ? 'current' : '' ) . '">';
-				echo '<div class="form-table-wrapper ' . ( $guide_link !== null ? 'has-guide' : '' ) . '">';
-				echo '<table class="form-table">';
-				$this->do_settings_fields( $page, $section['id'] );
-
-				?>
-                <tr>
-                    <td>
-                        <input type="text" id="<?= $social ?>-callback" onclick="this.select()" readonly="readonly"
-                               value="<?= AnyCommentSocialAuth::get_callback_url( $social ) ?>">
-                        <p class="description"><?= __( 'Callback URL', 'anycomment' ) ?></p>
-                    </td>
-                </tr>
-				<?php
-				echo '</table>';
-				echo '</div>';
-
-				if ( $guide_link !== null ) {
-					$path = sprintf( AnyComment()->plugin_url() . '/assets/img/icons/auth/%s.svg', str_replace( 'section_', 'social-', $section['id'] ) );
-					?>
-                    <div class="form-table-guide">
-                        <div class="anycomment-guide-block">
-                            <div class="anycomment-guide-block-social-icon">
-                                <img src="<?= $path ?>" alt="">
-                            </div>
-                            <div class="anycomment-guide-block-header"><?= sprintf( __( "How To Set-Up %s", 'anycomment' ), $section['title'] ) ?></div>
-                            <div class="anycomment-guide-block-link">
-                                <a target="_blank" href="<?= $guide_link ?>"><?= __( "Read", 'anycomment' ) ?></a>
-                            </div>
-                        </div>
-                    </div>
-					<?php
-				}
-
-				echo '<div class="clearfix"></div></div>';
-
-				$i ++;
-			}
-		}
-
-		/**
-		 * Custom wrapper over original WordPress core method.
-		 *
-		 * Part of the Settings API. Use this in a settings page callback function
-		 * to output all the sections and fields that were added to that $page with
-		 * add_settings_section() and add_settings_field()
-		 *
-		 * @global $wp_settings_sections Storage array of all settings sections added to admin pages
-		 * @global $wp_settings_fields Storage array of settings fields and info about their pages/sections
-		 * @since 0.0.45
-		 *
-		 * @param string $page The slug name of the page whose settings sections you want to output
-		 * @param bool Whether required to have header or not.
-		 */
 		protected function do_tab_sections( $page, $includeHeader = true ) {
 			global $wp_settings_sections, $wp_settings_fields;
 
@@ -803,7 +724,7 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 
 			$i = 0;
 			foreach ( (array) $wp_settings_sections[ $page ] as $section ) {
-				if ( $includeHeader && $section['title'] ) {
+				if ( $includeHeader && isset( $section['title'] ) ) {
 					echo "<h2>{$section['title']}</h2>";
 				}
 
@@ -818,6 +739,26 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 				echo '<div id="tab-' . $section['id'] . '" class="anycomment-tabs__container__tab ' . ( $i === 0 ? 'current' : '' ) . '">';
 				echo '<div class="grid-x anycomment-form-wrapper">';
 				$this->do_settings_fields( $page, $section['id'] );
+
+				$social     = str_replace( 'section_', '', $section['id'] );
+				$guide_link = static::getGuide( [ 'social' => $social ] );
+
+				if ( $guide_link !== null ) {
+					$path = sprintf( AnyComment()->plugin_url() . '/assets/img/icons/auth/%s.svg', str_replace( 'section_', 'social-', $section['id'] ) );
+					?>
+                    <div class="cell anycomment-form-wrapper__field">
+                        <div class="anycomment-guide-block">
+                            <div class="anycomment-guide-block-social-icon">
+                                <img src="<?= $path ?>" alt="">
+                            </div>
+                            <div class="anycomment-guide-block-header"><?= sprintf( __( "How To Set-Up %s", 'anycomment' ), $section['title'] ) ?></div>
+                            <div class="anycomment-guide-block-link">
+                                <a target="_blank" href="<?= $guide_link ?>"><?= __( "Read", 'anycomment' ) ?></a>
+                            </div>
+                        </div>
+                    </div>
+					<?php
+				}
 				echo '</div>';
 
 				echo '</div>';
