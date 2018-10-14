@@ -21,23 +21,23 @@ class AnyCommentCommentHooks {
 		add_action( 'delete_comment', [ $this, 'process_deleted_comment' ], 10, 2 );
 
 		// Should drop comment cache after it was deleted, just in case
-		add_action( 'deleted_comment', [ $this, 'process_soft_comment' ], 10, 2 );
+//		add_action( 'deleted_comment', [ $this, 'process_soft_comment' ], 10, 2 );
 
 		// After comment was updated
-		add_action( 'edit_comment', [ $this, 'process_edit_comment' ], 10, 2 );
+//		add_action( 'edit_comment', [ $this, 'process_edit_comment' ], 10, 2 );
 
 		// After comment was trashed, marked as spam, etc
-		add_action( 'trashed_comment', [ $this, 'process_soft_comment' ], 10, 2 );
-		add_action( 'untrashed_comment', [ $this, 'process_soft_comment' ], 10, 2 );
-		add_action( 'spam_comment', [ $this, 'process_soft_comment' ], 10, 2 );
-		add_action( 'unspam_comment', [ $this, 'process_soft_comment' ], 10, 2 );
+//		add_action( 'trashed_comment', [ $this, 'process_soft_comment' ], 10, 2 );
+//		add_action( 'untrashed_comment', [ $this, 'process_soft_comment' ], 10, 2 );
+//		add_action( 'spam_comment', [ $this, 'process_soft_comment' ], 10, 2 );
+//		add_action( 'unspam_comment', [ $this, 'process_soft_comment' ], 10, 2 );
 
 		// On comment status change
-		add_action( 'wp_set_comment_status', [ $this, 'process_set_status_comment' ], 10, 2 );
+//		add_action( 'wp_set_comment_status', [ $this, 'process_set_status_comment' ], 10, 2 );
 
 
 		// Extend allowed HTML tags to the needs of visual editor
-		add_filter( 'wp_kses_allowed_html', [$this, 'kses_allowed_html_for_quill'] );
+		add_filter( 'wp_kses_allowed_html', [ $this, 'kses_allowed_html_for_quill' ] );
 	}
 
 	/**
@@ -96,13 +96,6 @@ class AnyCommentCommentHooks {
 	 * @param mixed $data Comment data.
 	 */
 	public function process_edit_comment( $comment_id, $data ) {
-
-		$comment = get_comment( $comment_id );
-
-		if ( $comment !== null ) {
-			// Need to drop comments cache
-			\anycomment\cache\rest\AnyCommentRestCacheManager::flushComment( $comment->comment_post_ID, $comment_id );
-		}
 	}
 
 	/**
@@ -112,14 +105,6 @@ class AnyCommentCommentHooks {
 	 * @param int $status Status to be assigned.
 	 */
 	public function process_set_status_comment( $comment_id, $status ) {
-
-		// Get cache object, as `wp_set_comment_status` hook does not provide it
-		$comment = get_comment( $comment_id );
-
-		if ( $comment !== null ) {
-			// Just flush cache for the moment
-			$this->process_soft_comment( $comment_id, $comment );
-		}
 	}
 
 	/**
@@ -131,7 +116,5 @@ class AnyCommentCommentHooks {
 	 * @param WP_Comment $comment Comment object.
 	 */
 	public function process_soft_comment( $comment_id, $comment ) {
-		// Need to drop comments cache
-		\anycomment\cache\rest\AnyCommentRestCacheManager::flushComment( $comment->comment_post_ID, $comment_id );
 	}
 }

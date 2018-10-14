@@ -594,10 +594,6 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			$this->handle_status_param( 'hold', $comment_id );
 		}
 
-		// Flush comment when reply sent, etc
-		\anycomment\cache\rest\AnyCommentRestCacheManager::flushComment( $request['post'], $comment_id );
-
-
 		$comment = get_comment( $comment_id );
 
 		if ( AnyCommentGenericSettings::isNotifyOnNewReply() ) {
@@ -846,36 +842,17 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	 * @return WP_REST_Response Response object.
 	 */
 	public function prepare_item_for_response( $comment, $request ) {
-
-		$cachedComment = \anycomment\cache\rest\AnyCommentRestCacheManager::getComment( $comment->comment_post_ID, $comment->comment_ID );
-
-		if ( ! $cachedComment->isMiss() ) {
-			return $cachedComment->get();
-		}
-
 		$child_comments = AnyComment()->render->get_child_comments( $comment->comment_ID );
 
 		if ( ! empty( $child_comments ) ) {
 
 			foreach ( $child_comments as $key => $child_comment ) {
+				$prepared_child_comment = $this->prepare_item_for_response( $child_comment, $request );
 
-				// Check whether child comment is cache or not
-				$childCachedComment = \anycomment\cache\rest\AnyCommentRestCacheManager::getComment( $child_comment->comment_post_ID, $child_comment->comment_ID );
-
-				if ( ! $childCachedComment->isMiss() ) {
-					$childCache             = $childCachedComment->get();
-					$child_comments[ $key ] = isset( $childCache->data ) ? $childCache->data : $childCache;
-				} else {
-					$prepared_child_comment = $this->prepare_item_for_response( $child_comment, $request );
-					if ( isset( $prepared_child_comment->data ) ) {
-						$prepared_child_comment = $prepared_child_comment->data;
-					}
-
-					// Cache child comment
-					$childCachedComment->set( $prepared_child_comment )->save();
-
-					$child_comments[ $key ] = $prepared_child_comment;
+				if ( isset( $prepared_child_comment->data ) ) {
+					$prepared_child_comment = $prepared_child_comment->data;
 				}
+				$child_comments[ $key ] = $prepared_child_comment;
 			}
 		}
 
@@ -909,7 +886,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			'parent_author_name' => (int) $comment->comment_parent !== 0 ? get_comment_author( $comment->comment_parent ) : '',
 			'author'             => (int) $comment->user_id,
 			'author_name'        => $comment->comment_author,
-			'date'               => mysql2date('c', $comment->comment_date, false),
+			'date'               => mysql2date( 'c', $comment->comment_date, false ),
 			'date_gmt'           => mysql2date( 'c', $comment->comment_date_gmt, false ),
 			'content'            => $comment->comment_content,
 			'avatar_url'         => AnyComment()->auth->get_user_avatar_url( (int) $comment->user_id !== 0 ? $comment->user_id : $comment->comment_author_email ),
@@ -926,15 +903,12 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			]
 		);
 
-
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 		$data    = $this->add_additional_fields_to_object( $data, $request );
 		$data    = $this->filter_response_by_context( $data, $context );
 
 		// Wrap the data in a response object.
 		$response = rest_ensure_response( $data );
-
-		$cachedComment->set( $response )->save();
 
 		return $response;
 	}
