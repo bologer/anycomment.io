@@ -1,7 +1,8 @@
 import React from 'react'
 import AnyCommentComponent from "./AnyCommentComponent";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faStar, faStarHalf} from '@fortawesome/free-solid-svg-icons'
+import {faStar, faStarHalfAlt} from '@fortawesome/free-solid-svg-icons'
+import {toast} from 'react-toastify'
 
 /**
  * Component used to display rating.
@@ -14,6 +15,7 @@ class PageRating extends AnyCommentComponent {
         this.state = {
             value: props.settings.rating.value,
             count: props.settings.rating.count,
+            hasRated: props.settings.rating.hasRated
         }
     }
 
@@ -30,6 +32,11 @@ class PageRating extends AnyCommentComponent {
         const settings = this.getSettings(),
             self = this;
 
+        if (this.state.hasRated) {
+            toast.error(settings.i18.already_rated);
+            return false;
+        }
+
         return this.props.axios
             .request({
                 method: 'post',
@@ -44,6 +51,7 @@ class PageRating extends AnyCommentComponent {
                 self.setState({
                     value: response.data.value,
                     count: response.data.count,
+                    hasRated: true
                 });
             })
             .catch(function (error) {
@@ -61,29 +69,22 @@ class PageRating extends AnyCommentComponent {
 
         let {value} = this.state;
 
-        let halfAfter = null;
+        const matches = value > 0 ? value.match(/([1-5])\.([0-9])/m) : [];
 
         for (let i = 5; i >= 1; i--) {
-            const isHalfStar = (halfAfter !== null && i === halfAfter);
 
-
-            console.log(halfAfter);
-
-            if (isHalfStar) {
-                console.log(i, halfAfter);
-            }
-
-            const svg = <FontAwesomeIcon size={24} icon={isHalfStar ? faStarHalf : faStar}/>,
-                isActive = i <= value,
+            const isActive = i <= value,
                 activeClass = isActive ? " anycomment-rating__stars-item-active" : '';
+
+            let icon = faStar;
+
+            if (matches !== [] && parseInt(matches[1]) === i && matches[2] >= 5) {
+                icon = faStarHalfAlt;
+            }
 
             const item = <span
                 className={"anycomment anycomment-rating__stars-item" + activeClass}
-                onClick={(e) => this.rate(e, i)}>{svg}</span>;
-
-            if ((value / i) === 1 && (value * 2) % 0.5 !== 0) {
-                halfAfter = i;
-            }
+                onClick={(e) => this.rate(e, i)}><FontAwesomeIcon size={24} icon={icon}/></span>;
 
             stars.push(item);
         }
@@ -97,9 +98,13 @@ class PageRating extends AnyCommentComponent {
      * @returns {*}
      */
     render() {
+        const {value, count, hasRated} = this.state;
+
         return (
-            <div itemScope itemType="http://schema.org/Product" className="anycomment anycomment-rating">
-                <div className="anycomment anycomment-rating__stars">
+            <div itemScope itemType="http://schema.org/Product"
+                 className="anycomment anycomment-rating">
+                <div
+                    className={"anycomment anycomment-rating__stars" + (hasRated ? " anycomment-rating__stars-readonly" : '')}>
                     {this.renderStars()}
                 </div>
                 <div className="anycomment anycomment-rating__count"
@@ -107,9 +112,9 @@ class PageRating extends AnyCommentComponent {
                      itemScope
                      itemType="http://schema.org/AggregateRating">
                     <span className="anycomment anycomment-rating__count-value"
-                          itemProp="ratingValue">{this.state.value}</span>&nbsp;/&nbsp;
+                          itemProp="ratingValue">{value}</span>&nbsp;/&nbsp;
                     <span className="anycomment anycomment-rating__count-count"
-                          itemProp="reviewCount">{this.state.count}</span>
+                          itemProp="reviewCount">{count}</span>
                 </div>
             </div>
         );

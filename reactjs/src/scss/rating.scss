@@ -4,7 +4,7 @@
   .anycomment-rating {
     display: flex;
     flex-direction: row;
-    border-bottom: 1px solid $border-color;
+    border-bottom: 1px solid $semi-hidden-color;
     padding-bottom: 10px;
 
     &__stars {
@@ -17,6 +17,7 @@
           color: #ddd;
           width: 22px;
           height: 22px;
+          cursor: pointer;
         }
       }
 

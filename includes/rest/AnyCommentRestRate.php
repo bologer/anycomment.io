@@ -74,7 +74,7 @@ class AnyCommentRestRate extends AnyCommentRestController {
 			return new WP_Error( 'rest_rate_trash_post', __( 'Sorry, you are not allowed to create a comment on this post.', 'anycomment' ), [ 'status' => 403 ] );
 		}
 
-		$user = wp_get_current_user();
+		$user          = wp_get_current_user();
 		$user_id_or_ip = null;
 
 		if ( (int) $user->ID !== 0 ) {
@@ -82,7 +82,7 @@ class AnyCommentRestRate extends AnyCommentRestController {
 		}
 
 		if ( AnyCommentRating::current_user_rated( $post->ID, $user_id_or_ip ) ) {
-			return new WP_Error( 'rest_rate_already_rated', __( 'Sorry, you already rated', 'anycomment' ), [ 'status' => 403 ] );
+			return new WP_Error( 'rest_rate_already_rated', __( 'You have already rated', 'anycomment' ), [ 'status' => 403 ] );
 		}
 
 		return true;
@@ -102,7 +102,7 @@ class AnyCommentRestRate extends AnyCommentRestController {
 
 		$post_id = $request['post'];
 
-		$user = wp_get_current_user();
+		$user          = wp_get_current_user();
 		$user_id_or_ip = null;
 
 		if ( (int) $user->ID !== 0 ) {

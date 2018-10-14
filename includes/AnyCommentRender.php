@@ -106,8 +106,9 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 						'postUrl' => $postPermalink,
 					],
 					'rating'       => [
-						'value' => AnyCommentRating::get_average_by_post( $postId ),
-						'count' => AnyCommentRating::get_count_by_post( $postId )
+						'value'    => AnyCommentRating::get_average_by_post( $postId ),
+						'count'    => AnyCommentRating::get_count_by_post( $postId ),
+						'hasRated' => AnyCommentRating::current_user_rated( $postId, get_current_user_id() )
 					],
 					// Options from plugin
 					'options'      => [
@@ -172,6 +173,7 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 						'name'                           => __( 'Name', 'anycomment' ),
 						'email'                          => __( 'Email', 'anycomment' ),
 						'website'                        => __( 'Website', 'anycomment' ),
+						'already_rated'                  => __( 'You have already rated', 'anycomment' ),
 						'accept_user_agreement'          => sprintf(
 							__( 'I accept the <a href="%s"%s>User Agreement</a>', 'anycomment' ),
 							AnyCommentGenericSettings::getUserAgreementLink(),

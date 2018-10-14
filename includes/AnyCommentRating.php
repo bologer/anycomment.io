@@ -108,7 +108,7 @@ class AnyCommentRating {
 			return false;
 		}
 
-		if ( is_numeric( $user_id_or_ip ) ) {
+		if ( is_numeric( $user_id_or_ip ) && (int) $user_id_or_ip !== 0 ) {
 			$user = get_user_by( 'id', $user_id_or_ip );
 
 			if ( ! $user ) {
