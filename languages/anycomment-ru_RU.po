@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-14 20:01+0000\n"
-"PO-Revision-Date: 2018-10-14 20:07+0000\n"
+"POT-Creation-Date: 2018-10-14 20:32+0000\n"
+"PO-Revision-Date: 2018-10-14 20:33+0000\n"
 "Last-Translator: admin <sasha.tesh@gmail.com>\n"
 "Language-Team: Русский\n"
 "Language: ru_RU\n"
@@ -114,166 +114,166 @@ msgstr "ВК"
 msgid "Github"
 msgstr "Github"
 
-#: includes/AnyCommentRender.php:151
+#: includes/AnyCommentRender.php:155
 msgid "Oops, something went wrong..."
 msgstr "Упс, что-то пошло не так. Попробуйте перезагрузить страницу."
 
-#: includes/AnyCommentRender.php:152
+#: includes/AnyCommentRender.php:156
 msgid "Loading..."
 msgstr "Загрузка..."
 
-#: includes/AnyCommentRender.php:153
+#: includes/AnyCommentRender.php:157
 msgid "Load more"
 msgstr "Загрузить еще"
 
-#: includes/AnyCommentRender.php:154
+#: includes/AnyCommentRender.php:158
 msgid "Send"
 msgstr "Отправить"
 
-#: includes/AnyCommentRender.php:155
+#: includes/AnyCommentRender.php:159
 #: includes/admin/AnyCommentAdminOptions.php:261
-#: includes/admin/AnyCommentGenericSettings.php:906
+#: includes/admin/AnyCommentGenericSettings.php:918
 #: includes/admin/AnyCommentSocialSettings.php:645
 msgid "Save"
 msgstr "Сохранить"
 
-#: includes/AnyCommentRender.php:156 includes/AnyCommentRender.php:165
+#: includes/AnyCommentRender.php:160 includes/AnyCommentRender.php:169
 msgid "Reply"
 msgstr "Ответить"
 
-#: includes/AnyCommentRender.php:157
+#: includes/AnyCommentRender.php:161
 msgid "Sorting"
 msgstr "Сортировка"
 
-#: includes/AnyCommentRender.php:158
+#: includes/AnyCommentRender.php:162
 msgid "Sort By"
 msgstr "Сортировка"
 
-#: includes/AnyCommentRender.php:159
+#: includes/AnyCommentRender.php:163
 msgid "Oldest"
 msgstr "Старые"
 
-#: includes/AnyCommentRender.php:160
+#: includes/AnyCommentRender.php:164
 msgid "Newest"
 msgstr "Новые"
 
-#: includes/AnyCommentRender.php:161
+#: includes/AnyCommentRender.php:165
 msgid "reply to"
 msgstr "ответ для"
 
-#: includes/AnyCommentRender.php:162
+#: includes/AnyCommentRender.php:166
 msgid "Your comment..."
 msgstr "Ваш комментарий..."
 
-#: includes/AnyCommentRender.php:163
+#: includes/AnyCommentRender.php:167
 msgid "No comments to display"
 msgstr "Пока еще не было комментариев"
 
-#: includes/AnyCommentRender.php:164
+#: includes/AnyCommentRender.php:168
 msgid "Add Anycomment to your site"
 msgstr "Добавить AnyComment на свой сайт"
 
-#: includes/AnyCommentRender.php:166
+#: includes/AnyCommentRender.php:170
 msgid "Edit"
 msgstr "Изменить"
 
-#: includes/AnyCommentRender.php:167
+#: includes/AnyCommentRender.php:171
 #: includes/admin/tables/AnyCommentUploadedFilesTable.php:145
 msgid "Delete"
 msgstr "Удалить"
 
-#: includes/AnyCommentRender.php:168
+#: includes/AnyCommentRender.php:172
 msgid "Cancel"
 msgstr "Отменить"
 
-#: includes/AnyCommentRender.php:169
+#: includes/AnyCommentRender.php:173
 msgid "Quick Login"
 msgstr "Быстрый вход"
 
-#: includes/AnyCommentRender.php:170
+#: includes/AnyCommentRender.php:174
 msgid "Logout"
 msgstr "Выйти"
 
-#: includes/AnyCommentRender.php:171
+#: includes/AnyCommentRender.php:175
 msgid "New comment was added"
 msgstr "Был добавлен новый комментарий"
 
-#: includes/AnyCommentRender.php:172
+#: includes/AnyCommentRender.php:176
 msgid "Author"
 msgstr "Автор"
 
-#: includes/AnyCommentRender.php:173
+#: includes/AnyCommentRender.php:177
 msgid "Name"
 msgstr "Имя"
 
-#: includes/AnyCommentRender.php:174
+#: includes/AnyCommentRender.php:178
 msgid "Email"
 msgstr "Почта"
 
-#: includes/AnyCommentRender.php:175
+#: includes/AnyCommentRender.php:179
 msgid "Website"
 msgstr "Веб-сайт"
 
-#: includes/AnyCommentRender.php:176 includes/rest/AnyCommentRestRate.php:87
+#: includes/AnyCommentRender.php:180 includes/rest/AnyCommentRestRate.php:87
 msgid "You have already rated"
 msgstr "Вы уже ставили рейтинг"
 
-#: includes/AnyCommentRender.php:178
+#: includes/AnyCommentRender.php:182
 #, php-format
 msgid "I accept the <a href=\"%s\"%s>User Agreement</a>"
 msgstr "Я даю согласие на обработку <a href=\"%s\"%s>персональных данных</a>"
 
-#: includes/AnyCommentRender.php:182
+#: includes/AnyCommentRender.php:186
 msgid "Upload file"
 msgstr "Загрузить файл"
 
-#: includes/AnyCommentRender.php:183
+#: includes/AnyCommentRender.php:187
 msgid "Uploading..."
 msgstr "Идет загрузка..."
 
-#: includes/AnyCommentRender.php:184
+#: includes/AnyCommentRender.php:188
 msgid "Uploaded!"
 msgstr "Загружено!"
 
-#: includes/AnyCommentRender.php:185
+#: includes/AnyCommentRender.php:189
 #, php-format
 msgid "File %s is too big"
 msgstr "Файл %s слишком большой"
 
-#: includes/AnyCommentRender.php:186
+#: includes/AnyCommentRender.php:190
 #, php-format
 msgid "You may upload %s file(s) at maximum"
 msgstr "Вы можете загрузить максимум %s файл(-ов)"
 
-#: includes/AnyCommentRender.php:187
+#: includes/AnyCommentRender.php:191
 msgid "No file selected or select proper extension"
 msgstr "Не выбраны файлы или не правильное расширение"
 
-#: includes/AnyCommentRender.php:188
+#: includes/AnyCommentRender.php:192
 msgid "Read more"
 msgstr "Читать далее"
 
-#: includes/AnyCommentRender.php:189
+#: includes/AnyCommentRender.php:193
 msgid "Show less"
 msgstr "Показать меньше"
 
-#: includes/AnyCommentRender.php:194
+#: includes/AnyCommentRender.php:198
 msgid "Close (Esc)"
 msgstr "Закрыть (Esc)"
 
-#: includes/AnyCommentRender.php:195
+#: includes/AnyCommentRender.php:199
 msgid "Previous (Left arrow key)"
 msgstr "Предыдущая (левая стрелка)"
 
-#: includes/AnyCommentRender.php:196
+#: includes/AnyCommentRender.php:200
 msgid "Next (Right arrow key)"
 msgstr "Следующая (правая стрелка)"
 
-#: includes/AnyCommentRender.php:197
+#: includes/AnyCommentRender.php:201
 msgid " of "
 msgstr " из "
 
-#: includes/AnyCommentRender.php:275
+#: includes/AnyCommentRender.php:279
 #, php-format
 msgctxt "REST API Comments Count"
 msgid "%s comment"
@@ -293,13 +293,13 @@ msgstr ""
 "запись защищена паролем. "
 
 #: includes/admin/AnyCommentFiles.php:25 includes/admin/AnyCommentFiles.php:26
-#: includes/admin/AnyCommentGenericSettings.php:373
+#: includes/admin/AnyCommentGenericSettings.php:378
 #: templates/admin/files.php:12
 msgid "Files"
 msgstr "Файлы"
 
 #: includes/admin/AnyCommentIntegrationSettings.php:136
-#: includes/admin/AnyCommentGenericSettings.php:345
+#: includes/admin/AnyCommentGenericSettings.php:350
 msgid "Generic"
 msgstr "Общие"
 
@@ -424,33 +424,33 @@ msgid "Position of reCAPTCHA"
 msgstr "Расположение reCAPTCHA"
 
 #: includes/admin/AnyCommentAdminOptions.php:248
-#: includes/admin/AnyCommentGenericSettings.php:881
+#: includes/admin/AnyCommentGenericSettings.php:893
 #: includes/admin/AnyCommentSocialSettings.php:626
 msgid "Settings Saved"
 msgstr "Настройки сохранены"
 
-#: includes/admin/AnyCommentGenericSettings.php:330
-#: includes/admin/AnyCommentGenericSettings.php:421
+#: includes/admin/AnyCommentGenericSettings.php:335
+#: includes/admin/AnyCommentGenericSettings.php:426
 msgid "Social Network Subscriber"
 msgstr "Подписчик соц. сети"
 
-#: includes/admin/AnyCommentGenericSettings.php:352
+#: includes/admin/AnyCommentGenericSettings.php:357
 msgid "Design"
 msgstr "Дизайн"
 
-#: includes/admin/AnyCommentGenericSettings.php:359
+#: includes/admin/AnyCommentGenericSettings.php:364
 msgid "Moderation"
 msgstr "Модерация"
 
-#: includes/admin/AnyCommentGenericSettings.php:366
+#: includes/admin/AnyCommentGenericSettings.php:371
 msgid "Notifications"
 msgstr "Уведомления"
 
-#: includes/admin/AnyCommentGenericSettings.php:385
+#: includes/admin/AnyCommentGenericSettings.php:390
 msgid "Enable Comments"
 msgstr "Включить комментарии"
 
-#: includes/admin/AnyCommentGenericSettings.php:387
+#: includes/admin/AnyCommentGenericSettings.php:392
 msgid ""
 "When on, comments are visible. When off, default WordPress' comments shown. "
 "This can be used to configure social networks on fresh installation."
@@ -459,66 +459,66 @@ msgstr ""
 "от WordPress отображаются. Это может использоваться для настройки соц. сетей "
 "после первой установки. "
 
-#: includes/admin/AnyCommentGenericSettings.php:391
+#: includes/admin/AnyCommentGenericSettings.php:396
 msgid "Default Sorting"
 msgstr "Сортировка"
 
-#: includes/admin/AnyCommentGenericSettings.php:394
+#: includes/admin/AnyCommentGenericSettings.php:399
 msgid "Newest first"
 msgstr "Сначала новые"
 
-#: includes/admin/AnyCommentGenericSettings.php:395
+#: includes/admin/AnyCommentGenericSettings.php:400
 msgid "Oldest first"
 msgstr "Сначала старые"
 
-#: includes/admin/AnyCommentGenericSettings.php:397
+#: includes/admin/AnyCommentGenericSettings.php:402
 msgid "Default sorting."
 msgstr "Сортировка."
 
-#: includes/admin/AnyCommentGenericSettings.php:401
+#: includes/admin/AnyCommentGenericSettings.php:406
 msgid "Default Avatar"
 msgstr "Аватар по умолчанию"
 
-#: includes/admin/AnyCommentGenericSettings.php:404
+#: includes/admin/AnyCommentGenericSettings.php:409
 msgid "No avatar (from AnyComment)"
 msgstr "Нет аватарки (от AnyComment)"
 
-#: includes/admin/AnyCommentGenericSettings.php:405
+#: includes/admin/AnyCommentGenericSettings.php:410
 msgid "No avatar (from Gravatar)"
 msgstr "Нет аватарки (от Gravatar)"
 
-#: includes/admin/AnyCommentGenericSettings.php:406
+#: includes/admin/AnyCommentGenericSettings.php:411
 msgid "Identicon (from Gravatar)"
 msgstr "Identicon (от Gravatar)"
 
-#: includes/admin/AnyCommentGenericSettings.php:407
+#: includes/admin/AnyCommentGenericSettings.php:412
 msgid "Monsteroid (from Gravatar)"
 msgstr "Monsteroid (от Gravatar)"
 
-#: includes/admin/AnyCommentGenericSettings.php:408
+#: includes/admin/AnyCommentGenericSettings.php:413
 msgid "Wavatar (from Gravatar)"
 msgstr "Wavatar (от Gravatar)"
 
-#: includes/admin/AnyCommentGenericSettings.php:409
+#: includes/admin/AnyCommentGenericSettings.php:414
 msgid "Retro (from Gravatar)"
 msgstr "Retro (от Gravatar)"
 
-#: includes/admin/AnyCommentGenericSettings.php:410
+#: includes/admin/AnyCommentGenericSettings.php:415
 msgid "Robohash (from Gravatar)"
 msgstr "Robohash (от Gravatar)"
 
-#: includes/admin/AnyCommentGenericSettings.php:412
+#: includes/admin/AnyCommentGenericSettings.php:417
 msgid "Default avatar when user does not have any."
 msgstr ""
 "Для пользователей, не имеющих своего аватара, можно показывать либо "
 "стандартное изображение от AnyComment, либо созданное автоматически на "
 "основе их e-mail."
 
-#: includes/admin/AnyCommentGenericSettings.php:416
+#: includes/admin/AnyCommentGenericSettings.php:421
 msgid "Register User Group"
 msgstr "Группа зарегистрированного пользователя"
 
-#: includes/admin/AnyCommentGenericSettings.php:417
+#: includes/admin/AnyCommentGenericSettings.php:422
 msgid ""
 "When users will authorize via plugin, they are being registered and be "
 "assigned with group selected above."
@@ -526,33 +526,33 @@ msgstr ""
 "После авторизации через плагин, система автоматически создает профиль с "
 "выбранной группой выше. "
 
-#: includes/admin/AnyCommentGenericSettings.php:420
+#: includes/admin/AnyCommentGenericSettings.php:425
 msgid "Subscriber"
 msgstr "Подписчик"
 
-#: includes/admin/AnyCommentGenericSettings.php:426
+#: includes/admin/AnyCommentGenericSettings.php:431
 msgid "Number of Comments Loaded"
 msgstr "Кол-во комментариев при загрузке"
 
-#: includes/admin/AnyCommentGenericSettings.php:428
+#: includes/admin/AnyCommentGenericSettings.php:433
 msgid "Number of comments to load initially and per page."
 msgstr "Количество изначально и постранично загружаемых комментариев."
 
-#: includes/admin/AnyCommentGenericSettings.php:432
+#: includes/admin/AnyCommentGenericSettings.php:437
 msgid "Load on Scroll"
 msgstr "Подгружать при сколле"
 
-#: includes/admin/AnyCommentGenericSettings.php:434
+#: includes/admin/AnyCommentGenericSettings.php:439
 msgid "Load comments when user scrolls to it."
 msgstr ""
 "Подгружать комментарии в момент когда пользователь прокрутил (проскроллил) к "
 "ним."
 
-#: includes/admin/AnyCommentGenericSettings.php:439
+#: includes/admin/AnyCommentGenericSettings.php:444
 msgid "Show Profile URL"
 msgstr "Показывать ссылку профиля"
 
-#: includes/admin/AnyCommentGenericSettings.php:441
+#: includes/admin/AnyCommentGenericSettings.php:446
 msgid ""
 "Show link to user in the social media or website when available (name of the "
 "user will be clickable)."
@@ -560,43 +560,51 @@ msgstr ""
 "Показывать ссылку на профиль пользователя в социальной сети или веб-сайт "
 "когда доступно (имя будет кликабельным)."
 
-#: includes/admin/AnyCommentGenericSettings.php:446
+#: includes/admin/AnyCommentGenericSettings.php:451
 msgid "Display Twitter Embeds"
 msgstr "Отображать вставки из Твиттера"
 
-#: includes/admin/AnyCommentGenericSettings.php:448
+#: includes/admin/AnyCommentGenericSettings.php:453
 msgid "Detect & display tweets from Twitter as embedded widget."
 msgstr "Определять & отображать твиты из Твиттера как встроенные виджеты."
 
-#: includes/admin/AnyCommentGenericSettings.php:453
+#: includes/admin/AnyCommentGenericSettings.php:458
 msgid "Display Video Attachments"
 msgstr "Отображать приложенные видео"
 
-#: includes/admin/AnyCommentGenericSettings.php:455
+#: includes/admin/AnyCommentGenericSettings.php:460
 msgid "Display video link from comment as attachment."
 msgstr "Отображать ссылки на видео в комментариях как приложение."
 
-#: includes/admin/AnyCommentGenericSettings.php:460
+#: includes/admin/AnyCommentGenericSettings.php:465
 msgid "Display Image Attachments"
 msgstr "Отображать приложенные картинки"
 
-#: includes/admin/AnyCommentGenericSettings.php:462
+#: includes/admin/AnyCommentGenericSettings.php:467
 msgid "Display image link from comment as attachment."
 msgstr "Отображать ссылки на картинки в комментариях как приложение."
 
-#: includes/admin/AnyCommentGenericSettings.php:466
+#: includes/admin/AnyCommentGenericSettings.php:471
 msgid "Display Rating"
 msgstr "Отображать рейтинг"
 
-#: includes/admin/AnyCommentGenericSettings.php:468
+#: includes/admin/AnyCommentGenericSettings.php:473
 msgid "Display 5 star rating above comments."
 msgstr "Отображать пятизвездочный рейтинг."
 
+#: includes/admin/AnyCommentGenericSettings.php:478
+msgid "Shorten Long Comments"
+msgstr "Укоротить длинные комментарии"
+
 #: includes/admin/AnyCommentGenericSettings.php:480
+msgid "Shorten long comments with \"Read more\" message."
+msgstr "Укоротить длинные комментарии с надписью \"Читать далее\"."
+
+#: includes/admin/AnyCommentGenericSettings.php:492
 msgid "User Agreement Link"
 msgstr "Ссылка на пользовательское соглашение"
 
-#: includes/admin/AnyCommentGenericSettings.php:482
+#: includes/admin/AnyCommentGenericSettings.php:494
 msgid ""
 "Link to User Agreement, where described how your process users data once "
 "they authorize via social network and/or add new comment."
@@ -605,11 +613,11 @@ msgstr ""
 "обрабатываете пользовательскую информацию после того как они авторизуются на "
 "вашем ресурсе и/или добавят комментарий."
 
-#: includes/admin/AnyCommentGenericSettings.php:486
+#: includes/admin/AnyCommentGenericSettings.php:498
 msgid "Thanks"
 msgstr "Спасибо"
 
-#: includes/admin/AnyCommentGenericSettings.php:488
+#: includes/admin/AnyCommentGenericSettings.php:500
 msgid ""
 "Show AnyComment's link in the footer of comments. Copyright helps to bring "
 "awareness of such plugin and bring people to allow us to understand that it "
@@ -619,28 +627,28 @@ msgstr ""
 "нам информировать о плагине и поддерживать дальнейшую разработку и "
 "усовершенствования."
 
-#: includes/admin/AnyCommentGenericSettings.php:499
-#: includes/admin/AnyCommentGenericSettings.php:506
+#: includes/admin/AnyCommentGenericSettings.php:511
+#: includes/admin/AnyCommentGenericSettings.php:518
 msgid "Comment form"
 msgstr "Форма комментария"
 
-#: includes/admin/AnyCommentGenericSettings.php:502
+#: includes/admin/AnyCommentGenericSettings.php:514
 msgid "Social, WordPress & guests"
 msgstr "Социалки, WordPress & гости"
 
-#: includes/admin/AnyCommentGenericSettings.php:503
+#: includes/admin/AnyCommentGenericSettings.php:515
 msgid "Socials & WordPress users only."
 msgstr "Только социалки & WordPress пользователи."
 
-#: includes/admin/AnyCommentGenericSettings.php:504
+#: includes/admin/AnyCommentGenericSettings.php:516
 msgid "Guests only. "
 msgstr "Только гости."
 
-#: includes/admin/AnyCommentGenericSettings.php:510
+#: includes/admin/AnyCommentGenericSettings.php:522
 msgid "Guest Fields"
 msgstr "Гостевые поля"
 
-#: includes/admin/AnyCommentGenericSettings.php:512
+#: includes/admin/AnyCommentGenericSettings.php:524
 msgid ""
 "Use this rearrange guest form fields or remove something. {name} is required "
 "and if you do not add it, it will be added by plugin. {name} is name field, "
@@ -651,154 +659,154 @@ msgstr ""
 "добавлен плагином. {name} - поле имени, {email} - поле почты, {website} - "
 "поле веб-сайта."
 
-#: includes/admin/AnyCommentGenericSettings.php:521
+#: includes/admin/AnyCommentGenericSettings.php:533
 msgid "Enable Toolbar"
 msgstr "Включить опции редактирования"
 
-#: includes/admin/AnyCommentGenericSettings.php:523
+#: includes/admin/AnyCommentGenericSettings.php:535
 msgid ""
 "Enable editor toolbar (show options to modify comment text - bold, italics, "
 "etc)."
 msgstr "Включить опции редактирования (например, жирный, курсив и т.д.)"
 
-#: includes/admin/AnyCommentGenericSettings.php:528
+#: includes/admin/AnyCommentGenericSettings.php:540
 msgid "Bold"
 msgstr "Жирный"
 
-#: includes/admin/AnyCommentGenericSettings.php:530
+#: includes/admin/AnyCommentGenericSettings.php:542
 msgid "Show bold option in editor toolbar."
 msgstr "Показывать жирный в списке опций редактора."
 
-#: includes/admin/AnyCommentGenericSettings.php:535
+#: includes/admin/AnyCommentGenericSettings.php:547
 msgid "Italic"
 msgstr "Курсив"
 
-#: includes/admin/AnyCommentGenericSettings.php:537
+#: includes/admin/AnyCommentGenericSettings.php:549
 msgid "Show italic option in editor toolbar."
 msgstr "Показывать курсив в списке опций редактора."
 
-#: includes/admin/AnyCommentGenericSettings.php:542
+#: includes/admin/AnyCommentGenericSettings.php:554
 msgid "Underline"
 msgstr "Подчеркивание"
 
-#: includes/admin/AnyCommentGenericSettings.php:544
+#: includes/admin/AnyCommentGenericSettings.php:556
 msgid "Show underline option in editor toolbar."
 msgstr "Показывать подчеркивание в списке опций редактора."
 
-#: includes/admin/AnyCommentGenericSettings.php:549
+#: includes/admin/AnyCommentGenericSettings.php:561
 msgid "Quote"
 msgstr "Цитаты"
 
-#: includes/admin/AnyCommentGenericSettings.php:551
+#: includes/admin/AnyCommentGenericSettings.php:563
 msgid "Show quote option in editor toolbar."
 msgstr "Показывать цитаты в списке опций редактора."
 
-#: includes/admin/AnyCommentGenericSettings.php:556
+#: includes/admin/AnyCommentGenericSettings.php:568
 msgid "Ordered list"
 msgstr "Нумерованный список"
 
-#: includes/admin/AnyCommentGenericSettings.php:558
+#: includes/admin/AnyCommentGenericSettings.php:570
 msgid "Show ordered list option in editor toolbar."
 msgstr "Показывать нумерованный список в списке опций редактора."
 
-#: includes/admin/AnyCommentGenericSettings.php:563
+#: includes/admin/AnyCommentGenericSettings.php:575
 msgid "Unordered list"
 msgstr "Неупорядоченный список"
 
-#: includes/admin/AnyCommentGenericSettings.php:565
+#: includes/admin/AnyCommentGenericSettings.php:577
 msgid "Show unordered list option in editor toolbar."
 msgstr "Показывать неупорядоченный список в списке опций редактора."
 
-#: includes/admin/AnyCommentGenericSettings.php:570
+#: includes/admin/AnyCommentGenericSettings.php:582
 msgid "Link"
 msgstr "Ссылки"
 
-#: includes/admin/AnyCommentGenericSettings.php:572
+#: includes/admin/AnyCommentGenericSettings.php:584
 msgid "Show link option in editor toolbar."
 msgstr "Показывать ссылки в списке опций редактора."
 
-#: includes/admin/AnyCommentGenericSettings.php:577
+#: includes/admin/AnyCommentGenericSettings.php:589
 msgid "Clean formatting"
 msgstr "Чистить форматирование"
 
-#: includes/admin/AnyCommentGenericSettings.php:579
+#: includes/admin/AnyCommentGenericSettings.php:591
 msgid "Show clean formatting option in editor toolbar."
 msgstr "Показывать возможность почистить формат в списке опций редактора."
 
-#: includes/admin/AnyCommentGenericSettings.php:584
+#: includes/admin/AnyCommentGenericSettings.php:596
 msgid "Custom Design"
 msgstr "Собственный дизайн"
 
-#: includes/admin/AnyCommentGenericSettings.php:586
+#: includes/admin/AnyCommentGenericSettings.php:598
 msgid ""
 "Use custom design. Enable this option to display design changes from below."
 msgstr ""
 "Использовать собственный дизайн. Включите эту опцию, чтобы настройки ниже "
 "начали действовать."
 
-#: includes/admin/AnyCommentGenericSettings.php:590
+#: includes/admin/AnyCommentGenericSettings.php:602
 msgid "Border radius"
 msgstr "Закругление краев"
 
-#: includes/admin/AnyCommentGenericSettings.php:592
+#: includes/admin/AnyCommentGenericSettings.php:604
 msgid "Border radius. You may use \"px\" or \"%\"."
 msgstr "Закругление краев. Можно указать с \"px\" или \"%\"."
 
-#: includes/admin/AnyCommentGenericSettings.php:596
+#: includes/admin/AnyCommentGenericSettings.php:608
 msgid "Text Size"
 msgstr "Размер текста"
 
-#: includes/admin/AnyCommentGenericSettings.php:598
+#: includes/admin/AnyCommentGenericSettings.php:610
 msgid "Overal text size. You may use \"px\", \"pt\", \"em\" or \"%\"."
 msgstr "Общий размер текста. Можно указать с \"px\", \"pt\", \"em\" или \"%\"."
 
-#: includes/admin/AnyCommentGenericSettings.php:602
+#: includes/admin/AnyCommentGenericSettings.php:614
 msgid "Font Choice"
 msgstr "Шрифт"
 
-#: includes/admin/AnyCommentGenericSettings.php:604
+#: includes/admin/AnyCommentGenericSettings.php:616
 msgid "Global font family."
 msgstr "Глобальный шрифт."
 
-#: includes/admin/AnyCommentGenericSettings.php:609
+#: includes/admin/AnyCommentGenericSettings.php:621
 msgid "Text Color"
 msgstr "Цвет текста"
 
-#: includes/admin/AnyCommentGenericSettings.php:611
+#: includes/admin/AnyCommentGenericSettings.php:623
 msgid "Global text color."
 msgstr "Общий цвет текста."
 
-#: includes/admin/AnyCommentGenericSettings.php:615
+#: includes/admin/AnyCommentGenericSettings.php:627
 msgid "Link Color"
 msgstr "Цвет ссылок"
 
-#: includes/admin/AnyCommentGenericSettings.php:617
+#: includes/admin/AnyCommentGenericSettings.php:629
 msgid "Links color."
 msgstr "Цвет ссылок."
 
-#: includes/admin/AnyCommentGenericSettings.php:621
+#: includes/admin/AnyCommentGenericSettings.php:633
 msgid "Semi Hidden Color"
 msgstr "Полускрытый текст"
 
-#: includes/admin/AnyCommentGenericSettings.php:623
+#: includes/admin/AnyCommentGenericSettings.php:635
 msgid "Semi hidden color. This is used for dates, action links, etc."
 msgstr ""
 "Полускрытый текст. Используется для дат, ссылок \"Ответить\", \"Изменить\" и "
 "прочего."
 
-#: includes/admin/AnyCommentGenericSettings.php:627
+#: includes/admin/AnyCommentGenericSettings.php:639
 msgid "Form Fields Background"
 msgstr "Цвет заливки полей формы"
 
-#: includes/admin/AnyCommentGenericSettings.php:629
+#: includes/admin/AnyCommentGenericSettings.php:641
 msgid "Form fields background color."
 msgstr "Цвет заливки полей формы."
 
-#: includes/admin/AnyCommentGenericSettings.php:634
+#: includes/admin/AnyCommentGenericSettings.php:646
 msgid "Attachment Text Color"
 msgstr "Цвет текст приложений"
 
-#: includes/admin/AnyCommentGenericSettings.php:636
+#: includes/admin/AnyCommentGenericSettings.php:648
 msgid ""
 "Attachments text color. For example, YouTube attachments do not have "
 "previews, instead they have \"YouTube\" text over."
@@ -806,11 +814,11 @@ msgstr ""
 "Цвет текста для приложений. Например, у YouTube видео нет превью, поэтому "
 "показывается текст \"YouTube\" поверх. "
 
-#: includes/admin/AnyCommentGenericSettings.php:641
+#: includes/admin/AnyCommentGenericSettings.php:653
 msgid "Attachment Background Color"
 msgstr "Цвет заднего фона приложений"
 
-#: includes/admin/AnyCommentGenericSettings.php:643
+#: includes/admin/AnyCommentGenericSettings.php:655
 msgid ""
 "Attachment background color. For example, user may attach PNG image with "
 "transparent background. This color will be used as background behind the "
@@ -819,11 +827,11 @@ msgstr ""
 "Задний цвет для фона приложений. Например, пользователь может приложить PNG "
 "картинку с прозрачным фоном. Этот цвет будет задним фоном под картинкой. "
 
-#: includes/admin/AnyCommentGenericSettings.php:648
+#: includes/admin/AnyCommentGenericSettings.php:660
 msgid "Avatar Border Radius"
 msgstr "Закругление краев аватарок"
 
-#: includes/admin/AnyCommentGenericSettings.php:650
+#: includes/admin/AnyCommentGenericSettings.php:662
 msgid ""
 "Avatar border radius. You may use \"px\" or \"%\". \"50%\" will make avatars "
 "rounded."
@@ -831,75 +839,75 @@ msgstr ""
 "Закругление краев аватарок. Можно указать с \"px\" или \"%\". \"50%\" "
 "сделает аватарки круглыми."
 
-#: includes/admin/AnyCommentGenericSettings.php:654
+#: includes/admin/AnyCommentGenericSettings.php:666
 msgid "Avatar Parent Size"
 msgstr "Размер родительской аватарки"
 
-#: includes/admin/AnyCommentGenericSettings.php:656
+#: includes/admin/AnyCommentGenericSettings.php:668
 msgid "Parent comment avatar size."
 msgstr "Размер аватарки родительского комментария."
 
-#: includes/admin/AnyCommentGenericSettings.php:661
+#: includes/admin/AnyCommentGenericSettings.php:673
 msgid "Avatar Child Size"
 msgstr "Размер аватарки в ответах"
 
-#: includes/admin/AnyCommentGenericSettings.php:663
+#: includes/admin/AnyCommentGenericSettings.php:675
 msgid "Child comment avatar size. Usually, this is reply comment."
 msgstr "Размер аватарки в ответах родительского комментария."
 
-#: includes/admin/AnyCommentGenericSettings.php:668
+#: includes/admin/AnyCommentGenericSettings.php:680
 msgid "Button Radius"
 msgstr "Закругление кнопок"
 
-#: includes/admin/AnyCommentGenericSettings.php:670
+#: includes/admin/AnyCommentGenericSettings.php:682
 msgid "Button border radius."
 msgstr "Закругление краев у кнопок."
 
-#: includes/admin/AnyCommentGenericSettings.php:674
+#: includes/admin/AnyCommentGenericSettings.php:686
 msgid "Button Color"
 msgstr "Цвет текста кнопки"
 
-#: includes/admin/AnyCommentGenericSettings.php:676
+#: includes/admin/AnyCommentGenericSettings.php:688
 msgid "Button text color."
 msgstr "Цвет текста кнопки."
 
-#: includes/admin/AnyCommentGenericSettings.php:681
+#: includes/admin/AnyCommentGenericSettings.php:693
 msgid "Button Background Color"
 msgstr "Задний фон кнопки"
 
-#: includes/admin/AnyCommentGenericSettings.php:683
+#: includes/admin/AnyCommentGenericSettings.php:695
 msgid "Button background color."
 msgstr "Задний фон кнопок."
 
-#: includes/admin/AnyCommentGenericSettings.php:688
+#: includes/admin/AnyCommentGenericSettings.php:700
 msgid "Button Background Color Active"
 msgstr "Задний фон кнопок при наведении"
 
-#: includes/admin/AnyCommentGenericSettings.php:690
+#: includes/admin/AnyCommentGenericSettings.php:702
 msgid "Button background color when hovered or focused."
 msgstr "Задний фон кнопок при наведении"
 
-#: includes/admin/AnyCommentGenericSettings.php:701
+#: includes/admin/AnyCommentGenericSettings.php:713
 msgid "Moderate First"
 msgstr "Сначала модерировать"
 
-#: includes/admin/AnyCommentGenericSettings.php:703
+#: includes/admin/AnyCommentGenericSettings.php:715
 msgid "Moderators should check comment before it appears."
 msgstr "Модераторы должны утвердить комментарий перед появлением."
 
-#: includes/admin/AnyCommentGenericSettings.php:707
+#: includes/admin/AnyCommentGenericSettings.php:719
 msgid "Links on Hold"
 msgstr "Комментарии с сылками"
 
-#: includes/admin/AnyCommentGenericSettings.php:709
+#: includes/admin/AnyCommentGenericSettings.php:721
 msgid "Comment with links should be marked for moderation."
 msgstr "Комментарии с ссылками должны быть отмечены на модерацию."
 
-#: includes/admin/AnyCommentGenericSettings.php:713
+#: includes/admin/AnyCommentGenericSettings.php:725
 msgid "Spam Words"
 msgstr "Спам слова"
 
-#: includes/admin/AnyCommentGenericSettings.php:715
+#: includes/admin/AnyCommentGenericSettings.php:727
 msgid ""
 "Comment should be marked for moderation when matched word from this list of "
 "comma-separated values."
@@ -907,21 +915,21 @@ msgstr ""
 "Комментарии должны быть поставлена на модерацию, если совпадают хоть с одним "
 "из указанных слов (каждое слово разделять запятой)."
 
-#: includes/admin/AnyCommentGenericSettings.php:726
+#: includes/admin/AnyCommentGenericSettings.php:738
 msgid "New Comment Alert"
 msgstr "Уведомление при новом комментарии"
 
-#: includes/admin/AnyCommentGenericSettings.php:728
+#: includes/admin/AnyCommentGenericSettings.php:740
 msgid "Show alert about new comment when user is on the page."
 msgstr ""
 "Показывать подсказку о новом комментарии когда пользователь находится на "
 "странице."
 
-#: includes/admin/AnyCommentGenericSettings.php:732
+#: includes/admin/AnyCommentGenericSettings.php:744
 msgid "New Comment Interval Checking"
 msgstr "Интервал проверки новых комментариев"
 
-#: includes/admin/AnyCommentGenericSettings.php:734
+#: includes/admin/AnyCommentGenericSettings.php:746
 msgid ""
 "Interval (in seconds) to check for new comments. Minimum 5 and maximum is "
 "100 seconds."
@@ -929,19 +937,19 @@ msgstr ""
 "Интервал (в секундах) для проверки на наличие новых комментариев. Минимум 5 "
 "и максимум 100 секунд."
 
-#: includes/admin/AnyCommentGenericSettings.php:738
+#: includes/admin/AnyCommentGenericSettings.php:750
 msgid "Notify Administrator"
 msgstr "Уведомлять администратора"
 
-#: includes/admin/AnyCommentGenericSettings.php:740
+#: includes/admin/AnyCommentGenericSettings.php:752
 msgid "Notify administrator via email about new comment."
 msgstr "Уведомлять администратора по почте о новых комментариях."
 
-#: includes/admin/AnyCommentGenericSettings.php:744
+#: includes/admin/AnyCommentGenericSettings.php:756
 msgid "Email Notifications"
 msgstr "Email уведомления ответов"
 
-#: includes/admin/AnyCommentGenericSettings.php:746
+#: includes/admin/AnyCommentGenericSettings.php:758
 msgid ""
 "Notify users by email (if specified) about new replies. Make sure you have "
 "proper SMTP configurations in order to send emails."
@@ -949,90 +957,90 @@ msgstr ""
 "Уведомлять пользователей по почте (когда присутствует) о новых ответах. "
 "Убедитесь, что у вас правильно настроен SMTP для отправки писем."
 
-#: includes/admin/AnyCommentGenericSettings.php:751
+#: includes/admin/AnyCommentGenericSettings.php:763
 msgid "Reply Email Template"
 msgstr "Шаблон письма ответа"
 
-#: includes/admin/AnyCommentGenericSettings.php:753
+#: includes/admin/AnyCommentGenericSettings.php:765
 msgid "Email template on new comment reply."
 msgstr "Шаблон письма при новом ответе на комментарий."
 
-#: includes/admin/AnyCommentGenericSettings.php:756
-#: includes/admin/AnyCommentGenericSettings.php:793
+#: includes/admin/AnyCommentGenericSettings.php:768
+#: includes/admin/AnyCommentGenericSettings.php:805
 msgid "Blog name as text"
 msgstr "Название сайта как текст"
 
-#: includes/admin/AnyCommentGenericSettings.php:757
-#: includes/admin/AnyCommentGenericSettings.php:794
+#: includes/admin/AnyCommentGenericSettings.php:769
+#: includes/admin/AnyCommentGenericSettings.php:806
 msgid "Blog link as text"
 msgstr "Ссылка на сайт в виде текста"
 
-#: includes/admin/AnyCommentGenericSettings.php:758
-#: includes/admin/AnyCommentGenericSettings.php:795
+#: includes/admin/AnyCommentGenericSettings.php:770
+#: includes/admin/AnyCommentGenericSettings.php:807
 msgid "Blog name in HTML link"
 msgstr "Название сайта в HTML ссылке"
 
-#: includes/admin/AnyCommentGenericSettings.php:759
-#: includes/admin/AnyCommentGenericSettings.php:796
+#: includes/admin/AnyCommentGenericSettings.php:771
+#: includes/admin/AnyCommentGenericSettings.php:808
 msgid "Post title as text"
 msgstr "Заголовок записи как текст"
 
-#: includes/admin/AnyCommentGenericSettings.php:760
-#: includes/admin/AnyCommentGenericSettings.php:797
+#: includes/admin/AnyCommentGenericSettings.php:772
+#: includes/admin/AnyCommentGenericSettings.php:809
 msgid "Post URL as text"
 msgstr "Ссылка на пост как текст"
 
-#: includes/admin/AnyCommentGenericSettings.php:761
-#: includes/admin/AnyCommentGenericSettings.php:798
+#: includes/admin/AnyCommentGenericSettings.php:773
+#: includes/admin/AnyCommentGenericSettings.php:810
 msgid "Post title in HTML link"
 msgstr "Заголовок записи внутри HTML ссылки"
 
-#: includes/admin/AnyCommentGenericSettings.php:762
-#: includes/admin/AnyCommentGenericSettings.php:799
+#: includes/admin/AnyCommentGenericSettings.php:774
+#: includes/admin/AnyCommentGenericSettings.php:811
 msgid "Comment text"
 msgstr "Текст комментария"
 
-#: includes/admin/AnyCommentGenericSettings.php:763
-#: includes/admin/AnyCommentGenericSettings.php:800
+#: includes/admin/AnyCommentGenericSettings.php:775
+#: includes/admin/AnyCommentGenericSettings.php:812
 msgid "Comment text nicely formatted"
 msgstr "Красиво оформленный текст комментария "
 
-#: includes/admin/AnyCommentGenericSettings.php:764
-#: includes/admin/AnyCommentGenericSettings.php:801
+#: includes/admin/AnyCommentGenericSettings.php:776
+#: includes/admin/AnyCommentGenericSettings.php:813
 msgid "Reply link as text"
 msgstr "Ссылка на ответ в виде текста"
 
-#: includes/admin/AnyCommentGenericSettings.php:765
-#: includes/admin/AnyCommentGenericSettings.php:802
+#: includes/admin/AnyCommentGenericSettings.php:777
+#: includes/admin/AnyCommentGenericSettings.php:814
 msgid "Reply link as button"
 msgstr "Ссылка на ответ в виде кнопки"
 
-#: includes/admin/AnyCommentGenericSettings.php:770
-#: includes/admin/AnyCommentGenericSettings.php:807
+#: includes/admin/AnyCommentGenericSettings.php:782
+#: includes/admin/AnyCommentGenericSettings.php:819
 msgid "More info"
 msgstr "Больше информации"
 
-#: includes/admin/AnyCommentGenericSettings.php:788
+#: includes/admin/AnyCommentGenericSettings.php:800
 msgid "Admin Email Template"
 msgstr "Шаблон письма администратору"
 
-#: includes/admin/AnyCommentGenericSettings.php:790
+#: includes/admin/AnyCommentGenericSettings.php:802
 msgid "Email template sent to admin about new comment."
 msgstr "Шаблон письма о новом комментарии отправленный администратору сайта."
 
-#: includes/admin/AnyCommentGenericSettings.php:831
+#: includes/admin/AnyCommentGenericSettings.php:843
 msgid "Allow File Uploads"
 msgstr "Разрешить загрузку файлов"
 
-#: includes/admin/AnyCommentGenericSettings.php:833
+#: includes/admin/AnyCommentGenericSettings.php:845
 msgid "Allow to upload files."
 msgstr "Разрешить загрузку файлов."
 
-#: includes/admin/AnyCommentGenericSettings.php:837
+#: includes/admin/AnyCommentGenericSettings.php:849
 msgid "File Upload By Guests"
 msgstr "Загрузка гостями"
 
-#: includes/admin/AnyCommentGenericSettings.php:839
+#: includes/admin/AnyCommentGenericSettings.php:851
 msgid ""
 "Guest users can upload documents. Please be careful about this setting as "
 "some users may potentially misuse this and periodically upload unwanted "
@@ -1042,11 +1050,11 @@ msgstr ""
 "настройкой, так как некоторые пользователи могут использовать ее в корыстных "
 "целях и периодично загружать файлы."
 
-#: includes/admin/AnyCommentGenericSettings.php:843
+#: includes/admin/AnyCommentGenericSettings.php:855
 msgid "File MIME Types"
 msgstr "Тип файлов (MIME)"
 
-#: includes/admin/AnyCommentGenericSettings.php:845
+#: includes/admin/AnyCommentGenericSettings.php:857
 msgid ""
 "Comman-separated list of allowed MIME types (e.g. .png, .jpg, etc). "
 "Alternatively, you may write \"image/*\" for all image types or \"audio/*\" "
@@ -1056,22 +1064,22 @@ msgstr ""
 "Альтернативно можно написать \"image/*\" для всех картинок или \"audio/*\" "
 "для всех аудио."
 
-#: includes/admin/AnyCommentGenericSettings.php:849
+#: includes/admin/AnyCommentGenericSettings.php:861
 msgid "File Upload Limit"
 msgstr "Лимит на загрузку"
 
-#: includes/admin/AnyCommentGenericSettings.php:851
+#: includes/admin/AnyCommentGenericSettings.php:863
 msgid ""
 "Maximum number of files to upload per period defined in the field below."
 msgstr ""
 "Максимальное количество файлов для загрузке за интервал указанный в поле "
 "ниже."
 
-#: includes/admin/AnyCommentGenericSettings.php:855
+#: includes/admin/AnyCommentGenericSettings.php:867
 msgid "File Upload Limit Period"
 msgstr "Лимит за загрузку"
 
-#: includes/admin/AnyCommentGenericSettings.php:857
+#: includes/admin/AnyCommentGenericSettings.php:869
 msgid ""
 "If user will cross the limit (defined above) within specified period (in "
 "seconds) in this field, he will be give a warning."
@@ -1079,11 +1087,11 @@ msgstr ""
 "Если пользователь превысит лимит файлов в период указанный в этом поле, ему "
 "будет показано предупреждение."
 
-#: includes/admin/AnyCommentGenericSettings.php:861
+#: includes/admin/AnyCommentGenericSettings.php:873
 msgid "File Size"
 msgstr "Размер файла"
 
-#: includes/admin/AnyCommentGenericSettings.php:863
+#: includes/admin/AnyCommentGenericSettings.php:875
 msgid ""
 "Maximum allowed file size in megabytes. For example, regular PNG image is "
 "about ~ 1.5-2MB, JPEG are even smaller."
@@ -1550,7 +1558,7 @@ msgstr ""
 #: includes/rest/AnyCommentRestLikes.php:37
 #: includes/rest/AnyCommentRestComment.php:70
 #: includes/rest/AnyCommentRestComment.php:98
-#: includes/rest/AnyCommentRestComment.php:1091
+#: includes/rest/AnyCommentRestComment.php:1065
 msgid "Unique identifier for the object."
 msgstr ""
 
@@ -1606,7 +1614,7 @@ msgid "Invalid comment ID."
 msgstr "Неправильный ID комментария."
 
 #: includes/rest/AnyCommentRestComment.php:347
-#: includes/rest/AnyCommentRestComment.php:694
+#: includes/rest/AnyCommentRestComment.php:690
 msgid "Invalid post ID."
 msgstr "Неправильный ID записи."
 
@@ -1652,7 +1660,7 @@ msgid "Captcha is incorrect. Please try again."
 msgstr "Не указана каптча. Пожалуйста попробуйте снова."
 
 #: includes/rest/AnyCommentRestComment.php:526
-#: includes/rest/AnyCommentRestComment.php:711
+#: includes/rest/AnyCommentRestComment.php:707
 msgid "Comment cannot be empty."
 msgstr "Комментарий не может быть пустым."
 
@@ -1675,7 +1683,7 @@ msgid "Provide valid email address."
 msgstr "Укажите правильный формат почты."
 
 #: includes/rest/AnyCommentRestComment.php:577
-#: includes/rest/AnyCommentRestComment.php:720
+#: includes/rest/AnyCommentRestComment.php:716
 msgid "Comment field exceeds maximum length allowed."
 msgstr "Слишком длинный комментарий."
 
@@ -1683,191 +1691,191 @@ msgstr "Слишком длинный комментарий."
 msgid "Creating comment failed."
 msgstr "Ошибка добавления комментария."
 
-#: includes/rest/AnyCommentRestComment.php:656
+#: includes/rest/AnyCommentRestComment.php:652
 msgid "Sorry, you are not allowed to edit this comment."
 msgstr "Вы не можете изменять этот комментарий."
 
-#: includes/rest/AnyCommentRestComment.php:682
+#: includes/rest/AnyCommentRestComment.php:678
 msgid "Sorry, you are not allowed to change the comment type."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:703
+#: includes/rest/AnyCommentRestComment.php:699
 msgid "Updating comment status failed."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:726
+#: includes/rest/AnyCommentRestComment.php:722
 msgid "Updating comment failed."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:781
+#: includes/rest/AnyCommentRestComment.php:777
 msgid "Sorry, you are not allowed to delete this comment."
 msgstr "Извините, но вы не можете удалить этот комментарий."
 
 #. %s: force=true
-#: includes/rest/AnyCommentRestComment.php:819
+#: includes/rest/AnyCommentRestComment.php:815
 #, php-format
 msgid "The comment does not support trashing. Set '%s' to delete."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:823
+#: includes/rest/AnyCommentRestComment.php:819
 msgid "The comment has already been trashed."
 msgstr "Комментарий уже был удален."
 
-#: includes/rest/AnyCommentRestComment.php:832
+#: includes/rest/AnyCommentRestComment.php:828
 msgid "The comment cannot be deleted."
 msgstr "Комментарий не может быть удален."
 
-#: includes/rest/AnyCommentRestComment.php:1046
+#: includes/rest/AnyCommentRestComment.php:1020
 msgid "Invalid comment author ID."
 msgstr "Неправильный ID автора."
 
-#: includes/rest/AnyCommentRestComment.php:1097
+#: includes/rest/AnyCommentRestComment.php:1071
 msgid "The ID of the user object, if author was a user."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1102
+#: includes/rest/AnyCommentRestComment.php:1076
 msgid "Email address for the object author."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1108
+#: includes/rest/AnyCommentRestComment.php:1082
 msgid "IP address for the object author."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1114
+#: includes/rest/AnyCommentRestComment.php:1088
 msgid "Display name for the object author."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1122
+#: includes/rest/AnyCommentRestComment.php:1096
 msgid "URL for the object author."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1128
+#: includes/rest/AnyCommentRestComment.php:1102
 msgid "User agent for the object author."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1136
+#: includes/rest/AnyCommentRestComment.php:1110
 msgid "The content for the object."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1147
+#: includes/rest/AnyCommentRestComment.php:1121
 msgid "Content for the object, as it exists in the database."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1152
+#: includes/rest/AnyCommentRestComment.php:1126
 msgid "HTML content for the object, transformed for display."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1160
+#: includes/rest/AnyCommentRestComment.php:1134
 msgid "The date the object was published, in the site's timezone."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1166
+#: includes/rest/AnyCommentRestComment.php:1140
 msgid "The date the object was published, as GMT."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1172
+#: includes/rest/AnyCommentRestComment.php:1146
 msgid "URL to the object."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1179
+#: includes/rest/AnyCommentRestComment.php:1153
 msgid "The ID for the parent of the object."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1185
+#: includes/rest/AnyCommentRestComment.php:1159
 msgid "The ID of the associated post object."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1191
+#: includes/rest/AnyCommentRestComment.php:1165
 msgid "State of the object."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1199
+#: includes/rest/AnyCommentRestComment.php:1173
 msgid "Type of Comment for the object."
 msgstr ""
 
 #. %d: avatar image size in pixels
-#: includes/rest/AnyCommentRestComment.php:1214
+#: includes/rest/AnyCommentRestComment.php:1188
 #, php-format
 msgid "Avatar URL with image size of %d pixels."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1222
+#: includes/rest/AnyCommentRestComment.php:1196
 msgid "Avatar URLs for the object author."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1248
+#: includes/rest/AnyCommentRestComment.php:1222
 msgid ""
 "Limit response to comments published after a given ISO8601 compliant date."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1254
+#: includes/rest/AnyCommentRestComment.php:1228
 msgid ""
 "Limit result set to comments assigned to specific user IDs. Requires "
 "authorization."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1262
+#: includes/rest/AnyCommentRestComment.php:1236
 msgid ""
 "Ensure result set excludes comments assigned to specific user IDs. Requires "
 "authorization."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1271
+#: includes/rest/AnyCommentRestComment.php:1245
 msgid ""
 "Limit result set to that from a specific author email. Requires "
 "authorization."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1277
+#: includes/rest/AnyCommentRestComment.php:1251
 msgid ""
 "Limit response to comments published before a given ISO8601 compliant date."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1283
+#: includes/rest/AnyCommentRestComment.php:1257
 msgid "Ensure result set excludes specific IDs."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1292
+#: includes/rest/AnyCommentRestComment.php:1266
 msgid "Limit result set to specific IDs."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1301
+#: includes/rest/AnyCommentRestComment.php:1275
 msgid "Offset the result set by a specific number of items."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1306
+#: includes/rest/AnyCommentRestComment.php:1280
 msgid "Order sort attribute ascending or descending."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1316
+#: includes/rest/AnyCommentRestComment.php:1290
 msgid "Sort collection by object attribute."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1332
+#: includes/rest/AnyCommentRestComment.php:1306
 msgid "Limit result set to comments of specific parent IDs."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1341
+#: includes/rest/AnyCommentRestComment.php:1315
 msgid "Ensure result set excludes specific parent IDs."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1350
+#: includes/rest/AnyCommentRestComment.php:1324
 msgid "Limit result set to comments assigned to specific post IDs."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1359
+#: includes/rest/AnyCommentRestComment.php:1333
 msgid ""
 "Limit result set to comments assigned a specific status. Requires "
 "authorization."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1367
+#: includes/rest/AnyCommentRestComment.php:1341
 msgid ""
 "Limit result set to comments assigned a specific type. Requires "
 "authorization."
 msgstr ""
 
-#: includes/rest/AnyCommentRestComment.php:1374
+#: includes/rest/AnyCommentRestComment.php:1348
 msgid "The password for the post if it is password protected."
 msgstr ""
 

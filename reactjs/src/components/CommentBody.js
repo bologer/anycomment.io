@@ -81,24 +81,30 @@ class CommentBody extends AnyCommentComponent {
     };
 
     componentDidMount() {
-        this.checkCommentLength();
+
+        const options = this.getOptions();
+
+        if (options.isReadMoreOn) {
+            this.checkCommentLength();
+        }
     }
 
     render() {
         const settings = this.getSettings(),
             bodyClasses = 'anycomment comment-single-body__text',
             cleanContent = this.processContent(),
-            thirdParty = this.processThirdParties(cleanContent);
+            thirdParty = this.processThirdParties(cleanContent),
+            {isLong, hideAsLong} = this.state;
 
         return <div className={bodyClasses} onClick={() => this.toggleLongComment()}
                     id={"comment-content-" + this.props.comment.id}>
             <div
-                className={"comment-single-body__text-content" + (this.state.hideAsLong ? ' comment-single-body__shortened' : '')}
-                style={this.state.hideAsLong ? {'height': MAX_BODY_HEIGHT} : null}
+                className={"comment-single-body__text-content" + (hideAsLong ? ' comment-single-body__shortened' : '')}
+                style={hideAsLong ? {'height': MAX_BODY_HEIGHT} : null}
                 dangerouslySetInnerHTML={{__html: cleanContent}}></div>
             <div className="comment-single-body__text-embeds">{thirdParty}</div>
-            {this.state.isLong ? <p className="comment-single-body__text-readmore"
-                                    onClick={() => this.toggleLongComment()}>{this.state.hideAsLong ? settings.i18.read_more : settings.i18.show_less}</p> : ''}
+            {isLong ? <p className="comment-single-body__text-readmore"
+                         onClick={() => this.toggleLongComment()}>{hideAsLong ? settings.i18.read_more : settings.i18.show_less}</p> : ''}
         </div>
     }
 }

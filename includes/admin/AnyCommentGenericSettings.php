@@ -96,6 +96,11 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 
 
 		/**
+		 * Ability to toggle read more.
+		 */
+		const OPTION_READ_MORE_TOGGLE = 'option_read_more_toggle';
+
+		/**
 		 * Display page rating.
 		 */
 		const OPTION_RATING_TOGGLE = 'option_rating_toggle';
@@ -466,6 +471,13 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'title'       => __( 'Display Rating', "anycomment" ),
 						'type'        => 'checkbox',
 						'description' => esc_html( __( 'Display 5 star rating above comments.', "anycomment" ) )
+					],
+
+					[
+						'id'          => self::OPTION_READ_MORE_TOGGLE,
+						'title'       => __( 'Shorten Long Comments', "anycomment" ),
+						'type'        => 'checkbox',
+						'description' => esc_html( __( 'Shorten long comments with "Read more" message.', "anycomment" ) )
 					],
 
 //					[
@@ -1656,6 +1668,15 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 */
 		public static function getUserAgreementLink() {
 			return static::instance()->getOption( self::OPTION_USER_AGREEMENT_LINK );
+		}
+
+		/**
+		 * Check whether read more should be shown.
+		 *
+		 * @return bool
+		 */
+		public static function isReadMoreOn() {
+			return static::instance()->getOption( self::OPTION_READ_MORE_TOGGLE ) !== null;
 		}
 
 		/**

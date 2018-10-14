@@ -135,6 +135,7 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 						'fileMaxSize'            => AnyCommentGenericSettings::getFileMaxSize(),
 						'fileUploadLimit'        => AnyCommentGenericSettings::getFileUploadLimit(),
 						'isRatingOn'             => AnyCommentGenericSettings::isRatingOn(),
+						'isReadMoreOn'             => AnyCommentGenericSettings::isReadMoreOn(),
 
 						'isEditorOn'           => AnyCommentGenericSettings::isEditorToolbarOn(),
 						'editorToolbarOptions' => AnyCommentGenericSettings::getEditorToolbarOptions(),
