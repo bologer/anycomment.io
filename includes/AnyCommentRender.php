@@ -134,6 +134,7 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 						'fileLimit'              => AnyCommentGenericSettings::getFileLimit(),
 						'fileMaxSize'            => AnyCommentGenericSettings::getFileMaxSize(),
 						'fileUploadLimit'        => AnyCommentGenericSettings::getFileUploadLimit(),
+						'isRatingOn'             => AnyCommentGenericSettings::isRatingOn(),
 
 						'isEditorOn'           => AnyCommentGenericSettings::isEditorToolbarOn(),
 						'editorToolbarOptions' => AnyCommentGenericSettings::getEditorToolbarOptions(),
@@ -145,6 +146,8 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 						'reCaptchaSiteKey'   => AnyCommentIntegrationSettings::getRecaptchaSiteKey(),
 						'reCaptchaTheme'     => AnyCommentIntegrationSettings::getRecaptchaTheme(),
 						'reCaptchaPosition'  => AnyCommentIntegrationSettings::getRecaptchaBadge(),
+
+
 					],
 					'user'         => AnyCommentUser::getSafeUser(),
 					'i18'          => [

@@ -10,7 +10,9 @@ class AnyCommentRestRate extends AnyCommentRestController {
 		$this->namespace = 'anycomment/v1';
 		$this->rest_base = 'rate';
 
-		add_action( 'rest_api_init', [ $this, 'register_routes' ] );
+		if ( AnyCommentGenericSettings::isRatingOn() ) {
+			add_action( 'rest_api_init', [ $this, 'register_routes' ] );
+		}
 	}
 
 	/**
