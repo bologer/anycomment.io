@@ -234,6 +234,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			include_once( ANYCOMMENT_ABSPATH . 'includes/rest/AnyCommentRestLikes.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/rest/AnyCommentRestUsers.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/rest/AnyCommentRestDocuments.php' );
+			include_once( ANYCOMMENT_ABSPATH . 'includes/rest/AnyCommentRestRate.php' );
 
 			/**
 			 * Generic
@@ -243,6 +244,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentRender.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/ac-core-functions.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentSocialAuth.php' );
+			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentRating.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentLikes.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentEmailQueue.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentUploadedFiles.php' );
@@ -292,6 +294,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			new AnyCommentRestLikes();
 			new AnyCommentRestUsers();
 			new AnyCommentRestDocuments();
+			new AnyCommentRestRate();
 			new AnyCommentWPComments();
 			new AnyCommentAvatars();
 

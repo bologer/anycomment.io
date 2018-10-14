@@ -44,6 +44,10 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 		'0.0.59' => [
 			'version'     => '0.0.59',
 			'description' => 'Create anycomment_email_queue table if does not exist and prefix every custom table from plugin with WordPress\'s default wpdb prefix'
+		],
+		'0.0.61' => [
+			'version'     => '0.0.61',
+			'description' => 'Create anycomment_rating table for keeping rating information'
 		]
 	];
 
@@ -78,7 +82,9 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 			return null;
 		}
 
-		return sprintf( "%s%s", $this->prefix, $this->table );
+		global $wpdb;
+
+		return sprintf( '%s%s%s', $wpdb->prefix, $this->prefix, $this->table );
 	}
 
 	/**

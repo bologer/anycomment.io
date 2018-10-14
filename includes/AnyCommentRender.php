@@ -105,6 +105,10 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 						'logout'  => wp_logout_url(),
 						'postUrl' => $postPermalink,
 					],
+					'rating'       => [
+						'value' => AnyCommentRating::get_average_by_post( $postId ),
+						'count' => AnyCommentRating::get_count_by_post( $postId )
+					],
 					// Options from plugin
 					'options'      => [
 						'limit'                  => AnyCommentGenericSettings::getPerPage(),

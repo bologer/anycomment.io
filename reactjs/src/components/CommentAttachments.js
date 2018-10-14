@@ -185,6 +185,12 @@ class CommentAttachments extends AnyCommentComponent {
             return (null);
         }
 
+        const theme = {
+            container: {
+                zIndex: 99999
+            }
+        };
+
         return (
             <ul className="anycomment anycomment-uploads">
                 {this.renderGallery()}
@@ -195,6 +201,7 @@ class CommentAttachments extends AnyCommentComponent {
                     rightArrowTitle={settings.i18.lighbox_right_arrow}
                     currentImage={this.state.currentImage}
                     images={images}
+                    theme={theme}
                     isOpen={this.state.lightboxIsOpen}
                     onClickImage={this.handleClickImage}
                     onClickNext={this.gotoNext}

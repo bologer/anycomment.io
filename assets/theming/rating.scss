@@ -1,0 +1,47 @@
+@import "_variables";
+
+#{$root} {
+  .anycomment-rating {
+    display: flex;
+    flex-direction: row;
+
+    &__stars {
+      margin-right: 10px;
+      display: inline-flex;
+      flex-direction: row-reverse;
+
+      &-item {
+        svg {
+          color: #ddd;
+          width: 22px;
+          height: 22px;
+        }
+      }
+
+      &-item-active {
+        svg {
+          color: #ffaf02;
+          /* make hover effect work properly in IE */
+          pointer-events: none;
+        }
+      }
+
+      &-item:hover svg,
+      &-item:hover ~ span svg,
+      &-item-active:hover > span svg,
+      &-item-active:hover ~ span:hover ~ label svg {
+        color: #ffaf02;
+      }
+    }
+
+    &__count {
+      line-height: 1.7;
+
+      &-value {
+      }
+
+      &-count {
+      }
+    }
+  }
+}

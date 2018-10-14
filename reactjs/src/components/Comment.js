@@ -103,7 +103,12 @@ class Comment extends AnyCommentComponent {
 
 
         return (
-            <li key={comment.id} className="anycomment comment-single" id={commentId}>
+            <li
+                key={comment.id}
+                className="anycomment comment-single"
+                id={commentId}
+                itemType="http://schema.org/Comment"
+                itemScope="itemscope">
 
                 <CommentAvatar comment={comment}/>
 

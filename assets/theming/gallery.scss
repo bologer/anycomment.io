@@ -1,11 +1,6 @@
 @import "variables";
 @import "mixins";
 
-// Lightbox fix
-#lightboxBackdrop {
-  z-index: 99999;
-}
-
 #{$root} {
   .anycomment-uploads {
     list-style: none;

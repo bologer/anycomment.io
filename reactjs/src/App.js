@@ -8,6 +8,7 @@ import {toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import $ from 'jquery/src/core';
 import 'jquery/src/offset';
+import PageRating from './components/PageRating'
 
 /**
  * App is main compontent of the application.
@@ -113,6 +114,7 @@ class App extends AnyCommentComponent {
         return (
             <div id={this.state.rootElement} className="anycomment">
                 <ToastContainer/>
+                <PageRating/>
                 <CommentList/>
                 <CommentCopyright/>
             </div>

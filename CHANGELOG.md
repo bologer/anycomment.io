@@ -4,6 +4,7 @@
 
 **Enhancements:**
 
+* Added ability to rate post from 1 to 5 stars, #156
 
 
 **Fixes:**

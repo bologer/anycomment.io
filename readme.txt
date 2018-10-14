@@ -168,6 +168,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Enhancements:**
 
+* Added ability to rate post from 1 to 5 stars, #156
 
 
 **Fixes:**
