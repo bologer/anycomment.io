@@ -76,14 +76,14 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 			$isInclude = $params['include'];
 
 			if ( ! post_password_required() && comments_open() ) {
-				wp_enqueue_script( 'anycomment-react', AnyComment()->plugin_url() . '/static/js/main.min.js', [], sha1( AnyComment()->version ) );
+				wp_enqueue_script( 'anycomment-react', AnyComment()->plugin_url() . '/static/js/main.min.js', [], md5( AnyComment()->version ) );
 
 				if ( AnyCommentGenericSettings::isDesignCustom() ) {
 					$url = AnyCommentGenericSettings::getCustomDesignStylesheetUrl();
 
-					wp_enqueue_style( 'anycomment-custom-styles', $url, [], AnyComment()->version );
+					wp_enqueue_style( 'anycomment-custom-styles', $url, [], md5( AnyComment()->version ) );
 				} else {
-					wp_enqueue_style( 'anycomment-styles', AnyComment()->plugin_url() . '/static/css/main.min.css', [], sha1( AnyComment()->version ) );
+					wp_enqueue_style( 'anycomment-styles', AnyComment()->plugin_url() . '/static/css/main.min.css', [], md5( AnyComment()->version ) );
 				}
 
 

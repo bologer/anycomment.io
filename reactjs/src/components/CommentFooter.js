@@ -16,7 +16,7 @@ class CommentFooter extends AnyCommentComponent {
             <footer className="anycomment comment-single-body__actions">
                 <ul className="anycomment">
                     <li className="anycomment"><a className="anycomment" href=""
-                                                  onClick={(e) => this.props.onReply(e, comment)}>{settings.i18.reply}</a>
+                                                  onClick={(e) => this.props.onReply(e)}>{settings.i18.reply}</a>
                     </li>
                     <li className="anycomment">
                             <span
@@ -26,7 +26,7 @@ class CommentFooter extends AnyCommentComponent {
 
                     {!isGuest && comment.permissions.can_edit_comment ?
                         <li className="anycomment"><a className="anycomment" href=""
-                                                      onClick={(e) => this.props.onEdit(e, comment)}>{settings.i18.edit}</a>
+                                                      onClick={(e) => this.props.onEdit(e)}>{settings.i18.edit}</a>
                         </li> : ''}
                     {!isGuest && comment.permissions.can_edit_comment ?
                         <li className="anycomment"><a className="anycomment" href=""

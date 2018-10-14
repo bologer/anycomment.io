@@ -7,18 +7,16 @@
   float: left;
   position: relative;
 
-  .anycomment-send-comment.anycomment-send-comment-authorized {
-    .anycomment-send-comment-body {
-      &-outliner {
-        &__avatar {
-          position: absolute;
-          top: 60%;
-          margin-top: -($child-avatar-size/2);
-          left: 15px;
-          @include avatar();
-          @include avatar_child();
-          z-index: 1;
-        }
+  .anycomment-send-comment-body.anycomment-send-comment-body-authorized {
+    .anycomment-send-comment-body-outliner {
+      &__avatar {
+        position: absolute;
+        top: 60%;
+        margin-top: -($child-avatar-size/2);
+        left: 15px;
+        @include avatar();
+        @include avatar_child();
+        z-index: 1;
       }
     }
   }
@@ -701,6 +699,10 @@
             }
           }
         }
+      }
+
+      &-form-wrapper {
+        margin: 10px 0;
       }
     }
 

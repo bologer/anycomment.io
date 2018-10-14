@@ -78,13 +78,12 @@ class SendCommentForm extends AnyCommentComponent {
      * @see prepareInitialForm
      */
     prepareForm = () => {
-        const comment = this.props.comment;
         switch (this.props.action) {
             case 'reply':
-                this.prepareReplyForm(comment);
+                this.prepareReplyForm(this.props.comment);
                 break;
             case 'update':
-                this.prepareUpdateForm(comment);
+                this.prepareUpdateForm(this.props.comment);
                 break;
             default:
                 this.prepareInitialForm();
@@ -460,6 +459,7 @@ class SendCommentForm extends AnyCommentComponent {
 
     componentDidMount() {
         this.prepareRemembered();
+        this.prepareForm();
     }
 
     componentDidUpdate(prevProps) {
@@ -488,7 +488,8 @@ class SendCommentForm extends AnyCommentComponent {
         }
 
         return (
-            <div className="anycomment anycomment-send-comment-body">
+            <div
+                className={"anycomment anycomment-send-comment-body" + (!this.isGuest() ? ' anycomment-send-comment-body-authorized' : '')}>
                 <form onSubmit={this.handleSubmit}>
 
                     <SendCommentFormBody {...this.props}

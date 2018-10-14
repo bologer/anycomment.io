@@ -170,6 +170,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 **Enhancements:**
 
 * Added ability to rate page in comments as guest or logged in user, #156
+* Added ability to edit comment or reply to a comment right above it, #164
 
 
 **Fixes:**

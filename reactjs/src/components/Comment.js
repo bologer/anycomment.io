@@ -5,6 +5,8 @@ import CommentHeader from './CommentHeader';
 import CommentFooter from './CommentFooter';
 import CommentBody from './CommentBody';
 import CommentAttachments from "./CommentAttachments";
+import SendCommentForm from './SendCommentForm'
+
 
 /**
  * Comment is rendering single comment entry.
@@ -17,36 +19,43 @@ class Comment extends AnyCommentComponent {
         this.state = {
             likesCount: props.comment.meta.likes_count,
             hasLike: props.comment.meta.has_like,
-        };
 
-        this.onReply = this.onReply.bind(this);
-        this.onLike = this.onLike.bind(this);
-        this.onEdit = this.onEdit.bind(this);
-        this.onDelete = this.onDelete.bind(this);
+            action: '',
+        };
     }
+
+    handleUnsetAction = () => {
+        this.setState({
+            action: ''
+        });
+    };
 
 
     /**
      * On comment reply action.
      * @param e
-     * @param comment
      */
-    onReply(e, comment) {
+    onReply = (e) => {
         e.preventDefault();
-        this.props.handleReplyIdChange(comment);
-    }
+
+        this.setState({
+            action: 'reply'
+        });
+    };
 
     /**
      * On comment edit action.
      * @param e
-     * @param comment
      */
-    onEdit(e, comment) {
+    onEdit = (e) => {
         e.preventDefault();
-        this.props.handleEditIdChange(comment);
-    }
 
-    onLike(e) {
+        this.setState({
+            action: 'update'
+        });
+    };
+
+    onLike = (e) => {
         e.preventDefault();
 
         const settings = this.getSettings();
@@ -70,7 +79,7 @@ class Comment extends AnyCommentComponent {
             .catch(function (error) {
                 self.showError(error);
             });
-    }
+    };
 
     /**
      * On comment delete.
@@ -78,29 +87,41 @@ class Comment extends AnyCommentComponent {
      * @param e
      * @param comment
      */
-    onDelete(e, comment) {
+    onDelete = (e, comment) => {
         e.preventDefault();
         this.props.handleDelete(comment);
-    }
+    };
 
     render() {
         const comment = this.props.comment;
         const commentId = 'comment-' + comment.id;
+
+        const {action, likesCount, hasLike} = this.state;
 
         const childComments = comment.children ?
             <div className="anycomment comment-single-replies">
                 <ul className="anycomment anycomment-list anycomment-list-child">
                     {comment.children.map(childrenComment => (
                         <Comment
-                            handleReplyIdChange={this.props.handleReplyIdChange}
-                            handleEditIdChange={this.props.handleEditIdChange}
                             handleDelete={this.props.handleDelete}
+                            loadComments={this.props.loadComments}
+                            handleUnsetAction={this.handleUnsetAction}
+                            handleJustAdded={this.props.handleJustAdded}
                             key={childrenComment.id}
                             comment={childrenComment}/>
                     ))}
                 </ul>
             </div> : '';
 
+        const replyForm = action ? <div className="comment-single-form-wrapper">
+            <SendCommentForm
+                action={action}
+                comment={comment}
+                handleUnsetAction={this.handleUnsetAction}
+                handleJustAdded={this.props.handleJustAdded}
+                loadComments={this.props.loadComments}
+            />
+        </div> : '';
 
         return (
             <li
@@ -125,10 +146,11 @@ class Comment extends AnyCommentComponent {
                         onReply={this.onReply}
                         onDelete={this.onDelete}
                         comment={comment}
-                        likesCount={this.state.likesCount}
-                        hasLike={this.state.hasLike}
+                        likesCount={likesCount}
+                        hasLike={hasLike}
                     />
                 </div>
+                {replyForm}
                 {childComments}
             </li>
         )

@@ -261,30 +261,6 @@ class CommentList extends AnyCommentComponent {
     };
 
     /**
-     * Propage reply action.
-     *
-     * @param comment
-     */
-    handleReplyIdChange = (comment) => {
-        this.setState({
-            action: 'reply',
-            comment: comment
-        });
-    };
-
-    /**
-     * Propagate edit action.
-     *
-     * @param comment
-     */
-    handleEditIdChange = (comment) => {
-        this.setState({
-            action: 'update',
-            comment: comment
-        });
-    };
-
-    /**
      * Handle action unsetting.
      * Unset any previously set action.
      */
@@ -337,9 +313,10 @@ class CommentList extends AnyCommentComponent {
                     <ul id="anycomment-load-container" className="anycomment anycomment-list">
                         {comments.map(comment => (
                             <Comment
-                                handleReplyIdChange={this.handleReplyIdChange}
-                                handleEditIdChange={this.handleEditIdChange}
                                 handleDelete={this.handleDelete}
+                                handleUnsetAction={this.handleUnsetAction}
+                                handleJustAdded={this.handleJustAdded}
+                                loadComments={this.loadComments}
                                 key={comment.id}
                                 comment={comment}
                             />

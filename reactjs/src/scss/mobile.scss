@@ -34,14 +34,12 @@ $btn-padding: 0 40px;
     }
   }
 
-  .anycomment-send-comment.anycomment-send-comment-authorized {
-    .anycomment-send-comment-body {
-      &-outliner {
-        &__avatar {
-          margin-top: -($parent-avatar-size/2);
-          @include avatar();
-          @include avatar-parent();
-        }
+  .anycomment-send-comment-body.anycomment-send-comment-body-authorized {
+    .anycomment-send-comment-body-outliner {
+      &__avatar {
+        margin-top: -($parent-avatar-size/2);
+        @include avatar();
+        @include avatar-parent();
       }
     }
   }
