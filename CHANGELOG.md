@@ -9,6 +9,7 @@
 **Fixes:**
 
 * Fixed issue when comment moderation was on, but they were still showing to the end user, #223
+* Changed Product to Article for rating as provides clearer idea about the content inside, #220
 
 
 ## 0.0.61 – 15.10.2018

@@ -107,7 +107,7 @@ class PageRating extends AnyCommentComponent {
         const {value, count, hasRated} = this.state;
 
         return (
-            <div itemScope itemType="http://schema.org/Product"
+            <div itemScope itemType="http://schema.org/Article"
                  className="anycomment anycomment-rating">
                 <div
                     className={"anycomment anycomment-rating__stars" + (hasRated ? " anycomment-rating__stars-readonly" : '')}>
