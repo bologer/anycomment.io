@@ -78,8 +78,8 @@ class App extends AnyCommentComponent {
         if (this.hasCommentSectionAnchor()) {
             const rootEl = '#' + this.state.rootElement;
             const interval = setInterval(function () {
-                let el = $(rootEl);
-                if (el.length) {
+                let el = document.getElementById(rootEl.replace('#', ''));
+                if (el) {
                     self.moveToElement(rootEl);
                     clearInterval(interval);
                 }
@@ -99,8 +99,8 @@ class App extends AnyCommentComponent {
     }
 
     componentDidMount() {
-        this.handleLoadOnScroll();
         this.handleScrollToComments();
+        this.handleLoadOnScroll();
         this.handleErrors();
     }
 

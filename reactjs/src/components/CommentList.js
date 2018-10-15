@@ -222,10 +222,9 @@ class CommentList extends AnyCommentComponent {
         if (this.hasSpecificCommentAnchor()) {
             const interval = setInterval(function () {
 
-                const element = document.getElementById(hash);
-                const commentElement = element.length;
+                const element = document.getElementById(hash.replace('#', ''));
 
-                if (!commentElement) {
+                if (!element) {
                     self.handleLoadMore();
                 } else {
                     self.moveToCommentAndHighlight(hash);

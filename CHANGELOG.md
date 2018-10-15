@@ -10,6 +10,7 @@
 
 * Fixed issue when comment moderation was on, but they were still showing to the end user, #223
 * Changed Product to Article for rating as provides clearer idea about the content inside, #220
+* Fixed issue when scrolling to comments section or to specific comment was not working and was throwing console error, #219
 
 
 ## 0.0.61 – 15.10.2018
