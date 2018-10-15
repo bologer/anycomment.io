@@ -260,6 +260,12 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			$prepared_args['offset'] = $prepared_args['number'] * ( absint( $request['page'] ) - 1 );
 		}
 
+		if ( current_user_can( 'moderate_comments' ) ) {
+			$prepared_args['status'] = 'all';
+		} else {
+			$prepared_args['status'] = 'approve';
+		}
+
 		$query        = new WP_Comment_Query;
 		$query_result = $query->query( $prepared_args );
 
@@ -842,7 +848,19 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	 * @return WP_REST_Response Response object.
 	 */
 	public function prepare_item_for_response( $comment, $request ) {
-		$child_comments = AnyComment()->render->get_child_comments( $comment->comment_ID );
+
+
+		$prepared_args['parent']  = $comment->comment_ID;
+		$prepared_args['post_id'] = $comment->comment_post_ID;
+
+		if ( current_user_can( 'moderate_comments' ) ) {
+			$prepared_args['status'] = 'all';
+		} else {
+			$prepared_args['status'] = 'approve';
+		}
+
+		$query          = new WP_Comment_Query;
+		$child_comments = $query->query( $prepared_args );
 
 		if ( ! empty( $child_comments ) ) {
 
@@ -854,6 +872,8 @@ class AnyCommentRestComment extends AnyCommentRestController {
 				}
 				$child_comments[ $key ] = $prepared_child_comment;
 			}
+		} else {
+			$child_comments = null;
 		}
 
 		$is_post_author = false;

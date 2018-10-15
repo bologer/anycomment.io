@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.0.62 – 15.10.2018
+
+**Enhancements:**
+
+
+
+**Fixes:**
+
+* Fixed issue when comment moderation was on, but they were still showing to the end user, #223
+
+
 ## 0.0.61 – 15.10.2018
 
 **Enhancements:**
