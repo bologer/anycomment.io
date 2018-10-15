@@ -1,23 +1,27 @@
 <div class="anycomment-tab anycomment-dashboard__tab" id="anycomment-dashboard">
     <div class="grid-x grid-margin-x anycomment-dashboard__splitter">
-        <div class="cell large-6 medium-6 small-12 anycomment-dashboard__splitter-half anycomment-dashboard__splitter-half-commentators">
-            <div class="anycomment-dashboard__splitter-half-center">
-                <img src="<?= AnyComment()->plugin_url() . '/assets/img/dashboard-users.svg' ?>"
-                     alt="<?= __( 'Commentators', 'anycomment' ) ?>">
+        <div class="cell large-6 medium-12 small-12 anycomment-dashboard__splitter-half anycomment-dashboard__splitter-half-commentators">
+            <div class="grid-x align-center">
+                <div class="cell shrink">
+                    <img src="<?= AnyComment()->plugin_url() . '/assets/img/dashboard-users.svg' ?>"
+                         alt="<?= __( 'Commentators', 'anycomment' ) ?>">
 
-                <div class="anycomment-dashboard__splitter-half-description">
-                    <span><?= AnyComment()->statistics->get_commentor_count() ?></span>
-                    <span><?= __( 'Commentators', 'anycomment' ) ?></span>
+                    <div class="anycomment-dashboard__splitter-half-description">
+                        <span><?= AnyComment()->statistics->get_commentor_count() ?></span>
+                        <span><?= __( 'Commentators', 'anycomment' ) ?></span>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="cell large-6 medium-6 small-12 anycomment-dashboard__splitter-half anycomment-dashboard__splitter-half-comments">
-            <div class="anycomment-dashboard__splitter-half-center">
-                <img src="<?= AnyComment()->plugin_url() . '/assets/img/dashboard-comments.svg' ?>"
-                     alt="<?= __( 'All Comments', 'anycomment' ) ?>">
-                <div class="anycomment-dashboard__splitter-half-description">
-                    <span><?= AnyComment()->statistics->get_approved_comment_count() ?></span>
-                    <span><?= __( 'All Comments', 'anycomment' ) ?></span>
+        <div class="cell large-6 medium-12 small-12 anycomment-dashboard__splitter-half anycomment-dashboard__splitter-half-comments">
+            <div class="grid-x align-center">
+                <div class="cell shrink">
+                    <img src="<?= AnyComment()->plugin_url() . '/assets/img/dashboard-comments.svg' ?>"
+                         alt="<?= __( 'All Comments', 'anycomment' ) ?>">
+                    <div class="anycomment-dashboard__splitter-half-description">
+                        <span><?= AnyComment()->statistics->get_approved_comment_count() ?></span>
+                        <span><?= __( 'All Comments', 'anycomment' ) ?></span>
+                    </div>
                 </div>
             </div>
         </div>

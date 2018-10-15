@@ -261,19 +261,9 @@ a:focus {
         color: #53146c;
       }
 
-      &-center {
-        display: table;
-        margin: 0 auto;
-
-        img {
-          float: left;
-          margin-right: 20px;
-        }
-      }
 
       &-description {
-        padding-top: 50px;
-        float: right;
+        padding-top: 20px;
 
         span {
           text-align: center;
