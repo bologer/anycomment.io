@@ -1,7 +1,7 @@
 <?php
 
 class AnyCommentMigration_0_0_50 extends AnyCommentMigration {
-	public $table = 'email_queue';
+	public $table   = 'email_queue';
 	public $version = '0.0.50';
 
 	/**
@@ -15,8 +15,7 @@ class AnyCommentMigration_0_0_50 extends AnyCommentMigration {
 		$res2 = $wpdb->get_results( "SHOW COLUMNS FROM `anycomment_email_queue` LIKE 'email';", 'ARRAY_A' );
 
 
-		return ! empty( $res ) && count( $res ) > 0 &&
-		       ! empty( $res2 ) && count( $res2 ) > 0;
+		return ! empty( $res ) && count( $res ) > 0 && ! empty( $res2 ) && count( $res2 ) > 0;
 	}
 
 	/**
@@ -75,3 +74,5 @@ class AnyCommentMigration_0_0_50 extends AnyCommentMigration {
 		return count( $arr ) === $count;
 	}
 }
+
+// eof;
