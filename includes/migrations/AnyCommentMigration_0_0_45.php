@@ -7,7 +7,7 @@
  */
 
 class AnyCommentMigration_0_0_45 extends AnyCommentMigration {
-	public $table = 'email_queue';
+	public $table   = 'email_queue';
 	public $version = '0.0.45';
 
 	/**
@@ -25,8 +25,6 @@ class AnyCommentMigration_0_0_45 extends AnyCommentMigration {
 	 * {@inheritdoc}
 	 */
 	public function up() {
-		$isEmailQueueTableCreated = false;
-
 		/**
 		 * Modify VK API options
 		 */
@@ -51,35 +49,31 @@ class AnyCommentMigration_0_0_45 extends AnyCommentMigration {
 
 		global $wpdb;
 
-		$table = 'anycomment_email_queue';
+		$charset_collate = $wpdb->get_charset_collate();
+		$table           = 'anycomment_email_queue';
 
 		/**
 		 * Create email queue table
 		 */
 		$sql = "CREATE TABLE `$table` (
-  `ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `user_ID` bigint(20) UNSIGNED NOT NULL,
-  `post_ID` bigint(20) UNSIGNED NOT NULL,
-  `comment_ID` bigint(20) UNSIGNED NOT NULL,
-  `content` LONGTEXT COLLATE utf8_unicode_ci NOT NULL,
-  `ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `user_agent` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `sent_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `created_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+			  `ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+			  `user_ID` bigint(20) UNSIGNED NOT NULL,
+			  `post_ID` bigint(20) UNSIGNED NOT NULL,
+			  `comment_ID` bigint(20) UNSIGNED NOT NULL,
+			  `content` LONGTEXT COLLATE utf8_unicode_ci NOT NULL,
+			  `ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+			  `user_agent` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+			  `sent_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+			  `created_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+			  PRIMARY KEY (`ID`),
+			  KEY `user_ID` (`user_ID`),
+			  KEY `post_ID` (`post_ID`),
+			  KEY `comment_ID` (`comment_ID`)
+		) $charset_collate";
 
-		if ( $wpdb->query( $sql ) !== false ) {
-
-			$user_id_index    = "ALTER TABLE `$table` ADD INDEX `user_ID` (`user_ID`)";
-			$post_id_index    = "ALTER TABLE `$table` ADD INDEX `post_ID` (`post_ID`)";
-			$comment_id_index = "ALTER TABLE `$table` ADD INDEX `comment_ID` (`comment_ID`)";
-
-			$isEmailQueueTableCreated = $wpdb->query( $user_id_index ) !== false &&
-			                            $wpdb->query( $post_id_index ) !== false &&
-			                            $wpdb->query( $comment_id_index ) !== false;
-		}
-
-		return $isEmailQueueTableCreated;
+		return ( $wpdb->query( $sql ) !== false ) ?
+			true :
+			false;
 	}
 
 	/**
@@ -108,3 +102,5 @@ class AnyCommentMigration_0_0_45 extends AnyCommentMigration {
 		return $isVkOptionUpdated;
 	}
 }
+
+// eof;
