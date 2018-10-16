@@ -20,21 +20,25 @@ class AnyCommentMigration_0_0_52 extends AnyCommentMigration {
 	public function up() {
 		global $wpdb;
 
+		$charset_collate = $wpdb->get_charset_collate();
+		$table           = 'anycomment_uploaded_files';
+
 		/**
 		 * Create email queue table
 		 */
-		$sql = "CREATE TABLE `anycomment_uploaded_files` (
-  `ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `post_ID` bigint(20) UNSIGNED NOT NULL,
-  `user_ID` bigint(20) UNSIGNED DEFAULT NULL,
-  `ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `user_agent` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created_at` bigint(20) NOT NULL,
-  INDEX post_ID (`post_ID`),
-  INDEX user_ID (`user_ID`),
-  INDEX ip_created_at (`ip`, `created_at`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+		$sql = "CREATE TABLE `$table` (
+			  `ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+			  `post_ID` bigint(20) UNSIGNED NOT NULL,
+			  `user_ID` bigint(20) UNSIGNED DEFAULT NULL,
+			  `ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+			  `url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+			  `user_agent` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+			  `created_at` bigint(20) NOT NULL,
+			  PRIMARY KEY (`ID`),
+			  INDEX post_ID (`post_ID`),
+			  INDEX user_ID (`user_ID`),
+			  INDEX ip_created_at (`ip`, `created_at`)
+			) $charset_collate;";
 
 		return $wpdb->query( $sql ) !== false;
 	}
@@ -48,3 +52,5 @@ class AnyCommentMigration_0_0_52 extends AnyCommentMigration {
 		$wpdb->query( $sql );
 	}
 }
+
+// eof;
