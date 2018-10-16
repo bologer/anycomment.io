@@ -1548,6 +1548,10 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	public function is_comment_empty( $comment_text ) {
 		$comment_text = trim( $comment_text );
 
+		if ( empty( $comment_text ) ) {
+			return true;
+		}
+
 		/**
 		 * @link https://regex101.com/r/tlvIcV/1
 		 */
