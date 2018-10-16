@@ -5,7 +5,7 @@
  * prefexes existing plugin table with WPDB WordPress's prefix.
  */
 class AnyCommentMigration_0_0_59 extends AnyCommentMigration {
-	public $table = 'uploaded_files';
+	public $table   = 'uploaded_files';
 	public $version = '0.0.59';
 
 	/**
@@ -14,7 +14,7 @@ class AnyCommentMigration_0_0_59 extends AnyCommentMigration {
 	private $_tables_to_rename = [
 		'anycomment_email_queue',
 		'anycomment_likes',
-		'anycomment_uploaded_files'
+		'anycomment_uploaded_files',
 	];
 
 	/**
@@ -44,18 +44,21 @@ class AnyCommentMigration_0_0_59 extends AnyCommentMigration {
 	public function up() {
 		global $wpdb;
 
-		$create_email_queue_table = 'CREATE TABLE IF NOT EXISTS `anycomment_email_queue` (
-  `ID` bigint(20) UNSIGNED NOT NULL,
-  `post_ID` bigint(20) UNSIGNED NOT NULL,
-  `comment_ID` bigint(20) UNSIGNED NOT NULL,
-  `content` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `user_agent` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created_at` datetime NOT NULL DEFAULT \'0000-00-00 00:00:00\',
-  `subject` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `is_sent` tinyint(1) DEFAULT \'0\'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
+		$charset_collate = $wpdb->get_charset_collate();
+		$table           = 'anycomment_email_queue';
+
+		$create_email_queue_table = "CREATE TABLE IF NOT EXISTS `$table` (
+									  `ID` bigint(20) UNSIGNED NOT NULL,
+									  `post_ID` bigint(20) UNSIGNED NOT NULL,
+									  `comment_ID` bigint(20) UNSIGNED NOT NULL,
+									  `content` longtext COLLATE utf8_unicode_ci NOT NULL,
+									  `ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+									  `user_agent` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+									  `created_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+									  `subject` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+									  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+									  `is_sent` tinyint(1) DEFAULT '0'
+									) $charset_collate;";
 
 		// Do not care much about result, as table is create if does not exist only
 		$wpdb->query( $create_email_queue_table );
@@ -76,7 +79,7 @@ class AnyCommentMigration_0_0_59 extends AnyCommentMigration {
 
 
 
-		return $tables_renamed_count === count( $tables_to_rename );
+		return count( $tables_to_rename ) === $tables_renamed_count;
 	}
 
 	/**
@@ -100,6 +103,8 @@ class AnyCommentMigration_0_0_59 extends AnyCommentMigration {
 			}
 		}
 
-		return $tables_renamed_count === count( $tables_to_rename );
+		return count( $tables_to_rename ) === $tables_renamed_count;
 	}
 }
+
+// eof;
