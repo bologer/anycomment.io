@@ -4,7 +4,7 @@
  * Class AnyCommentMigration_0_0_56 is used to re upload big avatars and make them smaller in favor of speed.
  */
 class AnyCommentMigration_0_0_56 extends AnyCommentMigration {
-	public $table = 'uploaded_files';
+	public $table   = 'uploaded_files';
 	public $version = '0.0.56';
 
 	/**
@@ -27,7 +27,7 @@ class AnyCommentMigration_0_0_56 extends AnyCommentMigration {
 
 		$results = $wpdb->get_results( $sql );
 
-		if ( $results === null ) {
+		if ( null === $results ) {
 			return true;
 		}
 
@@ -95,3 +95,5 @@ class AnyCommentMigration_0_0_56 extends AnyCommentMigration {
 		return true;
 	}
 }
+
+// eof;
