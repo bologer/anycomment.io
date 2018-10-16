@@ -24,27 +24,23 @@ class AnyCommentMigration_0_0_32 extends AnyCommentMigration {
 	public function up() {
 		global $wpdb;
 
-		$table = 'anycomment_likes';
+		$table           = 'anycomment_likes';
+		$charset_collate = $wpdb->get_charset_collate();
 
 		$sql = "CREATE TABLE `$table` (
-  `ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `user_ID` bigint(20) UNSIGNED NOT NULL,
-  `comment_ID` bigint(20) UNSIGNED NOT NULL,
-  `post_ID` bigint(20) UNSIGNED NOT NULL,
-  `user_agent` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `liked_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+			  `ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+			  `user_ID` bigint(20) UNSIGNED NOT NULL,
+			  `comment_ID` bigint(20) UNSIGNED NOT NULL,
+			  `post_ID` bigint(20) UNSIGNED NOT NULL,
+			  `user_agent` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+			  `ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+			  `liked_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+			  PRIMARY KEY (`ID`),
+			  KEY `user_ID` (`user_ID`),
+			  KEY `post_ID` (`post_ID`)
+			) $charset_collate;";
 
-		if ( $wpdb->query( $sql ) !== false ) {
-
-			$user_id_index = "ALTER TABLE `$table` ADD INDEX `user_ID` (`user_ID`)";
-			$post_id_index = "ALTER TABLE `$table` ADD INDEX `post_ID` (`post_ID`)";
-
-			$wpdb->query( $user_id_index );
-			$wpdb->query( $post_id_index );
-		}
-
+		$wpdb->query( $sql );
 
 		return true;
 	}
@@ -55,9 +51,11 @@ class AnyCommentMigration_0_0_32 extends AnyCommentMigration {
 	public function down() {
 		global $wpdb;
 
-		$sql = "DROP TABLE IF EXISTS `anycomment_likes`;";
+		$sql = 'DROP TABLE IF EXISTS `anycomment_likes`;';
 		$wpdb->query( $sql );
 
 		return true;
 	}
 }
+
+// eof;
