@@ -165,11 +165,11 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 == Changelog ==
 
-= 0.0.62 – 15.10.2018 =
+= 0.0.62 – 17.10.2018 =
 
 **Enhancements:**
 
-
+* Cosmetic changes to paragraphs as now it is more visible when new one started, #225
 
 **Fixes:**
 
