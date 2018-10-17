@@ -18,27 +18,8 @@ class AnyCommentMigration_0_0_63 extends AnyCommentMigration {
 	 * {@inheritdoc}
 	 */
 	public function up() {
-		global $wpdb;
-
-		$charset_collate = $wpdb->get_charset_collate();
-
-		/**
-		 * Create email queue table
-		 */
-		$sql = "CREATE TABLE IF NOT EXISTS `{$this->getTable()}` (
-				  `ID` bigint(20) UNSIGNED NOT NULL,
-				  `post_ID` bigint(20) UNSIGNED NOT NULL,
-				  `user_ID` bigint(20) UNSIGNED DEFAULT NULL,
-				  `rating` smallint(1) SIGNED DEFAULT 5,
-				  `ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-				  `user_agent` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-				  `created_at` bigint(20) NOT NULL,
-				  PRIMARY KEY (`ID`),
-				  KEY `post_ID` (`post_ID`),
-				  KEY `user_ID` (`user_ID`)
-				) $charset_collate;";
-
-		return ( false !== $wpdb->query( $sql ) );
+		update_option( 'anycomment_migration', '0.0.61' );
+		return true;
 	}
 
 	/**

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.0.63 – 17.10.2018
+
+**Fixes:**
+
+* Fixed issue when users were unable to place rating as migration failed to create rating table from 0.0.61, #217
+
 ## 0.0.62 – 17.10.2018
 
 **Enhancements:**

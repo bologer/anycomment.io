@@ -31,7 +31,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 		 *
 		 * @var string
 		 */
-		public $version = '0.0.62';
+		public $version = '0.0.63';
 
 		/**
 		 * Instance of render class.

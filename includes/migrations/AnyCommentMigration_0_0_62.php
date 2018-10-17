@@ -35,7 +35,7 @@ class AnyCommentMigration_0_0_62 extends AnyCommentMigration {
 				  `created_at` bigint(20) NOT NULL,
 				  PRIMARY KEY (`ID`),
 				  KEY `post_ID` (`post_ID`),
-				  KEY `user_ID` (`user_ID`),
+				  KEY `user_ID` (`user_ID`)
 				) $charset_collate;";
 
 		return ( false !== $wpdb->query( $sql ) );
