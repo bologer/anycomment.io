@@ -532,18 +532,15 @@
               }
             }
 
-            & > *:last-child {
-              margin-bottom: 0;
-            }
-
-            & > p:last-child {
-              padding-bottom: 0;
-            }
-
             // blockTypes
             ul, ol {
               padding-left: 21px;
               margin-left: 0;
+            }
+
+            p {
+              line-height: 1.6;
+              margin: 0 0 5px 0;
             }
 
             // quotes
@@ -574,6 +571,14 @@
             img {
               max-width: 100%;
               width: auto;
+            }
+
+            & > *:last-child {
+              margin-bottom: 0;
+            }
+
+            & > p:last-child {
+              padding-bottom: 0;
             }
           }
 

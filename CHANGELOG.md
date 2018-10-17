@@ -4,7 +4,7 @@
 
 **Enhancements:**
 
-
+* Cosmetic changes to paragraphs as now it is more visible when new one started, #225
 
 **Fixes:**
 
