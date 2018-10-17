@@ -90,6 +90,7 @@ class CommentList extends AnyCommentComponent {
     loadComments() {
         const self = this;
         const settings = this.props.settings;
+        const timestamp = new Date().getTime();
 
         const params = {
             post: settings.postId,
@@ -97,6 +98,7 @@ class CommentList extends AnyCommentComponent {
             per_page: this.state.perPage,
             order: this.state.order,
             order_by: this.state.orderBy,
+            rnd: timestamp
         };
 
         return this.props.axios
