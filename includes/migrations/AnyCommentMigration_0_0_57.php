@@ -4,7 +4,7 @@
  * Class AnyCommentMigration_0_0_57 is used to re upload big avatars and make them smaller in favor of speed.
  */
 class AnyCommentMigration_0_0_57 extends AnyCommentMigration {
-	public $table   = 'uploaded_files';
+	public $table = 'uploaded_files';
 	public $version = '0.0.57';
 
 	/**
@@ -24,13 +24,15 @@ class AnyCommentMigration_0_0_57 extends AnyCommentMigration {
 	public function up() {
 		global $wpdb;
 
-		$sql  = "ALTER TABLE `{$this->getTable()}` ADD COLUMN `url_thumbnail` VARCHAR(255) NULL";
-		$sql2 = "ALTER TABLE `{$this->getTable()}` ADD COLUMN `type` VARCHAR(255) NOT NULL";
+		$table = 'anycomment_uploaded_files';
+
+		$sql  = "ALTER TABLE $table ADD COLUMN `url_thumbnail` VARCHAR(255) NULL";
+		$sql2 = "ALTER TABLE $table ADD COLUMN `type` VARCHAR(255) NOT NULL";
 
 
 		$success = $wpdb->query( $sql ) !== false && $wpdb->query( $sql2 ) !== false;
 
-		$sql3 = "SELECT * FROM `{$this->getTable()}` WHERE `type`='' OR `type` IS NULL";
+		$sql3 = "SELECT * FROM $table WHERE `type`='' OR `type` IS NULL";
 
 		$rows = $wpdb->get_results( $sql3 );
 
@@ -55,7 +57,7 @@ class AnyCommentMigration_0_0_57 extends AnyCommentMigration {
 				}
 
 				if ( null !== $mime_to_use ) {
-					$wpdb->update( $this->getTable(), [ 'type' => $mime_to_use ], [ 'id' => $row->ID ] );
+					$wpdb->update( $table, [ 'type' => $mime_to_use ], [ 'id' => $row->ID ] );
 				}
 			}
 		}
