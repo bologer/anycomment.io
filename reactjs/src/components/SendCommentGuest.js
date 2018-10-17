@@ -5,6 +5,23 @@ import LoginSocialList from './LoginSocialList'
 
 class SendCommentGuest extends AnyCommentComponent {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            isAgreementAccepted: true,
+        };
+    }
+
+    /**
+     * Handle agreement checkbox change.
+     *
+     * @param e
+     */
+    handleAgreement = (e) => {
+        this.setState({isAgreementAccepted: e.target.checked});
+    };
+
     render() {
         const settings = this.getSettings();
         const translations = settings.i18;
@@ -60,13 +77,13 @@ class SendCommentGuest extends AnyCommentComponent {
 
             <div className="anycomment anycomment-form-guest__container">
                 <div className="anycomment anycomment-form-guest-socials">
-                    {(settings.options.isFormTypeSocials || settings.options.isFormTypeAll) && this.props.isAgreementAccepted ?
+                    {(settings.options.isFormTypeSocials || settings.options.isFormTypeAll) && this.state.isAgreementAccepted ?
                         <LoginSocialList/> : ''}
                 </div>
                 <div className="anycomemnt anycomment-form-submit">
                     <DataProcessing isAgreementAccepted={this.props.isAgreementAccepted}
-                                    onAccept={this.props.handleAgreement}/>
-                    <input type="submit" disabled={!this.props.isAgreementAccepted}
+                                    onAccept={this.handleAgreement}/>
+                    <input type="submit" disabled={!this.props.buttonEnabled}
                            className="anycomment-btn anycomment-send-comment-body__btn"
                            value={this.props.buttonText}/>
                 </div>

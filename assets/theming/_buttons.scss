@@ -4,9 +4,9 @@
   input + .input[type="button"] {
     @include button();
 
-    &:hover,
-    &:active,
-    &:focus {
+    &:not([disabled]):hover,
+    &:not([disabled]):active,
+    &:not([disabled]):focus {
       @include button();
       background-color: $btn-background-color-active !important;
     }

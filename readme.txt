@@ -178,6 +178,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Fixed issue when scrolling to comments section or to specific comment was not working and was throwing console error, #219
 * Fixed issue when users were unable to place rating as migration failed to create rating table from 0.0.61, #217
 * Fixed issue when user was able to send empty comment before even typing anything, #226
+* Fixed issue when user could click two times on send comment button and duplicate comment would be sent, #218
 
 = 0.0.61 – 15.10.2018 =
 

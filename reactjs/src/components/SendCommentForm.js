@@ -20,7 +20,6 @@ class SendCommentForm extends AnyCommentComponent {
             settings = this.props.settings;
 
         this.state = {
-            isAgreementAccepted: true,
             commentText: '',
             attachments: [],
             buttonText: settings.i18.button_send,
@@ -31,6 +30,7 @@ class SendCommentForm extends AnyCommentComponent {
             replyName: '',
             editId: '',
             commentHTML: '',
+            buttonEnabled: false
         };
 
         this.reCaptchaSiteKey = options.reCaptchaSiteKey;
@@ -63,11 +63,16 @@ class SendCommentForm extends AnyCommentComponent {
      *
      * @returns {boolean}
      */
-    isCommentEmpty = () => {
-        let {commentHTML} = this.state;
+    isCommentEmpty = (text = null) => {
+
+        text = text || this.state.commentHTML;
+
+        if (text.trim() === '') {
+            return true;
+        }
 
         const re = /^<p>(<br>|<br\/>|<br\s\/>|\s+|)<\/p>$/gm;
-        return re.test(commentHTML);
+        return re.test(text);
     };
 
     /**
@@ -102,7 +107,8 @@ class SendCommentForm extends AnyCommentComponent {
             buttonText: this.props.settings.i18.button_send,
             replyId: 0,
             editId: '',
-            commentHTML: ''
+            commentHTML: '',
+            buttonEnabled: false
         });
 
         this.dropComment();
@@ -120,7 +126,8 @@ class SendCommentForm extends AnyCommentComponent {
             buttonText: this.props.settings.i18.button_reply,
             replyId: comment.id,
             editId: '',
-            commentHTML: ''
+            commentHTML: '',
+            buttonEnabled: false
         });
 
         this.focusCommentField();
@@ -141,7 +148,8 @@ class SendCommentForm extends AnyCommentComponent {
                 replyName: '',
                 editId: comment.id,
                 buttonText: this.props.settings.i18.button_save,
-                commentHTML: commentHtml
+                commentHTML: commentHtml,
+                buttonEnabled: true
             };
 
             if (comment.attachments || comment.attachments && comment.attachments.length > 0) {
@@ -199,24 +207,16 @@ class SendCommentForm extends AnyCommentComponent {
     };
 
     /**
-     * Handle agreement checkbox change.
-     *
-     * @param e
-     */
-    handleAgreement = (e) => {
-        this.setState({isAgreementAccepted: e.target.checked});
-    };
-
-    /**
      * Handle comment text change.
      *
      * @param text
      */
     handleEditorChange = (text) => {
-        this.setState({
-            commentHTML: text,
-        });
 
+        let params = {commentHTML: text};
+
+        params.buttonEnabled = !this.isCommentEmpty(text);
+        this.setState(params);
         this.storeComment(text);
     };
 
@@ -372,6 +372,8 @@ class SendCommentForm extends AnyCommentComponent {
 
         const self = this;
 
+        this.setState({buttonEnabled: false});
+
         if (this.isCaptchaOn()) {
             recapchaRef.current.execute();
 
@@ -504,9 +506,8 @@ class SendCommentForm extends AnyCommentComponent {
                                           handleAuthorNameChange={this.handleAuthorNameChange}
                                           handleAuthorEmailChange={this.handleAuthorEmailChange}
                                           handleAuthorWebsiteChange={this.handleAuthorWebsiteChange}
-                                          handleAgreement={this.handleAgreement}
-                                          isAgreementAccepted={this.state.isAgreementAccepted}/> :
-                        <input type="submit" disabled={!this.state.isAgreementAccepted}
+                                          buttonEnabled={this.state.buttonEnabled}/> :
+                        <input type="submit" disabled={!this.state.buttonEnabled}
                                className="anycomment-btn anycomment-send-comment-body__btn"
                                value={this.state.buttonText}/>
                     }
