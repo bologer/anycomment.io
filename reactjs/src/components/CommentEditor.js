@@ -65,6 +65,7 @@ class CommentEditor extends AnyCommentComponent {
                 <SendCommentFormBodyAvatar/>
                 <ReactQuill
                     className={'anycomment-quill-editor anycomment-lang-' + this.getLocale()}
+                    theme="bubble"
                     value={commentHTML}
                     placeholder={settings.i18.add_comment}
                     ref={editorRef}

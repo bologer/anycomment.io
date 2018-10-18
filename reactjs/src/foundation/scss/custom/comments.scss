@@ -1,0 +1,782 @@
+#{$root} {
+  padding: $global-padding;
+  width: 100%;
+  float: left;
+  position: relative;
+
+  .anycomment-send-comment-body.anycomment-send-comment-body-authorized {
+    .anycomment-send-comment-body-outliner {
+      &__avatar {
+        position: absolute;
+        top: 60%;
+        margin-top: -($child-avatar-size/2);
+        left: 15px;
+        @include avatar();
+        @include avatar_child();
+        z-index: 1;
+      }
+    }
+  }
+
+  // Send comment
+  .anycomment-send-comment {
+    width: 100%;
+    margin-bottom: $form-after-space;
+    margin-top: 5px;
+
+    &-supheader {
+      width: 100%;
+      position: relative;
+      font-size: $font-size;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row;
+      align-items: center;
+
+      &__count {
+        color: $text-color;
+      }
+
+      &__dropdown {
+        float: right;
+        color: $text-color;
+
+        & > div {
+          display: block;
+          min-width: 200px;
+          z-index: 3;
+
+          & > div {
+            background-color: transparent;
+            border-color: transparent;
+            border-width: 0;
+          }
+        }
+      }
+    }
+
+    &-body {
+
+      &-reply {
+        font-size: $font-size - 2;
+        span {
+          color: $link-color;
+          font-weight: bold;
+          padding: 2px 5px;
+          display: inline-block;
+          cursor: pointer;
+          user-select: none;
+          appearance: none;
+        }
+      }
+
+      &,
+      &-outliner {
+        width: 100%;
+      }
+
+      &-outliner {
+        border: 2px solid $semi-hidden-color;
+        min-height: 64px;
+        position: relative;
+        background-color: $form-field-background-color;
+        margin-bottom: 10px;
+        @include border-radius($global-radius);
+
+        &__logo {
+          position: absolute;
+          left: 33px;
+          top: 60%;
+          margin-top: -13px;
+          width: 26px;
+          height: 26px;
+          z-index: 2;
+
+          & svg {
+            width: 100%;
+            height: 100%;
+          }
+        }
+
+        &__select-file {
+          position: absolute;
+          top: 2px;
+          right: 18px;
+          height: 25px;
+          width: 25px;
+          cursor: pointer;
+          opacity: 0.6;
+          z-index: 2;
+
+          &:hover,
+          &:active,
+          &:focus {
+            opacity: 1;
+          }
+        }
+      }
+
+      // Dropzone
+      &-outliner-dropzone-active {
+        border-style: dashed;
+
+        &::before {
+
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          background: url('../img/dropzone.svg');
+          background-size: cover;
+          width: 60px;
+          height: 60px;
+          z-index: 4;
+          opacity: 0.5;
+          margin-left: -30px;
+          margin-top: -30px;
+        }
+
+        &::after {
+          background-color: rgba(255, 255, 255, 0.9);
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 2;
+          content: '';
+        }
+      }
+
+      .anycomment-form-guest {
+        &__header {
+          font-size: $font-size - 6;
+          color: $semi-hidden-color;
+          text-transform: uppercase
+        }
+
+        &__container {
+          width: 100%;
+
+          .anycomment-form-guest-socials,
+          .anycomment-form-submit {
+            display: inline-block;
+            vertical-align: middle;
+            width: 50%;
+            float: left;
+            margin-top: 5px;
+          }
+
+          .anycomment-form-guest-socials {
+            ul {
+              list-style: none;
+              padding: 0;
+              margin: 0;
+
+              li {
+                display: inline-block;
+                margin: 0 5px 0 0;
+
+                &:last-of-type {
+                  margin-right: 0;
+                }
+
+                a {
+                  display: block;
+                  opacity: 0.8;
+
+                  &, & svg {
+                    width: 30px;
+                    height: 30px;
+                  }
+
+                  &:hover,
+                  &:focus,
+                  &:active {
+                    opacity: 1;
+                  }
+                }
+              }
+            }
+          }
+
+          .anycomment-form-submit {
+            &__user-agreement {
+              font-size: $font-size - 3;
+              color: $semi-hidden-color;
+              text-align: right;
+              margin: 5px 0 10px 0;
+
+              a {
+                text-decoration: underline;
+
+                &:hover,
+                &:focus,
+                &:active {
+                  text-decoration: none;
+                }
+              }
+
+              label {
+                position: relative;
+                padding-left: 25px;
+                font-weight: normal;
+                display: block;
+                float: right;
+              }
+
+              /* Hide the browser's default checkbox */
+              input {
+                position: absolute;
+                opacity: 0;
+                cursor: pointer;
+              }
+
+              /* Create a custom checkbox */
+              .checkmark {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 16px;
+                width: 16px;
+                @include border-radius(2px);
+                background-color: $semi-hidden-color;
+              }
+
+              /* On mouse-over, add a grey background color */
+              &:hover input ~ .checkmark {
+                background-color: darken($semi-hidden-color, 5%);
+              }
+
+              /* When the checkbox is checked, add a blue background */
+              input:checked ~ .checkmark {
+                background-color: $btn-background-color-active;
+              }
+
+              /* Create the checkmark/indicator (hidden when not checked) */
+              .checkmark:after {
+                content: "";
+                position: absolute;
+                display: none;
+              }
+
+              /* Show the checkmark when checked */
+              input:checked ~ .checkmark:after {
+                display: block;
+              }
+
+              /* Style the checkmark/indicator */
+              .checkmark:after {
+                left: 6px;
+                top: 2px;
+                width: 5px;
+                height: 10px;
+                border: solid white;
+                border-width: 0 2px 2px 0;
+                -webkit-transform: rotate(45deg);
+                -ms-transform: rotate(45deg);
+                transform: rotate(45deg);
+              }
+            }
+          }
+        }
+      }
+
+      .anycomment-input-list {
+        width: 100%;
+
+        &-single {
+          display: inline-block;
+          padding-right: 5px;
+          width: 33.333%;
+          vertical-align: middle;
+
+          &:last-of-type {
+            padding-right: 0;
+          }
+
+          label {
+            color: $text-color;
+            font-weight: 700;
+            font-size: $font-size - 3;
+            margin-bottom: 2px;
+            line-height: 1.3;
+            display: block;
+          }
+
+          label,
+          input,
+          textarea {
+            width: 100%;
+          }
+
+          input[type="text"],
+          input[type="email"],
+          input[type="number"] {
+            background-color: $form-field-background-color;
+            border: 1px solid $semi-hidden-color !important;
+            color: $text-color !important;
+            outline: 0;
+            height: 31px !important;
+            line-height: 31px !important;
+            padding: 0 5px !important;
+            font-size: $font-size - 4;
+            text-align: left;
+            @include border-radius($global-radius);
+
+            &:hover,
+            &:active,
+            &:focus {
+              border: 1px solid darken($semi-hidden-color, 5%) !important;
+            }
+          }
+        }
+      }
+
+      // This is used for better look when admin customizing list of inputs (e.g. only one or two fields are visible)
+      .anycomment-input-list-1 {
+        .anycomment-input-list-single {
+          width: 100%;
+        }
+      }
+
+      .anycomment-input-list-2 {
+        .anycomment-input-list-single {
+          width: 50%;
+        }
+      }
+
+      &__btn {
+        float: right;
+      }
+    }
+  }
+
+  // Footer
+  .anycomment-copy-footer {
+    margin-top: $big-space;
+    padding-top: $medium-space;
+    text-align: right;
+    font-size: $font-size - 3;
+    border-top: 2px solid #e4e2e7;
+
+    &, a {
+      color: $semi-hidden-color
+    }
+
+    a:hover,
+    a:focus,
+    a:active {
+      color: $text-color;
+    }
+
+    & > span {
+      display: inline-block;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+  }
+
+  // Comments list
+  .anycomment-list {
+    margin: 0;
+    padding: 0;
+
+    &,
+    .comment-single {
+      list-style: none;
+    }
+
+    .comment-single-highlight {
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: -8px;
+        top: 0;
+        height: 100%;
+        width: 5px;
+        background-color: $btn-background-color;
+      }
+    }
+
+    .comment-single {
+      margin-bottom: $medium-space;
+
+      &-replies {
+        margin-top: $medium-space;
+      }
+
+      &:last-of-type {
+        padding-bottom: 0 !important;
+      }
+
+      &-avatar {
+        position: absolute;
+        left: 0;
+        top: 0;
+
+        &,
+        &__img {
+          @include avatar-parent();
+        }
+
+        &__img {
+          position: relative;
+          @include avatar();
+
+          &-auth-type {
+            position: absolute;
+            bottom: $parent-avatar-size - ($parent-avatar-size - 6);
+            right: $parent-avatar-size - ($parent-avatar-size - 6);
+            width: $parent-avatar-size / 3.5;
+            height: $parent-avatar-size / 3.5;
+
+            svg {
+              width: $parent-avatar-size / 3.5;
+              height: $parent-avatar-size / 3.5;
+            }
+          }
+        }
+      }
+
+      &-body {
+        &-header {
+
+          &__author {
+
+            &,
+            & > a {
+              color: $link-color;
+              background-color: transparent;
+              font-size: $font-size - 1;
+              margin-bottom: 2px;
+              display: inline-block;
+            }
+
+            &-owner {
+              background-color: $btn-background-color;
+              color: $btn-color;
+              font-size: $font-size - 5;
+              padding: 2px 5px;
+              margin-left: 10px;
+              user-select: none;
+              @include border-radius($btn-radius);
+            }
+
+            &-reply {
+              margin-left: 5px;
+              display: inline-block;
+
+              &, a {
+                color: $semi-hidden-color;
+                font-size: $font-size - 5px;
+              }
+            }
+
+            &-replied,
+            &-parent-author {
+              color: $link-color;
+            }
+
+            &-answered {
+              color: $semi-hidden-color;
+            }
+          }
+
+          &__date {
+            color: $semi-hidden-color;
+            font-size: $font-size - 2;
+            line-height: $small-space;
+            display: block;
+          }
+        }
+
+        &__shortened {
+          .comment-single-body__text {
+            &-content {
+              position: relative;
+              cursor: pointer;
+              overflow: hidden;
+            }
+          }
+        }
+
+        &__text {
+          width: 100%;
+          margin: 5px 0;
+          transition: height 1s ease-out;
+
+          &-content {
+            color: $text-color;
+            font-size: $font-size;
+            line-height: 1.45;
+            padding: 0;
+            margin: 0;
+            word-break: break-word;
+            word-wrap: break-word;
+            overflow: hidden;
+
+            a {
+              &,
+              &:hover,
+              &:active,
+              &:focus,
+              &:visited {
+                background-color: transparent;
+              }
+            }
+
+            // blockTypes
+            ul, ol {
+              padding-left: 21px;
+              margin-left: 0;
+            }
+
+            p {
+              line-height: 1.6;
+              margin: 0 0 5px 0;
+            }
+
+            // quotes
+            blockquote {
+              position: relative;
+              padding: 5px 8px 8px 41px;
+              font-size: $font-size + 5;
+              font-weight: 400;
+              font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+              background-color: #efefef;
+              line-height: 1.48;
+              letter-spacing: -.012em;
+              @include border-radius($global-radius);
+
+              &::before {
+                position: absolute;
+                top: 5px;
+                left: 10px;
+                content: "\201C";
+                font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+                font-size: $font-size + 25;
+                font-weight: bold;
+                line-height: $font-size +25;
+              }
+            }
+
+            // images
+            img {
+              max-width: 100%;
+              width: auto;
+            }
+
+            & > *:last-child {
+              margin-bottom: 0;
+            }
+
+            & > p:last-child {
+              padding-bottom: 0;
+            }
+          }
+
+          &-readmore {
+            color: $link-color;
+            font-size: $font-size - 2;
+            text-decoration: none;
+            text-align: left;
+            padding: 5px 0 0;
+            margin: 0;
+            cursor: pointer;
+
+            &:hover,
+            &:active,
+            &:focus {
+              color: $link-color-active;
+            }
+          }
+        }
+
+        .comment-attachments {
+          width: 100%;
+          display: block;
+          margin: 3px 0;
+          padding: 0;
+
+          li {
+            display: inline-block;
+            margin-right: 5px;
+            margin-bottom: 2px;
+            float: left;
+
+            .comment-attachment {
+              display: block;
+              width: $attachment-size;
+              height: $attachment-size;
+              line-height: $attachment-size;
+              background-color: $attachment-background-color;
+              text-align: center;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+              padding: 0 2px;
+              font-size: $font-size - 7;
+              font-weight: bold;
+              user-select: none;
+              color: darken($attachment-color, 15%);
+              @include border-radius(3px);
+
+              &:hover {
+                background-color: darken($attachment-background-color, 3%);
+                color: darken($attachment-color, 20%);
+              }
+            }
+
+            .comment-attachment__link {
+              outline: 0;
+            }
+
+            .comment-attachment__image {
+              background-size: cover;
+              background-repeat: no-repeat;
+              background-position: center center;
+            }
+          }
+        }
+
+        &__actions {
+          width: 100%;
+          display: block;
+
+          &-like.active {
+            &::before {
+              background-image: url('../img/icons/like-on.svg') !important;
+            }
+          }
+
+          &-like {
+            position: relative;
+            padding-left: 28px;
+            cursor: pointer;
+            user-select: none;
+
+            &::before {
+              content: '';
+              position: absolute;
+              width: 18px;
+              height: 16px;
+              left: 0;
+              top: 0;
+              background: url('../img/icons/like-off.svg') no-repeat;
+              background-size: 18px;
+            }
+
+          }
+
+          ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+
+            li {
+              display: inline-block;
+              margin-right: $small-space;
+
+              &:last-of-type {
+                margin-right: 0;
+              }
+
+              a, span {
+                font-size: $font-size - 1;
+                color: $semi-hidden-color;
+                text-decoration: none;
+
+                &:hover,
+                &:active,
+                &:focus {
+                  text-decoration: none;
+                  color: darken($semi-hidden-color, 5%);
+                }
+              }
+            }
+          }
+        }
+      }
+
+      &-form-wrapper {
+        margin: 10px 0;
+      }
+    }
+
+    // Child comments
+    &-child {
+      .comment-single {
+        &-avatar {
+          &,
+          &__img {
+            @include avatar-child();
+
+            &-auth-type {
+              bottom: $parent-avatar-size - ($parent-avatar-size - 5);
+              right: $parent-avatar-size - ($parent-avatar-size - 5);
+              width: $parent-avatar-size / 4;
+              height: $parent-avatar-size / 4;
+            }
+          }
+        }
+
+        &-body {
+          .comment-attachments {
+            li {
+              .comment-attachment {
+                width: $attachment-child-size;
+                height: $attachment-child-size;
+                line-height: $attachment-child-size;
+                font-size: $font-size - 9;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // Load more
+    .comment-single-load-more {
+      text-align: center;
+    }
+  }
+
+  &-inner > .anycomment-list {
+
+    ul.anycomment-list-child {
+      .comment-single-body {
+        padding-left: $comment-child-space;
+      }
+    }
+
+    & > .comment-single {
+
+      & > .comment-single-body {
+        padding-left: $comment-parent-space;
+      }
+
+      & > .comment-single-replies {
+        // Second level
+        & > ul.anycomment-list-child {
+          margin-left: $comment-parent-space;
+
+          // Third level
+          & > li {
+            & > .comment-single-replies {
+              & > ul.anycomment-list-child {
+                margin-left: $comment-parent-space;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @import "mobile";
+}
