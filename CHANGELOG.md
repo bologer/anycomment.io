@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.0.64 – 18.10.2018
+
+**Fixes:**
+
+* Fixed issue with rating, some of the users said that they could not rate posts more then once, #235
+
+
 ## 0.0.63 – 17.10.2018
 
 **Fixes:**

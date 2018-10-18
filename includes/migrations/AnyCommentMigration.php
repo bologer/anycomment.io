@@ -56,6 +56,10 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 		'0.0.63' => [
 			'version'     => '0.0.63',
 			'description' => 'Create anycomment_rating table if does not exist. Fix for 0.0.62 when table was not created'
+		],
+		'0.0.64' => [
+			'version'     => '0.0.64',
+			'description' => 'Adding AUTO INCREMENT for anycomment_rating as it was missing after recent update'
 		]
 	];
 
