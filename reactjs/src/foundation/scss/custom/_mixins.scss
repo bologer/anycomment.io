@@ -31,6 +31,7 @@
 @mixin avatar() {
   background-size: cover;
   background-position: center center;
+  border: 1px solid $semi-hidden-color;
   @include border-radius($avatar-border-radius);
 }
 

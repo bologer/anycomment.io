@@ -1,7 +1,7 @@
-$font-size: 15px !default;
+$font-size: 14px !default;
 $font-family: 'Noto-Sans', sans-serif !default;
 
-$semi-hidden-color: #b6c1c6 !default;
+$semi-hidden-color: #B6C1C6 !default;
 
 $link-color: #3658f7 !default;
 $link-color-active: darken($link-color, 5%) !default;
@@ -15,15 +15,15 @@ $attachment-child-size: $attachment-size - 10 !default;
 $attachment-color: #eee !default;
 $attachment-background-color: #eee !default;
 
-$avatar-border-radius: 50% !default;
-$parent-avatar-size: 60px !default;
-$child-avatar-size: 48px !default;
+$avatar-border-radius: 50% 50% 50% 0 !default;
+$parent-avatar-size: 48px !default;
+$child-avatar-size: 30px !default;
 
 $comment-parent-space: $parent-avatar-size + 20 !default;
 $comment-child-space: $parent-avatar-size !default;
 
 $comment-field-padding: 41px 10px 5px 93px !default;
-$comment-field-default-height: 96px !default;
+$comment-field-default-height: 64px !default;
 
 $form-after-space: 50px !default;
 
@@ -42,5 +42,7 @@ $btn-background-color-active: #4f9f49 !default;
 
 $global-radius: 4px !default;
 $global-padding: 40px 0 !default;
+
+$editor-bubble-color: #E8EDEF;
 
 $root: '#anycomment-root' !default;

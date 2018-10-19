@@ -19,6 +19,8 @@ class SendComment extends AnyCommentComponent {
         return (
             <div id="anycomment anycomment-send-comment"
                  className="anycomment-send-comment">
+                <SendCommentForm {...this.props} />
+
                 <div className="anycomment anycomment-send-comment-supheader">
                     <div className="anycomment anycomment-send-comment-supheader__count"
                          id="comment-count">{this.props.commentCountText}</div>
@@ -26,8 +28,6 @@ class SendComment extends AnyCommentComponent {
                         <ProfileDropdown onSort={this.props.onSort}/>
                     </div>
                 </div>
-
-                <SendCommentForm {...this.props} />
             </div>
         );
     }
