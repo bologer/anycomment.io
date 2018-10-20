@@ -4,7 +4,7 @@ Tags: anycomment, comments, ajax comments, comment, comment moderation, custom c
 Requires at least: 4.7
 Tested up to: 4.9.8
 Requires PHP: 5.4
-Stable tag: 0.0.64
+Stable tag: 0.0.65
 License: GPLv2 or later
 License URI: http://www.gnu.org/
 
@@ -164,6 +164,20 @@ Most of the hosting providers support single button-like installation of SSL cer
 It could only be difficult for website who have HTTP only and hight traffic as transfer to HTTPs can cause some traffic lose.
 
 == Changelog ==
+
+= 0.0.65 – 20.10.2018 =
+
+**Enhancements:**
+
+* New visual design for frontend
+* Optimized main JavaScript file, removed some dependencies and now it is much lighter
+
+
+**Fixes:**
+
+* Fixes various visual bugs related to CSS on frontend
+* Fixed issue when some of the users received too many repeating emails cause by incorrect table structure, #240
+
 
 = 0.0.64 – 18.10.2018 =
 

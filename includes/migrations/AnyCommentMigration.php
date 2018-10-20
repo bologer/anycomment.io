@@ -60,6 +60,10 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 		'0.0.64' => [
 			'version'     => '0.0.64',
 			'description' => 'Adding AUTO INCREMENT for anycomment_rating as it was missing after recent update'
+		],
+		'0.0.65' => [
+			'version'     => '0.0.65',
+			'description' => 'Fixing AUTO INCREMENT for anycomment_email_queue and adding BIGINT for anycomment_rating'
 		]
 	];
 

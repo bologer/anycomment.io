@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.0.65 – 20.10.2018
+
+**Enhancements:**
+
+* New visual design for frontend
+* Optimized main JavaScript file, removed some dependencies and now it is much lighter
+
+
+**Fixes:**
+
+* Fixes various visual bugs related to CSS on frontend
+* Fixed issue when some of the users received too many repeating emails cause by incorrect table structure, #240
+
+
 ## 0.0.64 – 18.10.2018
 
 **Fixes:**
