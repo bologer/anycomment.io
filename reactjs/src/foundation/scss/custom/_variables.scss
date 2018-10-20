@@ -3,9 +3,9 @@ $font-family: 'Noto-Sans', sans-serif !default;
 
 $semi-hidden-color: #B6C1C6 !default;
 
-$link-color: #3658f7 !default;
+$link-color: #1DA1F2 !default;
 $link-color-active: darken($link-color, 5%) !default;
-$text-color: #333 !default;
+$text-color: #000 !default;
 
 $form-field-background-color: #fff !default;
 
@@ -32,13 +32,13 @@ $medium-space: $big-space / 2 !default;
 $small-space: $medium-space / 2 !default;
 $xsmall-space: $small-space / 2 !default;
 
-$btn-radius: 40px !default;
+$btn-radius: 30px !default;
 
 $btn-color: #fff !default;
-$btn-height: 48px !default;
+$btn-height: 30px !default;
 $btn-padding: 0 50px !default;
-$btn-background-color: #53af4a !default;
-$btn-background-color-active: #4f9f49 !default;
+$btn-background-color: #1DA1F2 !default;
+$btn-background-color-active: darken($btn-background-color, 5%) !default;
 
 $global-radius: 4px !default;
 $global-padding: 40px 0 !default;

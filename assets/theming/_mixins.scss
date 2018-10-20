@@ -6,7 +6,7 @@
 }
 
 @mixin button() {
-  font-size: $font-size !important;
+  font-size: $font-size - 2 !important;
   font-weight: normal !important;
   text-align: center !important;
   text-transform: none !important;
@@ -32,6 +32,7 @@
   background-size: cover;
   background-position: center center;
   border: 1px solid $semi-hidden-color;
+  background-color: #DDE2E5;
   @include border-radius($avatar-border-radius);
 }
 

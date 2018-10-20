@@ -24,7 +24,7 @@
 
       &-item-active {
         svg {
-          color: #ffaf02;
+          color: #EEBA64;
           /* make hover effect work properly in IE */
           pointer-events: none;
         }
@@ -34,19 +34,19 @@
       &-item:hover ~ span svg,
       &-item-active:hover > span svg,
       &-item-active:hover ~ span:hover ~ label svg {
-        color: #ffaf02;
+        color: #EEBA64;
       }
     }
 
     &__count {
-      line-height: 1.7;
+      line-height: 2;
       font-size: $font-size - 2;
+      margin-left: 12px;
       color: $semi-hidden-color;
 
-      &-value {
-      }
-
+      &-value,
       &-count {
+        color: $semi-hidden-color;
       }
     }
   }

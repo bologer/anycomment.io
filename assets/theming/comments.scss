@@ -1,7 +1,8 @@
 #{$root} {
+  display: flex;
+  flex: 1 100%;
+  flex-direction: row;
   padding: $global-padding;
-  width: 100%;
-  float: left;
   position: relative;
 
   .anycomment-send-comment-body.anycomment-send-comment-body-authorized {
@@ -453,7 +454,7 @@
             & > a {
               color: $link-color;
               background-color: transparent;
-              font-size: $font-size - 1;
+              font-size: $font-size;
               margin-bottom: 2px;
               display: inline-block;
             }
@@ -514,7 +515,8 @@
           &-content {
             color: $text-color;
             font-size: $font-size;
-            line-height: 1.45;
+            font-weight: normal;
+            line-height: 19px;
             padding: 0;
             margin: 0;
             word-break: break-word;
@@ -646,33 +648,8 @@
         }
 
         &__actions {
-          width: 100%;
-          display: block;
-
-          &-like.active {
-            &::before {
-              background-image: url('../img/icons/like-on.svg') !important;
-            }
-          }
-
-          &-like {
-            position: relative;
-            padding-left: 28px;
-            cursor: pointer;
-            user-select: none;
-
-            &::before {
-              content: '';
-              position: absolute;
-              width: 18px;
-              height: 16px;
-              left: 0;
-              top: 0;
-              background: url('../img/icons/like-off.svg') no-repeat;
-              background-size: 18px;
-            }
-
-          }
+          display: flex;
+          margin-top: 10px;
 
           ul {
             list-style: none;
@@ -682,14 +659,20 @@
 
             li {
               display: inline-block;
-              margin-right: $small-space;
+              margin-right: 15px;
+
+              .svg-inline--fa {
+                font-size: $font-size + 1;
+                margin-right: 7px;
+                vertical-align: middle;
+              }
 
               &:last-of-type {
                 margin-right: 0;
               }
 
               a, span {
-                font-size: $font-size - 1;
+                font-size: $font-size;
                 color: $semi-hidden-color;
                 text-decoration: none;
 
