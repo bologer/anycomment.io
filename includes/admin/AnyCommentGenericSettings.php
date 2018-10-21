@@ -903,7 +903,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
                 <div class="wrap">
                 <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 			<?php endif; ?>
-            <form action="options.php" method="post" class="anycomment-form">
+            <form action="options.php" method="post" class="anycomment-form" novalidate>
 				<?php
 				settings_fields( $this->option_group );
 				?>

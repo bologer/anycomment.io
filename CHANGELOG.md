@@ -4,9 +4,9 @@
 
 **Enhancements:**
 
-* New design 
+* New design
 * Optimized main JavaScript file, removed some dependencies and now it lighter
-* Other little cosmetic changes and improvements  
+* Other little cosmetic changes and improvements
 
 **Fixes:**
 
@@ -18,6 +18,7 @@
 * Fixed possible issue when user social avatar was not uploaded causing him to have default avatar
 * Fixed issue when button border radius from design settings was ignored, #231
 * Fixed issue with quotes on some of the website, #230
+* Possible fix for Safari problem when users were unable to save admin form, #159 (credits @mihdan)
 
 ## 0.0.64 – 18.10.2018
 
