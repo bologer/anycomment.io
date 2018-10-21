@@ -1,7 +1,7 @@
 #{$root} {
   display: flex;
   flex-grow: 1;
-  flex-direction: row;
+  flex-direction: column;
   padding: $global-padding;
   position: relative;
 
@@ -215,6 +215,7 @@
             // quotes
             blockquote {
               position: relative;
+              margin: 0 0 10px 0;
               padding: 5px 8px 8px 41px;
               font-size: $font-size + 5;
               font-weight: 400;
@@ -223,6 +224,11 @@
               line-height: 1.48;
               letter-spacing: -.012em;
               @include border-radius($global-radius);
+
+              &::after {
+                // Clean-up possible styles from the theme
+                content: '';
+              }
 
               &::before {
                 position: absolute;

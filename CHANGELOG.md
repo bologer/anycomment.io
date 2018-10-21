@@ -17,6 +17,7 @@
 * Fixed issue when users had username instead of first and last name in the comment, #232
 * Fixed possible issue when user social avatar was not uploaded causing him to have default avatar
 * Fixed issue when button border radius from design settings was ignored, #231
+* Fixed issue with quotes on some of the website, #230
 
 ## 0.0.64 – 18.10.2018
 

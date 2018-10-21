@@ -203,7 +203,9 @@
 
         &__select-file {
           position: absolute;
-          top: 23px;
+          top: 50%;
+          height: 17px;
+          margin-top: -8.5px;
           right: 13px;
           cursor: pointer;
           z-index: 2;
