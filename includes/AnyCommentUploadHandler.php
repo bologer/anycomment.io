@@ -121,11 +121,22 @@ class AnyCommentUploadHandler {
 			return false;
 		}
 
+
+		$upload_dir = wp_get_upload_dir();
+
+		// When unable to get upload dir, should delete original file as well
+		if ( $upload_dir['error'] !== false ) {
+			wp_delete_file( $temp_file['file'] );
+
+			return false;
+		}
+
 		$fileName = static::getFileName( $metaIdentifier );
+		$savePath = $upload_dir['path'] . DIRECTORY_SEPARATOR . $fileName;
 
 		$instance->resize( AnyCommentAvatars::DEFAULT_AVATAR_WIDTH, AnyCommentAvatars::DEFAULT_AVATAR_HEIGHT, true );
 
-		$croppedImage = $instance->save( $fileName, 'image/jpeg' );
+		$croppedImage = $instance->save( $savePath, 'image/jpeg' );
 
 		if ( $croppedImage instanceof WP_Error ) {
 			return false;

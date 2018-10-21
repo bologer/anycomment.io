@@ -169,9 +169,9 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Enhancements:**
 
-* New visual design for frontend
-* Optimized main JavaScript file, removed some dependencies and now it is much lighter
-
+* New design
+* Optimized main JavaScript file, removed some dependencies and now it lighter
+* Other little cosmetic changes and improvements
 
 **Fixes:**
 
@@ -179,6 +179,8 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Fixed issue when some of the users received too many repeating emails cause by incorrect table structure, #240
 * Fixed issue when clicking on checkbox from reply could uncheck checkbox from other form
 * Fixed issue when guest user could rate page many times
+* Fixed issue when users had username instead of first and last name in the comment, #232
+* Fixed possible issue when user social avatar was not uploaded causing him to have default avatar
 
 
 = 0.0.64 – 18.10.2018 =

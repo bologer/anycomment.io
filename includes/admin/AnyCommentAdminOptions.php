@@ -257,7 +257,7 @@ EOT;
             <form action="options.php" method="post" class="anycomment-form">
 				<?php
 				settings_fields( $this->option_group );
-				$this->do_tab_sections($this->page_slug);
+				$this->do_tab_sections( $this->page_slug );
 				submit_button( __( 'Save', 'anycomment' ) );
 				?>
             </form>
@@ -284,7 +284,8 @@ EOT;
 
 			$i = 0;
 			foreach ( (array) $wp_settings_sections[ $page ] as $section ) {
-				echo '<li data-tab="' . $section['id'] . '">
+				$activeClass = $i === 0 ? 'class="active"' : '';
+				echo '<li ' . $activeClass . ' data-tab="' . $section['id'] . '">
 				<a href="#tab-' . $section['id'] . '">' . $section['title'] . '</a>
 				</li>';
 				$i ++;
@@ -421,7 +422,6 @@ EOT;
 			$description = ! empty( $field_data['description'] ) ?
 				'<p class="description">' . $field_data['description'] . '</p>' :
 				'';
-
 
 
 			$html .= '<div class="cell anycomment-form-wrapper__field">';

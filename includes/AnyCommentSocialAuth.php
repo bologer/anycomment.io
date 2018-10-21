@@ -511,9 +511,11 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 				$user->email :
 				null;
 
+			$first_last_name = trim( $user->firstName . ' ' . $user->lastName );
+
 			$userdata = [
 				'user_login'    => $user->identifier,
-				'display_name'  => $user->displayName,
+				'display_name'  => ! empty( $first_last_name ) ? $first_last_name : $user->displayName,
 				'user_nicename' => $user->firstName,
 				'first_name'    => $user->firstName,
 				'last_name'     => $user->lastName,
