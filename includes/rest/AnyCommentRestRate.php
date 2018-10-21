@@ -81,6 +81,8 @@ class AnyCommentRestRate extends AnyCommentRestController {
 
 		if ( (int) $user->ID !== 0 ) {
 			$user_id_or_ip = $user->ID;
+		} else {
+			$user_id_or_ip = AnyCommentHelper::get_user_ip();
 		}
 
 		if ( AnyCommentRating::current_user_rated( $post->ID, $user_id_or_ip ) ) {

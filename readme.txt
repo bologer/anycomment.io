@@ -178,6 +178,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Fixes various visual bugs related to CSS on frontend
 * Fixed issue when some of the users received too many repeating emails cause by incorrect table structure, #240
 * Fixed issue when clicking on checkbox from reply could uncheck checkbox from other form
+* Fixed issue when guest user could rate page many times
 
 
 = 0.0.64 – 18.10.2018 =
