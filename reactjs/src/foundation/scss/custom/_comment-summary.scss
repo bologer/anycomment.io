@@ -1,0 +1,31 @@
+#{$root} {
+  .anycomment-summary {
+    width: 100%;
+    position: relative;
+    font-size: $font-size;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 1px solid $semi-hidden-color;
+
+    &-count,
+    &-sort {
+      color: $text-color;
+      font-size: $font-size + 2;
+    }
+
+    &-sort {
+      color: $text-color;
+
+      span {
+        text-decoration: underline;
+        padding-right: 10px;
+        border-right: 1px solid $semi-hidden-color;
+      }
+    }
+  }
+}

@@ -1,8 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import {toast} from 'react-toastify';
-import $ from 'jquery/src/core';
-import 'jquery/src/effects';
 
 /**
  * Generic wrapper for React component.
@@ -27,8 +25,9 @@ class AnyCommentComponent extends React.Component {
      * @returns {boolean}
      */
     moveToCommentAndHighlight(id, highlightTime = 2500, e) {
-        const element = $(id);
-        const highlightClass = 'comment-single-highlight';
+        const $ = window.jQuery,
+            element = $(id),
+            highlightClass = 'comment-single-highlight';
 
         if (!element || element && !element.length) {
             return false;
@@ -52,6 +51,8 @@ class AnyCommentComponent extends React.Component {
      * @param callback
      */
     moveToElement(id, callback) {
+        const $ = window.jQuery;
+
         $([document.documentElement, document.body]).animate({
             scrollTop: $(id).offset().top - 60,
         }, 500, callback);

@@ -135,7 +135,7 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 						'fileMaxSize'            => AnyCommentGenericSettings::getFileMaxSize(),
 						'fileUploadLimit'        => AnyCommentGenericSettings::getFileUploadLimit(),
 						'isRatingOn'             => AnyCommentGenericSettings::isRatingOn(),
-						'isReadMoreOn'             => AnyCommentGenericSettings::isReadMoreOn(),
+						'isReadMoreOn'           => AnyCommentGenericSettings::isReadMoreOn(),
 
 						'isEditorOn'           => AnyCommentGenericSettings::isEditorToolbarOn(),
 						'editorToolbarOptions' => AnyCommentGenericSettings::getEditorToolbarOptions(),
@@ -159,10 +159,11 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 						'button_save'                    => __( 'Save', 'anycomment' ),
 						'button_reply'                   => __( 'Reply', 'anycomment' ),
 						'sorting'                        => __( 'Sorting', 'anycomment' ),
-						'sort_by'                        => __( 'Sort By', 'anycomment' ),
-						'sort_oldest'                    => __( 'Oldest', 'anycomment' ),
-						'sort_newest'                    => __( 'Newest', 'anycomment' ),
+						'sort_by'                        => __( 'Sort by', 'anycomment' ),
+						'sort_oldest'                    => __( 'oldest', 'anycomment' ),
+						'sort_newest'                    => __( 'newest', 'anycomment' ),
 						'reply_to'                       => __( 'reply to', 'anycomment' ),
+						'editing'                        => __( 'editing', 'anycomment' ),
 						'add_comment'                    => __( 'Your comment...', 'anycomment' ),
 						'no_comments'                    => __( 'No comments to display', "anycomment" ),
 						'footer_copyright'               => __( 'Add Anycomment to your site', 'anycomment' ),
@@ -181,7 +182,7 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 						'accept_user_agreement'          => sprintf(
 							__( 'I accept the <a href="%s"%s>User Agreement</a>', 'anycomment' ),
 							AnyCommentGenericSettings::getUserAgreementLink(),
-							' target="_blank" rel="noopener noreferrer" '
+							' target="_blank" '
 						),
 						'upload_file'                    => __( 'Upload file', 'anycomment' ),
 						'file_upload_in_progress'        => __( "Uploading...", 'anycomment' ),
@@ -191,6 +192,8 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 						'file_not_selected_or_extension' => __( "No file selected or select proper extension", 'anycomment' ),
 						'read_more'                      => __( 'Read more', 'anycomment' ),
 						'show_less'                      => __( 'Show less', 'anycomment' ),
+						'login_with'                     => __( 'Login with', 'anycomment' ),
+						'or_as_guest'                    => sprintf( __( 'or as %sguest%s', 'anycomment' ), '<span>', '</span>' ),
 
 						/**
 						 * Lightbox

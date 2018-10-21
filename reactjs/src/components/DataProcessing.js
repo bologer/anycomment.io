@@ -11,15 +11,13 @@ class DataProcessing extends AnyCommentComponent {
         }
 
         return (
-            <div className="anycomment-form-submit__user-agreement">
+            <div className="anycomment anycomment-form__terms-agreement">
                 <label htmlFor="accept-user-agreement">
                     <input type="checkbox" required={true} checked={this.props.isAgreementAccepted}
                            id="accept-user-agreement"
                            onClick={(e) => this.props.onAccept(e)}/>
                     <span dangerouslySetInnerHTML={{__html: i18.accept_user_agreement}}/>
-                    <span className="checkmark"></span>
                 </label>
-                <div className="clearfix"></div>
             </div>
         )
     }

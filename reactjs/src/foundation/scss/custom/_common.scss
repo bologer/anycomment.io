@@ -32,7 +32,7 @@
     padding: 0;
     border: none 0;
     border-radius: 0;
-    font-size: $font-size - 1;
+    font-size: $font-size;
     vertical-align: baseline;
     background: 0 0;
     color: $text-color;
@@ -48,6 +48,26 @@
     -webkit-box-sizing: content-box;
     min-height: 0;
     -webkit-overflow-scrolling: touch;
+  }
+
+  .anycomment-social {
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    text-align: center;
+    line-height: 20px;
+    font-size: $font-size - 1;
+  }
+
+  .anycomment-link {
+    cursor: pointer;
+  }
+
+  // Icons
+  .anycomment-icon {
+    color: $semi-hidden-color;
+    vertical-align: middle;
   }
 }
 

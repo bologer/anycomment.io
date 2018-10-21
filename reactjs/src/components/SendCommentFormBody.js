@@ -153,10 +153,10 @@ class SendCommentFormBody extends AnyCommentComponent {
         const canUpload = this.canUpload();
 
         const outliner = <div
-            className={"anycomment anycomment-send-comment-body-outliner" + (dropzoneActive ? ' anycomment-send-comment-body-outliner-dropzone-active' : '')}>
+            className={"anycomment anycomment-form-body-outliner" + (dropzoneActive ? ' anycomment-form-body-outliner-dropzone-active' : '')}>
 
             {canUpload ?
-                <div className="anycomment anycomment-send-comment-body-outliner__select-file"
+                <div className="anycomment anycomment-form-body-outliner__select-file"
                      title={settings.i18.upload_file}
                      onClick={() => {
                          dropzoneRef.open()

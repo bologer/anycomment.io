@@ -1,6 +1,5 @@
-import React from 'react';
-import AnyCommentComponent from "./AnyCommentComponent";
-import DataProcessing from './DataProcessing'
+import React from 'react'
+import AnyCommentComponent from "./AnyCommentComponent"
 import LoginSocialList from './LoginSocialList'
 
 class SendCommentGuest extends AnyCommentComponent {
@@ -9,17 +8,15 @@ class SendCommentGuest extends AnyCommentComponent {
         super(props);
 
         this.state = {
-            isAgreementAccepted: true,
+            showGuestFields: false
         };
     }
 
     /**
-     * Handle agreement checkbox change.
-     *
-     * @param e
+     * Handle guest fields (toggle them).
      */
-    handleAgreement = (e) => {
-        this.setState({isAgreementAccepted: e.target.checked});
+    handleGuestFields = () => {
+        this.setState({showGuestFields: !this.state.showGuestFields});
     };
 
     render() {
@@ -32,7 +29,7 @@ class SendCommentGuest extends AnyCommentComponent {
         inputs.forEach(el => {
             if (el === 'name') {
                 elementInputs.push(
-                    <div className="anycomment anycomment-input-list-single anycomment-input-list-single-name">
+                    <div className="anycomment anycomment-form__inputs-item anycomment-form__inputs-name">
                         <label form="anycomment-author-name">{translations.name} <span
                             class="anycomment-label-import">*</span></label>
                         <input type="text" name="author_name" id="anycomment-author-name"
@@ -43,7 +40,7 @@ class SendCommentGuest extends AnyCommentComponent {
                     </div>);
             } else if (el === 'email') {
                 elementInputs.push(
-                    <div className="anycomment anycomment-input-list-single anycomment-input-list-single-email">
+                    <div className="anycomment anycomment-form__inputs-item anycomment-form__inputs-email">
                         <label form="anycomment-author-email">{translations.email} <span
                             className="anycomment-label-import">*</span></label>
                         <input type="email" name="author_email" id="anycomment-author-email"
@@ -54,7 +51,7 @@ class SendCommentGuest extends AnyCommentComponent {
                     </div>);
             } else if (el === 'website') {
                 elementInputs.push(
-                    <div className="anycomment anycomment-input-list-single anycomment-input-list-single-website">
+                    <div className="anycomment-form__inputs-item anycomment-form__inputs-website">
                         <label form="anycomment-author-website">{translations.website}</label>
                         <input type="text" name="author_url" id="anycomment-author-website"
                                value={this.props.authorWebsite}
@@ -64,31 +61,20 @@ class SendCommentGuest extends AnyCommentComponent {
             }
         });
 
-        const guestInputList = elementInputs.length ?
-            <div className="anycomment anycomment-form-guest__container">
-                <div className={"anycomment anycomment-input-list anycomment-input-list-" + elementInputs.length}>
-                    {elementInputs}
-                </div>
+        const guestInputList = this.state.showGuestFields && elementInputs.length ?
+            <div
+                className={"anycomment anycomment-form__inputs anycomment-form__inputs-" + elementInputs.length}>
+                {elementInputs}
             </div> : '';
 
-        return <div className="anycomment anycomment-form-guest">
+        return <React.Fragment>
+            <div className="anycomment anycomment-form__guest-socials">
+                {(settings.options.isFormTypeSocials || settings.options.isFormTypeAll) ?
+                    <LoginSocialList handleGuestFields={this.handleGuestFields}/> : ''}
+            </div>
 
             {settings.options.isFormTypeGuests || settings.options.isFormTypeAll ? guestInputList : ''}
-
-            <div className="anycomment anycomment-form-guest__container">
-                <div className="anycomment anycomment-form-guest-socials">
-                    {(settings.options.isFormTypeSocials || settings.options.isFormTypeAll) && this.state.isAgreementAccepted ?
-                        <LoginSocialList/> : ''}
-                </div>
-                <div className="anycomemnt anycomment-form-submit">
-                    <DataProcessing isAgreementAccepted={this.props.isAgreementAccepted}
-                                    onAccept={this.handleAgreement}/>
-                    <input type="submit" disabled={!this.props.buttonEnabled}
-                           className="anycomment-btn anycomment-send-comment-body__btn"
-                           value={this.props.buttonText}/>
-                </div>
-            </div>
-        </div>;
+        </React.Fragment>;
     }
 }
 

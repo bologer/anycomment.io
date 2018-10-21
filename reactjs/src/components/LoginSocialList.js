@@ -15,14 +15,17 @@ class LoginSocialList extends AnyCommentComponent {
 
         const socials = settings.options.socials;
 
-        return [
-            <div className="anycomment anycomment-form-guest__header">{settings.i18.quick_login}:</div>,
+        return (
             <ul>
+                <li className="anycomment-form__guest-socials-text">{settings.i18.login_with}</li>
                 {Object.keys(socials).map((item, index) => (
                     <LoginSocial key={index} social={socials[item]}/>
                 ))}
+                <li className="anycomment-form__guest-socials-text anycomment-form__guest-socials-text-as-guest anycomment-link"
+                    onClick={this.props.handleGuestFields}
+                    dangerouslySetInnerHTML={{__html: settings.i18.or_as_guest}}></li>
             </ul>
-        ];
+        );
     }
 
     /**

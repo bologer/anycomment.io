@@ -5,7 +5,7 @@ import CommentHeader from './CommentHeader';
 import CommentFooter from './CommentFooter';
 import CommentBody from './CommentBody';
 import CommentAttachments from "./CommentAttachments";
-import SendCommentForm from './SendCommentForm'
+import SendComment from './SendComment'
 
 
 /**
@@ -114,7 +114,7 @@ class Comment extends AnyCommentComponent {
             </div> : '';
 
         const replyForm = action ? <div className="comment-single-form-wrapper">
-            <SendCommentForm
+            <SendComment
                 action={action}
                 comment={comment}
                 handleUnsetAction={this.handleUnsetAction}

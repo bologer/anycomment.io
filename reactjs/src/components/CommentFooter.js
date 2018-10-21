@@ -1,7 +1,7 @@
 import React from 'react';
 import AnyCommentComponent from "./AnyCommentComponent";
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faReply, faHeart, faEdit} from '@fortawesome/free-solid-svg-icons'
+import Icon from './Icon'
+import {faReply, faHeart, faEdit, faTrashAlt} from '@fortawesome/free-solid-svg-icons'
 
 /**
  * CommentFooter renders single comment actions such as
@@ -14,9 +14,10 @@ class CommentFooter extends AnyCommentComponent {
         const comment = this.props.comment;
         const isGuest = this.isGuest();
 
-        const replyIcon = <FontAwesomeIcon icon={faReply}/>;
-        const likeIcon = <FontAwesomeIcon icon={faHeart} style={this.props.hasLike ? {color: '#EC4568'} : ''}/>;
-        const editIcon = <FontAwesomeIcon icon={faEdit}/>;
+        const replyIcon = <Icon icon={faReply}/>;
+        const likeIcon = <Icon icon={faHeart} style={this.props.hasLike ? {color: '#EC4568'} : ''}/>;
+        const editIcon = <Icon icon={faEdit}/>;
+        const trashIcon = <Icon icon={faTrashAlt}/>;
 
         return (
             <footer className="anycomment comment-single-body__actions">
@@ -36,7 +37,7 @@ class CommentFooter extends AnyCommentComponent {
                         </li> : ''}
                     {!isGuest && comment.permissions.can_edit_comment ?
                         <li className="anycomment"><a className="anycomment" href="javascript:void(0)"
-                                                      onClick={(e) => this.props.onDelete(e, comment)}>{settings.i18.delete}</a>
+                                                      onClick={(e) => this.props.onDelete(e, comment)}>{trashIcon}{settings.i18.delete}</a>
                         </li> : ''}
                 </ul>
             </footer>

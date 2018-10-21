@@ -1,6 +1,6 @@
 import React from 'react'
 import AnyCommentComponent from "./AnyCommentComponent";
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import Icon from './Icon'
 import {faStar, faStarHalfAlt} from '@fortawesome/free-solid-svg-icons'
 import {toast} from 'react-toastify'
 
@@ -84,7 +84,7 @@ class PageRating extends AnyCommentComponent {
 
             const item = <span
                 className={"anycomment anycomment-rating__stars-item" + activeClass}
-                onClick={(e) => this.rate(e, i)}><FontAwesomeIcon size={24} icon={icon}/></span>;
+                onClick={(e) => this.rate(e, i)}><Icon size={24} icon={icon}/></span>;
 
             stars.push(item);
         }

@@ -3,6 +3,7 @@ import Comment from './Comment'
 import SendComment from './SendComment'
 import AnyCommentComponent from "./AnyCommentComponent";
 import {toast} from 'react-toastify';
+import CommentListSummary from "./CommentListSummary";
 
 /**
  * CommentList displays list of comments.
@@ -272,7 +273,6 @@ class CommentList extends AnyCommentComponent {
         });
     };
 
-
     render() {
         const {isError, action, comment, isLoaded, comments, isLastPage} = this.state;
         const settings = this.props.settings;
@@ -283,18 +283,24 @@ class CommentList extends AnyCommentComponent {
             handleUnsetAction={this.handleUnsetAction}
             handleJustAdded={this.handleJustAdded}
             loadComments={this.loadComments}
+        />;
+
+        const commentListSummary = <CommentListSummary
             commentCountText={this.state.commentCountText}
+            order={this.state.order}
             onSort={this.handleSort}/>;
 
         if (isError) {
             return <React.Fragment>
                 {sendComment}
+                {commentListSummary}
                 <div>{settings.i18.error_generic}</div>
             </React.Fragment>;
         } else if (!isLoaded) {
             return (
                 <React.Fragment>
                     {sendComment}
+                    {commentListSummary}
                     <div>{settings.i18.loading}</div>
                 </React.Fragment>
             )
@@ -302,6 +308,7 @@ class CommentList extends AnyCommentComponent {
             return (
                 <React.Fragment>
                     {sendComment}
+                    {commentListSummary}
                     <ul id="anycomment-load-container" className="anycomment anycomment-list">
                         <li className="anycomment comment-single comment-no-comments">{settings.i18.no_comments}</li>
                     </ul>
@@ -311,6 +318,7 @@ class CommentList extends AnyCommentComponent {
             return (
                 <React.Fragment>
                     {sendComment}
+                    {commentListSummary}
                     <ul id="anycomment-load-container" className="anycomment anycomment-list">
                         {comments.map(comment => (
                             <Comment

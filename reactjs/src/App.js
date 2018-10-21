@@ -6,8 +6,6 @@ import './css/app.css'
 import {ToastContainer} from 'react-toastify'
 import {toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import $ from 'jquery/src/core';
-import 'jquery/src/offset';
 import PageRating from './components/PageRating'
 
 /**
@@ -36,7 +34,8 @@ class App extends AnyCommentComponent {
         }
 
         const self = this,
-            {options} = this.props.settings;
+            {options} = this.props.settings,
+            $ = window.jQuery;
 
         /**
          * When load on scroll is not enabled or

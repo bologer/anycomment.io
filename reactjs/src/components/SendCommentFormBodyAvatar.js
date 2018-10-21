@@ -8,7 +8,7 @@ import commentLogo from '../img/comment-logo.svg'
  */
 class SendCommentFormBodyAvatar extends AnyCommentComponent {
     render() {
-        let className = "anycomment-send-comment-body-outliner__logo";
+        let className = "anycomment-form-body-outliner__logo";
         let title = '';
         let svg = <SVG src={commentLogo} loader={false}/>;
         let style = {};
@@ -16,7 +16,7 @@ class SendCommentFormBodyAvatar extends AnyCommentComponent {
         if (!this.isGuest()) {
             const user = this.getCurrentUser();
 
-            className = "anycomment-send-comment-body-outliner__avatar";
+            className = "anycomment-form-body-outliner__avatar";
             title = user.data.display_name;
             svg = '';
             style = {backgroundImage: 'url(' + user.data.user_avatar + ')'}
