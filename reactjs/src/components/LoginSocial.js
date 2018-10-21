@@ -1,6 +1,5 @@
 import React from 'react'
 import AnyCommentComponent from "./AnyCommentComponent"
-import SVG from 'react-inlinesvg'
 import SocialIcon from './SocialIcon'
 
 /**

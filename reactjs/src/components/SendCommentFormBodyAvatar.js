@@ -1,7 +1,5 @@
 import React from 'react';
 import AnyCommentComponent from "./AnyCommentComponent";
-import SVG from 'react-inlinesvg'
-import commentLogo from '../img/comment-logo.svg'
 
 /**
  * Displays authorized user avatar or guest one.
@@ -10,7 +8,10 @@ class SendCommentFormBodyAvatar extends AnyCommentComponent {
     render() {
         let className = "anycomment-form-body-outliner__logo";
         let title = '';
-        let svg = <SVG src={commentLogo} loader={false}/>;
+        let svg = <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26">
+            <path fill="none" fill-rule="evenodd" stroke="#B6C1C6"
+                  d="M1 13C1 6.373 6.373 1 13 1s12 5.373 12 12-5.373 12-12 12H1V13z"/>
+        </svg>;
         let style = {};
 
         if (!this.isGuest()) {

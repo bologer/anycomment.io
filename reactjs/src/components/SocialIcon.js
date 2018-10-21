@@ -16,17 +16,17 @@ import {
 
 export default class SocialIcon extends Component {
     render() {
-        return this.getIcon(this.props.slug, this.props.color);
+        return this.getIcon();
     };
 
     /**
      * Generate SVG icon based on provided slug.
      *
-     * @param {String} slug
-     * @param {String|null} color
      * @returns {*}
      */
-    getIcon = (slug, color) => {
+    getIcon = () => {
+        const {slug, color, classes} = this.props;
+
         const data = this.getIconBySlug(slug);
 
         if (data === null) {
@@ -37,7 +37,14 @@ export default class SocialIcon extends Component {
             backgroundColor: color || data.color,
         };
 
-        return <span className={"anycomment-social anycomment-" + this.slug}
+
+        let className = "anycomment-social anycomment-" + slug;
+
+        if (classes !== '') {
+            className += " " + classes;
+        }
+
+        return <span className={className}
                      style={style}>
             <FontAwesomeIcon icon={data.svg} color="#ffffff"/>
             </span>;

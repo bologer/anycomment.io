@@ -1,9 +1,8 @@
 import React from 'react'
 import Lightbox from 'react-images'
 import AnyCommentComponent from "./AnyCommentComponent";
-import SVG from 'react-inlinesvg'
-import audioIcon from '../img/icons/icon-audio.svg'
-import documentIcon from '../img/icons/icon-document.svg'
+import Icon from "./Icon";
+import {faMusic, faFile} from '@fortawesome/free-solid-svg-icons'
 
 
 class CommentAttachments extends AnyCommentComponent {
@@ -129,10 +128,7 @@ class CommentAttachments extends AnyCommentComponent {
                         <span className="anycomment anycomment-uploads__item-close"
                               onClick={(e) => this.handleDelete(i, obj, e)}>&times;</span> : ''}
                     <a href={obj.file_url} target="_blank">
-                        <SVG
-                            src={audioIcon}
-                            preloader={false}
-                        />
+                        <Icon icon={faMusic}/>
                     </a>
                 </li>;
             }
@@ -144,10 +140,7 @@ class CommentAttachments extends AnyCommentComponent {
                     <span className="anycomment anycomment-uploads__item-close"
                           onClick={(e) => this.handleDelete(i, obj, e)}>&times;</span> : ''}
                 <a href={obj.file_url} target="_blank">
-                    <SVG
-                        src={documentIcon}
-                        preloader={false}
-                    />
+                    <Icon icon={faFile}/>
                 </a>
             </li>;
         });

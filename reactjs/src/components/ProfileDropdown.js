@@ -40,7 +40,9 @@ export default class ProfileDropdown extends AnyCommentComponent {
 
         return (
             <Dropdown>
-                <DropdownTrigger>{user.data.display_name} <Icon icon={faAngleDown}/></DropdownTrigger>
+                <DropdownTrigger>
+                    <span className="anycomment-profile">{user.data.display_name}</span> <Icon
+                    icon={faAngleDown}/></DropdownTrigger>
                 <DropdownContent>
                     <ul>{items}</ul>
                 </DropdownContent>

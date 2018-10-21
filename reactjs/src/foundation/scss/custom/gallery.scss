@@ -14,9 +14,11 @@
       overflow: hidden;
       margin: 5px;
       cursor: pointer;
-      width: 60px;
-      height: 60px;
-      background-color: $semi-hidden-color;
+      width: $attachment-size;
+      height: $attachment-size;
+      line-height: $attachment-size;
+      text-align: center;
+      background-color: $attachment-background-color;
       @include border-radius($global-radius);
 
       &:hover .anycomment-uploads__item-close {
@@ -50,13 +52,17 @@
         @include border-radius($global-radius);
       }
 
-      .isvg {
-        svg {
-          height: 62%;
-          margin: 11px auto;
-          display: table;
-        }
+      .anycomment-icon {
+        font-size: 27pt;
+        color: darken($attachment-background-color, 20%);
       }
+    }
+  }
+
+  // When modifying uploads => align right
+  .anycomment-form {
+    .anycomment-uploads {
+      justify-content: flex-end;
     }
   }
 }

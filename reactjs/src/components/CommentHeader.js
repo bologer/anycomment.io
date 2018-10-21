@@ -21,7 +21,7 @@ class CommentHeader extends AnyCommentComponent {
         const formatter = buildFormatter(languageStrings);
 
         const authorName = settings.options.isShowProfileUrl && comment.owner.profile_url.trim() !== '' ?
-            <a className="anycomment" target="_blank" href={comment.owner.profile_url}
+            <a className="anycomment comment-single-body-header__author-name" target="_blank" href={comment.owner.profile_url}
                rel="noopener noreferrer">{comment.author_name}</a> :
             comment.author_name;
 

@@ -2,10 +2,10 @@ import React from 'react'
 import AnyCommentComponent from "./AnyCommentComponent"
 import Dropzone from 'react-dropzone'
 import {toast} from 'react-toastify'
-import SVG from 'react-inlinesvg';
-import selectFileSvg from '../img/select-file.svg'
 import CommentAttachments from './CommentAttachments'
 import CommentEditor from './CommentEditor';
+import Icon from "./Icon";
+import {faPaperclip} from '@fortawesome/free-solid-svg-icons'
 
 /**
  * Display comment field of the form.
@@ -160,9 +160,7 @@ class SendCommentFormBody extends AnyCommentComponent {
                      title={settings.i18.upload_file}
                      onClick={() => {
                          dropzoneRef.open()
-                     }}><SVG src={selectFileSvg}
-                             preloader={false}
-                /></div> : ''}
+                     }}><Icon icon={faPaperclip}/></div> : ''}
 
             <CommentEditor {...this.props} />
         </div>;

@@ -52,4 +52,14 @@
       }
     }
   }
+
+  .dropdown {
+    &__trigger {
+      .anycomment-profile {
+        margin-right: 5px;
+        padding-right: 5px;
+        border-right: 1px solid $semi-hidden-color;
+      }
+    }
+  }
 }

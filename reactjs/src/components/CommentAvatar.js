@@ -1,6 +1,6 @@
 import React from "react"
 import AnyCommentComponent from "./AnyCommentComponent"
-import SVG from 'react-inlinesvg'
+import SocialIcon from "./SocialIcon";
 
 /**
  * CommentAvatar used to display avatar partial of a single comment.
@@ -10,10 +10,8 @@ class CommentAvatar extends AnyCommentComponent {
     render() {
         const {comment} = this.props;
 
-        const miniIconSrc = comment.owner.is_social_login ? require('../img/icons/avatars/social-' + comment.owner.social_type + '.svg') : '';
-
-        const svgIcon = miniIconSrc ?
-            <SVG src={miniIconSrc} className="anycomment comment-single-avatar__img-auth-type" preload={false}/> : '';
+        const svgIcon = comment.owner.is_social_login ?
+            <SocialIcon slug={comment.owner.social_type} classes="comment-single-avatar__img-auth-type"/> : '';
 
         return (
             <div className="anycomment comment-single-avatar">
