@@ -20,6 +20,12 @@
 
     &-sort {
       color: $text-color;
+
+      span {
+        text-decoration: underline;
+        padding-right: 10px;
+        border-right: 1px solid $semi-hidden-color;
+      }
     }
   }
 }

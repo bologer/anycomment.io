@@ -10,11 +10,13 @@ class DataProcessing extends AnyCommentComponent {
             return (null);
         }
 
+        const agreementId = "accept-user-agreement-" + (new Date()).getTime();
+
         return (
             <div className="anycomment anycomment-form__terms-agreement">
-                <label htmlFor="accept-user-agreement">
+                <label htmlFor={agreementId}>
                     <input type="checkbox" required={true} checked={this.props.isAgreementAccepted}
-                           id="accept-user-agreement"
+                           id={agreementId}
                            onClick={(e) => this.props.onAccept(e)}/>
                     <span dangerouslySetInnerHTML={{__html: i18.accept_user_agreement}}/>
                 </label>
