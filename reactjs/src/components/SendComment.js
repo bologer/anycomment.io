@@ -500,7 +500,8 @@ class SendComment extends AnyCommentComponent {
             commentHTML,
             editId,
             replyId,
-            showOtherFields
+            showOtherFields,
+            isAgreementAccepted
         } = this.state;
 
         let reCaptcha = '';
@@ -556,7 +557,7 @@ class SendComment extends AnyCommentComponent {
 
 
                     {showOtherFields ? <div className="anycomment anycomment-form__terms">
-                        {this.isGuest() ? <DataProcessing isAgreementAccepted={this.props.isAgreementAccepted}
+                        {this.isGuest() ? <DataProcessing isAgreementAccepted={isAgreementAccepted}
                                                           onAccept={this.handleAgreement}/> : ''}
                     </div> : ''}
 

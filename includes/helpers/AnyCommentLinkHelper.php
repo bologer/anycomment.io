@@ -17,7 +17,7 @@ class AnyCommentLinkHelper {
 	 * @return string
 	 */
 	public static function getTelegram() {
-		return 'https://t.me/joinchat/BEUJEQ9aMmQsFX65MNRCDg';
+		return 'https://t.me/anycomment';
 	}
 
 	/**
