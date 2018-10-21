@@ -172,6 +172,8 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 						'delete'                         => __( 'Delete', 'anycomment' ),
 						'cancel'                         => __( 'Cancel', 'anycomment' ),
 						'quick_login'                    => __( 'Quick Login', 'anycomment' ),
+						'guest'                          => __( 'Guest', 'anycomment' ),
+						'login'                          => __( 'Login', 'anycomment' ),
 						'logout'                         => __( 'Logout', 'anycomment' ),
 						'new_comment_was_added'          => __( 'New comment was added', 'anycomment' ),
 						'author'                         => __( 'Author', 'anycomment' ),

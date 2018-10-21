@@ -6,7 +6,7 @@ import './css/app.css'
 import {ToastContainer} from 'react-toastify'
 import {toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import PageRating from './components/PageRating'
+import GlobalHeader from "./components/GlobalHeader";
 
 /**
  * App is main compontent of the application.
@@ -113,7 +113,7 @@ class App extends AnyCommentComponent {
         return (
             <div id={this.state.rootElement} className="anycomment">
                 <ToastContainer/>
-                <PageRating/>
+                <GlobalHeader/>
                 <CommentList/>
                 <CommentCopyright/>
             </div>

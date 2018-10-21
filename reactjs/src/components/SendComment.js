@@ -35,6 +35,8 @@ class SendComment extends AnyCommentComponent {
             commentHTML: '',
             buttonEnabled: false,
             isAgreementAccepted: true,
+
+            showOtherFields: false
         };
 
         this.reCaptchaSiteKey = options.reCaptchaSiteKey;
@@ -220,6 +222,9 @@ class SendComment extends AnyCommentComponent {
         let params = {commentHTML: text};
 
         params.buttonEnabled = !this.isCommentEmpty(text);
+
+        params.showOtherFields = true;
+
         this.setState(params);
         this.storeComment(text);
     };
@@ -487,6 +492,17 @@ class SendComment extends AnyCommentComponent {
         const settings = this.getSettings();
         const translations = settings.i18;
 
+        const {
+            buttonEnabled,
+            buttonText,
+            replyName,
+            attachments,
+            commentHTML,
+            editId,
+            replyId,
+            showOtherFields
+        } = this.state;
+
         let reCaptcha = '';
 
         if (this.isCaptchaOn()) {
@@ -501,9 +517,9 @@ class SendComment extends AnyCommentComponent {
             />;
         }
 
-        const submitButton = <input type="submit" disabled={!this.state.buttonEnabled}
+        const submitButton = <input type="submit" disabled={!buttonEnabled}
                                     className="anycomment-btn anycomment-send-comment-body__btn"
-                                    value={this.state.buttonText}/>;
+                                    value={buttonText}/>;
 
         let formClasses = '',
             submitStatus = '';
@@ -514,7 +530,7 @@ class SendComment extends AnyCommentComponent {
 
         if (this.isReply()) {
             formClasses += ' anycomment-form-reply';
-            submitStatus = translations.reply_to + " " + this.state.replyName;
+            submitStatus = translations.reply_to + " " + replyName;
         } else if (this.isUpdate()) {
             formClasses += ' anycomment-form-update';
             submitStatus = translations.editing;
@@ -525,25 +541,26 @@ class SendComment extends AnyCommentComponent {
                 className={"anycomment anycomment-form" + formClasses}>
                 <form onSubmit={this.handleSubmit}>
 
-                    {this.isGuest() ?
+                    {showOtherFields && this.isGuest() ?
                         <SendCommentGuest {...this.state}
                                           handleAuthorNameChange={this.handleAuthorNameChange}
                                           handleAuthorEmailChange={this.handleAuthorEmailChange}
                                           handleAuthorWebsiteChange={this.handleAuthorWebsiteChange}/> : ''}
 
                     <SendCommentFormBody {...this.props}
-                                         attachments={this.state.attachments}
+                                         attachments={attachments}
                                          handleEditorChange={this.handleEditorChange}
                                          editorRef={this.editorRef}
-                                         commentHTML={this.state.commentHTML}
+                                         commentHTML={commentHTML}
                                          handleAttachmentChange={this.handleAttachmentChange}/>
 
-                    <div className="anycomment anycomment-form__terms">
+
+                    {showOtherFields ? <div className="anycomment anycomment-form__terms">
                         {this.isGuest() ? <DataProcessing isAgreementAccepted={this.props.isAgreementAccepted}
                                                           onAccept={this.handleAgreement}/> : ''}
-                    </div>
+                    </div> : ''}
 
-                    <div className="anycomment anycomment-form__submit">
+                    {showOtherFields ? <div className="anycomment anycomment-form__submit">
                         {this.isUpdate() || this.isReply() ? <div
                             className="anycomment anycomment-form__submit-status">{submitStatus}
                             <span className="anycomment anycomment-form__submit-status-action"
@@ -552,17 +569,17 @@ class SendComment extends AnyCommentComponent {
                         <div className="anycomment anycomment-form__submit-button">
                             {submitButton}
                         </div>
-                    </div>
+                    </div> : ''}
 
                     <input
                         type="hidden"
                         name="parent"
-                        value={this.state.replyId}
+                        value={replyId}
                         className="anycomment"
                         onChange={this.handleReplyIdChange}/>
 
 
-                    {!this.isGuest() ? <input type="hidden" name="edit_id" value={this.state.editId}
+                    {!this.isGuest() ? <input type="hidden" name="edit_id" value={editId}
                                               onChange={this.handleEditIdChange}/> : ''}
 
                     {reCaptcha}

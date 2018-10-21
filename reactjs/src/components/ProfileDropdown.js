@@ -1,99 +1,50 @@
 import React from 'react';
-import Select, {components} from 'react-select';
 import AnyCommentComponent from "./AnyCommentComponent";
-
-
-const Placeholder = (props) => {
-    return (
-        <components.Placeholder {...props}/>
-    );
-};
-
-const customStyles = {
-    control: (base, state) => ({
-        ...base,
-        zIndex: 3,
-    }),
-
-};
+import Dropdown from 'react-simple-dropdown';
+import DropdownTrigger from 'react-simple-dropdown/lib/components/dropdown-trigger';
+import DropdownContent from 'react-simple-dropdown/lib/components/dropdown-content';
+import Icon from "./Icon";
+import {faAngleDown} from '@fortawesome/free-solid-svg-icons'
 
 export default class ProfileDropdown extends AnyCommentComponent {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            selectedOption: null,
-        };
-    }
-
-    /**
-     * Handle comment sorting.
-     * @param order
-     */
-    handleCommentSort(order) {
-        this.props.onSort(order)
-    }
-
     /**
      * Handle dropdown change.
+     * @param e
      * @param selectedOption
      */
-    handleChange = (selectedOption) => {
-        this.setState({selectedOption});
+    handleChange = (e, selectedOption) => {
+        e.preventDefault();
 
         const settings = this.getSettings();
 
-        switch (selectedOption.value) {
+        switch (selectedOption) {
             case 'logout':
                 window.location.href = settings.urls.logout.replace('&amp;', '&');
-                break;
-            case 'order_desc':
-                this.handleCommentSort('desc');
-                break;
-
-            case 'order_asc':
-                this.handleCommentSort('asc');
                 break;
             default:
         }
     };
 
-
     render() {
-        const {selectedOption} = this.state;
 
-        const settings = this.getSettings();
+        const settings = this.getSettings(),
+            user = settings.user;
 
-
-        let placeholder = settings.i18.sorting;
-
-        let options = [
-            {value: 'order_desc', label: settings.i18.sort_newest},
-            {value: 'order_asc', label: settings.i18.sort_oldest}
-        ];
-
-        if (!this.isGuest()) {
-            const user = settings.user;
-
-            placeholder = user.data.display_name;
-            options.push({value: 'logout', label: settings.i18.logout});
+        if (this.isGuest()) {
+            return <div>{settings.i18.guest}</div>;
         }
 
+        let items = [
+            <li onClick={(e) => this.handleChange(e, 'logout')}><a href="">{settings.i18.logout}</a></li>
+        ];
+
         return (
-            <Select
-                isSearchable={false}
-                style={customStyles}
-                value={selectedOption}
-                components={{Placeholder}}
-                placeholder={placeholder}
-                onChange={this.handleChange}
-                options={options}
-                theme={(theme) => ({
-                    ...theme,
-                    borderRadius: 0,
-                    border: 0,
-                })}
-            />
+            <Dropdown>
+                <DropdownTrigger>{user.data.display_name} <Icon icon={faAngleDown}/></DropdownTrigger>
+                <DropdownContent>
+                    <ul>{items}</ul>
+                </DropdownContent>
+            </Dropdown>
         );
     }
 }
