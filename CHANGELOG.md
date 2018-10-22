@@ -9,6 +9,7 @@
 **Fixes:**
 
 * Fixed issue when on update of the comment, previous text was recovered, #249
+* Fixed issue with comments which are not wrapped with `<p>` tag causing them to have different line height then other comments, #249
 
 
 

@@ -191,6 +191,12 @@
             word-wrap: break-word;
             overflow: hidden;
 
+            // In case when <p> tag is not wrapping text
+            &, p {
+              line-height: 1.6;
+              margin: 0 0 5px 0;
+            }
+
             a {
               color: $link-color;
 
@@ -209,10 +215,7 @@
               margin-left: 0;
             }
 
-            p {
-              line-height: 1.6;
-              margin: 0 0 5px 0;
-            }
+
 
             // quotes
             blockquote {
