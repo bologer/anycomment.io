@@ -594,9 +594,11 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			AnyCommentCommentMeta::addAttachments( $comment_id, $request['attachments'] );
 		}
 
-		if ( ! current_user_can( 'moderate_comments' ) && AnyCommentGenericSettings::isModerateFirst() ||
-		     AnyCommentComments::hasModerateWords( $comment_id ) ||
-		     AnyCommentGenericSettings::isLinksOnHold() && AnyCommentComments::has_links( $comment_id ) ) {
+		$should_moderate    = ! current_user_can( 'moderate_comments' ) && AnyCommentGenericSettings::isModerateFirst();
+		$has_filtered_words = ! current_user_can( 'moderate_comments' ) && AnyCommentComments::hasModerateWords( $comment_id );
+		$has_links          = ! current_user_can( 'moderate_comments' ) && AnyCommentGenericSettings::isLinksOnHold() && AnyCommentComments::has_links( $comment_id );
+
+		if ( $should_moderate || $has_filtered_words || $has_links ) {
 			$this->handle_status_param( 'hold', $comment_id );
 		}
 

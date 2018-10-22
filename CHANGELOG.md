@@ -19,6 +19,7 @@
 * Fixed issue when button border radius from design settings was ignored, #231
 * Fixed issue with quotes on some of the website, #230
 * Possible fix for Safari problem when users were unable to save admin form, #159 (credits @mihdan)
+* Fixed issue when admin comments with links were marked to be moderated, #236
 
 ## 0.0.64 – 18.10.2018
 
