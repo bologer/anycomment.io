@@ -4,3 +4,4 @@ cache/*
 !cache/index.php
 languages/anycomment-*backup*.po
 languages/anycomment-*backup*.pot
+static/css/main-custom-*.min.css

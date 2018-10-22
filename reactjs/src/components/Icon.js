@@ -11,6 +11,7 @@ export default class Icon extends Component {
             className={classes}
             size={this.props.size || ''}
             color={this.props.color || ''}
+            style={this.props.style || ''}
         />
     }
 }
