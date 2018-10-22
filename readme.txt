@@ -165,7 +165,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 == Changelog ==
 
-= 0.0.65 – 20.10.2018 =
+= 0.0.65 – 22.10.2018 =
 
 **Enhancements:**
 
