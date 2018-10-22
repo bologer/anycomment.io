@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AnyComment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-21 12:03+0000\n"
+"POT-Creation-Date: 2018-10-22 05:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -133,7 +133,7 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: includes/AnyCommentRender.php:160 includes/AnyCommentRender.php:170
+#: includes/AnyCommentRender.php:160 includes/AnyCommentRender.php:169
 msgid "Reply"
 msgstr ""
 
@@ -146,11 +146,11 @@ msgid "Sort By"
 msgstr ""
 
 #: includes/AnyCommentRender.php:163
-msgid "oldest"
+msgid "Oldest"
 msgstr ""
 
 #: includes/AnyCommentRender.php:164
-msgid "newest"
+msgid "Newest"
 msgstr ""
 
 #: includes/AnyCommentRender.php:165
@@ -158,131 +158,118 @@ msgid "reply to"
 msgstr ""
 
 #: includes/AnyCommentRender.php:166
-msgid "editing"
-msgstr ""
-
-#: includes/AnyCommentRender.php:167
 msgid "Your comment..."
 msgstr ""
 
-#: includes/AnyCommentRender.php:168
+#: includes/AnyCommentRender.php:167
 msgid "No comments to display"
 msgstr ""
 
-#: includes/AnyCommentRender.php:169
+#: includes/AnyCommentRender.php:168
 msgid "Add Anycomment to your site"
 msgstr ""
 
-#: includes/AnyCommentRender.php:171
+#: includes/AnyCommentRender.php:170
 msgid "Edit"
 msgstr ""
 
-#: includes/AnyCommentRender.php:172
+#: includes/AnyCommentRender.php:171
 #: includes/admin/tables/AnyCommentUploadedFilesTable.php:145
 msgid "Delete"
 msgstr ""
 
-#: includes/AnyCommentRender.php:173
+#: includes/AnyCommentRender.php:172
 msgid "Cancel"
 msgstr ""
 
-#: includes/AnyCommentRender.php:174
+#: includes/AnyCommentRender.php:173
 msgid "Quick Login"
 msgstr ""
 
-#: includes/AnyCommentRender.php:175
+#: includes/AnyCommentRender.php:174
 msgid "Logout"
 msgstr ""
 
-#: includes/AnyCommentRender.php:176
+#: includes/AnyCommentRender.php:175
 msgid "New comment was added"
 msgstr ""
 
-#: includes/AnyCommentRender.php:177
+#: includes/AnyCommentRender.php:176
 msgid "Author"
 msgstr ""
 
-#: includes/AnyCommentRender.php:178
+#: includes/AnyCommentRender.php:177
 msgid "Name"
 msgstr ""
 
-#: includes/AnyCommentRender.php:179
+#: includes/AnyCommentRender.php:178
 msgid "Email"
 msgstr ""
 
-#: includes/AnyCommentRender.php:180
+#: includes/AnyCommentRender.php:179
 msgid "Website"
 msgstr ""
 
-#: includes/AnyCommentRender.php:181 includes/rest/AnyCommentRestRate.php:87
+#: includes/AnyCommentRender.php:180 includes/rest/AnyCommentRestRate.php:87
 msgid "You have already rated"
 msgstr ""
 
-#: includes/AnyCommentRender.php:183
+#: includes/AnyCommentRender.php:182
 #, php-format
 msgid "I accept the <a href=\"%s\"%s>User Agreement</a>"
 msgstr ""
 
-#: includes/AnyCommentRender.php:187
+#: includes/AnyCommentRender.php:186
 msgid "Upload file"
 msgstr ""
 
-#: includes/AnyCommentRender.php:188
+#: includes/AnyCommentRender.php:187
 msgid "Uploading..."
 msgstr ""
 
-#: includes/AnyCommentRender.php:189
+#: includes/AnyCommentRender.php:188
 msgid "Uploaded!"
 msgstr ""
 
-#: includes/AnyCommentRender.php:190
+#: includes/AnyCommentRender.php:189
 #, php-format
 msgid "File %s is too big"
 msgstr ""
 
-#: includes/AnyCommentRender.php:191
+#: includes/AnyCommentRender.php:190
 #, php-format
 msgid "You may upload %s file(s) at maximum"
 msgstr ""
 
-#: includes/AnyCommentRender.php:192
+#: includes/AnyCommentRender.php:191
 msgid "No file selected or select proper extension"
 msgstr ""
 
-#: includes/AnyCommentRender.php:193
+#: includes/AnyCommentRender.php:192
 msgid "Read more"
 msgstr ""
 
-#: includes/AnyCommentRender.php:194
+#: includes/AnyCommentRender.php:193
 msgid "Show less"
 msgstr ""
 
-#: includes/AnyCommentRender.php:195
-msgid "Login with"
-msgstr ""
-
-#: includes/AnyCommentRender.php:196
-#, php-format
-msgid "or as %sguest%s"
-msgstr ""
-
-#: includes/AnyCommentRender.php:201
+#: includes/AnyCommentRender.php:198
 msgid "Close (Esc)"
 msgstr ""
 
-#: includes/AnyCommentRender.php:202
+#: includes/AnyCommentRender.php:199
 msgid "Previous (Left arrow key)"
 msgstr ""
 
-#: includes/AnyCommentRender.php:203
+#: includes/AnyCommentRender.php:200
 msgid "Next (Right arrow key)"
 msgstr ""
 
-#: includes/AnyCommentRender.php:204
+#: includes/AnyCommentRender.php:201
 msgid " of "
 msgstr ""
 
-#: includes/AnyCommentRender.php:282
+#: includes/AnyCommentRender.php:279
 #, php-format
 msgctxt "REST API Comments Count"
 msgid "%s comment"
