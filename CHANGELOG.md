@@ -8,6 +8,8 @@
 
 **Fixes:**
 
+* Fixed issue when on update of the comment, previous text was recovered, #249
+
 
 
 ## 0.0.65 – 22.10.2018

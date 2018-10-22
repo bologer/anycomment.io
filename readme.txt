@@ -173,8 +173,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Fixes:**
 
-
-
+* Fixed issue when on update of the comment, previous text was recovered, #249
 
 
 = 0.0.65 – 22.10.2018 =

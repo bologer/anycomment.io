@@ -463,7 +463,11 @@ class SendComment extends AnyCommentComponent {
                     state.authorWebsite = website;
                 }
 
-                if (commentHtml !== '') {
+                // if this is not update and comment is not empty
+                // should set remembered comment, otherwise remembered
+                // comment would overwrite what was pasted from editing
+                // comment content
+                if (!self.isUpdate() && commentHtml !== '') {
                     state.commentHTML = commentHtml;
                 }
 
