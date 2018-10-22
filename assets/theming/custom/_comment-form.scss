@@ -130,12 +130,15 @@
       }
 
       ul {
-        list-style: none;
         padding: 0;
         margin: 0;
         display: flex;
         flex-wrap: wrap;
         align-items: center;
+
+        &, & > li {
+          list-style: none;
+        }
 
         li {
           margin: 0 5px 0 0;

@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.0.66 – 22.10.2018
+
+**Enhancements:**
+
+* Same style for name when user does not have website or social available
+
+**Fixes:**
+
+
+
 ## 0.0.65 – 22.10.2018
 
 **Enhancements:**
