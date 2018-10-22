@@ -192,6 +192,8 @@
             overflow: hidden;
 
             a {
+              color: $link-color;
+
               &,
               &:hover,
               &:active,
