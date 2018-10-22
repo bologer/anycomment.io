@@ -25,7 +25,7 @@
   appearance: none;
   white-space: nowrap;
   background-color: $btn-background-color;
-  @include border-radius($btn-radius);
+  border-radius: $btn-radius;
 }
 
 @mixin avatar() {
@@ -33,7 +33,7 @@
   background-position: center center;
   border: 1px solid $semi-hidden-color;
   background-color: #DDE2E5;
-  @include border-radius($avatar-border-radius);
+  border-radius: $avatar-border-radius;
 }
 
 @mixin avatar-parent() {

@@ -1,8 +1,6 @@
 .sass-cache
-*.css.map
 node_modules
 cache/*
 !cache/index.php
-static/css/main-custom-*.min.css
 languages/anycomment-*backup*.po
 languages/anycomment-*backup*.pot

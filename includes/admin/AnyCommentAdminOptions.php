@@ -284,7 +284,7 @@ EOT;
 
 			$i = 0;
 			foreach ( (array) $wp_settings_sections[ $page ] as $section ) {
-				$activeClass = $i === 0 ? 'class="active"' : '';
+				$activeClass = $i === 0 ? 'class="current"' : '';
 				echo '<li ' . $activeClass . ' data-tab="' . $section['id'] . '">
 				<a href="#tab-' . $section['id'] . '">' . $section['title'] . '</a>
 				</li>';
