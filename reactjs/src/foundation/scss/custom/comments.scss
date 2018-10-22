@@ -134,7 +134,7 @@
               user-select: none;
               height: 18px;
               line-height: 18px;
-              @include border-radius($btn-radius);
+              border-radius: $global-radius;
             }
 
             &-reply {

@@ -10,7 +10,7 @@
 
 * Fixed issue when on update of the comment, previous text was recovered, #249
 * Fixed issue with comments which are not wrapped with `<p>` tag causing them to have different line height then other comments, #249
-
+* Fixed issue when button border radius was also changing it for "Author" label, #249
 
 
 ## 0.0.65 – 22.10.2018
