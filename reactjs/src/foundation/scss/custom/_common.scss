@@ -56,8 +56,9 @@
     height: 20px;
     display: inline-block;
     text-align: center;
-    line-height: 20px;
+    line-height: 21px;
     font-size: $font-size - 1;
+    vertical-align: middle;
   }
 
   .anycomment-link {

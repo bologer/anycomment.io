@@ -19,6 +19,14 @@ class SendCommentGuest extends AnyCommentComponent {
         this.setState({showGuestFields: !this.state.showGuestFields});
     };
 
+    componentDidMount() {
+        const settings = this.getSettings();
+
+        if (settings.options.isFormTypeGuests) {
+            this.setState({showGuestFields: true});
+        }
+    }
+
     render() {
         const settings = this.getSettings();
         const translations = settings.i18;
@@ -31,7 +39,7 @@ class SendCommentGuest extends AnyCommentComponent {
                 elementInputs.push(
                     <div className="anycomment anycomment-form__inputs-item anycomment-form__inputs-name">
                         <label form="anycomment-author-name">{translations.name} <span
-                            class="anycomment-label-import">*</span></label>
+                            className="anycomment-label-import">*</span></label>
                         <input type="text" name="author_name" id="anycomment-author-name"
                                value={this.props.authorName}
                                required={true}
