@@ -382,7 +382,7 @@ AND `comments`.`comment_ID`=%d";
 			$replyButton
 		];
 
-		$template = AnyCommentGenericSettings::getNotifyEmailReplyTemplate();
+		$template = AnyCommentGenericSettings::get_notify_email_reply_template();
 
 		return static::prepareEmailTemplate( $template, $search, $replacement );
 	}
@@ -465,7 +465,7 @@ AND `comments`.`comment_ID`=%d";
 			$replyButton
 		];
 
-		$template = AnyCommentGenericSettings::getNotifyEmailAdminTemplate();
+		$template = AnyCommentGenericSettings::get_notify_email_admin_template();
 
 		return static::prepareEmailTemplate( $template, $search, $replacement );
 	}

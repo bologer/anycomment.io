@@ -33,61 +33,61 @@ function anycomment_login_with( $html = false, $redirectUrl = null ) {
 			'slug'    => AnyCommentSocialAuth::SOCIAL_VKONTAKTE,
 			'url'     => AnyCommentSocialAuth::get_vk_callback( $redirectUrl ),
 			'label'   => __( 'VK', "anycomment" ),
-			'visible' => AnyCommentSocialSettings::isVkOn()
+			'visible' => AnyCommentSocialSettings::is_vk_active()
 		],
 		AnyCommentSocialAuth::SOCIAL_TWITTER       => [
 			'slug'    => AnyCommentSocialAuth::SOCIAL_TWITTER,
 			'url'     => AnyCommentSocialAuth::get_twitter_callback( $redirectUrl ),
 			'label'   => __( 'Twitter', "anycomment" ),
-			'visible' => AnyCommentSocialSettings::isTwitterOn()
+			'visible' => AnyCommentSocialSettings::is_twitter_active()
 		],
 		AnyCommentSocialAuth::SOCIAL_FACEBOOK      => [
 			'slug'    => AnyCommentSocialAuth::SOCIAL_FACEBOOK,
 			'url'     => AnyCommentSocialAuth::get_facebook_callback( $redirectUrl ),
 			'label'   => __( 'Facebook', "anycomment" ),
-			'visible' => AnyCommentSocialSettings::isFbOn()
+			'visible' => AnyCommentSocialSettings::is_facebook_active()
 		],
 		AnyCommentSocialAuth::SOCIAL_GOOGLE        => [
 			'slug'    => AnyCommentSocialAuth::SOCIAL_GOOGLE,
 			'url'     => AnyCommentSocialAuth::get_google_callback( $redirectUrl ),
 			'label'   => __( 'Google', "anycomment" ),
-			'visible' => AnyCommentSocialSettings::isGoogleOn()
+			'visible' => AnyCommentSocialSettings::is_google_active()
 		],
 		AnyCommentSocialAuth::SOCIAL_GITHUB        => [
 			'slug'    => AnyCommentSocialAuth::SOCIAL_GITHUB,
 			'url'     => AnyCommentSocialAuth::get_github_callback( $redirectUrl ),
 			'label'   => __( 'Github', "anycomment" ),
-			'visible' => AnyCommentSocialSettings::isGithubOn()
+			'visible' => AnyCommentSocialSettings::is_github_active()
 		],
 		AnyCommentSocialAuth::SOCIAL_ODNOKLASSNIKI => [
 			'slug'    => AnyCommentSocialAuth::SOCIAL_ODNOKLASSNIKI,
 			'url'     => AnyCommentSocialAuth::get_ok_callback( $redirectUrl ),
 			'label'   => __( 'Odnoklassniki', "anycomment" ),
-			'visible' => AnyCommentSocialSettings::isOkOn()
+			'visible' => AnyCommentSocialSettings::is_odnoklassniki_on()
 		],
 		AnyCommentSocialAuth::SOCIAL_INSTAGRAM     => [
 			'slug'    => AnyCommentSocialAuth::SOCIAL_INSTAGRAM,
 			'url'     => AnyCommentSocialAuth::get_instagram_callback( $redirectUrl ),
 			'label'   => __( 'Instagram', "anycomment" ),
-			'visible' => AnyCommentSocialSettings::isInstagramOn()
+			'visible' => AnyCommentSocialSettings::is_instagram_active()
 		],
 		AnyCommentSocialAuth::SOCIAL_TWITCH        => [
 			'slug'    => AnyCommentSocialAuth::SOCIAL_TWITCH,
 			'url'     => AnyCommentSocialAuth::get_twitch_callback( $redirectUrl ),
 			'label'   => __( 'Twitch', "anycomment" ),
-			'visible' => AnyCommentSocialSettings::isTwitchOn()
+			'visible' => AnyCommentSocialSettings::is_twitch_active()
 		],
 		AnyCommentSocialAuth::SOCIAL_DRIBBBLE      => [
 			'slug'    => AnyCommentSocialAuth::SOCIAL_DRIBBBLE,
 			'url'     => AnyCommentSocialAuth::get_dribbble_callback( $redirectUrl ),
 			'label'   => __( 'Dribbble', "anycomment" ),
-			'visible' => AnyCommentSocialSettings::isDribbbleOn()
+			'visible' => AnyCommentSocialSettings::is_dribbble_active()
 		],
 		AnyCommentSocialAuth::SOCIAL_YAHOO         => [
 			'slug'    => AnyCommentSocialAuth::SOCIAL_YAHOO,
 			'url'     => AnyCommentSocialAuth::get_yahoo_callback( $redirectUrl ),
 			'label'   => __( 'Yahoo', "anycomment" ),
-			'visible' => AnyCommentSocialSettings::isYahooOn()
+			'visible' => AnyCommentSocialSettings::is_yahoo_active()
 		],
 	];
 
@@ -103,7 +103,7 @@ function anycomment_login_with( $html = false, $redirectUrl = null ) {
 		'slug'    => 'wordpress',
 		'url'     => $wordpress_login_url,
 		'label'   => __( "WordPress", 'anycomment' ),
-		'visible' => AnyCommentSocialSettings::isWordPressOn()
+		'visible' => AnyCommentSocialSettings::is_wordpress_native_active()
 	];
 
 	if ( count( $socials ) <= 0 ) {
@@ -119,12 +119,12 @@ function anycomment_login_with( $html = false, $redirectUrl = null ) {
 			continue;
 		}
 		?>
-        <li><a href="<?= $social['url'] ?>"
+        <li><a href="<?php echo $social['url'] ?>"
                target="_parent"
-               title="<?= $social['label'] ?>"
-               class="<?= AnyComment()->classPrefix() ?>login-with-list-<?= $key ?>"><img
-                        src="<?= AnyComment()->plugin_url() ?>/assets/img/icons/auth/social-<?= $key ?>.svg"
-                        alt="<?= $social['label'] ?>"></a>
+               title="<?php echo $social['label'] ?>"
+               class="anycomment-login-with-list-<?php echo $key ?>"><img
+                        src="<?php echo AnyComment()->plugin_url() ?>/assets/img/icons/auth/social-<?php echo $key ?>.svg"
+                        alt="<?php echo $social['label'] ?>"></a>
         </li>
 	<?php
 	endforeach;

@@ -48,9 +48,9 @@ class AnyCommentMigrationManager {
 			$model = new $migrationName();
 
 			if ( ! $model->isApplied() && $model->up() ) {
-				AnyCommentOptions::updateMigration( $migrationVersion );
+				AnyCommentOptions::update_migration( $migrationVersion );
 			} elseif ( $model->isApplied() ) {
-				AnyCommentOptions::updateMigration( $migrationVersion );
+				AnyCommentOptions::update_migration( $migrationVersion );
 			}
 		}
 
@@ -86,7 +86,7 @@ class AnyCommentMigrationManager {
 			$model = new $migrationName();
 
 			if ( $model->isApplied() && $model->down() ) {
-				AnyCommentOptions::updateMigration( $migrationVersion );
+				AnyCommentOptions::update_migration( $migrationVersion );
 			}
 		}
 

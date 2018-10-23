@@ -95,7 +95,7 @@ class AnyCommentUploadHandler {
 	 * @link https://wordpress.stackexchange.com/a/251512
 	 * @return bool
 	 */
-	public static function uploadAvatar( $profileUrl, $metaIdentifier ) {
+	public static function upload_avatar( $profileUrl, $metaIdentifier ) {
 		$profileUrl = trim( $profileUrl );
 
 		if ( empty( $profileUrl ) ) {

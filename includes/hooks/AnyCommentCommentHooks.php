@@ -80,7 +80,7 @@ class AnyCommentCommentHooks {
 		AnyCommentLikes::deleteLikes( $comment_id );
 
 		// Delete attached files
-		$comment_metas = AnyCommentCommentMeta::getAttachments( $comment_id );
+		$comment_metas = AnyCommentCommentMeta::get_attachments( $comment_id );
 
 		if ( ! empty( $comment_metas ) ) {
 			foreach ( $comment_metas as $comment_meta ) {

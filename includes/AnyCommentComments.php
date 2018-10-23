@@ -20,11 +20,11 @@ class AnyCommentComments {
 			return false;
 		}
 
-		if ( ! AnyCommentGenericSettings::isModerateFirst() ) {
+		if ( ! AnyCommentGenericSettings::is_moderate_first() ) {
 			return false;
 		}
 
-		$moderate_words = trim( AnyCommentGenericSettings::getModerateWords() );
+		$moderate_words = trim( AnyCommentGenericSettings::get_moderate_words() );
 
 		if ( empty( $moderate_words ) ) {
 			return false;

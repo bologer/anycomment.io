@@ -62,7 +62,7 @@ class AnyCommentUserMeta {
 	 *
 	 * @return null|string
 	 */
-	public static function getSocialProfileUrl( $user, $html = false ) {
+	public static function get_social_profile_url( $user, $html = false ) {
 		if ( ! static::isSocialLogin( $user ) ) {
 			return null;
 		}

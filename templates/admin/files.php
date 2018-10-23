@@ -9,7 +9,7 @@ require_once( $path );
 ?>
 
 <div class="wrap">
-    <h2><?= __( 'Files', 'anycomment' ) ?></h2>
+    <h2><?php echo __( 'Files', 'anycomment' ) ?></h2>
 
     <form method="post">
         <input type="hidden" name="page" value="anycomment-files">

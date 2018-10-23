@@ -33,7 +33,7 @@ WHERE TABLE_NAME = '$email_queue_table'
 		/**
 		 * Create email queue table
 		 */
-		$rating_table      = AnyCommentRating::tableName();
+		$rating_table      = AnyCommentRating::table_name();
 		$email_queue_table = AnyCommentEmailQueue::tableName();
 		$sql_rating        = "ALTER TABLE {$rating_table} MODIFY COLUMN ID BIGINT AUTO_INCREMENT";
 		$sql_email_queue   = "ALTER TABLE {$email_queue_table} MODIFY COLUMN ID BIGINT AUTO_INCREMENT";

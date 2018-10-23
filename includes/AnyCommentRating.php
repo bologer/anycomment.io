@@ -34,7 +34,7 @@ class AnyCommentRating {
 	 *
 	 * @return string
 	 */
-	public static function tableName() {
+	public static function table_name() {
 		global $wpdb;
 
 		return $wpdb->prefix . 'anycomment_rating';
@@ -52,7 +52,7 @@ class AnyCommentRating {
 	public static function get_count_by_post( $post_id ) {
 		global $wpdb;
 
-		$table = static::tableName();
+		$table = static::table_name();
 
 		$sql = "SELECT COUNT(*) FROM `$table` WHERE `post_ID`=%d";
 
@@ -77,7 +77,7 @@ class AnyCommentRating {
 	public static function get_average_by_post( $post_id ) {
 		global $wpdb;
 
-		$table = static::tableName();
+		$table = static::table_name();
 
 		$sql = "SELECT ROUND(AVG(rating), 1) FROM `$table` WHERE `post_ID`=%d";
 		$res = $wpdb->get_var( $wpdb->prepare( $sql, [ $post_id ] ) );
@@ -122,7 +122,7 @@ class AnyCommentRating {
 			$field      = 'ip';
 		}
 
-		$table = static::tableName();
+		$table = static::table_name();
 
 		global $wpdb;
 		$sql   = $wpdb->prepare( "SELECT COUNT(*) FROM `$table` WHERE `post_ID` =%d AND `$field`=$field_type", $post_id, $user_id_or_ip );
@@ -181,7 +181,7 @@ class AnyCommentRating {
 
 		global $wpdb;
 
-		$tableName = static::tableName();
+		$tableName = static::table_name();
 
 		unset( $model->ID );
 

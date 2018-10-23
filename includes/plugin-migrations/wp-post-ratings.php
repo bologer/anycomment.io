@@ -24,7 +24,7 @@ if ( ! empty( $rating ) ) {
 		$ip        = empty( $rate->rating_ip ) ? 'NULL' : $rate->rating_ip;
 		$timestamp = $rate->rating_timestamp;
 
-		$tableName = AnyCommentRating::tableName();
+		$tableName = AnyCommentRating::table_name();
 
 		$isSuccess = $wpdb->query( "INSERT INTO $tableName (post_ID, user_ID, rating, ip, user_agent, created_at) VALUES ($postId, $userId, $rating, '$ip', NULL, $timestamp)" );
 

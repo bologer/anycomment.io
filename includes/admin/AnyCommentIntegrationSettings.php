@@ -136,7 +136,7 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 				__( 'Generic', "anycomment" ),
 				function () {
 					?>
-                    <p><?= __( 'Integration with other plugin and/or services. Integration options will automatically appear down below once you install one of the supported plugins.', "anycomment" ) ?></p>
+                    <p><?php echo __( 'Integration with other plugin and/or services. Integration options will automatically appear down below once you install one of the supported plugins.', "anycomment" ) ?></p>
 					<?php
 				},
 				$this->page_slug
@@ -241,8 +241,8 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isAkismetOn() {
-			return static::instance()->getOption( self::OPTION_AKISMET ) !== null;
+		public static function is_akismet_active() {
+			return static::instance()->get_option( self::OPTION_AKISMET ) !== null;
 		}
 
 		/**
@@ -251,8 +251,8 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 		 * @since 0.0.3
 		 * @return bool
 		 */
-		public static function isWPUserAvatarOn() {
-			return static::instance()->getOption( self::OPTION_WP_USER_AVATAR ) !== null;
+		public static function is_wp_user_avatar_active() {
+			return static::instance()->get_option( self::OPTION_WP_USER_AVATAR ) !== null;
 		}
 
 		/**
@@ -261,8 +261,8 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 		 * @since 0.0.56
 		 * @return bool
 		 */
-		public static function isRecaptchaOn() {
-			return static::instance()->getOption( self::OPTION_RECAPTCHA_TOGGLE ) !== null;
+		public static function is_recaptcha_active() {
+			return static::instance()->get_option( self::OPTION_RECAPTCHA_TOGGLE ) !== null;
 		}
 
 		/**
@@ -271,8 +271,8 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 		 * @since 0.0.56
 		 * @return bool
 		 */
-		public static function isRecaptchaUserAll() {
-			return static::getRecaptchaUser() === self::OPTION_RECAPTCHA_USER_ALL;
+		public static function is_recaptcha_user_all() {
+			return static::get_recaptcha_user() === self::OPTION_RECAPTCHA_USER_ALL;
 		}
 
 		/**
@@ -281,8 +281,8 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 		 * @since 0.0.56
 		 * @return bool
 		 */
-		public static function isRecaptchaUserGuest() {
-			return static::getRecaptchaUser() === self::OPTION_RECAPTCHA_USER_GUEST;
+		public static function is_recaptcha_user_guest() {
+			return static::get_recaptcha_user() === self::OPTION_RECAPTCHA_USER_GUEST;
 		}
 
 		/**
@@ -291,8 +291,8 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 		 * @since 0.0.56
 		 * @return bool
 		 */
-		public static function isRecaptchaUserAuth() {
-			return static::getRecaptchaUser() === self::OPTION_RECAPTCHA_USER_AUTH;
+		public static function is_recaptcha_user_auth() {
+			return static::get_recaptcha_user() === self::OPTION_RECAPTCHA_USER_AUTH;
 		}
 
 		/**
@@ -301,8 +301,8 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 		 * @since 0.0.56
 		 * @return string|null
 		 */
-		public static function getRecaptchaUser() {
-			$user = static::instance()->getOption( self::OPTION_RECAPTCHA_USER );
+		public static function get_recaptcha_user() {
+			$user = static::instance()->get_option( self::OPTION_RECAPTCHA_USER );
 
 			if ( $user !== self::OPTION_RECAPTCHA_USER_ALL &&
 			     $user !== self::OPTION_RECAPTCHA_USER_AUTH &&
@@ -319,8 +319,8 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 		 * @since 0.0.56
 		 * @return string|null
 		 */
-		public static function getRecaptchaSiteKey() {
-			return static::instance()->getOption( self::OPTION_RECAPTCHA_SITE_KEY );
+		public static function get_recaptcha_site_key() {
+			return static::instance()->get_option( self::OPTION_RECAPTCHA_SITE_KEY );
 		}
 
 		/**
@@ -329,8 +329,8 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 		 * @since 0.0.56
 		 * @return string|null
 		 */
-		public static function getRecaptchaSiteSecret() {
-			return static::instance()->getOption( self::OPTION_RECAPTCHA_SITE_SECRET );
+		public static function get_recaptcha_site_secret() {
+			return static::instance()->get_option( self::OPTION_RECAPTCHA_SITE_SECRET );
 		}
 
 		/**
@@ -339,8 +339,8 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 		 * @since 0.0.56
 		 * @return string|null
 		 */
-		public static function getRecaptchaTheme() {
-			$theme = static::instance()->getOption( self::OPTION_RECAPTCHA_THEME );
+		public static function get_recaptcha_theme() {
+			$theme = static::instance()->get_option( self::OPTION_RECAPTCHA_THEME );
 
 			if ( $theme !== self::OPTION_RECAPTCHA_THEME_LIGHT && $theme !== self::OPTION_RECAPTCHA_THEME_DARK ) {
 				return self::OPTION_RECAPTCHA_THEME_LIGHT;
@@ -355,8 +355,8 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 		 * @since 0.0.56
 		 * @return string|null
 		 */
-		public static function getRecaptchaBadge() {
-			$badge = static::instance()->getOption( self::OPTION_RECAPTCHA_BADGE );
+		public static function get_recaptcha_badge() {
+			$badge = static::instance()->get_option( self::OPTION_RECAPTCHA_BADGE );
 
 
 			if ( $badge !== self::OPTION_RECAPTCHA_BADGE_BOTTOM_RIGHT &&

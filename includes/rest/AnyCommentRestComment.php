@@ -502,10 +502,10 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			return new WP_Error( 'rest_comment_exists', __( 'Cannot create existing comment.', 'anycomment' ), array( 'status' => 400 ) );
 		}
 
-		$checkCaptcha = AnyCommentIntegrationSettings::isRecaptchaOn() && (
-				( AnyCommentIntegrationSettings::isRecaptchaUserAll() ) ||
-				( ! is_user_logged_in() && AnyCommentIntegrationSettings::isRecaptchaUserGuest() ) ||
-				( is_user_logged_in() && AnyCommentIntegrationSettings::isRecaptchaUserAuth() )
+		$checkCaptcha = AnyCommentIntegrationSettings::is_recaptcha_active() && (
+				( AnyCommentIntegrationSettings::is_recaptcha_user_all() ) ||
+				( ! is_user_logged_in() && AnyCommentIntegrationSettings::is_recaptcha_user_guest() ) ||
+				( is_user_logged_in() && AnyCommentIntegrationSettings::is_recaptcha_user_auth() )
 			);
 
 		if ( $checkCaptcha && ! $this->check_recaptcha( $request['captcha'] ) ) {
@@ -537,7 +537,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			$prepared_comment['comment_date_gmt'] = current_time( 'mysql', true );
 		}
 
-		if ( ! is_user_logged_in() && ! ( AnyCommentGenericSettings::isFormTypeGuests() || AnyCommentGenericSettings::isFormTypeAll() ) ) {
+		if ( ! is_user_logged_in() && ! ( AnyCommentGenericSettings::is_form_type_guests() || AnyCommentGenericSettings::is_form_type_all() ) ) {
 			return new WP_Error( 'rest_user_social_to_login', __( 'Please use any of the available social networks to leave a comment', 'anycomment' ), [ 'status' => 400 ] );
 		}
 
@@ -555,11 +555,11 @@ class AnyCommentRestComment extends AnyCommentRestController {
 				return new WP_Error( 'rest_comment_author_empty', __( 'Name is required.', 'anycomment' ), [ 'status' => 400 ] );
 			}
 
-			if ( AnyCommentGenericSettings::isGuestFieldEmailOn() && empty( $prepared_comment['comment_author_email'] ) ) {
+			if ( AnyCommentGenericSettings::is_guest_field_email_on() && empty( $prepared_comment['comment_author_email'] ) ) {
 				return new WP_Error( 'rest_comment_email_empty', __( 'Email field is required.', 'anycomment' ), [ 'status' => 400 ] );
 			}
 
-			if ( AnyCommentGenericSettings::isGuestFieldEmailOn() && ! empty( $prepared_comment['comment_author_email'] ) && ! is_email( $prepared_comment['comment_author_email'] ) ) {
+			if ( AnyCommentGenericSettings::is_guest_field_email_on() && ! empty( $prepared_comment['comment_author_email'] ) && ! is_email( $prepared_comment['comment_author_email'] ) ) {
 				return new WP_Error( 'rest_comment_email_invalid', __( 'Provide valid email address.', 'anycomment' ), [ 'status' => 400 ] );
 			}
 		}
@@ -591,12 +591,12 @@ class AnyCommentRestComment extends AnyCommentRestController {
 
 		// Process attachments
 		if ( ! empty( $request['attachments'] ) ) {
-			AnyCommentCommentMeta::addAttachments( $comment_id, $request['attachments'] );
+			AnyCommentCommentMeta::add_attachments( $comment_id, $request['attachments'] );
 		}
 
-		$should_moderate    = ! current_user_can( 'moderate_comments' ) && AnyCommentGenericSettings::isModerateFirst();
+		$should_moderate    = ! current_user_can( 'moderate_comments' ) && AnyCommentGenericSettings::is_moderate_first();
 		$has_filtered_words = ! current_user_can( 'moderate_comments' ) && AnyCommentComments::hasModerateWords( $comment_id );
-		$has_links          = ! current_user_can( 'moderate_comments' ) && AnyCommentGenericSettings::isLinksOnHold() && AnyCommentComments::has_links( $comment_id );
+		$has_links          = ! current_user_can( 'moderate_comments' ) && AnyCommentGenericSettings::is_links_on_hold() && AnyCommentComments::has_links( $comment_id );
 
 		if ( $should_moderate || $has_filtered_words || $has_links ) {
 			$this->handle_status_param( 'hold', $comment_id );
@@ -604,11 +604,11 @@ class AnyCommentRestComment extends AnyCommentRestController {
 
 		$comment = get_comment( $comment_id );
 
-		if ( AnyCommentGenericSettings::isNotifyOnNewReply() ) {
+		if ( AnyCommentGenericSettings::is_notify_on_new_reply() ) {
 			AnyCommentEmailQueue::addAsReply( $comment );
 		}
 
-		if ( AnyCommentGenericSettings::isNotifyAdministrator() ) {
+		if ( AnyCommentGenericSettings::is_notify_admin() ) {
 			AnyCommentEmailQueue::addAsAdminNotification( $comment );
 		}
 
@@ -738,7 +738,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		// Process attachments
 		if ( ! empty( $request['attachments'] ) ) {
 			// Would add non existing ones, add keep old ones
-			AnyCommentCommentMeta::addAttachments( $id, $request['attachments'] );
+			AnyCommentCommentMeta::add_attachments( $id, $request['attachments'] );
 		}
 
 		$comment = get_comment( $id );
@@ -884,7 +884,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			$is_post_author = (int) $post->post_author === (int) $comment->user_id;
 		}
 
-		if ( AnyCommentGenericSettings::isShowProfileUrl() && ( $socialUrl = AnyCommentUserMeta::getSocialProfileUrl( $comment->user_id ) ) !== null ) {
+		if ( AnyCommentGenericSettings::is_show_profile_url() && ( $socialUrl = AnyCommentUserMeta::get_social_profile_url( $comment->user_id ) ) !== null ) {
 			$profileUrl = $socialUrl;
 		} elseif ( ! empty( $comment->comment_author_url ) ) {
 			$profileUrl = $comment->comment_author_url;
@@ -914,13 +914,13 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			'avatar_url'         => AnyComment()->auth->get_user_avatar_url( (int) $comment->user_id !== 0 ? $comment->user_id : $comment->comment_author_email ),
 			'children'           => $child_comments,
 			'owner'              => $owner,
-			'attachments'        => AnyCommentCommentMeta::getAttachmentsForApi( $comment->comment_ID ),
+			'attachments'        => AnyCommentCommentMeta::get_attachments_for_api( $comment->comment_ID ),
 			'permissions'        => [
 				'can_edit_comment' => AnyComment()->render->can_edit_comment( $comment ),
 			],
 			'meta'               => [
 				'has_like'    => AnyCommentLikes::isCurrentUserHasLike( $comment->comment_ID ),
-				'likes_count' => AnyCommentLikes::getLikesCount( $comment->comment_ID ),
+				'likes_count' => AnyCommentLikes::get_likes_count( $comment->comment_ID ),
 				'count_text'  => AnyComment()->render->get_comment_count( $comment->comment_post_ID )
 			]
 		);
@@ -1616,7 +1616,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	public function check_recaptcha( $token ) {
 		$response = wp_remote_post( 'https://www.google.com/recaptcha/api/siteverify', [
 			'body' => [
-				'secret'   => AnyCommentIntegrationSettings::getRecaptchaSiteSecret(),
+				'secret'   => AnyCommentIntegrationSettings::get_recaptcha_site_secret(),
 				'response' => $token,
 				'remoteip' => isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : ''
 			]

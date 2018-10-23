@@ -21,7 +21,7 @@ class AnyCommentCommentMeta {
 	 *
 	 * @return bool
 	 */
-	public static function deleteAttachment( $meta_id ) {
+	public static function delete_attachment( $meta_id ) {
 		global $wpdb;
 
 		$rowsAffected = $wpdb->delete( $wpdb->commentmeta, [ 'meta_id' => $meta_id ] );
@@ -36,7 +36,7 @@ class AnyCommentCommentMeta {
 	 *
 	 * @return bool
 	 */
-	public static function deleteAttachmentByFileId( $file_id ) {
+	public static function delete_attachment_by_file_id( $file_id ) {
 		global $wpdb;
 
 		$file_id = trim( $file_id );
@@ -56,7 +56,7 @@ class AnyCommentCommentMeta {
 	 *
 	 * @return bool
 	 */
-	public static function existByAttachmentFileId( $file_id ) {
+	public static function exist_by_attachment_file_id( $file_id ) {
 		global $wpdb;
 
 		$file_id = trim( $file_id );
@@ -77,7 +77,7 @@ class AnyCommentCommentMeta {
 	 *
 	 * @return object|null
 	 */
-	public static function getAttachment( $meta_id, $comment_id = null, $withFile = true ) {
+	public static function get_attachment( $meta_id, $comment_id = null, $withFile = true ) {
 		global $wpdb;
 
 		$sql = 'SELECT `meta`.*';
@@ -118,7 +118,7 @@ class AnyCommentCommentMeta {
 	 *
 	 * @return array|null|object
 	 */
-	public static function getAttachments( $comment_id ) {
+	public static function get_attachments( $comment_id ) {
 		global $wpdb;
 
 		$commentTable = $wpdb->commentmeta;
@@ -146,9 +146,9 @@ WHERE `meta`.`comment_id`=%d AND `meta`.`meta_key`=%s AND `meta`.`meta_value` IS
 	 *
 	 * @return string|array string when returned as plain text and array when returned as array.
 	 */
-	public static function getAttachmentsForApi( $comment_id, $asObject = true ) {
+	public static function get_attachments_for_api( $comment_id, $asObject = true ) {
 
-		$res = static::getAttachments( $comment_id );
+		$res = static::get_attachments( $comment_id );
 
 		$objectToReturn = [];
 
@@ -182,7 +182,7 @@ WHERE `meta`.`comment_id`=%d AND `meta`.`meta_key`=%s AND `meta`.`meta_value` IS
 	 *
 	 * @return bool
 	 */
-	public static function addAttachments( $comment_id, $attachments ) {
+	public static function add_attachments( $comment_id, $attachments ) {
 		if ( is_string( $attachments ) ) {
 			$attachments = json_decode( $attachments, true );
 		}
@@ -196,7 +196,7 @@ WHERE `meta`.`comment_id`=%d AND `meta`.`meta_key`=%s AND `meta`.`meta_value` IS
 				}
 
 				// When files wasn't added yet, should do so
-				if ( ! static::existByAttachmentFileId( $fileId ) ) {
+				if ( ! static::exist_by_attachment_file_id( $fileId ) ) {
 					add_comment_meta( $comment_id, self::META_ATTACHMENT, $fileId );
 				}
 			}

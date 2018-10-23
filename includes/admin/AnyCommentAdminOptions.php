@@ -129,8 +129,8 @@ if ( ! class_exists( 'AnyCommentAdminOptions' ) ) :
 
 			$options_html = '';
 			foreach ( $options as $key => $value ) {
-				$option_value = $this->getOption( $for );
-				$selected     = isset( $this->getOptions()[ $for ] ) ? ( selected( $option_value, $key, false ) ) : ( '' );
+				$option_value = $this->get_option( $for );
+				$selected     = isset( $this->get_options()[ $for ] ) ? ( selected( $option_value, $key, false ) ) : ( '' );
 				$options_html .= <<<EOL
                 <option value="$key" $selected>$value</option>
 EOL;
@@ -261,7 +261,7 @@ EOT;
 				submit_button( __( 'Save', 'anycomment' ) );
 				?>
             </form>
-            <script src="<?= AnyComment()->plugin_url() ?>/assets/js/forms.js"></script>
+            <script src="<?php echo AnyComment()->plugin_url() ?>/assets/js/forms.js"></script>
 			<?php if ( $wrapper ): ?>
                 </div>
 			<?php endif; ?>
@@ -413,7 +413,7 @@ EOT;
 				'for'         => esc_attr( $args['label_for'] ),
 				'title'       => $field['title'],
 				'description' => isset( $args['description'] ) ? trim( $args['description'] ) : '',
-				'value'       => $this->getOption( $args['label_for'] ),
+				'value'       => $this->get_option( $args['label_for'] ),
 				'name'        => $this->option_name . '[' . $args['label_for'] . ']',
 				'options'     => isset( $args['options'] ) ? $args['options'] : null
 			];
@@ -483,8 +483,8 @@ EOT;
 		 *
 		 * @return bool
 		 */
-		public function hasOptions() {
-			$options = $this->getOptions();
+		public function has_options() {
+			$options = $this->get_options();
 
 			if ( $options === null ) {
 				return false;
@@ -507,8 +507,8 @@ EOT;
 		 *
 		 * @return mixed|null
 		 */
-		public function getOption( $name ) {
-			$options = $this->getOptions();
+		public function get_option( $name ) {
+			$options = $this->get_options();
 
 			$optionValue = isset( $options[ $name ] ) ? trim( $options[ $name ] ) : null;
 
@@ -519,7 +519,7 @@ EOT;
 		 * Get list of social options.
 		 * @return array|null
 		 */
-		public function getOptions() {
+		public function get_options() {
 			if ( $this->options === null ) {
 				$this->options = get_option( $this->option_name, null );
 			}

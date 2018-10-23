@@ -209,6 +209,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 */
 		const OPTION_DESIGN_CUSTOM_TOGGLE = 'options_design_custom_toggle';
 
+		const OPTION_DESIGN_GLOBAL_PADDING = 'options_design_global_padding';
+
 		const OPTION_DESIGN_FONT_SIZE = 'options_design_font_size';
 		const OPTION_DESIGN_FONT_FAMILY = 'options_design_font_family';
 
@@ -292,6 +294,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 //			self::OPTION_EDITOR_TOOLBAR_CLEAN                  => 'on',
 
 			// Custom design
+			self::OPTION_DESIGN_GLOBAL_PADDING                 => '20px 0',
 			self::OPTION_DESIGN_FONT_SIZE                      => '14px',
 			self::OPTION_DESIGN_FONT_FAMILY                    => "'Noto-Sans', sans-serif",
 			self::OPTION_DESIGN_SEMI_HIDDEN_COLOR              => '#B6C1C6',
@@ -591,18 +594,16 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'description' => esc_html( __( 'Show clean formatting option in editor toolbar.', "anycomment" ) )
 					],
 
+					/**
+					 * Custom design
+					 */
 					[
 						'id'          => self::OPTION_DESIGN_CUSTOM_TOGGLE,
 						'title'       => __( 'Custom Design', "anycomment" ),
 						'type'        => 'checkbox',
 						'description' => esc_html( __( 'Use custom design. Enable this option to display design changes from below.', "anycomment" ) )
 					],
-					[
-						'id'          => self::OPTION_DESIGN_GLOBAL_RADIUS,
-						'title'       => __( 'Border radius', "anycomment" ),
-						'type'        => 'text',
-						'description' => esc_html( __( 'Border radius. You may use "px" or "%".', "anycomment" ) )
-					],
+
 					[
 						'id'          => self::OPTION_DESIGN_FONT_SIZE,
 						'title'       => __( 'Text Size', "anycomment" ),
@@ -627,6 +628,20 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'title'       => __( 'Link Color', "anycomment" ),
 						'type'        => 'color',
 						'description' => esc_html( __( 'Links color.', "anycomment" ) )
+					],
+
+					[
+						'id'          => self::OPTION_DESIGN_GLOBAL_PADDING,
+						'title'       => __( 'Global padding', "anycomment" ),
+						'type'        => 'text',
+						'description' => esc_html( __( 'Global padding for all comments. You may use "px" or "%".', "anycomment" ) )
+					],
+
+					[
+						'id'          => self::OPTION_DESIGN_GLOBAL_RADIUS,
+						'title'       => __( 'Border radius', "anycomment" ),
+						'type'        => 'text',
+						'description' => esc_html( __( 'Border radius. You may use "px" or "%".', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_DESIGN_SEMI_HIDDEN_COLOR,
@@ -893,8 +908,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 				add_settings_error( $this->alert_key, 'anycomment_message', __( 'Settings Saved', 'anycomment' ), 'updated' );
 			}
 
-			if ( AnyCommentGenericSettings::isDesignCustom() ) {
-				static::applyStyleOnDesignChange();
+			if ( AnyCommentGenericSettings::is_design_custom() ) {
+				static::apply_style_on_design_change();
 			}
 
 			settings_errors( $this->alert_key );
@@ -936,7 +951,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return string String on success, false on failure.
 		 */
-		private static function combineStylesAndProcess() {
+		private static function combine_styles_and_process() {
 			$scssPath = AnyComment()->plugin_path() . '/assets/theming/';
 
 			$content = trim( file_get_contents( $scssPath . 'app.scss' ) );
@@ -959,28 +974,28 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 			$scss->addImportPath( $scssPath );
 
 			$replaceVariables = [
-				'font-size'   => AnyCommentGenericSettings::getDesignFontSize(),
-				'font-family' => AnyCommentGenericSettings::getDesignFontFamily(),
-				'link-color'  => AnyCommentGenericSettings::getDesignLinkColor(),
-				'text-color'  => AnyCommentGenericSettings::getDesignTextColor(),
+				'font-size'   => AnyCommentGenericSettings::get_design_font_size(),
+				'font-family' => AnyCommentGenericSettings::get_design_font_family(),
+				'link-color'  => AnyCommentGenericSettings::get_design_link_color(),
+				'text-color'  => AnyCommentGenericSettings::get_design_text_color(),
 
-				'semi-hidden-color' => AnyCommentGenericSettings::getDesignSemiHiddenColor(),
+				'semi-hidden-color' => AnyCommentGenericSettings::get_design_semi_hidden_color(),
 
-				'form-field-background-color' => AnyCommentGenericSettings::getDesignFormFieldBackgroundColor(),
+				'form-field-background-color' => AnyCommentGenericSettings::get_design_form_field_background_color(),
 
-				'attachment-color'            => AnyCommentGenericSettings::getDesignAttachmentColor(),
-				'attachment-background-color' => AnyCommentGenericSettings::getDesignAttachmentBackgroundColor(),
+				'attachment-color'            => AnyCommentGenericSettings::get_design_attachment_color(),
+				'attachment-background-color' => AnyCommentGenericSettings::get_design_attachment_background_color(),
 
-				'avatar-border-radius' => AnyCommentGenericSettings::getDesignAvatarRadius(),
-				'parent-avatar-size'   => AnyCommentGenericSettings::getDesignParentAvatarSize(),
-				'child-avatar-size'    => AnyCommentGenericSettings::getDesignChildAvatarSize(),
+				'avatar-border-radius' => AnyCommentGenericSettings::get_design_avatar_radius(),
+				'parent-avatar-size'   => AnyCommentGenericSettings::get_design_parent_avatar_size(),
+				'child-avatar-size'    => AnyCommentGenericSettings::get_design_child_avatar_size(),
 
-				'btn-radius'                  => AnyCommentGenericSettings::getDesignButtonRadius(),
-				'btn-color'                   => AnyCommentGenericSettings::getDesignButtonColor(),
-				'btn-background-color'        => AnyCommentGenericSettings::getDesignButtonBackgroundColor(),
-				'btn-background-color-active' => AnyCommentGenericSettings::getDesignButtonBackgroundColorActive(),
+				'btn-radius'                  => AnyCommentGenericSettings::get_design_button_radius(),
+				'btn-color'                   => AnyCommentGenericSettings::get_design_button_color(),
+				'btn-background-color'        => AnyCommentGenericSettings::get_design_button_background_color(),
+				'btn-background-color-active' => AnyCommentGenericSettings::get_design_button_background_color_active(),
 
-				'global-radius' => AnyCommentGenericSettings::getDesignGlobalRadius(),
+				'global-radius' => AnyCommentGenericSettings::get_design_global_radius(),
 			];
 
 			$scss->setVariables( $replaceVariables );
@@ -1025,8 +1040,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function applyStyleOnDesignChange() {
-			$hash        = static::getDesignHash();
+		public static function apply_style_on_design_change() {
+			$hash        = static::get_design_hash();
 			$filePattern = 'main-custom-%s.min.css';
 			$path        = AnyComment()->plugin_path() . '/static/css/';
 
@@ -1038,7 +1053,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 				// to avoid duplicate unwanted files
 				$oldCustomFiles = glob( $path . sprintf( $filePattern, '*' ) );
 
-				$generatedCss = static::combineStylesAndProcess();
+				$generatedCss = static::combine_styles_and_process();
 
 				if ( empty( $generatedCss ) ) {
 					return false;
@@ -1063,12 +1078,12 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return string
 		 */
-		public static function getDesignHash() {
+		public static function get_design_hash() {
 			$items = [];
 
 			$items[] = AnyComment()->version;
 
-			$options = static::instance()->getOptions();
+			$options = static::instance()->get_options();
 
 			if ( ! empty( $options ) ) {
 				foreach ( $options as $option_name => $option_value ) {
@@ -1088,9 +1103,9 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return null|string NULL on failure (when nothing in the design specified yet.
 		 */
-		public static function getCustomDesignStylesheetUrl( $createOnNotFound = true ) {
+		public static function get_custom_design_stylesheet_url( $createOnNotFound = true ) {
 
-			$hash = static::getDesignHash();
+			$hash = static::get_design_hash();
 
 			if ( empty( $hash ) ) {
 				return null;
@@ -1101,20 +1116,19 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 			$sheetsPath = AnyComment()->plugin_path() . $relativePath;
 
 			if ( $createOnNotFound && ! file_exists( $sheetsPath ) ) {
-				static::applyStyleOnDesignChange();
+				static::apply_style_on_design_change();
 			}
 
 			return AnyComment()->plugin_url() . $relativePath;
 		}
-
 
 		/**
 		 * Check whether plugin is enabled or not.
 		 *
 		 * @return bool
 		 */
-		public static function isEnabled() {
-			return static::instance()->getOption( self::OPTION_PLUGIN_TOGGLE ) !== null;
+		public static function is_enabled() {
+			return static::instance()->get_option( self::OPTION_PLUGIN_TOGGLE ) !== null;
 		}
 
 		/**
@@ -1122,8 +1136,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isLoadOnScroll() {
-			return static::instance()->getOption( self::OPTION_LOAD_ON_SCROLL ) !== null;
+		public static function is_load_on_scroll() {
+			return static::instance()->get_option( self::OPTION_LOAD_ON_SCROLL ) !== null;
 		}
 
 		/**
@@ -1131,8 +1145,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isLinksOnHold() {
-			return static::instance()->getOption( self::OPTION_LINKS_ON_HOLD ) !== null;
+		public static function is_links_on_hold() {
+			return static::instance()->get_option( self::OPTION_LINKS_ON_HOLD ) !== null;
 		}
 
 		/**
@@ -1140,8 +1154,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isModerateFirst() {
-			return static::instance()->getOption( self::OPTION_MODERATE_FIRST ) !== null;
+		public static function is_moderate_first() {
+			return static::instance()->get_option( self::OPTION_MODERATE_FIRST ) !== null;
 		}
 
 		/**
@@ -1149,8 +1163,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isShowTwitterEmbeds() {
-			return static::instance()->getOption( self::OPTION_SHOW_TWITTER_EMBEDS ) !== null;
+		public static function is_show_twitter_embeds() {
+			return static::instance()->get_option( self::OPTION_SHOW_TWITTER_EMBEDS ) !== null;
 		}
 
 		/**
@@ -1158,8 +1172,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isShowVideoAttachments() {
-			return static::instance()->getOption( self::OPTION_SHOW_VIDEO_ATTACHMENTS ) !== null;
+		public static function is_show_video_attachments() {
+			return static::instance()->get_option( self::OPTION_SHOW_VIDEO_ATTACHMENTS ) !== null;
 		}
 
 		/**
@@ -1167,8 +1181,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isShowImageAttachments() {
-			return static::instance()->getOption( self::OPTION_SHOW_IMAGE_ATTACHMENTS ) !== null;
+		public static function is_show_image_attachments() {
+			return static::instance()->get_option( self::OPTION_SHOW_IMAGE_ATTACHMENTS ) !== null;
 		}
 
 		/**
@@ -1176,8 +1190,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isLinkClickable() {
-			return static::instance()->getOption( self::OPTION_MAKE_LINKS_CLICKABLE ) !== null;
+		public static function is_link_clickable() {
+			return static::instance()->get_option( self::OPTION_MAKE_LINKS_CLICKABLE ) !== null;
 		}
 
 		/**
@@ -1185,8 +1199,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isShowProfileUrl() {
-			return static::instance()->getOption( self::OPTION_SHOW_PROFILE_URL ) !== null;
+		public static function is_show_profile_url() {
+			return static::instance()->get_option( self::OPTION_SHOW_PROFILE_URL ) !== null;
 		}
 
 		/**
@@ -1194,8 +1208,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isNotifyOnNewComment() {
-			return static::instance()->getOption( self::OPTION_NOTIFY_ON_NEW_COMMENT ) !== null;
+		public static function is_notify_on_new_comment() {
+			return static::instance()->get_option( self::OPTION_NOTIFY_ON_NEW_COMMENT ) !== null;
 		}
 
 		/**
@@ -1203,8 +1217,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isNotifyAdministrator() {
-			return static::instance()->getOption( self::OPTION_NOTIFY_ADMINISTRATOR ) !== null;
+		public static function is_notify_admin() {
+			return static::instance()->get_option( self::OPTION_NOTIFY_ADMINISTRATOR ) !== null;
 		}
 
 		/**
@@ -1212,8 +1226,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isNotifyOnNewReply() {
-			return static::instance()->getOption( self::OPTION_NOTIFY_ON_NEW_REPLY ) !== null;
+		public static function is_notify_on_new_reply() {
+			return static::instance()->get_option( self::OPTION_NOTIFY_ON_NEW_REPLY ) !== null;
 		}
 
 		/**
@@ -1221,8 +1235,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return string|null
 		 */
-		public static function getNotifyEmailAdminTemplate() {
-			return static::instance()->getOption( self::OPTION_NOTIFY_ADMIN_EMAIL_TEMPLATE );
+		public static function get_notify_email_admin_template() {
+			return static::instance()->get_option( self::OPTION_NOTIFY_ADMIN_EMAIL_TEMPLATE );
 		}
 
 		/**
@@ -1230,8 +1244,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return string|null
 		 */
-		public static function getNotifyEmailReplyTemplate() {
-			return static::instance()->getOption( self::OPTION_NOTIFY_REPLY_EMAIL_TEMPLATE );
+		public static function get_notify_email_reply_template() {
+			return static::instance()->get_option( self::OPTION_NOTIFY_REPLY_EMAIL_TEMPLATE );
 		}
 
 		/**
@@ -1239,8 +1253,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return string|null
 		 */
-		public static function getModerateWords() {
-			return static::instance()->getOption( self::OPTION_MODERATE_WORDS );
+		public static function get_moderate_words() {
+			return static::instance()->get_option( self::OPTION_MODERATE_WORDS );
 		}
 
 		/**
@@ -1248,8 +1262,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isFileUploadAllowed() {
-			return static::instance()->getOption( self::OPTION_FILES_TOGGLE ) !== null;
+		public static function is_file_upload_allowed() {
+			return static::instance()->get_option( self::OPTION_FILES_TOGGLE ) !== null;
 		}
 
 		/**
@@ -1257,8 +1271,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isGuestCanUpload() {
-			return static::instance()->getOption( self::OPTION_FILES_GUEST_CAN_UPLOAD );
+		public static function is_guest_can_upload() {
+			return static::instance()->get_option( self::OPTION_FILES_GUEST_CAN_UPLOAD );
 		}
 
 		/**
@@ -1266,8 +1280,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return float|null
 		 */
-		public static function getFileMaxSize() {
-			return static::instance()->getOption( self::OPTION_FILES_MAX_SIZE );
+		public static function get_file_max_size() {
+			return static::instance()->get_option( self::OPTION_FILES_MAX_SIZE );
 		}
 
 		/**
@@ -1275,8 +1289,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return float|null
 		 */
-		public static function getFileLimit() {
-			return static::instance()->getOption( self::OPTION_FILES_LIMIT );
+		public static function get_file_limit() {
+			return static::instance()->get_option( self::OPTION_FILES_LIMIT );
 		}
 
 		/**
@@ -1284,8 +1298,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return int|null
 		 */
-		public static function getFileUploadLimit() {
-			return static::instance()->getOption( self::OPTION_FILES_LIMIT_PERIOD );
+		public static function get_file_upload_limit() {
+			return static::instance()->get_option( self::OPTION_FILES_LIMIT_PERIOD );
 		}
 
 		/**
@@ -1293,8 +1307,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return string|null
 		 */
-		public static function getFileMimeTypes() {
-			return static::instance()->getOption( self::OPTION_FILES_MIME_TYPES );
+		public static function get_file_mime_types() {
+			return static::instance()->get_option( self::OPTION_FILES_MIME_TYPES );
 		}
 
 		/**
@@ -1307,8 +1321,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isAllowedMimeType( $file ) {
-			$acceptedFilesArray = explode( ',', static::getFileMimeTypes() );
+		public static function is_allowed_mime_type( $file ) {
+			$acceptedFilesArray = explode( ',', static::get_file_mime_types() );
 
 			if ( empty( $acceptedFilesArray ) ) {
 				return false;
@@ -1345,38 +1359,38 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return array
 		 */
-		public static function getEditorToolbarOptions() {
+		public static function get_editor_toolbar_options() {
 
 			$toolbar_option = [];
-			if ( static::isEditorToolbarBold() ) {
+			if ( static::is_editor_toolbar_bold() ) {
 				$toolbar_option[] = 'bold';
 			}
 
-			if ( static::isEditorToolbarItalic() ) {
+			if ( static::is_editor_toolbar_italic() ) {
 				$toolbar_option[] = 'italic';
 			}
 
-			if ( static::isEditorToolbarUnderline() ) {
+			if ( static::is_editor_toolbar_underline() ) {
 				$toolbar_option[] = 'underline';
 			}
 
-			if ( static::isEditorToolbarBlockQuote() ) {
+			if ( static::is_editor_toolbar_blockquote() ) {
 				$toolbar_option[] = 'blockquote';
 			}
 
-			if ( static::isEditorToolbarOrderedList() ) {
+			if ( static::is_editor_toolbar_ordered_list() ) {
 				$toolbar_option[] = 'ordered';
 			}
 
-			if ( static::isEditorToolbarBulletList() ) {
+			if ( static::is_editor_toolbar_bullet_list() ) {
 				$toolbar_option[] = 'bullet';
 			}
 
-			if ( static::isEditorToolbarLink() ) {
+			if ( static::is_editor_toolbar_link() ) {
 				$toolbar_option[] = 'link';
 			}
 
-			if ( static::isEditorToolbarClean() ) {
+			if ( static::is_editor_toolbar_clean() ) {
 				$toolbar_option[] = 'clean';
 			}
 
@@ -1388,16 +1402,16 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isEditorToolbarOn() {
-			$is_toolbar_on                 = static::instance()->getOption( self::OPTION_EDITOR_TOOLBAR_TOGGLE ) !== null;
-			$has_at_least_one_toolbar_item = static::isEditorToolbarBold() ||
-			                                 static::isEditorToolbarItalic() ||
-			                                 static::isEditorToolbarUnderline() ||
-			                                 static::isEditorToolbarBlockQuote() ||
-			                                 static::isEditorToolbarOrderedList() ||
-			                                 static::isEditorToolbarBulletList() ||
-			                                 static::isEditorToolbarLink() ||
-			                                 static::isEditorToolbarClean();
+		public static function is_editor_toolbar_on() {
+			$is_toolbar_on                 = static::instance()->get_option( self::OPTION_EDITOR_TOOLBAR_TOGGLE ) !== null;
+			$has_at_least_one_toolbar_item = static::is_editor_toolbar_bold() ||
+			                                 static::is_editor_toolbar_italic() ||
+			                                 static::is_editor_toolbar_underline() ||
+			                                 static::is_editor_toolbar_blockquote() ||
+			                                 static::is_editor_toolbar_ordered_list() ||
+			                                 static::is_editor_toolbar_bullet_list() ||
+			                                 static::is_editor_toolbar_link() ||
+			                                 static::is_editor_toolbar_clean();
 
 			if ( $is_toolbar_on && $has_at_least_one_toolbar_item ) {
 				return true;
@@ -1411,8 +1425,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isEditorToolbarBold() {
-			return static::instance()->getOption( self::OPTION_EDITOR_TOOLBAR_BOLD ) !== null;
+		public static function is_editor_toolbar_bold() {
+			return static::instance()->get_option( self::OPTION_EDITOR_TOOLBAR_BOLD ) !== null;
 		}
 
 		/**
@@ -1420,8 +1434,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isEditorToolbarItalic() {
-			return static::instance()->getOption( self::OPTION_EDITOR_TOOLBAR_ITALIC ) !== null;
+		public static function is_editor_toolbar_italic() {
+			return static::instance()->get_option( self::OPTION_EDITOR_TOOLBAR_ITALIC ) !== null;
 		}
 
 		/**
@@ -1429,8 +1443,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isEditorToolbarUnderline() {
-			return static::instance()->getOption( self::OPTION_EDITOR_TOOLBAR_UNDERLINE ) !== null;
+		public static function is_editor_toolbar_underline() {
+			return static::instance()->get_option( self::OPTION_EDITOR_TOOLBAR_UNDERLINE ) !== null;
 		}
 
 		/**
@@ -1438,8 +1452,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isEditorToolbarBlockQuote() {
-			return static::instance()->getOption( self::OPTION_EDITOR_TOOLBAR_QUOTE ) !== null;
+		public static function is_editor_toolbar_blockquote() {
+			return static::instance()->get_option( self::OPTION_EDITOR_TOOLBAR_QUOTE ) !== null;
 		}
 
 		/**
@@ -1447,8 +1461,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isEditorToolbarOrderedList() {
-			return static::instance()->getOption( self::OPTION_EDITOR_TOOLBAR_ORDERED ) !== null;
+		public static function is_editor_toolbar_ordered_list() {
+			return static::instance()->get_option( self::OPTION_EDITOR_TOOLBAR_ORDERED ) !== null;
 		}
 
 		/**
@@ -1456,8 +1470,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isEditorToolbarBulletList() {
-			return static::instance()->getOption( self::OPTION_EDITOR_TOOLBAR_BULLET ) !== null;
+		public static function is_editor_toolbar_bullet_list() {
+			return static::instance()->get_option( self::OPTION_EDITOR_TOOLBAR_BULLET ) !== null;
 		}
 
 		/**
@@ -1465,8 +1479,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isEditorToolbarLink() {
-			return static::instance()->getOption( self::OPTION_EDITOR_TOOLBAR_LINK ) !== null;
+		public static function is_editor_toolbar_link() {
+			return static::instance()->get_option( self::OPTION_EDITOR_TOOLBAR_LINK ) !== null;
 		}
 
 		/**
@@ -1474,8 +1488,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isEditorToolbarClean() {
-			return static::instance()->getOption( self::OPTION_EDITOR_TOOLBAR_CLEAN ) !== null;
+		public static function is_editor_toolbar_clean() {
+			return static::instance()->get_option( self::OPTION_EDITOR_TOOLBAR_CLEAN ) !== null;
 		}
 
 
@@ -1484,8 +1498,18 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isDesignCustom() {
-			return static::instance()->getOption( self::OPTION_DESIGN_CUSTOM_TOGGLE ) !== null;
+		public static function is_design_custom() {
+			return static::instance()->get_option( self::OPTION_DESIGN_CUSTOM_TOGGLE ) !== null;
+		}
+
+
+		/**
+		 * Get global padding.
+		 *
+		 * @return string
+		 */
+		public static function get_global_padding() {
+			return AnyCommentInputHelper::normalize_css_size( static::instance()->get_option( self::OPTION_DESIGN_GLOBAL_PADDING ) );
 		}
 
 		/**
@@ -1493,8 +1517,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return string|null
 		 */
-		public static function getDesignFontSize() {
-			return AnyCommentInputHelper::getSizeForCss( static::instance()->getOption( self::OPTION_DESIGN_FONT_SIZE ) );
+		public static function get_design_font_size() {
+			return AnyCommentInputHelper::normalize_css_size( static::instance()->get_option( self::OPTION_DESIGN_FONT_SIZE ) );
 		}
 
 		/**
@@ -1502,8 +1526,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return string|null
 		 */
-		public static function getDesignFontFamily() {
-			return static::instance()->getOption( self::OPTION_DESIGN_FONT_FAMILY );
+		public static function get_design_font_family() {
+			return static::instance()->get_option( self::OPTION_DESIGN_FONT_FAMILY );
 		}
 
 		/**
@@ -1511,8 +1535,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return string|null
 		 */
-		public static function getDesignSemiHiddenColor() {
-			return AnyCommentInputHelper::getHexForCss( static::instance()->getOption( self::OPTION_DESIGN_SEMI_HIDDEN_COLOR ) );
+		public static function get_design_semi_hidden_color() {
+			return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_option( self::OPTION_DESIGN_SEMI_HIDDEN_COLOR ) );
 		}
 
 
@@ -1521,8 +1545,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return string|null
 		 */
-		public static function getDesignLinkColor() {
-			return AnyCommentInputHelper::getHexForCss( static::instance()->getOption( self::OPTION_DESIGN_LINK_COLOR ) );
+		public static function get_design_link_color() {
+			return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_option( self::OPTION_DESIGN_LINK_COLOR ) );
 		}
 
 		/**
@@ -1530,8 +1554,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return string|null
 		 */
-		public static function getDesignTextColor() {
-			return AnyCommentInputHelper::getHexForCss( static::instance()->getOption( self::OPTION_DESIGN_TEXT_COLOR ) );
+		public static function get_design_text_color() {
+			return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_option( self::OPTION_DESIGN_TEXT_COLOR ) );
 		}
 
 		/**
@@ -1539,8 +1563,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return string|null
 		 */
-		public static function getDesignFormFieldBackgroundColor() {
-			return AnyCommentInputHelper::getHexForCss( static::instance()->getOption( self::OPTION_DESIGN_FORM_FIELD_BACKGROUND_COLOR ) );
+		public static function get_design_form_field_background_color() {
+			return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_option( self::OPTION_DESIGN_FORM_FIELD_BACKGROUND_COLOR ) );
 		}
 
 		/**
@@ -1548,8 +1572,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return string|null
 		 */
-		public static function getDesignAttachmentColor() {
-			return AnyCommentInputHelper::getHexForCss( static::instance()->getOption( self::OPTION_DESIGN_ATTACHMENT_COLOR ) );
+		public static function get_design_attachment_color() {
+			return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_option( self::OPTION_DESIGN_ATTACHMENT_COLOR ) );
 		}
 
 		/**
@@ -1557,8 +1581,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return string|null
 		 */
-		public static function getDesignAttachmentBackgroundColor() {
-			return AnyCommentInputHelper::getHexForCss( static::instance()->getOption( self::OPTION_DESIGN_ATTACHMENT_BACKGROUND_COLOR ) );
+		public static function get_design_attachment_background_color() {
+			return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_option( self::OPTION_DESIGN_ATTACHMENT_BACKGROUND_COLOR ) );
 		}
 
 		/**
@@ -1566,8 +1590,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return string|null
 		 */
-		public static function getDesignAvatarRadius() {
-			return AnyCommentInputHelper::getSizeForCss( static::instance()->getOption( self::OPTION_DESIGN_AVATAR_RADIUS ) );
+		public static function get_design_avatar_radius() {
+			return AnyCommentInputHelper::normalize_css_size( static::instance()->get_option( self::OPTION_DESIGN_AVATAR_RADIUS ) );
 		}
 
 		/**
@@ -1575,8 +1599,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return string|null
 		 */
-		public static function getDesignParentAvatarSize() {
-			return AnyCommentInputHelper::getSizeForCss( static::instance()->getOption( self::OPTION_DESIGN_PARENT_AVATAR_SIZE ) );
+		public static function get_design_parent_avatar_size() {
+			return AnyCommentInputHelper::normalize_css_size( static::instance()->get_option( self::OPTION_DESIGN_PARENT_AVATAR_SIZE ) );
 		}
 
 		/**
@@ -1584,8 +1608,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return string|null
 		 */
-		public static function getDesignChildAvatarSize() {
-			return AnyCommentInputHelper::getSizeForCss( static::instance()->getOption( self::OPTION_DESIGN_CHILD_AVATAR_SIZE ) );
+		public static function get_design_child_avatar_size() {
+			return AnyCommentInputHelper::normalize_css_size( static::instance()->get_option( self::OPTION_DESIGN_CHILD_AVATAR_SIZE ) );
 		}
 
 		/**
@@ -1593,8 +1617,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return string|null
 		 */
-		public static function getDesignButtonColor() {
-			return AnyCommentInputHelper::getHexForCss( static::instance()->getOption( self::OPTION_DESIGN_BUTTON_COLOR ) );
+		public static function get_design_button_color() {
+			return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_option( self::OPTION_DESIGN_BUTTON_COLOR ) );
 		}
 
 		/**
@@ -1602,8 +1626,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return string|null
 		 */
-		public static function getDesignButtonBackgroundColor() {
-			return AnyCommentInputHelper::getHexForCss( static::instance()->getOption( self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR ) );
+		public static function get_design_button_background_color() {
+			return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_option( self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR ) );
 		}
 
 		/**
@@ -1611,8 +1635,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return string|null
 		 */
-		public static function getDesignButtonBackgroundColorActive() {
-			return AnyCommentInputHelper::getHexForCss( static::instance()->getOption( self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR_ACTIVE ) );
+		public static function get_design_button_background_color_active() {
+			return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_option( self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR_ACTIVE ) );
 		}
 
 		/**
@@ -1620,8 +1644,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return string|null
 		 */
-		public static function getDesignButtonRadius() {
-			return AnyCommentInputHelper::getSizeForCss( static::instance()->getOption( self::OPTION_DESIGN_BUTTON_RADIUS ) );
+		public static function get_design_button_radius() {
+			return AnyCommentInputHelper::normalize_css_size( static::instance()->get_option( self::OPTION_DESIGN_BUTTON_RADIUS ) );
 		}
 
 		/**
@@ -1629,19 +1653,19 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return string|null
 		 */
-		public static function getDesignGlobalRadius() {
-			return AnyCommentInputHelper::getSizeForCss( static::instance()->getOption( self::OPTION_DESIGN_GLOBAL_RADIUS ) );
+		public static function get_design_global_radius() {
+			return AnyCommentInputHelper::normalize_css_size( static::instance()->get_option( self::OPTION_DESIGN_GLOBAL_RADIUS ) );
 		}
 
 		/**
 		 * Get interval in seconds per each check for new comments.
 		 *
-		 * @see AnyCommentGenericSettings::isNotifyOnNewReply() for more information. Which option is ignored when notification disabled.
+		 * @see AnyCommentGenericSettings::is_notify_on_new_reply() for more information. Which option is ignored when notification disabled.
 		 *
 		 * @return string
 		 */
-		public static function getIntervalCommentsCheck() {
-			$intervalInSeconds = static::instance()->getOption( self::OPTION_INTERVAL_COMMENTS_CHECK );
+		public static function get_interval_comments_check() {
+			$intervalInSeconds = static::instance()->get_option( self::OPTION_INTERVAL_COMMENTS_CHECK );
 
 			if ( $intervalInSeconds < 5 ) {
 				$intervalInSeconds = 5;
@@ -1657,8 +1681,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return string
 		 */
-		public static function getRegisterDefaultGroup() {
-			return static::instance()->getOption( self::OPTION_REGISTER_DEFAULT_GROUP );
+		public static function get_register_default_group() {
+			return static::instance()->get_option( self::OPTION_REGISTER_DEFAULT_GROUP );
 		}
 
 		/**
@@ -1666,8 +1690,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return string|null
 		 */
-		public static function getUserAgreementLink() {
-			return static::instance()->getOption( self::OPTION_USER_AGREEMENT_LINK );
+		public static function get_user_agreement_link() {
+			return static::instance()->get_option( self::OPTION_USER_AGREEMENT_LINK );
 		}
 
 		/**
@@ -1675,8 +1699,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isReadMoreOn() {
-			return static::instance()->getOption( self::OPTION_READ_MORE_TOGGLE ) !== null;
+		public static function is_read_more_on() {
+			return static::instance()->get_option( self::OPTION_READ_MORE_TOGGLE ) !== null;
 		}
 
 		/**
@@ -1684,8 +1708,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isRatingOn() {
-			return static::instance()->getOption( self::OPTION_RATING_TOGGLE ) !== null;
+		public static function is_rating_on() {
+			return static::instance()->get_option( self::OPTION_RATING_TOGGLE ) !== null;
 		}
 
 		/**
@@ -1693,8 +1717,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return int
 		 */
-		public static function getPerPage() {
-			$value = (int) static::instance()->getOption( self::OPTION_COUNT_PER_PAGE );
+		public static function get_per_page() {
+			$value = (int) static::instance()->get_option( self::OPTION_COUNT_PER_PAGE );
 
 			if ( $value < 5 ) {
 				$value = 5;
@@ -1708,8 +1732,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return string
 		 */
-		public static function getSortOrder() {
-			$value = static::instance()->getOption( self::OPTION_DEFAULT_SORT_BY );
+		public static function get_sort_order() {
+			$value = static::instance()->get_option( self::OPTION_DEFAULT_SORT_BY );
 
 			if ( $value !== self::SORT_DESC && $value !== self::SORT_ASC ) {
 				return self::SORT_DESC;
@@ -1723,8 +1747,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isDefaultAvatarAnyComment() {
-			return static::getDefaultAvatar() === self::OPTION_DEFAULT_AVATAR_ANYCOMMENT;
+		public static function is_default_avatar_anycomment() {
+			return static::get_default_avatar() === self::OPTION_DEFAULT_AVATAR_ANYCOMMENT;
 		}
 
 		/**
@@ -1732,8 +1756,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return null|string
 		 */
-		public static function getDefaultAvatar() {
-			$value = static::instance()->getOption( self::OPTION_DEFAULT_AVATAR );
+		public static function get_default_avatar() {
+			$value = static::instance()->get_option( self::OPTION_DEFAULT_AVATAR );
 
 			if ( $value !== self::OPTION_DEFAULT_AVATAR_ANYCOMMENT &&
 			     $value !== self::OPTION_DEFAULT_AVATAR_MP &&
@@ -1753,8 +1777,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return string|null
 		 */
-		public static function getFormType() {
-			return static::instance()->getOption( self::OPTION_FORM_TYPE );
+		public static function get_form_type() {
+			return static::instance()->get_option( self::OPTION_FORM_TYPE );
 		}
 
 		/**
@@ -1769,9 +1793,9 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return string|array|null
 		 */
-		public static function getGuestFields( $asArray = false ) {
+		public static function get_guest_fields( $asArray = false ) {
 			$instance = static::instance();
-			$value    = $instance->getOption( self::OPTION_GUEST_FIELDS );
+			$value    = $instance->get_option( self::OPTION_GUEST_FIELDS );
 
 			/**
 			 * Name is required. If there is no name,
@@ -1799,8 +1823,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isGuestFieldNameOn() {
-			return in_array( 'name', static::getGuestFields( true ), true );
+		public static function is_guest_field_name_on() {
+			return in_array( 'name', static::get_guest_fields( true ), true );
 		}
 
 		/**
@@ -1808,8 +1832,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isGuestFieldEmailOn() {
-			return in_array( 'email', static::getGuestFields( true ), true );
+		public static function is_guest_field_email_on() {
+			return in_array( 'email', static::get_guest_fields( true ), true );
 		}
 
 		/**
@@ -1817,8 +1841,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isGuestFieldWebsiteOn() {
-			return in_array( 'website', static::getGuestFields( true ), true );
+		public static function is_guest_field_website_on() {
+			return in_array( 'website', static::get_guest_fields( true ), true );
 		}
 
 		/**
@@ -1826,8 +1850,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isFormTypeAll() {
-			return static::getFormType() === self::FORM_OPTION_ALL;
+		public static function is_form_type_all() {
+			return static::get_form_type() === self::FORM_OPTION_ALL;
 		}
 
 		/**
@@ -1835,8 +1859,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isFormTypeSocials() {
-			return static::getFormType() === self::FORM_OPTION_SOCIALS_ONLY;
+		public static function is_form_type_socials() {
+			return static::get_form_type() === self::FORM_OPTION_SOCIALS_ONLY;
 		}
 
 		/**
@@ -1844,8 +1868,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isFormTypeGuests() {
-			return static::getFormType() === self::FORM_OPTION_GUEST_ONLY;
+		public static function is_form_type_guests() {
+			return static::get_form_type() === self::FORM_OPTION_GUEST_ONLY;
 		}
 
 		/**
@@ -1853,8 +1877,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isCopyrightOn() {
-			return static::instance()->getOption( self::OPTION_COPYRIGHT_TOGGLE ) !== null;
+		public static function is_copyright_on() {
+			return static::instance()->get_option( self::OPTION_COPYRIGHT_TOGGLE ) !== null;
 		}
 	}
 endif;

@@ -1,4 +1,4 @@
-<h2><?= __( 'News', 'anycomment' ) ?></h2>
+<h2><?php echo __( 'News', 'anycomment' ) ?></h2>
 <ul class="anycomment-dashboard__sidebar-news">
 	<?php
 	$posts = AnyComment()->admin_pages->get_news( 3 );
@@ -7,7 +7,7 @@
 		foreach ( $posts as $key => $post ): ?>
             <li>
                 <div class="anycomment-dashboard__sidebar-news-date">
-					<?= date( 'm.d.Y', strtotime( $post['date'] ) ) ?>
+					<?php echo date( 'm.d.Y', strtotime( $post['date'] ) ) ?>
 
 					<?php
 
@@ -21,12 +21,12 @@
 					$categoryLink = sprintf( 'https://anycomment.io/%scategory/changelog/', strpos( $locale, 'ru' ) !== false ? '' : 'en/' );
 
 					if ( $isNew ): ?>
-                        <span class="anycomment-dashboard__sidebar-news-date-new"><?= __( 'New', 'anycomment' ) ?></span>
+                        <span class="anycomment-dashboard__sidebar-news-date-new"><?php echo __( 'New', 'anycomment' ) ?></span>
 					<?php endif; ?>
                 </div>
-                <a href="<?= $post['link'] ?>"
+                <a href="<?php echo $post['link'] ?>"
                    target="_blank"
-                   class="anycomment-dashboard__sidebar-news-title"><?= esc_html( $post['title']['rendered'] ) ?></a>
+                   class="anycomment-dashboard__sidebar-news-title"><?php echo esc_html( $post['title']['rendered'] ) ?></a>
                 <div class="anycomment-dashboard__sidebar-news-content">
 					<?php
 					$content = isset( $post['content']['rendered'] ) ? $post['content']['rendered'] : null;
@@ -43,13 +43,13 @@
             </li>
 		<?php endforeach; ?>
 	<?php else: ?>
-        <li><?= __( 'No news yet', 'anycomment' ) ?></li>
+        <li><?php echo __( 'No news yet', 'anycomment' ) ?></li>
 	<?php endif; ?>
 </ul>
 
 <?php if ( $post !== null ) : ?>
     <div class="anycomment-dashboard__sidebar-all-news">
-        <a href="<?= $categoryLink ?>"
-           target="_blank"><?= __( "All News", 'anycomment' ) ?></a>
+        <a href="<?php echo $categoryLink ?>"
+           target="_blank"><?php echo __( "All News", 'anycomment' ) ?></a>
     </div>
 <?php endif; ?>

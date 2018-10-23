@@ -128,7 +128,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			register_activation_hook( __FILE__, [ $this, 'activation' ] );
 			register_uninstall_hook( __FILE__, sprintf( '%s::uninstall', get_called_class() ) );
 
-			if ( version_compare( AnyCommentOptions::getMigration(), $this->version, '<' ) ) {
+			if ( version_compare( AnyCommentOptions::get_migration(), $this->version, '<' ) ) {
 				( new AnyCommentMigrationManager() )->applyAll();
 			}
 		}
@@ -196,15 +196,6 @@ if ( ! class_exists( 'AnyComment' ) ) :
 		 */
 		public function ajax_url() {
 			return admin_url( 'admin-ajax.php', 'relative' );
-		}
-
-		/**
-		 * Returns generic class prefix that should be used on all HTML elements.
-		 *
-		 * @return string
-		 */
-		public function classPrefix() {
-			return $this->classPrefix;
 		}
 
 		/**

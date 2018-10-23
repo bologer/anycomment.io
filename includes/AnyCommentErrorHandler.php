@@ -9,14 +9,18 @@ if ( ! class_exists( 'AnyCommentErrorHandler' ) ):
 	 * AnyCommentErrorHandler is processing errors.
 	 */
 	class AnyCommentErrorHandler {
-		private $_cookieName = 'anycomment-errors';
+
+		/**
+		 * @var string Cookie name.
+		 */
+		private $_cookie_name = 'anycomment-errors';
 
 		/**
 		 * Check whether there are some errors or not.
 		 *
 		 * @return bool
 		 */
-		public function hasErrors() {
+		public function has_errors() {
 			return $this->getCookie() !== null;
 		}
 
@@ -26,7 +30,7 @@ if ( ! class_exists( 'AnyCommentErrorHandler' ) ):
 		 * @package bool $asArray Set true when required to get list of errors in form of array.
 		 * @return null|string
 		 */
-		public function getErrors( $asArray = false ) {
+		public function get_errors( $asArray = false ) {
 			$value = $this->getCookie();
 
 			if ( $asArray ) {
@@ -43,8 +47,8 @@ if ( ! class_exists( 'AnyCommentErrorHandler' ) ):
 		 *
 		 * @return bool
 		 */
-		public function addError( $message ) {
-			return $this->setError( $message );
+		public function add_error( $message ) {
+			return $this->set_error( $message );
 		}
 
 		/**
@@ -52,7 +56,7 @@ if ( ! class_exists( 'AnyCommentErrorHandler' ) ):
 		 * @return null|string NULL when it is not set.
 		 */
 		private function getCookie() {
-			return isset( $_COOKIE[ $this->getCookieName() ] ) ? $_COOKIE[ $this->getCookieName() ] : null;
+			return isset( $_COOKIE[ $this->get_cookie_name() ] ) ? $_COOKIE[ $this->get_cookie_name() ] : null;
 		}
 
 		/**
@@ -60,8 +64,8 @@ if ( ! class_exists( 'AnyCommentErrorHandler' ) ):
 		 *
 		 * @return string
 		 */
-		public function getCookieName() {
-			return $this->_cookieName;
+		public function get_cookie_name() {
+			return $this->_cookie_name;
 		}
 
 		/**
@@ -69,10 +73,10 @@ if ( ! class_exists( 'AnyCommentErrorHandler' ) ):
 		 *
 		 * @return bool
 		 */
-		public function cleanErrors() {
-			setcookie( $this->getCookieName(), null, time() - 3600, '/' );
+		public function clean_errors() {
+			setcookie( $this->get_cookie_name(), null, time() - 3600, '/' );
 
-			return ! isset( $_COOKIE[ $this->getCookieName() ] );
+			return ! isset( $_COOKIE[ $this->get_cookie_name() ] );
 		}
 
 		/**
@@ -82,12 +86,12 @@ if ( ! class_exists( 'AnyCommentErrorHandler' ) ):
 		 *
 		 * @return bool False will be returned when message is empty.
 		 */
-		private function setError( $message ) {
-			if ( ( $value = $this->processErrors( $message ) ) === null ) {
+		private function set_error( $message ) {
+			if ( ( $value = $this->process_errors( $message ) ) === null ) {
 				return false;
 			}
 
-			setcookie( $this->getCookieName(), $value, 0, '/' );
+			setcookie( $this->get_cookie_name(), $value, 0, '/' );
 
 			return true;
 		}
@@ -99,7 +103,7 @@ if ( ! class_exists( 'AnyCommentErrorHandler' ) ):
 		 *
 		 * @return string Prepared list of errors in JSON format.
 		 */
-		private function processErrors( $message ) {
+		private function process_errors( $message ) {
 			$errors  = $this->getCookie();
 			$message = trim( $message );
 

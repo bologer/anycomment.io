@@ -3,12 +3,12 @@
         <div class="cell large-6 medium-12 small-12 anycomment-dashboard__splitter-half anycomment-dashboard__splitter-half-commentators">
             <div class="grid-x align-center">
                 <div class="cell shrink">
-                    <img src="<?= AnyComment()->plugin_url() . '/assets/img/dashboard-users.svg' ?>"
-                         alt="<?= __( 'Commentators', 'anycomment' ) ?>">
+                    <img src="<?php echo AnyComment()->plugin_url() . '/assets/img/dashboard-users.svg' ?>"
+                         alt="<?php echo __( 'Commentators', 'anycomment' ) ?>">
 
                     <div class="anycomment-dashboard__splitter-half-description">
-                        <span><?= AnyComment()->statistics->get_commentor_count() ?></span>
-                        <span><?= __( 'Commentators', 'anycomment' ) ?></span>
+                        <span><?php echo AnyComment()->statistics->get_commentor_count() ?></span>
+                        <span><?php echo __( 'Commentators', 'anycomment' ) ?></span>
                     </div>
                 </div>
             </div>
@@ -16,11 +16,11 @@
         <div class="cell large-6 medium-12 small-12 anycomment-dashboard__splitter-half anycomment-dashboard__splitter-half-comments">
             <div class="grid-x align-center">
                 <div class="cell shrink">
-                    <img src="<?= AnyComment()->plugin_url() . '/assets/img/dashboard-comments.svg' ?>"
-                         alt="<?= __( 'All Comments', 'anycomment' ) ?>">
+                    <img src="<?php echo AnyComment()->plugin_url() . '/assets/img/dashboard-comments.svg' ?>"
+                         alt="<?php echo __( 'All Comments', 'anycomment' ) ?>">
                     <div class="anycomment-dashboard__splitter-half-description">
-                        <span><?= AnyComment()->statistics->get_approved_comment_count() ?></span>
-                        <span><?= __( 'All Comments', 'anycomment' ) ?></span>
+                        <span><?php echo AnyComment()->statistics->get_approved_comment_count() ?></span>
+                        <span><?php echo __( 'All Comments', 'anycomment' ) ?></span>
                     </div>
                 </div>
             </div>
@@ -29,7 +29,7 @@
 
     <div class="grid-x grid-margin-x anycomment-dashboard__statistics">
         <div class="cell auto anycomment-dashboard__statistics-graph">
-            <h2><?= __( 'Overal Statistics', 'anycomment' ) ?></h2>
+            <h2><?php echo __( 'Overal Statistics', 'anycomment' ) ?></h2>
 			<?php
 
 			$comments = AnyComment()->statistics->get_comment_data();
@@ -50,11 +50,11 @@
                         let c = new Chart(document.getElementById("anycomment-dashboard-chart").getContext('2d'), {
                             type: 'line',
                             data: {
-                                labels: <?= $comments['label'] ?>,
+                                labels: <?php echo $comments['label'] ?>,
                                 datasets: [
                                     {
-                                        label: '<?= __( 'Comments', 'anycomment' ) ?>',
-                                        data: <?= $comments['data'] ?>,
+                                        label: '<?php echo __( 'Comments', 'anycomment' ) ?>',
+                                        data: <?php echo $comments['data'] ?>,
                                         fill: false,
                                         borderColor: '#f1b927',
                                         borderWidth: 5,
@@ -64,8 +64,8 @@
                                         pointHitRadius: 30,
                                     },
                                     {
-                                        label: '<?= __( 'Users', 'anycomment' ) ?>',
-                                        data: <?= $users['data'] ?>,
+                                        label: '<?php echo __( 'Users', 'anycomment' ) ?>',
+                                        data: <?php echo $users['data'] ?>,
                                         fill: false,
                                         borderColor: '#ec4568',
                                         borderWidth: 5,
@@ -105,7 +105,7 @@
             </script>
         </div>
         <div class="cell large-4 medium-4 small-12 anycomment-dashboard__statistics-userlist">
-            <h2><?= __( 'Most Active Users', 'anycomment' ) ?></h2>
+            <h2><?php echo __( 'Most Active Users', 'anycomment' ) ?></h2>
 			<?php
 			$users = AnyComment()->statistics->get_most_active_users();
 
@@ -113,14 +113,14 @@
                 <ul>
 					<?php foreach ( $users as $user ): ?>
                         <li> <span class="anycomment-dashboard__statistics-userlist-avatar"
-                                   style="background-image:url('<?= AnyComment()->auth->get_user_avatar_url( $user->user_id ) ?>')"></span>
-							<?= $user->name ?>
-                            <span class="anycomment-dashboard__statistics-userlist-counter"><?= $user->comment_count ?></span>
+                                   style="background-image:url('<?php echo AnyComment()->auth->get_user_avatar_url( $user->user_id ) ?>')"></span>
+							<?php echo $user->name ?>
+                            <span class="anycomment-dashboard__statistics-userlist-counter"><?php echo $user->comment_count ?></span>
                         </li>
 					<?php endforeach; ?>
                 </ul>
 			<?php else: ?>
-                <p><?= __( 'No users yet', 'anycomment' ) ?></p>
+                <p><?php echo __( 'No users yet', 'anycomment' ) ?></p>
 			<?php endif; ?>
         </div>
     </div>

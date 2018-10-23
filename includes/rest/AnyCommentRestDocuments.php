@@ -152,7 +152,7 @@ class AnyCommentRestDocuments extends AnyCommentRestController {
 		}
 
 
-		$max_size_allowed = AnyCommentGenericSettings::getFileMaxSize() * 1000000;
+		$max_size_allowed = AnyCommentGenericSettings::get_file_max_size() * 1000000;
 		$uploaded_files   = [];
 
 		foreach ( $files as $key => $file ) {
@@ -161,7 +161,7 @@ class AnyCommentRestDocuments extends AnyCommentRestController {
 				continue;
 			}
 
-			if ( ! AnyCommentGenericSettings::isAllowedMimeType( $file ) ) {
+			if ( ! AnyCommentGenericSettings::is_allowed_mime_type( $file ) ) {
 				continue;
 			}
 
@@ -279,12 +279,12 @@ class AnyCommentRestDocuments extends AnyCommentRestController {
 	 * @return bool
 	 */
 	public function can_upload() {
-		$is_file_upload_allowed = AnyCommentGenericSettings::isFileUploadAllowed();
+		$is_file_upload_allowed = AnyCommentGenericSettings::is_file_upload_allowed();
 		$is_guest               = ! is_user_logged_in();
 
 		if ( $is_file_upload_allowed && ! $is_guest ) {
 			return true;
-		} else if ( $is_file_upload_allowed && $is_guest && AnyCommentGenericSettings::isGuestCanUpload() ) {
+		} else if ( $is_file_upload_allowed && $is_guest && AnyCommentGenericSettings::is_guest_can_upload() ) {
 			return true;
 		}
 

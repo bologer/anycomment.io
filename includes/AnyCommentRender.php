@@ -28,7 +28,7 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 		 * AC_Render constructor.
 		 */
 		public function __construct() {
-			if ( AnyCommentGenericSettings::isEnabled() ) {
+			if ( AnyCommentGenericSettings::is_enabled() ) {
 				add_filter( 'comments_template', [ $this, 'override_comment' ] );
 
 				add_shortcode( 'anycomment', [ $this, 'override_comment' ] );
@@ -78,8 +78,8 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 			if ( ! post_password_required() && comments_open() ) {
 				wp_enqueue_script( 'anycomment-react', AnyComment()->plugin_url() . '/static/js/main.min.js', [], md5( AnyComment()->version ) );
 
-				if ( AnyCommentGenericSettings::isDesignCustom() ) {
-					$url = AnyCommentGenericSettings::getCustomDesignStylesheetUrl();
+				if ( AnyCommentGenericSettings::is_design_custom() ) {
+					$url = AnyCommentGenericSettings::get_custom_design_stylesheet_url();
 
 					wp_enqueue_style( 'anycomment-custom-styles', $url, [], md5( AnyComment()->version ) );
 				} else {
@@ -87,7 +87,7 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 				}
 
 
-				if ( strpos( AnyCommentGenericSettings::getDesignFontFamily(), 'Noto-Sans' ) !== false ) {
+				if ( strpos( AnyCommentGenericSettings::get_design_font_family(), 'Noto-Sans' ) !== false ) {
 					wp_enqueue_style( 'anycomment-google-font', 'https://fonts.googleapis.com/css?family=Noto+Sans:400,700&amp;subset=cyrillic' );
 				}
 
@@ -112,41 +112,41 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 					],
 					// Options from plugin
 					'options'      => [
-						'limit'                  => AnyCommentGenericSettings::getPerPage(),
-						'isCopyright'            => AnyCommentGenericSettings::isCopyrightOn(),
+						'limit'                  => AnyCommentGenericSettings::get_per_page(),
+						'isCopyright'            => AnyCommentGenericSettings::is_copyright_on(),
 						'socials'                => anycomment_login_with( false, get_permalink( $postId ) ),
-						'sort_order'             => AnyCommentGenericSettings::getSortOrder(),
-						'guestInputs'            => AnyCommentGenericSettings::getGuestFields( true ),
-						'isShowProfileUrl'       => AnyCommentGenericSettings::isShowProfileUrl(),
-						'isShowImageAttachments' => AnyCommentGenericSettings::isShowImageAttachments(),
-						'isShowVideoAttachments' => AnyCommentGenericSettings::isShowVideoAttachments(),
-						'isShowTwitterEmbeds'    => AnyCommentGenericSettings::isShowTwitterEmbeds(),
-						'userAgreementLink'      => AnyCommentGenericSettings::getUserAgreementLink(),
-						'notifyOnNewComment'     => AnyCommentGenericSettings::isNotifyOnNewComment(),
-						'intervalCommentsCheck'  => AnyCommentGenericSettings::getIntervalCommentsCheck(),
-						'isLoadOnScroll'         => AnyCommentGenericSettings::isLoadOnScroll(),
-						'isFormTypeAll'          => AnyCommentGenericSettings::isFormTypeAll(),
-						'isFormTypeGuests'       => AnyCommentGenericSettings::isFormTypeGuests(),
-						'isFormTypeSocials'      => AnyCommentGenericSettings::isFormTypeSocials(),
-						'isFileUploadAllowed'    => AnyCommentGenericSettings::isFileUploadAllowed(),
-						'isGuestCanUpload'       => AnyCommentGenericSettings::isGuestCanUpload(),
-						'fileMimeTypes'          => AnyCommentGenericSettings::getFileMimeTypes(),
-						'fileLimit'              => AnyCommentGenericSettings::getFileLimit(),
-						'fileMaxSize'            => AnyCommentGenericSettings::getFileMaxSize(),
-						'fileUploadLimit'        => AnyCommentGenericSettings::getFileUploadLimit(),
-						'isRatingOn'             => AnyCommentGenericSettings::isRatingOn(),
-						'isReadMoreOn'           => AnyCommentGenericSettings::isReadMoreOn(),
+						'sort_order'             => AnyCommentGenericSettings::get_sort_order(),
+						'guestInputs'            => AnyCommentGenericSettings::get_guest_fields( true ),
+						'isShowProfileUrl'       => AnyCommentGenericSettings::is_show_profile_url(),
+						'isShowImageAttachments' => AnyCommentGenericSettings::is_show_image_attachments(),
+						'isShowVideoAttachments' => AnyCommentGenericSettings::is_show_video_attachments(),
+						'isShowTwitterEmbeds'    => AnyCommentGenericSettings::is_show_twitter_embeds(),
+						'userAgreementLink'      => AnyCommentGenericSettings::get_user_agreement_link(),
+						'notifyOnNewComment'     => AnyCommentGenericSettings::is_notify_on_new_comment(),
+						'intervalCommentsCheck'  => AnyCommentGenericSettings::get_interval_comments_check(),
+						'isLoadOnScroll'         => AnyCommentGenericSettings::is_load_on_scroll(),
+						'isFormTypeAll'          => AnyCommentGenericSettings::is_form_type_all(),
+						'isFormTypeGuests'       => AnyCommentGenericSettings::is_form_type_guests(),
+						'isFormTypeSocials'      => AnyCommentGenericSettings::is_form_type_socials(),
+						'isFileUploadAllowed'    => AnyCommentGenericSettings::is_file_upload_allowed(),
+						'isGuestCanUpload'       => AnyCommentGenericSettings::is_guest_can_upload(),
+						'fileMimeTypes'          => AnyCommentGenericSettings::get_file_mime_types(),
+						'fileLimit'              => AnyCommentGenericSettings::get_file_limit(),
+						'fileMaxSize'            => AnyCommentGenericSettings::get_file_max_size(),
+						'fileUploadLimit'        => AnyCommentGenericSettings::get_file_upload_limit(),
+						'isRatingOn'             => AnyCommentGenericSettings::is_rating_on(),
+						'isReadMoreOn'           => AnyCommentGenericSettings::is_read_more_on(),
 
-						'isEditorOn'           => AnyCommentGenericSettings::isEditorToolbarOn(),
-						'editorToolbarOptions' => AnyCommentGenericSettings::getEditorToolbarOptions(),
+						'isEditorOn'           => AnyCommentGenericSettings::is_editor_toolbar_on(),
+						'editorToolbarOptions' => AnyCommentGenericSettings::get_editor_toolbar_options(),
 
-						'reCaptchaOn'        => AnyCommentIntegrationSettings::isRecaptchaOn(),
-						'reCaptchaUserAll'   => AnyCommentIntegrationSettings::isRecaptchaUserAll(),
-						'reCaptchaUserGuest' => AnyCommentIntegrationSettings::isRecaptchaUserGuest(),
-						'reCaptchaUserAuth'  => AnyCommentIntegrationSettings::isRecaptchaUserAuth(),
-						'reCaptchaSiteKey'   => AnyCommentIntegrationSettings::getRecaptchaSiteKey(),
-						'reCaptchaTheme'     => AnyCommentIntegrationSettings::getRecaptchaTheme(),
-						'reCaptchaPosition'  => AnyCommentIntegrationSettings::getRecaptchaBadge(),
+						'reCaptchaOn'        => AnyCommentIntegrationSettings::is_recaptcha_active(),
+						'reCaptchaUserAll'   => AnyCommentIntegrationSettings::is_recaptcha_user_all(),
+						'reCaptchaUserGuest' => AnyCommentIntegrationSettings::is_recaptcha_user_guest(),
+						'reCaptchaUserAuth'  => AnyCommentIntegrationSettings::is_recaptcha_user_auth(),
+						'reCaptchaSiteKey'   => AnyCommentIntegrationSettings::get_recaptcha_site_key(),
+						'reCaptchaTheme'     => AnyCommentIntegrationSettings::get_recaptcha_theme(),
+						'reCaptchaPosition'  => AnyCommentIntegrationSettings::get_recaptcha_badge(),
 
 
 					],
@@ -183,14 +183,14 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 						'already_rated'                  => __( 'You have already rated', 'anycomment' ),
 						'accept_user_agreement'          => sprintf(
 							__( 'I accept the <a href="%s"%s>User Agreement</a>', 'anycomment' ),
-							AnyCommentGenericSettings::getUserAgreementLink(),
+							AnyCommentGenericSettings::get_user_agreement_link(),
 							' target="_blank" '
 						),
 						'upload_file'                    => __( 'Upload file', 'anycomment' ),
 						'file_upload_in_progress'        => __( "Uploading...", 'anycomment' ),
 						'file_uploaded'                  => __( "Uploaded!", 'anycomment' ),
 						'file_too_big'                   => __( "File %s is too big", 'anycomment' ),
-						'file_limit'                     => sprintf( __( "You may upload %s file(s) at maximum", 'anycomment' ), AnyCommentGenericSettings::getFileLimit() ),
+						'file_limit'                     => sprintf( __( "You may upload %s file(s) at maximum", 'anycomment' ), AnyCommentGenericSettings::get_file_limit() ),
 						'file_not_selected_or_extension' => __( "No file selected or select proper extension", 'anycomment' ),
 						'read_more'                      => __( 'Read more', 'anycomment' ),
 						'show_less'                      => __( 'Show less', 'anycomment' ),
@@ -229,7 +229,7 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 		public function get_comments( $postId = null, $limit = null, $sort = null ) {
 
 			if ( $limit === null || empty( $limit ) ) {
-				$limit = AnyCommentGenericSettings::getPerPage();
+				$limit = AnyCommentGenericSettings::get_per_page();
 			}
 
 			if ( $sort === null || ( $sort !== self::SORT_ASC && $sort !== self::SORT_DESC ) ) {

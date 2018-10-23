@@ -131,11 +131,11 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 				__( 'VK', "anycomment" ),
 				function () {
 					?>
-                    <p><?= __( 'VK authorization settings.', "anycomment" ) ?></p>
+                    <p><?php echo __( 'VK authorization settings.', "anycomment" ) ?></p>
 
                     <table class="form-table">
                         <tr>
-                            <th><label for="vk-callback"><?= __( 'Callback URL', 'anycomment' ) ?></label></th>
+                            <th><label for="vk-callback"><?php echo __( 'Callback URL', 'anycomment' ) ?></label></th>
                             <td><input type="text" id="vk-callback" onclick="this.select()" readonly="readonly"
                                        value="<?= AnyCommentSocialAuth::get_vk_callback() ?>"></td>
                         </tr>
@@ -669,7 +669,7 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 			foreach ( (array) $wp_settings_sections[ $page ] as $section ) {
 				$liClasses = ( $i == 0 ? 'current' : '' );
 
-				$liClasses .= ' ' . ( static::isEnabled( str_replace( 'section_', '', $section['id'] ) ) ? 'toggled' : '' );
+				$liClasses .= ' ' . ( static::is_enabled( str_replace( 'section_', '', $section['id'] ) ) ? 'toggled' : '' );
 
 				$path = sprintf( AnyComment()->plugin_url() . '/assets/img/icons/auth/%s.svg', str_replace( 'section_', 'social-', $section['id'] ) );
 				echo '<li class="' . $liClasses . '" data-tab="' . $section['id'] . '">
@@ -774,8 +774,8 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 *
 		 * @return mixed|null
 		 */
-		public static function isEnabled( $name ) {
-			return static::instance()->getOption( sprintf( 'social_%s_toggle_field', strtolower( $name ) ) ) !== null;
+		public static function is_enabled( $name ) {
+			return static::instance()->get_option( sprintf( 'social_%s_toggle_field', strtolower( $name ) ) ) !== null;
 		}
 
 		/**
@@ -783,8 +783,8 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function hasAnySocial() {
-			return static::instance()->hasOptions();
+		public static function has_any_social() {
+			return static::instance()->has_options();
 		}
 
 		/**
@@ -792,8 +792,8 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isVkOn() {
-			return static::instance()->getOption( self::OPTION_VK_TOGGLE ) !== null;
+		public static function is_vk_active() {
+			return static::instance()->get_option( self::OPTION_VK_TOGGLE ) !== null;
 		}
 
 		/**
@@ -801,8 +801,8 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 *
 		 * @return int|null
 		 */
-		public static function getVkAppId() {
-			return static::instance()->getOption( self::OPTION_VK_APP_ID );
+		public static function get_vk_app_id() {
+			return static::instance()->get_option( self::OPTION_VK_APP_ID );
 		}
 
 		/**
@@ -810,8 +810,8 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 *
 		 * @return string|null
 		 */
-		public static function getVkSecureKey() {
-			return static::instance()->getOption( self::OPTION_VK_SECRET );
+		public static function get_vk_secure_key() {
+			return static::instance()->get_option( self::OPTION_VK_SECRET );
 		}
 
 		/**
@@ -819,8 +819,8 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isYahooOn() {
-			return static::instance()->getOption( self::OPTION_YAHOO_TOGGLE ) !== null;
+		public static function is_yahoo_active() {
+			return static::instance()->get_option( self::OPTION_YAHOO_TOGGLE ) !== null;
 		}
 
 		/**
@@ -828,8 +828,8 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 *
 		 * @return int|null
 		 */
-		public static function getYahooAppId() {
-			return static::instance()->getOption( self::OPTION_YAHOO_APP_ID );
+		public static function get_ahoo_app_id() {
+			return static::instance()->get_option( self::OPTION_YAHOO_APP_ID );
 		}
 
 		/**
@@ -837,8 +837,8 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 *
 		 * @return string|null
 		 */
-		public static function getYahooClientSecret() {
-			return static::instance()->getOption( self::OPTION_YAHOO_CLIENT_SECRET );
+		public static function get_yahoo_client_secret() {
+			return static::instance()->get_option( self::OPTION_YAHOO_CLIENT_SECRET );
 		}
 
 		/**
@@ -846,8 +846,8 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isGithubOn() {
-			return static::instance()->getOption( self::OPTION_GITHUB_TOGGLE ) !== null;
+		public static function is_github_active() {
+			return static::instance()->get_option( self::OPTION_GITHUB_TOGGLE ) !== null;
 		}
 
 		/**
@@ -855,8 +855,8 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 *
 		 * @return int|null
 		 */
-		public static function getGithubClientId() {
-			return static::instance()->getOption( self::OPTION_GITHUB_CLIENT_ID );
+		public static function get_github_client_id() {
+			return static::instance()->get_option( self::OPTION_GITHUB_CLIENT_ID );
 		}
 
 		/**
@@ -864,8 +864,8 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 *
 		 * @return string|null
 		 */
-		public static function getGithubSecretKey() {
-			return static::instance()->getOption( self::OPTION_GITHUB_SECRET );
+		public static function get_github_secret_key() {
+			return static::instance()->get_option( self::OPTION_GITHUB_SECRET );
 		}
 
 		/**
@@ -873,8 +873,8 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isInstagramOn() {
-			return static::instance()->getOption( self::OPTION_INSTAGRAM_TOGGLE ) !== null;
+		public static function is_instagram_active() {
+			return static::instance()->get_option( self::OPTION_INSTAGRAM_TOGGLE ) !== null;
 		}
 
 		/**
@@ -882,8 +882,8 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 *
 		 * @return int|null
 		 */
-		public static function getInstagramClientId() {
-			return static::instance()->getOption( self::OPTION_INSTAGRAM_CLIENT_ID );
+		public static function get_instagram_client_id() {
+			return static::instance()->get_option( self::OPTION_INSTAGRAM_CLIENT_ID );
 		}
 
 		/**
@@ -891,8 +891,8 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 *
 		 * @return string|null
 		 */
-		public static function getInstagramClientSecret() {
-			return static::instance()->getOption( self::OPTION_INSTAGRAM_CLIENT_SECRET );
+		public static function get_nstagram_client_secret() {
+			return static::instance()->get_option( self::OPTION_INSTAGRAM_CLIENT_SECRET );
 		}
 
 		/**
@@ -900,8 +900,8 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isTwitchOn() {
-			return static::instance()->getOption( self::OPTION_TWITCH_TOGGLE ) !== null;
+		public static function is_twitch_active() {
+			return static::instance()->get_option( self::OPTION_TWITCH_TOGGLE ) !== null;
 		}
 
 		/**
@@ -909,8 +909,8 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 *
 		 * @return string|null
 		 */
-		public static function getTwitchClientId() {
-			return static::instance()->getOption( self::OPTION_TWITCH_CLIENT_ID );
+		public static function get_twitch_client_id() {
+			return static::instance()->get_option( self::OPTION_TWITCH_CLIENT_ID );
 		}
 
 		/**
@@ -918,8 +918,8 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 *
 		 * @return string|null
 		 */
-		public static function getTwitchClientSecret() {
-			return static::instance()->getOption( self::OPTION_TWITCH_CLIENT_SECRET );
+		public static function get_twitch_client_secret() {
+			return static::instance()->get_option( self::OPTION_TWITCH_CLIENT_SECRET );
 		}
 
 		/**
@@ -927,8 +927,8 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isDribbbleOn() {
-			return static::instance()->getOption( self::OPTION_DRIBBBLE_TOGGLE ) !== null;
+		public static function is_dribbble_active() {
+			return static::instance()->get_option( self::OPTION_DRIBBBLE_TOGGLE ) !== null;
 		}
 
 		/**
@@ -936,8 +936,8 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 *
 		 * @return string|null
 		 */
-		public static function getDribbbleClientId() {
-			return static::instance()->getOption( self::OPTION_DRIBBBLE_CLIENT_ID );
+		public static function get_dribbble_client_id() {
+			return static::instance()->get_option( self::OPTION_DRIBBBLE_CLIENT_ID );
 		}
 
 		/**
@@ -945,8 +945,8 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 *
 		 * @return string|null
 		 */
-		public static function getDribbbleClientSecret() {
-			return static::instance()->getOption( self::OPTION_DRIBBBLE_CLIENT_SECRET );
+		public static function get_dribbble_client_secret() {
+			return static::instance()->get_option( self::OPTION_DRIBBBLE_CLIENT_SECRET );
 		}
 
 		/**
@@ -954,8 +954,8 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isTwitterOn() {
-			return static::instance()->getOption( self::OPTION_TWITTER_TOGGLE ) !== null;
+		public static function is_twitter_active() {
+			return static::instance()->get_option( self::OPTION_TWITTER_TOGGLE ) !== null;
 		}
 
 		/**
@@ -963,8 +963,8 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 *
 		 * @return string|null
 		 */
-		public static function getTwitterConsumerKey() {
-			return static::instance()->getOption( self::OPTION_TWITTER_CONSUMER_KEY );
+		public static function get_twitter_consumer_key() {
+			return static::instance()->get_option( self::OPTION_TWITTER_CONSUMER_KEY );
 		}
 
 		/**
@@ -972,8 +972,8 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 *
 		 * @return string|null
 		 */
-		public static function getTwitterConsumerSecret() {
-			return static::instance()->getOption( self::OPTION_TWITTER_CONSUMER_SECRET );
+		public static function get_twitter_consumer_secret() {
+			return static::instance()->get_option( self::OPTION_TWITTER_CONSUMER_SECRET );
 		}
 
 		/**
@@ -981,8 +981,8 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isFbOn() {
-			return static::instance()->getOption( self::OPTION_FACEBOOK_TOGGLE ) !== null;
+		public static function is_facebook_active() {
+			return static::instance()->get_option( self::OPTION_FACEBOOK_TOGGLE ) !== null;
 		}
 
 		/**
@@ -990,8 +990,8 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 *
 		 * @return int|null
 		 */
-		public static function getFbAppId() {
-			return static::instance()->getOption( self::OPTION_FACEBOOK_APP_ID );
+		public static function get_facebook_app_id() {
+			return static::instance()->get_option( self::OPTION_FACEBOOK_APP_ID );
 		}
 
 		/**
@@ -999,8 +999,8 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 *
 		 * @return string|null
 		 */
-		public static function getFbAppSecret() {
-			return static::instance()->getOption( self::OPTION_FACEBOOK_APP_SECRET );
+		public static function get_facebook_app_secret() {
+			return static::instance()->get_option( self::OPTION_FACEBOOK_APP_SECRET );
 		}
 
 		/**
@@ -1008,8 +1008,8 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isGoogleOn() {
-			return static::instance()->getOption( self::OPTION_GOOGLE_TOGGLE ) !== null;
+		public static function is_google_active() {
+			return static::instance()->get_option( self::OPTION_GOOGLE_TOGGLE ) !== null;
 		}
 
 		/**
@@ -1017,8 +1017,8 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 *
 		 * @return int|null
 		 */
-		public static function getGoogleClientId() {
-			return static::instance()->getOption( self::OPTION_GOOGLE_CLIENT_ID );
+		public static function get_google_client_id() {
+			return static::instance()->get_option( self::OPTION_GOOGLE_CLIENT_ID );
 		}
 
 		/**
@@ -1026,8 +1026,8 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 *
 		 * @return string|null
 		 */
-		public static function getGoogleSecret() {
-			return static::instance()->getOption( self::OPTION_GOOGLE_SECRET );
+		public static function get_google_secret() {
+			return static::instance()->get_option( self::OPTION_GOOGLE_SECRET );
 		}
 
 		/**
@@ -1035,8 +1035,8 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isOkOn() {
-			return static::instance()->getOption( self::OPTION_OK_TOGGLE ) !== null;
+		public static function is_odnoklassniki_on() {
+			return static::instance()->get_option( self::OPTION_OK_TOGGLE ) !== null;
 		}
 
 		/**
@@ -1044,8 +1044,8 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 *
 		 * @return int|null
 		 */
-		public static function getOkAppId() {
-			return static::instance()->getOption( self::OPTION_OK_APP_ID );
+		public static function get_odnoklassniki_app_id() {
+			return static::instance()->get_option( self::OPTION_OK_APP_ID );
 		}
 
 		/**
@@ -1053,8 +1053,8 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 *
 		 * @return int|null
 		 */
-		public static function getOkAppKey() {
-			return static::instance()->getOption( self::OPTION_OK_APP_KEY );
+		public static function get_odnoklassniki_app_key() {
+			return static::instance()->get_option( self::OPTION_OK_APP_KEY );
 		}
 
 		/**
@@ -1062,8 +1062,8 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 *
 		 * @return string|null
 		 */
-		public static function getOkAppSecret() {
-			return static::instance()->getOption( self::OPTION_OK_APP_SECRET );
+		public static function get_odnoklassniki_app_secret() {
+			return static::instance()->get_option( self::OPTION_OK_APP_SECRET );
 		}
 
 		/**
@@ -1071,8 +1071,8 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function isWordPressOn() {
-			return static::instance()->getOption( self::OPTION_WORDPRESS_NATIVE_TOGGLE ) !== null;
+		public static function is_wordpress_native_active() {
+			return static::instance()->get_option( self::OPTION_WORDPRESS_NATIVE_TOGGLE ) !== null;
 		}
 
 		/**

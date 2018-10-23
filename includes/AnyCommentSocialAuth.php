@@ -90,7 +90,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		 */
 		public function __construct() {
 			// When only guests allowed, social should not be allowed
-			if ( ! AnyCommentGenericSettings::isFormTypeGuests() ) {
+			if ( ! AnyCommentGenericSettings::is_form_type_guests() ) {
 				$this->init_rest_route();
 			}
 		}
@@ -247,85 +247,85 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 			$config = [
 				'providers' => [
 					self::$providers[ self::SOCIAL_VKONTAKTE ]     => [
-						'enabled'  => AnyCommentSocialSettings::isVkOn(),
+						'enabled'  => AnyCommentSocialSettings::is_vk_active(),
 						'keys'     => [
-							'id'     => AnyCommentSocialSettings::getVkAppId(),
-							'secret' => AnyCommentSocialSettings::getVkSecureKey()
+							'id'     => AnyCommentSocialSettings::get_vk_app_id(),
+							'secret' => AnyCommentSocialSettings::get_vk_secure_key()
 						],
 						'callback' => static::get_vk_callback(),
 					],
 					self::$providers[ self::SOCIAL_GOOGLE ]        => [
-						'enabled'  => AnyCommentSocialSettings::isGoogleOn(),
+						'enabled'  => AnyCommentSocialSettings::is_google_active(),
 						'keys'     => [
-							'id'     => AnyCommentSocialSettings::getGoogleClientId(),
-							'secret' => AnyCommentSocialSettings::getGoogleSecret()
+							'id'     => AnyCommentSocialSettings::get_google_client_id(),
+							'secret' => AnyCommentSocialSettings::get_google_secret()
 						],
 						'scope'    => 'profile https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.profile.emails.read',
 						'callback' => static::get_google_callback(),
 					],
 					self::$providers[ self::SOCIAL_FACEBOOK ]      => [
-						'enabled'  => AnyCommentSocialSettings::isFbOn(),
+						'enabled'  => AnyCommentSocialSettings::is_facebook_active(),
 						'scope'    => 'email, public_profile',
 						'keys'     => [
-							'id'     => AnyCommentSocialSettings::getFbAppId(),
-							'secret' => AnyCommentSocialSettings::getFbAppSecret()
+							'id'     => AnyCommentSocialSettings::get_facebook_app_id(),
+							'secret' => AnyCommentSocialSettings::get_facebook_app_secret()
 						],
 						'callback' => static::get_facebook_callback(),
 					],
 					self::$providers[ self::SOCIAL_TWITTER ]       => [
-						'enabled'  => AnyCommentSocialSettings::isTwitterOn(),
+						'enabled'  => AnyCommentSocialSettings::is_twitter_active(),
 						'keys'     => [
-							'key'    => AnyCommentSocialSettings::getTwitterConsumerKey(),
-							'secret' => AnyCommentSocialSettings::getTwitterConsumerSecret()
+							'key'    => AnyCommentSocialSettings::get_twitter_consumer_key(),
+							'secret' => AnyCommentSocialSettings::get_twitter_consumer_secret()
 						],
 						'callback' => static::get_twitter_callback(),
 					],
 					self::$providers[ self::SOCIAL_GITHUB ]        => [
-						'enabled'  => AnyCommentSocialSettings::isGithubOn(),
+						'enabled'  => AnyCommentSocialSettings::is_github_active(),
 						'keys'     => [
-							'id'     => AnyCommentSocialSettings::getGithubClientId(),
-							'secret' => AnyCommentSocialSettings::getGithubSecretKey()
+							'id'     => AnyCommentSocialSettings::get_github_client_id(),
+							'secret' => AnyCommentSocialSettings::get_github_secret_key()
 						],
 						'callback' => static::get_github_callback(),
 					],
 					self::$providers[ self::SOCIAL_ODNOKLASSNIKI ] => [
-						'enabled'  => AnyCommentSocialSettings::isOkOn(),
+						'enabled'  => AnyCommentSocialSettings::is_odnoklassniki_on(),
 						'keys'     => [
-							'id'     => AnyCommentSocialSettings::getOkAppId(),
-							'key'    => AnyCommentSocialSettings::getOkAppKey(),
-							'secret' => AnyCommentSocialSettings::getOkAppSecret()
+							'id'     => AnyCommentSocialSettings::get_odnoklassniki_app_id(),
+							'key'    => AnyCommentSocialSettings::get_odnoklassniki_app_key(),
+							'secret' => AnyCommentSocialSettings::get_odnoklassniki_app_secret()
 						],
 						'callback' => static::get_ok_callback(),
 					],
 					self::$providers[ self::SOCIAL_INSTAGRAM ]     => [
-						'enabled'  => AnyCommentSocialSettings::isInstagramOn(),
+						'enabled'  => AnyCommentSocialSettings::is_instagram_active(),
 						'keys'     => [
-							'id'     => AnyCommentSocialSettings::getInstagramClientId(),
-							'secret' => AnyCommentSocialSettings::getInstagramClientSecret()
+							'id'     => AnyCommentSocialSettings::get_instagram_client_id(),
+							'secret' => AnyCommentSocialSettings::get_nstagram_client_secret()
 						],
 						'callback' => static::get_instagram_callback(),
 					],
 					self::$providers[ self::SOCIAL_TWITCH ]        => [
-						'enabled'  => AnyCommentSocialSettings::isTwitchOn(),
+						'enabled'  => AnyCommentSocialSettings::is_twitch_active(),
 						'keys'     => [
-							'id'     => AnyCommentSocialSettings::getTwitchClientId(),
-							'secret' => AnyCommentSocialSettings::getTwitchClientSecret()
+							'id'     => AnyCommentSocialSettings::get_twitch_client_id(),
+							'secret' => AnyCommentSocialSettings::get_twitch_client_secret()
 						],
 						'callback' => static::get_twitch_callback(),
 					],
 					self::$providers[ self::SOCIAL_DRIBBBLE ]      => [
-						'enabled'  => AnyCommentSocialSettings::isDribbbleOn(),
+						'enabled'  => AnyCommentSocialSettings::is_dribbble_active(),
 						'keys'     => [
-							'id'     => AnyCommentSocialSettings::getDribbbleClientId(),
-							'secret' => AnyCommentSocialSettings::getDribbbleClientSecret()
+							'id'     => AnyCommentSocialSettings::get_dribbble_client_id(),
+							'secret' => AnyCommentSocialSettings::get_dribbble_client_secret()
 						],
 						'callback' => static::get_dribbble_callback(),
 					],
 					self::$providers[ self::SOCIAL_YAHOO ]         => [
-						'enabled'  => AnyCommentSocialSettings::isYahooOn(),
+						'enabled'  => AnyCommentSocialSettings::is_yahoo_active(),
 						'keys'     => [
-							'id'     => AnyCommentSocialSettings::getYahooAppId(),
-							'secret' => AnyCommentSocialSettings::getYahooClientSecret()
+							'id'     => AnyCommentSocialSettings::get_ahoo_app_id(),
+							'secret' => AnyCommentSocialSettings::get_yahoo_client_secret()
 						],
 						'callback' => static::get_yahoo_callback(),
 					]
@@ -572,7 +572,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 			}
 
 			if ( ! isset( $user_data['role'] ) ) {
-				$user_data['role'] = AnyCommentGenericSettings::getRegisterDefaultGroup();
+				$user_data['role'] = AnyCommentGenericSettings::get_register_default_group();
 			}
 
 			// Preset social type as it is passed anyways in the method
@@ -631,7 +631,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 			$photoUrl = null;
 
 			if ( ! empty( $user_profile->photoURL ) ) {
-				$localUrl = AnyCommentUploadHandler::uploadAvatar( $user_profile->photoURL, [
+				$localUrl = AnyCommentUploadHandler::upload_avatar( $user_profile->photoURL, [
 					$social,
 					$user_profile->identifier
 				] );
@@ -791,7 +791,7 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 		 */
 		public function get_user_avatar_url( $id_or_email ) {
 
-			if ( AnyCommentIntegrationSettings::isWPUserAvatarOn() ) {
+			if ( AnyCommentIntegrationSettings::is_wp_user_avatar_active() ) {
 				global $wpua_functions;
 				if ( $wpua_functions->has_wp_user_avatar( $id_or_email ) ) {
 					return $wpua_functions->get_wp_user_avatar_src( $id_or_email, AnyCommentAvatars::DEFAULT_AVATAR_WIDTH );
@@ -836,10 +836,10 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 				return get_avatar_url( $id_or_email, [ 'size' => AnyCommentAvatars::DEFAULT_AVATAR_WIDTH ] );
 			}
 
-			if ( ! AnyCommentGenericSettings::isDefaultAvatarAnyComment() ) {
+			if ( ! AnyCommentGenericSettings::is_default_avatar_anycomment() ) {
 				return get_avatar_url( $id_or_email, [
 					'size'    => AnyCommentAvatars::DEFAULT_AVATAR_WIDTH,
-					'default' => AnyCommentGenericSettings::getDefaultAvatar()
+					'default' => AnyCommentGenericSettings::get_default_avatar()
 				] );
 			}
 

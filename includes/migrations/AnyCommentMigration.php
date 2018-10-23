@@ -154,7 +154,7 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 	 * @return array|null
 	 */
 	public static function getListDown() {
-		$currentVersion = AnyCommentOptions::getMigration();
+		$currentVersion = AnyCommentOptions::get_migration();
 		$list           = static::getList( false );
 
 		if ( $list === null ) {
@@ -186,7 +186,7 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 	 * @return array|null NULL when migration list is empty.
 	 */
 	public static function getListUp() {
-		$currentVersion = AnyCommentOptions::getMigration();
+		$currentVersion = AnyCommentOptions::get_migration();
 		$list           = static::getList( false );
 
 		if ( $list === null ) {
@@ -234,7 +234,7 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 	 *
 	 * @return string
 	 */
-	public static function normalizeVersion( $version ) {
+	public static function normalize_version( $version ) {
 		if ( strpos( $version, '_' ) === false ) {
 			return $version;
 		}

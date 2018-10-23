@@ -90,9 +90,9 @@ class AnyCommentUploadedFiles {
 			$ip = $_SERVER["REMOTE_ADDR"];
 		}
 
-		$seconds      = AnyCommentGenericSettings::getFileUploadLimit();
+		$seconds      = AnyCommentGenericSettings::get_file_upload_limit();
 		$intervalTime = strtotime( "-{$seconds} seconds" );
-		$limit        = AnyCommentGenericSettings::getFileLimit();
+		$limit        = AnyCommentGenericSettings::get_file_limit();
 
 		$table_name = static::tableName();
 		$sql        = "SELECT COUNT(*) FROM $table_name WHERE `ip`=%s AND `created_at` >= %d";
@@ -152,7 +152,7 @@ class AnyCommentUploadedFiles {
 			}
 
 			// Delete file attachment from comment meta (if there are such)
-			AnyCommentCommentMeta::deleteAttachmentByFileId( $file->ID );
+			AnyCommentCommentMeta::delete_attachment_by_file_id( $file->ID );
 
 			// Delete files from table
 			$affected_rows = $wpdb->delete( $table, [ 'id' => $file->ID ] );

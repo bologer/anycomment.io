@@ -72,7 +72,7 @@ class AnyCommentEmailQueueCron {
 			 * When required to notify new users about replies, them them email,
 			 * otherwise fake it as sent in order not to break the logic of the queue.
 			 */
-			$isSent = AnyCommentGenericSettings::isNotifyOnNewReply() ?
+			$isSent = AnyCommentGenericSettings::is_notify_on_new_reply() ?
 				wp_mail( $email->email, $subject, $body, $headers ) :
 				true;
 

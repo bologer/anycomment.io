@@ -41,7 +41,7 @@ class AnyCommentWPComments {
 	 */
 	public function add_comment_columns( $column_name, $comment_id ) {
 		if ( $column_name == 'anycomment_likes' ) {
-			echo AnyCommentLikes::getLikesCount( $comment_id );
+			echo AnyCommentLikes::get_likes_count( $comment_id );
 		}
 	}
 
@@ -70,9 +70,9 @@ class AnyCommentWPComments {
 	 */
 	public function add_user_columns( $value, $column_name, $user_id ) {
 		if ( $column_name == 'anycomment_likes_count' ) {
-			return AnyCommentLikes::getLikesCountByUser( $user_id );
+			return AnyCommentLikes::get_likes_count_by_user( $user_id );
 		} elseif ( $column_name == 'anycomment_social_url' ) {
-			$socialUrl = AnyCommentUserMeta::getSocialProfileUrl( $user_id, true );
+			$socialUrl = AnyCommentUserMeta::get_social_profile_url( $user_id, true );
 
 			return ! empty( $socialUrl ) ? $socialUrl : '—';
 		}

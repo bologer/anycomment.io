@@ -33,12 +33,12 @@ $tabs       = [
     <div class="grid-x grid-margin-x anycomment-dashboard__tabs">
         <ul class="cell">
 			<?php foreach ( $tabs as $key => $tab ): ?>
-                <li<?= $active_tab === $key ? ' class="active"' : '' ?>><a
-                            href="<?= $tab['url'] ?>"><?= $tab['text'] ?></a>
+                <li<?php echo $active_tab === $key ? ' class="active"' : '' ?>><a
+                            href="<?php echo $tab['url'] ?>"><?php echo $tab['text'] ?></a>
                 </li>
 			<?php endforeach; ?>
         </ul>
     </div>
 <?php endif; ?>
 
-<?= anycomment_get_template( 'admin/tab-' . $active_tab ) ?>
+<?php echo anycomment_get_template( 'admin/tab-' . $active_tab ) ?>

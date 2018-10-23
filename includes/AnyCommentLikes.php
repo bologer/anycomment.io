@@ -74,7 +74,7 @@ class AnyCommentLikes {
 	 *
 	 * @return int
 	 */
-	public static function getLikesCountByUser( $userId ) {
+	public static function get_likes_count_by_user( $userId ) {
 		global $wpdb;
 
 		$table_name = static::tableName();
@@ -96,7 +96,7 @@ class AnyCommentLikes {
 	 *
 	 * @return int
 	 */
-	public static function getLikesCount( $commentId ) {
+	public static function get_likes_count( $commentId ) {
 		global $wpdb;
 
 		$table_name = static::tableName();

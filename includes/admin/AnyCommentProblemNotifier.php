@@ -11,7 +11,7 @@ class AnyCommentProblemNotifier {
 	 * Get list of problematic issue analyzed from website.
 	 * @return array
 	 */
-	public static function getProblemList() {
+	public static function get_problem_list() {
 		$items = [];
 
 		global $wp_version;

@@ -14,7 +14,7 @@ class AnyCommentInputHelper {
 	 *
 	 * @return string
 	 */
-	public static function getSizeForCss( $value ) {
+	public static function normalize_css_size( $value ) {
 		$value = strtolower( $value );
 
 		// Clean
@@ -37,7 +37,7 @@ class AnyCommentInputHelper {
 	 *
 	 * @return string
 	 */
-	public static function getHexForCss( $value ) {
+	public static function normalize_hex_color( $value ) {
 		$value = strtolower( $value );
 
 		$value = preg_replace( '/[g-z]/', '', $value );

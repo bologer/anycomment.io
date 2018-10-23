@@ -25,7 +25,7 @@ class AnyCommentOptions {
 	 * @return mixed
 	 */
 	public static function get( $option, $default = null ) {
-		return get_option( static::prepareOption( $option ), $default );
+		return get_option( static::prepare_option( $option ), $default );
 	}
 
 	/**
@@ -37,7 +37,7 @@ class AnyCommentOptions {
 	 * @return bool
 	 */
 	public static function add( $option, $value ) {
-		return add_option( static::prepareOption( $option ), $value );
+		return add_option( static::prepare_option( $option ), $value );
 	}
 
 
@@ -50,7 +50,7 @@ class AnyCommentOptions {
 	 * @return bool
 	 */
 	public static function update( $option, $value ) {
-		return update_option( static::prepareOption( $option ), $value );
+		return update_option( static::prepare_option( $option ), $value );
 	}
 
 	/**
@@ -60,7 +60,7 @@ class AnyCommentOptions {
 	 *
 	 * @return string
 	 */
-	public static function prepareOption( $option ) {
+	public static function prepare_option( $option ) {
 		if ( strpos( $option, self::$prefix ) == false ) {
 			$option = sprintf( '%s%s', self::$prefix, $option );
 		}
@@ -80,8 +80,8 @@ class AnyCommentOptions {
 	 *
 	 * @return bool
 	 */
-	public static function updateMigration( $value ) {
-		return static::update( self::OPTION_MIGRATION, AnyCommentMigration::normalizeVersion( $value ) );
+	public static function update_migration( $value ) {
+		return static::update( self::OPTION_MIGRATION, AnyCommentMigration::normalize_version( $value ) );
 	}
 
 	/**
@@ -89,7 +89,7 @@ class AnyCommentOptions {
 	 *
 	 * @return string
 	 */
-	public static function getMigration() {
+	public static function get_migration() {
 		return static::get( self::OPTION_MIGRATION, '0.0.1' );
 	}
 }

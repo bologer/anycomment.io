@@ -155,7 +155,7 @@ class AnyCommentRestLikes extends AnyCommentRestController {
 			];
 		}
 
-		$data['total_count'] = AnyCommentLikes::getLikesCount( $like->comment_ID );
+		$data['total_count'] = AnyCommentLikes::get_likes_count( $like->comment_ID );
 		$data['has_like']    = AnyCommentLikes::isCurrentUserHasLike( $like->comment_ID );
 
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
