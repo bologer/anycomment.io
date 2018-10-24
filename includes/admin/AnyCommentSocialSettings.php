@@ -123,31 +123,13 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 		 * {@inheritdoc}
 		 */
 		public function init_settings() {
-			/**
-			 * VK
-			 */
-			add_settings_section(
-				'section_vkontakte',
-				__( 'VK', "anycomment" ),
-				function () {
-					?>
-                    <p><?php echo __( 'VK authorization settings.', "anycomment" ) ?></p>
 
-                    <table class="form-table">
-                        <tr>
-                            <th><label for="vk-callback"><?php echo __( 'Callback URL', 'anycomment' ) ?></label></th>
-                            <td><input type="text" id="vk-callback" onclick="this.select()" readonly="readonly"
-                                       value="<?= AnyCommentSocialAuth::get_vk_callback() ?>"></td>
-                        </tr>
-                    </table>
-					<?php
-				},
-				$this->page_slug
-			);
-
+			// Vkontakte
 			$this->render_fields(
-				$this->page_slug,
-				'section_vkontakte',
+				[
+					'id'   => 'section_vkontakte',
+					'name' => __( 'VK', "anycomment" ),
+				],
 				[
 					[
 						'id'          => self::OPTION_VK_TOGGLE,
@@ -179,19 +161,12 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 				]
 			);
 
-			/**
-			 * Twitter
-			 */
-			add_settings_section(
-				'section_twitter',
-				__( 'Twitter', "anycomment" ),
-				null,
-				$this->page_slug
-			);
-
+			// Twitter
 			$this->render_fields(
-				$this->page_slug,
-				'section_twitter',
+				[
+					'id'   => 'section_twitter',
+					'name' => __( 'Twitter', "anycomment" ),
+				],
 				[
 					[
 						'id'          => self::OPTION_TWITTER_TOGGLE,
@@ -223,19 +198,12 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 				]
 			);
 
-			/**
-			 * Facebook
-			 */
-			add_settings_section(
-				'section_facebook',
-				__( 'Facebook', "anycomment" ),
-				null,
-				$this->page_slug
-			);
-
+			// Facebook
 			$this->render_fields(
-				$this->page_slug,
-				'section_facebook',
+				[
+					'id'   => 'section_facebook',
+					'name' => __( 'Facebook', "anycomment" ),
+				],
 				[
 					[
 						'id'          => self::OPTION_FACEBOOK_TOGGLE,
@@ -267,19 +235,12 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 				]
 			);
 
-			/**
-			 * Google
-			 */
-			add_settings_section(
-				'section_google',
-				__( 'Google', "anycomment" ),
-				null,
-				$this->page_slug
-			);
-
+			// Google
 			$this->render_fields(
-				$this->page_slug,
-				'section_google',
+				[
+					'id'   => 'section_google',
+					'name' => __( 'Google', "anycomment" ),
+				],
 				[
 					[
 						'id'          => self::OPTION_GOOGLE_TOGGLE,
@@ -311,19 +272,12 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 				]
 			);
 
-			/**
-			 * GitHub
-			 */
-			add_settings_section(
-				'section_github',
-				__( 'Github', "anycomment" ),
-				null,
-				$this->page_slug
-			);
-
+			// GutHub
 			$this->render_fields(
-				$this->page_slug,
-				'section_github',
+				[
+					'id'   => 'section_github',
+					'name' => __( 'GitHub', "anycomment" ),
+				],
 				[
 					[
 						'id'          => self::OPTION_GITHUB_TOGGLE,
@@ -355,19 +309,13 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 				]
 			);
 
-			/**
-			 * GitHub
-			 */
-			add_settings_section(
-				'section_odnoklassniki',
-				__( 'Odnoklassniki', "anycomment" ),
-				null,
-				$this->page_slug
-			);
 
+			// Odnoklassniki
 			$this->render_fields(
-				$this->page_slug,
-				'section_odnoklassniki',
+				[
+					'id'   => 'section_odnoklassniki',
+					'name' => __( 'Odnoklassniki', "anycomment" ),
+				],
 				[
 					[
 						'id'          => self::OPTION_OK_TOGGLE,
@@ -405,19 +353,12 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 				]
 			);
 
-			/**
-			 * Instagram
-			 */
-			add_settings_section(
-				'section_instagram',
-				__( 'Instagram', "anycomment" ),
-				null,
-				$this->page_slug
-			);
-
+			// Instagram
 			$this->render_fields(
-				$this->page_slug,
-				'section_instagram',
+				[
+					'id'   => 'section_instagram',
+					'name' => __( 'Instagram', "anycomment" ),
+				],
 				[
 					[
 						'id'          => self::OPTION_INSTAGRAM_TOGGLE,
@@ -451,19 +392,12 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 			);
 
 
-			/**
-			 * Twitch
-			 */
-			add_settings_section(
-				'section_twitch',
-				__( 'Twitch', "anycomment" ),
-				null,
-				$this->page_slug
-			);
-
+			// Twitch
 			$this->render_fields(
-				$this->page_slug,
-				'section_twitch',
+				[
+					'id'   => 'section_twitch',
+					'name' => __( 'Twitch', "anycomment" ),
+				],
 				[
 					[
 						'id'          => self::OPTION_TWITCH_TOGGLE,
@@ -496,19 +430,13 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 				]
 			);
 
-			/**
-			 * Dribble
-			 */
-			add_settings_section(
-				'section_dribbble',
-				__( 'Dribbble', "anycomment" ),
-				null,
-				$this->page_slug
-			);
 
+			// Dribbble
 			$this->render_fields(
-				$this->page_slug,
-				'section_dribbble',
+				[
+					'id'   => 'section_dribbble',
+					'name' => __( 'Dribbble', "anycomment" ),
+				],
 				[
 					[
 						'id'          => self::OPTION_DRIBBBLE_TOGGLE,
@@ -541,19 +469,12 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 				]
 			);
 
-			/**
-			 * Yahoo
-			 */
-			add_settings_section(
-				'section_yahoo',
-				__( 'Yahoo', "anycomment" ),
-				null,
-				$this->page_slug
-			);
-
+			// Yahoo
 			$this->render_fields(
-				$this->page_slug . time(),
-				'section_yahoo',
+				[
+					'id'   => 'section_yahoo',
+					'name' => __( 'Yahoo', "anycomment" ),
+				],
 				[
 					[
 						'id'          => self::OPTION_YAHOO_TOGGLE,
@@ -586,19 +507,12 @@ if ( ! class_exists( 'AnyCommentSocialSettings' ) ) :
 			);
 
 
-			/**
-			 * WordPress
-			 */
-			add_settings_section(
-				'section_wordpress',
-				__( 'WordPress', "anycomment" ),
-				null,
-				$this->page_slug
-			);
-
+			// WordPress
 			$this->render_fields(
-				$this->page_slug,
-				'section_wordpress',
+				[
+					'id'   => 'section_wordpress',
+					'name' => __( 'WordPress', "anycomment" ),
+				],
 				[
 					[
 						'id'          => self::OPTION_WORDPRESS_NATIVE_TOGGLE,

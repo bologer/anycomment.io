@@ -131,19 +131,8 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 		 * @return bool False on failure.
 		 */
 		public function init_options() {
-			add_settings_section(
-				'section_integration',
-				__( 'Generic', "anycomment" ),
-				function () {
-					?>
-                    <p><?php echo __( 'Integration with other plugin and/or services. Integration options will automatically appear down below once you install one of the supported plugins.', "anycomment" ) ?></p>
-					<?php
-				},
-				$this->page_slug
-			);
 
 			$integrations = [];
-
 
 			if ( is_plugin_active( 'akismet/akismet.php' ) ) {
 				$integrations[] = [
@@ -166,7 +155,6 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 			/**
 			 * reCaptcha
 			 */
-
 			$integrations[] = [
 				'id'          => self::OPTION_RECAPTCHA_TOGGLE,
 				'title'       => __( 'Enable reCAPTCHA', "anycomment" ),
@@ -175,10 +163,10 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 			];
 
 			$integrations[] = [
-				'id'      => self::OPTION_RECAPTCHA_USER,
-				'title'   => __( 'reCAPTCHA Users', "anycomment" ),
-				'type'    => 'select',
-				'options' => [
+				'id'          => self::OPTION_RECAPTCHA_USER,
+				'title'       => __( 'reCAPTCHA Users', "anycomment" ),
+				'type'        => 'select',
+				'options'     => [
 					self::OPTION_RECAPTCHA_USER_ALL   => __( 'For all', 'anycomment' ),
 					self::OPTION_RECAPTCHA_USER_GUEST => __( 'For guests only', 'anycomment' ),
 					self::OPTION_RECAPTCHA_USER_AUTH  => __( 'For logged in only', 'anycomment' ),
@@ -189,22 +177,22 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 			$integrations[] = [
 				'id'          => self::OPTION_RECAPTCHA_SITE_KEY,
 				'title'       => __( 'reCAPTCHA Site Key', "anycomment" ),
-				'type'    => 'text',
+				'type'        => 'text',
 				'description' => sprintf( __( 'reCAPTCHA site key. Can be found <a href="%s">here</a> (register your website if does not exist)', "anycomment" ), "http://www.google.com/recaptcha/admin" )
 			];
 
 			$integrations[] = [
 				'id'          => self::OPTION_RECAPTCHA_SITE_SECRET,
 				'title'       => __( 'reCAPTCHA Site Secret', "anycomment" ),
-				'type'    => 'text',
+				'type'        => 'text',
 				'description' => sprintf( __( 'reCAPTCHA site secret. Can be found <a href="%s">here</a> (register your website if does not exist)', "anycomment" ), "http://www.google.com/recaptcha/admin" )
 			];
 
 			$integrations[] = [
-				'id'      => self::OPTION_RECAPTCHA_THEME,
-				'title'   => __( 'reCAPTCHA Theme', "anycomment" ),
-				'type'    => 'select',
-				'options' => [
+				'id'          => self::OPTION_RECAPTCHA_THEME,
+				'title'       => __( 'reCAPTCHA Theme', "anycomment" ),
+				'type'        => 'select',
+				'options'     => [
 					self::OPTION_RECAPTCHA_THEME_LIGHT => __( 'Light', 'anycomment' ),
 					self::OPTION_RECAPTCHA_THEME_DARK  => __( 'Dark', 'anycomment' ),
 				],
@@ -228,8 +216,15 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 
 
 			$this->render_fields(
-				$this->page_slug,
-				'section_integration',
+				[
+					'id'       => 'section_integration',
+					'name'     => __( 'Generic', "anycomment" ),
+					'callback' => function () {
+						?>
+                        <p><?php echo __( 'Integration with other plugin and/or services. Integration options will automatically appear down below once you install one of the supported plugins.', "anycomment" ) ?></p>
+						<?php
+					},
+				],
 				$integrations
 			);
 

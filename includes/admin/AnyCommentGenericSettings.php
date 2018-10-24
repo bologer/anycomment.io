@@ -348,45 +348,12 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 * {@inheritdoc}
 		 */
 		public function init_settings() {
-			add_settings_section(
-				'section_generic',
-				__( 'Generic', "anycomment" ),
-				null,
-				$this->page_slug
-			);
-
-			add_settings_section(
-				'section_design',
-				__( 'Design', "anycomment" ),
-				null,
-				$this->page_slug
-			);
-
-			add_settings_section(
-				'section_moderation',
-				__( 'Moderation', "anycomment" ),
-				null,
-				$this->page_slug
-			);
-
-			add_settings_section(
-				'section_notifications',
-				__( 'Notifications', "anycomment" ),
-				null,
-				$this->page_slug
-			);
-
-			add_settings_section(
-				'section_files',
-				__( 'Files', "anycomment" ),
-				null,
-				$this->page_slug
-			);
-
 
 			$this->render_fields(
-				$this->page_slug,
-				'section_generic',
+				[
+					'id'   => 'section_generic',
+					'name' => __( 'Generic', "anycomment" ),
+				],
 				[
 					[
 						'id'          => self::OPTION_PLUGIN_TOGGLE,
@@ -506,8 +473,10 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 			);
 
 			$this->render_fields(
-				$this->page_slug,
-				'section_design',
+				[
+					'id'   => 'section_elements',
+					'name' => __( 'Elements', "anycomment" ),
+				],
 				[
 					[
 						'id'          => self::OPTION_FORM_TYPE,
@@ -593,7 +562,15 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'type'        => 'checkbox',
 						'description' => esc_html( __( 'Show clean formatting option in editor toolbar.', "anycomment" ) )
 					],
+				]
+			);
 
+			$this->render_fields(
+				[
+					'id'   => 'section_design',
+					'name' => __( 'Design', "anycomment" ),
+				],
+				[
 					/**
 					 * Custom design
 					 */
@@ -720,8 +697,10 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 			);
 
 			$this->render_fields(
-				$this->page_slug,
-				'section_moderation',
+				[
+					'id'   => 'section_moderation',
+					'name' => __( 'Moderation', "anycomment" ),
+				],
 				[
 					[
 						'id'          => self::OPTION_MODERATE_FIRST,
@@ -745,8 +724,10 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 			);
 
 			$this->render_fields(
-				$this->page_slug,
-				'section_notifications',
+				[
+					'id'   => 'section_notifications',
+					'name' => __( 'Notifications', "anycomment" ),
+				],
 				[
 					[
 						'id'          => self::OPTION_NOTIFY_ON_NEW_COMMENT,
@@ -850,8 +831,10 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 			);
 
 			$this->render_fields(
-				$this->page_slug,
-				'section_files',
+				[
+					'id'   => 'section_files',
+					'name' => __( 'Files', "anycomment" ),
+				],
 				[
 					[
 						'id'          => self::OPTION_FILES_TOGGLE,

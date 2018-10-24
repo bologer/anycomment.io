@@ -61,17 +61,23 @@ if ( ! class_exists( 'AnyCommentAdminOptions' ) ) :
 		/**
 		 * Render fields.
 		 *
-		 * @param string $page Page to be rendered fields for.
-		 * @param string $section_id ID of the section to render fields for.
+		 * @param array $section ID of the section to render fields for.
 		 * @param array $fields List of fields to render.
 		 *
 		 * @return bool True on success, false on failure.
 		 */
-		public function render_fields( $page, $section_id, $fields ) {
+		public function render_fields( $section, $fields ) {
 
 			if ( empty( $fields ) ) {
 				return false;
 			}
+
+			add_settings_section(
+				$section['id'],
+				$section['name'],
+				isset( $section['callback'] ) ? $section['callback'] : null,
+				$this->page_slug
+			);
 
 			foreach ( $fields as $field ) {
 
@@ -105,8 +111,8 @@ if ( ! class_exists( 'AnyCommentAdminOptions' ) ) :
 					$field['id'],
 					$field['title'],
 					[ $this, 'page_html' ],
-					$page,
-					$section_id,
+					$this->page_slug,
+					$section['id'],
 					$args
 				);
 			}
