@@ -170,7 +170,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 **Enhancements:**
 
 * Same style for name when user does not have website or social available
-* JavaScript bundle is now having async to speed-up loading of comments, #256
+* JavaScript bundle is now having async to speed-up loading of comments, #256 (credits @mihdan)
 
 **Fixes:**
 
