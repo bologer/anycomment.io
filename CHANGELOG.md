@@ -5,6 +5,7 @@
 **Enhancements:**
 
 * Same style for name when user does not have website or social available
+* JavaScript bundle is now having async to speed-up loading of comments, #256
 
 **Fixes:**
 

@@ -36,8 +36,11 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 
 			add_filter( 'logout_url', [ $this, 'logout_redirect' ], 10, 2 );
 
+			add_filter( 'script_loader_tag', [ $this, 'add_async_to_bundle' ], 10, 2 );
+
 			$this->errors = AnyCommentSocialAuth::getErrors();
 		}
+
 
 		/**
 		 * Custom logout URL to redirect user back to post on logout.
@@ -64,6 +67,23 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 		}
 
 		/**
+		 * Async loading of main JavaScript bundle.
+		 *
+		 * @param $tag
+		 * @param $handle
+		 *
+		 * @return mixed
+		 * @since 0.0.66
+		 */
+		function add_async_to_bundle( $tag, $handle ) {
+			if ( 'anycomment-js-bundle' !== $handle ) {
+				return $tag;
+			}
+
+			return str_replace( ' src', ' async="async" src', $tag );
+		}
+
+		/**
 		 * Make custom template for comments.
 		 * @return string
 		 */
@@ -76,7 +96,7 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 			$isInclude = $params['include'];
 
 			if ( ! post_password_required() && comments_open() ) {
-				wp_enqueue_script( 'anycomment-react', AnyComment()->plugin_url() . '/static/js/main.min.js', [], md5( AnyComment()->version ) );
+				wp_enqueue_script( 'anycomment-js-bundle', AnyComment()->plugin_url() . '/static/js/main.min.js', [], md5( AnyComment()->version ) );
 
 				if ( AnyCommentGenericSettings::is_design_custom() ) {
 					$url = AnyCommentGenericSettings::get_custom_design_stylesheet_url();
@@ -94,7 +114,7 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 				$postId        = get_the_ID();
 				$postPermalink = get_permalink( $postId );
 
-				wp_localize_script( 'anycomment-react', 'anyCommentApiSettings', [
+				wp_localize_script( 'anycomment-js-bundle', 'anyCommentApiSettings', [
 					'postId'       => $postId,
 					'nonce'        => wp_create_nonce( 'wp_rest' ),
 					'locale'       => get_locale(),
