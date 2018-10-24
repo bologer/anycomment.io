@@ -18,6 +18,9 @@
     text-align: right;
     font-size: $font-size - 3;
     border-top: 2px solid #e4e2e7;
+    display: flex;
+    justify-content: end;
+    align-items: center;
 
     &, a {
       color: $semi-hidden-color

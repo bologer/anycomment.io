@@ -174,9 +174,10 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Fixes:**
 
-* Fixed issue when on update of the comment, previous text was recovered, #249
-* Fixed issue with comments which are not wrapped with `<p>` tag causing them to have different line height then other comments, #249
-* Fixed issue when button border radius was also changing it for "Author" label, #249
+* Fixed issue when on update of the comment, previous text was recovered, #249 (credits @artikus11)
+* Fixed issue with comments which are not wrapped with `<p>` tag causing them to have different line height then other comments, #249 (credits @artikus11)
+* Fixed issue when button border radius was also changing it for "Author" label, #249 (credits @artikus11)
+* Fixed AnyComment logo design in the footer of comments, #249 (credits @artikus11)
 
 
 = 0.0.65 – 22.10.2018 =
