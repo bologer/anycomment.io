@@ -183,6 +183,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Fixed issue when social icons could be not well aligned when custom designed is used and global font size is bigger then usual, #250 (credits @artikus11)
 * Corrected description for reCAPTCHA integration about "Invisible" type, #264 (credits @LDSgent)
 * Fixed issue when email queue table was having incorrect structure which caused issue with email notifications, #266
+* Fixed issue when send/save comment button was disabled on error and user could submit form again,  #260 (credits @mihdan)
 
 
 = 0.0.65 – 22.10.2018 =

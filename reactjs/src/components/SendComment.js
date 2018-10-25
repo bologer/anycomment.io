@@ -293,6 +293,7 @@ class SendComment extends AnyCommentComponent {
                 return true;
             })
             .catch(function (error) {
+                self.setState({buttonEnabled: true});
                 self.showError(error);
             });
 
@@ -372,8 +373,8 @@ class SendComment extends AnyCommentComponent {
                 return true;
             })
             .catch(function (error) {
+                self.setState({buttonEnabled: true});
                 self.showError(error);
-
             });
 
         return false;
