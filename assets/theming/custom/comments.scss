@@ -3,7 +3,10 @@
   flex-grow: 1;
   flex-direction: column;
   padding: $global-padding;
+  margin: $global-margin;
   position: relative;
+  background-color: $global-background-color;
+  border-radius: $global-background-border-radius;
 
   &-inner {
     display: flex;
@@ -217,8 +220,6 @@
               padding-left: 21px;
               margin-left: 0;
             }
-
-
 
             // quotes
             blockquote {

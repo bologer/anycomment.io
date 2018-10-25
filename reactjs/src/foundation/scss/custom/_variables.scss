@@ -41,7 +41,8 @@ $btn-background-color: #1DA1F2 !default;
 $btn-background-color-active: darken($btn-background-color, 5%) !default;
 
 $global-radius: 4px !default;
-$global-padding: 40px 0 !default;
+$global-background-color: transparent !default;
+$global-background-border-radius: 0 !default;
 
 $editor-bubble-color: #E8EDEF;
 

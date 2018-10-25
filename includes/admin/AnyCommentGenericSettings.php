@@ -210,6 +210,9 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		const OPTION_DESIGN_CUSTOM_TOGGLE = 'options_design_custom_toggle';
 
 		const OPTION_DESIGN_GLOBAL_PADDING = 'options_design_global_padding';
+		const OPTION_DESIGN_GLOBAL_MARGIN = 'options_design_global_margin';
+		const OPTION_DESIGN_GLOBAL_BACKGROUND_BORDER_RADIUS = 'options_design_global_background_border_radius';
+		const OPTION_DESIGN_GLOBAL_BACKGROUND_COLOR = 'options_design_global_background_color';
 
 		const OPTION_DESIGN_FONT_SIZE = 'options_design_font_size';
 		const OPTION_DESIGN_FONT_FAMILY = 'options_design_font_family';
@@ -266,21 +269,21 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 			self::OPTION_COUNT_PER_PAGE          => 20,
 			self::OPTION_INTERVAL_COMMENTS_CHECK => 10,
 
-			self::OPTION_DEFAULT_SORT_BY                       => self::SORT_DESC,
+			self::OPTION_DEFAULT_SORT_BY                        => self::SORT_DESC,
 
 			// Files
-			self::OPTION_FILES_LIMIT                           => 5,
-			self::OPTION_FILES_LIMIT_PERIOD                    => 900,
-			self::OPTION_FILES_MAX_SIZE                        => 1.5,
-			self::OPTION_FILES_MIME_TYPES                      => 'image/*, .pdf',
+			self::OPTION_FILES_LIMIT                            => 5,
+			self::OPTION_FILES_LIMIT_PERIOD                     => 900,
+			self::OPTION_FILES_MAX_SIZE                         => 1.5,
+			self::OPTION_FILES_MIME_TYPES                       => 'image/*, .pdf',
 
 			// Notifications
-			self::OPTION_NOTIFY_REPLY_EMAIL_TEMPLATE           => "New reply for you in {blogUrlHtml}.\nFrom post {postUrlHtml}.\n\n{commentFormatted}\n{replyButton}",
-			self::OPTION_NOTIFY_ADMIN_EMAIL_TEMPLATE           => "New comment posted in {blogUrlHtml}.\nFor post {postUrlHtml}.\n\n{commentFormatted}\n{replyButton}",
+			self::OPTION_NOTIFY_REPLY_EMAIL_TEMPLATE            => "New reply for you in {blogUrlHtml}.\nFrom post {postUrlHtml}.\n\n{commentFormatted}\n{replyButton}",
+			self::OPTION_NOTIFY_ADMIN_EMAIL_TEMPLATE            => "New comment posted in {blogUrlHtml}.\nFor post {postUrlHtml}.\n\n{commentFormatted}\n{replyButton}",
 
 			// Other design
-			self::OPTION_FORM_TYPE                             => self::FORM_OPTION_SOCIALS_ONLY,
-			self::OPTION_GUEST_FIELDS                          => '{name} {email} {website}',
+			self::OPTION_FORM_TYPE                              => self::FORM_OPTION_SOCIALS_ONLY,
+			self::OPTION_GUEST_FIELDS                           => '{name} {email} {website}',
 
 			// Editor
 //			self::OPTION_EDITOR_TOOLBAR_TOGGLE                 => 'on',
@@ -294,23 +297,25 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 //			self::OPTION_EDITOR_TOOLBAR_CLEAN                  => 'on',
 
 			// Custom design
-			self::OPTION_DESIGN_GLOBAL_PADDING                 => '20px 0',
-			self::OPTION_DESIGN_FONT_SIZE                      => '14px',
-			self::OPTION_DESIGN_FONT_FAMILY                    => "'Noto-Sans', sans-serif",
-			self::OPTION_DESIGN_SEMI_HIDDEN_COLOR              => '#B6C1C6',
-			self::OPTION_DESIGN_LINK_COLOR                     => '#1DA1F2',
-			self::OPTION_DESIGN_TEXT_COLOR                     => '#2A2E2E',
-			self::OPTION_DESIGN_FORM_FIELD_BACKGROUND_COLOR    => '#ffffff',
-			self::OPTION_DESIGN_ATTACHMENT_COLOR               => '#eeeeee',
-			self::OPTION_DESIGN_ATTACHMENT_BACKGROUND_COLOR    => '#eeeeee',
-			self::OPTION_DESIGN_AVATAR_RADIUS                  => '50% 50% 50% 0',
-			self::OPTION_DESIGN_PARENT_AVATAR_SIZE             => '48px',
-			self::OPTION_DESIGN_CHILD_AVATAR_SIZE              => '30px',
-			self::OPTION_DESIGN_BUTTON_COLOR                   => '#ffffff',
-			self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR        => '#1DA1F2',
-			self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR_ACTIVE => '#4f9f49',
-			self::OPTION_DESIGN_BUTTON_RADIUS                  => '20px',
-			self::OPTION_DESIGN_GLOBAL_RADIUS                  => '10px',
+			self::OPTION_DESIGN_GLOBAL_PADDING                  => '0',
+			self::OPTION_DESIGN_GLOBAL_MARGIN                   => '20px 0',
+			self::OPTION_DESIGN_GLOBAL_BACKGROUND_BORDER_RADIUS => '0',
+			self::OPTION_DESIGN_FONT_SIZE                       => '14px',
+			self::OPTION_DESIGN_FONT_FAMILY                     => "'Noto-Sans', sans-serif",
+			self::OPTION_DESIGN_SEMI_HIDDEN_COLOR               => '#B6C1C6',
+			self::OPTION_DESIGN_LINK_COLOR                      => '#1DA1F2',
+			self::OPTION_DESIGN_TEXT_COLOR                      => '#2A2E2E',
+			self::OPTION_DESIGN_FORM_FIELD_BACKGROUND_COLOR     => '#ffffff',
+			self::OPTION_DESIGN_ATTACHMENT_COLOR                => '#eeeeee',
+			self::OPTION_DESIGN_ATTACHMENT_BACKGROUND_COLOR     => '#eeeeee',
+			self::OPTION_DESIGN_AVATAR_RADIUS                   => '50% 50% 50% 0',
+			self::OPTION_DESIGN_PARENT_AVATAR_SIZE              => '48px',
+			self::OPTION_DESIGN_CHILD_AVATAR_SIZE               => '30px',
+			self::OPTION_DESIGN_BUTTON_COLOR                    => '#ffffff',
+			self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR         => '#1DA1F2',
+			self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR_ACTIVE  => '#4f9f49',
+			self::OPTION_DESIGN_BUTTON_RADIUS                   => '20px',
+			self::OPTION_DESIGN_GLOBAL_RADIUS                   => '10px',
 		];
 
 
@@ -608,17 +613,37 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 					],
 
 					[
+						'id'          => self::OPTION_DESIGN_GLOBAL_BACKGROUND_COLOR,
+						'title'       => __( 'Global background color', "anycomment" ),
+						'type'        => 'color',
+						'description' => esc_html( __( 'Global background color used for all comments.', "anycomment" ) )
+					],
+					[
+						'id'          => self::OPTION_DESIGN_GLOBAL_BACKGROUND_BORDER_RADIUS,
+						'title'       => __( 'Global background border radius', "anycomment" ),
+						'type'        => 'text',
+						'description' => esc_html( __( 'Global background border radius. Could be useful when you have background different then website primary color.', "anycomment" ) )
+					],
+
+					[
+						'id'          => self::OPTION_DESIGN_GLOBAL_MARGIN,
+						'title'       => __( 'Global margin', "anycomment" ),
+						'type'        => 'text',
+						'description' => esc_html( __( 'Global margin for all comments. You may use "px", "em" or "%".', "anycomment" ) )
+					],
+
+					[
 						'id'          => self::OPTION_DESIGN_GLOBAL_PADDING,
 						'title'       => __( 'Global padding', "anycomment" ),
 						'type'        => 'text',
-						'description' => esc_html( __( 'Global padding for all comments. You may use "px" or "%".', "anycomment" ) )
+						'description' => esc_html( __( 'Global padding for all comments. You may use "px", "em" or "%".', "anycomment" ) )
 					],
 
 					[
 						'id'          => self::OPTION_DESIGN_GLOBAL_RADIUS,
 						'title'       => __( 'Border radius', "anycomment" ),
 						'type'        => 'text',
-						'description' => esc_html( __( 'Border radius. You may use "px" or "%".', "anycomment" ) )
+						'description' => esc_html( __( 'Border radius. You may use "px", "em" or "%".', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_DESIGN_SEMI_HIDDEN_COLOR,
@@ -957,6 +982,11 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 			$scss->addImportPath( $scssPath );
 
 			$replaceVariables = [
+				'global-margin'                   => AnyCommentGenericSettings::get_global_margin(),
+				'global-padding'                  => AnyCommentGenericSettings::get_global_padding(),
+				'global-background-color'         => AnyCommentGenericSettings::get_global_background_color(),
+				'global-background-border-radius' => AnyCommentGenericSettings::get_global_background_border_radius(),
+
 				'font-size'   => AnyCommentGenericSettings::get_design_font_size(),
 				'font-family' => AnyCommentGenericSettings::get_design_font_family(),
 				'link-color'  => AnyCommentGenericSettings::get_design_link_color(),
@@ -1485,6 +1515,32 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 			return static::instance()->get_option( self::OPTION_DESIGN_CUSTOM_TOGGLE ) !== null;
 		}
 
+		/**
+		 * Get global background color.
+		 *
+		 * @return string
+		 */
+		public static function get_global_background_color() {
+			return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_option( self::OPTION_DESIGN_GLOBAL_BACKGROUND_COLOR ) );
+		}
+
+		/**
+		 * Get global background border radius.
+		 *
+		 * @return string
+		 */
+		public static function get_global_background_border_radius() {
+			return AnyCommentInputHelper::normalize_css_size( static::instance()->get_option( self::OPTION_DESIGN_GLOBAL_BACKGROUND_BORDER_RADIUS ) );
+		}
+
+		/**
+		 * Get global margin.
+		 *
+		 * @return string
+		 */
+		public static function get_global_margin() {
+			return AnyCommentInputHelper::normalize_css_size( static::instance()->get_option( self::OPTION_DESIGN_GLOBAL_MARGIN ) );
+		}
 
 		/**
 		 * Get global padding.
