@@ -15,6 +15,7 @@
 * Fixed issue with comments which are not wrapped with `<p>` tag causing them to have different line height then other comments, #249
 * Fixed issue when button border radius was also changing it for "Author" label, #249
 * Fixed AnyComment logo design in the footer of comments, #249 (credits @artikus11)
+* Fixed issue when social icons could be not well aligned when custom designed is used and global font size is bigger then usual, #250 (credits @artikus11)
 
 
 ## 0.0.65 – 22.10.2018
