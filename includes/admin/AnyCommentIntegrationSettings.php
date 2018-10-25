@@ -178,14 +178,14 @@ if ( ! class_exists( 'AnyCommentIntegrationSettings' ) ) :
 				'id'          => self::OPTION_RECAPTCHA_SITE_KEY,
 				'title'       => __( 'reCAPTCHA Site Key', "anycomment" ),
 				'type'        => 'text',
-				'description' => sprintf( __( 'reCAPTCHA site key. Can be found <a href="%s">here</a> (register your website if does not exist)', "anycomment" ), "http://www.google.com/recaptcha/admin" )
+				'description' => sprintf( __( 'ШтмшытreCAPTCHA site key. Can be found <a href="%s">here</a> (register your website if does not exist). Please note that you should choose "Invisible" type in order for it to work.', "anycomment" ), "http://www.google.com/recaptcha/admin" )
 			];
 
 			$integrations[] = [
 				'id'          => self::OPTION_RECAPTCHA_SITE_SECRET,
 				'title'       => __( 'reCAPTCHA Site Secret', "anycomment" ),
 				'type'        => 'text',
-				'description' => sprintf( __( 'reCAPTCHA site secret. Can be found <a href="%s">here</a> (register your website if does not exist)', "anycomment" ), "http://www.google.com/recaptcha/admin" )
+				'description' => sprintf( __( 'reCAPTCHA site secret. Can be found <a href="%s">here</a> (register your website if does not exist). Please note that you should choose "Invisible" type in order for it to work.', "anycomment" ), "http://www.google.com/recaptcha/admin" )
 			];
 
 			$integrations[] = [
