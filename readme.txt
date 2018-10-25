@@ -165,7 +165,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 == Changelog ==
 
-= 0.0.66 – 22.10.2018 =
+= 0.0.66 – 25.10.2018 =
 
 **Enhancements:**
 
@@ -182,6 +182,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Fixed AnyComment logo design in the footer of comments, #249 (credits @artikus11)
 * Fixed issue when social icons could be not well aligned when custom designed is used and global font size is bigger then usual, #250 (credits @artikus11)
 * Corrected description for reCAPTCHA integration about "Invisible" type, #264 (credits @LDSgent)
+* Fixed issue when email queue table was having incorrect structure which caused issue with email notifications, #266
 
 
 = 0.0.65 – 22.10.2018 =

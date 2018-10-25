@@ -12,8 +12,10 @@ class AnyCommentMigration_0_0_57 extends AnyCommentMigration {
 	 */
 	public function isApplied() {
 		global $wpdb;
-		$queryRes  = $wpdb->get_results( "SHOW COLUMNS FROM `{$this->getTable()}` LIKE 'url_thumbnail';", 'ARRAY_A' );
-		$queryRes2 = $wpdb->get_results( "SHOW COLUMNS FROM `{$this->getTable()}` LIKE 'type';", 'ARRAY_A' );
+		$table = 'anycomment_uploaded_files';
+
+		$queryRes  = $wpdb->get_results( "SHOW COLUMNS FROM $table LIKE 'url_thumbnail';", 'ARRAY_A' );
+		$queryRes2 = $wpdb->get_results( "SHOW COLUMNS FROM $table LIKE 'type';", 'ARRAY_A' );
 
 		return ! empty( $queryRes ) && count( $queryRes ) > 0 && ! empty( $queryRes2 ) && count( $queryRes2 ) > 0;
 	}
@@ -71,8 +73,11 @@ class AnyCommentMigration_0_0_57 extends AnyCommentMigration {
 	public function down() {
 		global $wpdb;
 
-		$sql  = "ALTER TABLE `{$this->getTable()}` DROP COLUMN `url_thumbnail`";
-		$sql2 = "ALTER TABLE `{$this->getTable()}` DROP COLUMN `type`";
+		$table = 'anycomment_uploaded_files';
+
+
+		$sql  = "ALTER TABLE $table DROP COLUMN `url_thumbnail`";
+		$sql2 = "ALTER TABLE $table DROP COLUMN `type`";
 
 		return $wpdb->query( $sql ) !== false && $wpdb->query( $sql2 ) !== false;
 	}

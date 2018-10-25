@@ -1,7 +1,7 @@
 <?php
 
 class AnyCommentMigration_0_0_50 extends AnyCommentMigration {
-	public $table   = 'email_queue';
+	public $table = 'email_queue';
 	public $version = '0.0.50';
 
 	/**
@@ -10,12 +10,13 @@ class AnyCommentMigration_0_0_50 extends AnyCommentMigration {
 	public function isApplied() {
 		global $wpdb;
 
-
 		$res  = $wpdb->get_results( "SHOW COLUMNS FROM `anycomment_email_queue` LIKE 'subject';", 'ARRAY_A' );
 		$res2 = $wpdb->get_results( "SHOW COLUMNS FROM `anycomment_email_queue` LIKE 'email';", 'ARRAY_A' );
+		$res3 = $wpdb->get_results( "SHOW COLUMNS FROM `anycomment_email_queue` LIKE 'is_sent';", 'ARRAY_A' );
 
-
-		return ! empty( $res ) && count( $res ) > 0 && ! empty( $res2 ) && count( $res2 ) > 0;
+		return ! empty( $res ) && count( $res ) > 0 &&
+		       ! empty( $res2 ) && count( $res2 ) > 0 &&
+		       ! empty( $res3 ) && count( $res3 ) > 0;
 	}
 
 	/**
@@ -24,11 +25,9 @@ class AnyCommentMigration_0_0_50 extends AnyCommentMigration {
 	public function up() {
 		global $wpdb;
 
-		$table = $this->getTable();
 
-		/**
-		 * Create email queue table
-		 */
+		$table = 'anycomment_email_queue';
+
 		$arr   = [];
 		$arr[] = "ALTER TABLE `$table` ADD COLUMN `subject` VARCHAR(255) NOT NULL";
 		$arr[] = "ALTER TABLE `$table` ADD COLUMN `email` VARCHAR(255) DEFAULT NULL";
