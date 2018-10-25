@@ -51,9 +51,10 @@ class LoginSocialList extends AnyCommentComponent {
                 {Object.keys(socials).map((item, index) => (
                     <LoginSocial key={index} social={socials[item]}/>
                 ))}
-                <li className="anycomment-form__guest-socials-text anycomment-form__guest-socials-text-as-guest anycomment-link"
-                    onClick={this.props.handleGuestFields}
-                    dangerouslySetInnerHTML={{__html: settings.i18.or_as_guest}}></li>
+                {!settings.options.isFormTypeSocials ?
+                    <li className="anycomment-form__guest-socials-text anycomment-form__guest-socials-text-as-guest anycomment-link"
+                        onClick={this.props.handleGuestFields}
+                        dangerouslySetInnerHTML={{__html: settings.i18.or_as_guest}}></li> : ''}
             </ul>
         );
     }

@@ -7,6 +7,7 @@
 * Same style for name when user does not have website or social available
 * JavaScript bundle is now having async to speed-up loading of comments, #256 (credits @mihdan)
 * Added ability to define comments background color, border radius, outside (margin) and inside (padding) space, #249
+* nofollow for plugin copyright, #249
 
 **Fixes:**
 

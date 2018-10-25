@@ -31,6 +31,7 @@ class CommentCopyright extends AnyCommentComponent {
         return (
             <footer className="anycomment anycomment-copy-footer">
                 {logoSvg} <a href="https://anycomment.io"
+                             rel="nofollow"
                              target="_blank">{settings.i18.footer_copyright}</a>
             </footer>
         );

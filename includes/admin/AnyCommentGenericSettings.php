@@ -489,10 +489,10 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'type'        => 'select',
 						'options'     => [
 							self::FORM_OPTION_ALL          => __( 'Social, WordPress & guests', 'anycomment' ),
-							self::FORM_OPTION_SOCIALS_ONLY => __( 'Socials & WordPress users only.', 'anycomment' ),
-							self::FORM_OPTION_GUEST_ONLY   => __( 'Guests only. ', 'anycomment' ),
+							self::FORM_OPTION_SOCIALS_ONLY => __( 'Socials & WordPress users only', 'anycomment' ),
+							self::FORM_OPTION_GUEST_ONLY   => __( 'Guests only', 'anycomment' ),
 						],
-						'description' => esc_html( __( 'Comment form', "anycomment" ) ),
+						'description' => esc_html( __( 'Users who able to leave comments.', "anycomment" ) ),
 					],
 					[
 						'id'          => self::OPTION_GUEST_FIELDS,
