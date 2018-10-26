@@ -165,7 +165,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 == Changelog ==
 
-= 0.0.66 – 25.10.2018 =
+= 0.0.66 – 26.10.2018 =
 
 **Enhancements:**
 
@@ -184,6 +184,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Corrected description for reCAPTCHA integration about "Invisible" type, #264 (credits @LDSgent)
 * Fixed issue when email queue table was having incorrect structure which caused issue with email notifications, #266
 * Fixed issue when send/save comment button was disabled on error and user could submit form again,  #260 (credits @mihdan)
+* Fixed issue when "or as guest" part was showing even when "Only social" option was chosen, #253
 
 
 = 0.0.65 – 22.10.2018 =
