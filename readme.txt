@@ -172,7 +172,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Same style for name when user does not have website or social available
 * JavaScript bundle is now having async to speed-up loading of comments, #256 (credits @mihdan)
 * Added ability to define comments background color, border radius, outside (margin) and inside (padding) space, #249
-* nofollow for plugin copyright, #249
+* nofollow for link in plugin copyright, #249 (credits @artikus11)
 * User is not alerted when comment was added in case when "Moderate first" option is enabled, as not users thought that comment was not send and sent duplicates, #249 (credits @artikus11)
 * Added ability to add admin links to all moderated comments or to single one, #246
 
