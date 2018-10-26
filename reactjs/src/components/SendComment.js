@@ -295,6 +295,15 @@ class SendComment extends AnyCommentComponent {
             .catch(function (error) {
                 self.setState({buttonEnabled: true});
                 self.showError(error);
+
+                if (settings.options.isModerateFirst) {
+                    const user = self.getCurrentUser();
+
+                    if (!('moderate_comments' in user.allcaps)) {
+                        toast.success(settings.i18.comment_waiting_moderation);
+                    }
+                }
+
             });
 
         return false;
@@ -370,6 +379,11 @@ class SendComment extends AnyCommentComponent {
                 self.prepareInitialForm();
                 self.props.handleJustAdded();
                 self.props.loadComments();
+
+                if (settings.options.isModerateFirst) {
+                    toast.success(settings.i18.comment_waiting_moderation);
+                }
+
                 return true;
             })
             .catch(function (error) {
