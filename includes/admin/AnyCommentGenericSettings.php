@@ -786,16 +786,16 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'description' => esc_html( __( 'Email template on new comment reply.', "anycomment" ) ),
 						'after'       => function () {
 							$supportedList = [
-								'{blogName}'         => __( 'Blog name as text', 'anycomment' ),
-								'{blogUrl}'          => __( 'Blog link as text', 'anycomment' ),
-								'{blogUrlHtml}'      => __( 'Blog name in HTML link', 'anycomment' ),
-								'{postTitle}'        => __( 'Post title as text', 'anycomment' ),
-								'{postUrl}'          => __( 'Post URL as text', 'anycomment' ),
-								'{postUrlHtml}'      => __( 'Post title in HTML link', 'anycomment' ),
-								'{commentText}'      => __( 'Comment text', 'anycomment' ),
-								'{commentFormatted}' => __( 'Comment text nicely formatted', 'anycomment' ),
-								'{replyUrl}'         => __( 'Reply link as text', 'anycomment' ),
-								'{replyButton}'      => __( 'Reply link as button', 'anycomment' ),
+								'{blogName}'            => __( 'Blog name as text', 'anycomment' ),
+								'{blogUrl}'             => __( 'Blog link as text', 'anycomment' ),
+								'{blogUrlHtml}'         => __( 'Blog name in HTML link', 'anycomment' ),
+								'{postTitle}'           => __( 'Post title as text', 'anycomment' ),
+								'{postUrl}'             => __( 'Post URL as text', 'anycomment' ),
+								'{postUrlHtml}'         => __( 'Post title in HTML link', 'anycomment' ),
+								'{commentText}'         => __( 'Comment text', 'anycomment' ),
+								'{commentFormatted}'    => __( 'Comment text nicely formatted', 'anycomment' ),
+								'{replyUrl}'            => __( 'Reply link as text', 'anycomment' ),
+								'{replyButton}'         => __( 'Reply link as button', 'anycomment' ),
 							];
 
 							$id = self::OPTION_NOTIFY_REPLY_EMAIL_TEMPLATE . time();
@@ -823,16 +823,18 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'description' => esc_html( __( 'Email template sent to admin about new comment.', "anycomment" ) ),
 						'after'       => function () {
 							$supportedList = [
-								'{blogName}'         => __( 'Blog name as text', 'anycomment' ),
-								'{blogUrl}'          => __( 'Blog link as text', 'anycomment' ),
-								'{blogUrlHtml}'      => __( 'Blog name in HTML link', 'anycomment' ),
-								'{postTitle}'        => __( 'Post title as text', 'anycomment' ),
-								'{postUrl}'          => __( 'Post URL as text', 'anycomment' ),
-								'{postUrlHtml}'      => __( 'Post title in HTML link', 'anycomment' ),
-								'{commentText}'      => __( 'Comment text', 'anycomment' ),
-								'{commentFormatted}' => __( 'Comment text nicely formatted', 'anycomment' ),
-								'{replyUrl}'         => __( 'Reply link as text', 'anycomment' ),
-								'{replyButton}'      => __( 'Reply link as button', 'anycomment' ),
+								'{blogName}'            => __( 'Blog name as text', 'anycomment' ),
+								'{blogUrl}'             => __( 'Blog link as text', 'anycomment' ),
+								'{blogUrlHtml}'         => __( 'Blog name in HTML link', 'anycomment' ),
+								'{postTitle}'           => __( 'Post title as text', 'anycomment' ),
+								'{postUrl}'             => __( 'Post URL as text', 'anycomment' ),
+								'{postUrlHtml}'         => __( 'Post title in HTML link', 'anycomment' ),
+								'{commentText}'         => __( 'Comment text', 'anycomment' ),
+								'{commentFormatted}'    => __( 'Comment text nicely formatted', 'anycomment' ),
+								'{replyUrl}'            => __( 'Reply link as text', 'anycomment' ),
+								'{replyButton}'         => __( 'Reply link as button', 'anycomment' ),
+								'{adminModerationUrl}' => __( 'Direct link to admin to see all comments waiting to reviewed', 'anycomment' ),
+								'{adminEditUrl}'       => __( 'Direct link to admin to edit comment', 'anycomment' ),
 							];
 
 							$id = self::OPTION_NOTIFY_ADMIN_EMAIL_TEMPLATE . time();

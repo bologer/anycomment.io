@@ -328,36 +328,36 @@ AND `comments`.`comment_ID`=%d";
 		$comment        = get_comment( $email->comment_ID );
 		$post           = get_post( $email->post_ID );
 		$cleanPermalink = get_permalink( $post );
-		$replyUrl       = sprintf( '%s#comment-%s', $cleanPermalink, $comment->comment_ID );
+		$reply_url      = sprintf( '%s#comment-%s', $cleanPermalink, $comment->comment_ID );
 
-		$blogName    = get_option( 'blogname' );
-		$blogUrl     = get_option( 'siteurl' );
-		$blogUrlHtml = sprintf( '<a href="%s">%s</a>', $blogUrl, $blogName );
+		$blog_name     = get_option( 'blogname' );
+		$blog_url      = get_option( 'siteurl' );
+		$blog_url_html = sprintf( '<a href="%s">%s</a>', $blog_url, $blog_name );
 
-		$postTitle   = '';
-		$postUrl     = '';
-		$postUrlHtml = '';
+		$post_title    = '';
+		$post_url      = '';
+		$post_url_html = '';
 
-		$commentText      = '';
-		$commentFormatted = '';
+		$comment_text      = '';
+		$comment_formatted = '';
 
 		if ( $post !== null ) {
-			$postTitle   = $post->post_title;
-			$postUrl     = $cleanPermalink;
-			$postUrlHtml = sprintf( '<a href="%s">%s</a>', $postUrl, $postTitle );
+			$post_title    = $post->post_title;
+			$post_url      = $cleanPermalink;
+			$post_url_html = sprintf( '<a href="%s">%s</a>', $post_url, $post_title );
 		}
 
 		if ( $comment !== null ) {
-			$commentText = $comment->comment_content;
+			$comment_text = $comment->comment_content;
 
-			$commentFormatted = '<div style="background-color:#eee; padding: 10px; font-size: 12pt; font-family: Verdana, Arial, sans-serif; line-height: 1.5;">';
-			$commentFormatted .= $commentText;
-			$commentFormatted .= '</div>';
+			$comment_formatted = '<div style="background-color:#eee; padding: 10px; font-size: 12pt; font-family: Verdana, Arial, sans-serif; line-height: 1.5;">';
+			$comment_formatted .= $comment_text;
+			$comment_formatted .= '</div>';
 		}
 
-		$replyButton = '<p><a href="' . $replyUrl . '" style="font-size: 15px;text-decoration:none;font-weight: 400;text-align: center;color: #fff;padding: 0 50px;line-height: 48px;background-color: #53af4a;display: inline-block;vertical-align: middle;border: 0;outline: 0;cursor: pointer;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;-webkit-appearance: none;-moz-appearance: none;appearance: none;white-space: nowrap;border-radius: 24px;">' . __( 'See', 'anycomment' ) . '</a></p>';
+		$reply_button = '<p><a href="' . $reply_url . '" style="font-size: 15px;text-decoration:none;font-weight: 400;text-align: center;color: #fff;padding: 0 50px;line-height: 48px;background-color: #53af4a;display: inline-block;vertical-align: middle;border: 0;outline: 0;cursor: pointer;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;-webkit-appearance: none;-moz-appearance: none;appearance: none;white-space: nowrap;border-radius: 24px;">' . __( 'See', 'anycomment' ) . '</a></p>';
 
-		$search      = [
+		$search = [
 			'{blogName}',
 			'{blogUrl}',
 			'{blogUrlHtml}',
@@ -367,19 +367,20 @@ AND `comments`.`comment_ID`=%d";
 			'{commentText}',
 			'{commentFormatted}',
 			'{replyUrl}',
-			'{replyButton}'
+			'{replyButton}',
 		];
+
 		$replacement = [
-			$blogName,
-			$blogUrl,
-			$blogUrlHtml,
-			$postTitle,
-			$postUrl,
-			$postUrlHtml,
-			$commentText,
-			$commentFormatted,
-			$replyUrl,
-			$replyButton
+			$blog_name,
+			$blog_url,
+			$blog_url_html,
+			$post_title,
+			$post_url,
+			$post_url_html,
+			$comment_text,
+			$comment_formatted,
+			$reply_url,
+			$reply_button,
 		];
 
 		$template = AnyCommentGenericSettings::get_notify_email_reply_template();
@@ -411,34 +412,37 @@ AND `comments`.`comment_ID`=%d";
 		$comment        = get_comment( $email->comment_ID );
 		$post           = get_post( $email->post_ID );
 		$cleanPermalink = get_permalink( $post );
-		$replyUrl       = sprintf( '%s#comment-%s', $cleanPermalink, $comment->comment_ID );
+		$reply_url      = sprintf( '%s#comment-%s', $cleanPermalink, $comment->comment_ID );
 
-		$blogName    = get_option( 'blogname' );
-		$blogUrl     = get_option( 'siteurl' );
-		$blogUrlHtml = sprintf( '<a href="%s">%s</a>', $blogUrl, $blogName );
+		$blog_name     = get_option( 'blogname' );
+		$blog_url      = get_option( 'siteurl' );
+		$blog_url_html = sprintf( '<a href="%s">%s</a>', $blog_url, $blog_name );
 
-		$postTitle   = '';
-		$postUrl     = '';
-		$postUrlHtml = '';
+		$post_title    = '';
+		$post_url      = '';
+		$post_url_html = '';
 
-		$commentText      = '';
-		$commentFormatted = '';
+		$comment_text      = '';
+		$comment_formatted = '';
+
+		$admin_moderation_url = esc_url( admin_url( 'edit-comments.php?comment_status=moderated' ) );
+		$admin_edit_url       = esc_url( admin_url( 'comment.php?action=editcomment&c=' . $comment->comment_ID ) );
 
 		if ( $post !== null ) {
-			$postTitle   = $post->post_title;
-			$postUrl     = $cleanPermalink;
-			$postUrlHtml = sprintf( '<a href="%s">%s</a>', $postUrl, $postTitle );
+			$post_title    = $post->post_title;
+			$post_url      = $cleanPermalink;
+			$post_url_html = sprintf( '<a href="%s">%s</a>', $post_url, $post_title );
 		}
 
 		if ( $comment !== null ) {
-			$commentText = $comment->comment_content;
+			$comment_text = $comment->comment_content;
 
-			$commentFormatted = '<div style="background-color:#eee; padding: 10px; font-size: 12pt; font-family: Verdana, Arial, sans-serif; line-height: 1.5;">';
-			$commentFormatted .= $commentText;
-			$commentFormatted .= '</div>';
+			$comment_formatted = '<div style="background-color:#eee; padding: 10px; font-size: 12pt; font-family: Verdana, Arial, sans-serif; line-height: 1.5;">';
+			$comment_formatted .= $comment_text;
+			$comment_formatted .= '</div>';
 		}
 
-		$replyButton = '<p><a href="' . $replyUrl . '" style="font-size: 15px;text-decoration:none;font-weight: 400;text-align: center;color: #fff;padding: 0 50px;line-height: 48px;background-color: #53af4a;display: inline-block;vertical-align: middle;border: 0;outline: 0;cursor: pointer;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;-webkit-appearance: none;-moz-appearance: none;appearance: none;white-space: nowrap;border-radius: 24px;">' . __( 'See', 'anycomment' ) . '</a></p>';
+		$reply_button = '<p><a href="' . $reply_url . '" style="font-size: 15px;text-decoration:none;font-weight: 400;text-align: center;color: #fff;padding: 0 50px;line-height: 48px;background-color: #53af4a;display: inline-block;vertical-align: middle;border: 0;outline: 0;cursor: pointer;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;-webkit-appearance: none;-moz-appearance: none;appearance: none;white-space: nowrap;border-radius: 24px;">' . __( 'See', 'anycomment' ) . '</a></p>';
 
 		$search      = [
 			'{blogName}',
@@ -450,19 +454,23 @@ AND `comments`.`comment_ID`=%d";
 			'{commentText}',
 			'{commentFormatted}',
 			'{replyUrl}',
-			'{replyButton}'
+			'{replyButton}',
+			'{adminModerationUrl}',
+			'{adminEditUrl}',
 		];
 		$replacement = [
-			$blogName,
-			$blogUrl,
-			$blogUrlHtml,
-			$postTitle,
-			$postUrl,
-			$postUrlHtml,
-			$commentText,
-			$commentFormatted,
-			$replyUrl,
-			$replyButton
+			$blog_name,
+			$blog_url,
+			$blog_url_html,
+			$post_title,
+			$post_url,
+			$post_url_html,
+			$comment_text,
+			$comment_formatted,
+			$reply_url,
+			$reply_button,
+			$admin_moderation_url,
+			$admin_edit_url
 		];
 
 		$template = AnyCommentGenericSettings::get_notify_email_admin_template();

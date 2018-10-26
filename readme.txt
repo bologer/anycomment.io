@@ -174,6 +174,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Added ability to define comments background color, border radius, outside (margin) and inside (padding) space, #249
 * nofollow for plugin copyright, #249
 * User is not alerted when comment was added in case when "Moderate first" option is enabled, as not users thought that comment was not send and sent duplicates, #249 (credits @artikus11)
+* Added ability to add admin links to all moderated comments or to single one, #246
 
 **Fixes:**
 
