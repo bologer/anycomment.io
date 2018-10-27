@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.0.67 – 27.10.2018
+
+**Enhancements:**
+
+
+
+**Fixes:**
+
+* Fixed translations in "Integration" tab regarding reCAPTCHA, #269
+
+
 ## 0.0.66 – 26.10.2018
 
 **Enhancements:**
