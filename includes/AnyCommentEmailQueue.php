@@ -63,7 +63,7 @@ class AnyCommentEmailQueue {
 	 * Get latest
 	 * @return AnyCommentEmailQueue|null|object
 	 */
-	public static function getNewest() {
+	public static function get_newest() {
 		$tableName = static::tableName();
 		$sql       = "SELECT * FROM `$tableName` ORDER BY `id` DESC LIMIT 1";
 
@@ -75,7 +75,7 @@ class AnyCommentEmailQueue {
 	 *
 	 * @return null|AnyCommentEmailQueue[]
 	 */
-	public static function grabRepliesToSend() {
+	public static function grab_replies_to_send() {
 		$tableName = static::tableName();
 		$sql       = "SELECT `emails`.* FROM `$tableName` `emails` WHERE `emails`.`is_sent` = 0";
 
@@ -89,7 +89,7 @@ class AnyCommentEmailQueue {
 	 *
 	 * @return bool
 	 */
-	public static function isSent( $email_id ) {
+	public static function is_sent( $email_id ) {
 		if ( empty( $email_id ) || ! is_numeric( $email_id ) ) {
 			return false;
 		}
@@ -122,12 +122,12 @@ class AnyCommentEmailQueue {
 	 *
 	 * @return bool
 	 */
-	public static function markAsSent( $email_id ) {
+	public static function mark_as_sent( $email_id ) {
 		if ( empty( $email_id ) || ! is_numeric( $email_id ) ) {
 			return false;
 		}
 
-		if ( static::isSent( $email_id ) ) {
+		if ( static::is_sent( $email_id ) ) {
 			return true;
 		}
 
@@ -147,7 +147,7 @@ class AnyCommentEmailQueue {
 	 *
 	 * @return AnyCommentEmailQueue|bool|int
 	 */
-	public static function addAsReply( $comment ) {
+	public static function add_as_reply( $comment ) {
 
 		if ( ! $comment instanceof WP_Comment || (int) $comment->comment_parent === 0 ) {
 			return false;
@@ -194,7 +194,7 @@ AND `comments`.`comment_ID`=%d";
 		$model->email      = ! empty( $result ) ? $result->userTableEmail : $parentCommentEmail;
 		$model->post_ID    = $comment->comment_post_ID;
 		$model->comment_ID = $comment->comment_ID;
-		$model->content    = AnyCommentEmailQueue::generateReplyEmail( $model );
+		$model->content    = AnyCommentEmailQueue::generate_reply_email( $model );
 
 		$isAdded = AnyCommentEmailQueue::add( $model );
 
@@ -208,7 +208,7 @@ AND `comments`.`comment_ID`=%d";
 	 *
 	 * @return AnyCommentEmailQueue|bool|int
 	 */
-	public static function addAsAdminNotification( $comment ) {
+	public static function add_as_admin_notification( $comment ) {
 		if ( ! $comment instanceof WP_Comment ) {
 			return false;
 		}
@@ -239,7 +239,7 @@ AND `comments`.`comment_ID`=%d";
 		$email->subject    = $subject;
 		$email->post_ID    = $comment->comment_post_ID;
 		$email->comment_ID = $comment->comment_ID;
-		$email->content    = AnyCommentEmailQueue::generateAdminEmail( $email );
+		$email->content    = AnyCommentEmailQueue::generate_admin_email( $email );
 
 		$isAdded = AnyCommentEmailQueue::add( $email, 'bool' );
 
@@ -324,7 +324,7 @@ AND `comments`.`comment_ID`=%d";
 	 *
 	 * @return string HTML formatted content of email.
 	 */
-	public static function generateReplyEmail( $email ) {
+	public static function generate_reply_email( $email ) {
 		$comment        = get_comment( $email->comment_ID );
 		$post           = get_post( $email->post_ID );
 		$cleanPermalink = get_permalink( $post );
@@ -385,7 +385,7 @@ AND `comments`.`comment_ID`=%d";
 
 		$template = AnyCommentGenericSettings::get_notify_email_reply_template();
 
-		return static::prepareEmailTemplate( $template, $search, $replacement );
+		return static::prepare_email_template( $template, $search, $replacement );
 	}
 
 	/**
@@ -408,7 +408,7 @@ AND `comments`.`comment_ID`=%d";
 	 * @return string
 	 * todo: need rewrite as duplicate code of email template above, for now good enought
 	 */
-	public static function generateAdminEmail( $email ) {
+	public static function generate_admin_email( $email ) {
 		$comment        = get_comment( $email->comment_ID );
 		$post           = get_post( $email->post_ID );
 		$cleanPermalink = get_permalink( $post );
@@ -475,7 +475,7 @@ AND `comments`.`comment_ID`=%d";
 
 		$template = AnyCommentGenericSettings::get_notify_email_admin_template();
 
-		return static::prepareEmailTemplate( $template, $search, $replacement );
+		return static::prepare_email_template( $template, $search, $replacement );
 	}
 
 	/**
@@ -487,7 +487,7 @@ AND `comments`.`comment_ID`=%d";
 	 *
 	 * @return string
 	 */
-	public static function prepareEmailTemplate( $content, $search, $replacement ) {
+	public static function prepare_email_template( $content, $search, $replacement ) {
 		$content = str_replace( $search, $replacement, $content );
 
 		$content = preg_replace( '/\{.*?\}/', '', $content );

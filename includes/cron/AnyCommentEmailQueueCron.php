@@ -44,7 +44,7 @@ class AnyCommentEmailQueueCron {
 	 * @return bool
 	 */
 	public function send_emails() {
-		$emails = AnyCommentEmailQueue::grabRepliesToSend();
+		$emails = AnyCommentEmailQueue::grab_replies_to_send();
 
 		if ( empty( $emails ) ) {
 			return false;
@@ -58,7 +58,7 @@ class AnyCommentEmailQueueCron {
 		foreach ( $emails as $key => $email ) {
 
 			if ( empty( $email->email ) ) {
-				AnyCommentEmailQueue::markAsSent( $email->ID );
+				AnyCommentEmailQueue::mark_as_sent( $email->ID );
 				continue;
 			}
 
@@ -77,7 +77,7 @@ class AnyCommentEmailQueueCron {
 				true;
 
 			if ( $isSent ) {
-				AnyCommentEmailQueue::markAsSent( $email->ID );
+				AnyCommentEmailQueue::mark_as_sent( $email->ID );
 				$successCount ++;
 			}
 		}
