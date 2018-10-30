@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import {toast} from 'react-toastify';
+import CommonHelper from "./helpers/CommonHelper";
+
 
 /**
  * Generic wrapper for React component.
@@ -25,19 +27,28 @@ class AnyCommentComponent extends React.Component {
      * @returns {boolean}
      */
     moveToCommentAndHighlight(id, highlightTime = 2500, e) {
-        const $ = window.jQuery,
-            element = $(id),
+
+        if (!id) {
+            return false;
+        }
+
+        if (id.indexOf('#') !== -1) {
+            id.replace('#', '');
+        }
+
+        const element = document.getElementById(id),
             highlightClass = 'comment-single-highlight';
 
-        if (!element || element && !element.length) {
+        if (!element) {
             return false;
         }
 
         this.moveToElement(id, function () {
-            element.addClass(highlightClass);
+
+            element.classList.add(highlightClass);
 
             setTimeout(function () {
-                element.removeClass(highlightClass);
+                element.classList.remove(highlightClass);
             }, highlightTime);
         });
 
@@ -51,11 +62,7 @@ class AnyCommentComponent extends React.Component {
      * @param callback
      */
     moveToElement(id, callback) {
-        const $ = window.jQuery;
-
-        $([document.documentElement, document.body]).animate({
-            scrollTop: $(id).offset().top - 60,
-        }, 500, callback);
+        CommonHelper.moveToElement(id, callback);
     }
 
     /**
@@ -77,7 +84,7 @@ class AnyCommentComponent extends React.Component {
      */
     hasSpecificCommentAnchor() {
         const hash = window.location.hash;
-        return hash !== "" && /#comment-\d{1,11}$/.test(hash);
+        return hash !== "" && /#comment-\d{1,20}$/.test(hash);
     }
 
     /**

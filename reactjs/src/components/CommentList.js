@@ -172,9 +172,10 @@ class CommentList extends AnyCommentComponent {
 
     /**
      * Handles load more comments.
+     * @param callback {response, error}
      * @returns {*}
      */
-    handleLoadMore() {
+    handleLoadMore(callback = null) {
         if (this.state.isLastPage) {
             return false;
         }
@@ -203,6 +204,9 @@ class CommentList extends AnyCommentComponent {
                     offset: self.state.offset + limit,
                     isLastPage: !response.data || response.data.length < limit
                 });
+                if (callback !== null) {
+                    callback(response, null);
+                }
             })
             .catch(function (error) {
                 self.setState({
@@ -210,6 +214,10 @@ class CommentList extends AnyCommentComponent {
                     isError: true
                 });
                 self.showError(error);
+
+                if (callback !== null) {
+                    callback(null, error);
+                }
             });
     }
 

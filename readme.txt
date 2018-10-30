@@ -174,6 +174,8 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 **Fixes:**
 
 * Fixed translations in "Integration" tab regarding reCAPTCHA, #269
+* Fixed issue when comments were not displaying in IE, #272
+* Minor fixes to CSS for proper alignment of elements
 
 
 = 0.0.66 – 26.10.2018 =

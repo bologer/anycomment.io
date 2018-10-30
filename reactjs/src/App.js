@@ -7,6 +7,8 @@ import {ToastContainer} from 'react-toastify'
 import {toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import GlobalHeader from "./components/GlobalHeader";
+import CommonHelper from "./components/helpers/CommonHelper";
+
 
 /**
  * App is main compontent of the application.
@@ -17,13 +19,15 @@ class App extends AnyCommentComponent {
 
         this.state = {
             shouldLoad: false,
-            rootElement: 'anycomment-root-inner'
+            rootElement: 'anycomment-root',
+            rootElementInner: 'anycomment-root-inner'
         };
 
         this.handleLoadOnScroll = this.handleLoadOnScroll.bind(this);
         this.handleScrollToComments = this.handleScrollToComments.bind(this);
         this.handleErrors = this.handleErrors.bind(this);
     }
+
 
     /**
      * Handle situation when required to load comments on scroll to them.
@@ -34,36 +38,39 @@ class App extends AnyCommentComponent {
         }
 
         const self = this,
-            {options} = this.props.settings,
-            $ = window.jQuery;
+            {options} = this.props.settings;
 
         /**
          * When load on scroll is not enabled or
          * there is scroll to comments or specific comment in the url hash.
          */
         if (!options.isLoadOnScroll || (this.hasCommentSectionAnchor() || this.hasSpecificCommentAnchor())) {
-            $(document).ready(function () {
-                self.setState({shouldLoad: true});
-            });
+            self.setState({shouldLoad: true});
         }
 
-        const root = $('#anycomment-root'),
-            tillTop = root.offset().top;
+        const root = document.getElementById('anycomment-root');
+
+        if (!root) {
+            return;
+        }
+
+        const tillTop = root.offsetTop;
 
         if (window.outerHeight <= window.innerHeight) {
             self.setState({shouldLoad: true});
             return false;
         }
 
-        $(window).on('scroll', function () {
+        window.addEventListener('scroll', function () {
 
             let wH = window.innerHeight,
-                currentTop = $(this).scrollTop();
+                currentTop = CommonHelper.scrollTop();
 
             wH = wH * 0.9;
 
             if ((currentTop + wH) > tillTop) {
-                $(window).off('scroll');
+                window.removeEventListener('scroll', function () {
+                });
                 self.setState({shouldLoad: true});
             }
         });
@@ -75,14 +82,36 @@ class App extends AnyCommentComponent {
     handleScrollToComments() {
         const self = this;
         if (this.hasCommentSectionAnchor()) {
-            const rootEl = '#' + this.state.rootElement;
             const interval = setInterval(function () {
-                let el = document.getElementById(rootEl.replace('#', ''));
+                let el = document.getElementById(self.state.rootElement);
+                console.log(el);
                 if (el) {
-                    self.moveToElement(rootEl);
+                    self.moveToElement(self.state.rootElement);
                     clearInterval(interval);
                 }
             }, 100);
+        }
+    }
+
+    /**
+     * Make plugin IE compatible.
+     */
+    maybeAddIEMeta() {
+        const metas = document.getElementsByTagName('meta');
+
+        let found = false;
+        for (let i = 0; i < metas.length; i++) {
+            if (metas[i].getAttribute('http-equiv') === 'X-UA-Compatible') {
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            var meta = document.createElement('meta');
+            meta.httpEquiv = "X-UA-Compatible";
+            meta.content = "IE=edge";
+            document.getElementsByTagName('head')[0].appendChild(meta);
         }
     }
 
@@ -101,6 +130,7 @@ class App extends AnyCommentComponent {
         this.handleScrollToComments();
         this.handleLoadOnScroll();
         this.handleErrors();
+        this.maybeAddIEMeta();
     }
 
     render() {
@@ -111,7 +141,7 @@ class App extends AnyCommentComponent {
         }
 
         return (
-            <div id={this.state.rootElement} className="anycomment">
+            <div id={this.state.rootElementInner} className="anycomment">
                 <ToastContainer/>
                 <GlobalHeader/>
                 <CommentList/>
