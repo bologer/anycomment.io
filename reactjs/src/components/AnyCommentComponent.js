@@ -33,11 +33,13 @@ class AnyCommentComponent extends React.Component {
         }
 
         if (id.indexOf('#') !== -1) {
-            id.replace('#', '');
+            id = id.replace('#', '');
         }
 
         const element = document.getElementById(id),
             highlightClass = 'comment-single-highlight';
+
+        console.log(id, element);
 
         if (!element) {
             return false;

@@ -13,6 +13,7 @@
 * Fixed issue when comments were not displaying in IE, #272
 * Minor fixes to CSS for proper alignment of elements
 * Fixed issue when comments were not shown on short page, #275
+* Fixed issue when on some websites, plugin was conflicting with elements based on events from jQuery, #274
 
 
 ## 0.0.66 – 26.10.2018
