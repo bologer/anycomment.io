@@ -192,6 +192,11 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		/**
 		 * Option to allow comments from users who authorized using social.
 		 */
+		const FORM_OPTION_WORDPRESS_ONLY = 'form_option_wordpress_only';
+
+		/**
+		 * Option to allow comments from users who authorized using social.
+		 */
 		const FORM_OPTION_SOCIALS_ONLY = 'form_option_socials_only';
 
 		/**
@@ -488,9 +493,10 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'title'       => __( 'Comment form', "anycomment" ),
 						'type'        => 'select',
 						'options'     => [
-							self::FORM_OPTION_ALL          => __( 'Social, WordPress & guests', 'anycomment' ),
-							self::FORM_OPTION_SOCIALS_ONLY => __( 'Socials & WordPress users only', 'anycomment' ),
-							self::FORM_OPTION_GUEST_ONLY   => __( 'Guests only', 'anycomment' ),
+							self::FORM_OPTION_ALL            => __( 'Anyone', 'anycomment' ),
+							self::FORM_OPTION_WORDPRESS_ONLY => __( 'WordPress only', 'anycomment' ),
+							self::FORM_OPTION_SOCIALS_ONLY   => __( 'Socials only', 'anycomment' ),
+							self::FORM_OPTION_GUEST_ONLY     => __( 'Guests only', 'anycomment' ),
 						],
 						'description' => esc_html( __( 'Users who able to leave comments.', "anycomment" ) ),
 					],
@@ -786,16 +792,16 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'description' => esc_html( __( 'Email template on new comment reply.', "anycomment" ) ),
 						'after'       => function () {
 							$supportedList = [
-								'{blogName}'            => __( 'Blog name as text', 'anycomment' ),
-								'{blogUrl}'             => __( 'Blog link as text', 'anycomment' ),
-								'{blogUrlHtml}'         => __( 'Blog name in HTML link', 'anycomment' ),
-								'{postTitle}'           => __( 'Post title as text', 'anycomment' ),
-								'{postUrl}'             => __( 'Post URL as text', 'anycomment' ),
-								'{postUrlHtml}'         => __( 'Post title in HTML link', 'anycomment' ),
-								'{commentText}'         => __( 'Comment text', 'anycomment' ),
-								'{commentFormatted}'    => __( 'Comment text nicely formatted', 'anycomment' ),
-								'{replyUrl}'            => __( 'Reply link as text', 'anycomment' ),
-								'{replyButton}'         => __( 'Reply link as button', 'anycomment' ),
+								'{blogName}'         => __( 'Blog name as text', 'anycomment' ),
+								'{blogUrl}'          => __( 'Blog link as text', 'anycomment' ),
+								'{blogUrlHtml}'      => __( 'Blog name in HTML link', 'anycomment' ),
+								'{postTitle}'        => __( 'Post title as text', 'anycomment' ),
+								'{postUrl}'          => __( 'Post URL as text', 'anycomment' ),
+								'{postUrlHtml}'      => __( 'Post title in HTML link', 'anycomment' ),
+								'{commentText}'      => __( 'Comment text', 'anycomment' ),
+								'{commentFormatted}' => __( 'Comment text nicely formatted', 'anycomment' ),
+								'{replyUrl}'         => __( 'Reply link as text', 'anycomment' ),
+								'{replyButton}'      => __( 'Reply link as button', 'anycomment' ),
 							];
 
 							$id = self::OPTION_NOTIFY_REPLY_EMAIL_TEMPLATE . time();
@@ -823,16 +829,16 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'description' => esc_html( __( 'Email template sent to admin about new comment.', "anycomment" ) ),
 						'after'       => function () {
 							$supportedList = [
-								'{blogName}'            => __( 'Blog name as text', 'anycomment' ),
-								'{blogUrl}'             => __( 'Blog link as text', 'anycomment' ),
-								'{blogUrlHtml}'         => __( 'Blog name in HTML link', 'anycomment' ),
-								'{postTitle}'           => __( 'Post title as text', 'anycomment' ),
-								'{postUrl}'             => __( 'Post URL as text', 'anycomment' ),
-								'{postUrlHtml}'         => __( 'Post title in HTML link', 'anycomment' ),
-								'{commentText}'         => __( 'Comment text', 'anycomment' ),
-								'{commentFormatted}'    => __( 'Comment text nicely formatted', 'anycomment' ),
-								'{replyUrl}'            => __( 'Reply link as text', 'anycomment' ),
-								'{replyButton}'         => __( 'Reply link as button', 'anycomment' ),
+								'{blogName}'           => __( 'Blog name as text', 'anycomment' ),
+								'{blogUrl}'            => __( 'Blog link as text', 'anycomment' ),
+								'{blogUrlHtml}'        => __( 'Blog name in HTML link', 'anycomment' ),
+								'{postTitle}'          => __( 'Post title as text', 'anycomment' ),
+								'{postUrl}'            => __( 'Post URL as text', 'anycomment' ),
+								'{postUrlHtml}'        => __( 'Post title in HTML link', 'anycomment' ),
+								'{commentText}'        => __( 'Comment text', 'anycomment' ),
+								'{commentFormatted}'   => __( 'Comment text nicely formatted', 'anycomment' ),
+								'{replyUrl}'           => __( 'Reply link as text', 'anycomment' ),
+								'{replyButton}'        => __( 'Reply link as button', 'anycomment' ),
 								'{adminModerationUrl}' => __( 'Direct link to admin to see all comments waiting to reviewed', 'anycomment' ),
 								'{adminEditUrl}'       => __( 'Direct link to admin to edit comment', 'anycomment' ),
 							];
@@ -1893,6 +1899,15 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 */
 		public static function is_form_type_all() {
 			return static::get_form_type() === self::FORM_OPTION_ALL;
+		}
+
+		/**
+		 * Check whether form type is for authorized WordPress users only.
+		 *
+		 * @return bool
+		 */
+		public static function is_form_type_wordpress() {
+			return static::get_form_type() === self::FORM_OPTION_WORDPRESS_ONLY;
 		}
 
 		/**

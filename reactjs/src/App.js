@@ -33,7 +33,9 @@ class App extends AnyCommentComponent {
      * Handle situation when required to load comments on scroll to them.
      */
     handleLoadOnScroll() {
-        if (this.state.shouldLoad) {
+        const {shouldLoad} = this.state;
+
+        if (shouldLoad) {
             return false;
         }
 
@@ -44,36 +46,49 @@ class App extends AnyCommentComponent {
          * When load on scroll is not enabled or
          * there is scroll to comments or specific comment in the url hash.
          */
-        if (!options.isLoadOnScroll || (this.hasCommentSectionAnchor() || this.hasSpecificCommentAnchor())) {
+        if (this.commentsVisible() || !options.isLoadOnScroll || (this.hasCommentSectionAnchor() || this.hasSpecificCommentAnchor())) {
             self.setState({shouldLoad: true});
         }
 
+        if (!shouldLoad) {
+            window.addEventListener('scroll', function () {
+                if (self.commentsVisible()) {
+                    window.removeEventListener('scroll', function () {
+                    });
+                    self.setState({shouldLoad: true});
+                }
+            });
+        }
+    }
+
+    commentsVisible() {
         const root = document.getElementById('anycomment-root');
 
         if (!root) {
-            return;
-        }
-
-        const tillTop = root.offsetTop;
-
-        if (window.outerHeight <= window.innerHeight) {
-            self.setState({shouldLoad: true});
             return false;
         }
 
-        window.addEventListener('scroll', function () {
+        const tillTop = root.offsetTop,
+            body = document.body,
+            html = document.documentElement;
 
-            let wH = window.innerHeight,
-                currentTop = CommonHelper.scrollTop();
+        const height = Math.max(body.scrollHeight, body.offsetHeight,
+            html.clientHeight, html.scrollHeight, html.offsetHeight);
 
-            wH = wH * 0.9;
+        if (height <= window.innerHeight) {
+            return true;
+        }
 
-            if ((currentTop + wH) > tillTop) {
-                window.removeEventListener('scroll', function () {
-                });
-                self.setState({shouldLoad: true});
-            }
-        });
+        let wH = window.innerHeight,
+            currentTop = CommonHelper.scrollTop();
+
+        wH = wH * 0.9;
+
+        if ((currentTop + wH) > tillTop) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -84,7 +99,6 @@ class App extends AnyCommentComponent {
         if (this.hasCommentSectionAnchor()) {
             const interval = setInterval(function () {
                 let el = document.getElementById(self.state.rootElement);
-                console.log(el);
                 if (el) {
                     self.moveToElement(self.state.rootElement);
                     clearInterval(interval);

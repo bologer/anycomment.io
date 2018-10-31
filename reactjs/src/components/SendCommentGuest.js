@@ -19,6 +19,28 @@ class SendCommentGuest extends AnyCommentComponent {
         this.setState({showGuestFields: !this.state.showGuestFields});
     };
 
+    /**
+     * Check whether it is required to show social icons.
+     *
+     * @returns {*}
+     */
+    showSocialIcons = () => {
+        const options = this.getOptions();
+
+        return options.isFormTypeWordpress || options.isFormTypeSocials || options.isFormTypeAll;
+    };
+
+    /**
+     * Check whether it is required to show guest fields such as name, email, website.
+     *
+     * @returns {*}
+     */
+    showGuestFields = () => {
+        const options = this.getOptions();
+
+        return options.isFormTypeGuests || options.isFormTypeAll;
+    };
+
     componentDidMount() {
         const settings = this.getSettings();
 
@@ -69,19 +91,19 @@ class SendCommentGuest extends AnyCommentComponent {
             }
         });
 
-        const guestInputList = this.state.showGuestFields && elementInputs.length ?
+        const guestInputList = this.showGuestFields() && this.state.showGuestFields && elementInputs.length ?
             <div
                 className={"anycomment anycomment-form__inputs anycomment-form__inputs-" + elementInputs.length}>
                 {elementInputs}
-            </div> : '';
+            </div> : null;
 
         return <React.Fragment>
-            <div className="anycomment anycomment-form__guest-socials">
-                {(settings.options.isFormTypeSocials || settings.options.isFormTypeAll) ?
-                    <LoginSocialList handleGuestFields={this.handleGuestFields}/> : ''}
-            </div>
+            {this.showSocialIcons() ?
+                <div className="anycomment anycomment-form__guest-socials">
+                    <LoginSocialList handleGuestFields={this.handleGuestFields}/>
+                </div> : null}
 
-            {settings.options.isFormTypeGuests || settings.options.isFormTypeAll ? guestInputList : ''}
+            {guestInputList}
         </React.Fragment>;
     }
 }

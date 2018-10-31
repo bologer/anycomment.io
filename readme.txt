@@ -170,13 +170,14 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 **Enhancements:**
 
 * Added original comments wrapper. Should help themes align comments properly, #283
-
+* Added "WordPress only" as a form type in "Elements" tab
 
 **Fixes:**
 
 * Fixed translations in "Integration" tab regarding reCAPTCHA, #269
 * Fixed issue when comments were not displaying in IE, #272
 * Minor fixes to CSS for proper alignment of elements
+* Fixed issue when comments were not shown on short page, #275
 
 
 = 0.0.66 – 26.10.2018 =

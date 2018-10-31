@@ -537,8 +537,16 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			$prepared_comment['comment_date_gmt'] = current_time( 'mysql', true );
 		}
 
-		if ( ! is_user_logged_in() && ! ( AnyCommentGenericSettings::is_form_type_guests() || AnyCommentGenericSettings::is_form_type_all() ) ) {
-			return new WP_Error( 'rest_user_social_to_login', __( 'Please use any of the available social networks to leave a comment', 'anycomment' ), [ 'status' => 400 ] );
+		$should_use_wordpress_login_form = ! is_user_logged_in() && AnyCommentGenericSettings::is_form_type_wordpress();
+
+		if ( $should_use_wordpress_login_form ) {
+			return new WP_Error( 'rest_use_wordpress_to_login', __( 'Please login to leave a comment', 'anycomment' ), [ 'status' => 400 ] );
+		}
+
+		$should_use_social = ! is_user_logged_in() && AnyCommentGenericSettings::is_form_type_socials();
+
+		if ( ! $should_use_wordpress_login_form && $should_use_social ) {
+			return new WP_Error( 'rest_use_social_to_login', __( 'Please use any of the available social networks to leave a comment', 'anycomment' ), [ 'status' => 400 ] );
 		}
 
 		if ( is_user_logged_in() ) {
@@ -595,7 +603,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		}
 
 		$should_moderate    = ! current_user_can( 'moderate_comments' ) && AnyCommentGenericSettings::is_moderate_first();
-		$has_filtered_words = ! current_user_can( 'moderate_comments' ) && AnyCommentComments::hasModerateWords( $comment_id );
+		$has_filtered_words = ! current_user_can( 'moderate_comments' ) && AnyCommentComments::has_moderate_words( $comment_id );
 		$has_links          = ! current_user_can( 'moderate_comments' ) && AnyCommentGenericSettings::is_links_on_hold() && AnyCommentComments::has_links( $comment_id );
 
 		if ( $should_moderate || $has_filtered_words || $has_links ) {
@@ -605,11 +613,11 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		$comment = get_comment( $comment_id );
 
 		if ( AnyCommentGenericSettings::is_notify_on_new_reply() ) {
-			AnyCommentEmailQueue::addAsReply( $comment );
+			AnyCommentEmailQueue::add_as_reply( $comment );
 		}
 
 		if ( AnyCommentGenericSettings::is_notify_admin() ) {
-			AnyCommentEmailQueue::addAsAdminNotification( $comment );
+			AnyCommentEmailQueue::add_as_admin_notification( $comment );
 		}
 
 		$schema = $this->get_item_schema();

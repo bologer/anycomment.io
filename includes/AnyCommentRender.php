@@ -149,6 +149,7 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 						'isFormTypeAll'          => AnyCommentGenericSettings::is_form_type_all(),
 						'isFormTypeGuests'       => AnyCommentGenericSettings::is_form_type_guests(),
 						'isFormTypeSocials'      => AnyCommentGenericSettings::is_form_type_socials(),
+						'isFormTypeWordpress'    => AnyCommentGenericSettings::is_form_type_wordpress(),
 						'isFileUploadAllowed'    => AnyCommentGenericSettings::is_file_upload_allowed(),
 						'isGuestCanUpload'       => AnyCommentGenericSettings::is_guest_can_upload(),
 						'fileMimeTypes'          => AnyCommentGenericSettings::get_file_mime_types(),
