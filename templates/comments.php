@@ -15,4 +15,6 @@ if ( post_password_required() || ! comments_open() ) {
 }
 
 ?>
-<div id="anycomment-root"></div>
+<div id="comments">
+    <div id="anycomment-root"></div>
+</div>

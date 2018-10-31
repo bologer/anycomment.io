@@ -4,7 +4,7 @@
 
 **Enhancements:**
 
-
+* Added original comments wrapper. Should help themes align comments properly, #283
 
 **Fixes:**
 

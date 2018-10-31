@@ -169,6 +169,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Enhancements:**
 
+* Added original comments wrapper. Should help themes align comments properly, #283
 
 
 **Fixes:**
