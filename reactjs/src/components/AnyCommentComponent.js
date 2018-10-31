@@ -39,8 +39,6 @@ class AnyCommentComponent extends React.Component {
         const element = document.getElementById(id),
             highlightClass = 'comment-single-highlight';
 
-        console.log(id, element);
-
         if (!element) {
             return false;
         }
