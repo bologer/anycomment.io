@@ -171,6 +171,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 * Added original comments wrapper. Should help themes align comments properly, #283
 * Added "WordPress only" as a form type in "Elements" tab
+* Added new option under "Generic" tab to define comment update time in minutes
 
 **Fixes:**
 

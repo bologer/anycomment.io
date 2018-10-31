@@ -310,17 +310,16 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 		 * Check whether it is too old to edit (update/delete) comment.
 		 *
 		 * @param WP_Comment $comment Comment to be checked.
-		 * @param int $minutes Number of minutes comment allow to be edited.
-		 *
-		 * Note: if `$minutes` is below 5, it will be set to 5 as it is the default value.
 		 *
 		 * @return bool
 		 */
-		public function is_old_to_edit( $comment, $minutes = 5 ) {
+		public function is_old_to_edit( $comment ) {
 			$commentTime = strtotime( $comment->comment_date_gmt );
 
-			if ( (int) $minutes < 5 ) {
-				$minutes = 5;
+			$minutes = AnyCommentGenericSettings::get_comment_update_time();
+
+			if ( $minutes === 0 ) {
+				return false;
 			}
 
 			$secondsToEdit        = (int) $minutes * 60;

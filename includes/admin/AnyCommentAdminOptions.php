@@ -533,7 +533,7 @@ EOT;
 			if ( ! empty( $this->default_options ) ) {
 				foreach ( $this->default_options as $key => $optionValue ) {
 					$setDefault = ! isset( $this->options[ $key ] ) && ! strpos( $key, 'toggle' ) ||
-					              isset( $this->options[ $key ] ) && empty( $this->options[ $key ] );
+					              isset( $this->options[ $key ] ) && $this->options[ $key ] != 0 && empty( $this->options[ $key ] );
 					if ( $setDefault ) {
 						$this->options[ $key ] = $optionValue;
 					}

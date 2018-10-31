@@ -111,6 +111,11 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		const OPTION_COUNT_PER_PAGE = 'option_comments_count_per_page';
 
 		/**
+		 * Comment update time.
+		 */
+		const OPTION_COMMENT_UPDATE_TIME = 'option_comment_update_time';
+
+		/**
 		 * Link to the user agreement.
 		 */
 		const OPTION_USER_AGREEMENT_LINK = 'option_comments_user_agreement_link';
@@ -271,6 +276,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 */
 		protected $default_options = [
 			self::OPTION_COPYRIGHT_TOGGLE        => 'on',
+			self::OPTION_COMMENT_UPDATE_TIME     => 5,
 			self::OPTION_COUNT_PER_PAGE          => 20,
 			self::OPTION_INTERVAL_COMMENTS_CHECK => 10,
 
@@ -405,6 +411,12 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 							self::DEFAULT_ROLE_SUBSCRIBER        => __( 'Subscriber', 'anycomment' ),
 							self::DEFAULT_ROLE_SOCIAL_SUBSCRIBER => __( 'Social Network Subscriber', 'anycomment' ),
 						]
+					],
+					[
+						'id'          => self::OPTION_COMMENT_UPDATE_TIME,
+						'title'       => __( 'Comment Update Time', "anycomment" ),
+						'type'        => 'number',
+						'description' => esc_html( __( 'Number of minutes user can update his comment. "0" or empty for no limit.', "anycomment" ) )
 					],
 					[
 						'id'          => self::OPTION_COUNT_PER_PAGE,
@@ -1773,6 +1785,22 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 
 			return $value;
 		}
+
+		/**
+		 * Get comment update time in minutes.
+		 *
+		 * @return int
+		 */
+		public static function get_comment_update_time() {
+			$value = (int) static::instance()->get_option( self::OPTION_COMMENT_UPDATE_TIME );
+
+			if ( empty( $value ) || (int) $value === 0 || $value < 1 ) {
+				$value = 0;
+			}
+
+			return $value;
+		}
+
 
 		/**
 		 * Get default sort order.
