@@ -28,7 +28,7 @@ class AnyCommentProblemNotifier {
 			$items[] = [
 				'level'   => self::LEVEL_CRITICAL,
 				'type'    => self::TYPE_PLUGIN,
-				'message' => sprintf( __( 'You have <a href="%s">Clearfy</a> activated, please make sure "Remove REST API Links" is "Off" under "Performance" tab as it may cause problems to load comments.', 'anycomment' ), '/wp-admin/admin.php?page=performance-wbcr_clearfy' )
+				'message' => sprintf( 'You have Clearfy activated, please make sure "Remove REST API Links" is "Off" under "Performance" tab and all options under "Server headers and response" in "SEO" tab are "Off" as it may cause problems to load comments.', 'anycomment' )
 			];
 		}
 
