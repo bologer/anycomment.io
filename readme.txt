@@ -181,6 +181,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Minor fixes to CSS for proper alignment of elements
 * Fixed issue when comments were not shown on short page, #275
 * Fixed issue when on some websites, plugin was conflicting with elements based on events from jQuery, #274
+* Fixed issue when facebook URL was longer then 100 chars. Now such URLs will be added to user meta, #285
 
 
 = 0.0.66 – 26.10.2018 =

@@ -511,16 +511,19 @@ if ( ! class_exists( 'AnyCommentSocialAuth' ) ) :
 				$user->email :
 				null;
 
-			$first_last_name = trim( $user->firstName . ' ' . $user->lastName );
+			$full_name = trim( $user->firstName . ' ' . $user->lastName );
 
 			$userdata = [
 				'user_login'    => $user->identifier,
-				'display_name'  => ! empty( $first_last_name ) ? $first_last_name : $user->displayName,
+				'display_name'  => ! empty( $full_name ) ? $full_name : $user->displayName,
 				'user_nicename' => $user->firstName,
 				'first_name'    => $user->firstName,
 				'last_name'     => $user->lastName,
-				'user_url'      => $user->profileURL
 			];
+
+			if ( strlen( $user->profileURL ) <= 100 ) {
+				$userdata['user_url'] = $user->profileURL;
+			}
 
 			if ( $email !== null ) {
 				$userdata['user_email'] = $email;
