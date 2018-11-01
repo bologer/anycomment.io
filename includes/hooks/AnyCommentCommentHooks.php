@@ -37,7 +37,7 @@ class AnyCommentCommentHooks {
 
 
 		// Extend allowed HTML tags to the needs of visual editor
-		add_filter( 'wp_kses_allowed_html', [ $this, 'kses_allowed_html_for_quill' ] );
+		add_filter( 'pre_comment_content', [ $this, 'kses_allowed_html_for_quill' ], 16 );
 	}
 
 	/**
@@ -47,26 +47,25 @@ class AnyCommentCommentHooks {
 	 *
 	 * @return mixed
 	 */
-	public function kses_allowed_html_for_quill( $allowedtags ) {
+	public function kses_allowed_html_for_quill( $comment_content ) {
+		$allowedhtml['p']          = [];
+		$allowedhtml['a']          = [ 'href', 'target', 'rel' ];
+		$allowedhtml['ul']         = [];
+		$allowedhtml['ol']         = [];
+		$allowedhtml['blockquote'] = [ 'class' ];
+		$allowedhtml['code']       = [];
+		$allowedhtml['li']         = [];
+		$allowedhtml['b']          = [];
+		$allowedhtml['i']          = [];
+		$allowedhtml['u']          = [];
+		$allowedhtml['strong']     = [];
+		$allowedhtml['em']         = [];
+		$allowedhtml['br']         = [];
+		$allowedhtml['img']        = [ 'class', 'src', 'alt' ];
+		$allowedhtml['figure']     = [];
+		$allowedhtml['iframe']     = [];
 
-		$allowedtags['p']          = [];
-		$allowedtags['a']          = [ 'href', 'target', 'rel' ];
-		$allowedtags['ul']         = [];
-		$allowedtags['ol']         = [];
-		$allowedtags['blockquote'] = [ 'class' ];
-		$allowedtags['code']       = [];
-		$allowedtags['li']         = [];
-		$allowedtags['b']          = [];
-		$allowedtags['i']          = [];
-		$allowedtags['u']          = [];
-		$allowedtags['strong']     = [];
-		$allowedtags['em']         = [];
-		$allowedtags['br']         = [];
-		$allowedtags['img']        = [ 'class', 'src', 'alt' ];
-		$allowedtags['figure']     = [];
-		$allowedtags['iframe']     = [];
-
-		return $allowedtags;
+		return wp_kses( $comment_content, $allowedhtml );
 	}
 
 	/**
