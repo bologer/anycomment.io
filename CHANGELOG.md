@@ -7,6 +7,7 @@
 * Added original comments wrapper. Should help themes align comments properly, #283
 * Added "WordPress only" as a form type in "Elements" tab
 * Added new option under "Generic" tab to define comment update time in minutes
+* Added helper to "Possible problems" which detects problematic hooks which deactivate WP REST API
 
 **Fixes:**
 

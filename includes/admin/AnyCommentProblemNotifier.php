@@ -144,7 +144,59 @@ class AnyCommentProblemNotifier {
 			];
 		}
 
+		if ( static::has_functionphp_problem() ) {
+			$items[] = [
+				'level'   => self::LEVEL_CRITICAL,
+				'type'    => self::TYPE_GENERIC,
+				'message' => sprintf( __( "It looks like you have hooks related to REST API in %s which may cause failure to load comments. If you are not sure how to fix it, contact plugin developer in on the contacts available in 'Help' tab.", "anycomment" ), get_template_directory() . '/functions.php' )
+			];
+		}
+
 
 		return $items;
+	}
+
+	/**
+	 * Checks whether function.php may contain some WP REST API hooks.
+	 *
+	 * @return bool
+	 */
+	public static function has_functionphp_problem() {
+		$file_path = get_template_directory() . '/functions.php';
+
+		if ( ! file_exists( $file_path ) ) {
+			return false;
+		}
+
+		$content = file_get_contents( $file_path );
+
+		$possible_problems = [
+			'rest_enabled',
+			'rest_output_rsd',
+			'rest_output_link_wp_head',
+			'rest_output_link_header',
+			'rest_cookie_collect_status',
+			'rest_cookie_check_errors',
+			'rest_api_init',
+			'rest_api_default_filters',
+			'rest_api_loaded',
+			'rest_api_init',
+			'rest_pre_serve_request',
+		];
+
+		$count = 0;
+
+		foreach ( $possible_problems as $problem ) {
+			if ( strpos( $content, $problem ) !== false ) {
+				$count ++;
+			}
+		}
+
+		// No matches, try to find generic REST, rEsT or rest in the file
+		if ( $count === 0 && preg_match( '/rest/i', $content ) ) {
+			$count ++;
+		}
+
+		return $count > 0;
 	}
 }
