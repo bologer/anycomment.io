@@ -12,11 +12,11 @@
 **Fixes:**
 
 * Fixed translations in "Integration" tab regarding reCAPTCHA, #269
-* Fixed issue when comments were not displaying in IE, #272
-* Minor fixes to CSS for proper alignment of elements
-* Fixed issue when comments were not shown on short page, #275
-* Fixed issue when on some websites, plugin was conflicting with elements based on events from jQuery, #274
+* Fixed issue when comments were not displaying in Internet Explorer, #272
+* Fixed issue when comments were not shown in short page, #275
+* Fixed issue when plugin was conflicting with jQuery which caused problems for sticky headers, sliders, etc, #274
 * Fixed issue when facebook URL was longer then 100 chars. Now such URLs will be added to user meta, #285
+* Minor fixes to CSS for proper alignment of elements
 
 
 ## 0.0.66 – 26.10.2018

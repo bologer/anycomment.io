@@ -172,17 +172,16 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Added original comments wrapper. Should help themes align comments properly, #283
 * Added "WordPress only" as a form type in "Elements" tab
 * Added new option under "Generic" tab to define comment update time in minutes
-* Added helper to "Possible problems" which detects problematic hooks which deactivate WP REST API
+* Added new helpers to "Possible problems" to detect problematic hooks & plugins
 
 **Fixes:**
 
 * Fixed translations in "Integration" tab regarding reCAPTCHA, #269
-* Fixed issue when comments were not displaying in IE, #272
-* Minor fixes to CSS for proper alignment of elements
-* Fixed issue when comments were not shown on short page, #275
-* Fixed issue when on some websites, plugin was conflicting with elements based on events from jQuery, #274
+* Fixed issue when comments were not displaying in Internet Explorer, #272
+* Fixed issue when comments were not shown in short page, #275
+* Fixed issue when plugin was conflicting with jQuery which caused problems for sticky headers, sliders, etc, #274
 * Fixed issue when facebook URL was longer then 100 chars. Now such URLs will be added to user meta, #285
-
+* Minor fixes to CSS for proper alignment of elements
 
 = 0.0.66 – 26.10.2018 =
 

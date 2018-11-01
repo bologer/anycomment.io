@@ -144,6 +144,14 @@ class AnyCommentProblemNotifier {
 			];
 		}
 
+		if ( is_plugin_active( 'custom-post-type-ui/custom-post-type-ui.php' ) ) {
+			$items[] = [
+				'level'   => self::LEVEL_CRITICAL,
+				'type'    => self::TYPE_PLUGIN,
+				'message' => sprintf( __( "You are using %s. If you're experiencing some problem with AnyComment, try to set option 'Show in REST API' as 'true' in 'Add/Edit Taxonomies' or deactivate it and check whether problem was resolved", "anycomment" ), 'Custom Post Type UI' )
+			];
+		}
+
 		if ( static::has_functionphp_problem() ) {
 			$items[] = [
 				'level'   => self::LEVEL_CRITICAL,
