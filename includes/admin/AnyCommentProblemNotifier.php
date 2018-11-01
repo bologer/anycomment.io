@@ -168,7 +168,11 @@ class AnyCommentProblemNotifier {
 			return false;
 		}
 
-		$content = file_get_contents( $file_path );
+		$content = @file_get_contents( $file_path );
+
+		if ( empty( $content ) ) {
+			return false;
+		}
 
 		$possible_problems = [
 			'rest_enabled',
