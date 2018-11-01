@@ -603,7 +603,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		}
 
 		$should_moderate    = ! current_user_can( 'moderate_comments' ) && AnyCommentGenericSettings::is_moderate_first();
-		$has_filtered_words = ! current_user_can( 'moderate_comments' ) && AnyCommentComments::has_moderate_words( $comment_id );
+		$has_filtered_words = ! current_user_can( 'moderate_comments' ) && AnyCommentComments::has_moderate_words( $prepared_comment['comment_content'] );
 		$has_links          = ! current_user_can( 'moderate_comments' ) && AnyCommentGenericSettings::is_links_on_hold() && AnyCommentComments::has_links( $comment_id );
 
 		if ( $should_moderate || $has_filtered_words || $has_links ) {

@@ -14,13 +14,23 @@ class AnyCommentComments {
 	 */
 	public static function has_moderate_words( $comment ) {
 
-		$comment = get_comment( $comment );
+		$comment_content = '';
 
-		if ( ! $comment ) {
-			return false;
+		if ( is_numeric( $comment ) || is_object( $comment ) ) {
+			$comment = get_comment( $comment );
+
+			if ( ! $comment ) {
+				return false;
+			}
+
+			$comment_content = $comment->comment_content;
+		} elseif ( is_string( $comment ) ) {
+			$comment_content = $comment;
+		} elseif ( is_array( $comment ) && isset( $comment['comment_content'] ) ) {
+			$comment_content = $comment['comment_content'];
 		}
 
-		if ( ! AnyCommentGenericSettings::is_moderate_first() ) {
+		if ( empty( $comment_content ) ) {
 			return false;
 		}
 
@@ -42,7 +52,7 @@ class AnyCommentComments {
 
 			$word = preg_quote( $word, '#' );
 
-			if ( preg_match( "#$word#i", $comment->comment_content ) ) {
+			if ( preg_match( "#$word#i", $comment_content ) ) {
 				return true;
 			}
 		}

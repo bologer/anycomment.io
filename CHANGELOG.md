@@ -18,6 +18,7 @@
 * Fixed issue when facebook URL was longer then 100 chars. Now such URLs will be added to user meta, #285
 * Minor fixes to CSS for proper alignment of elements
 * Fixed issue when some websites had problems that they saved the post and some of the tags or attributes were not saved (kses issue)
+* Fixed issue when comments were not put on hold when matched stop words
 
 
 ## 0.0.66 – 26.10.2018
