@@ -32,6 +32,7 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 				add_filter( 'comments_template', [ $this, 'override_comment' ] );
 
 				add_shortcode( 'anycomment', [ $this, 'override_comment' ] );
+
 			}
 
 			add_filter( 'logout_url', [ $this, 'logout_redirect' ], 10, 2 );
@@ -40,6 +41,8 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 
 			$this->errors = AnyCommentSocialAuth::getErrors();
 		}
+
+
 
 
 		/**
@@ -239,59 +242,6 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 			return $path;
 		}
 
-		/**
-		 * Get comments.
-		 *
-		 * @param null|int $postId Post ID to check comments for. Avoid then get_the_ID() will be used to get id.
-		 * @param int $limit Limit number of comments to load.
-		 * @param string $sort Sorting type. New or old. Default is new.
-		 *
-		 * @return array|null NULL when there are no comments for post.
-		 */
-		public function get_comments( $postId = null, $limit = null, $sort = null ) {
-
-			if ( $limit === null || empty( $limit ) ) {
-				$limit = AnyCommentGenericSettings::get_per_page();
-			}
-
-			if ( $sort === null || ( $sort !== self::SORT_ASC && $sort !== self::SORT_DESC ) ) {
-				$sort = self::SORT_DESC;
-			}
-
-			$options = [
-				'post_id'        => $postId === null ? get_the_ID() : $postId,
-				'parent'         => 0,
-				'comment_status' => 1,
-				'number'         => $limit,
-				'orderby'        => 'comment_ID',
-				'order'          => $sort
-			];
-
-			$comments = get_comments( $options );
-
-			return count( $comments ) > 0 ? $comments : null;
-		}
-
-		/**
-		 * Get parent child comments.
-		 *
-		 * @param int $commentId Parent comment id.
-		 * @param null|int $postId Post ID to check comments for. Avoid then get_the_ID() will be used to get id.
-		 *
-		 * @return array|null NULL when there are no comments for post.
-		 */
-		public function get_child_comments( $commentId, $postId = null ) {
-			if ( $commentId === null ) {
-				return null;
-			}
-
-			$comments = get_comments( [
-				'parent'  => $commentId,
-				'post_id' => $postId === null ? get_the_ID() : $postId
-			] );
-
-			return count( $comments ) > 0 ? $comments : null;
-		}
 
 		/**
 		 * Get comment count.

@@ -3,7 +3,7 @@
  * Plugin Name: AnyComment
  * Plugin URI: https://anycomment.io
  * Description: AnyComment is an advanced commenting system for WordPress.
- * Version: 0.0.67
+ * Version: 0.0.68
  * Author: Bologer
  * Author URI: http://bologer.ru
  * Requires at least: 4.4
@@ -31,7 +31,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 		 *
 		 * @var string
 		 */
-		public $version = '0.0.67';
+		public $version = '0.0.68';
 
 		/**
 		 * Instance of render class.
@@ -252,6 +252,12 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			include_once( ANYCOMMENT_ABSPATH . 'includes/hooks/AnyCommentCommentHooks.php' );
 
 			/**
+			 * Integrations
+			 */
+			include_once( ANYCOMMENT_ABSPATH . 'includes/integrations/AnyCommentWooCommerce.php' );
+
+
+			/**
 			 * Admin related
 			 */
 			include_once( ANYCOMMENT_ABSPATH . 'includes/admin/AnyCommentStatistics.php' );
@@ -294,6 +300,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			 * Hooks init.
 			 */
 			new AnyCommentCommentHooks();
+			new AnyCommentWooCommerce();
 
 			/**
 			 * Cron tabs.

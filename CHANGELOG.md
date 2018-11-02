@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.0.68 – 02.11.2018
+
+**Enhancements:**
+
+* WooCommerce support, #280 (credits @artikus11 for helper script)
+
+
+**Fixes:**
+
+
+
 ## 0.0.67 – 01.11.2018
 
 **Enhancements:**
