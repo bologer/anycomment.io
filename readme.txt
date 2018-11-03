@@ -170,10 +170,12 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 **Enhancements:**
 
 * WooCommerce support, #280 (credits to @artikus11)
-* Added new option to show list of available social networks under WordPress' native login form, #150
+* Added new option to show/hide list of available social networks under WordPress' native login form, #150
+* Added new option to show/hide admin bar for regular users and those who used social network, #290
 
 **Fixes:**
 
+* Fixed issue with social icon conflict with existing Fontawesome library, #288
 
 
 = 0.0.67 – 01.11.2018 =

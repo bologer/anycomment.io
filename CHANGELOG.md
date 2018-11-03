@@ -5,10 +5,12 @@
 **Enhancements:**
 
 * WooCommerce support, #280 (credits to @artikus11)
-* Added new option to show list of available social networks under WordPress' native login form, #150
-
+* Added new option to show/hide list of available social networks under WordPress' native login form, #150
+* Added new option to show/hide admin bar for regular users and those who used social network, #290
 
 **Fixes:**
+
+* Fixed issue with social icon conflict with existing Fontawesome library, #288
 
 
 

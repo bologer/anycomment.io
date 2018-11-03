@@ -86,6 +86,7 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 
 		/**
 		 * Make custom template for comments.
+		 *
 		 * @return string
 		 */
 		public function override_comment( $atts ) {

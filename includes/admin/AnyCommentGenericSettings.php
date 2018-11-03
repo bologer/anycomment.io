@@ -106,7 +106,8 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		const OPTION_MODERATE_FIRST = 'options_moderate_first'; // Mark comments for moderation before they are added.
 		const OPTION_MODERATE_WORDS = 'options_moderate_words'; // List of words to mark comments as spam.
 		const OPTION_LINKS_ON_HOLD = 'options_links_on_hold'; // Put comments with links on hold.
-		const OPTION_SHOW_SOCIALS_IN_LOGIN_PAGE = 'options_show_socials_in_login_page'; // Show/hide profile URL on client mini social icon.
+		const OPTION_SHOW_SOCIALS_IN_LOGIN_PAGE = 'options_show_socials_in_login_page'; // Show/hide list of available socials in WordPress's native login form.
+		const OPTION_SHOW_ADMIN_BAR = 'options_show_admin_bar'; // Show/hide admin bar for authorized users (users with manage_options would be able to see it).
 		const OPTION_SHOW_PROFILE_URL = 'options_show_profile_url'; // Show/hide profile URL on client mini social icon.
 		const OPTION_SHOW_TWITTER_EMBEDS = 'options_show_tweet_attachments'; // Show tweet (from Twitter) attachments
 		const OPTION_SHOW_VIDEO_ATTACHMENTS = 'options_show_video_attachments'; // Show/hide video attachments.
@@ -351,11 +352,19 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'type'        => 'checkbox',
 						'description' => esc_html( __( 'Load comments when user scrolls to it.', "anycomment" ) )
 					],
+
 					[
 						'id'          => self::OPTION_SHOW_SOCIALS_IN_LOGIN_PAGE,
-						'title'       => __( 'Login Page Socials', "anycomment" ),
+						'title'       => __( 'Show Login Page Socials', "anycomment" ),
 						'type'        => 'checkbox',
 						'description' => esc_html( __( 'Show list of available socials under WordPress\'s native login form.', "anycomment" ) )
+					],
+
+					[
+						'id'          => self::OPTION_SHOW_ADMIN_BAR,
+						'title'       => __( 'Show Admin Bar', "anycomment" ),
+						'type'        => 'checkbox',
+						'description' => esc_html( __( 'Show admin bar for regular WordPress users and those who logged in via social.', "anycomment" ) )
 					],
 
 					[
@@ -1170,6 +1179,15 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 */
 		public static function is_show_socials_in_login_page() {
 			return static::instance()->get_option( self::OPTION_SHOW_SOCIALS_IN_LOGIN_PAGE ) !== null;
+		}
+
+		/**
+		 * Check whether it is required to show admin bar.
+		 *
+		 * @return bool
+		 */
+		public static function is_show_show_admin_bar() {
+			return static::instance()->get_option( self::OPTION_SHOW_ADMIN_BAR ) !== null;
 		}
 
 		/**

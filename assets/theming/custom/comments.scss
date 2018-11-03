@@ -104,14 +104,20 @@
           @include avatar();
 
           &-auth-type {
+            $size: 15px;
             position: absolute;
             bottom: 0;
             left: 0;
             border-radius: $avatar-border-radius;
-            width: 15px;
-            height: 15px;
+            width: $size;
+            height: $size;
             font-size: 9px;
-            line-height: 15px;
+            line-height: $size;
+
+            svg {
+              font-size: 9px;
+              line-height: $size;
+            }
           }
         }
       }

@@ -15,6 +15,6 @@ if ( post_password_required() || ! comments_open() ) {
 }
 
 ?>
-<div id="comments">
+<div id="comments" class="comments-area">
     <div id="anycomment-root"></div>
 </div>

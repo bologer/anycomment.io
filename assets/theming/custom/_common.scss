@@ -52,18 +52,17 @@
 
   .anycomment-social {
     $size: $font-size + 6;
-
     border-radius: 50%;
     width: $size;
     height: $size;
+    line-height: $size;
     display: inline-block;
     text-align: center;
-    line-height: $size + 1;
-    font-size: $font-size - 1;
-    vertical-align: middle;
 
+    &,
     svg {
-      vertical-align: text-top;
+      font-size: $font-size - 1;
+      color: #fff;
     }
   }
 
@@ -87,15 +86,15 @@
     }
 
     &__content {
-
-      * {
-        user-select: none;
-      }
-
       display: none;
       position: absolute;
       top: 20px;
       user-select: none;
+      right: 0;
+
+      * {
+        user-select: none;
+      }
 
       ul {
         margin: 0;
