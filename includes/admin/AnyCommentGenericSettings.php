@@ -94,85 +94,29 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 */
 		const OPTION_INTERVAL_COMMENTS_CHECK = 'option_interval_comment_check';
 
-
 		/**
-		 * Ability to toggle read more.
+		 * General
 		 */
-		const OPTION_READ_MORE_TOGGLE = 'option_read_more_toggle';
-
-		/**
-		 * Display page rating.
-		 */
-		const OPTION_RATING_TOGGLE = 'option_rating_toggle';
-
-		/**
-		 * Number of comments displayed per page and on the page load.
-		 */
-		const OPTION_COUNT_PER_PAGE = 'option_comments_count_per_page';
-
-		/**
-		 * Comment update time.
-		 */
-		const OPTION_COMMENT_UPDATE_TIME = 'option_comment_update_time';
-
-		/**
-		 * Link to the user agreement.
-		 */
-		const OPTION_USER_AGREEMENT_LINK = 'option_comments_user_agreement_link';
-
-		/**
-		 * Show/hide copyright.
-		 */
-		const OPTION_COPYRIGHT_TOGGLE = 'option_copyright_toggle';
-
-		/**
-		 * Load comments on scroll to it.
-		 */
-		const OPTION_LOAD_ON_SCROLL = 'options_load_on_scroll';
-
-		/**
-		 * Mark comments for moderation before they are added.
-		 */
-		const OPTION_MODERATE_FIRST = 'options_moderate_first';
-
-		/**
-		 * List of words to mark comments as spam.
-		 */
-		const OPTION_MODERATE_WORDS = 'options_moderate_words';
-
-		/**
-		 * Put comments with links on hold.
-		 */
-		const OPTION_LINKS_ON_HOLD = 'options_links_on_hold';
-
-		/**
-		 * Show/hide profile URL on client mini social icon.
-		 */
-		const OPTION_SHOW_PROFILE_URL = 'options_show_profile_url';
-
-		/**
-		 * Show tweet (from Twitter) attachments
-		 */
-		const OPTION_SHOW_TWITTER_EMBEDS = 'options_show_tweet_attachments';
-
-		/**
-		 * Show/hide video attachments.
-		 */
-		const OPTION_SHOW_VIDEO_ATTACHMENTS = 'options_show_video_attachments';
-
-		/**
-		 * Show/hide image attachments.
-		 */
-		const OPTION_SHOW_IMAGE_ATTACHMENTS = 'options_show_image_attachments';
-
-		/**
-		 * Whether required to make links clickable.
-		 */
-		const OPTION_MAKE_LINKS_CLICKABLE = 'options_make_links_clickable';
+		const OPTION_READ_MORE_TOGGLE = 'option_read_more_toggle'; // Ability to toggle read more.
+		const OPTION_RATING_TOGGLE = 'option_rating_toggle'; // Display page rating.
+		const OPTION_COUNT_PER_PAGE = 'option_comments_count_per_page'; // Number of comments displayed per page and on the page load.
+		const OPTION_COMMENT_UPDATE_TIME = 'option_comment_update_time'; // Comment update time.
+		const OPTION_USER_AGREEMENT_LINK = 'option_comments_user_agreement_link'; // Link to the user agreement.
+		const OPTION_LOAD_ON_SCROLL = 'options_load_on_scroll'; // Load comments on scroll to it.
+		const OPTION_MODERATE_FIRST = 'options_moderate_first'; // Mark comments for moderation before they are added.
+		const OPTION_MODERATE_WORDS = 'options_moderate_words'; // List of words to mark comments as spam.
+		const OPTION_LINKS_ON_HOLD = 'options_links_on_hold'; // Put comments with links on hold.
+		const OPTION_SHOW_SOCIALS_IN_LOGIN_PAGE = 'options_show_socials_in_login_page'; // Show/hide profile URL on client mini social icon.
+		const OPTION_SHOW_PROFILE_URL = 'options_show_profile_url'; // Show/hide profile URL on client mini social icon.
+		const OPTION_SHOW_TWITTER_EMBEDS = 'options_show_tweet_attachments'; // Show tweet (from Twitter) attachments
+		const OPTION_SHOW_VIDEO_ATTACHMENTS = 'options_show_video_attachments'; // Show/hide video attachments.
+		const OPTION_SHOW_IMAGE_ATTACHMENTS = 'options_show_image_attachments'; // Show/hide image attachments.
+		const OPTION_MAKE_LINKS_CLICKABLE = 'options_make_links_clickable'; // Whether required to make links clickable.
+		const OPTION_COPYRIGHT_TOGGLE = 'option_copyright_toggle'; // Show/hide copyright.
 
 
 		/**
-		 * FILES UPLOAD
+		 * File upload
 		 */
 		const OPTION_FILES_TOGGLE = 'options_files_toggle';
 		const OPTION_FILES_GUEST_CAN_UPLOAD = 'options_files_guest_can_upload';
@@ -182,32 +126,13 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		const OPTION_FILES_MAX_SIZE = 'options_files_max_size';
 
 		/**
-		 * DESIGN
+		 * Design
 		 */
-		/**
-		 * Define form type: only guest users, only social networks or both of it.
-		 */
-		const OPTION_FORM_TYPE = 'options_form_type';
-
-		/**
-		 * Option to enable comments only from guest.
-		 */
-		const FORM_OPTION_GUEST_ONLY = 'form_option_guest_only';
-
-		/**
-		 * Option to allow comments from users who authorized using social.
-		 */
-		const FORM_OPTION_WORDPRESS_ONLY = 'form_option_wordpress_only';
-
-		/**
-		 * Option to allow comments from users who authorized using social.
-		 */
-		const FORM_OPTION_SOCIALS_ONLY = 'form_option_socials_only';
-
-		/**
-		 * Option to allow both: guest & social login.
-		 */
-		const FORM_OPTION_ALL = 'form_option_all';
+		const OPTION_FORM_TYPE = 'options_form_type'; // Define form type: only guest users, only social networks or both of it.
+		const FORM_OPTION_GUEST_ONLY = 'form_option_guest_only'; // Option to enable comments only from guest.
+		const FORM_OPTION_WORDPRESS_ONLY = 'form_option_wordpress_only'; // Option to allow comments from users who authorized using social.
+		const FORM_OPTION_SOCIALS_ONLY = 'form_option_socials_only'; // Option to allow comments from users who authorized using social.
+		const FORM_OPTION_ALL = 'form_option_all'; // Option to allow both: guest & social login.
 
 		/**
 		 * Define what fields to show and order.
@@ -248,14 +173,10 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		const OPTION_DESIGN_GLOBAL_RADIUS = 'options_design_global_radius';
 
 		/**
-		 * Normal subscriber (from WordPress)
+		 * Roles
 		 */
-		const DEFAULT_ROLE_SUBSCRIBER = 'subscriber';
-
-		/**
-		 * Custom social subscriber. Role introduced via this plugin.
-		 */
-		const DEFAULT_ROLE_SOCIAL_SUBSCRIBER = 'social_subscriber';
+		const DEFAULT_ROLE_SUBSCRIBER = 'subscriber'; // Normal subscriber (from WordPress)
+		const DEFAULT_ROLE_SOCIAL_SUBSCRIBER = 'social_subscriber'; // Custom social subscriber. Role introduced via this plugin.
 
 
 		/**
@@ -297,15 +218,15 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 			self::OPTION_GUEST_FIELDS                           => '{name} {email} {website}',
 
 			// Editor
-//			self::OPTION_EDITOR_TOOLBAR_TOGGLE                 => 'on',
-//			self::OPTION_EDITOR_TOOLBAR_BOLD                   => 'on',
-//			self::OPTION_EDITOR_TOOLBAR_ITALIC                 => 'on',
-//			self::OPTION_EDITOR_TOOLBAR_UNDERLINE              => 'on',
-//			self::OPTION_EDITOR_TOOLBAR_QUOTE                  => 'on',
-//			self::OPTION_EDITOR_TOOLBAR_ORDERED                => 'on',
-//			self::OPTION_EDITOR_TOOLBAR_BULLET                 => 'on',
-//			self::OPTION_EDITOR_TOOLBAR_LINK                   => 'on',
-//			self::OPTION_EDITOR_TOOLBAR_CLEAN                  => 'on',
+			self::OPTION_EDITOR_TOOLBAR_TOGGLE                  => 'on',
+			self::OPTION_EDITOR_TOOLBAR_BOLD                    => 'on',
+			self::OPTION_EDITOR_TOOLBAR_ITALIC                  => 'on',
+			self::OPTION_EDITOR_TOOLBAR_UNDERLINE               => 'on',
+			self::OPTION_EDITOR_TOOLBAR_QUOTE                   => 'on',
+			self::OPTION_EDITOR_TOOLBAR_ORDERED                 => 'on',
+			self::OPTION_EDITOR_TOOLBAR_BULLET                  => 'on',
+			self::OPTION_EDITOR_TOOLBAR_LINK                    => 'on',
+			self::OPTION_EDITOR_TOOLBAR_CLEAN                   => 'on',
 
 			// Custom design
 			self::OPTION_DESIGN_GLOBAL_PADDING                  => '0',
@@ -429,6 +350,12 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 						'title'       => __( 'Load on Scroll', "anycomment" ),
 						'type'        => 'checkbox',
 						'description' => esc_html( __( 'Load comments when user scrolls to it.', "anycomment" ) )
+					],
+					[
+						'id'          => self::OPTION_SHOW_SOCIALS_IN_LOGIN_PAGE,
+						'title'       => __( 'Login Page Socials', "anycomment" ),
+						'type'        => 'checkbox',
+						'description' => esc_html( __( 'Show list of available socials under WordPress\'s native login form.', "anycomment" ) )
 					],
 
 					[
@@ -1234,6 +1161,15 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 */
 		public static function is_show_profile_url() {
 			return static::instance()->get_option( self::OPTION_SHOW_PROFILE_URL ) !== null;
+		}
+
+		/**
+		 * Check whether it is required to show list of social icons in the login page.
+		 *
+		 * @return bool
+		 */
+		public static function is_show_socials_in_login_page() {
+			return static::instance()->get_option( self::OPTION_SHOW_SOCIALS_IN_LOGIN_PAGE ) !== null;
 		}
 
 		/**

@@ -20,14 +20,13 @@ function anycomment_get_template( $templateName ) {
 }
 
 /**
- * Display list of available login methods.
+ * Get list of socials.
  *
- * @param bool $html If required to return rendered HTML or as array.
- * @param string $redirectUrl Redirect link after successful/failed authentication.
+ * @param string|null $redirectUrl URL back to redirect on success or failure.
  *
- * @return string|array|null HTML formatted list (when $html false and array when true) of social links.
+ * @return array|null List of socials or NULL in case when no socials defined or so.
  */
-function anycomment_login_with( $html = false, $redirectUrl = null ) {
+function anycomment_get_socials( $redirectUrl = null ) {
 	$socials = [
 		AnyCommentSocialAuth::SOCIAL_VKONTAKTE     => [
 			'slug'    => AnyCommentSocialAuth::SOCIAL_VKONTAKTE,
@@ -99,38 +98,21 @@ function anycomment_login_with( $html = false, $redirectUrl = null ) {
 		$wordpress_login_url = add_query_arg( 'redirect_to', urlencode( $redirectUrl ), $wordpress_login_url );
 	}
 
-	$socials[AnyCommentSocialAuth::SOCIAL_WORDPRESS] = [
+	$socials[ AnyCommentSocialAuth::SOCIAL_WORDPRESS ] = [
 		'slug'    => 'wordpress',
 		'url'     => $wordpress_login_url,
 		'label'   => __( "WordPress", 'anycomment' ),
 		'visible' => AnyCommentSocialSettings::is_wordpress_native_active()
 	];
 
+	$socials = apply_filters( 'anycomment_get_socials', $socials, $socials );
+
 	if ( count( $socials ) <= 0 ) {
 		return null;
 	}
 
-	if ( ! $html ) {
-		return $socials;
-	}
-
-	foreach ( $socials as $key => $social ):
-		if ( ! $social['visible'] ) {
-			continue;
-		}
-		?>
-        <li><a href="<?php echo $social['url'] ?>"
-               target="_parent"
-               title="<?php echo $social['label'] ?>"
-               class="anycomment-login-with-list-<?php echo $key ?>"><img
-                        src="<?php echo AnyComment()->plugin_url() ?>/assets/img/icons/auth/social-<?php echo $key ?>.svg"
-                        alt="<?php echo $social['label'] ?>"></a>
-        </li>
-	<?php
-	endforeach;
+	return $socials;
 }
-
-add_action( 'anycomment_login_with', 'anycomment_login_with' );
 
 
 

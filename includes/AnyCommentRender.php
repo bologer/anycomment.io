@@ -43,8 +43,6 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 		}
 
 
-
-
 		/**
 		 * Custom logout URL to redirect user back to post on logout.
 		 *
@@ -137,7 +135,7 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 					'options'      => [
 						'limit'                  => AnyCommentGenericSettings::get_per_page(),
 						'isCopyright'            => AnyCommentGenericSettings::is_copyright_on(),
-						'socials'                => anycomment_login_with( false, get_permalink( $postId ) ),
+						'socials'                => anycomment_get_socials( get_permalink( $postId ) ),
 						'sort_order'             => AnyCommentGenericSettings::get_sort_order(),
 						'guestInputs'            => AnyCommentGenericSettings::get_guest_fields( true ),
 						'isShowProfileUrl'       => AnyCommentGenericSettings::is_show_profile_url(),

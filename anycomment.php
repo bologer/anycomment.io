@@ -250,6 +250,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			 * Hooks
 			 */
 			include_once( ANYCOMMENT_ABSPATH . 'includes/hooks/AnyCommentCommentHooks.php' );
+			include_once( ANYCOMMENT_ABSPATH . 'includes/hooks/AnyCommentNativeLoginForm.php' );
 
 			/**
 			 * Integrations
@@ -300,6 +301,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			 * Hooks init.
 			 */
 			new AnyCommentCommentHooks();
+			new AnyCommentNativeLoginForm();
 			new AnyCommentWooCommerce();
 
 			/**

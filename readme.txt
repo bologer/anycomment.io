@@ -169,7 +169,8 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Enhancements:**
 
-* WooCommerce support, #280 (credits @artikus11 for helper script)
+* WooCommerce support, #280 (credits to @artikus11)
+* Added new option to show list of available social networks under WordPress' native login form, #150
 
 **Fixes:**
 

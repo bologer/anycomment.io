@@ -12,24 +12,29 @@ class AnyCommentWooCommerce {
 		$this->init();
 	}
 
+	/**
+	 * Init hooks.
+	 */
 	public function init() {
-		add_filter( 'woocommerce_product_tabs', [ $this, 'woo_new_product_tab' ], 98 );
+		add_filter( 'woocommerce_product_tabs', [ $this, 'woo_new_product_tab' ], 99 );
 	}
-
 
 	/**
 	 * Add new review tab to display comments.
 	 *
-	 * @param $tabs
+	 * @param array $tabs List of WooCommerce tabs.
 	 *
-	 * @return mixed
+	 * @return array List of tabs.
 	 */
 	public function woo_new_product_tab( $tabs ) {
-		unset( $tabs['reviews'] );
+		/**
+		 * @var $product WC_Product
+		 */
+		global $product;
 
-		$tabs['anycomment_reviews'] = array(
-			'title'    => __( 'Reviews', 'anycomment' ),
-			'priority' => 50,
+		$tabs['reviews'] = array(
+			'title'    => sprintf( __( 'Reviews (%d)', 'woocommerce' ), $product->get_review_count() ),
+			'priority' => 30,
 			'callback' => function () {
 				echo do_shortcode( '[anycomment include="true"]' );
 			}
