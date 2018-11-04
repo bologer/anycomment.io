@@ -22,7 +22,7 @@ WHERE TABLE_NAME = '$email_queue_table'
 
 		$res = $wpdb->get_results( $check_email_queue );
 
-		return !empty($res);
+		return ! empty( $res );
 	}
 
 	/**
@@ -33,13 +33,13 @@ WHERE TABLE_NAME = '$email_queue_table'
 		/**
 		 * Create email queue table
 		 */
-		$rating_table      = AnyCommentRating::table_name();
-		$email_queue_table = AnyCommentEmailQueue::tableName();
-		$sql_rating        = "ALTER TABLE {$rating_table} MODIFY COLUMN ID BIGINT AUTO_INCREMENT";
-		$sql_email_queue   = "ALTER TABLE {$email_queue_table} MODIFY COLUMN ID BIGINT AUTO_INCREMENT";
+		$rating_table      = $wpdb->prefix . 'anycomment_rating';
+		$email_queue_table = $wpdb->prefix . 'anycomment_email_queue';
+		$sql_rating        = "ALTER TABLE $rating_table MODIFY COLUMN ID BIGINT AUTO_INCREMENT";
+		$sql_email_queue   = "ALTER TABLE $email_queue_table MODIFY COLUMN ID BIGINT AUTO_INCREMENT";
 
 		// Clean email queue table as it does not have AUTO INCREMENT
-		$wpdb->query( "DELETE FROM {$email_queue_table}" );
+		$wpdb->query( "DELETE FROM $email_queue_table" );
 
 		return ( false !== $wpdb->query( $sql_rating ) ) &&
 		       ( false !== $wpdb->query( $sql_email_queue ) );

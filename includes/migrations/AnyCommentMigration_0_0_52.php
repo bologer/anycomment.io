@@ -48,7 +48,7 @@ class AnyCommentMigration_0_0_52 extends AnyCommentMigration {
 	 */
 	public function down() {
 		global $wpdb;
-		$sql = sprintf( "DROP TABLE IF EXISTS `%s`;", 'anycomment_uploaded_files' );
+		$sql = "DROP TABLE IF EXISTS anycomment_uploaded_files;";
 		$wpdb->query( $sql );
 	}
 }

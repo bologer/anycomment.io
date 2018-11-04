@@ -1,7 +1,7 @@
 <?php
 
 class AnyCommentMigration_0_0_61 extends AnyCommentMigration {
-	public $table   = 'rating';
+	public $table = 'anycomment_rating';
 	public $version = '0.0.61';
 
 	/**
@@ -9,7 +9,9 @@ class AnyCommentMigration_0_0_61 extends AnyCommentMigration {
 	 */
 	public function isApplied() {
 		global $wpdb;
-		$res = $wpdb->get_results( "SHOW TABLES LIKE '{$this->getTable()}';", 'ARRAY_A' );
+
+		$table = $wpdb->prefix . $this->table;
+		$res   = $wpdb->get_results( "SHOW TABLES LIKE '$table';", 'ARRAY_A' );
 
 		return ! empty( $res ) && count( $res ) == 1;
 	}
@@ -22,10 +24,11 @@ class AnyCommentMigration_0_0_61 extends AnyCommentMigration {
 
 		$charset_collate = $wpdb->get_charset_collate();
 
+		$table = $table = $wpdb->prefix . $this->table;
 		/**
 		 * Create email queue table
 		 */
-		$sql = "CREATE TABLE `{$this->getTable()}` (
+		$sql = "CREATE TABLE `$table` (
 				  `ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 				  `post_ID` bigint(20) UNSIGNED NOT NULL,
 				  `user_ID` bigint(20) UNSIGNED DEFAULT NULL,
@@ -51,7 +54,8 @@ class AnyCommentMigration_0_0_61 extends AnyCommentMigration {
 	 */
 	public function down() {
 		global $wpdb;
-		$sql = "DROP TABLE IF EXISTS `{$this->getTable()}`;";
+		$table = $wpdb->prefix . $this->table;
+		$sql   = "DROP TABLE IF EXISTS `$table`;";
 		$wpdb->query( $sql );
 	}
 }

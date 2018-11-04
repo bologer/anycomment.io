@@ -1,7 +1,7 @@
 <?php
 
 class AnyCommentMigration_0_0_64 extends AnyCommentMigration {
-	public $table = 'rating';
+	public $table = 'anycomment_rating';
 	public $version = '0.0.64';
 
 	/**
@@ -16,10 +16,8 @@ class AnyCommentMigration_0_0_64 extends AnyCommentMigration {
 	 */
 	public function up() {
 		global $wpdb;
-		/**
-		 * Create email queue table
-		 */
-		$sql = "ALTER TABLE {$this->getTable()} MODIFY COLUMN ID INT AUTO_INCREMENT";
+		$table = $wpdb->prefix . $this->table;
+		$sql   = "ALTER TABLE $table MODIFY COLUMN ID INT AUTO_INCREMENT";
 
 		return ( false !== $wpdb->query( $sql ) );
 	}

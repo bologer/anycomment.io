@@ -96,7 +96,7 @@ class AnyCommentMigration_0_0_45 extends AnyCommentMigration {
 		 * Drop email queue table if exist, will be ignored when not exists
 		 */
 		global $wpdb;
-		$sql = sprintf( "DROP TABLE IF EXISTS `%s`;", $this->getTable() );
+		$sql = "DROP TABLE IF EXISTS anycomment_email_queue;";
 		$wpdb->query( $sql );
 
 		return $isVkOptionUpdated;

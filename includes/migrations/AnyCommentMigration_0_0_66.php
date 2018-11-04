@@ -10,7 +10,7 @@ class AnyCommentMigration_0_0_66 extends AnyCommentMigration {
 	public function isApplied() {
 		global $wpdb;
 
-		$table = $this->getTable();
+		$table = $wpdb->prefix . 'anycomment_email_queue';
 
 		$subjectColumn = $wpdb->get_results( "SHOW COLUMNS FROM $table LIKE 'subject';", 'ARRAY_A' );
 		$emailColumn   = $wpdb->get_results( "SHOW COLUMNS FROM $table LIKE 'email';", 'ARRAY_A' );
@@ -28,7 +28,7 @@ class AnyCommentMigration_0_0_66 extends AnyCommentMigration {
 	public function up() {
 		global $wpdb;
 
-		$table = $this->getTable();
+		$table = $wpdb->prefix . 'anycomment_email_queue';
 
 		$arr   = [];
 		$arr[] = "ALTER TABLE `$table` ADD COLUMN `subject` VARCHAR(255) NOT NULL";
