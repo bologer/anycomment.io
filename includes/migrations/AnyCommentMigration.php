@@ -68,7 +68,11 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 		'0.0.66' => [
 			'version'     => '0.0.66',
 			'description' => 'Fixing issue when anycomment_email_queue was missing some of the columns after recent update to previous migrations'
-		]
+		],
+		'0.0.68' => [
+			'version'     => '0.0.68',
+			'description' => 'Create anycomment_subscription table to keep track of who is subscribing for comments'
+		],
 	];
 
 	/**

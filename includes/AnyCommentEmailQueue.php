@@ -262,15 +262,11 @@ AND `comments`.`comment_ID`=%d";
 		}
 
 		if ( ! isset( $email->ip ) ) {
-			$email->ip = isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : null;
+			$email->ip = AnyCommentHelper::get_user_ip();
 		}
 
 		if ( ! isset( $email->user_agent ) ) {
-			$email->user_agent = isset( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : null;
-		}
-
-		if ( ! isset( $email->ip ) ) {
-			$email->ip = isset( $_SERVER['SERVER_ADDR'] ) ? $_SERVER['SERVER_ADDR'] : null;
+			$email->user_agent = AnyCommentHelper::get_user_agent();
 		}
 
 		if ( ! isset( $email->created_at ) ) {

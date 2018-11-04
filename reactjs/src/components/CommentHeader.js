@@ -21,10 +21,6 @@ class CommentHeader extends AnyCommentComponent {
     isModerated = () => {
         const {comment} = this.props;
 
-        console.log(comment);
-        console.log(comment.meta)
-        console.log(comment.meta.status);
-
         return comment.meta.status === 'unapproved';
     };
 

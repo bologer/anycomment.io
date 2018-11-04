@@ -1,0 +1,46 @@
+#{$root} {
+  .anycomment-subscribe {
+    margin: 10px 0;
+    position: relative;
+
+    form {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    &__close {
+      position: absolute;
+      top: 0;
+      right: 0;
+      cursor: pointer;
+
+      &:hover,
+      &:active,
+      &:focus {
+        .anycomment-icon,
+        svg {
+          color: $text-color;
+        }
+      }
+    }
+
+    &__email {
+      margin-right: 10px;
+
+      input {
+        background-color: $form-field-background-color;
+        border: 1px solid $semi-hidden-color !important;
+        color: $text-color;
+        outline: 0;
+        height: 30px;
+        line-height: 30px;
+        padding: 5px 10px;
+        font-size: $font-size;
+        text-align: left;
+        @include border-radius($global-radius);
+      }
+    }
+  }
+}

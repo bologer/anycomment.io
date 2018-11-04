@@ -8,6 +8,7 @@ import {toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import GlobalHeader from "./components/GlobalHeader";
 import CommonHelper from "./components/helpers/CommonHelper";
+import Subscribe from './components/Subscribe'
 
 
 /**
@@ -158,6 +159,7 @@ class App extends AnyCommentComponent {
             <div id={this.state.rootElementInner} className="anycomment">
                 <ToastContainer/>
                 <GlobalHeader/>
+                <Subscribe/>
                 <CommentList/>
                 <CommentCopyright/>
             </div>

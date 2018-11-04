@@ -174,6 +174,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Added new option to show/hide admin bar for regular users and those who used social network, #290
 * Added moderation icon besides comment owner name to point to the admin that this comment is waiting to be moderated, #291
 * Added edited icon besides comment owner name to show users that comment was edited, #243 (credits @mihdan)
+* Added ability to subscribe by email to comments for specific post, #71
 
 **Fixes:**
 

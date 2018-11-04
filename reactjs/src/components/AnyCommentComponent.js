@@ -251,7 +251,10 @@ class AnyCommentComponent extends React.Component {
             return false;
         }
 
-        text = text.trim();
+        if (typeof text === 'string') {
+            text = text.trim();
+        }
+
         localStorage.setItem(key, text);
     }
 

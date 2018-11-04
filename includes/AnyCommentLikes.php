@@ -181,7 +181,7 @@ class AnyCommentLikes {
 		}
 
 		if ( ! isset( $like->ip ) ) {
-			$like->ip = isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : null;
+			$like->ip = AnyCommentHelper::get_user_ip();
 		}
 
 		if ( ! isset( $like->liked_at ) ) {
@@ -204,7 +204,9 @@ class AnyCommentLikes {
 				return false;
 			}
 
-			return $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $tableName WHERE `id`=%d LIMIT 1", $lastId ) );
+			$like->ID = $lastId;
+
+			return $like;
 		}
 
 		return false;

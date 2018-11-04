@@ -27,4 +27,15 @@ class AnyCommentHelper {
 
 		return $ip;
 	}
+
+	/**
+	 * Get user agent.
+	 *
+	 * @return null|string
+	 */
+	public static function get_user_agent() {
+		return isset( $_SERVER['HTTP_USER_AGENT'] ) ?
+			trim( $_SERVER['HTTP_USER_AGENT'] ) :
+			null;
+	}
 }

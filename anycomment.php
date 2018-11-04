@@ -227,6 +227,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			include_once( ANYCOMMENT_ABSPATH . 'includes/rest/AnyCommentRestUsers.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/rest/AnyCommentRestDocuments.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/rest/AnyCommentRestRate.php' );
+			include_once( ANYCOMMENT_ABSPATH . 'includes/rest/AnyCommentRestSubscriptions.php' );
 
 			/**
 			 * Generic
@@ -239,6 +240,7 @@ if ( ! class_exists( 'AnyComment' ) ) :
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentRating.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentLikes.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentEmailQueue.php' );
+			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentSubscriptions.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentUploadedFiles.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentUser.php' );
 			include_once( ANYCOMMENT_ABSPATH . 'includes/AnyCommentUserMeta.php' );
@@ -289,11 +291,14 @@ if ( ! class_exists( 'AnyComment' ) ) :
 				include_once( ANYCOMMENT_ABSPATH . 'includes/hybridauth/src/autoload.php' );
 			}
 
+			// Rest
 			new AnyCommentRestComment();
 			new AnyCommentRestLikes();
 			new AnyCommentRestUsers();
 			new AnyCommentRestDocuments();
 			new AnyCommentRestRate();
+			new AnyCommentRestSubscriptions();
+
 			new AnyCommentWPComments();
 			new AnyCommentAvatars();
 

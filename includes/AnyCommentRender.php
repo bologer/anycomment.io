@@ -196,6 +196,7 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 						'reply'                          => __( 'Reply', 'anycomment' ),
 						'edit'                           => __( 'Edit', 'anycomment' ),
 						'delete'                         => __( 'Delete', 'anycomment' ),
+						'subscribed'                     => __( 'You were subscribed successfully', 'anycomment' ),
 						'cancel'                         => __( 'Cancel', 'anycomment' ),
 						'quick_login'                    => __( 'Quick Login', 'anycomment' ),
 						'guest'                          => __( 'Guest', 'anycomment' ),

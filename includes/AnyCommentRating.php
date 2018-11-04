@@ -176,7 +176,7 @@ class AnyCommentRating {
 		$model->post_ID = $post->ID;
 
 		$model->rating     = $rating;
-		$model->user_agent = isset( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : null;
+		$model->user_agent = AnyCommentHelper::get_user_agent();
 		$model->created_at = time();
 
 		global $wpdb;
