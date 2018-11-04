@@ -14,7 +14,7 @@
 
 * Fixed issue with social icon conflict with existing Fontawesome library, #288
 * Fixed issue when user agreement checkbox was misaligned on some of the websites
-
+* Fixed issue when dropdown was too narrow and some options were not seen well, #289
 
 
 ## 0.0.67 – 01.11.2018

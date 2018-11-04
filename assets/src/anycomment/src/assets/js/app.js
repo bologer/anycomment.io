@@ -13,9 +13,10 @@ window.$ = $;
 // jQuery(document).foundation();
 
 $(document).ready(function ($) {
-    console.log('ready');
-    $('.anycomment-select2').select2();
-    console.log('should be loaded');
+
+    $('.anycomment-select2').select2({
+        width: '100%'
+    });
 
     $('.anycomment-input-color').minicolors();
 });
