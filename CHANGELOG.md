@@ -13,6 +13,7 @@
 **Fixes:**
 
 * Fixed issue with social icon conflict with existing Fontawesome library, #288
+* Fixed issue when user agreement checkbox was misaligned on some of the websites
 
 
 

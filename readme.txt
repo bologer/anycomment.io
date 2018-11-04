@@ -178,6 +178,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 **Fixes:**
 
 * Fixed issue with social icon conflict with existing Fontawesome library, #288
+* Fixed issue when user agreement checkbox was misaligned on some of the websites
 
 
 = 0.0.67 – 01.11.2018 =
