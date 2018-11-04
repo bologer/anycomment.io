@@ -4,11 +4,41 @@ import buildFormatter from 'react-timeago/lib/formatters/buildFormatter'
 import i18En from 'react-timeago/lib/language-strings/en'
 import i18Ru from 'react-timeago/lib/language-strings/ru'
 import TimeAgo from 'react-timeago'
+import Icon from './Icon'
+import Tooltip from './helpers/Tooltip'
+import {faEllipsisV, faGavel, faPen} from '@fortawesome/free-solid-svg-icons'
 
 /**
  * Used to render partial header of a comment.
  */
 class CommentHeader extends AnyCommentComponent {
+
+    /**
+     * Check whether status of the comment is unapproved (being moderated).
+     *
+     * @returns {boolean}
+     */
+    isModerated = () => {
+        const {comment} = this.props;
+
+        console.log(comment);
+        console.log(comment.meta)
+        console.log(comment.meta.status);
+
+        return comment.meta.status === 'unapproved';
+    };
+
+    /**
+     * Check whether comment was updated.
+     *
+     * @returns {*}
+     */
+    isUpdated = () => {
+        const {comment} = this.props;
+
+        return comment.meta.is_updated || false;
+    };
+
     render() {
         const {comment, settings} = this.props;
 
@@ -43,9 +73,19 @@ class CommentHeader extends AnyCommentComponent {
 
         return (
             <header className="anycomment comment-single-body-header">
+
                 <div className="anycomment comment-single-body-header__author">
                     {authorName}
                     {additionalTags}
+
+                    <div className="anycomment comment-single-body-header__author--actions">
+                        {this.isModerated() ?
+                            <Tooltip message={settings.i18.waiting_moderation}><Icon icon={faGavel}/></Tooltip> : ''}
+
+                        {this.isUpdated() ? <Tooltip message={settings.i18.edited}><Icon icon={faPen}/></Tooltip> : ''}
+
+                        <Icon icon={faEllipsisV}/>
+                    </div>
                 </div>
                 <a href={'#comment-' + comment.id} className="anycomment">
                     <TimeAgo className="anycomment comment-single-body-header__date"

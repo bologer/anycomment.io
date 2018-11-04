@@ -24,7 +24,7 @@ class AnyCommentCommentHooks {
 //		add_action( 'deleted_comment', [ $this, 'process_soft_comment' ], 10, 2 );
 
 		// After comment was updated
-//		add_action( 'edit_comment', [ $this, 'process_edit_comment' ], 10, 2 );
+		add_action( 'edit_comment', [ $this, 'process_edit_comment' ], 10, 2 );
 
 		// After comment was trashed, marked as spam, etc
 //		add_action( 'trashed_comment', [ $this, 'process_soft_comment' ], 10, 2 );
@@ -92,9 +92,11 @@ class AnyCommentCommentHooks {
 	 * Drops cache of updated comment.
 	 *
 	 * @param int $comment_id Comment ID.
-	 * @param mixed $data Comment data.
+	 * @param array $data Comment data.
 	 */
 	public function process_edit_comment( $comment_id, $data ) {
+		// Mark comment as updated
+		AnyCommentCommentMeta::mark_updated( $comment_id, $data);
 	}
 
 	/**

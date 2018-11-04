@@ -1,0 +1,95 @@
+#{$root} {
+  .anycomment-tooltip {
+    position: relative;
+
+    &-message {
+      background: $tooltip-background-color;
+      border-radius: $tooltip-border-radius;
+      color: $tooltip-text-color;
+      font-size: $font-size - 4;
+      line-height: 1.4;
+      padding: 5px 8px;
+      text-align: center;
+    }
+
+    &-trigger {
+      display: inline-block;
+      text-decoration: underline;
+    }
+
+    &-bubble {
+      min-width: 120px;
+      max-width: 210px;
+      position: absolute;
+      z-index: 10;
+      &::after {
+        content: '';
+        position: absolute;
+      }
+    }
+
+    &-top {
+      bottom: 100%;
+      left: 50%;
+      padding-bottom: 9px;
+      transform: translateX(-50%);
+
+      &::after {
+        border-left: $tooltip-border-radius solid transparent;
+        border-right: $tooltip-border-radius solid transparent;
+        border-top: $tooltip-border-radius solid $tooltip-background-color;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+
+    &-bottom {
+      top: 100%;
+      left: 50%;
+      padding-top: 9px;
+      transform: translateX(-50%);
+
+      &::after {
+        border-left: $tooltip-border-radius solid transparent;
+        border-right: $tooltip-border-radius solid transparent;
+        border-bottom: $tooltip-border-radius solid $tooltip-background-color;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+
+    &-left {
+      top: 50%;
+      right: 100%;
+      padding-right: 9px;
+      transform: translateY(-50%);
+
+      &::after {
+        border-left: $tooltip-border-radius solid $tooltip-background-color;
+        border-top: $tooltip-border-radius solid transparent;
+        border-bottom: $tooltip-border-radius solid transparent;
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+      }
+    }
+
+    &-right {
+      top: 50%;
+      left: 100%;
+      padding-left: 9px;
+      transform: translateY(-50%);
+
+      &::after {
+        border-right: $tooltip-border-radius solid $tooltip-background-color;
+        border-top: $tooltip-border-radius solid transparent;
+        border-bottom: $tooltip-border-radius solid transparent;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+      }
+    }
+  }
+}

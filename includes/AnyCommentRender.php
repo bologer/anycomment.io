@@ -179,6 +179,8 @@ if ( ! class_exists( 'AnyCommentRender' ) ) :
 						'error_generic'                  => __( "Oops, something went wrong...", "anycomment" ),
 						'loading'                        => __( 'Loading...', 'anycomment' ),
 						'load_more'                      => __( "Load more", "anycomment" ),
+						'waiting_moderation'             => __( "Waiting moderation", "anycomment" ),
+						'edited'                         => __( "Edited", "anycomment" ),
 						'button_send'                    => __( 'Send', 'anycomment' ),
 						'button_save'                    => __( 'Save', 'anycomment' ),
 						'button_reply'                   => __( 'Reply', 'anycomment' ),

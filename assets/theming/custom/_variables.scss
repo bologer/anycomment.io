@@ -44,6 +44,10 @@ $global-radius: 4px !default;
 $global-background-color: transparent !default;
 $global-background-border-radius: 0 !default;
 
-$editor-bubble-color: #E8EDEF;
+$editor-bubble-color: #E8EDEF !default;
+
+$tooltip-background-color: $editor-bubble-color;
+$tooltip-text-color: #747B7E !default;
+$tooltip-border-radius: 10px !default;
 
 $root: '#anycomment-root' !default;

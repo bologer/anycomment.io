@@ -751,16 +751,6 @@ class AnyCommentRestComment extends AnyCommentRestController {
 
 		$comment = get_comment( $id );
 
-		$schema = $this->get_item_schema();
-
-		if ( ! empty( $schema['properties']['meta'] ) && isset( $request['meta'] ) ) {
-			$meta_update = $this->meta->update_value( $request['meta'], $id );
-
-			if ( is_wp_error( $meta_update ) ) {
-				return $meta_update;
-			}
-		}
-
 		$fields_update = $this->update_additional_fields_for_object( $comment, $request );
 
 		if ( is_wp_error( $fields_update ) ) {
@@ -896,7 +886,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			$profileUrl = $socialUrl;
 		} elseif ( ! empty( $comment->comment_author_url ) ) {
 			$profileUrl = $comment->comment_author_url;
-		} elseif ( ! empty( $comment->user_id ) && ( $user = get_user_by( 'id', $comment->user_id ) ) !== false ) {
+		} elseif ( ! empty( $comment->user_id ) && false !== ( $user = get_user_by( 'id', $comment->user_id ) ) && ! empty( $user->user_url ) ) {
 			$profileUrl = $user->user_url;
 		} else {
 			$profileUrl = '';
@@ -928,8 +918,11 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			],
 			'meta'               => [
 				'has_like'    => AnyCommentLikes::isCurrentUserHasLike( $comment->comment_ID ),
+				'status'      => wp_get_comment_status( $comment ),
 				'likes_count' => AnyCommentLikes::get_likes_count( $comment->comment_ID ),
-				'count_text'  => AnyComment()->render->get_comment_count( $comment->comment_post_ID )
+				'count_text'  => AnyComment()->render->get_comment_count( $comment->comment_post_ID ),
+				'is_updated'  => AnyCommentCommentMeta::is_updated( $comment ),
+				'updated_by'  => AnyCommentCommentMeta::get_updated_by( $comment ),
 			]
 		);
 

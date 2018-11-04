@@ -9,10 +9,10 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class AnyCommentCommentMeta {
 
-	/**
-	 * Comment attachments.
-	 */
-	const META_ATTACHMENT = 'anycomment_attachment';
+	const META_ATTACHMENT = 'anycomment_attachment'; // Keeps list of comment attachments.
+
+	const META_UPDATED_AT = 'anycomment_updated_at'; // Keeps UNIX timestamp when comment was updated.
+	const META_UPDATED_BY = 'anycomment_updated_by'; // Keeps data about who updated the comment
 
 	/**
 	 * Delete attachments by meta id.
@@ -203,5 +203,96 @@ WHERE `meta`.`comment_id`=%d AND `meta`.`meta_key`=%s AND `meta`.`meta_value` IS
 		}
 
 		return true;
+	}
+
+	/**
+	 * Mark comment as updated.
+	 *
+	 * @param mixed $comment Comment to be check. It could be ID or instance of WP_Comment.
+	 * @param array|null $comment_data
+	 *
+	 * @return bool|int
+	 */
+	public static function mark_updated( $comment, $comment_data = null ) {
+		$retrieved_comment = get_comment( $comment );
+
+		if ( null === $retrieved_comment ) {
+			return false;
+		}
+
+		$updated_by = '';
+
+		if ( null !== $comment_data && isset( $comment_data['user_id'] ) && ! empty( $comment_data['user_id'] ) ) {
+			$updated_by = $comment_data['user_id'];
+		}
+
+		$comment_metas = [ self::META_UPDATED_AT => time(), self::META_UPDATED_BY => $updated_by ];
+		$count         = 0;
+
+		foreach ( $comment_metas as $meta_key => $meta_value ) {
+			$meta_updated = update_comment_meta( $retrieved_comment->comment_ID, $meta_key, $meta_value );
+
+			if ( false !== $meta_updated ) {
+				$count ++;
+			}
+		}
+
+		return $count === count( $comment_metas );
+	}
+
+	/**
+	 * Check by whome comment was update (if it was updated).
+	 *
+	 * @param mixed $comment Comment to be check. It could be ID or instance of WP_Comment.
+	 * @param bool $user_instance Return user instance in cause user exists. User ID will be returned when false.
+	 *
+	 * @return int|null NULL returned in case when comment never updated, missing meta or user ID does not exist.
+	 */
+	public static function get_updated_by( $comment, $user_instance = false ) {
+		$retrieved_comment = get_comment( $comment );
+
+		if ( null === $retrieved_comment ) {
+			return false;
+		}
+
+		$user_id = get_comment_meta( $retrieved_comment->comment_ID, self::META_UPDATED_BY, true );
+
+		if ( empty( $user_id ) ) {
+			return null;
+		}
+
+		$user = get_user_by( 'id', $user_id );
+
+		if ( false === $user ) {
+			// Unset comment meta value to empty as user does not exist
+			update_comment_meta( $retrieved_comment->comment_ID, self::META_UPDATED_BY, '' );
+
+			return null;
+		}
+
+		return $user_instance ? $user_instance : $user_id;
+	}
+
+	/**
+	 * Check whether comment was updated or not.
+	 *
+	 * @param mixed $comment Comment to be check. It could be ID or instance of WP_Comment.
+	 *
+	 * @return bool
+	 */
+	public static function is_updated( $comment ) {
+		$retrieved_comment = get_comment( $comment );
+
+		if ( null === $retrieved_comment ) {
+			return false;
+		}
+
+		$unix_timestamp = get_comment_meta( $retrieved_comment->comment_ID, self::META_UPDATED_AT, true );
+
+		if ( empty( $unix_timestamp ) ) {
+			return false;
+		}
+
+		return is_numeric( $unix_timestamp );
 	}
 }

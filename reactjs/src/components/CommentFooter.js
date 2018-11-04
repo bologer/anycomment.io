@@ -28,7 +28,9 @@ class CommentFooter extends AnyCommentComponent {
                     <li className="anycomment">
                         <a href="javascript:void(0)"
                            className="anycomment comment-single-body__actions-like"
-                           onClick={(e) => this.props.onLike(e)}>{likeIcon}{this.props.likesCount}</a>
+                           onClick={(e) => this.props.onLike(e)}>{likeIcon}
+                            <span itemProp="upvoteCount">{this.props.likesCount}</span>
+                        </a>
                     </li>
 
                     {!isGuest && comment.permissions.can_edit_comment ?
