@@ -171,6 +171,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 * WooCommerce support, #280 (credits to @artikus11)
 * Added new option to show/hide list of available social networks under WordPress' native login form, #150
+* Added new shortcode `[anycomment_socials]` to "Shortcodes" tab to display list of available social to login in custom place
 * Added new option to show/hide admin bar for regular users and those who used social network, #290, #233
 * Added moderation icon besides comment owner name to point to the admin that this comment is waiting to be moderated, #291
 * Added edited icon besides comment owner name to show users that comment was edited, #243 (credits @mihdan)
