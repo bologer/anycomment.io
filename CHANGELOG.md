@@ -6,16 +6,19 @@
 
 * WooCommerce support, #280 (credits to @artikus11)
 * Added new option to show/hide list of available social networks under WordPress' native login form, #150
-* Added new option to show/hide admin bar for regular users and those who used social network, #290
+* Added new option to show/hide admin bar for regular users and those who used social network, #290, #233
 * Added moderation icon besides comment owner name to point to the admin that this comment is waiting to be moderated, #291
 * Added edited icon besides comment owner name to show users that comment was edited, #243 (credits @mihdan)
-* Added ability to subscribe by email to comments for specific post, #71
+* Subscription: Added ability to subscribe by email to comments for specific post, #71
+* Subscription: Added ability customize email template, #71
+* Added new option to to specify sender name
 
 **Fixes:**
 
 * Fixed issue with social icon conflict with existing Fontawesome library, #288
 * Fixed issue when user agreement checkbox was misaligned on some of the websites
 * Fixed issue when dropdown was too narrow and some options were not seen well, #289
+* Fixed issue when links and other tags were missing attributes (e.g. <a> was missing href)
 
 
 ## 0.0.67 – 01.11.2018
