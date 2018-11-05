@@ -29,7 +29,7 @@ class Subscribe extends AnyCommentComponent {
      * Handle hide form action.
      */
     handleClose = () => {
-        this.localStore(LOCALE_STORE_KEY, 1);
+        this.localStore(this.getStoreKey(), 1);
         this.setState({showForm: false});
     };
 
@@ -65,6 +65,17 @@ class Subscribe extends AnyCommentComponent {
     };
 
     /**
+     * Get store key + post ID as subscription can be done per post.
+     *
+     * @returns {string}
+     */
+    getStoreKey = () => {
+        const {settings} = this.props;
+
+        return LOCALE_STORE_KEY + settings.postId;
+    };
+
+    /**
      * Check whether component should render or not.
      *
      * @returns {boolean}
@@ -73,7 +84,7 @@ class Subscribe extends AnyCommentComponent {
         const settings = this.getSettings();
         const {showForm} = this.state;
 
-        if (!settings.options.isNotifySubscribers || !showForm || this.getCurrentUser() === null || this.localGet(LOCALE_STORE_KEY)) {
+        if (!settings.options.isNotifySubscribers || !showForm || this.getCurrentUser() === null || this.localGet(this.getStoreKey())) {
             return false;
         }
 
