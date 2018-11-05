@@ -6,7 +6,10 @@ import i18Ru from 'react-timeago/lib/language-strings/ru'
 import TimeAgo from 'react-timeago'
 import Icon from './Icon'
 import Tooltip from './helpers/Tooltip'
-import {faEllipsisV, faGavel, faPen} from '@fortawesome/free-solid-svg-icons'
+import {faEllipsisV, faTrashAlt, faGavel, faPen} from '@fortawesome/free-solid-svg-icons'
+import Dropdown from 'react-simple-dropdown';
+import DropdownTrigger from 'react-simple-dropdown/lib/components/dropdown-trigger';
+import DropdownContent from 'react-simple-dropdown/lib/components/dropdown-content';
 
 /**
  * Used to render partial header of a comment.
@@ -80,7 +83,21 @@ class CommentHeader extends AnyCommentComponent {
 
                         {this.isUpdated() ? <Tooltip message={settings.i18.edited}><Icon icon={faPen}/></Tooltip> : ''}
 
-                        <Icon icon={faEllipsisV}/>
+                        {!this.isGuest() && comment.permissions.can_edit_comment ?
+                            <Dropdown>
+                                <DropdownTrigger>
+                                    <Icon icon={faEllipsisV}/>
+                                </DropdownTrigger>
+                                <DropdownContent>
+                                    <ul>
+                                        <li><a className="anycomment"
+                                               onClick={(e) => this.props.onDelete(e, comment)}><Icon
+                                            icon={faTrashAlt}/>&nbsp;{settings.i18.delete}</a>
+                                        </li>
+                                    </ul>
+                                </DropdownContent>
+                            </Dropdown> : ''}
+
                     </div>
                 </div>
                 <a href={'#comment-' + comment.id} className="anycomment">

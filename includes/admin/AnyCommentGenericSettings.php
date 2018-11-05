@@ -9,10 +9,21 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 	 * AC_AdminSettingPage helps to process generic plugin settings.
 	 */
 	class AnyCommentGenericSettings extends AnyCommentAdminOptions {
+
+		/**
+		 * Sender name used to send emails.
+		 */
+		const OPTION_NOTIFY_SENDER_NAME = 'option_notify_sender_name';
+
 		/**
 		 * Notify about new comment.
 		 */
 		const OPTION_NOTIFY_ON_NEW_COMMENT = 'option_notify_on_new_comment';
+
+		/**
+		 * Send email notification to users about new reply.
+		 */
+		const OPTION_NOTIFY_SUBSCRIBERS = 'option_notify_subscription';
 
 		/**
 		 * Send email notification to users about new reply.
@@ -28,6 +39,11 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 * Reply email template.
 		 */
 		const OPTION_NOTIFY_REPLY_EMAIL_TEMPLATE = 'option_notify_reply_email_template';
+
+		/**
+		 * Reply email template.
+		 */
+		const OPTION_NOTIFY_SUBSCRIBERS_EMAIL_TEMPLATE = 'option_notify_subscribe_email_template';
 
 		/**
 		 * Admin email template.
@@ -211,6 +227,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 			self::OPTION_FILES_MIME_TYPES                       => 'image/*, .pdf',
 
 			// Notifications
+			self::OPTION_NOTIFY_SUBSCRIBERS_EMAIL_TEMPLATE      => "New comment in {blogUrlHtml}.\nFrom post {postUrlHtml}.\n\n{commentFormatted}\n{replyButton}\n\nYou were subscribed to this post.",
 			self::OPTION_NOTIFY_REPLY_EMAIL_TEMPLATE            => "New reply for you in {blogUrlHtml}.\nFrom post {postUrlHtml}.\n\n{commentFormatted}\n{replyButton}",
 			self::OPTION_NOTIFY_ADMIN_EMAIL_TEMPLATE            => "New comment posted in {blogUrlHtml}.\nFor post {postUrlHtml}.\n\n{commentFormatted}\n{replyButton}",
 
@@ -709,6 +726,12 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 				],
 				[
 					[
+						'id'          => self::OPTION_NOTIFY_SENDER_NAME,
+						'title'       => __( 'Sender Name', "anycomment" ),
+						'type'        => 'text',
+						'description' => esc_html( __( 'Send name shown to email recipient. This could be your blog name.', "anycomment" ) )
+					],
+					[
 						'id'          => self::OPTION_NOTIFY_ON_NEW_COMMENT,
 						'title'       => __( 'New Comment Alert', "anycomment" ),
 						'type'        => 'checkbox',
@@ -728,9 +751,51 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 					],
 					[
 						'id'          => self::OPTION_NOTIFY_ON_NEW_REPLY,
-						'title'       => __( 'Email Notifications', "anycomment" ),
+						'title'       => __( 'Notify on new replies', "anycomment" ),
 						'type'        => 'checkbox',
 						'description' => esc_html( __( 'Notify users by email (if specified) about new replies. Make sure you have proper SMTP configurations in order to send emails.', "anycomment" ) ),
+					],
+
+					[
+						'id'          => self::OPTION_NOTIFY_SUBSCRIBERS,
+						'title'       => __( 'Notify Post Subscribers', "anycomment" ),
+						'type'        => 'checkbox',
+						'description' => esc_html( __( 'Show subscription form and notify active post subscribers. Make sure you have proper SMTP configurations in order to send emails.', "anycomment" ) ),
+					],
+
+					[
+						'id'          => self::OPTION_NOTIFY_SUBSCRIBERS_EMAIL_TEMPLATE,
+						'title'       => __( 'Subscription Email Template', "anycomment" ),
+						'type'        => 'textarea',
+						'description' => esc_html( __( 'Email template for subscriptions.', "anycomment" ) ),
+						'after'       => function () {
+							$supportedList = [
+								'{blogName}'         => __( 'Blog name as text', 'anycomment' ),
+								'{blogUrl}'          => __( 'Blog link as text', 'anycomment' ),
+								'{blogUrlHtml}'      => __( 'Blog name in HTML link', 'anycomment' ),
+								'{postTitle}'        => __( 'Post title as text', 'anycomment' ),
+								'{postUrl}'          => __( 'Post URL as text', 'anycomment' ),
+								'{postUrlHtml}'      => __( 'Post title in HTML link', 'anycomment' ),
+								'{commentText}'      => __( 'Comment text', 'anycomment' ),
+								'{commentFormatted}' => __( 'Comment text nicely formatted', 'anycomment' ),
+								'{replyUrl}'         => __( 'Reply link as text', 'anycomment' ),
+								'{replyButton}'      => __( 'Reply link as button', 'anycomment' ),
+							];
+
+							$id = self::OPTION_NOTIFY_SUBSCRIBERS_EMAIL_TEMPLATE . time();
+
+							$html = '<div><span class="button button-small" id="' . $id . '">' . __( 'More info', 'anycomment' ) . '</span><ul style="display: none;">';
+
+							foreach ( $supportedList as $code => $description ) {
+								$html .= sprintf( "<li>%s - %s</li>", $code, $description );
+							}
+
+							$html .= '</ul></div>';
+
+							$html .= '<script>jQuery("#' . $id . '").on("click", function() {jQuery(this).next("ul").toggle();});</script>';
+
+							return $html;
+						}
 					],
 
 					[
@@ -765,8 +830,6 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 							$html .= '<script>jQuery("#' . $id . '").on("click", function() {jQuery(this).next("ul").toggle();});</script>';
 
 							return $html;
-
-
 						}
 					],
 
@@ -793,7 +856,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 
 							$id = self::OPTION_NOTIFY_ADMIN_EMAIL_TEMPLATE . time();
 
-							$html = '<div><span class="button button-small" id="' . $id . '">' . __( 'More info', 'anycomment' ) . '</span><ul style="display: none;">';
+							$html = '<div><br><span class="button button-small" id="' . $id . '">' . __( 'More info', 'anycomment' ) . '</span><ul style="display: none;">';
 
 							foreach ( $supportedList as $code => $description ) {
 								$html .= sprintf( "<li>%s - %s</li>", $code, $description );
@@ -804,8 +867,6 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 							$html .= '<script>jQuery("#' . $id . '").on("click", function() {jQuery(this).next("ul").toggle();});</script>';
 
 							return $html;
-
-
 						}
 					],
 				]
@@ -1206,6 +1267,39 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 */
 		public static function is_notify_admin() {
 			return static::instance()->get_option( self::OPTION_NOTIFY_ADMINISTRATOR ) !== null;
+		}
+
+		/**
+		 * Check whether it is required to notify subscribers about new comment(s).
+		 *
+		 * @return bool
+		 */
+		public static function is_notify_subscribers() {
+			return static::instance()->get_option( self::OPTION_NOTIFY_SUBSCRIBERS ) !== null;
+		}
+
+		/**
+		 * Get sender name. When name is empty, `blogname` options will be returned.
+		 * @return string
+		 */
+		public static function get_notify_email_sender_name() {
+			$value = static::instance()->get_option( self::OPTION_NOTIFY_SUBSCRIBERS );
+
+			if ( empty( $value ) ) {
+				// Get blog name in case from name is now specified
+				return get_option( 'blogname' );
+			}
+
+			return $value;
+		}
+
+		/**
+		 * Get subscribers email template format.
+		 *
+		 * @return string|null
+		 */
+		public static function get_notify_email_subscribers_template() {
+			return static::instance()->get_option( self::OPTION_NOTIFY_SUBSCRIBERS_EMAIL_TEMPLATE );
 		}
 
 		/**

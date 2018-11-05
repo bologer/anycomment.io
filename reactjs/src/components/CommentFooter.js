@@ -37,10 +37,6 @@ class CommentFooter extends AnyCommentComponent {
                         <li className="anycomment"><a className="anycomment" href="javascript:void(0)"
                                                       onClick={(e) => this.props.onEdit(e)}>{editIcon}{settings.i18.edit}</a>
                         </li> : ''}
-                    {!isGuest && comment.permissions.can_edit_comment ?
-                        <li className="anycomment"><a className="anycomment" href="javascript:void(0)"
-                                                      onClick={(e) => this.props.onDelete(e, comment)}>{trashIcon}{settings.i18.delete}</a>
-                        </li> : ''}
                 </ul>
             </footer>
         );

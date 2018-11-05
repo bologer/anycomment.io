@@ -134,7 +134,7 @@ class Comment extends AnyCommentComponent {
                 <CommentAvatar comment={comment}/>
 
                 <div className="comment-single-body">
-                    <CommentHeader comment={comment}/>
+                    <CommentHeader comment={comment} onDelete={this.onDelete}/>
 
                     <CommentBody comment={comment}/>
 
@@ -144,7 +144,6 @@ class Comment extends AnyCommentComponent {
                         onEdit={this.onEdit}
                         onLike={this.onLike}
                         onReply={this.onReply}
-                        onDelete={this.onDelete}
                         comment={comment}
                         likesCount={likesCount}
                         hasLike={hasLike}

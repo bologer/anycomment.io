@@ -4,6 +4,7 @@ import SendComment from './SendComment'
 import AnyCommentComponent from "./AnyCommentComponent";
 import {toast} from 'react-toastify';
 import CommentListSummary from "./CommentListSummary";
+import Subscribe from './Subscribe'
 
 /**
  * CommentList displays list of comments.
@@ -290,6 +291,8 @@ class CommentList extends AnyCommentComponent {
             order={this.state.order}
             onSort={this.handleSort}/>;
 
+        const subscription = <Subscribe/>;
+
         if (isError) {
             return <React.Fragment>
                 {sendComment}
@@ -319,6 +322,7 @@ class CommentList extends AnyCommentComponent {
                 <React.Fragment>
                     {sendComment}
                     {commentListSummary}
+                    {subscription}
                     <ul id="anycomment-load-container" className="anycomment anycomment-list">
                         {comments.map(comment => (
                             <Comment

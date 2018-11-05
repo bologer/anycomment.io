@@ -27,12 +27,8 @@ class Subscribe extends AnyCommentComponent {
 
     /**
      * Handle hide form action.
-     *
-     * @param event
      */
-    handleClose = (event) => {
-        event.preventDefault();
-
+    handleClose = () => {
         this.localStore(LOCALE_STORE_KEY, 1);
         this.setState({showForm: false});
     };
@@ -60,7 +56,7 @@ class Subscribe extends AnyCommentComponent {
                 headers: {'X-WP-Nonce': settings.nonce}
             })
             .then(function (response) {
-                self.setState({showForm: false});
+                self.handleClose();
                 self.showSuccess(settings.i18.subscribed);
             })
             .catch(function (error) {
@@ -68,19 +64,36 @@ class Subscribe extends AnyCommentComponent {
             });
     };
 
-    render() {
-        const {email, showForm} = this.state;
+    /**
+     * Check whether component should render or not.
+     *
+     * @returns {boolean}
+     */
+    shouldRender = () => {
+        const settings = this.getSettings();
+        const {showForm} = this.state;
 
-        if (!showForm || this.getCurrentUser() === null || this.localGet(LOCALE_STORE_KEY)) {
+        if (!settings.options.isNotifySubscribers || !showForm || this.getCurrentUser() === null || this.localGet(LOCALE_STORE_KEY)) {
+            return false;
+        }
+
+        return true;
+    };
+
+    render() {
+        if (!this.shouldRender()) {
             return (null);
         }
+
+        const {email} = this.state;
+        const settings = this.getSettings();
 
         return (
             <div className="anycomment anycomment-component anycomment-subscribe">
                 <div className="anycomment-subscribe__close" onClick={this.handleClose}>
                     <Icon icon={faTimes}/>
                 </div>
-                <p>You may subscribe to comments for this post by providing your email address:</p>
+                <p>{settings.i18.subscribe_pre_paragraph}</p>
                 <form onSubmit={this.handleSubmit}>
                     <div className="anycomment anycomment-subscribe__email">
                         <input onChange={this.handleAuthorEmailChange} type="email" value={email}
@@ -89,7 +102,7 @@ class Subscribe extends AnyCommentComponent {
                     <div className="anycomment anycomment-subscribe__submit">
                         <input type="submit"
                                className="anycomment-btn"
-                               value="Subscribe"/>
+                               value={settings.i18.subscribe}/>
                     </div>
                 </form>
             </div>

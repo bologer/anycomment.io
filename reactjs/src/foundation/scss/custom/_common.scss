@@ -121,6 +121,23 @@
     border-radius: $global-radius;
     border: 1px solid #d6d6d6;
     z-index: 9;
+
+    // In case of icons in the list
+    ul {
+      li {
+        a {
+          cursor: pointer;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-around;
+
+          .anycomment-icon {
+            margin-right: 5px;
+          }
+        }
+      }
+    }
   }
 }
 

@@ -11,7 +11,9 @@ class AnyCommentRestSubscriptions extends AnyCommentRestController {
 		$this->namespace = 'anycomment/v1';
 		$this->rest_base = 'subscribe';
 
-		add_action( 'rest_api_init', [ $this, 'register_routes' ] );
+		if ( AnyCommentGenericSettings::is_notify_subscribers() ) {
+			add_action( 'rest_api_init', [ $this, 'register_routes' ] );
+		}
 	}
 
 	/**
@@ -68,8 +70,8 @@ class AnyCommentRestSubscriptions extends AnyCommentRestController {
 			return new WP_Error( 'rest_comment_like_trash_post', __( 'Sorry, you are not allowed to create a comment on this post.', 'anycomment' ), array( 'status' => 403 ) );
 		}
 
-		if ( AnyCommentSubscriptions::is_subscribed_by( 'email', $request['email'] ) ) {
-			return new WP_Error( 'rest_already_subscribed', __( 'This email is already subscribed', 'anycomemnt' ), [ 'status' => 403 ] );
+		if ( AnyCommentSubscriptions::is_subscribed_by( $request['email'], $request['post'] ) ) {
+			return new WP_Error( 'rest_already_subscribed', __( 'This email is already subscribed for this post', 'anycomment' ), [ 'status' => 403 ] );
 		}
 
 		return true;

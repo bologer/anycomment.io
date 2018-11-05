@@ -89,10 +89,14 @@ class AnyCommentComponent extends React.Component {
 
     /**
      * Show success message toast.
-     * @param message
+     * @param data
      * @param options
      */
     showSuccess(message, options = null) {
+        if (!message) {
+            return false;
+        }
+
         toast.success(message, options);
     }
 

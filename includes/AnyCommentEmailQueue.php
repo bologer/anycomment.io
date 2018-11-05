@@ -247,6 +247,46 @@ AND `comments`.`comment_ID`=%d";
 	}
 
 	/**
+	 * Method can be used to add email notification about new comment to subscribers.
+	 *
+	 * @param string $subscriber_email Subscriber email.
+	 * @param WP_Comment $comment Comment to be added as notification.
+	 *
+	 * @return AnyCommentEmailQueue|bool|int
+	 */
+	public static function add_as_subscriber_notification( $subscriber_email, $comment ) {
+		if ( ! $comment instanceof WP_Comment ) {
+			return false;
+		}
+
+		$user = get_user_by( 'email', $subscriber_email );
+
+		if ( ! $user instanceof WP_User ) {
+			return false;
+		}
+
+		$email = new self();
+
+		$post = get_post( $comment->comment_post_ID );
+
+		if ( $post !== null ) {
+			$subject = sprintf( __( "New Comment in %s", 'anycomment' ), $post->post_title );
+		} else {
+			$subject = sprintf( __( 'New Comment in %s', 'anycomment' ), get_option( 'blogname' ) );
+		}
+
+		$email->email      = $subscriber_email;
+		$email->subject    = $subject;
+		$email->post_ID    = $comment->comment_post_ID;
+		$email->comment_ID = $comment->comment_ID;
+		$email->content    = AnyCommentEmailQueue::generate_subscribe_email( $email );
+
+		$isAdded = AnyCommentEmailQueue::add( $email, 'bool' );
+
+		return $isAdded;
+	}
+
+	/**
 	 * Add new email to queue.
 	 *
 	 * @param AnyCommentEmailQueue $email
@@ -295,10 +335,95 @@ AND `comments`.`comment_ID`=%d";
 				return $email;
 			}
 
+			do_action( 'anycomment_queue_entry_created', $email );
+
 			return true;
 		}
 
 		return false;
+	}
+
+	/**
+	 * Prepare email body.
+	 *
+	 * Subs to replace:
+	 * '{blogName}',
+	 * '{blogUrl}',
+	 * '{blogUrlHtml}',
+	 * '{postTitle}',
+	 * '{postUrl}',
+	 * '{postUrlHtml}',
+	 * '{commentText}',
+	 * '{commentFormatted}',
+	 * '{replyUrl}',
+	 * '{replyButton}'
+	 *
+	 * @param AnyCommentEmailQueue $email
+	 *
+	 * @return string HTML formatted content of email.
+	 */
+	public static function generate_subscribe_email( $email ) {
+		$comment        = get_comment( $email->comment_ID );
+		$post           = get_post( $email->post_ID );
+		$cleanPermalink = get_permalink( $post );
+		$reply_url      = sprintf( '%s#comment-%s', $cleanPermalink, $comment->comment_ID );
+
+		$blog_name     = get_option( 'blogname' );
+		$blog_url      = get_option( 'siteurl' );
+		$blog_url_html = sprintf( '<a href="%s">%s</a>', $blog_url, $blog_name );
+
+		$post_title    = '';
+		$post_url      = '';
+		$post_url_html = '';
+
+		$comment_text      = '';
+		$comment_formatted = '';
+
+		if ( $post !== null ) {
+			$post_title    = $post->post_title;
+			$post_url      = $cleanPermalink;
+			$post_url_html = sprintf( '<a href="%s">%s</a>', $post_url, $post_title );
+		}
+
+		if ( $comment !== null ) {
+			$comment_text = $comment->comment_content;
+
+			$comment_formatted = '<div style="background-color:#eee; padding: 10px; font-size: 12pt; font-family: Verdana, Arial, sans-serif; line-height: 1.5;">';
+			$comment_formatted .= $comment_text;
+			$comment_formatted .= '</div>';
+		}
+
+		$reply_button = '<p><a href="' . $reply_url . '" style="font-size: 15px;text-decoration:none;font-weight: 400;text-align: center;color: #fff;padding: 0 50px;line-height: 48px;background-color: #53af4a;display: inline-block;vertical-align: middle;border: 0;outline: 0;cursor: pointer;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;-webkit-appearance: none;-moz-appearance: none;appearance: none;white-space: nowrap;border-radius: 24px;">' . __( 'See', 'anycomment' ) . '</a></p>';
+
+		$search = [
+			'{blogName}',
+			'{blogUrl}',
+			'{blogUrlHtml}',
+			'{postTitle}',
+			'{postUrl}',
+			'{postUrlHtml}',
+			'{commentText}',
+			'{commentFormatted}',
+			'{replyUrl}',
+			'{replyButton}',
+		];
+
+		$replacement = [
+			$blog_name,
+			$blog_url,
+			$blog_url_html,
+			$post_title,
+			$post_url,
+			$post_url_html,
+			$comment_text,
+			$comment_formatted,
+			$reply_url,
+			$reply_button,
+		];
+
+		$template = AnyCommentGenericSettings::get_notify_email_subscribers_template();
+
+		return static::prepare_email_template( $template, $search, $replacement );
 	}
 
 	/**
@@ -490,6 +615,6 @@ AND `comments`.`comment_ID`=%d";
 
 		$content = trim( nl2br( $content ) );
 
-		return $content;
+		return apply_filters( 'anycomment_prepare_email_template', $content, $content, $search, $replacement );
 	}
 }

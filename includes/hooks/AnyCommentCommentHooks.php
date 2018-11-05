@@ -35,6 +35,8 @@ class AnyCommentCommentHooks {
 		// On comment status change
 //		add_action( 'wp_set_comment_status', [ $this, 'process_set_status_comment' ], 10, 2 );
 
+		add_action( 'wp_insert_comment', [ $this, 'process_new_comment' ], 10, 2 );
+
 
 		// Extend allowed HTML tags to the needs of visual editor
 		add_filter( 'pre_comment_content', [ $this, 'kses_allowed_html_for_quill' ], 16 );
@@ -49,10 +51,10 @@ class AnyCommentCommentHooks {
 	 */
 	public function kses_allowed_html_for_quill( $comment_content ) {
 		$allowedhtml['p']          = [];
-		$allowedhtml['a']          = [ 'href', 'target', 'rel' ];
+		$allowedhtml['a']          = [ 'href' => true, 'target' => true, 'rel' => true ];
 		$allowedhtml['ul']         = [];
 		$allowedhtml['ol']         = [];
-		$allowedhtml['blockquote'] = [ 'class' ];
+		$allowedhtml['blockquote'] = [ 'class' => true ];
 		$allowedhtml['code']       = [];
 		$allowedhtml['li']         = [];
 		$allowedhtml['b']          = [];
@@ -61,11 +63,22 @@ class AnyCommentCommentHooks {
 		$allowedhtml['strong']     = [];
 		$allowedhtml['em']         = [];
 		$allowedhtml['br']         = [];
-		$allowedhtml['img']        = [ 'class', 'src', 'alt' ];
+		$allowedhtml['img']        = [ 'class' => true, 'src' => true, 'alt' => true ];
 		$allowedhtml['figure']     = [];
 		$allowedhtml['iframe']     = [];
 
 		return wp_kses( $comment_content, $allowedhtml );
+	}
+
+	/**
+	 * Process comment which will be deleted soon in order to clean-up after it.
+	 *
+	 * @param int $comment_id Comment ID.
+	 * @param WP_Comment $comment Comment object.
+	 */
+	public function process_new_comment( $comment_id, $comment ) {
+		// Notify subscribers
+		AnyCommentSubscriptions::notify_by( $comment );
 	}
 
 	/**
@@ -96,7 +109,7 @@ class AnyCommentCommentHooks {
 	 */
 	public function process_edit_comment( $comment_id, $data ) {
 		// Mark comment as updated
-		AnyCommentCommentMeta::mark_updated( $comment_id, $data);
+		AnyCommentCommentMeta::mark_updated( $comment_id, $data );
 	}
 
 	/**

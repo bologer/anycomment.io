@@ -68,6 +68,9 @@ class AnyCommentEmailQueueCron {
 			$subject = $email->subject;
 			$body    = $email->content;
 
+			// Hook specified sender name from settings
+			add_filter( 'wp_mail_from_name', [ $this, 'sender_name' ] );
+
 			/**
 			 * When required to notify new users about replies, them them email,
 			 * otherwise fake it as sent in order not to break the logic of the queue.
@@ -83,5 +86,16 @@ class AnyCommentEmailQueueCron {
 		}
 
 		return count( $emails ) === $successCount;
+	}
+
+	/**
+	 * Rewrite original email from.
+	 *
+	 * @param string $original_email_from
+	 *
+	 * @return string
+	 */
+	public function sender_name( $original_email_from ) {
+		return AnyCommentGenericSettings::get_notify_email_sender_name();
 	}
 }

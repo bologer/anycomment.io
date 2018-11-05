@@ -45,18 +45,66 @@ class AnyCommentSubscriptions {
 		return $wpdb->prefix . 'anycomment_subscriptions';
 	}
 
+
 	/**
-	 * Check whether user subscribed by specified field and search value.
+	 * Notify subscribers by specified comment.
+	 * Expected that specified comment is the new comment.
 	 *
-	 * @param string $field Database field to search for. Should be taken from table schema.
-	 * @param string $search Value to search for.
+	 * @param mixed $comment Comment ID or instance of WP_Comment
+	 *
+	 * @see WP_Comment for further information.
 	 *
 	 * @return bool
 	 */
-	public static function is_subscribed_by( $field = 'email', $search ) {
+	public static function notify_by( $comment ) {
 
-		if ( $field !== 'email' && $field !== 'id' ) {
-			$field = 'email';
+		if ( ! AnyCommentGenericSettings::is_notify_subscribers() ) {
+			return false;
+		}
+
+		$working_comment = get_comment( $comment );
+
+		if ( (int) $working_comment->comment_post_ID === 0 ) {
+			return false;
+		}
+
+		global $wpdb;
+
+		$table = static::tableName();
+		$sql   = "SELECT `user_ID`, `email` FROM $table WHERE post_ID=%d AND is_active=1 AND confirmed_at IS NOT NULL";
+
+		/**
+		 * @var AnyCommentSubscriptions[]|null $subscribers
+		 */
+		$subscribers = $wpdb->get_results( $wpdb->prepare( $sql, [ $working_comment->comment_post_ID ] ) );
+
+		if ( empty( $subscribers ) ) {
+			return true;
+		}
+
+		foreach ( $subscribers as $key => $subscriber ) {
+			AnyCommentEmailQueue::add_as_subscriber_notification( $subscriber->email, $comment );
+		}
+
+		return true;
+	}
+
+	/**
+	 * Check whether user subscribed by specified field and search value.
+	 *
+	 * @param string $email Database field to search for. Should be taken from table schema.
+	 * @param int|null $post_id Post ID to check whether user is subsribed to it. Leave empty to check just for email.
+	 *
+	 * @return bool
+	 */
+	public static function is_subscribed_by( $email, $post_id = null ) {
+
+		$condition_array = [ $email ];
+		$condition       = "email = %s";
+
+		if ( $post_id !== null ) {
+			$condition         .= ' AND post_ID = %d';
+			$condition_array[] = $post_id;
 		}
 
 		global $wpdb;
@@ -64,7 +112,7 @@ class AnyCommentSubscriptions {
 
 		$tableName = static::tableName();
 
-		$sql   = $wpdb->prepare( "SELECT COUNT(*) FROM $tableName WHERE `$field`=%s", $search );
+		$sql   = $wpdb->prepare( "SELECT COUNT(*) FROM $tableName WHERE $condition", $condition_array );
 		$count = $wpdb->get_var( $sql );
 
 		return $count >= 1;
