@@ -24,6 +24,10 @@ class AnyCommentNativeLoginForm {
 		add_shortcode( 'anycomment_socials', [ $this, 'social_list' ] );
 	}
 
+	/**
+	 * Used to display list available socials to login as alternative to
+	 * regular login details.
+	 */
 	public function social_list_login_form() {
 		$this->social_list( [ 'output' => true ] );
 	}
