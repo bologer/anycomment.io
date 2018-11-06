@@ -204,6 +204,8 @@ AND `comments`.`comment_ID`=%d";
 	/**
 	 * Method can be used to add email notification about new comment to admin.
 	 *
+	 * Notice: no email will be send if admin email from settings is matching one from comment.
+	 *
 	 * @param WP_Comment $comment Comment to be added as notification to admin.
 	 *
 	 * @return AnyCommentEmailQueue|bool|int
@@ -214,12 +216,6 @@ AND `comments`.`comment_ID`=%d";
 		}
 
 		$adminEmail = get_option( 'admin_email' );
-
-		$user = get_user_by( 'email', $adminEmail );
-
-		if ( ! $user instanceof WP_User ) {
-			return false;
-		}
 
 		if ( $comment->comment_author_email === $adminEmail ) {
 			return false;

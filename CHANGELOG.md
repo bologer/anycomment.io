@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.0.69 – 06.11.2018
+
+**Fixes:**
+
+* Fixed issue when incorrect option was used to grab admins email on some websites
+* Fixed issue when recent addition of shortcode could break WP native API
+
 ## 0.0.68 – 05.11.2018
 
 **Enhancements:**

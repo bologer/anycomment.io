@@ -4,7 +4,7 @@ Tags: anycomment, comments, ajax comments, comment, comment moderation, custom c
 Requires at least: 4.7
 Tested up to: 4.9.8
 Requires PHP: 5.4
-Stable tag: 0.0.68
+Stable tag: 0.0.69
 License: GPLv2 or later
 License URI: http://www.gnu.org/
 
@@ -164,6 +164,14 @@ Most of the hosting providers support single button-like installation of SSL cer
 It could only be difficult for website who have HTTP only and hight traffic as transfer to HTTPs can cause some traffic lose.
 
 == Changelog ==
+
+= 0.0.69 – 06.11.2018 =
+
+**Fixes:**
+
+* Fixed issue when incorrect option was used to grab admins email on some websites
+* Fixed issue when recent addition of shortcode could break WP native API
+
 
 = 0.0.68 – 05.11.2018 =
 
