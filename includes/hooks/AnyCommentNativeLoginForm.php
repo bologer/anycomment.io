@@ -18,20 +18,29 @@ class AnyCommentNativeLoginForm {
 	 */
 	public function init() {
 		if ( AnyCommentGenericSettings::is_show_socials_in_login_page() ) {
-			add_action( 'login_form', [ $this, 'social_list' ], 11 );
+			add_action( 'login_form', [ $this, 'social_list_login_form' ], 11 );
 		}
 
 		add_shortcode( 'anycomment_socials', [ $this, 'social_list' ] );
+	}
+
+	public function social_list_login_form() {
+		$this->social_list( [ 'output' => true ] );
 	}
 
 	/**
 	 * Display list of available methods to login on the website.
 	 *
 	 * Usage as shortcode: `[anycomment_socials]`
+	 *
+	 * Possible options:
+	 * - only_socials (default: false) display just list of socials, without starting paragraph.
+	 * - output (default: true) true would `echo` the result HTML, false would `return` it.
 	 */
 	public function social_list( $atts ) {
 		$params = shortcode_atts( array(
 			'only_socials' => false,
+			'output'       => false
 		), $atts );
 
 		$socials = $this->login_with();
@@ -45,6 +54,10 @@ class AnyCommentNativeLoginForm {
 		$html .= $socials;
 
 		$html .= '</div>';
+
+		if ( false === $params['output'] ) {
+			return $html;
+		}
 
 		echo $html;
 	}
@@ -68,16 +81,16 @@ class AnyCommentNativeLoginForm {
 			$url          = $social['url'];
 			$label        = $social['label'];
 			$src          = AnyComment()->plugin_url() . "/assets/img/icons/auth/social-$key.svg";
-			$socials_html .= <<<HTML
+			$socials_html .= <<<EOT
 <li>
     <a href="$url" title="$label">
        <img src="$src" alt="$label">
     </a>
 </li>
-HTML;
+EOT;
 		endforeach;
 
-		return <<<HTML
+		return <<<EOT
 <style>
 ul.anycomment-socials {
 	margin: 0; 
@@ -126,6 +139,6 @@ ul.anycomment-socials > li > a img {
 <ul class="anycomment-socials">
 $socials_html
 </ul>
-HTML;
+EOT;
 	}
 }
