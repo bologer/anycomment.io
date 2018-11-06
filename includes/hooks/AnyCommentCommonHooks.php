@@ -14,7 +14,7 @@ class AnyCommentCommonHooks {
 	 * Init hooks.
 	 */
 	public function init() {
-		if ( ! AnyCommentGenericSettings::is_show_show_admin_bar() ) {
+		if ( ! AnyCommentGenericSettings::is_show_admin_bar() ) {
 			add_action( 'init', [ $this, 'hide_admin_bar' ] );
 			add_action( 'template_redirect', [ $this, 'redirect_on_hidden_admin_bar' ] );
 		}

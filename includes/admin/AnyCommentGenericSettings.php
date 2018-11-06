@@ -1247,7 +1247,7 @@ if ( ! class_exists( 'AnyCommentGenericSettings' ) ) :
 		 *
 		 * @return bool
 		 */
-		public static function is_show_show_admin_bar() {
+		public static function is_show_admin_bar() {
 			return static::instance()->get_option( self::OPTION_SHOW_ADMIN_BAR ) !== null;
 		}
 

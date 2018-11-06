@@ -213,7 +213,7 @@ AND `comments`.`comment_ID`=%d";
 			return false;
 		}
 
-		$adminEmail = get_option( 'new_admin_email' );
+		$adminEmail = get_option( 'admin_email' );
 
 		$user = get_user_by( 'email', $adminEmail );
 
