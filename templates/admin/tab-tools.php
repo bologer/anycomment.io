@@ -25,11 +25,12 @@ if ( isset( $_GET['action'] ) ) {
 		default:
 	}
 }
+
 ?>
 
 <div class="anycomment-tab">
     <h2><?php echo __( 'Tools', 'anycomment' ) ?></h2>
-    <p><?php echo __( 'This page will have helpers and debug information related to the plugin. For example, version of plugin, WordPress or PHP. Also you may drop comments or global plugins cache, open comments for all posts, pages or WooCommerce products (when plugin activated).', 'anycomment') ?></p>
+    <p><?php echo __( 'This page will have helpers and debug information related to the plugin. For example, version of plugin, WordPress or PHP. Also you may drop comments or global plugins cache, open comments for all posts, pages or WooCommerce products (when plugin activated).', 'anycomment' ) ?></p>
 
 
     <h3><?php echo __( 'Debug Information', 'anycomment' ) ?></h3>
@@ -38,34 +39,19 @@ if ( isset( $_GET['action'] ) ) {
 	global $wp_version;
 
 
-	$debugData = [
-		[ 'th' => __( 'AnyComment Version', 'anycomment' ), 'td' => AnyComment()->version ],
-		[ 'th' => __( 'WordPress Version', 'anycomment' ), 'td' => $wp_version ],
-		[ 'th' => __( 'PHP Version', 'anycomment' ), 'td' => PHP_VERSION ],
-		[ 'th' => __( 'Locale', 'anycomment' ), 'td' => get_locale() ],
-		[
-			'th' => __( 'Using Custom Design', 'anycomment' ),
-			'td' => \AnyComment\Admin\AnyCommentGenericSettings::is_design_custom() ? __( 'Yes', 'anycomment' ) : __( 'No', 'anycomment' )
-		],
-		[ 'th' => __( 'Generated at', 'anycomment' ), 'td' => date( 'c' ) ],
-	];
+	$preparedData = \AnyComment\AnyCommentDebugReport::prepare();
 
 	function anycomment_get_debug_summary( $debugData ) {
-		$text = '';
-		foreach ( $debugData as $key => $debug ) {
-			$text .= sprintf( "%s: %s%s", $debug['th'], $debug['td'], ( isset( $debugData[ $key + 1 ] ) ? "\n" : '' ) );
-		}
 
-		return $text;
 	}
 
 	?>
     <table class="form-table">
         <tbody>
-		<?php foreach ( $debugData as $row ): ?>
+		<?php foreach ( $preparedData as $row ): ?>
             <tr>
-                <th><?php echo $row['th'] ?></th>
-                <td><?php echo $row['td'] ?></td>
+                <th><?php echo $row['name'] ?></th>
+                <td style="word-break: break-all;"><?php echo $row['value'] ?></td>
             </tr>
 		<?php endforeach; ?>
         <tr>
@@ -74,7 +60,7 @@ if ( isset( $_GET['action'] ) ) {
                 <textarea name="" id="" cols="100"
                           readonly="readonly"
                           onclick="this.select()"
-                          rows="10"><?php echo anycomment_get_debug_summary( $debugData ) ?></textarea>
+                          rows="10"><?php echo \AnyComment\AnyCommentDebugReport::generate( $preparedData ) ?></textarea>
                 <p class="description"><?php echo __( 'Copy and paste this information to developer as it may be helpful for problem investigation.', 'anycomment' ) ?></p>
             </td>
         </tr>
