@@ -5,22 +5,22 @@ if ( isset( $_GET['action'] ) ) {
 	$action = $_GET['action'];
 	switch ( $action ) {
 		case 'cache-flush-all':
-			\anycomment\cache\AnyCommentCacheManager::flushAll();
+			\AnyComment\Cache\AnyCommentCacheManager::flushAll();
 			break;
 		case 'cache-flush-rest':
-			\anycomment\cache\rest\AnyCommentRestCacheManager::flush();
+			\AnyComment\Cache\AnyCommentRestCacheManager::flush();
 			break;
 		case 'open-all-comments':
-			\anycomment\helpers\AnyCommentManipulatorHelper::open_all_comments();
+			\AnyComment\helpers\AnyCommentManipulatorHelper::open_all_comments();
 			break;
 		case 'open-posts-comments':
-			\anycomment\helpers\AnyCommentManipulatorHelper::open_all_post_comments();
+			\AnyComment\helpers\AnyCommentManipulatorHelper::open_all_post_comments();
 			break;
 		case 'open-pages-comments':
-			\anycomment\helpers\AnyCommentManipulatorHelper::open_all_page_comments();
+			\AnyComment\helpers\AnyCommentManipulatorHelper::open_all_page_comments();
 			break;
 		case 'open-products-comments':
-			\anycomment\helpers\AnyCommentManipulatorHelper::open_all_product_comments();
+			\AnyComment\helpers\AnyCommentManipulatorHelper::open_all_product_comments();
 			break;
 		default:
 	}
@@ -45,7 +45,7 @@ if ( isset( $_GET['action'] ) ) {
 		[ 'th' => __( 'Locale', 'anycomment' ), 'td' => get_locale() ],
 		[
 			'th' => __( 'Using Custom Design', 'anycomment' ),
-			'td' => AnyCommentGenericSettings::is_design_custom() ? __( 'Yes', 'anycomment' ) : __( 'No', 'anycomment' )
+			'td' => \AnyComment\Admin\AnyCommentGenericSettings::is_design_custom() ? __( 'Yes', 'anycomment' ) : __( 'No', 'anycomment' )
 		],
 		[ 'th' => __( 'Generated at', 'anycomment' ), 'td' => date( 'c' ) ],
 	];

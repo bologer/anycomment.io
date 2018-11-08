@@ -1,3 +1,3 @@
 <div class="anycomment-tab">
-	<?php AnyComment()->admin_pages->page_options_general->page_html( false ) ?>
+	<?php \AnyComment\Admin\AnyCommentAdminPages::get_generic()->page_html( false ) ?>
 </div>

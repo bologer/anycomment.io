@@ -1,7 +1,7 @@
 <h2><?php echo __( 'News', 'anycomment' ) ?></h2>
 <ul class="anycomment-dashboard__sidebar-news">
 	<?php
-	$posts = AnyComment()->admin_pages->get_news( 3 );
+	$posts = \AnyComment\Admin\AnyCommentAdminPages::get_news( 3 );
 
 	if ( $posts !== null ):
 		foreach ( $posts as $key => $post ): ?>

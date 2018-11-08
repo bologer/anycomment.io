@@ -1,5 +1,9 @@
 <?php
 
+namespace AnyComment;
+
+use AnyComment\Rest\AnyCommentSocialAuth;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -45,7 +49,7 @@ class AnyCommentAvatars {
 	public function override_avatar_globally( $avatar_html, $id_or_email, $size, $default, $alt ) {
 		return sprintf( "<img alt=\"%s\" src=\"%s\" class=\"avatar avatar-%s photo\" height=\"%s\" width=\"%s\" />",
 			$alt,
-			AnyComment()->auth->get_user_avatar_url( $id_or_email ),
+			AnyCommentSocialAuth::get_user_avatar_url( $id_or_email ),
 			$size,
 			$size,
 			$size

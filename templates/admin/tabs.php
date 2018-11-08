@@ -18,11 +18,11 @@ $tabs       = [
 		'url'  => menu_page_url( $_GET['page'], false ) . '&tab=shortcodes',
 		'text' => __( 'Shortcodes', 'anycomment' )
 	],
-	'help'  => [
+	'help'        => [
 		'url'  => menu_page_url( $_GET['page'], false ) . '&tab=help',
 		'text' => __( 'Help', 'anycomment' )
 	],
-	'tools'  => [
+	'tools'       => [
 		'url'  => menu_page_url( $_GET['page'], false ) . '&tab=tools',
 		'text' => __( 'Tools', 'anycomment' )
 	]
@@ -41,4 +41,4 @@ $tabs       = [
     </div>
 <?php endif; ?>
 
-<?php echo anycomment_get_template( 'admin/tab-' . $active_tab ) ?>
+<?php echo \AnyComment\Helpers\AnyCommentTemplate::render( 'admin/tab-' . $active_tab ) ?>

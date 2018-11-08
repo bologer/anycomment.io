@@ -1,4 +1,5 @@
 <?php
+namespace AnyComment;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -27,7 +28,7 @@ if ( ! class_exists( 'AnyCommentErrorHandler' ) ):
 		/**
 		 * Get list of errors as string or array.
 		 *
-		 * @package bool $asArray Set true when required to get list of errors in form of array.
+		 * @param  bool $asArray Set true when required to get list of errors in form of array.
 		 * @return null|string
 		 */
 		public function get_errors( $asArray = false ) {

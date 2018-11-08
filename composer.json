@@ -5,15 +5,13 @@
   "license": "GPLv2 or later",
   "authors": [
     {
-      "name": "Alex",
+      "name": "Alexander Teshabaev",
       "email": "sasha.tesh@gmail.com"
     }
   ],
-  "config": {
-    "autoload": {
-      "psr-4": {
-        "anycomment\\": ""
-      }
+  "autoload": {
+    "psr-4": {
+      "AnyComment\\": "includes/"
     }
   },
   "minimum-stability": "stable",

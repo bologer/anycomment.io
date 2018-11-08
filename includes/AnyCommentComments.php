@@ -1,5 +1,14 @@
 <?php
 
+namespace AnyComment;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
+use WP_Comment;
+use AnyComment\Admin\AnyCommentGenericSettings;
+
 class AnyCommentComments {
 
 	/**

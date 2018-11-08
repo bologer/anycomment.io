@@ -1,8 +1,12 @@
 <?php
 
+namespace AnyComment;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
+
+use WP_Error;
 
 /**
  * Class AnyCommentUploadHandler is used to handle avatar upload for social medias

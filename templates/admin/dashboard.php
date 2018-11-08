@@ -12,9 +12,9 @@ if ( ! defined( 'ABSPATH' ) ) {
     </div>
 
     <div class="anycomment-notice anycomment-success"><?php echo sprintf( __( 'Follow us on <a href="%s" %s>VK.com</a> or join our group in <a href="%s" %s>Telegram</a>', 'anycomment' ),
-			AnyCommentLinkHelper::getVkontakte(),
+			\AnyComment\Helpers\AnyCommentLinkHelper::getVkontakte(),
 			'target="_blank"',
-			AnyCommentLinkHelper::getTelegram(),
+			\AnyComment\Helpers\AnyCommentLinkHelper::getTelegram(),
 			'target="_blank"' ) ?></div>
 
     <div class="anycomment-dashboard grid-x">
@@ -27,20 +27,20 @@ if ( ! defined( 'ABSPATH' ) ) {
                 </div>
 
                 <div class="cell auto anycomment-dashboard__header-official">
-                    <a href="<?php echo AnyCommentLinkHelper::getOfficialWebsite() ?>"
+                    <a href="<?php echo \AnyComment\Helpers\AnyCommentLinkHelper::getOfficialWebsite() ?>"
                        target="_blank"><?php echo __( 'Official Website', 'anycomment' ) ?></a>
                 </div>
             </header>
 
-			<?php echo anycomment_get_template( 'admin/tabs' ) ?>
+			<?php echo \AnyComment\Helpers\AnyCommentTemplate::render('admin/tabs' ) ?>
 
             <div class="anycomment-dashboard__splitter anycomment-dashboard__splitter-right-space anycomment-dashboard__splitter-possible-problems">
                 <h2><?php echo __( 'Possible Problems', 'anycomment' ) ?></h2>
-				<?php echo anycomment_get_template( 'admin/notifications' ) ?>
+				<?php echo \AnyComment\Helpers\AnyCommentTemplate::render('admin/notifications' ) ?>
             </div>
         </div>
         <aside class="cell large-3 medium-12 anycomment-dashboard__sidebar">
-			<?php echo anycomment_get_template( 'admin/news-sidebar' ) ?>
+			<?php echo \AnyComment\Helpers\AnyCommentTemplate::render( 'admin/news-sidebar' ) ?>
         </aside>
     </div>
 </div>

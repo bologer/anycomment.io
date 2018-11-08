@@ -1,5 +1,10 @@
 <?php
 
+namespace AnyComment;
+
+use WP_User;
+use AnyComment\Rest\AnyCommentSocialAuth;
+
 class AnyCommentUserMeta {
 
 	/**

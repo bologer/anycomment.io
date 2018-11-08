@@ -1,5 +1,14 @@
 <?php
 
+namespace AnyComment;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
+use AnyComment\Rest\AnyCommentSocialAuth;
+use WP_User;
+
 class AnyCommentUser {
 
 	/**
@@ -20,7 +29,7 @@ class AnyCommentUser {
 		unset( $user->data->user_registered );
 		unset( $user->data->user_status );
 
-		$user->user_avatar = AnyComment()->auth->get_user_avatar_url( $user->ID );
+		$user->user_avatar = AnyCommentSocialAuth::get_user_avatar_url( $user->ID );
 
 		return $user;
 	}

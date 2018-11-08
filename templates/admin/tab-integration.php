@@ -1,3 +1,3 @@
 <div class="anycomment-tab">
-	<?php AnyComment()->admin_pages->page_options_integration->page_html( false ) ?>
+	<?php \AnyComment\Admin\AnyCommentAdminPages::get_integrations()->page_html( false ) ?>
 </div>

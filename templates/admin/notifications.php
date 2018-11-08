@@ -1,6 +1,6 @@
 <?php
 
-$items = AnyCommentProblemNotifier::get_problem_list();
+$items = \AnyComment\Admin\AnyCommentProblemNotifier::get_problem_list();
 
 if ( ! empty( $items ) ): ?>
     <p><?php echo __('Please do not treat every notice below as a problem. They are generated based on the plugins you use, based on the WordPress version you run and environment you have. They should be treated as suggestions.', 'anycomment') ?></p>
@@ -8,7 +8,7 @@ if ( ! empty( $items ) ): ?>
 		<?php foreach ( $items as $key => $item ): ?>
 			<?php
 			$class = 'anycomment-notice';
-			$class .= isset( $item['level'] ) && $item['level'] === AnyCommentProblemNotifier::LEVEL_CRITICAL ? ' anycomment-error' : '';
+			$class .= isset( $item['level'] ) && $item['level'] === \AnyComment\Admin\AnyCommentProblemNotifier::LEVEL_CRITICAL ? ' anycomment-error' : '';
 			?>
             <li><p class="<?php echo $class ?>"><?php echo $item['message'] ?></p></li>
 		<?php endforeach; ?>

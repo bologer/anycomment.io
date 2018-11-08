@@ -15,6 +15,10 @@ class ComposerStaticInit8a175f522fec6f0cce82e89c50e8c7ce
         array (
             'Psr\\Cache\\' => 10,
         ),
+        'A' => 
+        array (
+            'AnyComment\\' => 11,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -25,6 +29,10 @@ class ComposerStaticInit8a175f522fec6f0cce82e89c50e8c7ce
         'Psr\\Cache\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/cache/src',
+        ),
+        'AnyComment\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/includes',
         ),
     );
 

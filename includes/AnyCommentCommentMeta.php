@@ -1,8 +1,12 @@
 <?php
 
+namespace AnyComment;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
+
+use AnyComment\Models\AnyCommentUploadedFiles;
 
 /**
  * Class AnyCommentCommentMeta is used to handle comment meta of comments.

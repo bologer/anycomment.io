@@ -7,7 +7,7 @@
                          alt="<?php echo __( 'Commentators', 'anycomment' ) ?>">
 
                     <div class="anycomment-dashboard__splitter-half-description">
-                        <span><?php echo AnyComment()->statistics->get_commentor_count() ?></span>
+                        <span><?php echo \AnyComment\Admin\AnyCommentStatistics::get_commentor_count() ?></span>
                         <span><?php echo __( 'Commentators', 'anycomment' ) ?></span>
                     </div>
                 </div>
@@ -19,7 +19,7 @@
                     <img src="<?php echo AnyComment()->plugin_url() . '/assets/img/dashboard-comments.svg' ?>"
                          alt="<?php echo __( 'All Comments', 'anycomment' ) ?>">
                     <div class="anycomment-dashboard__splitter-half-description">
-                        <span><?php echo AnyComment()->statistics->get_approved_comment_count() ?></span>
+                        <span><?php echo \AnyComment\Admin\AnyCommentStatistics::get_approved_comment_count() ?></span>
                         <span><?php echo __( 'All Comments', 'anycomment' ) ?></span>
                     </div>
                 </div>
@@ -32,8 +32,8 @@
             <h2><?php echo __( 'Overal Statistics', 'anycomment' ) ?></h2>
 			<?php
 
-			$comments = AnyComment()->statistics->get_comment_data();
-			$users    = AnyComment()->statistics->get_commentor_data();
+			$comments = \AnyComment\Admin\AnyCommentStatistics::get_comment_data();
+			$users    = \AnyComment\Admin\AnyCommentStatistics::get_commentor_data();
 			?>
             <canvas id="anycomment-dashboard-chart"></canvas>
 
@@ -107,13 +107,13 @@
         <div class="cell large-4 medium-4 small-12 anycomment-dashboard__statistics-userlist">
             <h2><?php echo __( 'Most Active Users', 'anycomment' ) ?></h2>
 			<?php
-			$users = AnyComment()->statistics->get_most_active_users();
+			$users = \AnyComment\Admin\AnyCommentStatistics::get_most_active_users();
 
 			if ( ! empty( $users ) ): ?>
                 <ul>
 					<?php foreach ( $users as $user ): ?>
                         <li> <span class="anycomment-dashboard__statistics-userlist-avatar"
-                                   style="background-image:url('<?php echo AnyComment()->auth->get_user_avatar_url( $user->user_id ) ?>')"></span>
+                                   style="background-image:url('<?php echo \AnyComment\Rest\AnyCommentSocialAuth::get_user_avatar_url( $user->user_id ) ?>')"></span>
 							<?php echo $user->name ?>
                             <span class="anycomment-dashboard__statistics-userlist-counter"><?php echo $user->comment_count ?></span>
                         </li>

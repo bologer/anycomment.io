@@ -8,4 +8,5 @@ $baseDir = dirname($vendorDir);
 return array(
     'Stash\\' => array($vendorDir . '/tedivm/stash/src/Stash'),
     'Psr\\Cache\\' => array($vendorDir . '/psr/cache/src'),
+    'AnyComment\\' => array($baseDir . '/includes'),
 );
