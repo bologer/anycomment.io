@@ -260,42 +260,6 @@ class AnyCommentRender {
 		return $path;
 	}
 
-
-	/**
-	 * Get comment count.
-	 *
-	 * @param int $post_id Post ID.
-	 *
-	 * @return string
-	 */
-	public function get_comment_count( $post_id ) {
-		$count = get_comments_number( $post_id );
-
-		return sprintf( _nx( '%s comment', '%s comments', $count, 'REST API Comments Count', 'anycomment' ), number_format_i18n( $count ) );
-	}
-
-	/**
-	 * Check whether it is too old to edit (update/delete) comment.
-	 *
-	 * @param WP_Comment $comment Comment to be checked.
-	 *
-	 * @return bool
-	 */
-	public function is_old_to_edit( $comment ) {
-		$commentTime = strtotime( $comment->comment_date_gmt );
-
-		$minutes = AnyCommentGenericSettings::get_comment_update_time();
-
-		if ( $minutes === 0 ) {
-			return false;
-		}
-
-		$secondsToEdit        = (int) $minutes * 60;
-		$currentUnixTimeMysql = strtotime( current_time( 'mysql', true ) );
-
-		return $currentUnixTimeMysql > ( $commentTime + $secondsToEdit );
-	}
-
 	/**
 	 * Check whether current user has ability to edit comment.
 	 *

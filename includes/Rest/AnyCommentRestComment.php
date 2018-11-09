@@ -2,6 +2,7 @@
 
 namespace AnyComment\Rest;
 
+use AnyComment\AnyCommentUser;
 use WP_Post;
 use WP_User;
 use WP_Error;
@@ -935,13 +936,13 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			'owner'              => $owner,
 			'attachments'        => AnyCommentCommentMeta::get_attachments_for_api( $comment->comment_ID ),
 			'permissions'        => [
-				'can_edit_comment' => AnyComment()->render->can_edit_comment( $comment ),
+				'can_edit_comment' => AnyCommentUser::can_edit_comment( $comment ),
 			],
 			'meta'               => [
 				'has_like'    => AnyCommentLikes::isCurrentUserHasLike( $comment->comment_ID ),
 				'status'      => wp_get_comment_status( $comment ),
 				'likes_count' => AnyCommentLikes::get_likes_count( $comment->comment_ID ),
-				'count_text'  => AnyComment()->render->get_comment_count( $comment->comment_post_ID ),
+				'count_text'  => AnyCommentUser::get_comment_count( $comment->comment_post_ID ),
 				'is_updated'  => AnyCommentCommentMeta::is_updated( $comment ),
 				'updated_by'  => AnyCommentCommentMeta::get_updated_by( $comment ),
 			]
@@ -1595,7 +1596,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	 * @return bool
 	 */
 	public function is_old_to_edit( $comment, $minutes = 5 ) {
-		return AnyComment()->render->is_old_to_edit( $comment, $minutes );
+		return AnyCommentUser::is_old_to_edit( $comment, $minutes );
 	}
 
 	/**
