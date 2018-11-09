@@ -38,6 +38,6 @@ class AnyCommentFiles {
 	 * Display dashboard page.
 	 */
 	public function page_files() {
-		return AnyCommentTemplate::render( 'admin/files' );
+		echo AnyCommentTemplate::render( 'admin/files' );
 	}
 }

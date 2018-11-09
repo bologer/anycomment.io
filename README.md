@@ -1,6 +1,6 @@
-AnyComment is blazing-fast commenting plugin for WordPress.
+AnyComment is blazing-fast commenting plugin for WordPress based on React.
 
-It stands for simplicity & speed. We value feedback, so if you have any failures use [issues](https://github.com/bologer/anycomment.io/issues)!
+It stands for simplicity & speed. We value feedback, so open new [issue](https://github.com/bologer/anycomment.io/issues) if you have any failures.
 
 Feel free to use [this demo page](https://anycomment.io/demo/).
 

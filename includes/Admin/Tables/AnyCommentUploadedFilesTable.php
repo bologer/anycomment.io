@@ -2,14 +2,14 @@
 
 namespace AnyComment\Admin\Tables;
 
+if ( ! class_exists( 'WP_List_Table', false ) ) {
+	require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
+}
+
 use WP_List_Table;
 use WP_User;
 
 use AnyComment\Models\AnyCommentUploadedFiles;
-
-if ( ! class_exists( 'WP_List_Table', false ) ) {
-	require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
-}
 
 /**
  * Class AnyCommentUploadedFilesTable is used to display list of files in the admin.
@@ -141,12 +141,18 @@ class AnyCommentUploadedFilesTable extends WP_List_Table {
 		}
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
 	function column_cb( $item ) {
 		return sprintf(
 			'<input type="checkbox" name="files[]" value="%s" />', $item['ID']
 		);
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
 	function get_bulk_actions() {
 		$actions = array(
 			'delete' => __( 'Delete', 'anycomment' )
