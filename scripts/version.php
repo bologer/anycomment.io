@@ -22,18 +22,20 @@ $version = $argv[1];
  */
 $date  = date( 'd.m.Y' );
 $paths = [
-	__DIR__ . '/../anycomment.php' => [
+	__DIR__ . '/../anycomment.php'              => [
 		[ 'regex' => '/Version:\s[0-9.]+/m', 'replacement' => 'Version: %s' ],
+	],
+	__DIR__ . '/../includes/AnyCommentCore.php' => [
 		[ 'regex' => '/\$version\s=\s\'([0-9.]+)\'/m', 'replacement' => '$version = \'%s\'' ],
 	],
-	__DIR__ . '/../readme.txt'     => [
+	__DIR__ . '/../readme.txt'                  => [
 		[ 'regex' => '/Stable\stag:\s[0-9.]+/m', 'replacement' => 'Stable tag: %s' ],
 		[
 			'regex'       => '/==\sChangelog\s==/',
 			'replacement' => "== Changelog ==\n\n= $version – $date =\n\n**Enhancements:**\n\n\n\n**Fixes:**\n\n"
 		]
 	],
-	__DIR__ . '/../CHANGELOG.md'   => [
+	__DIR__ . '/../CHANGELOG.md'                => [
 		[
 			'regex'       => '/\#\sChangelog/',
 			'replacement' => "# Changelog\n\n## $version – $date\n\n**Enhancements:**\n\n\n\n**Fixes:**\n\n"

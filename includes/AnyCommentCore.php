@@ -2,13 +2,10 @@
 
 namespace AnyComment;
 
-use AnyComment\Admin\AnyCommentAdminPages;
-use AnyComment\Admin\AnyCommentStatistics;
-
-use AnyComment\Migrations\AnyCommentMigration;
-use AnyComment\Migrations\AnyCommentMigrationManager;
 
 use AnyComment\Admin\AnyCommentGenericSettings;
+
+use AnyComment\Migrations\AnyCommentMigrationManager;
 
 use Stash\Driver\FileSystem;
 use Stash\Pool;
@@ -23,7 +20,7 @@ class AnyCommentCore {
 	 *
 	 * @var string
 	 */
-	public $version = '0.0.69';
+	public $version = '0.0.70';
 
 	/**
 	 * @var Pool
@@ -125,18 +122,6 @@ class AnyCommentCore {
 		defined( 'ANYCOMMENT_PLUGIN_BASENAME' ) or define( 'ANYCOMMENT_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 		defined( 'ANYCOMMENT_VERSION' ) or define( 'ANYCOMMENT_VERSION', $this->version );
 		defined( 'ANYCOMMENT_DEBUG' ) or define( 'ANYCOMMENT_DEBUG', false );
-	}
-
-	/**
-	 * Define constant if not already set.
-	 *
-	 * @param  string $name
-	 * @param  string|bool $value
-	 */
-	private function define( $name, $value ) {
-		if ( ! defined( $name ) ) {
-			define( $name, $value );
-		}
 	}
 
 	/**
