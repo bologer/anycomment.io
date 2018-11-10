@@ -4,7 +4,7 @@ Tags: anycomment, comments, ajax comments, comment, comment moderation, custom c
 Requires at least: 4.7
 Tested up to: 4.9.8
 Requires PHP: 5.4
-Stable tag: 0.0.69
+Stable tag: 0.0.70
 License: GPLv2 or later
 License URI: http://www.gnu.org/
 
@@ -164,6 +164,18 @@ Most of the hosting providers support single button-like installation of SSL cer
 It could only be difficult for website who have HTTP only and hight traffic as transfer to HTTPs can cause some traffic lose.
 
 == Changelog ==
+
+= 0.0.70 – 10.11.2018 =
+
+**Enhancements:**
+
+* Added ability to see who rated in "Rating" submenu
+* Completely rewritten code towards PSR-4
+
+
+**Fixes:**
+
+* Fixed issue when on mobile devices attachments icon was too small to click on
 
 = 0.0.69 – 06.11.2018 =
 

@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.0.70 – 10.11.2018
+
+**Enhancements:**
+
+* Added ability to see who rated in "Rating" submenu
+* Completely rewritten code towards PSR-4
+
+
+**Fixes:**
+
+* Fixed issue when on mobile devices attachments icon was too small to click on
+
 ## 0.0.69 – 06.11.2018
 
 **Fixes:**

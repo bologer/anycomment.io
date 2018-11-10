@@ -213,12 +213,16 @@
 
         &__select-file {
           position: absolute;
-          top: 50%;
-          height: 17px;
-          margin-top: -8.5px;
-          right: 13px;
+          right: 0;
+          top: 0;
+          height: 100%;
           cursor: pointer;
           z-index: 2;
+          width: 38px;
+          display: flex;
+          align-content: center;
+          align-items: center;
+          padding-left: 10px;
 
           .anycomment-icon {
             color: #747B7E;
