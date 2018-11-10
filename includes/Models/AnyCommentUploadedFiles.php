@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use wpdb;
+use AnyComment\AnyCommentCommentMeta;
 use AnyComment\Admin\AnyCommentGenericSettings;
 
 /**
@@ -24,7 +24,13 @@ use AnyComment\Admin\AnyCommentGenericSettings;
  *
  * @since 0.0.3
  */
-class AnyCommentUploadedFiles {
+class AnyCommentUploadedFiles extends AnyCommentActiveRecord {
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public static $table_name = 'uploaded_files';
+
 	const TYPE_AUDIO = 'audio';
 	const TYPE_APPLICATION = 'document';
 	const TYPE_IMAGE = 'image';
@@ -40,39 +46,18 @@ class AnyCommentUploadedFiles {
 	public $created_at;
 
 	/**
-	 * Get table name.
-	 *
-	 * @return string
-	 */
-	public static function tableName() {
-		global $wpdb;
-
-		return $wpdb->prefix . 'anycomment_uploaded_files';
-	}
-
-	/**
-	 * Start query.
-	 *
-	 * @return wpdb
-	 */
-	public static function find() {
-		global $wpdb;
-
-		return $wpdb;
-	}
-
-	/**
 	 * Find uploaded file by ID.
 	 *
 	 * @param int $id File ID to search for.
 	 *
 	 * @return null|AnyCommentUploadedFiles NULL returned on failure and object on success.
 	 */
-	public static function findOne( $id ) {
-		$tablaName     = static::tableName();
-		$preparedQuery = static::find()->prepare( "SELECT * FROM $tablaName WHERE `id`=%d", [ $id ] );
+	public static function find_one( $id ) {
+		global $wpdb;
+		$tablaName     = static::get_table_name();
+		$preparedQuery = $wpdb->prepare( "SELECT * FROM $tablaName WHERE ID = %d", [ $id ] );
 
-		$res = static::find()->get_row( $preparedQuery );
+		$res = $wpdb->get_row( $preparedQuery );
 
 		if ( empty( $res ) ) {
 			return null;
@@ -88,7 +73,7 @@ class AnyCommentUploadedFiles {
 	 *
 	 * @return int
 	 */
-	public static function isOverLimitByIp( $ip = null ) {
+	public static function is_over_limit_by_ip( $ip = null ) {
 		global $wpdb;
 
 		if ( $ip === null ) {
@@ -99,7 +84,7 @@ class AnyCommentUploadedFiles {
 		$intervalTime = strtotime( "-{$seconds} seconds" );
 		$limit        = AnyCommentGenericSettings::get_file_limit();
 
-		$table_name = static::tableName();
+		$table_name = static::get_table_name();
 		$sql        = "SELECT COUNT(*) FROM $table_name WHERE `ip`=%s AND `created_at` >= %d";
 		$count      = $wpdb->get_var( $wpdb->prepare( $sql, [ $ip, $intervalTime ] ) );
 
@@ -131,7 +116,7 @@ class AnyCommentUploadedFiles {
 
 		global $wpdb;
 
-		$table = static::tableName();
+		$table = static::get_table_name();
 		$sql   = "SELECT * FROM `$table` WHERE `id` IN ($ids)";
 
 		$files = $wpdb->get_results( $sql );
@@ -193,7 +178,7 @@ class AnyCommentUploadedFiles {
 
 		global $wpdb;
 
-		$tableName = static::tableName();
+		$tableName = static::get_table_name();
 
 		unset( $this->ID );
 

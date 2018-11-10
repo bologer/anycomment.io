@@ -13,7 +13,7 @@ class AnyCommentMigration_0_0_65 extends AnyCommentMigration {
 	public function isApplied() {
 		global $wpdb;
 
-		$email_queue_table = AnyCommentEmailQueue::tableName();
+		$email_queue_table = AnyCommentEmailQueue::get_table_name();
 
 		$check_email_queue = "SELECT *
 FROM INFORMATION_SCHEMA.COLUMNS

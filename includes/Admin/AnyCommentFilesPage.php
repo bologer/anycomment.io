@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-class AnyCommentFiles {
+class AnyCommentFilesPage {
 	public function __construct() {
 		$this->init_hooks();
 	}
@@ -30,14 +30,14 @@ class AnyCommentFiles {
 			__( 'Files', "anycomment" ),
 			'manage_options',
 			'anycomment-files',
-			[ $this, 'page_files' ]
+			[ $this, 'page_html' ]
 		);
 	}
 
 	/**
-	 * Display dashboard page.
+	 * Display uploaded files page.
 	 */
-	public function page_files() {
-		echo AnyCommentTemplate::render( 'admin/files' );
+	public function page_html() {
+		echo AnyCommentTemplate::render( 'admin/tables/files' );
 	}
 }

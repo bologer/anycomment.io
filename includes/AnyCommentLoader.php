@@ -19,7 +19,8 @@ class AnyCommentLoader {
 		// Admin
 		'AnyComment\Admin\AnyCommentAdminPages',
 		'AnyComment\Admin\AnyCommentStatistics',
-		'AnyComment\Admin\AnyCommentFiles',
+		'AnyComment\Admin\AnyCommentFilesPage',
+		'AnyComment\Admin\AnyCommentRatingPage',
 
 		// Other
 		'AnyComment\Admin\AnyCommentWPComments',

@@ -93,7 +93,7 @@ class AnyCommentCommentMeta {
 		$sql .= " FROM `{$wpdb->commentmeta}` `meta`";
 
 		if ( $withFile ) {
-			$filesTable = AnyCommentUploadedFiles::tableName();
+			$filesTable = AnyCommentUploadedFiles::get_table_name();
 			$sql        .= " LEFT JOIN `$filesTable` `files` ON `meta`.`meta_value`=`files`.`id`";
 		}
 
@@ -126,7 +126,7 @@ class AnyCommentCommentMeta {
 		global $wpdb;
 
 		$commentTable = $wpdb->commentmeta;
-		$filesTable   = AnyCommentUploadedFiles::tableName();
+		$filesTable   = AnyCommentUploadedFiles::get_table_name();
 
 		$sql = "SELECT 
 `meta`.`meta_id` AS meta_id, 

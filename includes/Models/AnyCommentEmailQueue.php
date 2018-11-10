@@ -28,7 +28,12 @@ use AnyComment\Admin\AnyCommentGenericSettings;
  *
  * @since 0.0.3
  */
-class AnyCommentEmailQueue {
+class AnyCommentEmailQueue extends AnyCommentActiveRecord {
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public static $table_name = 'email_queue';
 
 	public $ID;
 	public $subject;
@@ -47,16 +52,6 @@ class AnyCommentEmailQueue {
 		$this->created_at = current_time( 'mysql' );
 	}
 
-	/**
-	 * Get table name.
-	 *
-	 * @return string
-	 */
-	public static function tableName() {
-		global $wpdb;
-
-		return $wpdb->prefix . 'anycomment_email_queue';
-	}
 
 	/**
 	 * @return \wpdb
@@ -72,7 +67,7 @@ class AnyCommentEmailQueue {
 	 * @return AnyCommentEmailQueue|null|object
 	 */
 	public static function get_newest() {
-		$tableName = static::tableName();
+		$tableName = static::get_table_name();
 		$sql       = "SELECT * FROM `$tableName` ORDER BY `id` DESC LIMIT 1";
 
 		return static::db()->get_row( $sql );
@@ -84,7 +79,7 @@ class AnyCommentEmailQueue {
 	 * @return null|AnyCommentEmailQueue[]
 	 */
 	public static function grab_replies_to_send() {
-		$tableName = static::tableName();
+		$tableName = static::get_table_name();
 		$sql       = "SELECT `emails`.* FROM `$tableName` `emails` WHERE `emails`.`is_sent` = 0";
 
 		return static::db()->get_results( $sql );
@@ -102,7 +97,7 @@ class AnyCommentEmailQueue {
 			return false;
 		}
 
-		$tableName = static::tableName();
+		$tableName = static::get_table_name();
 		$query     = static::db()->prepare( "SELECT `id`, `is_sent` FROM `$tableName` WHERE `id`=%d LIMIT 1", [ $email_id ] );
 
 		/**
@@ -139,7 +134,7 @@ class AnyCommentEmailQueue {
 			return true;
 		}
 
-		$isUpdated = static::db()->update( static::tableName(), [ 'is_sent' => 1 ], [ 'ID' => $email_id ] );
+		$isUpdated = static::db()->update( static::get_table_name(), [ 'is_sent' => 1 ], [ 'ID' => $email_id ] );
 
 		return $isUpdated !== false;
 	}
@@ -204,9 +199,7 @@ AND `comments`.`comment_ID`=%d";
 		$model->comment_ID = $comment->comment_ID;
 		$model->content    = AnyCommentEmailQueue::generate_reply_email( $model );
 
-		$isAdded = AnyCommentEmailQueue::add( $model );
-
-		return $isAdded;
+		return $model->save();
 	}
 
 	/**
@@ -245,9 +238,7 @@ AND `comments`.`comment_ID`=%d";
 		$email->comment_ID = $comment->comment_ID;
 		$email->content    = AnyCommentEmailQueue::generate_admin_email( $email );
 
-		$isAdded = AnyCommentEmailQueue::add( $email, 'bool' );
-
-		return $isAdded;
+		return $email->save();
 	}
 
 	/**
@@ -285,44 +276,34 @@ AND `comments`.`comment_ID`=%d";
 		$email->comment_ID = $comment->comment_ID;
 		$email->content    = AnyCommentEmailQueue::generate_subscribe_email( $email );
 
-		$isAdded = AnyCommentEmailQueue::add( $email, 'bool' );
-
-		return $isAdded;
+		return $email->save();
 	}
 
 	/**
-	 * Add new email to queue.
+	 * Save new model into email queue.
 	 *
-	 * @param AnyCommentEmailQueue $email
-	 * @param string $returnOnSuccess What to return on success.
-	 * - ID - will return new record ID
-	 * - OBJECT - will return email queue
-	 *
-	 * @return bool|int|AnyCommentEmailQueue
+	 * @return bool
 	 */
-	public static function add( $email, $returnOnSuccess = 'ID' ) {
-		if ( ! $email instanceof AnyCommentEmailQueue ) {
-			return false;
+	public function save() {
+
+		if ( ! isset( $this->ip ) ) {
+			$this->ip = AnyCommentRequest::get_user_ip();
 		}
 
-		if ( ! isset( $email->ip ) ) {
-			$email->ip = AnyCommentRequest::get_user_ip();
+		if ( ! isset( $this->user_agent ) ) {
+			$this->user_agent = AnyCommentRequest::get_user_agent();
 		}
 
-		if ( ! isset( $email->user_agent ) ) {
-			$email->user_agent = AnyCommentRequest::get_user_agent();
-		}
-
-		if ( ! isset( $email->created_at ) ) {
-			$email->created_at = current_time( 'mysql' );
+		if ( ! isset( $this->created_at ) ) {
+			$this->created_at = current_time( 'mysql' );
 		}
 
 		global $wpdb;
 
-		unset( $email->ID );
+		unset( $this->ID );
 
-		$tableName = static::tableName();
-		$count     = $wpdb->insert( $tableName, (array) $email );
+		$tableName = static::get_table_name();
+		$count     = $wpdb->insert( $tableName, (array) $this );
 
 		if ( $count !== false && $count > 0 ) {
 			$lastId = $wpdb->insert_id;
@@ -331,15 +312,7 @@ AND `comments`.`comment_ID`=%d";
 				return false;
 			}
 
-			$email->ID = $lastId;
-
-			if ( $returnOnSuccess === 'ID' ) {
-				return $lastId;
-			} elseif ( $returnOnSuccess === 'OBJECT' ) {
-				return $email;
-			}
-
-			do_action( 'anycomment_queue_entry_created', $email );
+			$this->ID = $lastId;
 
 			return true;
 		}

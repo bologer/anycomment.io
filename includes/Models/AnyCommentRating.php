@@ -21,7 +21,12 @@ use AnyComment\Helpers\AnyCommentRequest;
  *
  * @since 0.0.61
  */
-class AnyCommentRating {
+class AnyCommentRating extends AnyCommentActiveRecord {
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public static $table_name = 'rating';
 
 	public $ID;
 	public $post_ID;
@@ -30,19 +35,6 @@ class AnyCommentRating {
 	public $user_agent;
 	public $ip;
 	public $created_at;
-
-	/**
-	 * Get table name.
-	 *
-	 * @since 0.0.61
-	 *
-	 * @return string
-	 */
-	public static function table_name() {
-		global $wpdb;
-
-		return $wpdb->prefix . 'anycomment_rating';
-	}
 
 	/**
 	 * Get count of total votes by specified post ID.
@@ -56,7 +48,7 @@ class AnyCommentRating {
 	public static function get_count_by_post( $post_id ) {
 		global $wpdb;
 
-		$table = static::table_name();
+		$table = static::get_table_name();
 
 		$sql = "SELECT COUNT(*) FROM `$table` WHERE `post_ID`=%d";
 
@@ -81,7 +73,7 @@ class AnyCommentRating {
 	public static function get_average_by_post( $post_id ) {
 		global $wpdb;
 
-		$table = static::table_name();
+		$table = static::get_table_name();
 
 		$sql = "SELECT ROUND(AVG(rating), 1) FROM `$table` WHERE `post_ID`=%d";
 		$res = $wpdb->get_var( $wpdb->prepare( $sql, [ $post_id ] ) );
@@ -126,7 +118,7 @@ class AnyCommentRating {
 			$field      = 'ip';
 		}
 
-		$table = static::table_name();
+		$table = static::get_table_name();
 
 		global $wpdb;
 		$sql   = $wpdb->prepare( "SELECT COUNT(*) FROM `$table` WHERE `post_ID` =%d AND `$field`=$field_type", $post_id, $user_id_or_ip );
@@ -185,7 +177,7 @@ class AnyCommentRating {
 
 		global $wpdb;
 
-		$tableName = static::table_name();
+		$tableName = static::get_table_name();
 
 		unset( $model->ID );
 

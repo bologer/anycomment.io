@@ -115,24 +115,22 @@ class AnyCommentRestLikes extends AnyCommentRestController {
 			return new WP_Error( 'rest_comment_like_exists', __( 'Cannot create existing like.', 'anycomment' ), array( 'status' => 400 ) );
 		}
 
-		$prepareLike = new AnyCommentLikes();
+		$like = new AnyCommentLikes();
 
-		$prepareLike->comment_ID = $request['comment'];
+		$like->comment_ID = $request['comment'];
 
 		if ( ( $user = wp_get_current_user() ) instanceof WP_User ) {
-			$prepareLike->user_ID = $user->id;
+			$like->user_ID = $user->id;
 		}
 
-		$prepareLike->post_ID = $request['post'];
+		$like->post_ID = $request['post'];
 
-		if ( ! AnyCommentLikes::isCurrentUserHasLike( $prepareLike->comment_ID, $user->ID ) ) {
-			$like = AnyCommentLikes::addLike( $prepareLike );
-			if ( ! $like ) {
+		if ( ! AnyCommentLikes::is_current_user_has_like( $like->comment_ID, $user->ID ) ) {
+			if ( ! $like->save() ) {
 				return new WP_Error( 'rest_like_fail', __( 'Failed to like', 'anycomment' ), [ 'status' => 400 ] );
 			}
 		} else {
-			AnyCommentLikes::deleteLike( $prepareLike->comment_ID );
-			$like = $prepareLike;
+			AnyCommentLikes::delete_like( $like->comment_ID );
 		}
 
 		$response = $this->prepare_item_for_response( $like, $request );
@@ -166,7 +164,7 @@ class AnyCommentRestLikes extends AnyCommentRestController {
 		}
 
 		$data['total_count'] = AnyCommentLikes::get_likes_count( $like->comment_ID );
-		$data['has_like']    = AnyCommentLikes::isCurrentUserHasLike( $like->comment_ID );
+		$data['has_like']    = AnyCommentLikes::is_current_user_has_like( $like->comment_ID );
 
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 		$data    = $this->add_additional_fields_to_object( $data, $request );

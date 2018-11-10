@@ -1,4 +1,5 @@
 <?php
+
 namespace AnyComment\Models;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -25,7 +26,12 @@ use AnyComment\Helpers\AnyCommentRequest;
  *
  * @since 0.0.68
  */
-class AnyCommentSubscriptions {
+class AnyCommentSubscriptions extends AnyCommentActiveRecord {
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public static $table_name = 'subscriptions';
 
 	public $ID;
 	public $post_ID;
@@ -37,18 +43,6 @@ class AnyCommentSubscriptions {
 	public $token;
 	public $confirmed_at;
 	public $created_at;
-
-	/**
-	 * Get table name.
-	 *
-	 * @return string
-	 */
-	public static function tableName() {
-		global $wpdb;
-
-		return $wpdb->prefix . 'anycomment_subscriptions';
-	}
-
 
 	/**
 	 * Notify subscribers by specified comment.
@@ -74,7 +68,7 @@ class AnyCommentSubscriptions {
 
 		global $wpdb;
 
-		$table = static::tableName();
+		$table = static::get_table_name();
 		$sql   = "SELECT `user_ID`, `email` FROM $table WHERE post_ID=%d AND is_active=1 AND confirmed_at IS NOT NULL";
 
 		/**
@@ -114,7 +108,7 @@ class AnyCommentSubscriptions {
 		global $wpdb;
 
 
-		$tableName = static::tableName();
+		$tableName = static::get_table_name();
 
 		$sql   = $wpdb->prepare( "SELECT COUNT(*) FROM $tableName WHERE $condition", $condition_array );
 		$count = $wpdb->get_var( $sql );
@@ -146,7 +140,7 @@ class AnyCommentSubscriptions {
 
 		unset( $this->ID );
 
-		$count = $wpdb->insert( static::tableName(), (array) $this );
+		$count = $wpdb->insert( static::get_table_name(), (array) $this );
 
 		if ( $count !== false && $count > 0 ) {
 			$lastId = $wpdb->insert_id;

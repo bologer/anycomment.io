@@ -939,7 +939,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 				'can_edit_comment' => AnyCommentUser::can_edit_comment( $comment ),
 			],
 			'meta'               => [
-				'has_like'    => AnyCommentLikes::isCurrentUserHasLike( $comment->comment_ID ),
+				'has_like'    => AnyCommentLikes::is_current_user_has_like( $comment->comment_ID ),
 				'status'      => wp_get_comment_status( $comment ),
 				'likes_count' => AnyCommentLikes::get_likes_count( $comment->comment_ID ),
 				'count_text'  => AnyCommentUser::get_comment_count( $comment->comment_post_ID ),

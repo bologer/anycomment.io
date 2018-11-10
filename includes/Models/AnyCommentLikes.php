@@ -23,7 +23,12 @@ use AnyComment\Helpers\AnyCommentRequest;
  *
  * @since 0.0.3
  */
-class AnyCommentLikes {
+class AnyCommentLikes extends AnyCommentActiveRecord {
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public static $table_name = 'likes';
 
 	public $ID;
 	public $user_ID;
@@ -34,22 +39,11 @@ class AnyCommentLikes {
 	public $liked_at;
 
 	/**
-	 * Get table name.
-	 *
-	 * @return string
-	 */
-	public static function tableName() {
-		global $wpdb;
-
-		return $wpdb->prefix . 'anycomment_likes';
-	}
-
-	/**
 	 * @param $commentId
 	 *
 	 * @return bool|int
 	 */
-	public static function isCurrentUserHasLike( $commentId, $userId = null ) {
+	public static function is_current_user_has_like( $commentId, $userId = null ) {
 		if ( ! ( $comment = get_comment( $commentId ) ) instanceof WP_Comment ) {
 			return false;
 		}
@@ -65,7 +59,7 @@ class AnyCommentLikes {
 		global $wpdb;
 
 
-		$tableName = static::tableName();
+		$tableName = static::get_table_name();
 
 		$sql   = $wpdb->prepare( "SELECT COUNT(*) FROM $tableName WHERE `user_ID` =%d AND `comment_ID`=%s", $userId, $comment->comment_ID );
 		$count = $wpdb->get_var( $sql );
@@ -83,7 +77,7 @@ class AnyCommentLikes {
 	public static function get_likes_count_by_user( $userId ) {
 		global $wpdb;
 
-		$table_name = static::tableName();
+		$table_name = static::get_table_name();
 		$sql        = "SELECT COUNT(*) FROM $table_name WHERE `user_ID`=%d";
 		$count      = $wpdb->get_var( $wpdb->prepare( $sql, [ $userId ] ) );
 
@@ -105,7 +99,7 @@ class AnyCommentLikes {
 	public static function get_likes_count( $commentId ) {
 		global $wpdb;
 
-		$table_name = static::tableName();
+		$table_name = static::get_table_name();
 		$sql        = "SELECT COUNT(*) FROM $table_name WHERE `comment_ID`=%d";
 		$count      = $wpdb->get_var( $wpdb->prepare( $sql, [ $commentId ] ) );
 
@@ -138,7 +132,7 @@ class AnyCommentLikes {
 
 		global $wpdb;
 
-		$rows = $wpdb->delete( static::tableName(), [ 'comment_ID' => $commentId ] );
+		$rows = $wpdb->delete( static::get_table_name(), [ 'comment_ID' => $commentId ] );
 
 		return $rows !== false && $rows >= 0;
 	}
@@ -153,7 +147,7 @@ class AnyCommentLikes {
 	 *
 	 * @return bool
 	 */
-	public static function deleteLike( $commentId ) {
+	public static function delete_like( $commentId ) {
 		if ( empty( $commentId ) ) {
 			return false;
 		}
@@ -166,7 +160,7 @@ class AnyCommentLikes {
 
 		global $wpdb;
 
-		$rows = $wpdb->delete( static::tableName(), [ 'user_ID' => $userId, 'comment_ID' => $commentId ] );
+		$rows = $wpdb->delete( static::get_table_name(), [ 'user_ID' => $userId, 'comment_ID' => $commentId ] );
 
 		return $rows !== false && $rows >= 0;
 	}
@@ -176,31 +170,24 @@ class AnyCommentLikes {
 	 *
 	 * @since 0.0.3
 	 *
-	 * @param AnyCommentLikes $like Object to be used and in
-	 *
-	 * @return false|AnyCommentLikes|object
+	 * @return bool
 	 */
-	public static function addLike( $like ) {
-
-		if ( ! $like instanceof AnyCommentLikes ) {
-			return false;
+	public function save() {
+		if ( ! isset( $this->ip ) ) {
+			$this->ip = AnyCommentRequest::get_user_ip();
 		}
 
-		if ( ! isset( $like->ip ) ) {
-			$like->ip = AnyCommentRequest::get_user_ip();
-		}
-
-		if ( ! isset( $like->liked_at ) ) {
-			$like->liked_at = current_time( 'mysql' );
+		if ( ! isset( $this->liked_at ) ) {
+			$this->liked_at = current_time( 'mysql' );
 		}
 
 		global $wpdb;
 
-		$tableName = static::tableName();
+		$tableName = static::get_table_name();
 
-		unset( $like->ID );
+		unset( $this->ID );
 
-		$count = $wpdb->insert( $tableName, (array) $like );
+		$count = $wpdb->insert( $tableName, (array) $this );
 
 
 		if ( $count !== false && $count > 0 ) {
@@ -210,9 +197,9 @@ class AnyCommentLikes {
 				return false;
 			}
 
-			$like->ID = $lastId;
+			$this->ID = $lastId;
 
-			return $like;
+			return true;
 		}
 
 		return false;

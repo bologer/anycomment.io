@@ -92,7 +92,7 @@ class AnyCommentRestDocuments extends AnyCommentRestController {
 			return new WP_Error( 'rest_no_guests_allowed', __( 'Sorry, guests unable to delete files.', 'anycomment' ), [ 'status' => 403 ] );
 		}
 
-		$file = AnyCommentUploadedFiles::findOne( $request['id'] );
+		$file = AnyCommentUploadedFiles::find_one( $request['id'] );
 
 		// Make sure file can be found
 		if ( $file === null ) {
@@ -133,7 +133,7 @@ class AnyCommentRestDocuments extends AnyCommentRestController {
 			return new WP_Error( 'rest_comment_like_trash_post', __( 'Sorry, you are not allowed to create a comment on this post.', 'anycomment' ), array( 'status' => 403 ) );
 		}
 
-		if ( AnyCommentUploadedFiles::isOverLimitByIp() ) {
+		if ( AnyCommentUploadedFiles::is_over_limit_by_ip() ) {
 			return new WP_Error( 'rest_comment_over_limit', __( 'Sorry, you have reached upload limit. Wait a little bit before uploading again.', 'anycomment' ), array( 'status' => 403 ) );
 		}
 

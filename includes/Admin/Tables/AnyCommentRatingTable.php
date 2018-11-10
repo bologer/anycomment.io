@@ -9,12 +9,14 @@ if ( ! class_exists( 'WP_List_Table', false ) ) {
 use WP_List_Table;
 use WP_User;
 
+use AnyComment\Models\AnyCommentRating;
+
 use AnyComment\Models\AnyCommentUploadedFiles;
 
 /**
  * Class AnyCommentUploadedFilesTable is used to display list of files in the admin.
  */
-class AnyCommentUploadedFilesTable extends WP_List_Table {
+class AnyCommentRatingTable extends WP_List_Table {
 	/**
 	 * Site ID to generate the Users list table for.
 	 *
@@ -42,8 +44,10 @@ class AnyCommentUploadedFilesTable extends WP_List_Table {
 	public function prepare_items() {
 		global $wpdb;
 
-		$table = AnyCommentUploadedFiles::get_table_name();
+		$table = AnyCommentRating::get_table_name();
 
+
+		global $wpdb;
 
 		$countQuery = "SELECT COUNT(*) FROM $table";
 		$count      = $wpdb->get_var( $countQuery );
@@ -86,7 +90,7 @@ class AnyCommentUploadedFilesTable extends WP_List_Table {
 	 * {@inheritdoc}
 	 */
 	function no_items() {
-		_e( 'No files uploaded yet.', 'anycomment' );
+		_e( 'No rating yet.', 'anycomment' );
 	}
 
 	/**
@@ -128,10 +132,10 @@ class AnyCommentUploadedFilesTable extends WP_List_Table {
 				}
 
 				return $userHtml;
+			case 'rating':
+				return $item[ $column_name ];
 			case 'ip':
 				return $item[ $column_name ];
-			case 'url':
-				return sprintf( '<a href="%s" target="_blank">%s</a>', $item[ $column_name ], $item[ $column_name ] );
 			case 'created_at':
 				$format = sprintf( "%s %s", get_option( 'date_format' ), get_option( 'time_format' ) );
 
@@ -168,6 +172,7 @@ class AnyCommentUploadedFilesTable extends WP_List_Table {
 		$sortable_columns = [
 			'post_ID'    => [ 'post_ID', false ],
 			'user_ID'    => [ 'user_ID', false ],
+			'rating'     => [ 'rating', false ],
 			'created_at' => [ 'created_at', false ]
 		];
 
@@ -182,8 +187,8 @@ class AnyCommentUploadedFilesTable extends WP_List_Table {
 			'cb'         => '<input type="checkbox" />',
 			'post_ID'    => __( 'Post', 'anycomment' ),
 			'user_ID'    => __( 'User', 'anycomment' ),
+			'rating'     => __( 'Rating', 'anycomment' ),
 			'ip'         => __( 'IP', 'anycomment' ),
-			'url'        => __( 'URL', 'anycomment' ),
 			'created_at' => __( 'Date', 'anycomment' ),
 		);
 
