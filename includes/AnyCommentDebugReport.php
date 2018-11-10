@@ -35,10 +35,6 @@ class AnyCommentDebugReport {
 				'name'  => __( 'Generic Settings', 'anycomment' ),
 				'value' => json_encode( get_option( 'anycomment-generic' ) )
 			],
-			[
-				'name'  => __( 'Integration Settings', 'anycomment' ),
-				'value' => json_encode( get_option( 'anycomment-integration' ) )
-			],
 			[ 'name' => __( 'Active Plugins', 'anycomment' ), 'value' => static::get_active_plugins_formatted() ],
 			[ 'name' => __( 'Generated at', 'anycomment' ), 'value' => date( 'c' ) ],
 		];
