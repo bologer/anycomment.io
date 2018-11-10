@@ -11,6 +11,7 @@ use WP_Error;
 use WP_User;
 use WP_Comment;
 
+use AnyComment\Helpers\AnyCommentInflector;
 use AnyComment\Admin\AnyCommentGenericSettings;
 use AnyComment\Admin\AnyCommentSocialSettings;
 use AnyComment\Admin\AnyCommentIntegrationSettings;
@@ -60,6 +61,11 @@ class AnyCommentSocialAuth {
 	 * Link to social.
 	 */
 	const META_SOCIAL_LINK = 'anycomment_social_link';
+
+	/**
+	 * Original username from social.
+	 */
+	const META_SOCIAL_ORIGINAL_USERNAME = 'anycomment_social_original_username';
 
 	/**
 	 * Avatar hosted on website.
@@ -527,11 +533,11 @@ class AnyCommentSocialAuth {
 			$user->email :
 			null;
 
-		$full_name = trim( $user->firstName . ' ' . $user->lastName );
+		$full_name    = trim( $user->firstName . ' ' . $user->lastName );
+		$display_name = ! empty( $full_name ) ? $full_name : $user->displayName;
 
 		$userdata = [
-			'user_login'    => $user->identifier,
-			'display_name'  => ! empty( $full_name ) ? $full_name : $user->displayName,
+			'display_name'  => $display_name,
 			'user_nicename' => $user->firstName,
 			'first_name'    => $user->firstName,
 			'last_name'     => $user->lastName,
@@ -562,6 +568,70 @@ class AnyCommentSocialAuth {
 	}
 
 	/**
+	 * Prepares username or first/last name to become username.
+	 *
+	 * @param string $expected_username Could be username or first/last name which will be converted into username.
+	 *
+	 * @return string
+	 * @since 0.0.70
+	 */
+	public static function prepare_login( $expected_username ) {
+
+		// Transliterate to remove junky chars
+		$prepared_username = AnyCommentInflector::transliterate( $expected_username );
+
+		// Extra sanitize username
+		$prepared_username = sanitize_user( $prepared_username );
+
+		// Lowercase username
+		$prepared_username = strtolower( $prepared_username );
+
+		// Clean-up anything that is not A-Z, 0-9 or underscore
+		$prepared_username = preg_replace( '/[^A-Za-z0-9_\s]/', '', $prepared_username );
+
+		// Replace spaces with "_"
+		$prepared_username = preg_replace( '/\s+/', '_', $prepared_username );
+
+		// Replace more then one of "_" with once of such type
+		$prepared_username = preg_replace( '/_{2,}/', '_', $prepared_username );
+
+		// Wne username is empty, should create some random name in order to have at least something
+		if ( empty( $prepared_username ) ) {
+			$prepared_username = 'user' . time();
+		}
+
+		/**
+		 * Make username unique by adding extra numbers after it if exists already
+		 */
+		$unique_username = $prepared_username;
+		$i               = 0;
+
+		do {
+			$user = get_user_by( 'login', $unique_username );
+
+			if ( $user !== false ) {
+				// Remove previous _{n}, so we can try new ID
+				$unique_username = preg_replace( '/(_\d{1,})$/', '', $unique_username );
+				// Append new ID to the username and try the search again
+				$unique_username .= '_' . $i;
+			}
+
+			$i ++;
+
+		} while ( $user !== false );
+
+		/**
+		 * Converts first or last name into proper username.
+		 *
+		 * @since 0.0.70
+		 *
+		 * @param string $expected_username Initial value passed. It could be username already, first/last name.
+		 * @param string $unique_username Username that was produced after transliteration and sanitation via sanitize_user().
+		 */
+		return apply_filters( 'anycomment_prepare_login', $unique_username, $expected_username );
+	}
+
+	/**
 	 * Authenticate user with additional check whether such
 	 * user already exists or not. When user does not exist,
 	 * it create it. When exists, uses existing information to authorize.
@@ -578,16 +648,25 @@ class AnyCommentSocialAuth {
 	 * @return bool|WP_Error
 	 */
 	public function auth_user( $user_profile, $social, $field, $value, array $user_data, array $user_meta ) {
-		if ( $field == 'login' ) {
-			// Need to make username unique per social network, otherwise
-			// some of the IDs might have collision at some point
-			// format: social_login
-			// login usually is ID
-			$value = sprintf( '%s_%s', $social, $value );
+
+		// Transliterate display name into username, so it is looks
+		// more friendly, as previously it was as "social_username"
+		// which does look nice when seeing posts by user - e.g. website.com/facebook_username
+		$prepared_login = self::prepare_login( $user_data['display_name'] );
+
+		// Need to make username unique per social network, otherwise
+		// some of the IDs might collide at some point
+		// format: {social_name}_{user_identity} where:
+		// - social_name is lowercased social name
+		// - user_identity is usually ID from social or verbose name which usually permanent and unchanged
+		$user_meta[ self::META_SOCIAL_ORIGINAL_USERNAME ] = sprintf( '%s_%s', $social, $user_profile->identifier );
+
+		if ( $field === 'login' ) {
+			$value = $prepared_login;
 		}
 
-		if ( isset( $user_data['user_login'] ) ) {
-			$user_data['user_login'] = sprintf( '%s_%s', $social, $user_data['user_login'] );
+		if ( ! isset( $user_data['user_login'] ) ) {
+			$user_data['user_login'] = $prepared_login;
 		}
 
 		if ( ! isset( $user_data['role'] ) ) {
@@ -601,11 +680,11 @@ class AnyCommentSocialAuth {
 
 		$user = $this->get_user_by( $field, $value );
 
-		if ( $user !== false && ! AnyCommentUserMeta::isSocialLogin( $user ) ) {
+		if ( $user !== false && ! AnyCommentUserMeta::is_social_login( $user ) ) {
 			return new WP_Error( 'use_wordpress_to_login', __( "Please use normal login form, as this email is associated with a WordPress user.", "anycomment" ) );
 		}
 
-		$found_user_social = AnyCommentUserMeta::getSocialType( $user );
+		$found_user_social = AnyCommentUserMeta::get_social_type( $user );
 
 		if ( $found_user_social !== null && $field === 'email' && $found_user_social !== $social ) {
 			return new WP_Error( 'use_original_social_account', sprintf( __( "Please use %s to login as this %s seems to be already taken.", "anycomment" ),
@@ -686,14 +765,37 @@ class AnyCommentSocialAuth {
 	 * @return false|WP_User false on failure.
 	 */
 	public function get_user_by( $field, $value, $social = null ) {
-		$user = get_user_by( $field, $value );
+
+		$user = false;
+
+		if ( $field === 'email' ) {
+			$user = get_user_by( $field, $value );
+		} elseif ( $field === 'login' ) {
+			global $wpdb;
+
+			/**
+			 * Try to find user by unique username in the user meta
+			 */
+			$prepared_sql = $wpdb->prepare( "SELECT user_id, meta_value FROM {$wpdb->usermeta} WHERE meta_key = %s AND meta_value = %s", [
+				self::META_SOCIAL_ORIGINAL_USERNAME,
+				$value
+			] );
+			$user_meta    = $wpdb->get_row( $prepared_sql );
+
+			if ( empty( $user_meta ) ) {
+				return false;
+			}
+
+			// Try to get user by ID from meta
+			$user = $this->get_user_by( 'id', $user_meta->user_id );
+		}
 
 		if ( $user === false ) {
 			return false;
 		}
 
 		if ( $social !== null ) {
-			$social_from_meta = AnyCommentUserMeta::getSocialType( $user );
+			$social_from_meta = AnyCommentUserMeta::get_social_type( $user );
 			$social           = trim( $social );
 
 			if ( $social_from_meta !== $social ) {
@@ -840,7 +942,7 @@ class AnyCommentSocialAuth {
 		}
 
 		if ( $userId !== null ) {
-			$avatarUrl = AnyCommentUserMeta::getSocialAvatar( $userId );
+			$avatarUrl = AnyCommentUserMeta::get_social_avatar( $userId );
 
 			if ( ! empty( $avatarUrl ) ) {
 				return $avatarUrl;

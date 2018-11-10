@@ -447,7 +447,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 
 			$user = get_user_by( 'email', $request['author_email'] );
 
-			if ( $user instanceof WP_User && AnyCommentUserMeta::isSocialLogin( $user->ID ) ) {
+			if ( $user instanceof WP_User && AnyCommentUserMeta::is_social_login( $user->ID ) ) {
 				return new WP_Error( 'rest_use_social_to_login', __( 'Email was used as social authorization. Please login using this method.', 'anycomment' ), [ 'status' => 403 ] );
 			} elseif ( $user instanceof WP_User ) {
 				return new WP_Error( 'rest_login_to_leave_comment', __( "User with such email is registered. Please login to leave a comment.", 'anycomment' ), [ 'status' => 403 ] );
@@ -916,8 +916,8 @@ class AnyCommentRestComment extends AnyCommentRestController {
 
 		$owner = [
 			'is_post_author'  => $is_post_author,
-			'is_social_login' => AnyCommentUserMeta::isSocialLogin( $comment->user_id ),
-			'social_type'     => AnyCommentUserMeta::getSocialType( $comment->user_id ),
+			'is_social_login' => AnyCommentUserMeta::is_social_login( $comment->user_id ),
+			'social_type'     => AnyCommentUserMeta::get_social_type( $comment->user_id ),
 			'profile_url'     => $profileUrl
 		];
 

@@ -171,6 +171,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 * Added ability to see who rated in "Rating" submenu
 * Completely rewritten code towards PSR-4
+* Added transliteration for username, now instead of having `{socialname}_{username}`, it would be prettier, e.g. john_doe. Current usernames would be converted accordingly, #298
 
 
 **Fixes:**

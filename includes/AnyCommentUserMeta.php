@@ -14,7 +14,7 @@ class AnyCommentUserMeta {
 	 *
 	 * @return mixed
 	 */
-	public static function getSocialAvatar( $user ) {
+	public static function get_social_avatar( $user ) {
 		if ( $user instanceof WP_User ) {
 			$user_id = $user->ID;
 		} else {
@@ -31,7 +31,7 @@ class AnyCommentUserMeta {
 	 *
 	 * @return mixed
 	 */
-	public static function getSocialType( $user ) {
+	public static function get_social_type( $user ) {
 
 		if ( $user instanceof WP_User ) {
 			$user_id = $user->ID;
@@ -53,8 +53,8 @@ class AnyCommentUserMeta {
 	 *
 	 * @return bool
 	 */
-	public static function isSocialLogin( $user ) {
-		$socialType = static::getSocialType( $user );
+	public static function is_social_login( $user ) {
+		$socialType = static::get_social_type( $user );
 
 		return $socialType !== null && ! empty( $socialType );
 	}
@@ -68,7 +68,8 @@ class AnyCommentUserMeta {
 	 * @return null|string
 	 */
 	public static function get_social_profile_url( $user, $html = false ) {
-		if ( ! static::isSocialLogin( $user ) ) {
+
+		if ( ! static::is_social_login( $user ) ) {
 			return null;
 		}
 
