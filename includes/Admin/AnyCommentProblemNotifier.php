@@ -45,7 +45,9 @@ class AnyCommentProblemNotifier {
 			$items[] = [
 				'level'   => self::LEVEL_CRITICAL,
 				'type'    => self::TYPE_PLUGIN,
-				'message' => sprintf( __( 'You have <a href="%s">All In One WP Security</a> activated, please make sure "Disallow Unauthorized REST Requests" is unchecked under "WP REST API" tab as it may cause problems to load comments.', 'anycomment' ), '/wp-admin/admin.php?page=aiowpsec_misc&tab=tab4' )
+				'message' => sprintf( __( 'You have All In One WP Security activated, please make sure "Disallow Unauthorized REST Requests" is unchecked in <a href="%s">here</a> and "Bad Query Strings" is unchecked in <a href="%s">here</a> tab as it may cause problems to load comments.', 'anycomment' ),
+					'/wp-admin/admin.php?page=aiowpsec_misc&tab=tab4',
+					'/wp-admin/admin.php?page=aiowpsec_firewall&tab=tab2' )
 			];
 		}
 
