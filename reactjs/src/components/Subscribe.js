@@ -1,7 +1,7 @@
 import React from 'react'
 import AnyCommentComponent from "./AnyCommentComponent";
 import Icon from "./Icon";
-import {faTimes} from '@fortawesome/free-solid-svg-icons'
+import {faEnvelope} from '@fortawesome/free-solid-svg-icons'
 
 
 const LOCALE_STORE_KEY = 'anycomment-subscrine-closed';
@@ -101,12 +101,13 @@ class Subscribe extends AnyCommentComponent {
 
         return (
             <div className="anycomment anycomment-component anycomment-subscribe">
-                <div className="anycomment-subscribe__close" onClick={this.handleClose}>
-                    <Icon icon={faTimes}/>
-                </div>
+
                 <p>{settings.i18.subscribe_pre_paragraph}</p>
                 <form onSubmit={this.handleSubmit}>
                     <div className="anycomment anycomment-subscribe__email">
+                        <div className="anycomment anycomment-subscribe__email--icon">
+                            <Icon icon={faEnvelope}/>
+                        </div>
                         <input onChange={this.handleAuthorEmailChange} type="email" value={email}
                                required={true}/>
                     </div>
@@ -115,6 +116,8 @@ class Subscribe extends AnyCommentComponent {
                                className="anycomment-btn"
                                value={settings.i18.subscribe}/>
                     </div>
+                    <div className="anycomment anycomment-subscribe__close"
+                         onClick={this.handleClose}>{settings.i18.hide_this_message}</div>
                 </form>
             </div>
         );

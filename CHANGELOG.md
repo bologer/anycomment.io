@@ -8,7 +8,7 @@
 * Completely rewritten code towards PSR-4
 * Added transliteration for username, now instead of having `{socialname}_{username}`, it would be prettier, e.g. john_doe. Current usernames would be converted accordingly, #298
 * Added "All In One WP Security" to the list of possible problems as it may cause failure to load comments, #284
-
+* Better visual design for subscription form, #294
 
 **Fixes:**
 

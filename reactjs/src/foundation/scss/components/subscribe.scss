@@ -2,32 +2,30 @@
   .anycomment-subscribe {
     margin: 20px 0;
     position: relative;
+    background-color: #E8EDEF;
+    padding: 15px;
 
     form {
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: flex-start;
-    }
-
-    &__close {
-      position: absolute;
-      top: 0;
-      right: 0;
-      cursor: pointer;
-
-      &:hover,
-      &:active,
-      &:focus {
-        .anycomment-icon,
-        svg {
-          color: $text-color;
-        }
-      }
+      flex-wrap: wrap;
     }
 
     &__email {
-      margin-right: 10px;
+      margin-right: 15px;
+      position: relative;
+
+      &--icon {
+        position: absolute;
+        left: 13px;
+        top: 7px;
+
+        svg {
+          font-size: 15px;
+        }
+      }
 
       input {
         background-color: $form-field-background-color;
@@ -36,11 +34,18 @@
         outline: 0;
         height: 30px;
         line-height: 30px;
-        padding: 5px 10px;
+        padding: 5px 10px 5px 37px;
         font-size: $font-size;
         text-align: left;
         @include border-radius($global-radius);
       }
+    }
+
+    &__close {
+      cursor: pointer;
+      color: #747B7E;
+      font-size: $font-size;
+      margin-left: 30px;
     }
   }
 }

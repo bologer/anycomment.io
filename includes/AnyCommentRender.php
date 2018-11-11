@@ -149,7 +149,7 @@ class AnyCommentRender {
 				'options'      => [
 					'limit'                  => AnyCommentGenericSettings::get_per_page(),
 					'isCopyright'            => AnyCommentGenericSettings::is_copyright_on(),
-					'socials'                => AnyCommentSocials::getAll(get_permalink( $postId )),
+					'socials'                => AnyCommentSocials::getAll( get_permalink( $postId ) ),
 					'sort_order'             => AnyCommentGenericSettings::get_sort_order(),
 					'guestInputs'            => AnyCommentGenericSettings::get_guest_fields( true ),
 					'isNotifySubscribers'    => AnyCommentGenericSettings::is_notify_subscribers(),
@@ -237,6 +237,7 @@ class AnyCommentRender {
 					'file_not_selected_or_extension' => __( "No file selected or select proper extension", 'anycomment' ),
 					'read_more'                      => __( 'Read more', 'anycomment' ),
 					'show_less'                      => __( 'Show less', 'anycomment' ),
+					'hide_this_message'              => __( 'Hide this message', 'anycomment' ),
 					'login_with'                     => __( 'Login with', 'anycomment' ),
 					'or_as_guest'                    => sprintf( __( 'or as %sguest%s', 'anycomment' ), '<span>', '</span>' ),
 
