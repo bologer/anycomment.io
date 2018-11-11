@@ -44,7 +44,7 @@ class AnyCommentMigration_0_0_70 extends AnyCommentMigration {
 
 		$regexp = implode( '|', $socials );
 
-		$sql = "SELECT * FROM {$wpdb->users} u WHERE user_login REGEXP '$regexp'";
+		$sql = "SELECT * FROM {$wpdb->users} WHERE user_login REGEXP '$regexp'";
 
 		$users = $wpdb->get_results( $sql );
 
