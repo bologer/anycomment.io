@@ -8,7 +8,7 @@
  * Author URI: http://bologer.ru
  * Requires at least: 4.4
  * Requires PHP: 5.4
- * Tested up to: 4.9
+ * Tested up to: 5.0
  * Text Domain: anycomment
  * Domain Path: /languages
  *

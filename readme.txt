@@ -1,5 +1,6 @@
 === AnyComment ===
 Contributors: ateshabaev
+Donate link: https://www.paypal.me/TeshabaevA
 Tags: anycomment, comments, ajax comments, comment, comment moderation, custom comment form, comment email, anycomment.io
 Requires at least: 4.7
 Tested up to: 4.9.8
