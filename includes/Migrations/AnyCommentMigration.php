@@ -70,6 +70,10 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 			'version'     => '0.0.68',
 			'description' => 'Create anycomment_subscription table to keep track of who is subscribing for comments'
 		],
+		'0.0.70' => [
+			'version'     => '0.0.70',
+			'description' => 'Migrate existing social users to new username format'
+		],
 	];
 
 	/**

@@ -89,9 +89,12 @@ class AnyCommentCore {
 		register_activation_hook( __FILE__, [ $this, 'activation' ] );
 		register_uninstall_hook( __FILE__, sprintf( '%s::uninstall', get_called_class() ) );
 
-		if ( version_compare( AnyCommentOptions::get_migration(), $this->version, '<' ) ) {
-			( new AnyCommentMigrationManager() )->applyAll();
-		}
+
+		add_action( 'init', function () {
+			if ( version_compare( AnyCommentOptions::get_migration(), $this->version, '<' ) ) {
+				( new AnyCommentMigrationManager() )->applyAll();
+			}
+		} );
 	}
 
 	/**

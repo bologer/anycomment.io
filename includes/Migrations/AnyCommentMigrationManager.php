@@ -36,7 +36,7 @@ class AnyCommentMigrationManager {
 		foreach ( $migrationList as $key => $migrationVersion ) {
 			$format        = $this->getFileFormat();
 			$migrationName = sprintf( $format, $migrationVersion );
-			$path          = sprintf( ANYCOMMENT_ABSPATH . 'includes/migrations/%s.php', $migrationName );
+			$path          = sprintf( __DIR__ . '/%s.php', $migrationName );
 
 			if ( ! file_exists( $path ) ) {
 				continue;
@@ -47,7 +47,8 @@ class AnyCommentMigrationManager {
 			/**
 			 * @var $model AnyCommentMigration
 			 */
-			$model = new $migrationName();
+			$namespace = "\AnyComment\Migrations\\$migrationName";
+			$model     = new $namespace;
 
 			if ( ! $model->isApplied() && $model->up() ) {
 				AnyCommentOptions::update_migration( $migrationVersion );

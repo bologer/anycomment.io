@@ -11,7 +11,7 @@ use WP_Error;
 use WP_User;
 use WP_Comment;
 
-use AnyComment\Helpers\AnyCommentInflector;
+use AnyComment\AnyCommentUser;
 use AnyComment\Admin\AnyCommentGenericSettings;
 use AnyComment\Admin\AnyCommentSocialSettings;
 use AnyComment\Admin\AnyCommentIntegrationSettings;
@@ -567,69 +567,6 @@ class AnyCommentSocialAuth {
 		);
 	}
 
-	/**
-	 * Prepares username or first/last name to become username.
-	 *
-	 * @param string $expected_username Could be username or first/last name which will be converted into username.
-	 *
-	 * @return string
-	 * @since 0.0.70
-	 */
-	public static function prepare_login( $expected_username ) {
-
-		// Transliterate to remove junky chars
-		$prepared_username = AnyCommentInflector::transliterate( $expected_username );
-
-		// Extra sanitize username
-		$prepared_username = sanitize_user( $prepared_username );
-
-		// Lowercase username
-		$prepared_username = strtolower( $prepared_username );
-
-		// Clean-up anything that is not A-Z, 0-9 or underscore
-		$prepared_username = preg_replace( '/[^A-Za-z0-9_\s]/', '', $prepared_username );
-
-		// Replace spaces with "_"
-		$prepared_username = preg_replace( '/\s+/', '_', $prepared_username );
-
-		// Replace more then one of "_" with once of such type
-		$prepared_username = preg_replace( '/_{2,}/', '_', $prepared_username );
-
-		// Wne username is empty, should create some random name in order to have at least something
-		if ( empty( $prepared_username ) ) {
-			$prepared_username = 'user' . time();
-		}
-
-		/**
-		 * Make username unique by adding extra numbers after it if exists already
-		 */
-		$unique_username = $prepared_username;
-		$i               = 0;
-
-		do {
-			$user = get_user_by( 'login', $unique_username );
-
-			if ( $user !== false ) {
-				// Remove previous _{n}, so we can try new ID
-				$unique_username = preg_replace( '/(_\d{1,})$/', '', $unique_username );
-				// Append new ID to the username and try the search again
-				$unique_username .= '_' . $i;
-			}
-
-			$i ++;
-
-		} while ( $user !== false );
-
-		/**
-		 * Converts first or last name into proper username.
-		 *
-		 * @since 0.0.70
-		 *
-		 * @param string $expected_username Initial value passed. It could be username already, first/last name.
-		 * @param string $unique_username Username that was produced after transliteration and sanitation via sanitize_user().
-		 */
-		return apply_filters( 'anycomment_prepare_login', $unique_username, $expected_username );
-	}
 
 	/**
 	 * Authenticate user with additional check whether such
@@ -652,7 +589,7 @@ class AnyCommentSocialAuth {
 		// Transliterate display name into username, so it is looks
 		// more friendly, as previously it was as "social_username"
 		// which does look nice when seeing posts by user - e.g. website.com/facebook_username
-		$prepared_login = self::prepare_login( $user_data['display_name'] );
+		$prepared_login = AnyCommentUser::prepare_login( $user_data['display_name'] );
 
 		// Need to make username unique per social network, otherwise
 		// some of the IDs might collide at some point

@@ -3,7 +3,7 @@
 namespace AnyComment\Migrations;
 
 class AnyCommentMigration_0_0_66 extends AnyCommentMigration {
-	public $table = 'email_queue';
+	public $table = 'anycomment_email_queue';
 	public $version = '0.0.66';
 
 	/**
@@ -12,7 +12,7 @@ class AnyCommentMigration_0_0_66 extends AnyCommentMigration {
 	public function isApplied() {
 		global $wpdb;
 
-		$table = $wpdb->prefix . 'anycomment_email_queue';
+		$table = $wpdb->prefix . $this->table;
 
 		$subjectColumn = $wpdb->get_results( "SHOW COLUMNS FROM $table LIKE 'subject';", 'ARRAY_A' );
 		$emailColumn   = $wpdb->get_results( "SHOW COLUMNS FROM $table LIKE 'email';", 'ARRAY_A' );
@@ -30,7 +30,7 @@ class AnyCommentMigration_0_0_66 extends AnyCommentMigration {
 	public function up() {
 		global $wpdb;
 
-		$table = $wpdb->prefix . 'anycomment_email_queue';
+		$table = $wpdb->prefix . $this->table;
 
 		$arr   = [];
 		$arr[] = "ALTER TABLE `$table` ADD COLUMN `subject` VARCHAR(255) NOT NULL";

@@ -23,7 +23,8 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <div class="cell auto anycomment-dashboard__header-logo">
                     <img src="<?php echo AnyComment()->plugin_url() . '/assets/img/mini-logo.svg' ?>"
                          alt="<?php echo __( 'AnyComment', 'anycomment' ) ?>">
-                    <h2><?php echo __( 'AnyComment', 'anycomment' ) ?>&nbsp;<sup><?php echo AnyComment()->version ?></sup></h2>
+                    <h2><?php echo __( 'AnyComment', 'anycomment' ) ?>
+                        &nbsp;<sup><?php echo AnyComment()->version ?></sup></h2>
                 </div>
 
                 <div class="cell auto anycomment-dashboard__header-official">
@@ -32,15 +33,15 @@ if ( ! defined( 'ABSPATH' ) ) {
                 </div>
             </header>
 
-			<?php echo \AnyComment\Helpers\AnyCommentTemplate::render('admin/tabs' ) ?>
+			<?php echo \AnyComment\Helpers\AnyCommentTemplate::render( 'admin/tabs' ) ?>
 
             <div class="anycomment-dashboard__splitter anycomment-dashboard__splitter-right-space anycomment-dashboard__splitter-possible-problems">
                 <h2><?php echo __( 'Possible Problems', 'anycomment' ) ?></h2>
-				<?php echo \AnyComment\Helpers\AnyCommentTemplate::render('admin/notifications' ) ?>
+				<?php echo \AnyComment\Helpers\AnyCommentTemplate::render( 'admin/notifications' ) ?>
             </div>
         </div>
         <aside class="cell large-3 medium-12 anycomment-dashboard__sidebar">
-	        <?php echo \AnyComment\Helpers\AnyCommentTemplate::render( 'admin/help-sidebar' ) ?>
+			<?php echo \AnyComment\Helpers\AnyCommentTemplate::render( 'admin/help-sidebar' ) ?>
 			<?php echo \AnyComment\Helpers\AnyCommentTemplate::render( 'admin/news-sidebar' ) ?>
         </aside>
     </div>
