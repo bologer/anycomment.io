@@ -11,12 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php echo sprintf( __( 'Please take a few seconds and <a href="%s" target="_blank">rate us on WordPress.org</a>. You are the one who can help to grow and make this plugin better!', 'anycomment' ), 'https://wordpress.org/support/plugin/anycomment/reviews/?rate=5#new-post' ) ?>
     </div>
 
-    <div class="anycomment-notice anycomment-success"><?php echo sprintf( __( 'Follow us on <a href="%s" %s>VK.com</a> or join our group in <a href="%s" %s>Telegram</a>', 'anycomment' ),
-			\AnyComment\Helpers\AnyCommentLinkHelper::getVkontakte(),
-			'target="_blank"',
-			\AnyComment\Helpers\AnyCommentLinkHelper::getTelegram(),
-			'target="_blank"' ) ?></div>
-
     <div class="anycomment-dashboard grid-x">
         <div class="cell auto anycomment-dashboard__container">
             <header class="grid-x anycomment-dashboard__header">
@@ -28,8 +22,34 @@ if ( ! defined( 'ABSPATH' ) ) {
                 </div>
 
                 <div class="cell auto anycomment-dashboard__header-official">
-                    <a href="<?php echo \AnyComment\Helpers\AnyCommentLinkHelper::getOfficialWebsite() ?>"
-                       target="_blank"><?php echo __( 'Official Website', 'anycomment' ) ?></a>
+					<?php
+
+					$links = [
+						'telegram'  => [
+							'text' => __( 'Telegram', 'anycomment' ),
+							'url'  => \AnyComment\Helpers\AnyCommentLinkHelper::getTelegram()
+						],
+						'vkontakte' => [
+							'text' => __( 'Vkontakte', 'anycomment' ),
+							'url'  => \AnyComment\Helpers\AnyCommentLinkHelper::getVkontakte()
+						],
+						'website'   => [
+							'text' => __( 'Website', 'anycomment' ),
+							'url'  => \AnyComment\Helpers\AnyCommentLinkHelper::getOfficialWebsite()
+						],
+						'github'    => [
+							'text' => __( 'GitHub', 'anycomment' ),
+							'url'  => \AnyComment\Helpers\AnyCommentLinkHelper::getGitHub()
+						],
+					];
+
+					$i = 0;
+					foreach ( $links as $link ) {
+						$separator = $i !== 0 ? ' · ' : '';
+						echo $separator . '<a href="' . $link["url"] . '" target="_blank">' . $link['text'] . '</a>';
+						$i ++;
+					}
+					?>
                 </div>
             </header>
 

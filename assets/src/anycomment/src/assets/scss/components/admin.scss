@@ -77,10 +77,23 @@ a:focus {
     @include border-radius(0 16px 16px 0);
     background-color: #106ddc;
 
-    h2 {
-      color: #fff;
-      margin-top: 0;
+    &--widget {
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+
+      &:last-of-type {
+        margin-bottom: 0;
+        border-bottom: 0;
+      }
+
+      h2 {
+        color: #fff;
+        margin-top: 0;
+        margin-bottom: 30px;
+      }
     }
+
     &-news {
       li {
         color: #fff;
@@ -154,6 +167,20 @@ a:focus {
     &-logo,
     &-official {
       font-size: $global-font-size + 4;
+    }
+
+    &-official {
+      $link-color: #ec4568;
+      a {
+        font-size: 16px;
+        color: $link-color;
+
+        &:hover,
+        &:active,
+        &:focus {
+          color: darken($link-color, 30%);
+        }
+      }
     }
 
     &-logo {
@@ -260,7 +287,6 @@ a:focus {
       &-commentators {
         color: #53146c;
       }
-
 
       &-description {
         padding-top: 20px;
