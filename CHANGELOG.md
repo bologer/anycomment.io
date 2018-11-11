@@ -13,6 +13,7 @@
 **Fixes:**
 
 * Fixed issue when on mobile devices attachments icon was too small to click on
+* Fixed issue when it was not possible to load or add comments for custom post types, #292
 
 ## 0.0.69 – 06.11.2018
 
