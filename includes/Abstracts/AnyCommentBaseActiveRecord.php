@@ -32,7 +32,7 @@ abstract class AnyCommentBaseActiveRecord {
 	 *
 	 * @return bool|false|int
 	 */
-	public static function deletedAll( $column = 'ID', $search ) {
+	public static function deleted_all( $column = 'ID', $search ) {
 		global $wpdb;
 
 		if ( empty( $search ) ) {
@@ -47,10 +47,14 @@ abstract class AnyCommentBaseActiveRecord {
 			$prepared_ids = implode( ',', $search );
 		}
 
+		if ( empty( $prepared_ids ) ) {
+			return false;
+		}
+
 		$table = static::get_table_name();
 
-		$sql = "DELETE FROM $table WHERE %s IN(%s)";
+		$prepared_sql =  $wpdb->prepare("DELETE FROM $table WHERE $column IN(%s)", [$prepared_ids ] );
 
-		return $wpdb->query( $wpdb->prepare( $sql, [ $column, $prepared_ids ] ) );
+		return $wpdb->query( $prepared_sql );
 	}
 }
