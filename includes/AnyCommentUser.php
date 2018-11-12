@@ -28,7 +28,6 @@ class AnyCommentUser {
 		}
 
 		unset( $user->data->user_activation_key );
-		unset( $user->data->user_email );
 		unset( $user->data->user_pass );
 		unset( $user->data->user_registered );
 		unset( $user->data->user_status );

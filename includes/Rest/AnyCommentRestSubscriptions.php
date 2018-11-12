@@ -6,11 +6,12 @@ use WP_Error;
 use WP_REST_Server;
 use WP_REST_Request;
 use WP_REST_Response;
+
+use AnyComment\Models\AnyCommentEmailQueue;
 use AnyComment\Models\AnyCommentSubscriptions;
 use AnyComment\Admin\AnyCommentGenericSettings;
 
 class AnyCommentRestSubscriptions extends AnyCommentRestController {
-
 	/**
 	 * Constructor.
 	 *
@@ -109,9 +110,13 @@ class AnyCommentRestSubscriptions extends AnyCommentRestController {
 			$model->confirmed_at = time();
 		} else {
 			$model->is_active = false;
+			$model->set_token();
+
+			$email_to_send = AnyCommentEmailQueue::generate_subscribe_confirmation_email( $model->post_ID, $model->token );
 		}
 
 		$model->email = $request['email'];
+
 
 		if ( false === $model->save() ) {
 			return new WP_Error( 'rest_subscription_failure', __( 'Error, failed to subscribe. Please try again later.', 'anycomemnt' ), [ 'status' => 403 ] );

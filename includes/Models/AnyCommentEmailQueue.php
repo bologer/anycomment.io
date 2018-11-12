@@ -7,8 +7,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use WP_Comment;
-use WP_User;
 
+use AnyComment\EmailEndpoints;
 use AnyComment\Helpers\AnyCommentRequest;
 use AnyComment\Admin\AnyCommentGenericSettings;
 
@@ -244,19 +244,13 @@ AND `comments`.`comment_ID`=%d";
 	/**
 	 * Method can be used to add email notification about new comment to subscribers.
 	 *
-	 * @param string $subscriber_email Subscriber email.
+	 * @param AnyCommentSubscriptions $subscriber Subscriber email.
 	 * @param WP_Comment $comment Comment to be added as notification.
 	 *
 	 * @return AnyCommentEmailQueue|bool|int
 	 */
-	public static function add_as_subscriber_notification( $subscriber_email, $comment ) {
+	public static function add_as_subscriber_notification( $subscriber, $comment ) {
 		if ( ! $comment instanceof WP_Comment ) {
-			return false;
-		}
-
-		$user = get_user_by( 'email', $subscriber_email );
-
-		if ( ! $user instanceof WP_User ) {
 			return false;
 		}
 
@@ -270,7 +264,7 @@ AND `comments`.`comment_ID`=%d";
 			$subject = sprintf( __( 'New Comment in %s', 'anycomment' ), get_option( 'blogname' ) );
 		}
 
-		$email->email      = $subscriber_email;
+		$email->email      = $subscriber->email;
 		$email->subject    = $subject;
 		$email->post_ID    = $comment->comment_post_ID;
 		$email->comment_ID = $comment->comment_ID;
@@ -321,6 +315,43 @@ AND `comments`.`comment_ID`=%d";
 	}
 
 	/**
+	 * Generate subscribe confirmation email.
+	 *
+	 * @param int $post_id
+	 * @param string $token Toklen
+	 *
+	 * @return string
+	 */
+	public static function generate_subscribe_confirmation_email( $post_id, $token ) {
+		$template       = '';
+		$post           = get_post( $post_id );
+		$cleanPermalink = get_permalink( $post );
+		$reply_url      = sprintf( '%s?confirm_email=%s#comments', $cleanPermalink, $token );
+
+
+		if ( $post !== null ) {
+			$post_title    = $post->post_title;
+			$post_url      = $cleanPermalink;
+			$post_url_html = sprintf( '<a href="%s">%s</a>', $post_url, $post_title );
+
+			$template .= sprintf( __( 'You were subscribed to %s on %s.', 'anycomment' ), $post_url_html, get_option( 'blogname' ) );
+		}
+
+		$template .= "<br><br>" . __( 'Please follow link below to confirm this action or ignore this message if you think you received this by mistake.', 'anycomment' );
+
+		$confirmation_url = '';
+
+		$confirmation_button = '<p><a href="' . $confirmation_url . '" style="font-size: 15px;text-decoration:none;font-weight: 400;text-align: center;color: #fff;padding: 0 50px;line-height: 48px;background-color: #53af4a;display: inline-block;vertical-align: middle;border: 0;outline: 0;cursor: pointer;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;-webkit-appearance: none;-moz-appearance: none;appearance: none;white-space: nowrap;border-radius: 24px;">' . __( 'Confirm', 'anycomment' ) . '</a></p>';
+
+		$template .= $confirmation_button;
+
+		$template .= __( 'Or use link below:', 'anycomment' );
+		$template .= $confirmation_button;
+
+		return $template;
+	}
+
+	/**
 	 * Prepare email body.
 	 *
 	 * Subs to replace:
@@ -335,18 +366,26 @@ AND `comments`.`comment_ID`=%d";
 	 * '{replyUrl}',
 	 * '{replyButton}'
 	 *
+	 * @param AnyCommentSubscriptions $subscription
 	 * @param AnyCommentEmailQueue $email
 	 *
 	 * @return string HTML formatted content of email.
 	 */
-	public static function generate_subscribe_email( $email ) {
+	public static function generate_subscribe_email( $subscription, $email ) {
 		$comment        = get_comment( $email->comment_ID );
 		$post           = get_post( $email->post_ID );
 		$cleanPermalink = get_permalink( $post );
 		$reply_url      = sprintf( '%s#comment-%s', $cleanPermalink, $comment->comment_ID );
 
-		$blog_name     = get_option( 'blogname' );
-		$blog_url      = get_option( 'siteurl' );
+		$blog_name = get_option( 'blogname' );
+		$blog_url  = get_option( 'siteurl' );
+
+		/**
+		 * Generate unsubscribe URL
+		 */
+		$new_token      = AnyCommentSubscriptions::refresh_token_by( [ 'id' => $subscription->ID ] );
+		$unsubsribe_url = add_query_arg( EmailEndpoints::CANCEL_QUERY_PARAM, $new_token, $blog_url );
+
 		$blog_url_html = sprintf( '<a href="%s">%s</a>', $blog_url, $blog_name );
 
 		$post_title    = '';
@@ -378,6 +417,7 @@ AND `comments`.`comment_ID`=%d";
 			'{blogUrlHtml}',
 			'{postTitle}',
 			'{postUrl}',
+			'{unsubscribeUrl}',
 			'{postUrlHtml}',
 			'{commentText}',
 			'{commentFormatted}',
@@ -391,6 +431,7 @@ AND `comments`.`comment_ID`=%d";
 			$blog_url_html,
 			$post_title,
 			$post_url,
+			$unsubsribe_url,
 			$post_url_html,
 			$comment_text,
 			$comment_formatted,

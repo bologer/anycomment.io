@@ -34,6 +34,9 @@ class AnyCommentLoader {
 		// Crontabs
 		'AnyComment\cron\AnyCommentEmailQueueCron',
 
+		// Emails
+		'AnyComment\EmailEndpoints',
+
 		// Main
 		'AnyComment\AnyCommentRender',
 	];

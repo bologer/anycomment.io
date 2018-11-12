@@ -45,6 +45,124 @@ class AnyCommentSubscriptions extends AnyCommentActiveRecord {
 	public $created_at;
 
 	/**
+	 * Find subscriber by token to confirm subscription.
+	 *
+	 * @param string $token
+	 *
+	 * @return $this|null
+	 */
+	public static function find_by_token( $token ) {
+
+		$token = trim( $token );
+
+		if ( empty( $token ) ) {
+			return null;
+		}
+
+		global $wpdb;
+		$table        = static::get_table_name();
+		$prepared_sql = $wpdb->prepare( "SELECT * FROM {$table} WHERE token = %s", [ $token ] );
+
+		$row = $wpdb->get_row( $prepared_sql );
+
+		return empty( $row ) ? null : $row;
+	}
+
+	/**
+	 * Find entry by email and post id.
+	 *
+	 * @param string $email Email.
+	 * @param int $post_id Post ID.
+	 *
+	 * @return $this|null
+	 */
+	public static function find_by_email_post( $email, $post_id ) {
+
+		if ( empty( $email ) || empty( $post_id ) ) {
+			return null;
+		}
+
+		global $wpdb;
+		$table        = static::get_table_name();
+		$prepared_sql = $wpdb->prepare( "SELECT * FROM $table WHERE email = %s AND post_ID = %d", [
+			$email,
+			$post_id
+		] );
+
+		$row = $wpdb->get_row( $prepared_sql );
+
+		return empty( $row ) ? null : $row;
+	}
+
+	/**
+	 * Method allows to update token by provided where condition.
+	 *
+	 * @param array $where Key => list conditions.
+	 *
+	 * @return false|int
+	 */
+	public static function refresh_token_by( $where ) {
+		global $wpdb;
+
+		$new_token = static::generate_token();
+
+		$affected_rows = $wpdb->update( static::get_table_name(), [ 'token' => $new_token ], $where );
+
+		if ( $affected_rows > 0 ) {
+			return $new_token;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Mark subscriber as active by provided token.
+	 *
+	 * Notice: method would unset token automatically.
+	 *
+	 * @param string $token Value of the field to search for.
+	 * @param bool $unset_token If required to unset token as well.
+	 *
+	 * @return false|int false on failure, int when some rows affected (success).
+	 */
+	public static function mark_as_active_by_token( $token, $unset_token = true ) {
+		global $wpdb;
+		$table = static::get_table_name();
+
+		$data = [ 'is_active' => 1 ];
+
+		if ( $unset_token ) {
+			$data['token'] = null;
+		}
+
+		return $wpdb->update( $table, $data, [ 'token' => $token, 'is_active' => 0 ] );
+	}
+
+	/**
+	 * Mark subscriber as inactive by provided token.
+	 *
+	 * Notice: method would unset token automatically.
+	 *
+	 * @param string $token Value of the field to search for.
+	 * @param bool $unset_token If required to unset token as well.
+	 *
+	 * @return false|int false on failure, int when some rows affected (success).
+	 */
+	public static function mark_as_inactive_by_token( $token, $unset_token = true ) {
+		global $wpdb;
+		$table = static::get_table_name();
+
+		$data = [ 'is_active' => 0 ];
+
+		if ( $unset_token ) {
+			$data['token'] = null;
+		}
+
+		return $wpdb->update( $table, $data, [ 'token' => $token, 'is_active' => 1 ] );
+	}
+
+
+	/**
 	 * Notify subscribers by specified comment.
 	 * Expected that specified comment is the new comment.
 	 *
@@ -80,8 +198,11 @@ class AnyCommentSubscriptions extends AnyCommentActiveRecord {
 			return true;
 		}
 
+		/**
+		 * @var AnyCommentSubscriptions $subscriber
+		 */
 		foreach ( $subscribers as $key => $subscriber ) {
-			AnyCommentEmailQueue::add_as_subscriber_notification( $subscriber->email, $comment );
+			AnyCommentEmailQueue::add_as_subscriber_notification( $subscriber, $comment );
 		}
 
 		return true;
@@ -114,6 +235,24 @@ class AnyCommentSubscriptions extends AnyCommentActiveRecord {
 		$count = $wpdb->get_var( $sql );
 
 		return $count >= 1;
+	}
+
+	/**
+	 * Set token for the model.
+	 */
+	public function set_token() {
+		$this->token = static::generate_token( 32 );
+	}
+
+	/**
+	 * Generate token.
+	 *
+	 * @param int $length Length of the token.
+	 *
+	 * @return string
+	 */
+	public static function generate_token( $length = 16 ) {
+		return bin2hex( openssl_random_pseudo_bytes( $length ) );
 	}
 
 	/**

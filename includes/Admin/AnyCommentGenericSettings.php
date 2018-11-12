@@ -228,7 +228,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 		self::OPTION_FILES_MIME_TYPES                       => 'image/*, .pdf',
 
 		// Notifications
-		self::OPTION_NOTIFY_SUBSCRIBERS_EMAIL_TEMPLATE      => "New comment in {blogUrlHtml}.\nFrom post {postUrlHtml}.\n\n{commentFormatted}\n{replyButton}\n\nYou were subscribed to this post.",
+		self::OPTION_NOTIFY_SUBSCRIBERS_EMAIL_TEMPLATE      => "New comment in {blogUrlHtml}.\nFrom post {postUrlHtml}.\n\n{commentFormatted}\n{replyButton}\n\nYou were subscribed to this post.\n\nYou may unbsubscribe by following this link:\n{unsubscribeUrl}",
 		self::OPTION_NOTIFY_REPLY_EMAIL_TEMPLATE            => "New reply for you in {blogUrlHtml}.\nFrom post {postUrlHtml}.\n\n{commentFormatted}\n{replyButton}",
 		self::OPTION_NOTIFY_ADMIN_EMAIL_TEMPLATE            => "New comment posted in {blogUrlHtml}.\nFor post {postUrlHtml}.\n\n{commentFormatted}\n{replyButton}",
 
@@ -776,6 +776,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 							'{blogUrlHtml}'      => __( 'Blog name in HTML link', 'anycomment' ),
 							'{postTitle}'        => __( 'Post title as text', 'anycomment' ),
 							'{postUrl}'          => __( 'Post URL as text', 'anycomment' ),
+							'{unsubscribeUrl}'   => __( 'Unsubscribe URL as text', 'anycomment' ),
 							'{postUrlHtml}'      => __( 'Post title in HTML link', 'anycomment' ),
 							'{commentText}'      => __( 'Comment text', 'anycomment' ),
 							'{commentFormatted}' => __( 'Comment text nicely formatted', 'anycomment' ),
