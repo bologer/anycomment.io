@@ -6,17 +6,17 @@ if ( ! class_exists( 'WP_List_Table', false ) ) {
 	require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
 }
 
+use AnyComment\Models\AnyCommentSubscriptions;
 use WP_List_Table;
 use WP_User;
 
-use AnyComment\Models\AnyCommentRating;
-
-use AnyComment\Models\AnyCommentUploadedFiles;
 
 /**
- * Class AnyCommentUploadedFilesTable is used to display list of files in the admin.
+ * Class AnyCommentSubscribersTable is used to display list of subscribers as WP native table in the admin.
+ *
+ * @since 0.0.70
  */
-class AnyCommentRatingTable extends WP_List_Table {
+class AnyCommentSubscriptionsTable extends WP_List_Table {
 	/**
 	 * Site ID to generate the Users list table for.
 	 *
@@ -44,7 +44,7 @@ class AnyCommentRatingTable extends WP_List_Table {
 	public function prepare_items() {
 		global $wpdb;
 
-		$table = AnyCommentRating::get_table_name();
+		$table = AnyCommentSubscriptions::get_table_name();
 
 
 		global $wpdb;
@@ -90,7 +90,7 @@ class AnyCommentRatingTable extends WP_List_Table {
 	 * {@inheritdoc}
 	 */
 	function no_items() {
-		_e( 'No rating yet.', 'anycomment' );
+		_e( 'No subscribers yet.', 'anycomment' );
 	}
 
 	/**
@@ -115,7 +115,7 @@ class AnyCommentRatingTable extends WP_List_Table {
 				$user_object = get_user_by( 'id', $item[ $column_name ] );
 
 				if ( ! $user_object instanceof WP_User ) {
-					return '';
+					return $item['email'];
 				}
 
 				$super_admin = '';
@@ -132,10 +132,12 @@ class AnyCommentRatingTable extends WP_List_Table {
 				}
 
 				return $userHtml;
-			case 'rating':
+			case 'is_active':
 				return $item[ $column_name ];
-			case 'ip':
-				return $item[ $column_name ];
+			case 'confirmed_at':
+				$format = sprintf( "%s %s", get_option( 'date_format' ), get_option( 'time_format' ) );
+
+				return date( $format, $item[ $column_name ] );
 			case 'created_at':
 				$format = sprintf( "%s %s", get_option( 'date_format' ), get_option( 'time_format' ) );
 
@@ -150,7 +152,7 @@ class AnyCommentRatingTable extends WP_List_Table {
 	 */
 	function column_cb( $item ) {
 		return sprintf(
-			'<input type="checkbox" name="ratings[]" value="%s" />', $item['ID']
+			'<input type="checkbox" name="subscriptions[]" value="%s" />', $item['ID']
 		);
 	}
 
@@ -170,10 +172,11 @@ class AnyCommentRatingTable extends WP_List_Table {
 	 */
 	function get_sortable_columns() {
 		$sortable_columns = [
-			'post_ID'    => [ 'post_ID', false ],
-			'user_ID'    => [ 'user_ID', false ],
-			'rating'     => [ 'rating', false ],
-			'created_at' => [ 'created_at', false ]
+			'post_ID'      => [ 'post_ID', false ],
+			'user_ID'      => [ 'user_ID', false ],
+			'is_active'    => [ 'is_active', false ],
+			'confirmed_at' => [ 'confirmed_at', false ],
+			'created_at'   => [ 'created_at', false ]
 		];
 
 		return $sortable_columns;
@@ -184,12 +187,12 @@ class AnyCommentRatingTable extends WP_List_Table {
 	 */
 	public function get_columns() {
 		$c = array(
-			'cb'         => '<input type="checkbox" />',
-			'post_ID'    => __( 'Post', 'anycomment' ),
-			'user_ID'    => __( 'User', 'anycomment' ),
-			'rating'     => __( 'Rating', 'anycomment' ),
-			'ip'         => __( 'IP', 'anycomment' ),
-			'created_at' => __( 'Date', 'anycomment' ),
+			'cb'           => '<input type="checkbox" />',
+			'post_ID'      => __( 'Post', 'anycomment' ),
+			'user_ID'      => __( 'User', 'anycomment' ),
+			'is_active'    => __( 'Is Active?', 'anycomment' ),
+			'confirmed_at' => __( 'Confirmation', 'anycomment' ),
+			'created_at'   => __( 'Date', 'anycomment' ),
 		);
 
 		return $c;

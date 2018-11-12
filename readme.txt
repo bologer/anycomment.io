@@ -166,20 +166,24 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 == Changelog ==
 
-= 0.0.70 – 10.11.2018 =
+= 0.0.70 – 12.11.2018 =
 
 **Enhancements:**
 
-* Added ability to see who rated in "Rating" submenu
+* Added ability to see list of ratings in "Rating" submenu
+* Added ability to see list of subscribers in "Subscribers" submenu
 * Completely rewritten code towards PSR-4
 * Added transliteration for username, now instead of having `{socialname}_{username}`, it would be prettier, e.g. john_doe. Current usernames would be converted accordingly, #298
 * Added "All In One WP Security" to the list of possible problems as it may cause failure to load comments, #284
-* Better visual design for subscription form, #294
+* Subscription form: Better visual design for subscription form, #294
+* Subscription form: guest users can now subscribe but need to confirm it by provided email, #294
+* Subscription form: users can unsubscribe anytime by following the link provided in the bottom of the email, #294
 
 **Fixes:**
 
 * Fixed issue when on mobile devices attachments icon was too small to click on
 * Fixed issue when it was not possible to load or add comments for custom post types, #292
+* Fixed issue when email notifications were not send when reply option was disabled
 
 = 0.0.69 – 06.11.2018 =
 

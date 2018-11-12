@@ -104,6 +104,11 @@ class AnyCommentSubscriptions extends AnyCommentActiveRecord {
 	public static function refresh_token_by( $where ) {
 		global $wpdb;
 
+		if ( isset( $where['id'] ) ) {
+			$where['ID'] = $where['id'];
+			unset( $where['id'] );
+		}
+
 		$new_token = static::generate_token();
 
 		$affected_rows = $wpdb->update( static::get_table_name(), [ 'token' => $new_token ], $where );
@@ -129,7 +134,7 @@ class AnyCommentSubscriptions extends AnyCommentActiveRecord {
 		global $wpdb;
 		$table = static::get_table_name();
 
-		$data = [ 'is_active' => 1 ];
+		$data = [ 'is_active' => 1, 'confirmed_at' => time() ];
 
 		if ( $unset_token ) {
 			$data['token'] = null;
@@ -187,7 +192,7 @@ class AnyCommentSubscriptions extends AnyCommentActiveRecord {
 		global $wpdb;
 
 		$table = static::get_table_name();
-		$sql   = "SELECT `user_ID`, `email` FROM $table WHERE post_ID=%d AND is_active=1 AND confirmed_at IS NOT NULL";
+		$sql   = "SELECT * FROM $table WHERE post_ID=%d AND is_active=1 AND confirmed_at IS NOT NULL";
 
 		/**
 		 * @var AnyCommentSubscriptions[]|null $subscribers
@@ -199,13 +204,26 @@ class AnyCommentSubscriptions extends AnyCommentActiveRecord {
 		}
 
 		/**
-		 * @var AnyCommentSubscriptions $subscriber
+		 * @var AnyCommentSubscriptions $subscription
 		 */
-		foreach ( $subscribers as $key => $subscriber ) {
-			AnyCommentEmailQueue::add_as_subscriber_notification( $subscriber, $comment );
+		foreach ( $subscribers as $key => $subscription ) {
+			AnyCommentEmailQueue::add_as_subscriber_notification( $subscription, $comment );
 		}
 
 		return true;
+	}
+
+	/**
+	 * Delete subscription by ID.
+	 *
+	 * @param int $id Id of the subscription to delete.
+	 *
+	 * @return false|int
+	 */
+	public function delete_by_id( $id ) {
+		global $wpdb;
+
+		return $wpdb->delete( static::get_table_name(), [ 'ID' => $id ] );
 	}
 
 	/**

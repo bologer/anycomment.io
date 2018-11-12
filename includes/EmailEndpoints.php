@@ -49,19 +49,19 @@ class EmailEndpoints {
 		$cancel_token       = get_query_var( self::CANCEL_QUERY_PARAM );
 
 		if ( ! empty( $confirmation_token ) || ! empty( $cancel_token ) ) {
-			$token_model = AnyCommentSubscriptions::find_by_token( $confirmation_token );
+			$is_cancel     = ! empty( $cancel_token );
+			$working_token = $is_cancel ? $cancel_token : $confirmation_token;
+
+			$token_model = AnyCommentSubscriptions::find_by_token( $working_token );
 			if ( $token_model === null ) {
 				wp_redirect( '/' );
 				exit;
 			}
 
-			$is_cancel     = ! empty( $cancel_token );
-			$working_token = $is_cancel ? $cancel_token : $confirmation_token;
-
 			// Make user active/inactive depending on the action
 			$action_performed = $is_cancel ?
-				AnyCommentSubscriptions::mark_as_active_by_token( $working_token ) :
-				AnyCommentSubscriptions::mark_as_inactive_by_token( $working_token );
+				AnyCommentSubscriptions::mark_as_inactive_by_token( $working_token ) :
+				AnyCommentSubscriptions::mark_as_active_by_token( $working_token );
 
 			if ( $action_performed ) {
 

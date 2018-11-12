@@ -268,7 +268,53 @@ AND `comments`.`comment_ID`=%d";
 		$email->subject    = $subject;
 		$email->post_ID    = $comment->comment_post_ID;
 		$email->comment_ID = $comment->comment_ID;
-		$email->content    = AnyCommentEmailQueue::generate_subscribe_email( $email );
+
+		$email_content = AnyCommentEmailQueue::generate_subscribe_email( $subscriber, $email );
+
+		if ( empty( $email_content ) ) {
+			return false;
+		}
+
+		$email->content = $email_content;
+
+		return $email->save();
+	}
+
+	/**
+	 * Method can be used to add email confirmation for new subscribers.
+	 *
+	 * @param AnyCommentSubscriptions $subscriber Subscriber email.
+	 *
+	 * @return AnyCommentEmailQueue|bool|int
+	 */
+	public static function add_as_subscriber_confirmation_notification( $subscriber ) {
+
+		$email = new self();
+
+		$post = get_post( $subscriber->post_ID );
+
+		if ( $post !== null ) {
+			$subject = sprintf( __( "Subscription Confirmation For %s", 'anycomment' ), $post->post_title );
+		} else {
+			$subject = sprintf( __( 'Subscription Confirmation For %s', 'anycomment' ), get_option( 'blogname' ) );
+		}
+
+		$email->email   = $subscriber->email;
+		$email->subject = $subject;
+		$email->post_ID = $subscriber->post_ID;
+
+		/**
+		 * todo: create migration to allow comment ID to be NULL
+		 */
+		$email->comment_ID = 0;
+
+		$email_content = AnyCommentEmailQueue::generate_subscribe_confirmation_email( $subscriber );
+
+		if ( empty( $email_content ) ) {
+			return false;
+		}
+
+		$email->content = $email_content;
 
 		return $email->save();
 	}
@@ -317,17 +363,16 @@ AND `comments`.`comment_ID`=%d";
 	/**
 	 * Generate subscribe confirmation email.
 	 *
-	 * @param int $post_id
-	 * @param string $token Toklen
+	 * @param AnyCommentSubscriptions $subscriber
 	 *
 	 * @return string
 	 */
-	public static function generate_subscribe_confirmation_email( $post_id, $token ) {
+	public static function generate_subscribe_confirmation_email( $subscriber ) {
 		$template       = '';
-		$post           = get_post( $post_id );
+		$post           = get_post( $subscriber->post_ID );
 		$cleanPermalink = get_permalink( $post );
-		$reply_url      = sprintf( '%s?confirm_email=%s#comments', $cleanPermalink, $token );
 
+		$token = $subscriber->token;
 
 		if ( $post !== null ) {
 			$post_title    = $post->post_title;
@@ -339,14 +384,14 @@ AND `comments`.`comment_ID`=%d";
 
 		$template .= "<br><br>" . __( 'Please follow link below to confirm this action or ignore this message if you think you received this by mistake.', 'anycomment' );
 
-		$confirmation_url = '';
+		$confirmation_url = add_query_arg( EmailEndpoints::CONFIRM_QUERY_PARAM, $token, get_option( 'siteurl' ) );
 
 		$confirmation_button = '<p><a href="' . $confirmation_url . '" style="font-size: 15px;text-decoration:none;font-weight: 400;text-align: center;color: #fff;padding: 0 50px;line-height: 48px;background-color: #53af4a;display: inline-block;vertical-align: middle;border: 0;outline: 0;cursor: pointer;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;-webkit-appearance: none;-moz-appearance: none;appearance: none;white-space: nowrap;border-radius: 24px;">' . __( 'Confirm', 'anycomment' ) . '</a></p>';
 
 		$template .= $confirmation_button;
 
 		$template .= __( 'Or use link below:', 'anycomment' );
-		$template .= $confirmation_button;
+		$template .= "\n" . $confirmation_url;
 
 		return $template;
 	}
@@ -383,7 +428,12 @@ AND `comments`.`comment_ID`=%d";
 		/**
 		 * Generate unsubscribe URL
 		 */
-		$new_token      = AnyCommentSubscriptions::refresh_token_by( [ 'id' => $subscription->ID ] );
+		$new_token = AnyCommentSubscriptions::refresh_token_by( [ 'ID' => $subscription->ID ] );
+
+		if ( empty( $new_token ) ) {
+			return null;
+		}
+
 		$unsubsribe_url = add_query_arg( EmailEndpoints::CANCEL_QUERY_PARAM, $new_token, $blog_url );
 
 		$blog_url_html = sprintf( '<a href="%s">%s</a>', $blog_url, $blog_name );

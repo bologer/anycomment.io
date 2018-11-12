@@ -84,6 +84,9 @@ class AnyCommentRestSubscriptions extends AnyCommentRestController {
 			return new WP_Error( 'rest_already_subscribed', __( 'This email is already subscribed for this post', 'anycomment' ), [ 'status' => 403 ] );
 		}
 
+
+		if($request['email'] === '')
+
 		return true;
 	}
 
@@ -102,24 +105,32 @@ class AnyCommentRestSubscriptions extends AnyCommentRestController {
 
 		$model->post_ID = $request['post'];
 
-		$user = get_user_by( 'email', $request['email'] );
+		$current_user = wp_get_current_user();
 
-		if ( false !== $user ) {
-			$model->user_ID      = $user->ID;
+		$send_confirmation_email = false;
+
+		if ( 0 !== (int) $current_user->ID ) {
+			$model->user_ID      = $current_user->ID;
+			$model->email        = $current_user->user_email;
 			$model->is_active    = true;
 			$model->confirmed_at = time();
 		} else {
 			$model->is_active = false;
+			$model->email     = $request['email'];
 			$model->set_token();
-
-			$email_to_send = AnyCommentEmailQueue::generate_subscribe_confirmation_email( $model->post_ID, $model->token );
+			$send_confirmation_email = true;
 		}
-
-		$model->email = $request['email'];
-
 
 		if ( false === $model->save() ) {
 			return new WP_Error( 'rest_subscription_failure', __( 'Error, failed to subscribe. Please try again later.', 'anycomemnt' ), [ 'status' => 403 ] );
+		}
+
+		if ( $send_confirmation_email ) {
+			$confirmation_sent = AnyCommentEmailQueue::add_as_subscriber_confirmation_notification( $model );
+
+			if ( ! $confirmation_sent ) {
+				return new WP_Error( 'rest_subscription_failure', __( 'Error, failed to subscribe. Please try again later.', 'anycomemnt' ), [ 'status' => 403 ] );
+			}
 		}
 
 		$response = $this->prepare_item_for_response( $model, $request );

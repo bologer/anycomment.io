@@ -12,10 +12,10 @@ if ( ! defined( 'ABSPATH' ) ) {
         <input type="hidden" name="page" value="anycomment-files">
 		<?php
 
-		$filesToDelete = isset( $_POST['files'] ) && ! empty( $_POST['files'] ) ? $_POST['files'] : null;
-		$action        = isset( $_POST['action'] ) && ! empty( $_POST['action'] ) ? $_POST['action'] : null;
-		if ( $action !== null && $filesToDelete !== null && $action === 'delete' ) {
-			if ( \AnyComment\Models\AnyCommentRating::delete( $filesToDelete ) ) {
+		$ratings_to_delete = isset( $_POST['ratings'] ) && ! empty( $_POST['ratings'] ) ? $_POST['ratings'] : null;
+		$action            = isset( $_POST['action'] ) && ! empty( $_POST['action'] ) ? $_POST['action'] : null;
+		if ( $action !== null && $ratings_to_delete !== null && $action === 'delete' ) {
+			if ( \AnyComment\Models\AnyCommentRating::deleted_all( 'ID', $ratings_to_delete ) ) {
 				$messages = '<div id="message" class="updated notice is-dismissible"><p>' . __( 'Rating deleted.', 'anycomment' ) . '</p></div>';
 			} else {
 				$messages = '<div id="message" class="error notice is-dismissible"><p>' . __( 'Failed to delete selected ratings.', 'anycomment' ) . '</p></div>';
