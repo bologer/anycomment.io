@@ -76,13 +76,7 @@ class AnyCommentEmailQueueCron {
 			// Hook specified sender name from settings
 			add_filter( 'wp_mail_from_name', [ $this, 'sender_name' ] );
 
-			/**
-			 * When required to notify new users about replies, them them email,
-			 * otherwise fake it as sent in order not to break the logic of the queue.
-			 */
-			$isSent = AnyCommentGenericSettings::is_notify_on_new_reply() ?
-				wp_mail( $email->email, $subject, $body, $headers ) :
-				true;
+			$isSent = wp_mail( $email->email, $subject, $body, $headers );
 
 			if ( $isSent ) {
 				AnyCommentEmailQueue::mark_as_sent( $email->ID );
