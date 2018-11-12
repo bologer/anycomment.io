@@ -210,9 +210,13 @@ class AnyCommentRender {
 					'reply'                          => __( 'Reply', 'anycomment' ),
 					'edit'                           => __( 'Edit', 'anycomment' ),
 					'delete'                         => __( 'Delete', 'anycomment' ),
-					'subscribed'                     => __( 'You were subscribed successfully', 'anycomment' ),
+					'subscribed'                     => is_user_logged_in() ?
+						__( 'You were subscribed successfully', 'anycomment' ) :
+						__( 'Check you email to confirm subscription', 'anycomment' ),
 					'subscribe'                      => __( 'Subscribe', 'anycomment' ),
-					'subscribe_pre_paragraph'        => __( 'You may subscribe to comments for this post by providing your email address:', 'anycomment' ),
+					'subscribe_pre_paragraph'        => is_user_logged_in() ?
+						__( 'You may subscribe to new comments by clicking "Subscribe" button below:' ) :
+						__( 'You may subscribe to new comments for this post by entering your email below:', 'anycomment' ),
 					'cancel'                         => __( 'Cancel', 'anycomment' ),
 					'quick_login'                    => __( 'Quick Login', 'anycomment' ),
 					'guest'                          => __( 'Guest', 'anycomment' ),
@@ -239,7 +243,7 @@ class AnyCommentRender {
 					'show_less'                      => __( 'Show less', 'anycomment' ),
 					'hide_this_message'              => __( 'Hide this message', 'anycomment' ),
 					'login_with'                     => __( 'Login with', 'anycomment' ),
-					'or_as_guest'                    => sprintf( __( 'or as %sguest%s', 'anycomment' ), '<span>', '</span>' ),
+					'or_as_guest'                    => __( 'or as guest:', 'anycomment' ),
 
 					/**
 					 * Lightbox

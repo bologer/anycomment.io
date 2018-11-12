@@ -41,12 +41,6 @@ class LoginSocialList extends AnyCommentComponent {
         return options.isFormTypeAll;
     };
 
-    componentDidMount() {
-        if (!this.hasAtLeastOneSocial()) {
-            this.props.handleGuestFields();
-        }
-    }
-
     render() {
         const settings = this.props.settings;
 
@@ -63,9 +57,7 @@ class LoginSocialList extends AnyCommentComponent {
                     <LoginSocial key={index} social={socials[item]}/>
                 ))}
                 {this.showOrAsGuest() ?
-                    <li className="anycomment-form__guest-socials-text anycomment-form__guest-socials-text-as-guest anycomment-link"
-                        onClick={this.props.handleGuestFields}
-                        dangerouslySetInnerHTML={{__html: settings.i18.or_as_guest}}></li> : ''}
+                    <li className="anycomment-form__guest-socials-text anycomment-form__guest-socials-text-as-guest">{settings.i18.or_as_guest}</li> : ''}
             </ul>
         );
     }

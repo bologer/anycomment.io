@@ -4,21 +4,6 @@ import LoginSocialList from './LoginSocialList'
 
 class SendCommentGuest extends AnyCommentComponent {
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            showGuestFields: false
-        };
-    }
-
-    /**
-     * Handle guest fields (toggle them).
-     */
-    handleGuestFields = () => {
-        this.setState({showGuestFields: !this.state.showGuestFields});
-    };
-
     /**
      * Check whether it is required to show social icons.
      *
@@ -40,14 +25,6 @@ class SendCommentGuest extends AnyCommentComponent {
 
         return options.isFormTypeGuests || options.isFormTypeAll;
     };
-
-    componentDidMount() {
-        const settings = this.getSettings();
-
-        if (settings.options.isFormTypeGuests) {
-            this.setState({showGuestFields: true});
-        }
-    }
 
     render() {
         const settings = this.getSettings();
@@ -91,7 +68,7 @@ class SendCommentGuest extends AnyCommentComponent {
             }
         });
 
-        const guestInputList = this.showGuestFields() && this.state.showGuestFields && elementInputs.length ?
+        const guestInputList = this.showGuestFields() && elementInputs.length ?
             <div
                 className={"anycomment anycomment-form__inputs anycomment-form__inputs-" + elementInputs.length}>
                 {elementInputs}
@@ -100,7 +77,7 @@ class SendCommentGuest extends AnyCommentComponent {
         return <React.Fragment>
             {this.showSocialIcons() ?
                 <div className="anycomment anycomment-form__guest-socials">
-                    <LoginSocialList handleGuestFields={this.handleGuestFields}/>
+                    <LoginSocialList/>
                 </div> : null}
 
             {guestInputList}

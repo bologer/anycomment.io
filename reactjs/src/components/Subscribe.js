@@ -42,7 +42,8 @@ class Subscribe extends AnyCommentComponent {
         e.preventDefault();
 
         const self = this;
-        const {email} = this.state;
+        const user = this.getCurrentUser();
+        const email = user !== null ? user.data.user_email : this.state.email;
         const {settings} = this.props;
 
         this.props.axios
@@ -84,7 +85,7 @@ class Subscribe extends AnyCommentComponent {
         const settings = this.getSettings();
         const {showForm} = this.state;
 
-        if (!settings.options.isNotifySubscribers || !showForm || this.getCurrentUser() === null || this.localGet(this.getStoreKey())) {
+        if (!settings.options.isNotifySubscribers || !showForm || this.localGet(this.getStoreKey())) {
             return false;
         }
 
@@ -104,13 +105,16 @@ class Subscribe extends AnyCommentComponent {
 
                 <p>{settings.i18.subscribe_pre_paragraph}</p>
                 <form onSubmit={this.handleSubmit}>
-                    <div className="anycomment anycomment-subscribe__email">
+                    {this.isGuest() ? <div className="anycomment anycomment-subscribe__email">
                         <div className="anycomment anycomment-subscribe__email--icon">
                             <Icon icon={faEnvelope}/>
                         </div>
-                        <input onChange={this.handleAuthorEmailChange} type="email" value={email}
+                        <input onChange={this.handleAuthorEmailChange}
+                               type="email"
+                               value={email}
+                               placeholder={settings.i18.email}
                                required={true}/>
-                    </div>
+                    </div> : ''}
                     <div className="anycomment anycomment-subscribe__submit">
                         <input type="submit"
                                className="anycomment-btn"
