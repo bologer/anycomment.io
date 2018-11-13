@@ -196,8 +196,6 @@ class AnyCommentProblemNotifier {
 		$possible_problems = [
 			'rest_enabled',
 			'rest_output_rsd',
-			'rest_output_link_wp_head',
-			'rest_output_link_header',
 			'rest_cookie_collect_status',
 			'rest_cookie_check_errors',
 			'rest_api_init',
@@ -214,12 +212,7 @@ class AnyCommentProblemNotifier {
 				$count ++;
 			}
 		}
-
-		// No matches, try to find generic REST, rEsT or rest in the file
-		if ( $count === 0 && preg_match( '/rest/i', $content ) ) {
-			$count ++;
-		}
-
+		
 		return $count > 0;
 	}
 }

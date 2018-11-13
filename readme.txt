@@ -178,6 +178,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Subscription form: Better visual design for subscription form, #294
 * Subscription form: guest users can now subscribe but need to confirm it by provided email, #294
 * Subscription form: users can unsubscribe anytime by following the link provided in the bottom of the email, #294
+* Removed some hooks which could cause problematic notification regarding hooks in functions.php
 
 **Fixes:**
 
