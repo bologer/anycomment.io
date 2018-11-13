@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.0.71 – 13.11.2018
+
+
+**Fixes:**
+
+* Fixed 500 error on latest version
+
+
 ## 0.0.70 – 13.11.2018
 
 **Enhancements:**
