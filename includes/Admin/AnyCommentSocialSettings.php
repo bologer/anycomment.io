@@ -648,6 +648,12 @@ class AnyCommentSocialSettings extends AnyCommentAdminOptions {
 				echo "<h2>{$section['title']}</h2>";
 			}
 
+			if ( ! isset( $wp_settings_fields ) || ! isset( $wp_settings_fields[ $page ] ) || ! isset( $wp_settings_fields[ $page ][ $section['id'] ] ) ) {
+				continue;
+			}
+
+			echo '<div id="tab-' . $section['id'] . '" class="anycomment-tabs__container__tab ' . ( $i === 0 ? 'current' : '' ) . '">';
+
 			if ( isset( $section['callback'] ) ) {
 				if ( is_callable( $section['callback'] ) ) {
 					echo call_user_func( $section['callback'], $section );
@@ -656,11 +662,6 @@ class AnyCommentSocialSettings extends AnyCommentAdminOptions {
 				}
 			}
 
-			if ( ! isset( $wp_settings_fields ) || ! isset( $wp_settings_fields[ $page ] ) || ! isset( $wp_settings_fields[ $page ][ $section['id'] ] ) ) {
-				continue;
-			}
-
-			echo '<div id="tab-' . $section['id'] . '" class="anycomment-tabs__container__tab ' . ( $i === 0 ? 'current' : '' ) . '">';
 			echo '<div class="grid-x anycomment-form-wrapper">';
 			$this->do_settings_fields( $page, $section['id'] );
 
