@@ -178,13 +178,14 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Subscription form: Better visual design for subscription form, #294
 * Subscription form: guest users can now subscribe but need to confirm it by provided email, #294
 * Subscription form: users can unsubscribe anytime by following the link provided in the bottom of the email, #294
-* Removed some hooks which could cause problematic notification regarding hooks in functions.php
 
 **Fixes:**
 
 * Fixed issue when on mobile devices attachments icon was too small to click on
 * Fixed issue when it was not possible to load or add comments for custom post types, #292
 * Fixed issue when email notifications were not send when reply option was disabled
+* Fixed issue when some hooks related to rest in functions.php were causing incorrect notification in console
+* Fixed issue when it was not possible to turn off some of the default options in admin
 
 = 0.0.69 – 06.11.2018 =
 

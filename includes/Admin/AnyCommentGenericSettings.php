@@ -237,15 +237,15 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 		self::OPTION_GUEST_FIELDS                           => '{name} {email} {website}',
 
 		// Editor
-		self::OPTION_EDITOR_TOOLBAR_TOGGLE                  => 'on',
-		self::OPTION_EDITOR_TOOLBAR_BOLD                    => 'on',
-		self::OPTION_EDITOR_TOOLBAR_ITALIC                  => 'on',
-		self::OPTION_EDITOR_TOOLBAR_UNDERLINE               => 'on',
-		self::OPTION_EDITOR_TOOLBAR_QUOTE                   => 'on',
-		self::OPTION_EDITOR_TOOLBAR_ORDERED                 => 'on',
-		self::OPTION_EDITOR_TOOLBAR_BULLET                  => 'on',
-		self::OPTION_EDITOR_TOOLBAR_LINK                    => 'on',
-		self::OPTION_EDITOR_TOOLBAR_CLEAN                   => 'on',
+		self::OPTION_EDITOR_TOOLBAR_TOGGLE    => 'on',
+		self::OPTION_EDITOR_TOOLBAR_BOLD      => 'on',
+		self::OPTION_EDITOR_TOOLBAR_ITALIC    => 'on',
+		self::OPTION_EDITOR_TOOLBAR_UNDERLINE => 'on',
+		self::OPTION_EDITOR_TOOLBAR_QUOTE     => 'on',
+		self::OPTION_EDITOR_TOOLBAR_ORDERED   => 'on',
+		self::OPTION_EDITOR_TOOLBAR_BULLET    => 'on',
+		self::OPTION_EDITOR_TOOLBAR_LINK      => 'on',
+		self::OPTION_EDITOR_TOOLBAR_CLEAN     => 'on',
 
 		// Custom design
 		self::OPTION_DESIGN_GLOBAL_PADDING                  => '0',

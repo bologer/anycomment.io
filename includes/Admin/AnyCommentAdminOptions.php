@@ -531,14 +531,10 @@ EOT;
 			$this->options = get_option( $this->option_name, null );
 		}
 
-		if ( ! empty( $this->default_options ) ) {
-			foreach ( $this->default_options as $key => $optionValue ) {
-				$setDefault = ! isset( $this->options[ $key ] ) && ! strpos( $key, 'toggle' ) ||
-				              isset( $this->options[ $key ] ) && $this->options[ $key ] != 0 && empty( $this->options[ $key ] );
-				if ( $setDefault ) {
-					$this->options[ $key ] = $optionValue;
-				}
-			}
+		// When options are not defined yet and there are some default ones,
+		// set them for user
+		if ( $this->options === null && ! empty( $this->default_options ) ) {
+			update_option( $this->option_name, $this->default_options );
 		}
 
 		return $this->options;
