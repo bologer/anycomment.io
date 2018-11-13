@@ -140,7 +140,7 @@ class AnyCommentCore {
 	 * @return string
 	 */
 	public function plugin_path() {
-		return untrailingslashit( plugin_dir_path( __FILE__ ) );
+		return untrailingslashit( plugin_dir_path( __FILE__ ) . '../' );
 	}
 
 	/**
