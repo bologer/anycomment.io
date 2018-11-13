@@ -154,7 +154,9 @@ class AnyCommentCore {
 			include_once( ANYCOMMENT_ABSPATH . 'includes/hybridauth/src/autoload.php' );
 		}
 
-		AnyCommentLoader::load();
+		add_action( 'init', function () {
+			AnyCommentLoader::load();
+		} );
 
 		$cacheDriver = new FileSystem( [
 			'path' => ANYCOMMENT_ABSPATH . 'cache/'

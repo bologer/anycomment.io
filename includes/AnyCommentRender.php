@@ -40,7 +40,7 @@ class AnyCommentRender {
 	 */
 	public function __construct() {
 		if ( AnyCommentGenericSettings::is_enabled() ) {
-			add_filter( 'comments_template', [ $this, 'override_comment' ] );
+			add_filter( 'comments_template', [ $this, 'override_comment' ], 999 );
 
 			add_shortcode( 'anycomment', [ $this, 'override_comment' ] );
 

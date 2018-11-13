@@ -31,7 +31,8 @@ class AnyCommentLoader {
 		// Hooks
 		'AnyComment\Hooks\AnyCommentCommentHooks',
 		'AnyComment\Hooks\AnyCommentNativeLoginForm',
-		'AnyComment\Hooks\AnyCommentWooCommerce',
+
+		'AnyComment\Integrations\AnyCommentWooCommerce',
 
 		// Crontabs
 		'AnyComment\cron\AnyCommentEmailQueueCron',

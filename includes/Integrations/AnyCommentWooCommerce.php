@@ -20,7 +20,7 @@ class AnyCommentWooCommerce {
 	 * Init hooks.
 	 */
 	public function init() {
-		add_filter( 'woocommerce_product_tabs', [ $this, 'woo_new_product_tab' ], 99 );
+		add_filter( 'woocommerce_product_tabs', [ $this, 'woo_new_product_tab' ], 999 );
 	}
 
 	/**

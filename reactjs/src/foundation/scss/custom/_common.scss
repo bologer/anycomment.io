@@ -79,6 +79,7 @@
   // Dropdowns
   .dropdown {
     display: inline-block;
+    position: relative;
 
     &__trigger {
       cursor: pointer;
