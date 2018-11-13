@@ -42,9 +42,14 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	const OPTION_NOTIFY_REPLY_EMAIL_TEMPLATE = 'option_notify_reply_email_template';
 
 	/**
-	 * Reply email template.
+	 * Subscribers email template.
 	 */
 	const OPTION_NOTIFY_SUBSCRIBERS_EMAIL_TEMPLATE = 'option_notify_subscribe_email_template';
+
+	/**
+	 * Subscribers confirmation email template.
+	 */
+	const OPTION_NOTIFY_SUBSCRIBERS_CONFIRMATION_EMAIL_TEMPLATE = 'option_notify_subscribe_confirmation_email_template';
 
 	/**
 	 * Admin email template.
@@ -61,7 +66,6 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * Default sort by.
 	 */
 	const OPTION_DEFAULT_SORT_BY = 'option_default_sort_by';
-
 
 	/**
 	 * Order ascending order.
@@ -208,66 +212,67 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	/**
 	 * @inheritdoc
 	 */
-	protected $page_slug = 'anycomment-settings';
-
-	/**
-	 * @inheritdoc
-	 */
 	protected $default_options = [
 		self::OPTION_COPYRIGHT_TOGGLE        => 'on',
 		self::OPTION_COMMENT_UPDATE_TIME     => 5,
 		self::OPTION_COUNT_PER_PAGE          => 20,
 		self::OPTION_INTERVAL_COMMENTS_CHECK => 10,
 
-		self::OPTION_DEFAULT_SORT_BY                        => self::SORT_DESC,
+		self::OPTION_DEFAULT_SORT_BY                                => self::SORT_DESC,
 
 		// Files
-		self::OPTION_FILES_LIMIT                            => 5,
-		self::OPTION_FILES_LIMIT_PERIOD                     => 900,
-		self::OPTION_FILES_MAX_SIZE                         => 1.5,
-		self::OPTION_FILES_MIME_TYPES                       => 'image/*, .pdf',
+		self::OPTION_FILES_LIMIT                                    => 5,
+		self::OPTION_FILES_LIMIT_PERIOD                             => 900,
+		self::OPTION_FILES_MAX_SIZE                                 => 1.5,
+		self::OPTION_FILES_MIME_TYPES                               => 'image/*, .pdf',
 
 		// Notifications
-		self::OPTION_NOTIFY_SUBSCRIBERS_EMAIL_TEMPLATE      => "New comment in {blogUrlHtml}.\nFrom post {postUrlHtml}.\n\n{commentFormatted}\n{replyButton}\n\nYou were subscribed to this post.\n\nYou may unbsubscribe by following this link:\n{unsubscribeUrl}",
-		self::OPTION_NOTIFY_REPLY_EMAIL_TEMPLATE            => "New reply for you in {blogUrlHtml}.\nFrom post {postUrlHtml}.\n\n{commentFormatted}\n{replyButton}",
-		self::OPTION_NOTIFY_ADMIN_EMAIL_TEMPLATE            => "New comment posted in {blogUrlHtml}.\nFor post {postUrlHtml}.\n\n{commentFormatted}\n{replyButton}",
+		self::OPTION_NOTIFY_REPLY_EMAIL_TEMPLATE                    => "New reply for you in {blogUrlHtml}.\nFrom post {postUrlHtml}.\n\n{commentFormatted}\n{replyButton}",
+		self::OPTION_NOTIFY_ADMIN_EMAIL_TEMPLATE                    => "New comment posted in {blogUrlHtml}.\nFor post {postUrlHtml}.\n\n{commentFormatted}\n{replyButton}",
+		self::OPTION_NOTIFY_SUBSCRIBERS_EMAIL_TEMPLATE              => "New comment in {blogUrlHtml}.\nFrom post {postUrlHtml}.\n\n{commentFormatted}\n{replyButton}\n\nYou were subscribed to this post.\n\nYou may unbsubscribe by following this link:\n{unsubscribeUrl}",
+		self::OPTION_NOTIFY_SUBSCRIBERS_CONFIRMATION_EMAIL_TEMPLATE => "You were subscribed to {postUrlHtml} on {postTitle}.\n\nPlease follow link below to confirm this action or ignore this message if you think you received this by mistake.\n\n{confirmatiomButton}\n\nOr use link below:\n{confirmationUrl}",
 
 		// Other design
-		self::OPTION_FORM_TYPE                              => self::FORM_OPTION_SOCIALS_ONLY,
-		self::OPTION_GUEST_FIELDS                           => '{name} {email} {website}',
+		self::OPTION_FORM_TYPE                                      => self::FORM_OPTION_SOCIALS_ONLY,
+		self::OPTION_GUEST_FIELDS                                   => '{name} {email} {website}',
 
 		// Editor
-		self::OPTION_EDITOR_TOOLBAR_TOGGLE    => 'on',
-		self::OPTION_EDITOR_TOOLBAR_BOLD      => 'on',
-		self::OPTION_EDITOR_TOOLBAR_ITALIC    => 'on',
-		self::OPTION_EDITOR_TOOLBAR_UNDERLINE => 'on',
-		self::OPTION_EDITOR_TOOLBAR_QUOTE     => 'on',
-		self::OPTION_EDITOR_TOOLBAR_ORDERED   => 'on',
-		self::OPTION_EDITOR_TOOLBAR_BULLET    => 'on',
-		self::OPTION_EDITOR_TOOLBAR_LINK      => 'on',
-		self::OPTION_EDITOR_TOOLBAR_CLEAN     => 'on',
+		self::OPTION_EDITOR_TOOLBAR_TOGGLE                          => 'on',
+		self::OPTION_EDITOR_TOOLBAR_BOLD                            => 'on',
+		self::OPTION_EDITOR_TOOLBAR_ITALIC                          => 'on',
+		self::OPTION_EDITOR_TOOLBAR_UNDERLINE                       => 'on',
+		self::OPTION_EDITOR_TOOLBAR_QUOTE                           => 'on',
+		self::OPTION_EDITOR_TOOLBAR_ORDERED                         => 'on',
+		self::OPTION_EDITOR_TOOLBAR_BULLET                          => 'on',
+		self::OPTION_EDITOR_TOOLBAR_LINK                            => 'on',
+		self::OPTION_EDITOR_TOOLBAR_CLEAN                           => 'on',
 
 		// Custom design
-		self::OPTION_DESIGN_GLOBAL_PADDING                  => '0',
-		self::OPTION_DESIGN_GLOBAL_MARGIN                   => '20px 0',
-		self::OPTION_DESIGN_GLOBAL_BACKGROUND_BORDER_RADIUS => '0',
-		self::OPTION_DESIGN_FONT_SIZE                       => '14px',
-		self::OPTION_DESIGN_FONT_FAMILY                     => "'Noto-Sans', sans-serif",
-		self::OPTION_DESIGN_SEMI_HIDDEN_COLOR               => '#B6C1C6',
-		self::OPTION_DESIGN_LINK_COLOR                      => '#1DA1F2',
-		self::OPTION_DESIGN_TEXT_COLOR                      => '#2A2E2E',
-		self::OPTION_DESIGN_FORM_FIELD_BACKGROUND_COLOR     => '#ffffff',
-		self::OPTION_DESIGN_ATTACHMENT_COLOR                => '#eeeeee',
-		self::OPTION_DESIGN_ATTACHMENT_BACKGROUND_COLOR     => '#eeeeee',
-		self::OPTION_DESIGN_AVATAR_RADIUS                   => '50% 50% 50% 0',
-		self::OPTION_DESIGN_PARENT_AVATAR_SIZE              => '48px',
-		self::OPTION_DESIGN_CHILD_AVATAR_SIZE               => '30px',
-		self::OPTION_DESIGN_BUTTON_COLOR                    => '#ffffff',
-		self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR         => '#1DA1F2',
-		self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR_ACTIVE  => '#4f9f49',
-		self::OPTION_DESIGN_BUTTON_RADIUS                   => '20px',
-		self::OPTION_DESIGN_GLOBAL_RADIUS                   => '10px',
+		self::OPTION_DESIGN_GLOBAL_PADDING                          => '0',
+		self::OPTION_DESIGN_GLOBAL_MARGIN                           => '20px 0',
+		self::OPTION_DESIGN_GLOBAL_BACKGROUND_BORDER_RADIUS         => '0',
+		self::OPTION_DESIGN_FONT_SIZE                               => '14px',
+		self::OPTION_DESIGN_FONT_FAMILY                             => "'Noto-Sans', sans-serif",
+		self::OPTION_DESIGN_SEMI_HIDDEN_COLOR                       => '#B6C1C6',
+		self::OPTION_DESIGN_LINK_COLOR                              => '#1DA1F2',
+		self::OPTION_DESIGN_TEXT_COLOR                              => '#2A2E2E',
+		self::OPTION_DESIGN_FORM_FIELD_BACKGROUND_COLOR             => '#ffffff',
+		self::OPTION_DESIGN_ATTACHMENT_COLOR                        => '#eeeeee',
+		self::OPTION_DESIGN_ATTACHMENT_BACKGROUND_COLOR             => '#eeeeee',
+		self::OPTION_DESIGN_AVATAR_RADIUS                           => '50% 50% 50% 0',
+		self::OPTION_DESIGN_PARENT_AVATAR_SIZE                      => '48px',
+		self::OPTION_DESIGN_CHILD_AVATAR_SIZE                       => '30px',
+		self::OPTION_DESIGN_BUTTON_COLOR                            => '#ffffff',
+		self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR                 => '#1DA1F2',
+		self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR_ACTIVE          => '#4f9f49',
+		self::OPTION_DESIGN_BUTTON_RADIUS                           => '20px',
+		self::OPTION_DESIGN_GLOBAL_RADIUS                           => '10px',
 	];
+
+	/**
+	 * @inheritdoc
+	 */
+	protected $page_slug = 'anycomment-settings';
 
 
 	/**
@@ -744,6 +749,8 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 					'type'        => 'number',
 					'description' => esc_html( __( 'Interval (in seconds) to check for new comments. Minimum 5 and maximum is 100 seconds.', "anycomment" ) )
 				],
+
+				// Admin email notifications
 				[
 					'id'          => self::OPTION_NOTIFY_ADMINISTRATOR,
 					'title'       => __( 'Notify Administrator', "anycomment" ),
@@ -751,12 +758,85 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 					'description' => esc_html( __( 'Notify administrator via email about new comment.', "anycomment" ) )
 				],
 				[
+					'id'          => self::OPTION_NOTIFY_ADMIN_EMAIL_TEMPLATE,
+					'title'       => __( 'Admin Email Template', "anycomment" ),
+					'type'        => 'textarea',
+					'description' => esc_html( __( 'Email template sent to admin about new comment.', "anycomment" ) ),
+					'after'       => function () {
+						$supportedList = [
+							'{blogName}'           => __( 'Blog name as text', 'anycomment' ),
+							'{blogUrl}'            => __( 'Blog link as text', 'anycomment' ),
+							'{blogUrlHtml}'        => __( 'Blog name in HTML link', 'anycomment' ),
+							'{postTitle}'          => __( 'Post title as text', 'anycomment' ),
+							'{postUrl}'            => __( 'Post URL as text', 'anycomment' ),
+							'{postUrlHtml}'        => __( 'Post title in HTML link', 'anycomment' ),
+							'{commentText}'        => __( 'Comment text', 'anycomment' ),
+							'{commentFormatted}'   => __( 'Comment text nicely formatted', 'anycomment' ),
+							'{replyUrl}'           => __( 'Reply link as text', 'anycomment' ),
+							'{replyButton}'        => __( 'Reply link as button', 'anycomment' ),
+							'{adminModerationUrl}' => __( 'Direct link to admin to see all comments waiting to reviewed', 'anycomment' ),
+							'{adminEditUrl}'       => __( 'Direct link to admin to edit comment', 'anycomment' ),
+						];
+
+						$id = self::OPTION_NOTIFY_ADMIN_EMAIL_TEMPLATE . time();
+
+						$html = '<div><br><span class="button button-small" id="' . $id . '">' . __( 'More info', 'anycomment' ) . '</span><ul style="display: none;">';
+
+						foreach ( $supportedList as $code => $description ) {
+							$html .= sprintf( "<li>%s - %s</li>", $code, $description );
+						}
+
+						$html .= '</ul></div>';
+
+						$html .= '<script>jQuery("#' . $id . '").on("click", function() {jQuery(this).next("ul").toggle();});</script>';
+
+						return $html;
+					}
+				],
+
+				// Reply email notifications
+				[
 					'id'          => self::OPTION_NOTIFY_ON_NEW_REPLY,
 					'title'       => __( 'Notify on new replies', "anycomment" ),
 					'type'        => 'checkbox',
 					'description' => esc_html( __( 'Notify users by email (if specified) about new replies. Make sure you have proper SMTP configurations in order to send emails.', "anycomment" ) ),
 				],
+				[
+					'id'          => self::OPTION_NOTIFY_REPLY_EMAIL_TEMPLATE,
+					'title'       => __( 'Reply Email Template', "anycomment" ),
+					'type'        => 'textarea',
+					'description' => esc_html( __( 'Email template on new comment reply.', "anycomment" ) ),
+					'after'       => function () {
+						$supportedList = [
+							'{blogName}'         => __( 'Blog name as text', 'anycomment' ),
+							'{blogUrl}'          => __( 'Blog link as text', 'anycomment' ),
+							'{blogUrlHtml}'      => __( 'Blog name in HTML link', 'anycomment' ),
+							'{postTitle}'        => __( 'Post title as text', 'anycomment' ),
+							'{postUrl}'          => __( 'Post URL as text', 'anycomment' ),
+							'{postUrlHtml}'      => __( 'Post title in HTML link', 'anycomment' ),
+							'{commentText}'      => __( 'Comment text', 'anycomment' ),
+							'{commentFormatted}' => __( 'Comment text nicely formatted', 'anycomment' ),
+							'{replyUrl}'         => __( 'Reply link as text', 'anycomment' ),
+							'{replyButton}'      => __( 'Reply link as button', 'anycomment' ),
+						];
 
+						$id = self::OPTION_NOTIFY_REPLY_EMAIL_TEMPLATE . time();
+
+						$html = '<div><br><span class="button button-small" id="' . $id . '">' . __( 'More info', 'anycomment' ) . '</span><ul style="display: none;">';
+
+						foreach ( $supportedList as $code => $description ) {
+							$html .= sprintf( "<li>%s - %s</li>", $code, $description );
+						}
+
+						$html .= '</ul></div>';
+
+						$html .= '<script>jQuery("#' . $id . '").on("click", function() {jQuery(this).next("ul").toggle();});</script>';
+
+						return $html;
+					}
+				],
+
+				// Subscription email notifications
 				[
 					'id'          => self::OPTION_NOTIFY_SUBSCRIBERS,
 					'title'       => __( 'Notify Post Subscribers', "anycomment" ),
@@ -786,7 +866,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 
 						$id = self::OPTION_NOTIFY_SUBSCRIBERS_EMAIL_TEMPLATE . time();
 
-						$html = '<div><span class="button button-small" id="' . $id . '">' . __( 'More info', 'anycomment' ) . '</span><ul style="display: none;">';
+						$html = '<div><br><span class="button button-small" id="' . $id . '">' . __( 'More info', 'anycomment' ) . '</span><ul style="display: none;">';
 
 						foreach ( $supportedList as $code => $description ) {
 							$html .= sprintf( "<li>%s - %s</li>", $code, $description );
@@ -801,45 +881,10 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 				],
 
 				[
-					'id'          => self::OPTION_NOTIFY_REPLY_EMAIL_TEMPLATE,
-					'title'       => __( 'Reply Email Template', "anycomment" ),
+					'id'          => self::OPTION_NOTIFY_SUBSCRIBERS_CONFIRMATION_EMAIL_TEMPLATE,
+					'title'       => __( 'Subscription Confirmation Email Template', "anycomment" ),
 					'type'        => 'textarea',
-					'description' => esc_html( __( 'Email template on new comment reply.', "anycomment" ) ),
-					'after'       => function () {
-						$supportedList = [
-							'{blogName}'         => __( 'Blog name as text', 'anycomment' ),
-							'{blogUrl}'          => __( 'Blog link as text', 'anycomment' ),
-							'{blogUrlHtml}'      => __( 'Blog name in HTML link', 'anycomment' ),
-							'{postTitle}'        => __( 'Post title as text', 'anycomment' ),
-							'{postUrl}'          => __( 'Post URL as text', 'anycomment' ),
-							'{postUrlHtml}'      => __( 'Post title in HTML link', 'anycomment' ),
-							'{commentText}'      => __( 'Comment text', 'anycomment' ),
-							'{commentFormatted}' => __( 'Comment text nicely formatted', 'anycomment' ),
-							'{replyUrl}'         => __( 'Reply link as text', 'anycomment' ),
-							'{replyButton}'      => __( 'Reply link as button', 'anycomment' ),
-						];
-
-						$id = self::OPTION_NOTIFY_REPLY_EMAIL_TEMPLATE . time();
-
-						$html = '<div><span class="button button-small" id="' . $id . '">' . __( 'More info', 'anycomment' ) . '</span><ul style="display: none;">';
-
-						foreach ( $supportedList as $code => $description ) {
-							$html .= sprintf( "<li>%s - %s</li>", $code, $description );
-						}
-
-						$html .= '</ul></div>';
-
-						$html .= '<script>jQuery("#' . $id . '").on("click", function() {jQuery(this).next("ul").toggle();});</script>';
-
-						return $html;
-					}
-				],
-
-				[
-					'id'          => self::OPTION_NOTIFY_ADMIN_EMAIL_TEMPLATE,
-					'title'       => __( 'Admin Email Template', "anycomment" ),
-					'type'        => 'textarea',
-					'description' => esc_html( __( 'Email template sent to admin about new comment.', "anycomment" ) ),
+					'description' => esc_html( __( 'Email template for confirming subscription.', "anycomment" ) ),
 					'after'       => function () {
 						$supportedList = [
 							'{blogName}'           => __( 'Blog name as text', 'anycomment' ),
@@ -848,15 +893,11 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 							'{postTitle}'          => __( 'Post title as text', 'anycomment' ),
 							'{postUrl}'            => __( 'Post URL as text', 'anycomment' ),
 							'{postUrlHtml}'        => __( 'Post title in HTML link', 'anycomment' ),
-							'{commentText}'        => __( 'Comment text', 'anycomment' ),
-							'{commentFormatted}'   => __( 'Comment text nicely formatted', 'anycomment' ),
-							'{replyUrl}'           => __( 'Reply link as text', 'anycomment' ),
-							'{replyButton}'        => __( 'Reply link as button', 'anycomment' ),
-							'{adminModerationUrl}' => __( 'Direct link to admin to see all comments waiting to reviewed', 'anycomment' ),
-							'{adminEditUrl}'       => __( 'Direct link to admin to edit comment', 'anycomment' ),
+							'{confirmationUrl}'    => __( 'Confirmation link as text', 'anycomment' ),
+							'{confirmationButton}' => __( 'Confirmation link as button', 'anycomment' ),
 						];
 
-						$id = self::OPTION_NOTIFY_ADMIN_EMAIL_TEMPLATE . time();
+						$id = self::OPTION_NOTIFY_SUBSCRIBERS_CONFIRMATION_EMAIL_TEMPLATE . time();
 
 						$html = '<div><br><span class="button button-small" id="' . $id . '">' . __( 'More info', 'anycomment' ) . '</span><ul style="display: none;">';
 
@@ -896,7 +937,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 					'id'          => self::OPTION_FILES_MIME_TYPES,
 					'title'       => __( 'File MIME Types', "anycomment" ),
 					'type'        => 'text',
-					'description' => esc_html( __( 'Comman-separated list of allowed MIME types (e.g. .png, .jpg, etc). Alternatively, you may write "image/*" for all image types or "audio/*" for audios.', "anycomment" ) )
+					'description' => esc_html( __( 'Comma-separated list of allowed MIME types (e.g. .png, .jpg, etc). Alternatively, you may write "image/*" for all image types or "audio/*" for audios.', "anycomment" ) )
 				],
 				[
 					'id'          => self::OPTION_FILES_LIMIT,
@@ -1302,6 +1343,15 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 */
 	public static function get_notify_email_subscribers_template() {
 		return static::instance()->get_option( self::OPTION_NOTIFY_SUBSCRIBERS_EMAIL_TEMPLATE );
+	}
+
+	/**
+	 * Get subscribers confirmation email template format.
+	 *
+	 * @return string|null
+	 */
+	public static function get_notify_email_subscribers_confirmation_template() {
+		return static::instance()->get_option( self::OPTION_NOTIFY_SUBSCRIBERS_CONFIRMATION_EMAIL_TEMPLATE );
 	}
 
 	/**

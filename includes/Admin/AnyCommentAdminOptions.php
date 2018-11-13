@@ -519,6 +519,10 @@ EOT;
 
 		$optionValue = isset( $options[ $name ] ) ? trim( $options[ $name ] ) : null;
 
+		if ( empty( $optionValue ) && isset( $this->default_options[ $name ] ) ) {
+			return $this->default_options[ $name ];
+		}
+
 		return ! empty( $optionValue ) ? $optionValue : null;
 	}
 

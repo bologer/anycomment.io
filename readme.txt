@@ -179,6 +179,8 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Subscription form: Better visual design for subscription form, #294
 * Subscription form: guest users can now subscribe but need to confirm it by provided email, #294
 * Subscription form: users can unsubscribe anytime by following the link provided in the bottom of the email, #294
+* Subscription form: added email template for confirmation email, #294
+* Plugin is now following PSR-4 and most of the plugin comply with WordPress Coding Standards
 
 **Fixes:**
 

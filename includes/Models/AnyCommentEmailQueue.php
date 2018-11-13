@@ -362,38 +362,70 @@ AND `comments`.`comment_ID`=%d";
 
 	/**
 	 * Generate subscribe confirmation email.
+	 * Subs to replace:
+	 * - '{blogName}',
+	 * - '{blogUrl}',
+	 * - '{blogUrlHtml}',
+	 * - '{postTitle}',
+	 * - '{postUrl}',
+	 * - '{postUrlHtml}'
+	 * - '{confirmationButton}'
+	 * - '{confirmationUrl}'
 	 *
 	 * @param AnyCommentSubscriptions $subscriber
 	 *
 	 * @return string
 	 */
 	public static function generate_subscribe_confirmation_email( $subscriber ) {
-		$template       = '';
+		$token = $subscriber->token;
+
 		$post           = get_post( $subscriber->post_ID );
 		$cleanPermalink = get_permalink( $post );
 
-		$token = $subscriber->token;
+		$blog_name = get_option( 'blogname' );
+		$blog_url  = get_option( 'siteurl' );
+
+		$blog_url_html = sprintf( '<a href="%s">%s</a>', $blog_url, $blog_name );
+
+		$post_title    = '';
+		$post_url      = '';
+		$post_url_html = '';
 
 		if ( $post !== null ) {
 			$post_title    = $post->post_title;
 			$post_url      = $cleanPermalink;
 			$post_url_html = sprintf( '<a href="%s">%s</a>', $post_url, $post_title );
-
-			$template .= sprintf( __( 'You were subscribed to %s on %s.', 'anycomment' ), $post_url_html, get_option( 'blogname' ) );
 		}
-
-		$template .= "<br><br>" . __( 'Please follow link below to confirm this action or ignore this message if you think you received this by mistake.', 'anycomment' );
 
 		$confirmation_url = add_query_arg( EmailEndpoints::CONFIRM_QUERY_PARAM, $token, get_option( 'siteurl' ) );
 
 		$confirmation_button = '<p><a href="' . $confirmation_url . '" style="font-size: 15px;text-decoration:none;font-weight: 400;text-align: center;color: #fff;padding: 0 50px;line-height: 48px;background-color: #53af4a;display: inline-block;vertical-align: middle;border: 0;outline: 0;cursor: pointer;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;-webkit-appearance: none;-moz-appearance: none;appearance: none;white-space: nowrap;border-radius: 24px;">' . __( 'Confirm', 'anycomment' ) . '</a></p>';
 
-		$template .= $confirmation_button;
+		$search = [
+			'{blogName}',
+			'{blogUrl}',
+			'{blogUrlHtml}',
+			'{postTitle}',
+			'{postUrl}',
+			'{postUrlHtml}',
+			'{confirmationUrl}',
+			'{confirmationButton}',
+		];
 
-		$template .= __( 'Or use link below:', 'anycomment' );
-		$template .= "\n" . $confirmation_url;
+		$replacement = [
+			$blog_name,
+			$blog_url,
+			$blog_url_html,
+			$post_title,
+			$post_url,
+			$post_url_html,
+			$confirmation_url,
+			$confirmation_button,
+		];
 
-		return $template;
+		$template = AnyCommentGenericSettings::get_notify_email_subscribers_confirmation_template();
+
+		return static::prepare_email_template( $template, $search, $replacement );
 	}
 
 	/**

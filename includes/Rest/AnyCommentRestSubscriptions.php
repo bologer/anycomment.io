@@ -58,15 +58,18 @@ class AnyCommentRestSubscriptions extends AnyCommentRestController {
 	 */
 	public function create_item_permissions_check( $request ) {
 
-		if ( empty( $request['email'] ) ) {
+		$email = trim( $request['email'] );
+		$post  = trim( $request['post'] );
+
+		if ( empty( $email ) ) {
 			return new WP_Error( 'rest_comment_like_invalid_post_id', __( 'Sorry, email is required.', 'anycomment' ), array( 'status' => 403 ) );
 		}
 
-		if ( empty( $request['post'] ) ) {
+		if ( empty( $post ) ) {
 			return new WP_Error( 'rest_comment_like_invalid_post_id', __( 'Sorry, post is required.', 'anycomment' ), array( 'status' => 403 ) );
 		}
 
-		$post = get_post( (int) $request['post'] );
+		$post = get_post( (int) $post );
 
 		if ( ! $post ) {
 			return new WP_Error( 'rest_comment_like_invalid_post_id', __( 'Sorry, post does not exist.', 'anycomment' ), array( 'status' => 403 ) );
@@ -80,12 +83,14 @@ class AnyCommentRestSubscriptions extends AnyCommentRestController {
 			return new WP_Error( 'rest_comment_like_trash_post', __( 'Sorry, you are not allowed to create a comment on this post.', 'anycomment' ), array( 'status' => 403 ) );
 		}
 
-		if ( AnyCommentSubscriptions::is_subscribed_by( $request['email'], $request['post'] ) ) {
-			return new WP_Error( 'rest_already_subscribed', __( 'This email is already subscribed for this post', 'anycomment' ), [ 'status' => 403 ] );
+		if ( $email === get_option( 'admin_email' ) ) {
+			return new WP_Error( 'rest_email_not_allowed', __( 'Sorry, this email is unavailable for subscription.' ), [ 'status' => 403 ] );
 		}
 
+		if ( AnyCommentSubscriptions::is_subscribed_by( $email, $post ) ) {
+			return new WP_Error( 'rest_already_subscribed', __( 'This email is already subscribed for this post.', 'anycomment' ), [ 'status' => 403 ] );
+		}
 
-		if($request['email'] === '')
 
 		return true;
 	}
