@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.0.70 – 12.11.2018
+## 0.0.70 – 13.11.2018
 
 **Enhancements:**
 
@@ -23,6 +23,7 @@
 * Fixed issue when email notifications were not send when reply option was disabled
 * Fixed issue when some hooks related to rest in functions.php were causing incorrect notification in console
 * Fixed issue when it was not possible to turn off some of the default options in admin
+* Fixed a few typos in translations
 
 ## 0.0.69 – 06.11.2018
 

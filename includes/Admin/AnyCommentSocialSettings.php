@@ -359,8 +359,11 @@ class AnyCommentSocialSettings extends AnyCommentAdminOptions {
 		// Instagram
 		$this->render_fields(
 			[
-				'id'   => 'section_instagram',
-				'name' => __( 'Instagram', "anycomment" ),
+				'id'       => 'section_instagram',
+				'name'     => __( 'Instagram', "anycomment" ),
+				'callback' => function () {
+					return '<div class="anycomment-notice anycomment-error">' . __( 'It is very hard to get approve by Instagram. Read guide below to know more about why it is so.', 'anycomment' ) . '</div>';
+				}
 			],
 			[
 				[
@@ -645,8 +648,12 @@ class AnyCommentSocialSettings extends AnyCommentAdminOptions {
 				echo "<h2>{$section['title']}</h2>";
 			}
 
-			if ( $includeHeader && $section['callback'] ) {
-				call_user_func( $section['callback'], $section );
+			if ( isset( $section['callback'] ) ) {
+				if ( is_callable( $section['callback'] ) ) {
+					echo call_user_func( $section['callback'], $section );
+				} else {
+					echo $section['callback'];
+				}
 			}
 
 			if ( ! isset( $wp_settings_fields ) || ! isset( $wp_settings_fields[ $page ] ) || ! isset( $wp_settings_fields[ $page ][ $section['id'] ] ) ) {
