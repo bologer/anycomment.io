@@ -2,6 +2,12 @@
 
 namespace AnyComment;
 
+/**
+ * Class AnyCommentLoader is used as main plugin loader.
+ *
+ * @author Alexander Teshabaev <sasha.tesh@gmail.com>
+ * @package AnyComment
+ */
 class AnyCommentLoader {
 	/**
 	 * @var array List of classes to invoke immediately.

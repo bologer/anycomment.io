@@ -177,6 +177,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Fixed issue when alert error message about Instagram was showing on every social tab
 * Fixed issue with dropdown when items were aligned to the opposite side of it, #307
 * Fixed WooCommerce compatibility (#302) + added compatibility when WooCommerce reviews are not used within tabs (#308)
+* Fixed issue when copyright was not possible to uncheck, #301
 
 
 
