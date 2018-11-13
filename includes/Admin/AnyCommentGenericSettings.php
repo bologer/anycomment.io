@@ -6,6 +6,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+use AnyComment\Helpers\AnyCommentInputHelper;
+
 /**
  * AC_AdminSettingPage helps to process generic plugin settings.
  */

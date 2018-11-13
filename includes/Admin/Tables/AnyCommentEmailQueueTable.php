@@ -131,8 +131,9 @@ class AnyCommentEmailQueueTable extends WP_List_Table {
 					return '';
 				}
 
-
 				$user = get_user_by( 'email', $email );
+
+				$to_display = $user instanceof \WP_User ? $user->user_login : $email;
 
 				$super_admin = '';
 				$user_html   = get_avatar( $user->ID, 25 );
@@ -141,10 +142,10 @@ class AnyCommentEmailQueueTable extends WP_List_Table {
 				$edit_link = esc_url( add_query_arg( 'wp_http_referer', urlencode( wp_unslash( $_SERVER['REQUEST_URI'] ) ), get_edit_user_link( $user->ID ) ) );
 
 				if ( current_user_can( 'edit_user', $user->ID ) ) {
-					$user_html       .= " <strong><a href=\"{$edit_link}\">{$user->user_login}</a>{$super_admin}</strong><br />";
+					$user_html       .= " <strong><a href=\"{$edit_link}\">{$to_display}</a>{$super_admin}</strong><br />";
 					$actions['edit'] = '<a href="' . $edit_link . '">' . __( 'Edit' ) . '</a>';
 				} else {
-					$user_html .= " <strong>{$user->user_login}{$super_admin}</strong><br />";
+					$user_html .= " <strong>{$to_display}{$super_admin}</strong><br />";
 				}
 
 				return $user_html;
