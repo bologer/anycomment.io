@@ -6,17 +6,13 @@ if ( ! class_exists( 'WP_List_Table', false ) ) {
 	require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
 }
 
+use AnyComment\Models\AnyCommentEmailQueue;
 use WP_List_Table;
-use WP_User;
-
-use AnyComment\Models\AnyCommentRating;
-
-use AnyComment\Models\AnyCommentUploadedFiles;
 
 /**
- * Class AnyCommentUploadedFilesTable is used to display list of files in the admin.
+ * Class AnyCommentEmailQueueTable is used to display list of emails in the queue in the admin.
  */
-class AnyCommentRatingTable extends WP_List_Table {
+class AnyCommentEmailQueueTable extends WP_List_Table {
 	/**
 	 * Site ID to generate the Users list table for.
 	 *
@@ -44,10 +40,8 @@ class AnyCommentRatingTable extends WP_List_Table {
 	public function prepare_items() {
 		global $wpdb;
 
-		$table = AnyCommentRating::get_table_name();
+		$table = AnyCommentEmailQueue::get_table_name();
 
-
-		global $wpdb;
 
 		$countQuery = "SELECT COUNT(*) FROM $table";
 		$count      = $wpdb->get_var( $countQuery );
@@ -90,7 +84,7 @@ class AnyCommentRatingTable extends WP_List_Table {
 	 * {@inheritdoc}
 	 */
 	function no_items() {
-		_e( 'No rating yet.', 'anycomment' );
+		_e( 'No emails uploaded yet.', 'anycomment' );
 	}
 
 	/**
@@ -111,35 +105,63 @@ class AnyCommentRatingTable extends WP_List_Table {
 				), admin_url( 'post.php' ) ) );
 
 				return sprintf( '<strong><a href="%s">%s</a></strong>', $url, $post->post_title );
-			case 'user_ID':
-				$user_object = get_user_by( 'id', $item[ $column_name ] );
+			case 'comment_ID':
+				$comment = get_comment( $item[ $column_name ] );
 
-				if ( ! $user_object instanceof WP_User ) {
+				if ( ! $comment instanceof \WP_Comment ) {
 					return '';
 				}
 
+				// Set up the user editing link
+				$edit_link = esc_url( add_query_arg( 'wp_http_referer', urlencode( wp_unslash( $_SERVER['REQUEST_URI'] ) ), get_comment_to_edit( $comment->ID ) ) );
+
+				if ( current_user_can( 'moderate_comments', $comment->ID ) ) {
+					$comment_html = esc_html__( $comment->comment_content ) . "<br>";
+					$comment_html .= "<a href='comment.php?action=editcomment&amp;c={$comment->comment_ID}' aria-label='" . esc_attr__( 'Edit this comment' ) . "'>" . __( 'Edit' ) . '</a>';;
+				} else {
+					$comment_html = " <strong>{$comment->comment_content}</strong><br />";
+				}
+
+				return $comment_html;
+			case 'email':
+
+				$email = $item[ $column_name ];
+
+				if ( empty( $email ) ) {
+					return '';
+				}
+
+
+				$user = get_user_by( 'email', $email );
+
 				$super_admin = '';
-				$user_html    = get_avatar( $user_object->ID, 25 );
+				$user_html   = get_avatar( $user->ID, 25 );
 
 				// Set up the user editing link
-				$edit_link = esc_url( add_query_arg( 'wp_http_referer', urlencode( wp_unslash( $_SERVER['REQUEST_URI'] ) ), get_edit_user_link( $user_object->ID ) ) );
+				$edit_link = esc_url( add_query_arg( 'wp_http_referer', urlencode( wp_unslash( $_SERVER['REQUEST_URI'] ) ), get_edit_user_link( $user->ID ) ) );
 
-				if ( current_user_can( 'edit_user', $user_object->ID ) ) {
-					$user_html        .= " <strong><a href=\"{$edit_link}\">{$user_object->user_login}</a>{$super_admin}</strong><br />";
+				if ( current_user_can( 'edit_user', $user->ID ) ) {
+					$user_html       .= " <strong><a href=\"{$edit_link}\">{$user->user_login}</a>{$super_admin}</strong><br />";
 					$actions['edit'] = '<a href="' . $edit_link . '">' . __( 'Edit' ) . '</a>';
 				} else {
-					$user_html .= " <strong>{$user_object->user_login}{$super_admin}</strong><br />";
+					$user_html .= " <strong>{$user->user_login}{$super_admin}</strong><br />";
 				}
 
 				return $user_html;
-			case 'rating':
+			case 'subject':
 				return $item[ $column_name ];
+			case 'content':
+				return esc_html( $item[ $column_name ] );
 			case 'ip':
+				return $item[ $column_name ];
+			case 'url':
+				return sprintf( '<a href="%s" target="_blank">%s</a>', $item[ $column_name ], $item[ $column_name ] );
+			case 'is_sent':
 				return $item[ $column_name ];
 			case 'created_at':
 				$format = sprintf( "%s %s", get_option( 'date_format' ), get_option( 'time_format' ) );
 
-				return date( $format, $item[ $column_name ] );
+				return date( $format, strtotime( $item[ $column_name ] ) );
 		}
 	}
 
@@ -148,7 +170,7 @@ class AnyCommentRatingTable extends WP_List_Table {
 	 */
 	function column_cb( $item ) {
 		return sprintf(
-			'<input type="checkbox" name="ratings[]" value="%s" />', $item['ID']
+			'<input type="checkbox" name="emails[]" value="%s" />', $item['ID']
 		);
 	}
 
@@ -169,8 +191,9 @@ class AnyCommentRatingTable extends WP_List_Table {
 	function get_sortable_columns() {
 		$sortable_columns = [
 			'post_ID'    => [ 'post_ID', false ],
-			'user_ID'    => [ 'user_ID', false ],
-			'rating'     => [ 'rating', false ],
+			'comment_ID' => [ 'comment_ID', false ],
+			'is_sent'    => [ 'is_sent', false ],
+			'ip'         => [ 'ip', false ],
 			'created_at' => [ 'created_at', false ]
 		];
 
@@ -184,9 +207,12 @@ class AnyCommentRatingTable extends WP_List_Table {
 		$c = array(
 			'cb'         => '<input type="checkbox" />',
 			'post_ID'    => __( 'Post', 'anycomment' ),
-			'user_ID'    => __( 'User', 'anycomment' ),
-			'rating'     => __( 'Rating', 'anycomment' ),
+			'comment_ID' => __( 'Comment', 'anycomment' ),
+			'email'      => __( 'Email', 'anycomment' ),
+			'subject'    => __( 'Subject', 'anycomment' ),
+			'content'    => __( 'Content', 'anycomment' ),
 			'ip'         => __( 'IP', 'anycomment' ),
+			'is_sent'    => __( 'Is Sent?', 'anycomment' ),
 			'created_at' => __( 'Date', 'anycomment' ),
 		);
 

@@ -12,11 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) {
         <input type="hidden" name="page" value="anycomment-files">
 		<?php
 
-		$ratings_to_delete = isset( $_POST['ratings'] ) && ! empty( $_POST['ratings'] ) ? $_POST['ratings'] : null;
-		$action            = isset( $_POST['action'] ) && ! empty( $_POST['action'] ) ? $_POST['action'] : null;
-		if ( $action !== null && $ratings_to_delete !== null && $action === 'delete' ) {
-			if ( \AnyComment\Models\AnyCommentRating::deleted_all( 'ID', $ratings_to_delete ) ) {
-				$messages = '<div id="message" class="updated notice is-dismissible"><p>' . __( 'Rating deleted.', 'anycomment' ) . '</p></div>';
+		$ids    = isset( $_POST['ratings'] ) && ! empty( $_POST['ratings'] ) ? $_POST['ratings'] : null;
+		$action = isset( $_POST['action'] ) && ! empty( $_POST['action'] ) ? $_POST['action'] : null;
+		if ( $action !== null && $ids !== null && $action === 'delete' ) {
+			if ( \AnyComment\Models\AnyCommentRating::deleted_all( 'ID', $ids ) ) {
+				$messages = '<div id="message" class="updated notice is-dismissible"><p>' . __( 'Selected ratings were deleted.', 'anycomment' ) . '</p></div>';
 			} else {
 				$messages = '<div id="message" class="error notice is-dismissible"><p>' . __( 'Failed to delete selected ratings.', 'anycomment' ) . '</p></div>';
 			}

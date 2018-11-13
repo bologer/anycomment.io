@@ -172,6 +172,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 * Added ability to see list of ratings in "Rating" submenu
 * Added ability to see list of subscribers in "Subscribers" submenu
+* Added ability to see list of emails in "Emails" submenu
 * Completely rewritten code towards PSR-4
 * Added transliteration for username, now instead of having `{socialname}_{username}`, it would be prettier, e.g. john_doe. Current usernames would be converted accordingly, #298
 * Added "All In One WP Security" to the list of possible problems as it may cause failure to load comments, #284

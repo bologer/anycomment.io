@@ -142,8 +142,6 @@ class AnyCommentSubscriptionsTable extends WP_List_Table {
 				$format = sprintf( "%s %s", get_option( 'date_format' ), get_option( 'time_format' ) );
 
 				return date( $format, $item[ $column_name ] );
-			default:
-				return print_r( $item, true ); //Show the whole array for troubleshooting purposes
 		}
 	}
 

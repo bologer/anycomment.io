@@ -22,6 +22,7 @@ class AnyCommentLoader {
 		'AnyComment\Admin\AnyCommentFilesPage',
 		'AnyComment\Admin\AnyCommentRatingPage',
 		'AnyComment\Admin\AnyCommentSubscriptionsPage',
+		'AnyComment\Admin\AnyCommentEmailQueuePage',
 
 		// Other
 		'AnyComment\Admin\AnyCommentWPComments',

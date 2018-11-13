@@ -12,11 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) {
         <input type="hidden" name="page" value="anycomment-files">
 		<?php
 
-		$filesToDelete = isset( $_POST['files'] ) && ! empty( $_POST['files'] ) ? $_POST['files'] : null;
-		$action        = isset( $_POST['action'] ) && ! empty( $_POST['action'] ) ? $_POST['action'] : null;
-		if ( $action !== null && $filesToDelete !== null && $action === 'delete' ) {
-			if ( \AnyComment\Models\AnyCommentUploadedFiles::delete( $filesToDelete ) ) {
-				$messages = '<div id="message" class="updated notice is-dismissible"><p>' . __( 'Files deleted.', 'anycomment' ) . '</p></div>';
+		$ids    = isset( $_POST['files'] ) && ! empty( $_POST['files'] ) ? $_POST['files'] : null;
+		$action = isset( $_POST['action'] ) && ! empty( $_POST['action'] ) ? $_POST['action'] : null;
+		if ( $action !== null && $ids !== null && $action === 'delete' ) {
+			if ( \AnyComment\Models\AnyCommentUploadedFiles::deleted_all( 'ID', $ids ) ) {
+				$messages = '<div id="message" class="updated notice is-dismissible"><p>' . __( 'Files were deleted.', 'anycomment' ) . '</p></div>';
 			} else {
 				$messages = '<div id="message" class="error notice is-dismissible"><p>' . __( 'Failed to delete selected files.', 'anycomment' ) . '</p></div>';
 			}
