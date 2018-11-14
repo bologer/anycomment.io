@@ -1,0 +1,12 @@
+language: php
+
+env:
+  global:
+    - DEFAULT_COMPOSER_FLAGS="--prefer-dist --no-interaction --no-progress --optimize-autoloader"
+
+php:
+  - '5.4'
+  - '5.6'
+  - '7.0'
+  - hhvm # on Trusty only
+  - nightly
