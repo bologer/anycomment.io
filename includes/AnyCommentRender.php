@@ -215,7 +215,7 @@ class AnyCommentRender {
 						__( 'Check you email to confirm subscription', 'anycomment' ),
 					'subscribe'                      => __( 'Subscribe', 'anycomment' ),
 					'subscribe_pre_paragraph'        => is_user_logged_in() ?
-						__( 'You may subscribe to new comments by clicking "Subscribe" button below:' ) :
+						__( 'You may subscribe to new comments by clicking "Subscribe" button below:', 'anycomment' ) :
 						__( 'You may subscribe to new comments for this post by entering your email below:', 'anycomment' ),
 					'cancel'                         => __( 'Cancel', 'anycomment' ),
 					'quick_login'                    => __( 'Quick Login', 'anycomment' ),

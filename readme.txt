@@ -166,7 +166,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 == Changelog ==
 
-= 0.0.72 – 13.11.2018 =
+= 0.0.72 – 14.11.2018 =
 
 **Enhancements:**
 
@@ -179,7 +179,9 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Fixed WooCommerce compatibility (#302) + added compatibility when WooCommerce reviews are not used within tabs (#308)
 * Fixed issue when copyright was not possible to uncheck, #301
 
+**Other:**
 
+* Added missing translation for subscription form
 
 = 0.0.71 – 13.11.2018 =
 
