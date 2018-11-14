@@ -43,6 +43,8 @@ class EmailEndpoints {
 	 * Process emails actions such as confirmation and cancellation.
 	 *
 	 * @param string $template Template name used to render the page.
+	 *
+	 * @return string
 	 */
 	public function email_actions( $template ) {
 		$confirmation_token = get_query_var( self::CONFIRM_QUERY_PARAM );
@@ -82,6 +84,6 @@ class EmailEndpoints {
 			exit;
 		}
 
-		include $template;
+		return $template;
 	}
 }

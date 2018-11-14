@@ -12,6 +12,7 @@
 * Fixed issue with dropdown when items were aligned to the opposite side of it, #307
 * Fixed WooCommerce compatibility (#302) + added compatibility when WooCommerce reviews are not used within tabs (#308)
 * Fixed issue when copyright was not possible to uncheck, #301
+* Fixed critical issue when content on the page was duplicated
 
 
 ## 0.0.71 – 13.11.2018
