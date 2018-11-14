@@ -168,10 +168,6 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 = 0.0.72 – 15.11.2018 =
 
-**Enhancements:**
-
-
-
 **Fixes:**
 
 * Fixed issue when alert error message about Instagram was showing on every social tab
