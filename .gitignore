@@ -5,3 +5,4 @@ cache/*
 languages/anycomment-*backup*.po
 languages/anycomment-*backup*.pot
 static/css/main-custom-*.min.css
+vendor
