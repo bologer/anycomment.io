@@ -28,19 +28,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 						$links = [
 							'telegram'  => [
 								'text' => __( 'Telegram', 'anycomment' ),
-								'url'  => \AnyComment\Helpers\AnyCommentLinkHelper::getTelegram()
+								'url'  => \AnyComment\Helpers\AnyCommentLinkHelper::get_telegram()
 							],
 							'vkontakte' => [
 								'text' => __( 'Vkontakte', 'anycomment' ),
-								'url'  => \AnyComment\Helpers\AnyCommentLinkHelper::getVkontakte()
+								'url'  => \AnyComment\Helpers\AnyCommentLinkHelper::get_vkontakte()
 							],
 							'website'   => [
 								'text' => __( 'Website', 'anycomment' ),
-								'url'  => \AnyComment\Helpers\AnyCommentLinkHelper::getOfficialWebsite()
+								'url'  => \AnyComment\Helpers\AnyCommentLinkHelper::get_official_website()
 							],
 							'github'    => [
 								'text' => __( 'GitHub', 'anycomment' ),
-								'url'  => \AnyComment\Helpers\AnyCommentLinkHelper::getGitHub()
+								'url'  => \AnyComment\Helpers\AnyCommentLinkHelper::get_github()
 							],
 						];
 

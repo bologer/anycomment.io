@@ -1,6 +1,15 @@
 <?php
+
 namespace AnyComment\Helpers;
 
+/**
+ * Class AnyCommentLinkHelper is a link helper class.
+ *
+ * Consists of commonly used helpers for generating links.
+ *
+ * @author Alexander Teshabaev <sasha.tesh@gmail.com>
+ * @package AnyComment\Helpers
+ */
 class AnyCommentLinkHelper {
 
 	/**
@@ -8,7 +17,7 @@ class AnyCommentLinkHelper {
 	 *
 	 * @return string
 	 */
-	public static function getVkontakte() {
+	public static function get_vkontakte() {
 		return 'https://vk.com/anycomment';
 	}
 
@@ -17,8 +26,23 @@ class AnyCommentLinkHelper {
 	 *
 	 * @return string
 	 */
-	public static function getTelegram() {
-		return 'https://t.me/anycomment';
+	public static function get_telegram() {
+		return 'https://t.me/' . static::get_telegram_slug();
+	}
+
+	/**
+	 * Telegram group slug name.
+	 *
+	 * @param bool $pretty True if required to return camel case, false would return lowercase.
+	 *
+	 * @return string
+	 */
+	public static function get_telegram_slug( $pretty = false ) {
+		if ( $pretty ) {
+			return 'AnyComment';
+		}
+
+		return 'anycomment';
 	}
 
 	/**
@@ -26,7 +50,7 @@ class AnyCommentLinkHelper {
 	 *
 	 * @return string
 	 */
-	public static function getGitHub() {
+	public static function get_github() {
 		return 'https://github.com/bologer/anycomment.io';
 	}
 
@@ -35,8 +59,17 @@ class AnyCommentLinkHelper {
 	 *
 	 * @return string
 	 */
-	public static function getGuidesLink() {
-		return static::formatUrl( "category/tutorials" );
+	public static function get_guides() {
+		return static::format_url( "category/tutorials" );
+	}
+
+	/**
+	 * Get link to the demo page.
+	 *
+	 * @return string
+	 */
+	public static function get_demo() {
+		return static::format_url( 'demo' );
 	}
 
 	/**
@@ -44,8 +77,8 @@ class AnyCommentLinkHelper {
 	 *
 	 * @return string
 	 */
-	public static function getSocialGuidesLink() {
-		return static::formatUrl( "category/tutorials/socials" );
+	public static function get_social_guides() {
+		return static::format_url( "category/tutorials/socials" );
 	}
 
 	/**
@@ -55,8 +88,8 @@ class AnyCommentLinkHelper {
 	 *
 	 * @return string
 	 */
-	public static function formatUrl( $url ) {
-		$locale = static::getLanguage();
+	public static function format_url( $url ) {
+		$locale = static::get_language();
 
 		if ( $locale === 'ru' ) {
 			$locale = '';
@@ -64,7 +97,7 @@ class AnyCommentLinkHelper {
 			$locale .= '/';
 		}
 
-		return static::getOfficialWebsite() . $locale . $url;
+		return static::get_official_website() . $locale . $url;
 	}
 
 	/**
@@ -72,7 +105,7 @@ class AnyCommentLinkHelper {
 	 *
 	 * @return string
 	 */
-	public static function getOfficialWebsite() {
+	public static function get_official_website() {
 		return "https://anycomment.io/";
 	}
 
@@ -81,7 +114,7 @@ class AnyCommentLinkHelper {
 	 *
 	 * @return bool|string
 	 */
-	public static function getLanguage() {
+	public static function get_language() {
 		return substr( get_locale(), 0, 2 );
 	}
 }
