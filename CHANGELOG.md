@@ -11,6 +11,7 @@
 * Possible fix for Internet Explorer 11
 * Fixed issue when native notification from WordPress was inheriting styles from plugin, #300
 * Fixed issue when emails were not sending
+* Fixed issue when some of the themes were cut or had broken templates because of plugin
 
 **Other:**
 
