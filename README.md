@@ -1,3 +1,6 @@
+# AnyComment 
+[![Build Status](https://travis-ci.org/bologer/anycomment.io.svg?branch=master)](https://travis-ci.org/bologer/anycomment.io)
+
 AnyComment is blazing-fast commenting plugin for WordPress based on React.
 
 It stands for simplicity & speed. We value feedback, so open new [issue](https://github.com/bologer/anycomment.io/issues) if you have any failures.
