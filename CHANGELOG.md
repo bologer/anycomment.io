@@ -12,6 +12,8 @@
 * Fixed issue with dropdown when items were aligned to the opposite side of it, #307
 * Fixed WooCommerce compatibility (#302) + added compatibility when WooCommerce reviews are not used within tabs (#308)
 * Fixed issue when copyright was not possible to uncheck, #301
+* Possible fix for Internet Explorer 11
+* Fixed issue when native notification from WordPress was inheriting styles from plugin, #300
 
 **Other:**
 
