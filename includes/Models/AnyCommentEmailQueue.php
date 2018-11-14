@@ -80,7 +80,7 @@ class AnyCommentEmailQueue extends AnyCommentActiveRecord {
 	 */
 	public static function grab_replies_to_send() {
 		$tableName = static::get_table_name();
-		$sql       = "SELECT `emails`.* FROM `$tableName` `emails` WHERE `emails`.`is_sent` = 0";
+		$sql       = "SELECT * FROM `$tableName` WHERE `is_sent` = 0";
 
 		return static::db()->get_results( $sql );
 	}

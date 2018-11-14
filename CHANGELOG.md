@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.0.72 – 14.11.2018
+## 0.0.72 – 15.11.2018
 
 **Enhancements:**
 
@@ -14,6 +14,7 @@
 * Fixed issue when copyright was not possible to uncheck, #301
 * Possible fix for Internet Explorer 11
 * Fixed issue when native notification from WordPress was inheriting styles from plugin, #300
+* Fixed issue when emails were not sending
 
 **Other:**
 

@@ -41,7 +41,7 @@ class AnyCommentLoader {
 		'AnyComment\Integrations\AnyCommentWooCommerce',
 
 		// Crontabs
-		'AnyComment\cron\AnyCommentEmailQueueCron',
+		'AnyComment\Cron\AnyCommentEmailQueueCron',
 
 		// Emails
 		'AnyComment\EmailEndpoints',
