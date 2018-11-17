@@ -44,11 +44,14 @@ class AnyCommentCommentHooks {
 		// On comment status change
 //		add_action( 'wp_set_comment_status', [ $this, 'process_set_status_comment' ], 10, 2 );
 
+		kses_remove_filters();
+		remove_filter( 'comment_text', 'wp_kses_post' );
+
 		add_action( 'wp_insert_comment', [ $this, 'process_new_comment' ], 10, 2 );
 
 
 		// Extend allowed HTML tags to the needs of visual editor
-		add_filter( 'pre_comment_content', [ $this, 'kses_allowed_html_for_quill' ], 16 );
+		add_filter( 'pre_comment_content', [ $this, 'kses_allowed_html_for_quill' ], 9 );
 	}
 
 	/**
@@ -59,6 +62,7 @@ class AnyCommentCommentHooks {
 	 * @return mixed
 	 */
 	public function kses_allowed_html_for_quill( $comment_content ) {
+
 		$allowedhtml['p']          = [];
 		$allowedhtml['a']          = [ 'href' => true, 'target' => true, 'rel' => true ];
 		$allowedhtml['ul']         = [];
@@ -76,7 +80,11 @@ class AnyCommentCommentHooks {
 		$allowedhtml['figure']     = [];
 		$allowedhtml['iframe']     = [];
 
-		return wp_kses( $comment_content, $allowedhtml );
+		$comment_content = wp_kses( $comment_content, $allowedhtml );
+
+		kses_init_filters();
+
+		return $comment_content;
 	}
 
 	/**

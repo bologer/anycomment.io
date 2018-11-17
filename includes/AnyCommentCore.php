@@ -20,12 +20,17 @@ class AnyCommentCore {
 	 *
 	 * @var string
 	 */
-	public $version = '0.0.72';
+	public $version = '0.0.73';
 
 	/**
 	 * @var Pool
 	 */
 	public $cache;
+
+	/**
+	 * @var
+	 */
+	public $scss;
 
 	/**
 	 * Instance of AnyComment.

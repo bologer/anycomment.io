@@ -1,0 +1,79 @@
+$font-size: 12px;
+$background-color: #fff;
+$author-color: #1DA1F2;
+$semi-hidden-color: #B6C1C6;
+$comment-text-color: #2A2E2E;
+
+$global-margin: 15px;
+$global-comment-margin: 30px;
+$line-separator-color: #C4C4C4;
+
+$avatar-border-radius: 50%;
+
+@mixin avatar() {
+  background-size: cover;
+  background-position: center center;
+  border: 1px solid $semi-hidden-color;
+  background-color: #DDE2E5;
+  border-radius: $avatar-border-radius;
+  width: 30px;
+  height: 30px;
+  position: relative;
+}
+
+.anycomment-comments-widget {
+  padding: 0;
+  margin: $global-comment-margin 0;
+
+  &__item {
+    list-style: none;
+  }
+
+  &__item {
+    $space: $global-comment-margin / 2;
+    margin: 0 0 $space 0;
+    padding: 0 0 $space 0;
+    border-top: 0;
+    border-bottom: 1px solid $line-separator-color;
+
+    &__header {
+      display: flex;
+      justify-content: flex-start;
+      justify-items: center;
+      margin-bottom: $global-margin;
+
+      &-avatar {
+        margin-right: $global-margin;
+        &-wrapper {
+          @include avatar();
+
+          img {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 10px;
+            height: 10px;
+          }
+        }
+      }
+
+      &-author {
+
+      }
+    }
+
+    &__body {
+      margin-bottom: $global-margin;
+
+      &, p {
+        color: $comment-text-color;
+      }
+    }
+
+    &__footer {
+      &, a {
+        color: $semi-hidden-color;
+      }
+    }
+  }
+}

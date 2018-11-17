@@ -6,6 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+use AnyComment\Base\ScssCompiler;
 use AnyComment\Helpers\AnyCommentInputHelper;
 
 /**
@@ -1024,26 +1025,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	private static function combine_styles_and_process() {
 		$scssPath = AnyComment()->plugin_path() . '/assets/theming/';
 
-		$content = trim( file_get_contents( $scssPath . 'app.scss' ) );
-
-		if ( empty( $content ) ) {
-			return false;
-		}
-
-
-		$toastCss = file_get_contents( $scssPath . 'ReactToastify.css' );
-
-		if ( $toastCss !== false ) {
-			$content .= $toastCss;
-		}
-
-		include_once( AnyComment()->plugin_path() . '/includes/libs/scssphp/scss.inc.php' );
-
-		$scss = new \Leafo\ScssPhp\Compiler();
-		$scss->setFormatter( 'Leafo\ScssPhp\Formatter\Crunched' );
-		$scss->addImportPath( $scssPath );
-
-		$replaceVariables = [
+		$variables = [
 			'global-margin'                   => AnyCommentGenericSettings::get_global_margin(),
 			'global-padding'                  => AnyCommentGenericSettings::get_global_padding(),
 			'global-background-color'         => AnyCommentGenericSettings::get_global_background_color(),
@@ -1073,41 +1055,22 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 			'global-radius' => AnyCommentGenericSettings::get_design_global_radius(),
 		];
 
-		$scss->setVariables( $replaceVariables );
+		$compiler = new ScssCompiler();
 
-		$compiled = $scss->compile( $content );
+		$compiledCSS = $compiler
+			->set_scss( [
+				$scssPath . 'app.scss',
+				$scssPath . 'ReactToastify.css'
+			] )
+			->set_import_path( $scssPath )
+			->set_variables( $variables )
+			->compile();
 
-		/**
-		 * Replace relative paths of the images in the stylesheet with react-way,
-		 * as there is no way to remove it via react-create-app
-		 * @link https://github.com/facebook/create-react-app/issues/821 for further information
-		 */
-		$staticFolder = AnyComment()->plugin_path() . '/static/media/';
-		$assets       = $staticFolder . '*.*';
-
-		$fileAssetList = glob( $assets );
-
-		if ( ! empty( $fileAssetList ) ) {
-			foreach ( $fileAssetList as $key => $assetFullPath ) {
-				preg_match( '/\/media\/(.*)\.[a-z0-9]+\.(svg|png|jpg|jpeg|ico|gif)$/m', $assetFullPath, $matches );
-
-				if ( count( $matches ) !== 3 ) {
-					continue;
-				}
-
-				$fullMatchAndUrl = AnyComment()->plugin_url() . '/static' . $matches[0];
-				$fileName        = $matches[1];
-				$extension       = $matches[2];
-
-				$pattern = "/\.\.\/img\/?([\w-_]*\/)$fileName\.$extension/m";
-
-				if ( preg_match( $pattern, $compiled ) ) {
-					$compiled = preg_replace( $pattern, $fullMatchAndUrl, $compiled );
-				}
-			}
+		if ( empty( $compiledCSS ) ) {
+			return false;
 		}
 
-		return $compiled;
+		return $compiledCSS;
 	}
 
 	/**

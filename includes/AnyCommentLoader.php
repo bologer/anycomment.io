@@ -13,6 +13,8 @@ class AnyCommentLoader {
 	 * @var array List of classes to invoke immediately.
 	 */
 	public static $load = [
+		'AnyComment\Widgets\CommentList',
+
 		// Rest
 		'AnyComment\Rest\AnyCommentRestComment',
 		'AnyComment\Rest\AnyCommentRestLikes',
@@ -46,6 +48,7 @@ class AnyCommentLoader {
 		// Emails
 		'AnyComment\EmailEndpoints',
 
+
 		// Main
 		'AnyComment\AnyCommentRender',
 	];
@@ -58,6 +61,12 @@ class AnyCommentLoader {
 			foreach ( static::$load as $namespace ) {
 				if ( class_exists( $namespace ) ) {
 					new $namespace();
+				}
+
+				if ( strpos( $namespace, 'AnyComment\Widgets' ) !== false ) {
+					add_action( 'widgets_init', function () use ( $namespace ) {
+						register_widget( $namespace );
+					} );
 				}
 			}
 		}
