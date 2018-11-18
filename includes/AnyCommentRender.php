@@ -2,13 +2,9 @@
 
 namespace AnyComment;
 
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
-
-use WP_Comment;
-use WP_User;
 
 use AnyComment\Helpers\AnyCommentTemplate;
 use AnyComment\Models\AnyCommentRating;
@@ -256,38 +252,12 @@ class AnyCommentRender {
 			] );
 		}
 
-		$path = ANYCOMMENT_ABSPATH . 'templates/comments.php';
+		$path = ANYCOMMENT_ABSPATH . '/templates/comments.php';
 
 		if ( $isInclude ) {
 			return AnyCommentTemplate::render( 'comments' );
 		}
 
 		return $path;
-	}
-
-	/**
-	 * Check whether current user has ability to edit comment.
-	 *
-	 * @param WP_Comment $comment
-	 *
-	 * @return bool
-	 */
-	public function can_edit_comment( $comment ) {
-		if ( current_user_can( 'moderate_comments' ) ||
-		     current_user_can( 'edit_comment', $comment->comment_ID ) ) {
-			return true;
-		}
-
-		if ( $this->is_old_to_edit( $comment ) ) {
-			return false;
-		}
-
-		$user = wp_get_current_user();
-
-		if ( ! $user instanceof WP_User ) {
-			return false;
-		}
-
-		return (int) $user->ID === (int) $comment->user_id;
 	}
 }
