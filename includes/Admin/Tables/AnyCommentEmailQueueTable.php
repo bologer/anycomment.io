@@ -116,7 +116,7 @@ class AnyCommentEmailQueueTable extends WP_List_Table {
 				$edit_link = esc_url( add_query_arg( 'wp_http_referer', urlencode( wp_unslash( $_SERVER['REQUEST_URI'] ) ), get_comment_to_edit( $comment->ID ) ) );
 
 				if ( current_user_can( 'moderate_comments', $comment->ID ) ) {
-					$comment_html = esc_html__( $comment->comment_content ) . "<br>";
+					$comment_html =  $comment->comment_content . "<br>";
 					$comment_html .= "<a href='comment.php?action=editcomment&amp;c={$comment->comment_ID}' aria-label='" . esc_attr__( 'Edit this comment' ) . "'>" . __( 'Edit' ) . '</a>';;
 				} else {
 					$comment_html = " <strong>{$comment->comment_content}</strong><br />";

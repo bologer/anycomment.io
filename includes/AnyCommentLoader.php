@@ -13,8 +13,6 @@ class AnyCommentLoader {
 	 * @var array List of classes to invoke immediately.
 	 */
 	public static $load = [
-		'AnyComment\Widgets\CommentList',
-
 		// Rest
 		'AnyComment\Rest\AnyCommentRestComment',
 		'AnyComment\Rest\AnyCommentRestLikes',
@@ -48,6 +46,8 @@ class AnyCommentLoader {
 		// Emails
 		'AnyComment\EmailEndpoints',
 
+		// Widgets
+		'AnyComment\Widgets\CommentList',
 
 		// Main
 		'AnyComment\AnyCommentRender',
