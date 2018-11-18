@@ -18,7 +18,7 @@ class AnyCommentTemplate {
 	 */
 	public static function render( $name ) {
 		ob_start();
-		include ANYCOMMENT_ABSPATH . "templates/$name.php";
+		include ANYCOMMENT_ABSPATH . "/templates/{$name}.php";
 		$content = ob_get_contents();
 		ob_end_clean();
 

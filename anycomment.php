@@ -26,6 +26,12 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 }
 
 function AnyComment() {
+	defined( 'ANYCOMMENT_PLUGIN_FILE' ) or define( 'ANYCOMMENT_PLUGIN_FILE', __FILE__ );
+	defined( 'ANYCOMMENT_LANG' ) or define( 'ANYCOMMENT_LANG', __FILE__ );
+	defined( 'ANYCOMMENT_ABSPATH' ) or define( 'ANYCOMMENT_ABSPATH', dirname( __FILE__ ) );
+	defined( 'ANYCOMMENT_PLUGIN_BASENAME' ) or define( 'ANYCOMMENT_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
+	defined( 'ANYCOMMENT_DEBUG' ) or define( 'ANYCOMMENT_DEBUG', false );
+
 	return \AnyComment\AnyCommentCore::instance();
 }
 

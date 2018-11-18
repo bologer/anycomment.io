@@ -56,7 +56,6 @@ class AnyCommentCore {
 	 * Init method to invoke starting scripts.
 	 */
 	public function init() {
-		$this->define_constants();
 		$this->includes();
 		$this->init_textdomain();
 		$this->init_hooks();
@@ -120,24 +119,11 @@ class AnyCommentCore {
 	}
 
 	/**
-	 * Define AnyComment Constants.
-	 */
-	private function define_constants() {
-
-		defined( 'ANYCOMMENT_PLUGIN_FILE' ) or define( 'ANYCOMMENT_PLUGIN_FILE', __FILE__ );
-		defined( 'ANYCOMMENT_LANG' ) or define( 'ANYCOMMENT_LANG', __FILE__ );
-		defined( 'ANYCOMMENT_ABSPATH' ) or define( 'ANYCOMMENT_ABSPATH', dirname( __FILE__ ) . '/../' );
-		defined( 'ANYCOMMENT_PLUGIN_BASENAME' ) or define( 'ANYCOMMENT_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
-		defined( 'ANYCOMMENT_VERSION' ) or define( 'ANYCOMMENT_VERSION', $this->version );
-		defined( 'ANYCOMMENT_DEBUG' ) or define( 'ANYCOMMENT_DEBUG', false );
-	}
-
-	/**
 	 * Get the plugin url.
 	 * @return string
 	 */
 	public function plugin_url() {
-		return untrailingslashit( plugins_url( '/../', __FILE__ ) );
+		return untrailingslashit( plugins_url( '/', ANYCOMMENT_PLUGIN_FILE ) );
 	}
 
 	/**
@@ -145,7 +131,7 @@ class AnyCommentCore {
 	 * @return string
 	 */
 	public function plugin_path() {
-		return untrailingslashit( plugin_dir_path( __FILE__ ) . '../' );
+		return untrailingslashit( plugin_dir_path( ANYCOMMENT_PLUGIN_FILE ) );
 	}
 
 	/**
@@ -156,7 +142,7 @@ class AnyCommentCore {
 		 * Some plugin already have such class.
 		 */
 		if ( ! class_exists( 'Hybridauth' ) ) {
-			include_once( ANYCOMMENT_ABSPATH . 'includes/hybridauth/src/autoload.php' );
+			include_once( ANYCOMMENT_ABSPATH . '/includes/hybridauth/src/autoload.php' );
 		}
 
 		AnyCommentLoader::load();
