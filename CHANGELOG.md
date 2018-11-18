@@ -11,6 +11,7 @@
 **Fixes:**
 
 * Fixed issue when sender name was not set from the admin panel, #317
+* Fixed issue when it was not possible to copy long text as it was folding/unfolding on this action, #320
 
 
 ## 0.0.72 – 15.11.2018

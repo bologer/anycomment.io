@@ -96,8 +96,7 @@ class CommentBody extends AnyCommentComponent {
             thirdParty = this.processThirdParties(cleanContent),
             {isLong, hideAsLong} = this.state;
 
-        return <div className={bodyClasses} onClick={() => this.toggleLongComment()}
-                    id={"comment-content-" + this.props.comment.id}>
+        return <div className={bodyClasses} id={"comment-content-" + this.props.comment.id}>
             <div
                 className={"comment-single-body__text-content" + (hideAsLong ? ' comment-single-body__shortened' : '')}
                 style={hideAsLong ? {'height': MAX_BODY_HEIGHT} : null}
