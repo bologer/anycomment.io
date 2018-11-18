@@ -74,7 +74,9 @@ class AnyCommentEmailQueueCron {
 			$body    = $email->content;
 
 			// Hook specified sender name from settings
-			add_filter( 'wp_mail_from_name', [ $this, 'sender_name' ] );
+			add_filter( 'wp_mail_from_name', function ($from_name) {
+				return AnyCommentGenericSettings::get_notify_email_sender_name();
+			}, 99 );
 
 			$isSent = wp_mail( $email->email, $subject, $body, $headers );
 
@@ -85,16 +87,5 @@ class AnyCommentEmailQueueCron {
 		}
 
 		return count( $emails ) === $successCount;
-	}
-
-	/**
-	 * Rewrite original email from.
-	 *
-	 * @param string $original_email_from
-	 *
-	 * @return string
-	 */
-	public function sender_name( $original_email_from ) {
-		return AnyCommentGenericSettings::get_notify_email_sender_name();
 	}
 }

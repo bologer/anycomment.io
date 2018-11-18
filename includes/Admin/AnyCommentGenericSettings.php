@@ -1291,7 +1291,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return string
 	 */
 	public static function get_notify_email_sender_name() {
-		$value = static::instance()->get_option( self::OPTION_NOTIFY_SUBSCRIBERS );
+		$value = static::instance()->get_option( self::OPTION_NOTIFY_SENDER_NAME );
 
 		if ( empty( $value ) ) {
 			// Get blog name in case from name is now specified

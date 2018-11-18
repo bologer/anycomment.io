@@ -10,6 +10,7 @@
 
 **Fixes:**
 
+* Fixed issue when sender name was not set from the admin panel, #317
 
 
 ## 0.0.72 – 15.11.2018

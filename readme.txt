@@ -175,6 +175,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Fixes:**
 
+* Fixed issue when sender name was not set from the admin panel, #317
 
 
 = 0.0.72 – 15.11.2018 =
