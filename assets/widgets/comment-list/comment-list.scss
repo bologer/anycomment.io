@@ -1,0 +1,114 @@
+$font-size: 14px !default;
+$background-color: #fff !default;
+$author-color: #1DA1F2 !default;
+$semi-hidden-color: #B6C1C6 !default;
+$comment-color: #2A2E2E !default;
+
+$global-margin: 15px !default;
+$global-comment-margin: 30px !default;
+$line-separator-color: #C4C4C4 !default;
+
+$avatar-border-radius: 50% 50% 50% 0 !default;
+$avatar-size: 30px !default;
+
+@mixin avatar() {
+  background-size: cover;
+  background-position: center center;
+  border: 1px solid $semi-hidden-color;
+  background-color: #DDE2E5;
+  border-radius: $avatar-border-radius;
+  width: $avatar-size;
+  height: $avatar-size;
+  position: relative;
+}
+
+#anycomment-comments-widget-wrapper {
+  .anycomment-comments-widget {
+    padding: 0;
+    margin: $global-comment-margin 0;
+
+    &__item {
+      list-style: none;
+    }
+
+    &__item {
+      $space: $global-comment-margin / 2;
+      margin: 0 0 $space 0;
+      padding: 0 0 $space 0;
+      border-top: 0;
+      border-bottom: 1px solid $line-separator-color;
+
+      &:last-of-type {
+        border-bottom: 0;
+      }
+
+      &__header {
+        display: flex;
+        justify-content: flex-start;
+        justify-items: center;
+        margin-bottom: $global-margin;
+
+        &-avatar {
+          margin-right: $global-margin;
+          &-wrapper {
+            @include avatar();
+
+            img {
+              $icon-size: $avatar-size / 3;
+              position: absolute;
+              bottom: -($icon-size - ($icon-size / 2)) + 5;
+              right: -($icon-size - ($icon-size / 2)) + 5;
+              width: $icon-size;
+              height: $icon-size;
+            }
+          }
+        }
+
+        &-meta {
+
+          &--author,
+          &--meta {
+            display: block;
+            line-height: 1;
+          }
+          &--author {
+            color: $author-color;
+            font-weight: bold;
+            font-size: $font-size + 2;
+          }
+
+          &--date {
+            color: $semi-hidden-color;
+            font-size: $font-size;
+          }
+        }
+      }
+
+      &__body {
+        margin-bottom: $global-margin;
+
+        &, p {
+          color: $comment-color;
+          font-size: $font-size;
+          line-height: inherit;
+        }
+
+        & p {
+          margin: 0;
+          padding: 0;
+        }
+      }
+
+      &__footer {
+        &, a {
+          color: $semi-hidden-color;
+          -webkit-box-shadow: none;
+          -moz-box-shadow: none;
+          box-shadow: none;
+          text-decoration: underline;
+          line-height: 1;
+        }
+      }
+    }
+  }
+}

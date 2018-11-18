@@ -2,7 +2,6 @@
 
 namespace AnyComment\Widgets;
 
-use AnyComment\AnyCommentUser;
 use AnyComment\AnyCommentUserMeta;
 use AnyComment\Base\ScssCompiler;
 use AnyComment\Rest\AnyCommentSocialAuth;
@@ -22,40 +21,59 @@ class CommentList extends \WP_Widget {
 	 */
 	public function __construct() {
 		$widget_ops = array(
-			'classname'                   => 'anycomment_widget_comment_list',
+			'classname'                   => 'CommentList',
 			'description'                 => __( 'Your site&#8217;s most recent comments displayed using AnyComment.' ),
 			'customize_selective_refresh' => true,
 		);
-		parent::__construct( 'anycomment-recent-comments', __( 'Comments', 'anycomment' ), $widget_ops );
-		$this->alt_option_name = 'anycomment_widget_comment_list';
+		parent::__construct( 'anycomment-comment-list', __( 'Comments', 'anycomment' ), $widget_ops );
+		$this->alt_option_name = 'anycomment-comment-list';
 	}
 
 	/**
 	 * Outputs the default styles for the Recent Comments widget.
 	 *
-	 * @since 2.8.0
+	 * @param  array $instance
+	 *
+	 * @return string
 	 */
-	public function register_styles() {
-		$filename  = sprintf( '%s.min.css', md5( get_class() ) );
-		$save_path = AnyComment()->plugin_path() . '/static/css/';
+	public function compile_styles( $instance ) {
+		$mtime = filemtime( AnyComment()->plugin_path() . '/assets/widgets/comment-list/comment-list.scss' );
 
-		$full_path = $save_path . $filename;
-		$saved_url = AnyComment()->plugin_url() . '/static/css/' . $filename;
+		$array_hash   = [];
+		$array_hash[] = $mtime;
+		$array_hash[] = $instance;
 
+		$hash = md5( serialize( $array_hash ) );
 
-		if ( ! file_exists( $full_path ) ) {
-			$compiler = new ScssCompiler();
+		$scss_widget_cache = AnyComment()->cache->getItem( 'anycomment/widgets/comment-list/' . $hash );
+		$template          = '<style>%s</style>';
 
-			$is_saved = $compiler
-				->set_scss( [ __DIR__ . '/assets/scss/comment-list.scss' ] )
-				->compile( $full_path );
+		if ( $scss_widget_cache->isHit() ) {
+			return sprintf( $template, $scss_widget_cache->get() );
+		}
 
-			if ( ! $is_saved ) {
-				return false;
+		$variables = [];
+
+		if ( ! empty( $instance ) ) {
+			foreach ( $instance as $key => $value ) {
+				if ( false !== strpos( $key, 'scss_' ) ) {
+					$clean_key               = trim( str_replace( 'scss_', '', $key ) );
+					$clean_key               = str_replace( '_', '-', $clean_key );
+					$variables[ $clean_key ] = $value;
+				}
 			}
 		}
 
-		wp_enqueue_style( 'anycomment-widget-comment-list', $saved_url, [] );
+		$compiler = new ScssCompiler();
+
+		$compiled_css = $compiler
+			->set_scss( [ AnyComment()->plugin_path() . '/assets/widgets/comment-list/comment-list.scss' ] )
+			->set_variables( $variables )
+			->compile();
+
+		$scss_widget_cache->set( $compiled_css )->save();
+
+		return sprintf( $template, $compiled_css );
 	}
 
 	/**
@@ -68,13 +86,11 @@ class CommentList extends \WP_Widget {
 	 * @param array $instance Settings for the current Recent Comments widget instance.
 	 */
 	public function widget( $args, $instance ) {
-		$this->register_styles();
+		$output = $this->compile_styles( $instance );
 
 		if ( ! isset( $args['widget_id'] ) ) {
 			$args['widget_id'] = $this->id;
 		}
-
-		$output = '';
 
 		$title = ! empty( $instance['title'] ) ? $instance['title'] : '';
 
@@ -103,6 +119,7 @@ class CommentList extends \WP_Widget {
 		}
 
 
+		$output .= '<div id="anycomment-comments-widget-wrapper">';
 		$output .= '<ul class="anycomment-comments-widget">';
 		if ( is_array( $comments ) && $comments ) {
 			/**
@@ -110,7 +127,9 @@ class CommentList extends \WP_Widget {
 			 */
 			foreach ( (array) $comments as $comment ) {
 
-				$comment_text       = $comment->comment_content;
+				$comment_text       = wp_trim_words( $comment->comment_content, 10 );
+				$comment_datetime   = date( 'c', strtotime( $comment->comment_date ) );
+				$comment_human_time = human_time_diff( current_time( 'timestamp' ), strtotime( $comment->comment_date ) ) . ' ' . __( 'ago', 'anycomment' );
 				$comment_link       = esc_url( get_comment_link( $comment ) );
 				$post_title         = get_the_title( $comment->comment_post_ID );
 				$author_name        = $comment->comment_author;
@@ -132,7 +151,10 @@ class CommentList extends \WP_Widget {
                 $social_logo
             </div>
         </div>
-        <div class="anycomment-comments-widget__item__header-author">$author_name</div>
+        <div class="anycomment-comments-widget__item__header-meta">
+            <div class="anycomment-comments-widget__item__header-meta--author">$author_name</div>
+            <time class="anycomment-comments-widget__item__header-meta--date" datetime="$comment_datetime">$comment_human_time</time>
+        </div>  
     </div>
     <div class="anycomment-comments-widget__item__body"><p>$comment_text</p></div>
     <div class="anycomment-comments-widget__item__footer"><a href="$comment_link">$post_title</a></div>
@@ -141,6 +163,7 @@ EOT;
 			}
 		}
 		$output .= '</ul>';
+		$output .= '</div>';
 		$output .= $args['after_widget'];
 
 		echo $output;
@@ -158,9 +181,14 @@ EOT;
 	 * @return array Updated settings to save.
 	 */
 	public function update( $new_instance, $old_instance ) {
-		$instance           = $old_instance;
-		$instance['title']  = sanitize_text_field( $new_instance['title'] );
-		$instance['number'] = absint( $new_instance['number'] );
+		$instance                          = $old_instance;
+		$instance['title']                 = sanitize_text_field( $new_instance['title'] );
+		$instance['number']                = absint( $new_instance['number'] );
+		$instance['scss_font_size']        = sanitize_text_field( $new_instance['scss_font_size'] );
+		$instance['scss_background_color'] = sanitize_text_field( $new_instance['scss_background_color'] );
+		$instance['scss_comment_color']    = sanitize_text_field( $new_instance['scss_comment_color'] );
+		$instance['scss_author_color']     = sanitize_text_field( $new_instance['scss_author_color'] );
+		$instance['scss_avatar_size']      = sanitize_text_field( $new_instance['scss_avatar_size'] );
 
 		return $instance;
 	}
@@ -175,17 +203,54 @@ EOT;
 	public function form( $instance ) {
 		$title  = isset( $instance['title'] ) ? $instance['title'] : '';
 		$number = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
+
+		$font_size        = isset( $instance['scss_font_size'] ) ? $instance['scss_font_size'] : '14px';
+		$background_color = isset( $instance['scss_background_color'] ) ? $instance['scss_background_color'] : '#fff';
+		$comment_color    = isset( $instance['scss_comment_color'] ) ? $instance['scss_comment_color'] : '#2A2E2E';
+		$author_color     = isset( $instance['scss_author_color'] ) ? $instance['scss_author_color'] : '#1DA1F2';
+		$avatar_size      = isset( $instance['scss_avatar_size'] ) ? $instance['scss_avatar_size'] : '30px';
 		?>
-        <p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
+        <p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'anycomment' ); ?></label>
             <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>"
                    name="<?php echo $this->get_field_name( 'title' ); ?>" type="text"
                    value="<?php echo esc_attr( $title ); ?>"/></p>
 
         <p>
-            <label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of comments to show:' ); ?></label>
+            <label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of comments to show:', 'anycomment' ); ?></label>
             <input class="tiny-text" id="<?php echo $this->get_field_id( 'number' ); ?>"
                    name="<?php echo $this->get_field_name( 'number' ); ?>" type="number" step="1" min="1"
                    value="<?php echo $number; ?>" size="3"/></p>
+
+        <p>
+            <label for="<?php echo $this->get_field_id( 'scss_font_size' ); ?>"><?php _e( 'Font size:', 'anycomment' ); ?></label>
+            <input class="widefat" id="<?php echo $this->get_field_id( 'scss_font_size' ); ?>"
+                   name="<?php echo $this->get_field_name( 'scss_font_size' ); ?>" type="text"
+                   value="<?php echo $font_size; ?>"/></p>
+
+        <p>
+            <label for="<?php echo $this->get_field_id( 'scss_background_color' ); ?>"><?php _e( 'Background color:', 'anycomment' ); ?></label>
+            <input class="widefat" id="<?php echo $this->get_field_id( 'scss_background_color' ); ?>"
+                   name="<?php echo $this->get_field_name( 'scss_background_color' ); ?>" type="text"
+                   value="<?php echo $background_color; ?>"/></p>
+
+        <p>
+            <label for="<?php echo $this->get_field_id( 'scss_comment_color' ); ?>"><?php _e( 'Comment text color:', 'anycomment' ); ?></label>
+            <input class="widefat" id="<?php echo $this->get_field_id( 'scss_comment_color' ); ?>"
+                   name="<?php echo $this->get_field_name( 'scss_comment_color' ); ?>" type="text"
+                   value="<?php echo $comment_color; ?>"/></p>
+
+        <p>
+            <label for="<?php echo $this->get_field_id( 'scss_author_color' ); ?>"><?php _e( 'Author name color:', 'anycomment' ); ?></label>
+            <input class="widefat" id="<?php echo $this->get_field_id( 'scss_author_color' ); ?>"
+                   name="<?php echo $this->get_field_name( 'scss_author_color' ); ?>" type="text"
+                   value="<?php echo $author_color; ?>"/></p>
+
+
+        <p>
+            <label for="<?php echo $this->get_field_id( 'scss_avatar_size' ); ?>"><?php _e( 'Author avatar size:', 'anycomment' ); ?></label>
+            <input class="widefat" id="<?php echo $this->get_field_id( 'scss_avatar_size' ); ?>"
+                   name="<?php echo $this->get_field_name( 'scss_avatar_size' ); ?>" type="text"
+                   value="<?php echo $avatar_size; ?>"/></p>
 		<?php
 	}
 }
