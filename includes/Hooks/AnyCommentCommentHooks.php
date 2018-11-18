@@ -44,11 +44,11 @@ class AnyCommentCommentHooks {
 		// On comment status change
 //		add_action( 'wp_set_comment_status', [ $this, 'process_set_status_comment' ], 10, 2 );
 
-		kses_remove_filters();
-		remove_filter( 'comment_text', 'wp_kses_post' );
 
-		add_action( 'wp_insert_comment', [ $this, 'process_new_comment' ], 10, 2 );
+		add_action( 'wp_insert_comment', [ $this, 'process_new_comment' ], 9, 2 );
 
+		remove_filter( 'pre_comment_content', 'wp_filter_post_kses' );
+		remove_filter( 'pre_comment_content', 'wp_filter_kses' );
 
 		// Extend allowed HTML tags to the needs of visual editor
 		add_filter( 'pre_comment_content', [ $this, 'kses_allowed_html_for_quill' ], 9 );
@@ -57,34 +57,33 @@ class AnyCommentCommentHooks {
 	/**
 	 * Extend list of allowed HTML tags.
 	 *
-	 * @param $allowedtags
+	 * @param string $data Post content to filter, expected to be escaped with slashes
 	 *
 	 * @return mixed
 	 */
-	public function kses_allowed_html_for_quill( $comment_content ) {
+	public function kses_allowed_html_for_quill( $data ) {
+		global $allowedtags;
 
-		$allowedhtml['p']          = [];
-		$allowedhtml['a']          = [ 'href' => true, 'target' => true, 'rel' => true ];
-		$allowedhtml['ul']         = [];
-		$allowedhtml['ol']         = [];
-		$allowedhtml['blockquote'] = [ 'class' => true ];
-		$allowedhtml['code']       = [];
-		$allowedhtml['li']         = [];
-		$allowedhtml['b']          = [];
-		$allowedhtml['i']          = [];
-		$allowedhtml['u']          = [];
-		$allowedhtml['strong']     = [];
-		$allowedhtml['em']         = [];
-		$allowedhtml['br']         = [];
-		$allowedhtml['img']        = [ 'class' => true, 'src' => true, 'alt' => true ];
-		$allowedhtml['figure']     = [];
-		$allowedhtml['iframe']     = [];
+		$allowedtags = [];
 
-		$comment_content = wp_kses( $comment_content, $allowedhtml );
+		$allowedtags['p']          = [];
+		$allowedtags['a']          = [ 'href' => true, 'target' => true, 'rel' => true ];
+		$allowedtags['ul']         = [];
+		$allowedtags['ol']         = [];
+		$allowedtags['blockquote'] = [ 'class' => true ];
+		$allowedtags['code']       = [];
+		$allowedtags['li']         = [];
+		$allowedtags['b']          = [];
+		$allowedtags['i']          = [];
+		$allowedtags['u']          = [];
+		$allowedtags['strong']     = [];
+		$allowedtags['em']         = [];
+		$allowedtags['br']         = [];
+		$allowedtags['img']        = [ 'class' => true, 'src' => true, 'alt' => true ];
+		$allowedtags['figure']     = [];
+		$allowedtags['iframe']     = [];
 
-		kses_init_filters();
-
-		return $comment_content;
+		return $data;
 	}
 
 	/**
