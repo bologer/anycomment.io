@@ -15,6 +15,10 @@ In order to start, you need:
 * Configure social networks you need (we have guides English & Russian to help you with this)
 * You are good to go!
 
+# Coding Standard
+AnyComment source conforms to [PSR2](https://www.php-fig.org/psr/psr-2/).
+
+
 # Resources
 * [Official website](http://anycomment.io/en/)
 * [All guides](https://anycomment.io/en/category/tutorials/)

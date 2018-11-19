@@ -167,7 +167,7 @@
               user-select: none;
               height: 18px;
               line-height: 18px;
-              border-radius: $global-radius;
+              @include border-radius($global-radius);
             }
 
             &-reply {
@@ -415,8 +415,6 @@
               display: inline-block;
               margin-right: 15px;
 
-
-
               .svg-inline--fa {
                 font-size: $font-size + 1;
                 margin-right: 7px;
@@ -518,6 +516,4 @@
       }
     }
   }
-
-  @import "mobile";
 }

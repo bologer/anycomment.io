@@ -1030,6 +1030,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 			'global-padding'                  => AnyCommentGenericSettings::get_global_padding(),
 			'global-background-color'         => AnyCommentGenericSettings::get_global_background_color(),
 			'global-background-border-radius' => AnyCommentGenericSettings::get_global_background_border_radius(),
+			'global-radius' => AnyCommentGenericSettings::get_design_global_radius(),
 
 			'font-size'   => AnyCommentGenericSettings::get_design_font_size(),
 			'font-family' => AnyCommentGenericSettings::get_design_font_family(),
@@ -1051,8 +1052,6 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 			'btn-color'                   => AnyCommentGenericSettings::get_design_button_color(),
 			'btn-background-color'        => AnyCommentGenericSettings::get_design_button_background_color(),
 			'btn-background-color-active' => AnyCommentGenericSettings::get_design_button_background_color_active(),
-
-			'global-radius' => AnyCommentGenericSettings::get_design_global_radius(),
 		];
 
 		$compiler = new ScssCompiler();

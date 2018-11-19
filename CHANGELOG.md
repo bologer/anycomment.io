@@ -12,7 +12,8 @@
 
 * Fixed issue when sender name was not set from the admin panel, #317
 * Fixed issue when it was not possible to copy long text as it was folding/unfolding on this action, #320
-* Fixed issue when newlinews and some of the other issue when user was posing comment as non-admin user
+* Fixed issue when newlines and some of the other issue when user was posing comment as non-admin user
+* Fixed issue when global border radius was not changing based on the settings value
 
 ## 0.0.72 – 15.11.2018
 
