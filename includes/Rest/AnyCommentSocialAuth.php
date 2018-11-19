@@ -977,12 +977,12 @@ class AnyCommentSocialAuth {
 			return null;
 		}
 
-		if ( $decode ) {
-			return json_decode( stripslashes( $errors ) );
-		}
-
 		if ( $andClean ) {
 			static::cleanErrors();
+		}
+
+		if ( $decode ) {
+			return json_decode( stripslashes( $errors ) );
 		}
 
 		return $errors;

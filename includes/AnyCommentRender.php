@@ -29,7 +29,7 @@ class AnyCommentRender {
 	/**
 	 * @var array|null Array list of error when there are such.
 	 */
-	public $errors = null;
+	public static $errors = null;
 
 	/**
 	 * AC_Render constructor.
@@ -46,7 +46,7 @@ class AnyCommentRender {
 
 		add_filter( 'script_loader_tag', [ $this, 'add_async_to_bundle' ], 10, 2 );
 
-		$this->errors = AnyCommentSocialAuth::getErrors();
+		self::$errors = AnyCommentSocialAuth::getErrors(true, true);
 	}
 
 
@@ -131,7 +131,7 @@ class AnyCommentRender {
 				'locale'       => get_locale(),
 				'restUrl'      => esc_url_raw( rest_url( 'anycomment/v1/' ) ),
 				'commentCount' => ( $res = get_comment_count( $postId ) ) !== null ? (int) $res['all'] : 0,
-				'errors'       => $this->errors,
+				'errors'       => self::$errors,
 				'urls'         => [
 					'logout'  => wp_logout_url(),
 					'postUrl' => $postPermalink,
