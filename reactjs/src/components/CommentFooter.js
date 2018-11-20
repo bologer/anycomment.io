@@ -13,6 +13,7 @@ class CommentFooter extends AnyCommentComponent {
         super();
 
         this.state = {
+            likeClass: '',
             processLikeStates: false
         };
     }
@@ -21,9 +22,12 @@ class CommentFooter extends AnyCommentComponent {
      * Handle like action.
      */
     handleLike = (e) => {
-        this.setState({
-            processLikeStates: !this.state.processLikeStates
-        });
+
+        if (!this.state.processLikeStates) {
+            this.setState({
+                processLikeStates: true
+            });
+        }
 
         this.props.onLike(e);
     };
@@ -37,7 +41,7 @@ class CommentFooter extends AnyCommentComponent {
         const likeIcon = <Icon icon={faHeart} style={this.props.hasLike ? {color: '#EC4568'} : ''}/>;
         const editIcon = <Icon icon={faEdit}/>;
 
-        let likeActionClass = "anycomment comment-single-body__actions-like" + (this.props.hasLike ? '-active' : '');
+        let likeActionClass = "anycomment comment-single-body__actions-like";
 
         if (this.state.processLikeStates) {
             likeActionClass += " comment-single-body__actions-like-" + (this.props.hasLike ? 'active' : 'static')
