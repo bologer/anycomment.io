@@ -106,9 +106,9 @@
           &-auth-type {
             $size: 15px;
             position: absolute;
-            bottom: 0;
-            left: 0;
-            border-radius: $avatar-border-radius;
+            bottom: -($size / 4);
+            right: -($size / 4);
+            border-radius: 50%;
             width: $size;
             height: $size;
             font-size: 9px;

@@ -57,7 +57,6 @@ class Subscribe extends AnyCommentComponent {
                 headers: {'X-WP-Nonce': settings.nonce}
             })
             .then(function (response) {
-                self.handleClose();
                 self.showSuccess(settings.i18.subscribed);
             })
             .catch(function (error) {

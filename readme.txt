@@ -181,6 +181,10 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Fixed issue when global border radius was not changing based on the settings value
 * Fixed issue when repeating error messages could have been shown in case user tried to use admin's email to login via social, #312
 
+**Other:**
+
+* Social icons are now on the right of the avatar, #318
+
 
 = 0.0.72 – 15.11.2018 =
 
