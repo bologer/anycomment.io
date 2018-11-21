@@ -128,10 +128,21 @@ class CommentList extends AnyCommentComponent {
     };
 
     /**
+     * Follow new comments to load them once there is something new.
+     *
+     * Notice: invocation of them will be skipped in case user is out of
+     * active tab. E.g. went to another tab or so as this may produce unwanted
+     * requests.
      *
      * @returns {*|Promise<T>}
      */
     followNewComments() {
+
+        // Drop request if user is not active in the tab
+        if (document.hidden) {
+            return false;
+        }
+
         const self = this;
         const settings = this.props.settings;
 

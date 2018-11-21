@@ -18,6 +18,11 @@ class AnyCommentRestCacheManager extends AnyCommentCacheManager {
 	public static $post = '/post/%s';
 
 	/**
+	 * @var string Post + count part.
+	 */
+	public static $post_count = '/post/count/%s';
+
+	/**
 	 * @var string Comments part of namespace.
 	 */
 	public static $comments = '/comments/%s';
@@ -38,6 +43,24 @@ class AnyCommentRestCacheManager extends AnyCommentCacheManager {
 
 
 		return AnyComment()->cache->getItem( static::buildPostNamespace( $postId ) );
+	}
+
+	/**
+	 * Get post comment count.
+	 *
+	 * @param $post
+	 *
+	 * @return bool|\Stash\Interfaces\ItemInterface
+	 */
+	public static function getPostCommentCount( $post ) {
+		$postId = static::retrievePostId( $post );
+
+		if ( $postId === null ) {
+			return false;
+		}
+
+
+		return AnyComment()->cache->getItem( static::buildPostCommentCountNamespace( $postId ) );
 	}
 
 	/**
@@ -64,6 +87,24 @@ class AnyCommentRestCacheManager extends AnyCommentCacheManager {
 	 */
 	public static function flush() {
 		return AnyComment()->cache->deleteItem( static::getNamespace() );
+	}
+
+	/**
+	 * Flush comment count for specified post.
+	 *
+	 * @param int|\WP_Post $post Post ID to flush comments for.
+	 *
+	 * @return bool
+	 */
+	public static function flushPostCommentCount( $post ) {
+
+		$postId = static::retrievePostId( $post );
+
+		if ( $postId === null ) {
+			return false;
+		}
+
+		return AnyComment()->cache->deleteItem( static::buildPostCommentCountNamespace( $postId ) );
 	}
 
 	/**
@@ -131,6 +172,20 @@ class AnyCommentRestCacheManager extends AnyCommentCacheManager {
 	 */
 	public static function buildPostNamespace( $postId ) {
 		return static::getNamespace() . sprintf( static::$post, $postId );
+	}
+
+	/**
+	 * Build full namespace for single post comment count.
+	 *
+	 * Example namespace returned:
+	 * /anycomment/rest/post/{postId}
+	 *
+	 * @param int $postId Post ID.
+	 *
+	 * @return string
+	 */
+	public static function buildPostCommentCountNamespace( $postId ) {
+		return static::getNamespace() . sprintf( static::$post_count, $postId );
 	}
 
 	/**

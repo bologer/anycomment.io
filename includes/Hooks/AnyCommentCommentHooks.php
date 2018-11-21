@@ -2,6 +2,7 @@
 
 namespace AnyComment\Hooks;
 
+use AnyComment\Cache\AnyCommentRestCacheManager;
 use WP_Comment;
 
 use AnyComment\Models\AnyCommentSubscriptions;
@@ -95,6 +96,9 @@ class AnyCommentCommentHooks {
 	public function process_new_comment( $comment_id, $comment ) {
 		// Notify subscribers
 		AnyCommentSubscriptions::notify_by( $comment );
+
+		// Flush post comment count cache
+		AnyCommentRestCacheManager::flushPostCommentCount( $comment->comment_post_ID );
 	}
 
 	/**
@@ -106,6 +110,9 @@ class AnyCommentCommentHooks {
 	public function process_deleted_comment( $comment_id, $comment ) {
 		// Delete likes of a comment
 		AnyCommentLikes::deleteLikes( $comment_id );
+
+		// Flush post comment count cache
+		AnyCommentRestCacheManager::flushPostCommentCount( $comment->comment_post_ID );
 
 		// Delete attached files
 		$comment_metas = AnyCommentCommentMeta::get_attachments( $comment_id );

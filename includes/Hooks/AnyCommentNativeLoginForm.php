@@ -89,7 +89,7 @@ class AnyCommentNativeLoginForm {
 			}
 			$url          = $social['url'];
 			$label        = $social['label'];
-			$src          = AnyComment()->plugin_url() . "/assets/img/icons/auth/social-$key.svg";
+			$src          = AnyComment()->plugin_url() . "/assets/img/socials/$key.svg";
 			$socials_html .= <<<EOT
 <li>
     <a href="$url" title="$label">
@@ -133,6 +133,21 @@ ul.anycomment-socials li {
 ul.anycomment-socials > li > a {
 	text-decoration: none;
 	opacity: 1;
+	box-shadow: none;
+	transition: none;
+	background-color: transparent;
+}
+
+ul.anycomment-socials > li > a:hover,
+ul.anycomment-socials > li > a:active, 
+ul.anycomment-socials > li > a:focus {
+	opacity: 1;
+}
+
+ul.anycomment-socials > li > a,
+ul.anycomment-socials > li > a img {
+	box-shadow: none;
+	-webkit-box-shadow: none;
 }
 
 ul.anycomment-socials > li > a:hover {

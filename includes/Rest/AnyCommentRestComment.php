@@ -3,6 +3,7 @@
 namespace AnyComment\Rest;
 
 use AnyComment\AnyCommentUser;
+use AnyComment\Cache\AnyCommentRestCacheManager;
 use WP_Post;
 use WP_User;
 use WP_Error;
@@ -191,8 +192,16 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	 */
 	public function get_count( $request ) {
 
+		$post_id = $request->get_param( 'post' );
+		$cache   = AnyCommentRestCacheManager::getPostCommentCount( $post_id );
+
+		if ( $cache->isHit() ) {
+			return rest_ensure_response( $cache->get() );
+		}
+
 		$comment_count = 0;
-		if ( ( $post_id = $request->get_param( 'post' ) ) !== null ) {
+
+		if ( $post_id !== null ) {
 			$data = get_comment_count( $post_id );
 
 			if ( is_array( $data ) ) {
@@ -200,9 +209,9 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			}
 		}
 
-		$response = rest_ensure_response( $comment_count );
+		$cache->set( $comment_count )->save();
 
-		return $response;
+		return rest_ensure_response( $comment_count );
 	}
 
 	/**
