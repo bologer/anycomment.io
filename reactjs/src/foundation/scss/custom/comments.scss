@@ -108,15 +108,10 @@
             position: absolute;
             bottom: -($size / 4);
             right: -($size / 4);
-            border-radius: 50%;
-            width: $size;
-            height: $size;
-            font-size: 9px;
-            line-height: $size;
 
-            svg {
-              font-size: 9px;
-              line-height: $size;
+            &, & > img {
+              width: $size;
+              height: $size;
             }
           }
         }
