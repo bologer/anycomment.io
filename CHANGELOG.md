@@ -1,12 +1,11 @@
 # Changelog
 
-## 0.0.73 – 17.11.2018
+## 0.0.73 – 21.11.2018
 
 **Enhancements:**
 
 * Added pretty like animation, #316
 * New widget to display list of comment in the sidebar, #319
-
 
 **Fixes:**
 
