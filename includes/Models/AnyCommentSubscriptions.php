@@ -230,18 +230,29 @@ class AnyCommentSubscriptions extends AnyCommentActiveRecord {
 	 * Check whether user subscribed by specified field and search value.
 	 *
 	 * @param string $email Database field to search for. Should be taken from table schema.
-	 * @param int|null $post_id Post ID to check whether user is subsribed to it. Leave empty to check just for email.
+	 * @param mixed $post Post ID or instance to check whether user is subscribed to it. Leave empty to check just for email.
 	 *
 	 * @return bool
 	 */
-	public static function is_subscribed_by( $email, $post_id = null ) {
+	public static function is_subscribed_by( $email, $post = null ) {
 
 		$condition_array = [ $email ];
 		$condition       = "email = %s";
 
-		if ( $post_id !== null ) {
-			$condition         .= ' AND post_ID = %d';
-			$condition_array[] = $post_id;
+		if ( $post !== null ) {
+
+			$post_id = null;
+
+			if ( $post instanceof \WP_Post ) {
+				$post_id = $post->ID;
+			} elseif ( is_numeric( $post ) ) {
+				$post_id = $post;
+			}
+
+			if ( ! empty( $post_id ) ) {
+				$condition         .= ' AND post_ID = %d';
+				$condition_array[] = $post_id;
+			}
 		}
 
 		global $wpdb;

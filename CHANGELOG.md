@@ -8,6 +8,7 @@
 
 **Fixes:**
 
+* Fixed issue when guest users could subscribe multiple times for same post
 
 
 ## 0.0.73 – 21.11.2018
