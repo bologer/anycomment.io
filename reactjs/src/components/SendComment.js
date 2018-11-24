@@ -4,7 +4,6 @@ import SendCommentFormBody from './SendCommentFormBody';
 import AnyCommentComponent from "./AnyCommentComponent";
 import ReCAPTCHA from "react-google-recaptcha";
 import {toast} from 'react-toastify';
-import CommentSanitization from "./CommentSanitization";
 import DataProcessing from './DataProcessing'
 import Icon from './Icon'
 import {faTimes} from '@fortawesome/free-solid-svg-icons'
@@ -144,7 +143,7 @@ class SendComment extends AnyCommentComponent {
      */
     prepareUpdateForm = (comment) => {
 
-        const commentHtml = CommentSanitization.sanitize(comment.content);
+        const commentHtml = comment.content.trim();
 
         if (commentHtml !== '') {
 
@@ -152,7 +151,7 @@ class SendComment extends AnyCommentComponent {
                 replyName: '',
                 editId: comment.id,
                 buttonText: this.props.settings.i18.button_save,
-                commentHTML: commentHtml,
+                commentHTML: comment.content,
                 buttonEnabled: true
             };
 
@@ -252,10 +251,8 @@ class SendComment extends AnyCommentComponent {
             self = this,
             url = '/comments' + (editId ? ('/' + editId) : '');
 
-        const cleanCommentHtml = CommentSanitization.sanitize(commentHTML);
-
         let params = {
-            content: cleanCommentHtml,
+            content: commentHTML,
         };
 
         if (!editId) {
@@ -324,10 +321,8 @@ class SendComment extends AnyCommentComponent {
 
         const url = '/comments';
 
-        const cleanCommentHtml = CommentSanitization.sanitize(commentHTML);
-
         let params = {
-            content: cleanCommentHtml,
+            content: commentHTML,
         };
 
         if (!settings.options.isFormTypeSocials) {

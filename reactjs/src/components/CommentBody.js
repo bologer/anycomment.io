@@ -1,7 +1,6 @@
 import React from 'react';
 import AnyCommentComponent from './AnyCommentComponent'
 import TweetEmbed from 'react-tweet-embed';
-import CommentSanitization from "./CommentSanitization";
 
 const MAX_BODY_HEIGHT = 250;
 
@@ -25,9 +24,7 @@ class CommentBody extends AnyCommentComponent {
      * @returns {*}
      */
     processContent() {
-        let content = this.props.comment.content;
-
-        return CommentSanitization.sanitize(content);
+        return this.props.comment.content;
     };
 
     /**

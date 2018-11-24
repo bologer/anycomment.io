@@ -348,7 +348,7 @@ class CommentList extends AnyCommentComponent {
 
                         {!isLastPage ?
                             <div className="anycomment comment-single-load-more">
-                            <span onClick={(e) => this.handleLoadMore(e)}
+                                <span onClick={(e) => this.handleLoadMore(e)}
                                   className="anycomment anycomment-btn">{settings.i18.load_more}</span>
                             </div>
                             : ''}

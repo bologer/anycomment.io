@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.0.74 – 24.11.2018
+
+**Enhancements:**
+
+* JS main dependency is not much lighter ~600kb
+
+**Fixes:**
+
+
+
 ## 0.0.73 – 21.11.2018
 
 **Enhancements:**
