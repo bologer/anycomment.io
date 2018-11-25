@@ -176,6 +176,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 **Fixes:**
 
 * Fixed issue when guest users could subscribe multiple times for same post
+* Fixed issue when admin bar setting was not taken affect
 
 
 

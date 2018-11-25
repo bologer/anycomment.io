@@ -35,6 +35,7 @@ class AnyCommentLoader {
 		'AnyComment\AnyCommentAvatars',
 
 		// Hooks
+		'AnyComment\Hooks\AnyCommentCommonHooks',
 		'AnyComment\Hooks\AnyCommentCommentHooks',
 		'AnyComment\Hooks\AnyCommentNativeLoginForm',
 

@@ -18,7 +18,7 @@ class Comment extends AnyCommentComponent {
 
         this.state = {
             likesCount: props.comment.meta.likes,
-            hasLike: props.comment.meta.hasLike,
+            hasLike: props.comment.meta.has_like,
 
             action: '',
         };
@@ -73,8 +73,8 @@ class Comment extends AnyCommentComponent {
             })
             .then(function (response) {
                 self.setState({
-                    likesCount: response.data.total_count,
-                    hasLike: response.data.hasLike,
+                    likesCount: response.data.likes,
+                    hasLike: response.data.has_like,
                 });
             })
             .catch(function (error) {

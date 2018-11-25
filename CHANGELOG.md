@@ -10,7 +10,7 @@
 **Fixes:**
 
 * Fixed issue when guest users could subscribe multiple times for same post
-
+* Fixed issue when admin bar setting was not taken affect
 
 ## 0.0.73 – 21.11.2018
 
