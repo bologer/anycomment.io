@@ -47,7 +47,7 @@ class AnyCommentLoader {
 		'AnyComment\EmailEndpoints',
 
 		// Widgets
-		'AnyComment\Widgets\CommentList',
+		'AnyComment\Widgets\Native\CommentList',
 
 		// Main
 		'AnyComment\AnyCommentRender',

@@ -36,7 +36,20 @@ class AnyCommentRestLikes extends AnyCommentRestController {
 				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => [ $this, 'create_item' ],
 				'permission_callback' => [ $this, 'create_item_permissions_check' ],
-				'args'                => $this->get_endpoint_args_for_item_schema( WP_REST_Server::CREATABLE ),
+				'args'                => [
+					'comment' => [
+						'description' => __( 'Comment id.', 'anycomment' ),
+						'type'        => 'integer',
+					],
+					'post'    => [
+						'description' => __( 'Post id.', 'anycomment' ),
+						'type'        => 'integer',
+					],
+					'type'    => [
+						'description' => sprintf( __( 'Like - %d or dislike - %d.', 'anycomment' ), AnyCommentLikes::TYPE_LIKE, AnyCommentLikes::TYPE_DISLIKE ),
+						'type'        => 'integer',
+					],
+				],
 			],
 			'schema' => [ $this, 'get_public_item_schema' ],
 		] );
@@ -96,6 +109,12 @@ class AnyCommentRestLikes extends AnyCommentRestController {
 			return new WP_Error( 'rest_comment_like_trash_post', __( 'Sorry, you are not allowed to create a comment on this post.', 'anycomment' ), array( 'status' => 403 ) );
 		}
 
+		$type = $request['type'];
+
+		if ( $type !== AnyCommentLikes::TYPE_LIKE && $type !== AnyCommentLikes::TYPE_DISLIKE ) {
+			return new WP_Error( 'rest_comment_rating_invalid', sprintf( __( 'Sorry, rating type can be only %s or %s.', 'anycomment' ), AnyCommentLikes::TYPE_LIKE, AnyCommentLikes::TYPE_DISLIKE ), array( 'status' => 403 ) );
+		}
+
 		return true;
 	}
 
@@ -115,29 +134,47 @@ class AnyCommentRestLikes extends AnyCommentRestController {
 			return new WP_Error( 'rest_comment_like_exists', __( 'Cannot create existing like.', 'anycomment' ), array( 'status' => 400 ) );
 		}
 
-		$like = new AnyCommentLikes();
+		$model = new AnyCommentLikes();
 
-		$like->comment_ID = $request['comment'];
+		$model->comment_ID = $request['comment'];
 
 		if ( ( $user = wp_get_current_user() ) instanceof WP_User ) {
-			$like->user_ID = $user->id;
+			$model->user_ID = $user->id;
 		}
 
-		$like->post_ID = $request['post'];
+		$model->post_ID = $request['post'];
 
-		if ( ! AnyCommentLikes::is_current_user_has_like( $like->comment_ID, $user->ID ) ) {
-			if ( ! $like->save() ) {
-				return new WP_Error( 'rest_like_fail', __( 'Failed to like', 'anycomment' ), [ 'status' => 400 ] );
+		$model->type = $request['type'];
+
+		if ( ! AnyCommentLikes::is_user_has( $model->type, $model->comment_ID ) ) {
+
+			// Should delete opposite of type to make sure user does not
+			// set like and dislike at the same time
+			if ( $model->type === AnyCommentLikes::TYPE_LIKE ) {
+				AnyCommentLikes::delete_dislike( $model->comment_ID );
+			} else {
+				AnyCommentLikes::delete_like( $model->comment_ID );
+			}
+
+			if ( ! $model->save() ) {
+				return new WP_Error(
+					'rest_like_fail',
+					sprintf(
+						__( 'Failed to %s', 'anycomment' ),
+						( $model->type === AnyCommentLikes::TYPE_LIKE ? __( 'like', 'anycomment' ) : __( 'dislike', 'anycomment' ) )
+					),
+					[ 'status' => 400 ]
+				);
 			}
 		} else {
-			AnyCommentLikes::delete_like( $like->comment_ID );
+			AnyCommentLikes::delete_by_type( $model->type, $model->comment_ID );
 		}
 
-		$response = $this->prepare_item_for_response( $like, $request );
+		$response = $this->prepare_item_for_response( $model, $request );
 		$response = rest_ensure_response( $response );
 
 		$response->set_status( 201 );
-		$response->header( 'Location', rest_url( sprintf( '%s/%s/%d', $this->namespace, $this->rest_base, $like->ID ) ) );
+		$response->header( 'Location', rest_url( sprintf( '%s/%s/%d', $this->namespace, $this->rest_base, $model->ID ) ) );
 
 
 		return $response;
@@ -148,23 +185,25 @@ class AnyCommentRestLikes extends AnyCommentRestController {
 	 *
 	 * @since 4.7.0
 	 *
-	 * @param AnyCommentLikes $like Like object.
+	 * @param AnyCommentLikes $model Like object.
 	 * @param WP_REST_Request $request Request object.
 	 *
 	 * @return WP_REST_Response Response object.
 	 */
-	public function prepare_item_for_response( $like, $request ) {
+	public function prepare_item_for_response( $model, $request ) {
 
 		$data = [];
 
-		if ( (int) $like->ID != 0 ) {
+		if ( (int) $model->ID != 0 ) {
 			$data = [
-				'liked_at' => mysql_to_rfc3339( $like->liked_at )
+				'liked_at' => mysql_to_rfc3339( $model->liked_at )
 			];
 		}
 
-		$data['total_count'] = AnyCommentLikes::get_likes_count( $like->comment_ID );
-		$data['has_like']    = AnyCommentLikes::is_current_user_has_like( $like->comment_ID );
+		$data['has_like']    = AnyCommentLikes::is_user_has_like( $model->comment_ID );
+		$data['has_dislike'] = AnyCommentLikes::is_user_has_dislike( $model->comment_ID );
+
+		$data = array_merge( $data, (array) AnyCommentLikes::get_summary( $model->comment_ID ) );
 
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 		$data    = $this->add_additional_fields_to_object( $data, $request );

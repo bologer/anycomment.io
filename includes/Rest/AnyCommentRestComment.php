@@ -948,14 +948,16 @@ class AnyCommentRestComment extends AnyCommentRestController {
 				'can_edit_comment' => AnyCommentUser::can_edit_comment( $comment ),
 			],
 			'meta'               => [
-				'has_like'    => AnyCommentLikes::is_current_user_has_like( $comment->comment_ID ),
+				'has_like'    => AnyCommentLikes::is_user_has_like( $comment->comment_ID ),
+				'has_dislike'    => AnyCommentLikes::is_user_has_dislike( $comment->comment_ID ),
 				'status'      => wp_get_comment_status( $comment ),
-				'likes_count' => AnyCommentLikes::get_likes_count( $comment->comment_ID ),
 				'count_text'  => AnyCommentUser::get_comment_count( $comment->comment_post_ID ),
 				'is_updated'  => AnyCommentCommentMeta::is_updated( $comment ),
 				'updated_by'  => AnyCommentCommentMeta::get_updated_by( $comment ),
 			]
 		);
+
+		$data['meta'] = array_merge( $data['meta'], (array) AnyCommentLikes::get_summary( $comment->comment_ID ) );
 
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 		$data    = $this->add_additional_fields_to_object( $data, $request );
@@ -969,8 +971,6 @@ class AnyCommentRestComment extends AnyCommentRestController {
 
 	/**
 	 * Prepends internal property prefix to query parameters to match our response fields.
-	 *
-	 * @since 4.7.0
 	 *
 	 * @param string $query_param Query parameter.
 	 *
@@ -1003,7 +1003,6 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	/**
 	 * Checks comment_approved to set comment status for single comment output.
 	 *
-	 * @since 4.7.0
 	 *
 	 * @param string|int $comment_approved comment status.
 	 *
@@ -1035,7 +1034,6 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	/**
 	 * Prepares a single comment to be inserted into the database.
 	 *
-	 * @since 4.7.0
 	 *
 	 * @param WP_REST_Request $request Request object.
 	 *
@@ -1105,7 +1103,6 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	/**
 	 * Retrieves the comment's schema, conforming to JSON Schema.
 	 *
-	 * @since 4.7.0
 	 *
 	 * @return array
 	 */
@@ -1263,7 +1260,6 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	/**
 	 * Retrieves the query params for collections.
 	 *
-	 * @since 4.7.0
 	 *
 	 * @return array Comments collection parameters.
 	 */
@@ -1410,8 +1406,6 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		 * collection parameter to an internal WP_Comment_Query parameter. Use the
 		 * `rest_comment_query` filter to set WP_Comment_Query parameters.
 		 *
-		 * @since 4.7.0
-		 *
 		 * @param array $query_params JSON Schema-formatted collection parameters.
 		 */
 		return apply_filters( 'rest_comment_collection_params', $query_params );
@@ -1419,8 +1413,6 @@ class AnyCommentRestComment extends AnyCommentRestController {
 
 	/**
 	 * Sets the comment_status of a given comment object when creating or updating a comment.
-	 *
-	 * @since 4.7.0
 	 *
 	 * @param string|int $new_status New comment status.
 	 * @param int $comment_id Comment ID.
@@ -1469,8 +1461,6 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	 *
 	 * Correctly handles posts with the inherit status.
 	 *
-	 * @since 4.7.0
-	 *
 	 * @param WP_Post $post Post object.
 	 * @param WP_REST_Request $request Request data to check.
 	 *
@@ -1507,8 +1497,6 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	/**
 	 * Checks if the comment can be read.
 	 *
-	 * @since 4.7.0
-	 *
 	 * @param WP_Comment $comment Comment object.
 	 * @param WP_REST_Request $request Request data to check.
 	 *
@@ -1541,8 +1529,6 @@ class AnyCommentRestComment extends AnyCommentRestController {
 
 	/**
 	 * Checks if a comment can be edited or deleted.
-	 *
-	 * @since 4.7.0
 	 *
 	 * @param WP_Comment $comment Comment object.
 	 *
@@ -1614,8 +1600,6 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	 * Accepts either a valid email address or empty string as a valid comment
 	 * author email address. Setting the comment author email to an empty
 	 * string is allowed when a comment is being updated.
-	 *
-	 * @since 4.7.0
 	 *
 	 * @param string $value Author email value submitted.
 	 * @param WP_REST_Request $request Full details about the request.

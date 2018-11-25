@@ -17,8 +17,8 @@ class Comment extends AnyCommentComponent {
         super(props);
 
         this.state = {
-            likesCount: props.comment.meta.likes_count,
-            hasLike: props.comment.meta.has_like,
+            likesCount: props.comment.meta.likes,
+            hasLike: props.comment.meta.hasLike,
 
             action: '',
         };
@@ -67,13 +67,14 @@ class Comment extends AnyCommentComponent {
                 params: {
                     comment: this.props.comment.id,
                     post: this.props.comment.post,
+                    type: 1
                 },
                 headers: {'X-WP-Nonce': settings.nonce}
             })
             .then(function (response) {
                 self.setState({
                     likesCount: response.data.total_count,
-                    hasLike: response.data.has_like,
+                    hasLike: response.data.hasLike,
                 });
             })
             .catch(function (error) {

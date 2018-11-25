@@ -74,6 +74,10 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 			'version'     => '0.0.70',
 			'description' => 'Migrate existing social users to new username format'
 		],
+		'0.0.74' => [
+			'version'     => '0.0.74',
+			'description' => 'Migrate adds `type` column to anycomment_likes table'
+		],
 	];
 
 	/**
