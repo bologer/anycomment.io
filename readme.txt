@@ -170,7 +170,8 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Enhancements:**
 
-* Added ability to choose between regular like and like/dislike, #322
+* Added likes/dislikes, #322
+* Added new option to control type of likes to display: just likes or likes/dislikes, #322
 * JS main dependency is not much lighter ~600kb
 
 **Fixes:**

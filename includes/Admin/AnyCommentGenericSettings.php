@@ -80,6 +80,11 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 */
 	const SORT_DESC = 'desc';
 
+	const OPTION_COMMENT_RATING = 'option_comment_rating';
+
+	const COMMENT_RATING_LIKES = 'likes'; // Likes only
+	const COMMENT_RATING_LIKES_DISLIKES = 'likes_dislikes'; // Likes and dislikes
+
 	/**
 	 * Default avatar.
 	 */
@@ -222,6 +227,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 		self::OPTION_INTERVAL_COMMENTS_CHECK => 10,
 
 		self::OPTION_DEFAULT_SORT_BY                                => self::SORT_DESC,
+		self::COMMENT_RATING_LIKES                                  => self::COMMENT_RATING_LIKES,
 
 		// Files
 		self::OPTION_FILES_LIMIT                                    => 5,
@@ -334,6 +340,16 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 						self::SORT_ASC  => __( 'Oldest first', 'anycomment' ),
 					],
 					'description' => esc_html( __( 'Default sorting.', "anycomment" ) ),
+				],
+				[
+					'id'          => self::OPTION_COMMENT_RATING,
+					'title'       => __( 'Comment rating', "anycomment" ),
+					'type'        => 'select',
+					'options'     => [
+						self::COMMENT_RATING_LIKES          => __( 'Likes only', 'anycomment' ),
+						self::COMMENT_RATING_LIKES_DISLIKES => __( 'Likes and dislikes', 'anycomment' ),
+					],
+					'description' => esc_html( __( 'Type of rating used for single comment. Option "Likes" would display only heart like, whereas "Likes and dislikes" would display up and down options.', "anycomment" ) ),
 				],
 				[
 					'id'          => self::OPTION_DEFAULT_AVATAR,
@@ -1030,7 +1046,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 			'global-padding'                  => AnyCommentGenericSettings::get_global_padding(),
 			'global-background-color'         => AnyCommentGenericSettings::get_global_background_color(),
 			'global-background-border-radius' => AnyCommentGenericSettings::get_global_background_border_radius(),
-			'global-radius' => AnyCommentGenericSettings::get_design_global_radius(),
+			'global-radius'                   => AnyCommentGenericSettings::get_design_global_radius(),
 
 			'font-size'   => AnyCommentGenericSettings::get_design_font_size(),
 			'font-family' => AnyCommentGenericSettings::get_design_font_family(),
@@ -1876,6 +1892,22 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 
 		if ( $value !== self::SORT_DESC && $value !== self::SORT_ASC ) {
 			return self::SORT_DESC;
+		}
+
+		return $value;
+	}
+
+
+	/**
+	 * Get comment rating type.
+	 *
+	 * @return string
+	 */
+	public static function get_comment_rating() {
+		$value = static::instance()->get_option( self::OPTION_COMMENT_RATING );
+
+		if ( $value !== self::COMMENT_RATING_LIKES && $value !== self::COMMENT_RATING_LIKES_DISLIKES ) {
+			return self::COMMENT_RATING_LIKES;
 		}
 
 		return $value;

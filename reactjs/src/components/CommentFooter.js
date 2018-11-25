@@ -53,13 +53,15 @@ class CommentFooter extends AnyCommentComponent {
                     <li className="anycomment"><a className="anycomment" href="javascript:void(0)"
                                                   onClick={(e) => this.props.onReply(e)}>{replyIcon}{settings.i18.reply}</a>
                     </li>
-                    <li className="anycomment">
-                        <a href="javascript:void(0)"
-                           className={likeActionClass}
-                           onClick={(e) => this.handleLike(e)}>{likeIcon}
-                            <span itemProp="upvoteCount">{this.props.likesCount}</span>
-                        </a>
-                    </li>
+
+                    {settings.options.commentRating === 'likes' ?
+                        <li className="anycomment">
+                            <a href="javascript:void(0)"
+                               className={likeActionClass}
+                               onClick={(e) => this.handleLike(e)}>{likeIcon}
+                                <span itemProp="upvoteCount">{this.props.likesCount}</span>
+                            </a>
+                        </li> : ''}
 
                     {!isGuest && comment.permissions.can_edit_comment ?
                         <li className="anycomment"><a className="anycomment" href="javascript:void(0)"

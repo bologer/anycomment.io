@@ -46,7 +46,7 @@ class AnyCommentRender {
 
 		add_filter( 'script_loader_tag', [ $this, 'add_async_to_bundle' ], 10, 2 );
 
-		self::$errors = AnyCommentSocialAuth::getErrors(true, true);
+		self::$errors = AnyCommentSocialAuth::getErrors( true, true );
 	}
 
 
@@ -170,6 +170,8 @@ class AnyCommentRender {
 					'fileUploadLimit'        => AnyCommentGenericSettings::get_file_upload_limit(),
 					'isRatingOn'             => AnyCommentGenericSettings::is_rating_on(),
 					'isReadMoreOn'           => AnyCommentGenericSettings::is_read_more_on(),
+
+					'commentRating' => AnyCommentGenericSettings::get_comment_rating(),
 
 					'isEditorOn'           => AnyCommentGenericSettings::is_editor_toolbar_on(),
 					'editorToolbarOptions' => AnyCommentGenericSettings::get_editor_toolbar_options(),
