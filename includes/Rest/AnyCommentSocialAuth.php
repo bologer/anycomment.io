@@ -39,6 +39,7 @@ class AnyCommentSocialAuth {
 	const SOCIAL_INSTAGRAM = 'instagram';
 	const SOCIAL_TWITCH = 'twitch';
 	const SOCIAL_DRIBBBLE = 'dribbble';
+	const SOCIAL_STEAM = 'steam';
 	const SOCIAL_YAHOO = 'yahoo';
 	const SOCIAL_WORDPRESS = 'wordpress';
 
@@ -290,7 +291,7 @@ class AnyCommentSocialAuth {
 					'scope'    => 'email, public_profile',
 					'keys'     => [
 						'id'     => AnyCommentSocialSettings::get_facebook_app_id(),
-						'secret' => AnyCommentSocialSettings::get_facebook_app_secret()
+						'secret' => AnyCommentSocialSettings::get_facebook_app_secret(),
 					],
 					'callback' => static::get_facebook_callback(),
 				],
@@ -298,7 +299,7 @@ class AnyCommentSocialAuth {
 					'enabled'  => AnyCommentSocialSettings::is_twitter_active(),
 					'keys'     => [
 						'key'    => AnyCommentSocialSettings::get_twitter_consumer_key(),
-						'secret' => AnyCommentSocialSettings::get_twitter_consumer_secret()
+						'secret' => AnyCommentSocialSettings::get_twitter_consumer_secret(),
 					],
 					'callback' => static::get_twitter_callback(),
 				],
@@ -306,7 +307,7 @@ class AnyCommentSocialAuth {
 					'enabled'  => AnyCommentSocialSettings::is_github_active(),
 					'keys'     => [
 						'id'     => AnyCommentSocialSettings::get_github_client_id(),
-						'secret' => AnyCommentSocialSettings::get_github_secret_key()
+						'secret' => AnyCommentSocialSettings::get_github_secret_key(),
 					],
 					'callback' => static::get_github_callback(),
 				],
@@ -315,7 +316,7 @@ class AnyCommentSocialAuth {
 					'keys'     => [
 						'id'     => AnyCommentSocialSettings::get_odnoklassniki_app_id(),
 						'key'    => AnyCommentSocialSettings::get_odnoklassniki_app_key(),
-						'secret' => AnyCommentSocialSettings::get_odnoklassniki_app_secret()
+						'secret' => AnyCommentSocialSettings::get_odnoklassniki_app_secret(),
 					],
 					'callback' => static::get_ok_callback(),
 				],
@@ -323,7 +324,7 @@ class AnyCommentSocialAuth {
 					'enabled'  => AnyCommentSocialSettings::is_instagram_active(),
 					'keys'     => [
 						'id'     => AnyCommentSocialSettings::get_instagram_client_id(),
-						'secret' => AnyCommentSocialSettings::get_nstagram_client_secret()
+						'secret' => AnyCommentSocialSettings::get_nstagram_client_secret(),
 					],
 					'callback' => static::get_instagram_callback(),
 				],
@@ -331,7 +332,7 @@ class AnyCommentSocialAuth {
 					'enabled'  => AnyCommentSocialSettings::is_twitch_active(),
 					'keys'     => [
 						'id'     => AnyCommentSocialSettings::get_twitch_client_id(),
-						'secret' => AnyCommentSocialSettings::get_twitch_client_secret()
+						'secret' => AnyCommentSocialSettings::get_twitch_client_secret(),
 					],
 					'callback' => static::get_twitch_callback(),
 				],
@@ -339,15 +340,23 @@ class AnyCommentSocialAuth {
 					'enabled'  => AnyCommentSocialSettings::is_dribbble_active(),
 					'keys'     => [
 						'id'     => AnyCommentSocialSettings::get_dribbble_client_id(),
-						'secret' => AnyCommentSocialSettings::get_dribbble_client_secret()
+						'secret' => AnyCommentSocialSettings::get_dribbble_client_secret(),
 					],
 					'callback' => static::get_dribbble_callback(),
+				],
+
+				self::$providers[ self::SOCIAL_STEAM ]      => [
+					'enabled'  => AnyCommentSocialSettings::is_steam_active(),
+					'keys'     => [
+						'secret' => AnyCommentSocialSettings::get_steam_secret(),
+					],
+					'callback' => static::get_steam_callback(),
 				],
 				self::$providers[ self::SOCIAL_YAHOO ]         => [
 					'enabled'  => AnyCommentSocialSettings::is_yahoo_active(),
 					'keys'     => [
 						'id'     => AnyCommentSocialSettings::get_ahoo_app_id(),
-						'secret' => AnyCommentSocialSettings::get_yahoo_client_secret()
+						'secret' => AnyCommentSocialSettings::get_yahoo_client_secret(),
 					],
 					'callback' => static::get_yahoo_callback(),
 				]
@@ -429,6 +438,17 @@ class AnyCommentSocialAuth {
 	 */
 	public static function get_dribbble_callback( $redirect = null ) {
 		return static::get_callback_url( self::SOCIAL_DRIBBBLE, $redirect );
+	}
+
+	/**
+	 * Get Steam callback URL.
+	 *
+	 * @param null|string $redirect Redirect URL added to the link.
+	 *
+	 * @return string
+	 */
+	public static function get_steam_callback( $redirect = null ) {
+		return static::get_callback_url( self::SOCIAL_STEAM, $redirect );
 	}
 
 	/**

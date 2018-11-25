@@ -26,7 +26,7 @@ class AnyCommentSocials {
 	 *
 	 * @return array|null List of socials or NULL in case when no socials defined or so.
 	 */
-	public static function getAll($redirectUrl = null) {
+	public static function getAll( $redirectUrl = null ) {
 		$socials = [
 			AnyCommentSocialAuth::SOCIAL_VKONTAKTE     => [
 				'slug'    => AnyCommentSocialAuth::SOCIAL_VKONTAKTE,
@@ -81,6 +81,12 @@ class AnyCommentSocials {
 				'url'     => AnyCommentSocialAuth::get_dribbble_callback( $redirectUrl ),
 				'label'   => __( 'Dribbble', "anycomment" ),
 				'visible' => AnyCommentSocialSettings::is_dribbble_active()
+			],
+			AnyCommentSocialAuth::SOCIAL_STEAM         => [
+				'slug'    => AnyCommentSocialAuth::SOCIAL_STEAM,
+				'url'     => AnyCommentSocialAuth::get_steam_callback( $redirectUrl ),
+				'label'   => __( 'Steam', "anycomment" ),
+				'visible' => AnyCommentSocialSettings::is_steam_active(),
 			],
 			AnyCommentSocialAuth::SOCIAL_YAHOO         => [
 				'slug'    => AnyCommentSocialAuth::SOCIAL_YAHOO,

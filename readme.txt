@@ -170,6 +170,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Enhancements:**
 
+* Added Steam as authorization option, #311
 * Added likes/dislikes, #322
 * Added new option to control type of likes to display: just likes or likes/dislikes, #322
 * JS main dependency is not much lighter ~600kb

@@ -91,6 +91,12 @@ class AnyCommentSocialSettings extends AnyCommentAdminOptions {
 	const OPTION_DRIBBBLE_CLIENT_SECRET = 'social_dribbble_client_secret_field';
 
 	/**
+	 * Steam
+	 */
+	const OPTION_STEAM_TOGGLE = 'social_steam_toggle_field';
+	const OPTION_STEAM_SECRET = 'social_steam_client_secret_field';
+
+	/**
 	 * Yahoo
 	 */
 	const OPTION_YAHOO_TOGGLE = 'social_yahoo_toggle_field';
@@ -436,6 +442,37 @@ class AnyCommentSocialSettings extends AnyCommentAdminOptions {
 			]
 		);
 
+		// Steam
+		$this->render_fields(
+			[
+				'id'   => 'section_steam',
+				'name' => __( 'Steam', "anycomment" ),
+			],
+			[
+				[
+					'id'          => self::OPTION_STEAM_TOGGLE,
+					'title'       => __( 'Enable', "anycomment" ),
+					'type'        => 'checkbox',
+					'description' => __( 'Allow Steam authorization', "anycomment" )
+				],
+				[
+					'id'          => self::OPTION_STEAM_SECRET,
+					'title'       => __( 'Key', "anycomment" ),
+					'type'        => 'text',
+					'description' => sprintf( __( 'Enter key. It can be found in the <a href="%s" target="_blank">Register Steam Web API Key</a>', "anycomment" ), 'https://steamcommunity.com/dev/registerkey' ),
+					'after'       => function () {
+						?>
+                        <div class="cell anycomment-form-wrapper__field">
+                            <label for="steam-callback"><?= __( 'Callback URL', 'anycomment' ) ?></label>
+                            <input type="text" id="steam-callback" onclick="this.select()" readonly="readonly"
+                                   value="<?= AnyCommentSocialAuth::get_steam_callback() ?>">
+                        </div>
+						<?php
+					},
+
+				]
+			]
+		);
 
 		// Dribbble
 		$this->render_fields(
@@ -875,6 +912,24 @@ class AnyCommentSocialSettings extends AnyCommentAdminOptions {
 	}
 
 	/**
+	 * Check whether Steam social is on.
+	 *
+	 * @return bool
+	 */
+	public static function is_steam_active() {
+		return static::instance()->get_option( self::OPTION_STEAM_TOGGLE ) !== null;
+	}
+
+	/**
+	 * Get Steam key.
+	 *
+	 * @return string|null
+	 */
+	public static function get_steam_secret() {
+		return static::instance()->get_option( self::OPTION_STEAM_SECRET ) !== null;
+	}
+
+	/**
 	 * Check whether Twitter is on.
 	 *
 	 * @return bool
@@ -1052,25 +1107,27 @@ class AnyCommentSocialSettings extends AnyCommentAdminOptions {
 	public static function getGuides() {
 		return [
 			'ru' => [
-				AnyCommentSocialAuth::SOCIAL_VKONTAKTE     => 'https://anycomment.io/ru/api-vkontakte/',
-				AnyCommentSocialAuth::SOCIAL_TWITTER       => 'https://anycomment.io/ru/api-twitter/',
-				AnyCommentSocialAuth::SOCIAL_FACEBOOK      => 'https://anycomment.io/ru/api-facebook/',
-				AnyCommentSocialAuth::SOCIAL_GOOGLE        => 'https://anycomment.io/ru/api-google/',
-				AnyCommentSocialAuth::SOCIAL_ODNOKLASSNIKI => 'https://anycomment.io/ru/api-odnoklassniki/',
-				AnyCommentSocialAuth::SOCIAL_GITHUB        => 'https://anycomment.io/ru/api-github/',
-				AnyCommentSocialAuth::SOCIAL_INSTAGRAM     => 'https://anycomment.io/ru/api-instagram/',
-				AnyCommentSocialAuth::SOCIAL_TWITCH        => 'https://anycomment.io/ru/api-twitch/',
-			],
-			'en' => [
 				AnyCommentSocialAuth::SOCIAL_VKONTAKTE     => 'https://anycomment.io/api-vkontakte/',
 				AnyCommentSocialAuth::SOCIAL_TWITTER       => 'https://anycomment.io/api-twitter/',
 				AnyCommentSocialAuth::SOCIAL_FACEBOOK      => 'https://anycomment.io/api-facebook/',
 				AnyCommentSocialAuth::SOCIAL_GOOGLE        => 'https://anycomment.io/api-google/',
-				AnyCommentSocialAuth::SOCIAL_ODNOKLASSNIKI => 'https://anycomment.io/ru/api-odnoklassniki/',
+				AnyCommentSocialAuth::SOCIAL_ODNOKLASSNIKI => 'https://anycomment.io/api-odnoklassniki/',
 				AnyCommentSocialAuth::SOCIAL_GITHUB        => 'https://anycomment.io/api-github/',
 				AnyCommentSocialAuth::SOCIAL_INSTAGRAM     => 'https://anycomment.io/api-instagram/',
 				AnyCommentSocialAuth::SOCIAL_TWITCH        => 'https://anycomment.io/api-twitch/',
-				AnyCommentSocialAuth::SOCIAL_DRIBBBLE      => 'https://anycomment.io/api-dribbble/',
+				AnyCommentSocialAuth::SOCIAL_STEAM         => 'https://anycomment.io/api-steam/',
+			],
+			'en' => [
+				AnyCommentSocialAuth::SOCIAL_VKONTAKTE     => 'https://anycomment.io/en/api-vkontakte/',
+				AnyCommentSocialAuth::SOCIAL_TWITTER       => 'https://anycomment.io/en/api-twitter/',
+				AnyCommentSocialAuth::SOCIAL_FACEBOOK      => 'https://anycomment.io/en/api-facebook/',
+				AnyCommentSocialAuth::SOCIAL_GOOGLE        => 'https://anycomment.io/en/api-google/',
+				AnyCommentSocialAuth::SOCIAL_ODNOKLASSNIKI => 'https://anycomment.io/ru/api-odnoklassniki/',
+				AnyCommentSocialAuth::SOCIAL_GITHUB        => 'https://anycomment.io/en/api-github/',
+				AnyCommentSocialAuth::SOCIAL_INSTAGRAM     => 'https://anycomment.io/en/api-instagram/',
+				AnyCommentSocialAuth::SOCIAL_TWITCH        => 'https://anycomment.io/en/api-twitch/',
+				AnyCommentSocialAuth::SOCIAL_DRIBBBLE      => 'https://anycomment.io/en/api-dribbble/',
+				AnyCommentSocialAuth::SOCIAL_STEAM         => 'https://anycomment.io/en/api-steam/',
 			]
 		];
 	}
