@@ -96,6 +96,7 @@ class AnyCommentSocialAuth {
 		self::SOCIAL_INSTAGRAM     => 'Instagram',
 		self::SOCIAL_TWITCH        => 'TwitchTV',
 		self::SOCIAL_DRIBBBLE      => 'Dribbble',
+		self::SOCIAL_STEAM         => 'Steam',
 		self::SOCIAL_YAHOO         => 'Yahoo',
 		self::SOCIAL_WORDPRESS     => 'WordPress',
 	];
@@ -226,13 +227,7 @@ class AnyCommentSocialAuth {
 	 * @return bool
 	 */
 	public function social_exists( $social ) {
-		$array = self::$providers;
-
-		if ( isset( $array[ strtolower( $social ) ] ) ) {
-			return true;
-		}
-
-		return false;
+		return isset( self::$providers[ strtolower( $social ) ] );
 	}
 
 	/**
@@ -345,14 +340,14 @@ class AnyCommentSocialAuth {
 					'callback' => static::get_dribbble_callback(),
 				],
 
-				self::$providers[ self::SOCIAL_STEAM ]      => [
+				self::$providers[ self::SOCIAL_STEAM ] => [
 					'enabled'  => AnyCommentSocialSettings::is_steam_active(),
 					'keys'     => [
 						'secret' => AnyCommentSocialSettings::get_steam_secret(),
 					],
 					'callback' => static::get_steam_callback(),
 				],
-				self::$providers[ self::SOCIAL_YAHOO ]         => [
+				self::$providers[ self::SOCIAL_YAHOO ] => [
 					'enabled'  => AnyCommentSocialSettings::is_yahoo_active(),
 					'keys'     => [
 						'id'     => AnyCommentSocialSettings::get_ahoo_app_id(),

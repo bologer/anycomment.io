@@ -1,8 +1,8 @@
 {
   "main.css": "static/css/main.e8994b9e.css",
   "main.css.map": "static/css/main.e8994b9e.css.map",
-  "main.js": "static/js/main.a43dc6cc.js",
-  "main.js.map": "static/js/main.a43dc6cc.js.map",
+  "main.js": "static/js/main.dcae3456.js",
+  "main.js.map": "static/js/main.dcae3456.js.map",
   "static/media/dribbble.svg": "static/media/dribbble.8f2d0d70.svg",
   "static/media/dropzone.svg": "static/media/dropzone.2cd703f4.svg",
   "static/media/facebook.svg": "static/media/facebook.9f840c97.svg",
@@ -12,6 +12,7 @@
   "static/media/mailru.svg": "static/media/mailru.3cc0d9d8.svg",
   "static/media/mini-logo.svg": "static/media/mini-logo.68334f3e.svg",
   "static/media/odnoklassniki.svg": "static/media/odnoklassniki.31259f7c.svg",
+  "static/media/steam.svg": "static/media/steam.67d4b7c7.svg",
   "static/media/telegram.svg": "static/media/telegram.34cd4f5b.svg",
   "static/media/twitch.svg": "static/media/twitch.baefdb2a.svg",
   "static/media/twitter.svg": "static/media/twitter.63e540d2.svg",
