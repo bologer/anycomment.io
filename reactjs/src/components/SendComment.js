@@ -33,7 +33,7 @@ class SendComment extends AnyCommentComponent {
             editId: '',
             commentHTML: '',
             buttonEnabled: false,
-            isAgreementAccepted: true,
+            isAgreementAccepted: false,
         };
 
         this.reCaptchaSiteKey = options.reCaptchaSiteKey;

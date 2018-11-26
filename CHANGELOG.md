@@ -13,6 +13,7 @@
 
 * Fixed issue when guest users could subscribe multiple times for same post
 * Fixed issue when admin bar setting was not taken affect
+* GDPR checkbox is unchecked by default
 
 ## 0.0.73 – 21.11.2018
 
