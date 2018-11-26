@@ -2,6 +2,8 @@
 
 namespace AnyComment\Migrations;
 
+use WP_Error;
+
 /**
  * Class AnyCommentMigration_0_0_56 is used to re upload big avatars and make them smaller in favor of speed.
  */
@@ -12,7 +14,7 @@ class AnyCommentMigration_0_0_56 extends AnyCommentMigration {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function isApplied() {
+	public function is_applied() {
 		return version_compare( get_option( 'anycomment_migration' ), $this->version, '>=' );
 	}
 
@@ -82,7 +84,7 @@ class AnyCommentMigration_0_0_56 extends AnyCommentMigration {
 				}
 
 				if ( update_user_meta( $meta->user_id, $meta->meta_key, $results['url'] ) ) {
-					unlink( $originalPath );
+					@unlink( $originalPath );
 				}
 			}
 		}

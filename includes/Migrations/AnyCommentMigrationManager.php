@@ -19,22 +19,22 @@ class AnyCommentMigrationManager {
 	 *
 	 * @return string
 	 */
-	public function getFileFormat() {
+	public function get_file_format() {
 		return 'AnyCommentMigration_%s';
 	}
 
 	/**
 	 * Apply all migrations.
 	 */
-	public function applyAll() {
-		$migrationList = AnyCommentMigration::getListUp();
+	public function apply_all() {
+		$migrationList = AnyCommentMigration::get_list_up();
 
 		if ( $migrationList === null ) {
 			return true;
 		}
 
 		foreach ( $migrationList as $key => $migrationVersion ) {
-			$format        = $this->getFileFormat();
+			$format        = $this->get_file_format();
 			$migrationName = sprintf( $format, $migrationVersion );
 			$path          = sprintf( __DIR__ . '/%s.php', $migrationName );
 
@@ -50,9 +50,9 @@ class AnyCommentMigrationManager {
 			$namespace = "\AnyComment\Migrations\\$migrationName";
 			$model     = new $namespace;
 
-			if ( ! $model->isApplied() && $model->up() ) {
+			if ( ! $model->is_applied() && $model->up() ) {
 				AnyCommentOptions::update_migration( $migrationVersion );
-			} elseif ( $model->isApplied() ) {
+			} elseif ( $model->is_applied() ) {
 				AnyCommentOptions::update_migration( $migrationVersion );
 			}
 		}
@@ -65,17 +65,17 @@ class AnyCommentMigrationManager {
 	 *
 	 * @return bool
 	 */
-	public function dropAll() {
-		$migrationList = AnyCommentMigration::getListDown();
+	public function drop_all() {
+		$migrationList = AnyCommentMigration::get_list_down();
 
 		if ( empty( $migrationList ) ) {
 			return true;
 		}
 
 		foreach ( $migrationList as $key => $migrationVersion ) {
-			$format        = $this->getFileFormat();
+			$format        = $this->get_file_format();
 			$migrationName = sprintf( $format, $migrationVersion );
-			$path          = sprintf( ANYCOMMENT_ABSPATH . 'includes/migrations/%s.php', $migrationName );
+			$path          = sprintf( ANYCOMMENT_ABSPATH . 'includes/Migrations/%s.php', $migrationName );
 
 			if ( ! file_exists( $path ) ) {
 				continue;
@@ -88,7 +88,7 @@ class AnyCommentMigrationManager {
 			 */
 			$model = new $migrationName();
 
-			if ( $model->isApplied() && $model->down() ) {
+			if ( $model->is_applied() && $model->down() ) {
 				AnyCommentOptions::update_migration( $migrationVersion );
 			}
 		}

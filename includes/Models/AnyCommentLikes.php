@@ -134,7 +134,9 @@ WHERE initial_likes.comment_ID = %d";
 	 *
 	 * @param int $type Type: like or dislike. Use constants TYPE_*.
 	 * @param int $comment_id Comment id.
-	 * @param int|null $user_id User id.
+	 * @param int|null $user_id User id. When user id is not provided,
+	 *                          active session would be used to retrieve it
+	 *                          if user is guest, current user IP address would instead.
 	 *
 	 * @return bool
 	 */
@@ -154,13 +156,7 @@ WHERE initial_likes.comment_ID = %d";
 
 		$sql = "SELECT COUNT(*) FROM $table_name WHERE";
 
-		if ( null === $user_id ) {
-			if ( ( $user_id = (int) get_current_user_id() ) === 0 ) {
-				return false;
-			}
-
-			$sql .= $wpdb->prepare( " user_ID = %d", $user_id );
-		} else {
+		if ( is_numeric( $user_id ) ) {
 			$user = get_user_by( 'id', $user_id );
 
 			if ( false === $user ) {
@@ -168,6 +164,14 @@ WHERE initial_likes.comment_ID = %d";
 			}
 
 			$sql .= $wpdb->prepare( " user_ID = %d", $user->ID );
+		} else {
+			$user_id = (int) get_current_user_id();
+
+			if ( $user_id !== 0 ) {
+				$sql .= $wpdb->prepare( " user_ID = %d", $user_id );
+			} else {
+				$sql .= $wpdb->prepare( " user_ID IS NULL AND ip = %s", AnyCommentRequest::get_user_ip() );
+			}
 		}
 
 		$sql   .= $wpdb->prepare( " AND comment_ID = %s AND type = %d", $comment->comment_ID, $type );
@@ -272,6 +276,17 @@ WHERE initial_likes.comment_ID = %d";
 		return $rows !== false && $rows >= 0;
 	}
 
+	/**
+	 * Delete item by type.
+	 *
+	 * @param int $type Like or dislike. You constants for it.
+	 * @param int $comment_id Comment id.
+	 * @param int|null $user_id User id. When user id is not provided,
+	 *                          active session would be used to retrieve it
+	 *                          if user is guest, current user IP address would instead.
+	 *
+	 * @return bool
+	 */
 	public static function delete_by_type( $type, $comment_id, $user_id = null ) {
 		if ( $type !== self::TYPE_LIKE && $type !== self::TYPE_DISLIKE ) {
 			return false;
@@ -283,15 +298,7 @@ WHERE initial_likes.comment_ID = %d";
 
 		$where = [];
 
-		if ( null === $user_id ) {
-			$user_id = (int) get_current_user_id();
-
-			if ( empty( $user_id ) ) {
-				return false;
-			}
-
-			$where['user_ID'] = $user_id;
-		} else {
+		if ( is_numeric( $user_id ) ) {
 			$user = get_user_by( 'id', $user_id );
 
 			if ( false === $user ) {
@@ -299,6 +306,15 @@ WHERE initial_likes.comment_ID = %d";
 			}
 
 			$where['user_ID'] = $user->ID;
+		} else {
+			$user_id = (int) get_current_user_id();
+
+			if ( $user_id !== 0 ) {
+				$where['user_ID'] = $user_id;
+			} else {
+				$where['user_ID'] = null;
+				$where['ip']      = AnyCommentRequest::get_user_ip();
+			}
 		}
 
 		$where['comment_ID'] = $comment->comment_ID;
@@ -354,6 +370,10 @@ WHERE initial_likes.comment_ID = %d";
 
 		if ( ! isset( $this->liked_at ) ) {
 			$this->liked_at = current_time( 'mysql' );
+		}
+
+		if ( isset( $this->user_ID ) && (int) $this->user_ID === 0 ) {
+			$this->user_ID = null;
 		}
 
 		global $wpdb;

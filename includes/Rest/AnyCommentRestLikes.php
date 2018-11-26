@@ -74,11 +74,6 @@ class AnyCommentRestLikes extends AnyCommentRestController {
 	 * {@inheritdoc}
 	 */
 	public function create_item_permissions_check( $request ) {
-
-		if ( ! is_user_logged_in() ) {
-			return new WP_Error( 'rest_comment_like_login_required', __( 'Login to like comment', 'anycomment' ), [ 'status' => 403 ] );
-		}
-
 		if ( empty( $request['post'] ) ) {
 			return new WP_Error( 'rest_comment_like_invalid_post_id', __( 'Sorry, post does not exist.', 'anycomment' ), array( 'status' => 403 ) );
 		}
@@ -122,8 +117,6 @@ class AnyCommentRestLikes extends AnyCommentRestController {
 	/**
 	 * Creates a comment.
 	 *
-	 * @since 4.7.0
-	 *
 	 * @param WP_REST_Request $request Full details about the request.
 	 *
 	 * @return WP_Error|WP_REST_Response Response object on success, or error object on failure.
@@ -138,9 +131,9 @@ class AnyCommentRestLikes extends AnyCommentRestController {
 
 		$model->comment_ID = $request['comment'];
 
-		if ( ( $user = wp_get_current_user() ) instanceof WP_User ) {
-			$model->user_ID = $user->id;
-		}
+		$user_id = (int) get_current_user_id();
+
+		$model->user_ID = $user_id !== 0 ? $user_id : null;
 
 		$model->post_ID = $request['post'];
 
@@ -182,8 +175,6 @@ class AnyCommentRestLikes extends AnyCommentRestController {
 
 	/**
 	 * Prepares a single like output for response.
-	 *
-	 * @since 4.7.0
 	 *
 	 * @param AnyCommentLikes $model Like object.
 	 * @param WP_REST_Request $request Request object.

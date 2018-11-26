@@ -8,7 +8,7 @@ namespace AnyComment\Interfaces;
  * @package AnyComment\includes\interfaces
  */
 interface  AnyCommentMigrationInterface {
-	public function isApplied();
+	public function is_applied();
 
 	public function up();
 

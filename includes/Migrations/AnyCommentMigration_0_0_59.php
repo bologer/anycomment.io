@@ -22,7 +22,7 @@ class AnyCommentMigration_0_0_59 extends AnyCommentMigration {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function isApplied() {
+	public function is_applied() {
 		global $wpdb;
 
 		$renamed_count    = 0;

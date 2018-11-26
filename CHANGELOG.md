@@ -4,6 +4,7 @@
 
 **Enhancements:**
 
+* Added ability guest users to like/dislike, #179
 * Added Steam as authorization option, #311
 * Added likes/dislikes, #322
 * Added new option to control type of likes to display: just likes or likes/dislikes, #322

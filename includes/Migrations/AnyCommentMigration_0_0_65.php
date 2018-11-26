@@ -10,7 +10,7 @@ class AnyCommentMigration_0_0_65 extends AnyCommentMigration {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function isApplied() {
+	public function is_applied() {
 		global $wpdb;
 
 		$email_queue_table = AnyCommentEmailQueue::get_table_name();

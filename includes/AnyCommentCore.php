@@ -96,7 +96,7 @@ class AnyCommentCore {
 
 		add_action( 'init', function () {
 			if ( version_compare( AnyCommentOptions::get_migration(), $this->version, '<' ) ) {
-				( new AnyCommentMigrationManager() )->applyAll();
+				( new AnyCommentMigrationManager() )->apply_all();
 			}
 		} );
 	}
@@ -106,7 +106,7 @@ class AnyCommentCore {
 	 */
 	public function activation() {
 		// Apply migrations
-		( new AnyCommentMigrationManager() )->applyAll();
+		( new AnyCommentMigrationManager() )->apply_all();
 	}
 
 	/**
@@ -115,7 +115,7 @@ class AnyCommentCore {
 	public static function uninstall() {
 		remove_role( AnyCommentGenericSettings::DEFAULT_ROLE_SOCIAL_SUBSCRIBER );
 
-		( new AnyCommentMigrationManager() )->dropAll();
+		( new AnyCommentMigrationManager() )->drop_all();
 	}
 
 	/**

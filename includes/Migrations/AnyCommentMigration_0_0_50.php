@@ -9,7 +9,7 @@ class AnyCommentMigration_0_0_50 extends AnyCommentMigration {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function isApplied() {
+	public function is_applied() {
 		global $wpdb;
 
 		$res  = $wpdb->get_results( "SHOW COLUMNS FROM `anycomment_email_queue` LIKE 'subject';", 'ARRAY_A' );

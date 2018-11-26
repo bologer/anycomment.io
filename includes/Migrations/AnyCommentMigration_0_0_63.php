@@ -9,7 +9,7 @@ class AnyCommentMigration_0_0_63 extends AnyCommentMigration {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function isApplied() {
+	public function is_applied() {
 		global $wpdb;
 		$table = $wpdb->prefix . $this->table;
 		$res   = $wpdb->get_results( "SHOW TABLES LIKE '$table';", 'ARRAY_A' );

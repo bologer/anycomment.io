@@ -170,6 +170,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Enhancements:**
 
+* Added ability guest users to like/dislike, #179
 * Added Steam as authorization option, #311
 * Added likes/dislikes, #322
 * Added new option to control type of likes to display: just likes or likes/dislikes, #322
@@ -180,8 +181,6 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Fixed issue when guest users could subscribe multiple times for same post
 * Fixed issue when admin bar setting was not taken affect
 * GDPR checkbox is unchecked by default
-
-
 
 = 0.0.73 – 21.11.2018 =
 

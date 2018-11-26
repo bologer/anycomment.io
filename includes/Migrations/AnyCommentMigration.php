@@ -83,7 +83,7 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function isApplied() {
+	public function is_applied() {
 		return true;
 	}
 
@@ -123,7 +123,7 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 	 *
 	 * @return array|null NULL when migration list is empty.
 	 */
-	public static function getList( $clean = true ) {
+	public static function get_list( $clean = true ) {
 
 		$list = self::$_list;
 
@@ -138,7 +138,7 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 		}
 
 		foreach ( $list as $key => $version ) {
-			$list[ $key ] = static::cleanVersion( $version );
+			$list[ $key ] = static::get_clean_version( $version );
 		}
 
 		return $list;
@@ -151,10 +151,10 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 	 *
 	 * @return mixed
 	 */
-	public static function cleanVersions( $versions ) {
+	public static function get_clean_versions( $versions ) {
 		if ( ! empty( $versions ) ) {
 			foreach ( $versions as $key => $version ) {
-				$versions[ $key ] = static::cleanVersion( $version );
+				$versions[ $key ] = static::get_clean_version( $version );
 			}
 		}
 
@@ -166,9 +166,9 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 	 *
 	 * @return array|null
 	 */
-	public static function getListDown() {
+	public static function get_list_down() {
 		$currentVersion = AnyCommentOptions::get_migration();
-		$list           = static::getList( false );
+		$list           = static::get_list( false );
 
 		if ( $list === null ) {
 			return null;
@@ -190,7 +190,7 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 			break;
 		}
 
-		return static::cleanVersions( $list );
+		return static::get_clean_versions( $list );
 	}
 
 	/**
@@ -198,9 +198,9 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 	 *
 	 * @return array|null NULL when migration list is empty.
 	 */
-	public static function getListUp() {
+	public static function get_list_up() {
 		$currentVersion = AnyCommentOptions::get_migration();
-		$list           = static::getList( false );
+		$list           = static::get_list( false );
 
 		if ( $list === null ) {
 			return null;
@@ -219,7 +219,7 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 			break;
 		}
 
-		return static::cleanVersions( $list );
+		return static::get_clean_versions( $list );
 	}
 
 	/**
@@ -230,7 +230,7 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 	 *
 	 * @return string|false String on success and false on failure.
 	 */
-	public static function cleanVersion( $version ) {
+	public static function get_clean_version( $version ) {
 		if ( empty( $version ) ) {
 			return false;
 		}

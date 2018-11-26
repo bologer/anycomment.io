@@ -2,6 +2,8 @@
 
 namespace AnyComment\Migrations;
 
+use AnyComment\Models\AnyCommentUploadedFiles;
+
 /**
  * Class AnyCommentMigration_0_0_57 is used to re upload big avatars and make them smaller in favor of speed.
  */
@@ -12,7 +14,7 @@ class AnyCommentMigration_0_0_57 extends AnyCommentMigration {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function isApplied() {
+	public function is_applied() {
 		global $wpdb;
 		$table = 'anycomment_uploaded_files';
 

@@ -15,12 +15,12 @@ class AnyCommentMigration_0_0_74 extends AnyCommentMigration {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function isApplied() {
+	public function is_applied() {
 		global $wpdb;
 
 		$table = $wpdb->prefix . 'anycomment_likes';
 
-		$res = $wpdb->get_results( "SHOW COLUMNS FROM $table LIKE 'type';", 'ARRAY_A' );
+		$res = $wpdb->get_results( "SHOW COLUMNS FROM $table LIKE 'type'", 'ARRAY_A' );
 
 		return ! empty( $res ) && count( $res );
 	}
@@ -33,9 +33,11 @@ class AnyCommentMigration_0_0_74 extends AnyCommentMigration {
 
 		$table = $wpdb->prefix . 'anycomment_likes';
 
-		$sql = "ALTER TABLE $table ADD COLUMN `type` TINYINT(1) DEFAULT 1";
+		$sql  = "ALTER TABLE $table ADD COLUMN type TINYINT(1) DEFAULT 1";
+		$sql2 = "ALTER TABLE $table MODIFY user_ID BIGINT(20) UNSIGNED NULL";
 
-		return false !== $wpdb->query( $sql );
+		return false !== $wpdb->query( $sql ) &&
+		       false !== $wpdb->query( $sql2 );
 	}
 
 	/**
@@ -46,9 +48,11 @@ class AnyCommentMigration_0_0_74 extends AnyCommentMigration {
 
 		$table = $wpdb->prefix . 'anycomment_likes';
 
-		$sql = "ALTER TABLE $table DROP COLUMN `type`";
+		$sql  = "ALTER TABLE $table DROP COLUMN type";
+		$sql2 = "ALTER TABLE $table MODIFY user_ID BIGINT(20) UNSIGNED NOT NULL";
 
-		return false !== $wpdb->query( $sql );
+		return false !== $wpdb->query( $sql ) &&
+		       false !== $wpdb->query( $sql2 );
 	}
 }
 

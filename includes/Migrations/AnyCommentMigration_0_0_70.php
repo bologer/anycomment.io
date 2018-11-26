@@ -17,7 +17,7 @@ class AnyCommentMigration_0_0_70 extends AnyCommentMigration {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function isApplied() {
+	public function is_applied() {
 		return version_compare( get_option( 'anycomment_migration' ), $this->version, '>=' );
 	}
 
