@@ -26,4 +26,13 @@
       }
     }
   }
+
+  .comment-single-replies {
+    .anycomment-comment-rating {
+      position: absolute;
+      top: $child-avatar-size + 10;
+      left: -4px;
+      width: $child-avatar-size + 10;
+    }
+  }
 }

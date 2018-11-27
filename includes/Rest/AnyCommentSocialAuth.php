@@ -558,8 +558,28 @@ class AnyCommentSocialAuth {
 			'last_name'     => $user->lastName,
 		];
 
-		if ( strlen( $user->profileURL ) <= 100 ) {
+		if ( strlen( $user->profileURL ) <= 100 && false !== strpos( $user->profileURL, 'http' ) ) {
 			$userdata['user_url'] = $user->profileURL;
+		}
+
+		/**
+		 * Temp hack for Steam. Should be removed later.
+		 * @todo separate to multiple classes authentication per Provider as most of them have some kind of exceptions
+		 */
+		if ( $social === self::SOCIAL_STEAM ) {
+			if ( false !== strpos( $user->identifier, 'http' ) ) {
+				$userdata['user_url'] = $user->identifier;
+			}
+
+			// Get ID from URL to be used as login as we have nothing else, #325 :D
+			// e.g. URL: https://steamcommunity.com/openid/id/1231312312312312
+			if ( preg_match( '/\/(\d{1,})(\/|)$/m', $user->identifier, $matches ) ) {
+				$steam_id                 = trim( $matches[1] );
+				$userdata['user_login']   = $steam_id;
+				$userdata['display_name'] = $steam_id;
+			} else {
+				return new WP_Error( 'login_failed', __( 'Something went wrong. Please try again later.', 'anycomment' ) );
+			}
 		}
 
 		if ( $email !== null ) {
@@ -611,10 +631,10 @@ class AnyCommentSocialAuth {
 		// format: {social_name}_{user_identity} where:
 		// - social_name is lowercased social name
 		// - user_identity is usually ID from social or verbose name which usually permanent and unchanged
-		$user_meta[ self::META_SOCIAL_ORIGINAL_USERNAME ] = sprintf( '%s_%s', $social, $user_profile->identifier );
+		$user_meta[ self::META_SOCIAL_ORIGINAL_USERNAME ] = sprintf( '%s_%s', $social, ( $field === 'login' ? $value : $user_profile->identifier ) );
 
 		if ( $field === 'login' ) {
-			$value = $prepared_login;
+			$value = $user_meta[ self::META_SOCIAL_ORIGINAL_USERNAME ];
 		}
 
 		if ( ! isset( $user_data['user_login'] ) ) {
@@ -739,7 +759,7 @@ class AnyCommentSocialAuth {
 			}
 
 			// Try to get user by ID from meta
-			$user = $this->get_user_by( 'id', $user_meta->user_id );
+			$user = get_user_by( 'id', $user_meta->user_id );
 		}
 
 		if ( $user === false ) {

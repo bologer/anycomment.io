@@ -165,7 +165,9 @@ class CommentList extends AnyCommentComponent {
 
                     // Show toast only if new comment was added, not deleted or
                     // something like this
-                    if (!self.state.isJustAdded && currentCount > stateCount) {
+                    const shouldReload = !self.state.isJustAdded && (currentCount > stateCount || currentCount < stateCount);
+
+                    if (shouldReload) {
                         self.loadComments();
                         self.showSuccess(settings.i18.new_comment_was_added, {
                             autoClose: true,

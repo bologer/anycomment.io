@@ -758,9 +758,9 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 				],
 				[
 					'id'          => self::OPTION_NOTIFY_ON_NEW_COMMENT,
-					'title'       => __( 'New Comment Alert', "anycomment" ),
+					'title'       => __( 'Real-time updates', "anycomment" ),
 					'type'        => 'checkbox',
-					'description' => esc_html( __( 'Show alert about new comment when user is on the page.', "anycomment" ) )
+					'description' => esc_html( __( 'Show comments in real-time. Users on the page would be notified about new comments by green alert and see comment without page reload.', "anycomment" ) )
 				],
 				[
 					'id'          => self::OPTION_INTERVAL_COMMENTS_CHECK,

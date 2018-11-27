@@ -221,6 +221,7 @@ class AnyCommentRender {
 					'login'                          => __( 'Login', 'anycomment' ),
 					'logout'                         => __( 'Logout', 'anycomment' ),
 					'comment_waiting_moderation'     => __( 'Comment will be shown once reviewed by moderator.', 'anycomment' ),
+					'new_comment_was_added'          => __( 'New comment was added', 'anycomment' ),
 					'author'                         => __( 'Author', 'anycomment' ),
 					'name'                           => __( 'Name', 'anycomment' ),
 					'email'                          => __( 'Email', 'anycomment' ),

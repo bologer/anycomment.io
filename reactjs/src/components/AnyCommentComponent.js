@@ -89,7 +89,7 @@ class AnyCommentComponent extends React.Component {
 
     /**
      * Show success message toast.
-     * @param data
+     * @param message
      * @param options
      */
     showSuccess(message, options = null) {

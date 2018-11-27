@@ -12,6 +12,8 @@
 
 **Fixes:**
 
+* Fixed issue when "New comment was added" alert was not showing when real-time updates option was on
+* Fixed possible authentication problem
 * Fixed issue when guest users could subscribe multiple times for same post
 * Fixed issue when admin bar setting was not taken affect
 * GDPR checkbox is unchecked by default
