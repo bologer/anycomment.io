@@ -178,7 +178,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Fixes:**
 
-* Fixed issue when "New comment was added" alert was not showing when real-time updates option was on
+* Fixed issue when "New comment was added" alert was not showing when real-time updates option was on, #297
 * Fixed possible authentication problem
 * Fixed issue when guest users could subscribe multiple times for same post
 * Fixed issue when admin bar setting was not taken affect
