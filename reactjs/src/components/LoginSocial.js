@@ -19,7 +19,7 @@ class LoginSocial extends AnyCommentComponent {
                    target="_parent"
                    title={social.label}
                    className={"anycomment-login-with-list-" + social.slug}>
-                    <SocialIcon slug={social.slug}/>
+                    <SocialIcon slug={social.slug} alt={social.label}/>
                 </a>
             </li>
         );

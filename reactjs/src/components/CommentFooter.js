@@ -10,7 +10,7 @@ import {faReply, faHeart, faEdit} from '@fortawesome/free-solid-svg-icons'
 class CommentFooter extends AnyCommentComponent {
 
     constructor(props) {
-        super();
+        super(props);
 
         this.state = {
             likeClass: '',

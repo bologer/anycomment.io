@@ -22,7 +22,7 @@ export default class CommonHelper {
         const elm = document.getElementById(id);
         let y = elm.offsetTop;
         let node = elm;
-        while (node.offsetParent && node.offsetParent != document.body) {
+        while (node.offsetParent && node.offsetParent !== document.body) {
             node = node.offsetParent;
             y += node.offsetTop;
         }

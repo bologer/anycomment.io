@@ -11,7 +11,7 @@ export default class SocialIcon extends Component {
      * @returns {*}
      */
     getIcon = () => {
-        const {slug, classes} = this.props;
+        const {slug, classes, alt} = this.props;
 
         let className = "anycomment-social anycomment-" + slug;
 
@@ -21,6 +21,6 @@ export default class SocialIcon extends Component {
 
         const svgSrc = require('../img/socials/' + slug + '.svg');
 
-        return <span className={className}><img src={svgSrc}/></span>;
+        return <span className={className}><img src={svgSrc} alt={alt}/></span>;
     };
 }
