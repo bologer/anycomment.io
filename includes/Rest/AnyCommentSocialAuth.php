@@ -6,6 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+use Hybridauth\Hybridauth;
 use WP_REST_Request;
 use WP_Error;
 use WP_User;
@@ -40,6 +41,7 @@ class AnyCommentSocialAuth {
 	const SOCIAL_TWITCH = 'twitch';
 	const SOCIAL_DRIBBBLE = 'dribbble';
 	const SOCIAL_STEAM = 'steam';
+	const SOCIAL_YANDEX = 'yandex';
 	const SOCIAL_YAHOO = 'yahoo';
 	const SOCIAL_WORDPRESS = 'wordpress';
 
@@ -98,6 +100,7 @@ class AnyCommentSocialAuth {
 		self::SOCIAL_DRIBBBLE      => 'Dribbble',
 		self::SOCIAL_STEAM         => 'Steam',
 		self::SOCIAL_YAHOO         => 'Yahoo',
+		self::SOCIAL_YANDEX        => 'Yandex',
 		self::SOCIAL_WORDPRESS     => 'WordPress',
 	];
 
@@ -249,6 +252,7 @@ class AnyCommentSocialAuth {
 			self::SOCIAL_TWITCH        => __( 'Twitch', 'anycomment' ),
 			self::SOCIAL_DRIBBBLE      => __( 'Dribbble', 'anycomment' ),
 			self::SOCIAL_YAHOO         => __( 'Yahoo', 'anycomment' ),
+			self::SOCIAL_YANDEX        => __( 'Yandex', 'anycomment' ),
 			self::SOCIAL_WORDPRESS     => __( 'WordPress', 'anycomment' ),
 		];
 
@@ -340,17 +344,26 @@ class AnyCommentSocialAuth {
 					'callback' => static::get_dribbble_callback(),
 				],
 
-				self::$providers[ self::SOCIAL_STEAM ] => [
+				self::$providers[ self::SOCIAL_STEAM ]  => [
 					'enabled'  => AnyCommentSocialSettings::is_steam_active(),
 					'keys'     => [
 						'secret' => AnyCommentSocialSettings::get_steam_secret(),
 					],
 					'callback' => static::get_steam_callback(),
 				],
-				self::$providers[ self::SOCIAL_YAHOO ] => [
+				self::$providers[ self::SOCIAL_YANDEX ] => [
+					'enabled'  => AnyCommentSocialSettings::is_yandex_active(),
+					'keys'     => [
+						'id'     => AnyCommentSocialSettings::get_yandex_client_id(),
+						'secret' => AnyCommentSocialSettings::get_yandex_client_secret(),
+					],
+					'adapter'  => '\AnyComment\Providers\Yandex',
+					'callback' => static::get_yandex_callback(),
+				],
+				self::$providers[ self::SOCIAL_YAHOO ]  => [
 					'enabled'  => AnyCommentSocialSettings::is_yahoo_active(),
 					'keys'     => [
-						'id'     => AnyCommentSocialSettings::get_ahoo_app_id(),
+						'id'     => AnyCommentSocialSettings::get_yahoo_app_id(),
 						'secret' => AnyCommentSocialSettings::get_yahoo_client_secret(),
 					],
 					'callback' => static::get_yahoo_callback(),
@@ -364,7 +377,7 @@ class AnyCommentSocialAuth {
 	/**
 	 * Authenticate a user.
 	 *
-	 * @param string $social Socila network name.
+	 * @param string $social Social network name.
 	 *
 	 * @return bool|\Hybridauth\Adapter\AdapterInterface
 	 * @throws \Hybridauth\Exception\InvalidArgumentException
@@ -444,6 +457,17 @@ class AnyCommentSocialAuth {
 	 */
 	public static function get_steam_callback( $redirect = null ) {
 		return static::get_callback_url( self::SOCIAL_STEAM, $redirect );
+	}
+
+	/**
+	 * Get Yandex callback URL.
+	 *
+	 * @param null|string $redirect Redirect URL added to the link.
+	 *
+	 * @return string
+	 */
+	public static function get_yandex_callback( $redirect = null ) {
+		return static::get_callback_url( self::SOCIAL_YANDEX, $redirect );
 	}
 
 	/**

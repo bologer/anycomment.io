@@ -82,6 +82,12 @@ class AnyCommentSocials {
 				'label'   => __( 'Dribbble', "anycomment" ),
 				'visible' => AnyCommentSocialSettings::is_dribbble_active()
 			],
+			AnyCommentSocialAuth::SOCIAL_YANDEX        => [
+				'slug'    => AnyCommentSocialAuth::SOCIAL_YANDEX,
+				'url'     => AnyCommentSocialAuth::get_yandex_callback( $redirectUrl ),
+				'label'   => __( 'Yandex', "anycomment" ),
+				'visible' => AnyCommentSocialSettings::is_yandex_active(),
+			],
 			AnyCommentSocialAuth::SOCIAL_STEAM         => [
 				'slug'    => AnyCommentSocialAuth::SOCIAL_STEAM,
 				'url'     => AnyCommentSocialAuth::get_steam_callback( $redirectUrl ),

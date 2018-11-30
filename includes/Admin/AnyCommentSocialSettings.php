@@ -97,6 +97,13 @@ class AnyCommentSocialSettings extends AnyCommentAdminOptions {
 	const OPTION_STEAM_SECRET = 'social_steam_client_secret_field';
 
 	/**
+	 * Yandex
+	 */
+	const OPTION_YANDEX_TOGGLE = 'social_yandex_toggle_field';
+	const OPTION_YANDEX_CLIENT_ID = 'social_yandex_client_id_field';
+	const OPTION_YANDEX_CLIENT_SECRET = 'social_yandex_client_secret_field';
+
+	/**
 	 * Yahoo
 	 */
 	const OPTION_YAHOO_TOGGLE = 'social_yahoo_toggle_field';
@@ -469,8 +476,44 @@ class AnyCommentSocialSettings extends AnyCommentAdminOptions {
                         </div>
 						<?php
 					},
-
 				]
+			]
+		);
+
+		// Yandex
+		$this->render_fields(
+			[
+				'id'   => 'section_yandex',
+				'name' => __( 'Yandex', "anycomment" ),
+			],
+			[
+				[
+					'id'          => self::OPTION_YANDEX_TOGGLE,
+					'title'       => __( 'Enable', "anycomment" ),
+					'type'        => 'checkbox',
+					'description' => __( 'Allow Yandex authorization', "anycomment" )
+				],
+				[
+					'id'          => self::OPTION_YANDEX_CLIENT_ID,
+					'title'       => __( 'ID', "anycomment" ),
+					'type'        => 'text',
+					'description' => sprintf( __( 'Enter id. It can be found after you <a href="%s" target="_blank">register</a> your web-application', "anycomment" ), 'https://oauth.yandex.ru/client/new' ),
+					'after'       => function () {
+						?>
+                        <div class="cell anycomment-form-wrapper__field">
+                            <label for="yandex-callback"><?= __( 'Callback URL', 'anycomment' ) ?></label>
+                            <input type="text" id="yandex-callback" onclick="this.select()" readonly="readonly"
+                                   value="<?= AnyCommentSocialAuth::get_yandex_callback() ?>">
+                        </div>
+						<?php
+					},
+				],
+				[
+					'id'          => self::OPTION_YANDEX_CLIENT_SECRET,
+					'title'       => __( 'Password', "anycomment" ),
+					'type'        => 'text',
+					'description' => sprintf( __( 'Enter password (NOT your email password). It can be found after you <a href="%s" target="_blank">register</a> your web-application', "anycomment" ), 'https://oauth.yandex.ru/client/new' ),
+				],
 			]
 		);
 
@@ -628,7 +671,10 @@ class AnyCommentSocialSettings extends AnyCommentAdminOptions {
 
 			$liClasses .= ' ' . ( static::is_enabled( str_replace( 'section_', '', $section['id'] ) ) ? 'toggled' : '' );
 
-			$path = sprintf( AnyComment()->plugin_url() . '/assets/img/icons/auth/%s.svg', str_replace( 'section_', 'social-', $section['id'] ) );
+			$path = sprintf( AnyComment()->plugin_url() . '/assets/img/socials/%s.svg', str_replace( [
+				'section_',
+				'social_'
+			], '', $section['id'] ) );
 			echo '<li class="' . $liClasses . '" data-tab="' . $section['id'] . '">
 				<a href="#tab-' . $section['id'] . '"><img src="' . $path . '" />' . $section['title'] . '</a>
 				</li>';
@@ -706,7 +752,7 @@ class AnyCommentSocialSettings extends AnyCommentAdminOptions {
 			$guide_link = static::getGuide( [ 'social' => $social ] );
 
 			if ( $guide_link !== null ) {
-				$path = sprintf( AnyComment()->plugin_url() . '/assets/img/icons/auth/%s.svg', str_replace( 'section_', 'social-', $section['id'] ) );
+				$path = sprintf( AnyComment()->plugin_url() . '/assets/img/socials/%s.svg', str_replace( 'section_', '', $section['id'] ) );
 				?>
                 <div class="cell anycomment-form-wrapper__field">
                     <div class="anycomment-guide-block">
@@ -777,6 +823,33 @@ class AnyCommentSocialSettings extends AnyCommentAdminOptions {
 	}
 
 	/**
+	 * Check whether Yandex is on.
+	 *
+	 * @return bool
+	 */
+	public static function is_yandex_active() {
+		return static::instance()->get_option( self::OPTION_YANDEX_TOGGLE ) !== null;
+	}
+
+	/**
+	 * Get Yandex client id.
+	 *
+	 * @return string|null
+	 */
+	public static function get_yandex_client_id() {
+		return static::instance()->get_option( self::OPTION_YANDEX_CLIENT_ID );
+	}
+
+	/**
+	 * Get Yandex client secret.
+	 *
+	 * @return string|null
+	 */
+	public static function get_yandex_client_secret() {
+		return static::instance()->get_option( self::OPTION_YANDEX_CLIENT_SECRET );
+	}
+
+	/**
 	 * Check whether Yahoo social is on.
 	 *
 	 * @return bool
@@ -790,7 +863,7 @@ class AnyCommentSocialSettings extends AnyCommentAdminOptions {
 	 *
 	 * @return int|null
 	 */
-	public static function get_ahoo_app_id() {
+	public static function get_yahoo_app_id() {
 		return static::instance()->get_option( self::OPTION_YAHOO_APP_ID );
 	}
 

@@ -138,13 +138,6 @@ class AnyCommentCore {
 	 * Include required core files used in admin and on the frontend.
 	 */
 	public function includes() {
-		/**
-		 * Some plugin already have such class.
-		 */
-		if ( ! class_exists( 'Hybridauth' ) ) {
-			include_once( ANYCOMMENT_ABSPATH . '/includes/hybridauth/src/autoload.php' );
-		}
-
 		AnyCommentLoader::load();
 
 		$cacheDriver = new FileSystem( [

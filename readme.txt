@@ -120,6 +120,7 @@ So far we support the following:
 * Instagram
 * Twitch
 * Dribbble
+* Steam
 
 = Can I contribute? =
 
