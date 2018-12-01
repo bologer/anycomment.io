@@ -88,6 +88,12 @@ class AnyCommentSocials {
 				'label'   => __( 'Yandex', "anycomment" ),
 				'visible' => AnyCommentSocialSettings::is_yandex_active(),
 			],
+			AnyCommentSocialAuth::SOCIAL_MAILRU        => [
+				'slug'    => AnyCommentSocialAuth::SOCIAL_MAILRU,
+				'url'     => AnyCommentSocialAuth::get_mailru_callback( $redirectUrl ),
+				'label'   => __( 'Mail.Ru', "anycomment" ),
+				'visible' => AnyCommentSocialSettings::is_mailru_active(),
+			],
 			AnyCommentSocialAuth::SOCIAL_STEAM         => [
 				'slug'    => AnyCommentSocialAuth::SOCIAL_STEAM,
 				'url'     => AnyCommentSocialAuth::get_steam_callback( $redirectUrl ),

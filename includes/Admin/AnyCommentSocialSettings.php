@@ -104,6 +104,13 @@ class AnyCommentSocialSettings extends AnyCommentAdminOptions {
 	const OPTION_YANDEX_CLIENT_SECRET = 'social_yandex_client_secret_field';
 
 	/**
+	 * Mailru
+	 */
+	const OPTION_MAILRU_TOGGLE = 'social_marilru_toggle_field';
+	const OPTION_MAILRU_CLIENT_ID = 'social_mailru_client_id_field';
+	const OPTION_MAILRU_CLIENT_SECRET = 'social_mailru_client_secret_field';
+
+	/**
 	 * Yahoo
 	 */
 	const OPTION_YAHOO_TOGGLE = 'social_yahoo_toggle_field';
@@ -512,7 +519,44 @@ class AnyCommentSocialSettings extends AnyCommentAdminOptions {
 					'id'          => self::OPTION_YANDEX_CLIENT_SECRET,
 					'title'       => __( 'Password', "anycomment" ),
 					'type'        => 'text',
-					'description' => sprintf( __( 'Enter password (NOT your email password). It can be found after you <a href="%s" target="_blank">register</a> your web-application', "anycomment" ), 'https://oauth.yandex.ru/client/new' ),
+					'description' => sprintf( __( 'Enter password (NOT your email password). It can be found after you <a href="%s" target="_blank">register</a> your web-application', "anycomment" ), 'http://api.mail.ru/sites/my/add' ),
+				],
+			]
+		);
+
+		// Mail.Ru
+		$this->render_fields(
+			[
+				'id'   => 'section_mailru',
+				'name' => __( 'Mail.Ru', "anycomment" ),
+			],
+			[
+				[
+					'id'          => self::OPTION_MAILRU_TOGGLE,
+					'title'       => __( 'Enable', "anycomment" ),
+					'type'        => 'checkbox',
+					'description' => __( 'Allow Mail.Ru authorization', "anycomment" )
+				],
+				[
+					'id'          => self::OPTION_MAILRU_CLIENT_ID,
+					'title'       => __( 'ID', "anycomment" ),
+					'type'        => 'text',
+					'description' => sprintf( __( 'Enter id. It can be found after you <a href="%s" target="_blank">register</a> your web-application', "anycomment" ), 'http://api.mail.ru/sites/my/add' ),
+					'after'       => function () {
+						?>
+                        <div class="cell anycomment-form-wrapper__field">
+                            <label for="mailru-callback"><?= __( 'Callback URL', 'anycomment' ) ?></label>
+                            <input type="text" id="mailru-callback" onclick="this.select()" readonly="readonly"
+                                   value="<?= AnyCommentSocialAuth::get_mailru_callback() ?>">
+                        </div>
+						<?php
+					},
+				],
+				[
+					'id'          => self::OPTION_MAILRU_CLIENT_SECRET,
+					'title'       => __( 'Client secret', "anycomment" ),
+					'type'        => 'text',
+					'description' => sprintf( __( 'Enter client secret. It can be found after you <a href="%s" target="_blank">register</a> your web-application', "anycomment" ), 'https://api.mail.ru/sites/my/add' ),
 				],
 			]
 		);
@@ -820,6 +864,33 @@ class AnyCommentSocialSettings extends AnyCommentAdminOptions {
 	 */
 	public static function get_vk_secure_key() {
 		return static::instance()->get_option( self::OPTION_VK_SECRET );
+	}
+
+	/**
+	 * Check whether Mail.Ru is on.
+	 *
+	 * @return bool
+	 */
+	public static function is_mailru_active() {
+		return static::instance()->get_option( self::OPTION_MAILRU_TOGGLE ) !== null;
+	}
+
+	/**
+	 * Get Mail.Ru client id.
+	 *
+	 * @return string|null
+	 */
+	public static function get_mailru_client_id() {
+		return static::instance()->get_option( self::OPTION_MAILRU_CLIENT_ID );
+	}
+
+	/**
+	 * Get Mail.Ru client secret.
+	 *
+	 * @return string|null
+	 */
+	public static function get_mailru_client_secret() {
+		return static::instance()->get_option( self::OPTION_MAILRU_CLIENT_SECRET );
 	}
 
 	/**
@@ -1189,6 +1260,8 @@ class AnyCommentSocialSettings extends AnyCommentAdminOptions {
 				AnyCommentSocialAuth::SOCIAL_INSTAGRAM     => 'https://anycomment.io/api-instagram/',
 				AnyCommentSocialAuth::SOCIAL_TWITCH        => 'https://anycomment.io/api-twitch/',
 				AnyCommentSocialAuth::SOCIAL_STEAM         => 'https://anycomment.io/api-steam/',
+				AnyCommentSocialAuth::SOCIAL_YANDEX        => 'https://anycomment.io/api-yandex/',
+				AnyCommentSocialAuth::SOCIAL_MAILRU        => 'https://anycomment.io/api-mailru/',
 			],
 			'en' => [
 				AnyCommentSocialAuth::SOCIAL_VKONTAKTE     => 'https://anycomment.io/en/api-vkontakte/',

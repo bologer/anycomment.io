@@ -6,7 +6,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use Hybridauth\Hybridauth;
 use WP_REST_Request;
 use WP_Error;
 use WP_User;
@@ -42,6 +41,7 @@ class AnyCommentSocialAuth {
 	const SOCIAL_DRIBBBLE = 'dribbble';
 	const SOCIAL_STEAM = 'steam';
 	const SOCIAL_YANDEX = 'yandex';
+	const SOCIAL_MAILRU = 'mailru';
 	const SOCIAL_YAHOO = 'yahoo';
 	const SOCIAL_WORDPRESS = 'wordpress';
 
@@ -101,6 +101,7 @@ class AnyCommentSocialAuth {
 		self::SOCIAL_STEAM         => 'Steam',
 		self::SOCIAL_YAHOO         => 'Yahoo',
 		self::SOCIAL_YANDEX        => 'Yandex',
+		self::SOCIAL_MAILRU        => 'Mailru',
 		self::SOCIAL_WORDPRESS     => 'WordPress',
 	];
 
@@ -253,6 +254,7 @@ class AnyCommentSocialAuth {
 			self::SOCIAL_DRIBBBLE      => __( 'Dribbble', 'anycomment' ),
 			self::SOCIAL_YAHOO         => __( 'Yahoo', 'anycomment' ),
 			self::SOCIAL_YANDEX        => __( 'Yandex', 'anycomment' ),
+			self::SOCIAL_MAILRU        => __( 'Mail.Ru', 'anycomment' ),
 			self::SOCIAL_WORDPRESS     => __( 'WordPress', 'anycomment' ),
 		];
 
@@ -359,6 +361,14 @@ class AnyCommentSocialAuth {
 					],
 					'adapter'  => '\AnyComment\Providers\Yandex',
 					'callback' => static::get_yandex_callback(),
+				],
+				self::$providers[ self::SOCIAL_MAILRU ] => [
+					'enabled'  => AnyCommentSocialSettings::is_mailru_active(),
+					'keys'     => [
+						'id'     => AnyCommentSocialSettings::get_mailru_client_id(),
+						'secret' => AnyCommentSocialSettings::get_mailru_client_secret(),
+					],
+					'callback' => static::get_mailru_callback(),
 				],
 				self::$providers[ self::SOCIAL_YAHOO ]  => [
 					'enabled'  => AnyCommentSocialSettings::is_yahoo_active(),
@@ -468,6 +478,17 @@ class AnyCommentSocialAuth {
 	 */
 	public static function get_yandex_callback( $redirect = null ) {
 		return static::get_callback_url( self::SOCIAL_YANDEX, $redirect );
+	}
+
+	/**
+	 * Get Mailru callback URL.
+	 *
+	 * @param null|string $redirect Redirect URL added to the link.
+	 *
+	 * @return string
+	 */
+	public static function get_mailru_callback( $redirect = null ) {
+		return static::get_callback_url( self::SOCIAL_MAILRU, $redirect );
 	}
 
 	/**
