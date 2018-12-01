@@ -11,16 +11,16 @@ if ( isset( $_GET['action'] ) ) {
 			\AnyComment\Cache\AnyCommentRestCacheManager::flush();
 			break;
 		case 'open-all-comments':
-			\AnyComment\helpers\AnyCommentManipulatorHelper::open_all_comments();
+			\AnyComment\Helpers\AnyCommentManipulatorHelper::open_all_comments();
 			break;
 		case 'open-posts-comments':
-			\AnyComment\helpers\AnyCommentManipulatorHelper::open_all_post_comments();
+			\AnyComment\Helpers\AnyCommentManipulatorHelper::open_all_post_comments();
 			break;
 		case 'open-pages-comments':
-			\AnyComment\helpers\AnyCommentManipulatorHelper::open_all_page_comments();
+			\AnyComment\Helpers\AnyCommentManipulatorHelper::open_all_page_comments();
 			break;
 		case 'open-products-comments':
-			\AnyComment\helpers\AnyCommentManipulatorHelper::open_all_product_comments();
+			\AnyComment\Helpers\AnyCommentManipulatorHelper::open_all_product_comments();
 			break;
 		default:
 	}

@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.0.75 – 01.12.2018
+
+**Enhancements:**
+
+* Added Yandex & Mail.Ru to authorization options, #282
+
+**Fixes:**
+
+* Fixed issue when error was shown in Tools tab
+
 ## 0.0.74 – 27.11.2018
 
 **Enhancements:**
