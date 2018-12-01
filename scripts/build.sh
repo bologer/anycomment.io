@@ -42,8 +42,8 @@ echo "Moving "${TEMP_PATH}/${ZIP_FILE_NAME}.zip" to $save_path"
 mv "${TEMP_PATH}/${ZIP_FILE_NAME}.zip" $save_path
 
 # Cleaning
-#echo "ZIP should've been moved, now cleaning"
-#rm -rf "$TEMP_PATH.zip"
+echo "ZIP should've been moved, now cleaning"
+rm -f "$TEMP_PATH.zip"
 
 # Done
 echo "============= DONE ============="
