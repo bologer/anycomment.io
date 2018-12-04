@@ -3,7 +3,7 @@
 namespace AnyComment\Options;
 
 
-class AnyCommentNewOptions {
+class AnyCommentOptionManager {
 	/**
 	 * @var string Options group.
 	 */
@@ -197,23 +197,6 @@ JS;
 		return new AnyCommentField( $options );
 	}
 
-	/**
-	 * Render fields.
-	 *
-	 * @param array $section ID of the section to render fields for.
-	 * @param array $fields List of fields to render.
-	 *
-	 * @return bool True on success, false on failure.
-	 */
-	public function render_fields( $section, $fields ) {
-
-		if ( empty( $fields ) ) {
-			return false;
-		}
-
-		return true;
-	}
-
 	public function run() {
 		$html = '';
 
@@ -317,58 +300,12 @@ JS;
 	}
 
 	/**
-	 * Custom wrapper over original WordPress core method.
-	 *
-	 * Part of the Settings API. Use this in a settings page callback function
-	 * to output all the sections and fields that were added to that $page with
-	 * add_settings_section() and add_settings_field()
-	 *
-	 * @global $wp_settings_sections Storage array of all settings sections added to admin pages
-	 * @global $wp_settings_fields Storage array of settings fields and info about their pages/sections
-	 * @since 0.0.45
-	 *
-	 * @param string $page The slug name of the page whose settings sections you want to output
-	 * @param bool Whether required to have header or not.
-	 */
-	protected function do_tab_sections( $page, $includeHeader = true ) {
-		global $wp_settings_sections, $wp_settings_fields;
-
-		if ( ! isset( $wp_settings_sections[ $page ] ) ) {
-			return;
-		}
-
-		$i = 0;
-		foreach ( (array) $wp_settings_sections[ $page ] as $section ) {
-			if ( $includeHeader && isset( $section['title'] ) ) {
-				echo "<h2>{$section['title']}</h2>";
-			}
-
-			if ( $includeHeader && $section['callback'] ) {
-				call_user_func( $section['callback'], $section );
-			}
-
-			if ( ! isset( $wp_settings_fields ) || ! isset( $wp_settings_fields[ $page ] ) || ! isset( $wp_settings_fields[ $page ][ $section['id'] ] ) ) {
-				continue;
-			}
-
-			echo '<div id="tab-' . $section['id'] . '" class="anycomment-tabs__container__tab ' . ( $i === 0 ? 'current' : '' ) . '">';
-			echo '<div class="grid-x anycomment-form-wrapper">';
-			$this->do_settings_fields( $page, $section['id'] );
-			echo '</div>';
-
-			echo '</div>';
-
-			$i ++;
-		}
-	}
-
-	/**
 	 * Check whether there are any options set on model.
 	 *
 	 * @return bool
 	 */
 	public function has_options() {
-		$options = $this->get_options();
+		$options = $this->get_db_options();
 
 		if ( $options === null ) {
 			return false;
@@ -385,14 +322,23 @@ JS;
 	}
 
 	/**
+	 * Get list of available options.
+	 *
+	 * @return AnyCommentOption[]|null
+	 */
+	public function get_options() {
+		return $this->options;
+	}
+
+	/**
 	 * Get single option.
 	 *
 	 * @param string $name Options name to search for.
 	 *
 	 * @return mixed|null
 	 */
-	public function get_option( $name ) {
-		$options = $this->get_options();
+	public function get_db_option( $name ) {
+		$options = $this->get_db_options();
 
 		$optionValue = isset( $options[ $name ] ) ? trim( $options[ $name ] ) : null;
 
@@ -401,25 +347,25 @@ JS;
 
 	/**
 	 * Get list of social options.
+     *
 	 * @return AnyCommentOption[]|null
 	 */
-	public function get_options() {
-//
-//		if ( $this->options === null ) {
-//			$this->options = get_option( $this->option_name, null );
-//		}
-//
-//		// When options are not defined yet and there are some default ones,
-//		// set them for user
-//		if ( $this->options === null && ! empty( $this->default_options ) ) {
-//			update_option( $this->option_name, $this->default_options );
-//		}
+	public function get_db_options() {
 
-		return $this->options;
+		$option = get_option( $this->option_name, null );
+
+		// When options are not defined yet and there are some default ones,
+		// set them for user
+		if ( $option === null && ! empty( $this->default_options ) ) {
+			update_option( $this->option_name, $this->default_options );
+		}
+
+		return $option;
 	}
 
 	/**
 	 * Get instance of currently running class.
+     *
 	 * @return self
 	 */
 	public static function instance() {

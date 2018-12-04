@@ -5,6 +5,7 @@
 **Enhancements:**
 
 * Added Yandex & Mail.Ru to authorization options, #282
+* Admin options are now saved without page reload
 
 **Fixes:**
 

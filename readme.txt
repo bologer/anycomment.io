@@ -172,6 +172,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 **Enhancements:**
 
 * Added Yandex & Mail.Ru to authorization options, #282
+* Admin options are now saved without page reload
 
 **Fixes:**
 

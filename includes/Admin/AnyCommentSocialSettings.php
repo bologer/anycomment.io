@@ -6,13 +6,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use AnyComment\Options\AnyCommentNewOptions;
+use AnyComment\Options\AnyCommentOptionManager;
 use AnyComment\Rest\AnyCommentSocialAuth;
 
 /**
  * AnyCommentAdminPages helps to process website authentication.
  */
-class AnyCommentSocialSettings extends AnyCommentNewOptions {
+class AnyCommentSocialSettings extends AnyCommentOptionManager {
 	/**
 	 * @inheritdoc
 	 */
@@ -643,7 +643,7 @@ class AnyCommentSocialSettings extends AnyCommentNewOptions {
 					$section->set_callback( function () use ( $section ) {
 
 						$alt        = $section->get_title();
-						$guide_link = static::getGuide( [ 'social' => $section->get_id() ] );
+						$guide_link = static::get_guide( [ 'social' => $section->get_id() ] );
 						$img_src    = sprintf( AnyComment()->plugin_url() . '/assets/img/socials/%s.svg', $section->get_id() );
 						$title      = sprintf( __( "How To Set-Up %s", 'anycomment' ), $section->get_title() );
 						$read_more  = __( "Read", 'anycomment' );
@@ -755,7 +755,7 @@ EOT;
 	 * @return mixed|null
 	 */
 	public static function is_enabled( $name ) {
-		return static::instance()->get_option( sprintf( 'social_%s_toggle_field', strtolower( $name ) ) ) !== null;
+		return static::instance()->get_db_option( sprintf( 'social_%s_toggle_field', strtolower( $name ) ) ) !== null;
 	}
 
 	/**
@@ -773,7 +773,7 @@ EOT;
 	 * @return bool
 	 */
 	public static function is_vk_active() {
-		return static::instance()->get_option( self::OPTION_VK_TOGGLE ) !== null;
+		return static::instance()->get_db_option( self::OPTION_VK_TOGGLE ) !== null;
 	}
 
 	/**
@@ -782,7 +782,7 @@ EOT;
 	 * @return int|null
 	 */
 	public static function get_vk_app_id() {
-		return static::instance()->get_option( self::OPTION_VK_APP_ID );
+		return static::instance()->get_db_option( self::OPTION_VK_APP_ID );
 	}
 
 	/**
@@ -791,7 +791,7 @@ EOT;
 	 * @return string|null
 	 */
 	public static function get_vk_secure_key() {
-		return static::instance()->get_option( self::OPTION_VK_SECRET );
+		return static::instance()->get_db_option( self::OPTION_VK_SECRET );
 	}
 
 	/**
@@ -800,7 +800,7 @@ EOT;
 	 * @return bool
 	 */
 	public static function is_mailru_active() {
-		return static::instance()->get_option( self::OPTION_MAILRU_TOGGLE ) !== null;
+		return static::instance()->get_db_option( self::OPTION_MAILRU_TOGGLE ) !== null;
 	}
 
 	/**
@@ -809,7 +809,7 @@ EOT;
 	 * @return string|null
 	 */
 	public static function get_mailru_client_id() {
-		return static::instance()->get_option( self::OPTION_MAILRU_CLIENT_ID );
+		return static::instance()->get_db_option( self::OPTION_MAILRU_CLIENT_ID );
 	}
 
 	/**
@@ -818,7 +818,7 @@ EOT;
 	 * @return string|null
 	 */
 	public static function get_mailru_client_secret() {
-		return static::instance()->get_option( self::OPTION_MAILRU_CLIENT_SECRET );
+		return static::instance()->get_db_option( self::OPTION_MAILRU_CLIENT_SECRET );
 	}
 
 	/**
@@ -827,7 +827,7 @@ EOT;
 	 * @return bool
 	 */
 	public static function is_yandex_active() {
-		return static::instance()->get_option( self::OPTION_YANDEX_TOGGLE ) !== null;
+		return static::instance()->get_db_option( self::OPTION_YANDEX_TOGGLE ) !== null;
 	}
 
 	/**
@@ -836,7 +836,7 @@ EOT;
 	 * @return string|null
 	 */
 	public static function get_yandex_client_id() {
-		return static::instance()->get_option( self::OPTION_YANDEX_CLIENT_ID );
+		return static::instance()->get_db_option( self::OPTION_YANDEX_CLIENT_ID );
 	}
 
 	/**
@@ -845,7 +845,7 @@ EOT;
 	 * @return string|null
 	 */
 	public static function get_yandex_client_secret() {
-		return static::instance()->get_option( self::OPTION_YANDEX_CLIENT_SECRET );
+		return static::instance()->get_db_option( self::OPTION_YANDEX_CLIENT_SECRET );
 	}
 
 	/**
@@ -854,7 +854,7 @@ EOT;
 	 * @return bool
 	 */
 	public static function is_yahoo_active() {
-		return static::instance()->get_option( self::OPTION_YAHOO_TOGGLE ) !== null;
+		return static::instance()->get_db_option( self::OPTION_YAHOO_TOGGLE ) !== null;
 	}
 
 	/**
@@ -863,7 +863,7 @@ EOT;
 	 * @return int|null
 	 */
 	public static function get_yahoo_app_id() {
-		return static::instance()->get_option( self::OPTION_YAHOO_APP_ID );
+		return static::instance()->get_db_option( self::OPTION_YAHOO_APP_ID );
 	}
 
 	/**
@@ -872,7 +872,7 @@ EOT;
 	 * @return string|null
 	 */
 	public static function get_yahoo_client_secret() {
-		return static::instance()->get_option( self::OPTION_YAHOO_CLIENT_SECRET );
+		return static::instance()->get_db_option( self::OPTION_YAHOO_CLIENT_SECRET );
 	}
 
 	/**
@@ -881,7 +881,7 @@ EOT;
 	 * @return bool
 	 */
 	public static function is_github_active() {
-		return static::instance()->get_option( self::OPTION_GITHUB_TOGGLE ) !== null;
+		return static::instance()->get_db_option( self::OPTION_GITHUB_TOGGLE ) !== null;
 	}
 
 	/**
@@ -890,7 +890,7 @@ EOT;
 	 * @return int|null
 	 */
 	public static function get_github_client_id() {
-		return static::instance()->get_option( self::OPTION_GITHUB_CLIENT_ID );
+		return static::instance()->get_db_option( self::OPTION_GITHUB_CLIENT_ID );
 	}
 
 	/**
@@ -899,7 +899,7 @@ EOT;
 	 * @return string|null
 	 */
 	public static function get_github_secret_key() {
-		return static::instance()->get_option( self::OPTION_GITHUB_SECRET );
+		return static::instance()->get_db_option( self::OPTION_GITHUB_SECRET );
 	}
 
 	/**
@@ -908,7 +908,7 @@ EOT;
 	 * @return bool
 	 */
 	public static function is_instagram_active() {
-		return static::instance()->get_option( self::OPTION_INSTAGRAM_TOGGLE ) !== null;
+		return static::instance()->get_db_option( self::OPTION_INSTAGRAM_TOGGLE ) !== null;
 	}
 
 	/**
@@ -917,7 +917,7 @@ EOT;
 	 * @return int|null
 	 */
 	public static function get_instagram_client_id() {
-		return static::instance()->get_option( self::OPTION_INSTAGRAM_CLIENT_ID );
+		return static::instance()->get_db_option( self::OPTION_INSTAGRAM_CLIENT_ID );
 	}
 
 	/**
@@ -926,7 +926,7 @@ EOT;
 	 * @return string|null
 	 */
 	public static function get_nstagram_client_secret() {
-		return static::instance()->get_option( self::OPTION_INSTAGRAM_CLIENT_SECRET );
+		return static::instance()->get_db_option( self::OPTION_INSTAGRAM_CLIENT_SECRET );
 	}
 
 	/**
@@ -935,7 +935,7 @@ EOT;
 	 * @return bool
 	 */
 	public static function is_twitch_active() {
-		return static::instance()->get_option( self::OPTION_TWITCH_TOGGLE ) !== null;
+		return static::instance()->get_db_option( self::OPTION_TWITCH_TOGGLE ) !== null;
 	}
 
 	/**
@@ -944,7 +944,7 @@ EOT;
 	 * @return string|null
 	 */
 	public static function get_twitch_client_id() {
-		return static::instance()->get_option( self::OPTION_TWITCH_CLIENT_ID );
+		return static::instance()->get_db_option( self::OPTION_TWITCH_CLIENT_ID );
 	}
 
 	/**
@@ -953,7 +953,7 @@ EOT;
 	 * @return string|null
 	 */
 	public static function get_twitch_client_secret() {
-		return static::instance()->get_option( self::OPTION_TWITCH_CLIENT_SECRET );
+		return static::instance()->get_db_option( self::OPTION_TWITCH_CLIENT_SECRET );
 	}
 
 	/**
@@ -962,7 +962,7 @@ EOT;
 	 * @return bool
 	 */
 	public static function is_dribbble_active() {
-		return static::instance()->get_option( self::OPTION_DRIBBBLE_TOGGLE ) !== null;
+		return static::instance()->get_db_option( self::OPTION_DRIBBBLE_TOGGLE ) !== null;
 	}
 
 	/**
@@ -971,7 +971,7 @@ EOT;
 	 * @return string|null
 	 */
 	public static function get_dribbble_client_id() {
-		return static::instance()->get_option( self::OPTION_DRIBBBLE_CLIENT_ID );
+		return static::instance()->get_db_option( self::OPTION_DRIBBBLE_CLIENT_ID );
 	}
 
 	/**
@@ -980,7 +980,7 @@ EOT;
 	 * @return string|null
 	 */
 	public static function get_dribbble_client_secret() {
-		return static::instance()->get_option( self::OPTION_DRIBBBLE_CLIENT_SECRET );
+		return static::instance()->get_db_option( self::OPTION_DRIBBBLE_CLIENT_SECRET );
 	}
 
 	/**
@@ -989,7 +989,7 @@ EOT;
 	 * @return bool
 	 */
 	public static function is_steam_active() {
-		return static::instance()->get_option( self::OPTION_STEAM_TOGGLE ) !== null;
+		return static::instance()->get_db_option( self::OPTION_STEAM_TOGGLE ) !== null;
 	}
 
 	/**
@@ -998,7 +998,7 @@ EOT;
 	 * @return string|null
 	 */
 	public static function get_steam_secret() {
-		return static::instance()->get_option( self::OPTION_STEAM_SECRET ) !== null;
+		return static::instance()->get_db_option( self::OPTION_STEAM_SECRET ) !== null;
 	}
 
 	/**
@@ -1007,7 +1007,7 @@ EOT;
 	 * @return bool
 	 */
 	public static function is_twitter_active() {
-		return static::instance()->get_option( self::OPTION_TWITTER_TOGGLE ) !== null;
+		return static::instance()->get_db_option( self::OPTION_TWITTER_TOGGLE ) !== null;
 	}
 
 	/**
@@ -1016,7 +1016,7 @@ EOT;
 	 * @return string|null
 	 */
 	public static function get_twitter_consumer_key() {
-		return static::instance()->get_option( self::OPTION_TWITTER_CONSUMER_KEY );
+		return static::instance()->get_db_option( self::OPTION_TWITTER_CONSUMER_KEY );
 	}
 
 	/**
@@ -1025,7 +1025,7 @@ EOT;
 	 * @return string|null
 	 */
 	public static function get_twitter_consumer_secret() {
-		return static::instance()->get_option( self::OPTION_TWITTER_CONSUMER_SECRET );
+		return static::instance()->get_db_option( self::OPTION_TWITTER_CONSUMER_SECRET );
 	}
 
 	/**
@@ -1034,7 +1034,7 @@ EOT;
 	 * @return bool
 	 */
 	public static function is_facebook_active() {
-		return static::instance()->get_option( self::OPTION_FACEBOOK_TOGGLE ) !== null;
+		return static::instance()->get_db_option( self::OPTION_FACEBOOK_TOGGLE ) !== null;
 	}
 
 	/**
@@ -1043,7 +1043,7 @@ EOT;
 	 * @return int|null
 	 */
 	public static function get_facebook_app_id() {
-		return static::instance()->get_option( self::OPTION_FACEBOOK_APP_ID );
+		return static::instance()->get_db_option( self::OPTION_FACEBOOK_APP_ID );
 	}
 
 	/**
@@ -1052,7 +1052,7 @@ EOT;
 	 * @return string|null
 	 */
 	public static function get_facebook_app_secret() {
-		return static::instance()->get_option( self::OPTION_FACEBOOK_APP_SECRET );
+		return static::instance()->get_db_option( self::OPTION_FACEBOOK_APP_SECRET );
 	}
 
 	/**
@@ -1061,7 +1061,7 @@ EOT;
 	 * @return bool
 	 */
 	public static function is_google_active() {
-		return static::instance()->get_option( self::OPTION_GOOGLE_TOGGLE ) !== null;
+		return static::instance()->get_db_option( self::OPTION_GOOGLE_TOGGLE ) !== null;
 	}
 
 	/**
@@ -1070,7 +1070,7 @@ EOT;
 	 * @return int|null
 	 */
 	public static function get_google_client_id() {
-		return static::instance()->get_option( self::OPTION_GOOGLE_CLIENT_ID );
+		return static::instance()->get_db_option( self::OPTION_GOOGLE_CLIENT_ID );
 	}
 
 	/**
@@ -1079,7 +1079,7 @@ EOT;
 	 * @return string|null
 	 */
 	public static function get_google_secret() {
-		return static::instance()->get_option( self::OPTION_GOOGLE_SECRET );
+		return static::instance()->get_db_option( self::OPTION_GOOGLE_SECRET );
 	}
 
 	/**
@@ -1088,7 +1088,7 @@ EOT;
 	 * @return bool
 	 */
 	public static function is_odnoklassniki_on() {
-		return static::instance()->get_option( self::OPTION_OK_TOGGLE ) !== null;
+		return static::instance()->get_db_option( self::OPTION_OK_TOGGLE ) !== null;
 	}
 
 	/**
@@ -1097,7 +1097,7 @@ EOT;
 	 * @return int|null
 	 */
 	public static function get_odnoklassniki_app_id() {
-		return static::instance()->get_option( self::OPTION_OK_APP_ID );
+		return static::instance()->get_db_option( self::OPTION_OK_APP_ID );
 	}
 
 	/**
@@ -1106,7 +1106,7 @@ EOT;
 	 * @return int|null
 	 */
 	public static function get_odnoklassniki_app_key() {
-		return static::instance()->get_option( self::OPTION_OK_APP_KEY );
+		return static::instance()->get_db_option( self::OPTION_OK_APP_KEY );
 	}
 
 	/**
@@ -1115,7 +1115,7 @@ EOT;
 	 * @return string|null
 	 */
 	public static function get_odnoklassniki_app_secret() {
-		return static::instance()->get_option( self::OPTION_OK_APP_SECRET );
+		return static::instance()->get_db_option( self::OPTION_OK_APP_SECRET );
 	}
 
 	/**
@@ -1124,7 +1124,7 @@ EOT;
 	 * @return bool
 	 */
 	public static function is_wordpress_native_active() {
-		return static::instance()->get_option( self::OPTION_WORDPRESS_NATIVE_TOGGLE ) !== null;
+		return static::instance()->get_db_option( self::OPTION_WORDPRESS_NATIVE_TOGGLE ) !== null;
 	}
 
 	/**
@@ -1137,7 +1137,7 @@ EOT;
 	 *
 	 * @return null|string NULL when no guide exists for native or specified lang or social, otherwise string.
 	 */
-	public static function getGuide( $options = null ) {
+	public static function get_guide( $options = null ) {
 		$isNative = isset( $options['native'] );
 		$lang     = isset( $options['lang'] ) ? trim( $options['lang'] ) : null;
 		$social   = isset( $options['social'] ) ? trim( $options['social'] ) : null;
@@ -1156,7 +1156,7 @@ EOT;
 			}
 		}
 
-		$guides = static::getGuides();
+		$guides = static::get_guides();
 
 		// When there are guides for specified language
 		if ( ! isset( $guides[ $searchLang ] ) ) {
@@ -1176,7 +1176,7 @@ EOT;
 	 *
 	 * @return array
 	 */
-	public static function getGuides() {
+	public static function get_guides() {
 		return [
 			'ru' => [
 				AnyCommentSocialAuth::SOCIAL_VKONTAKTE     => 'https://anycomment.io/api-vkontakte/',

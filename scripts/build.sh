@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Script is meant to package plugin into ZIP archive so it can be easily used for testing purposes
 # This script SHOULD NOT be used for release purposes
 
@@ -30,6 +31,8 @@ rsync -arv --cvs-exclude \
     --exclude='.travis.yml' \
     --exclude='phpunit.xml' \
     --exclude='vendor/bin' \
+    --exclude='*.js.map' \
+    --exclude='*.css.map' \
     $plugin_root \
     $TEMP_PATH
 
