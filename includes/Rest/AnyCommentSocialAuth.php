@@ -929,15 +929,6 @@ class AnyCommentSocialAuth {
 	 * @return mixed|null
 	 */
 	public static function get_user_avatar_url( $id_or_email ) {
-
-		if ( AnyCommentIntegrationSettings::is_wp_user_avatar_active() ) {
-			global $wpua_functions;
-			if ( $wpua_functions->has_wp_user_avatar( $id_or_email ) ) {
-				return $wpua_functions->get_wp_user_avatar_src( $id_or_email, AnyCommentAvatars::DEFAULT_AVATAR_WIDTH );
-			}
-		}
-
-
 		/**
 		 * Get avatar from social network.
 		 */
@@ -959,10 +950,20 @@ class AnyCommentSocialAuth {
 		}
 
 		if ( $userId !== null ) {
-			$avatarUrl = AnyCommentUserMeta::get_social_avatar( $userId );
+			$social_avatar_url = AnyCommentUserMeta::get_social_avatar( $userId );
 
-			if ( ! empty( $avatarUrl ) ) {
-				return $avatarUrl;
+			if ( ! empty( $social_avatar_url ) ) {
+				return $social_avatar_url;
+			}
+		}
+
+		/**
+		 * When WP User avatar is active, user has gravatar and has user avatar within
+		 * the plugin itself, return the plugin's version.
+		 */
+		if ( AnyCommentIntegrationSettings::is_wp_user_avatar_active() ) {
+			if ( has_wp_user_avatar( $id_or_email ) ) {
+				return get_wp_user_avatar_src( $id_or_email, AnyCommentAvatars::DEFAULT_AVATAR_WIDTH );
 			}
 		}
 
@@ -982,8 +983,11 @@ class AnyCommentSocialAuth {
 			] );
 		}
 
+		if ( AnyCommentIntegrationSettings::is_wp_user_avatar_active() ) {
+			return get_wp_user_avatar_src( $id_or_email, AnyCommentAvatars::DEFAULT_AVATAR_WIDTH );
+		}
 
-		return AnyComment()->plugin_url() . '/assets/img/no-avatar.svg';
+		return apply_filters( 'anycomment/user/no_avatar', AnyComment()->plugin_url() . '/assets/img/no-avatar.svg' );
 	}
 
 	/**

@@ -134,7 +134,7 @@ JS;
 		$options = $request->get_params();
 		unset( $options['option_name'] );
 
-		update_option( $option_name, $options );
+		$this->update_db_option( $options, $option_name );
 
 		$response->set_data( [
 			'success' => true
@@ -153,7 +153,6 @@ JS;
 	public function add_option( $options ) {
 		$this->options[] = $options;
 	}
-
 
 	/**
 	 * @return AnyCommentOption
@@ -347,7 +346,7 @@ JS;
 
 	/**
 	 * Get list of social options.
-     *
+	 *
 	 * @return AnyCommentOption[]|null
 	 */
 	public function get_db_options() {
@@ -357,15 +356,34 @@ JS;
 		// When options are not defined yet and there are some default ones,
 		// set them for user
 		if ( $option === null && ! empty( $this->default_options ) ) {
-			update_option( $this->option_name, $this->default_options );
+			$this->update_db_option( $this->default_options, $this->option_name );
 		}
 
 		return $option;
 	}
 
 	/**
+	 * Update db option value.
+	 *
+	 * @param mixed $value Value of the option.
+	 * @param null|string $option_name Option name. When not specified current option_name will be used.
+	 */
+	public function update_db_option( $value, $option_name = null ) {
+
+		$option = null;
+
+		if ( $option_name === null ) {
+			$option = $this->option_name;
+		} else {
+			$option = $option_name;
+		}
+
+		update_option( $option, $value );
+	}
+
+	/**
 	 * Get instance of currently running class.
-     *
+	 *
 	 * @return self
 	 */
 	public static function instance() {

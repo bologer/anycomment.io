@@ -698,17 +698,16 @@ EOT;
 		$html = '';
 
 
-		$i = 0;
 
 		foreach ( $options as $option ) {
 			$html .= '<ul>';
 
 			$sections = $option->get_sections();
 
-			foreach ( $sections as $section ) {
+			foreach ( $sections as $key => $section ) {
 				$section_id = $section->get_id();
 
-				$liClasses = ( $i == 0 ? 'current' : '' );
+				$liClasses = ( $key == 0 ? 'current' : '' );
 
 				$liClasses .= ' ' . ( static::is_enabled( str_replace( 'section_', '', $section_id ) ) ? 'toggled' : '' );
 
@@ -717,8 +716,6 @@ EOT;
 				$html .= '<li class="' . $liClasses . '" data-tab="' . $section_id . '">
 				<a href="#tab-' . $section_id . '"><img src="' . $path . '" />' . $section->get_title() . '</a>
 				</li>';
-
-				$i ++;
 			}
 		}
 		$html .= '</ul>';

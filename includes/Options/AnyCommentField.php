@@ -15,61 +15,62 @@ class AnyCommentField {
 	const TYPE_CHECKBOX = 'checkbox';
 	const TYPE_TEXT = 'text';
 	const TYPE_NUMBER = 'number';
+	const TYPE_COLOR = 'color';
 
 	/**
 	 * @var string Field id.
 	 */
-	public $id;
+	protected $id;
 
 	/**
 	 * @var string Field title.
 	 */
-	public $title;
+	protected $title;
 
 	/**
 	 * @var string|null For attribute type pointing to the form field itself.
 	 */
-	public $label_for;
+	protected $label_for;
 
 	/**
 	 * @var string Field type.
 	 */
-	public $type;
+	protected $type;
 
 	/**
 	 * @var string|null Description displayed below the field.
 	 */
-	public $description = null;
+	protected $description = null;
 
 	/**
 	 * @var null|string|callable Custom content displayed before field.
 	 */
-	public $before = null;
+	protected $before = null;
 
 	/**
 	 * @var null|string|callable Custom content displayed after field.
 	 */
-	public $after = null;
+	protected $after = null;
 
 	/**
 	 * @var string|null
 	 */
-	public $hint = null;
+	protected $hint = null;
 
 	/**
 	 * @var array List of additional arguments.
 	 */
-	public $args = [];
+	protected $args = [];
 
 	/**
 	 * @var null|string Page slug to which option belongs.
 	 */
-	public $option_name = null;
+	protected $option_name = null;
 
 	/**
 	 * @var string Field wrapping element.
 	 */
-	public $wrapper = '<div class="woption-field">{content}</div>';
+	protected $wrapper = '<div class="woption-field">{content}</div>';
 
 	/**
 	 * AnyCommentField constructor.
@@ -274,6 +275,28 @@ class AnyCommentField {
 	}
 
 	/**
+	 * Set number type.
+	 *
+	 * @return $this
+	 */
+	public function number() {
+		$this->set_type( self::TYPE_NUMBER );
+
+		return $this;
+	}
+
+	/**
+	 * Set color type.
+	 *
+	 * @return $this
+	 */
+	public function color() {
+		$this->set_type( self::TYPE_COLOR );
+
+		return $this;
+	}
+
+	/**
 	 * Set checkbox type.
 	 *
 	 * @return $this
@@ -336,68 +359,6 @@ class AnyCommentField {
 		return $value;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function __toString() {
-		return $this->run();
-	}
-
-	/**
-	 * Renders field into HMTL.
-	 *
-	 * @return string
-	 */
-	public function run() {
-
-		$type        = $this->get_type();
-		$label_for   = $this->get_label_for();
-		$label_title = $this->get_title();
-		$description = $this->get_description();
-
-		$label       = '<label for="' . $label_for . '">' . $label_title . '</label>';
-		$description = ! empty( $description ) ?
-			'<p class="description">' . $description . '</p>' :
-			'';
-
-		$html       = '';
-		$field_html = '';
-
-		$html .= $label;
-
-		switch ( $type ) {
-			case 'text':
-			case 'number':
-			case 'numeric':
-				$field_html = $this->input_text();
-				break;
-			case 'toggle':
-			case 'checkbox':
-				$field_html = $this->input_checkbox();
-				break;
-			case 'dropdown':
-			case 'list':
-			case 'select':
-				$field_html = $this->input_select();
-				break;
-			case 'textarea':
-				$field_html = $this->input_textarea();
-				break;
-			case 'color':
-				$field_html = $this->input_color();
-				break;
-			default:
-		}
-
-		$html .= $this->get_before();
-
-		$html .= $field_html;
-		$html .= $description;
-
-		$html .= $this->get_after();
-
-		return str_replace( '{content}', $html, $this->wrapper );
-	}
 
 	/**
 	 * Helper to render select.
@@ -405,18 +366,20 @@ class AnyCommentField {
 	 * @return string
 	 */
 	public function input_select() {
-//		$for     = $args['for'];
-//		$name    = $args['name'];
-//		$options = $args['options'];
-//
+		$for            = $this->get_label_for();
+		$name           = $this->get_id();
+		$args           = $this->get_args();
+		$selected_value = $this->get_value();
+		$options        = isset( $args['options'] ) ? $args['options'] : null;
+
+		if ( $options === null ) {
+			return '';
+		}
 
 		$options_html = '';
 		foreach ( $options as $key => $value ) {
-			$option_value = $this->get_option( $for );
-			$selected     = isset( $this->get_options()[ $for ] ) ? ( selected( $option_value, $key, false ) ) : ( '' );
-			$options_html .= <<<EOL
-                <option value="$key" $selected>$value</option>
-EOL;
+			$selected     = $value !== null ? ( selected( $selected_value, $key, false ) ) : ( '' );
+			$options_html .= sprintf( '<option value="%s" %s>%s</option>', $key, $selected, $value );
 		}
 
 		return <<<EOL
@@ -434,15 +397,25 @@ EOL;
 	public function input_checkbox() {
 		$for               = $this->get_label_for();
 		$name              = $this->get_id();
+		$title             = $this->get_title();
+		$description       = $this->get_description();
 		$value             = $this->get_value();
 		$checked_attribute = $value !== null ? 'checked="checked"' : '';
 
 		return <<<EOL
-<div class="switch tiny">
-    <input class="switch-input" id="$for" type="checkbox"
-           name="$name"
-        $checked_attribute>
-    <label class="switch-paddle" for="$for"></label>
+<div class="grid-x">
+    <div class="cell auto shrink align-self-middle">
+        <div class="switch tiny">
+		    <input class="switch-input" id="$for" type="checkbox"
+		           name="$name"
+		        $checked_attribute>
+		    <label class="switch-paddle" for="$for"></label>
+		</div>
+    </div>
+    <div class="cell auto">
+        <label for="option_plugin_toggle">$title</label>
+        <p class="description">$description</p>
+    </div>
 </div>
 EOL;
 	}
@@ -499,5 +472,71 @@ EOT;
 		return <<<EOT
             <textarea rows="5" id="$for" name="$name">$value</textarea>
 EOT;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function __toString() {
+		return $this->run();
+	}
+
+	/**
+	 * Renders field into HMTL.
+	 *
+	 * @return string
+	 */
+	public function run() {
+
+		$type        = $this->get_type();
+		$label_for   = $this->get_label_for();
+		$label_title = $this->get_title();
+		$description = $this->get_description();
+
+		$label       = '<label for="' . $label_for . '">' . $label_title . '</label>';
+		$description = ! empty( $description ) ?
+			'<p class="description">' . $description . '</p>' :
+			'';
+
+		$html       = '';
+		$field_html = '';
+
+		switch ( $type ) {
+			case 'text':
+			case 'number':
+			case 'numeric':
+				$field_html = $this->input_text();
+				break;
+			case 'toggle':
+			case 'checkbox':
+				// Remove label and description and both of these would be set
+				// inside the method itself
+				$label       = '';
+				$description = '';
+				$field_html  = $this->input_checkbox();
+				break;
+			case 'dropdown':
+			case 'list':
+			case 'select':
+				$field_html = $this->input_select();
+				break;
+			case 'textarea':
+				$field_html = $this->input_textarea();
+				break;
+			case 'color':
+				$field_html = $this->input_color();
+				break;
+			default:
+		}
+
+		$html .= $this->get_before();
+
+		$html .= $label;
+		$html .= $field_html;
+		$html .= $description;
+
+		$html .= $this->get_after();
+
+		return str_replace( '{content}', $html, $this->wrapper );
 	}
 }

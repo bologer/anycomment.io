@@ -167,17 +167,18 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 == Changelog ==
 
-= 0.0.75 – 01.12.2018 =
+= 0.0.75 – 05.12.2018 =
 
 **Enhancements:**
 
 * Added Yandex & Mail.Ru to authorization options, #282
-* Admin options are now saved without page reload
+* Integration settings are not split into tabs for easier navigation
+* Admin settings are now saved without page reload
 
 **Fixes:**
 
 * Fixed issue when error was shown in Tools tab
-
+* Fixed issue when WP User Avatar settings were not taking affect
 
 = 0.0.74 – 27.11.2018 =
 

@@ -8,11 +8,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use AnyComment\Base\ScssCompiler;
 use AnyComment\Helpers\AnyCommentInputHelper;
+use AnyComment\Options\AnyCommentOptionManager;
 
 /**
  * AC_AdminSettingPage helps to process generic plugin settings.
  */
-class AnyCommentGenericSettings extends AnyCommentAdminOptions {
+class AnyCommentGenericSettings extends AnyCommentOptionManager {
 
 	/**
 	 * Sender name used to send emails.
@@ -217,6 +218,22 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @inheritdoc
 	 */
 	protected $option_name = 'anycomment-generic';
+
+	/**
+	 * @inheritdoc
+	 */
+	protected $field_options = [
+		'wrapper' => '<div class="cell anycomment-form-wrapper__field">{content}</div>'
+	];
+
+	/**
+	 * @inheritdoc
+	 */
+	protected $section_options = [
+		'wrapper' => '<div class="grid-x anycomment-form-wrapper anycomment-tabs__container__tab" id="{id}">{content}</div>'
+	];
+
+
 	/**
 	 * @inheritdoc
 	 */
@@ -319,713 +336,770 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 */
 	public function init_settings() {
 
-		$this->render_fields(
-			[
-				'id'   => 'section_generic',
-				'name' => __( 'Generic', "anycomment" ),
-			],
-			[
-				[
-					'id'          => self::OPTION_PLUGIN_TOGGLE,
-					'title'       => __( 'Enable Comments', "anycomment" ),
-					'type'        => 'checkbox',
-					'description' => esc_html( __( 'When on, comments are visible. When off, default WordPress\' comments shown. This can be used to configure social networks on fresh installation.', "anycomment" ) )
-				],
-				[
-					'id'          => self::OPTION_DEFAULT_SORT_BY,
-					'title'       => __( 'Default Sorting', "anycomment" ),
-					'type'        => 'select',
-					'options'     => [
-						self::SORT_DESC => __( 'Newest first', 'anycomment' ),
-						self::SORT_ASC  => __( 'Oldest first', 'anycomment' ),
-					],
-					'description' => esc_html( __( 'Default sorting.', "anycomment" ) ),
-				],
-				[
-					'id'          => self::OPTION_COMMENT_RATING,
-					'title'       => __( 'Comment rating', "anycomment" ),
-					'type'        => 'select',
-					'options'     => [
-						self::COMMENT_RATING_LIKES          => __( 'Likes only', 'anycomment' ),
-						self::COMMENT_RATING_LIKES_DISLIKES => __( 'Likes and dislikes', 'anycomment' ),
-					],
-					'description' => esc_html( __( 'Type of rating used for single comment. Option "Likes" would display only heart like, whereas "Likes and dislikes" would display up and down options.', "anycomment" ) ),
-				],
-				[
-					'id'          => self::OPTION_DEFAULT_AVATAR,
-					'title'       => __( 'Default Avatar', "anycomment" ),
-					'type'        => 'select',
-					'options'     => [
-						self::OPTION_DEFAULT_AVATAR_ANYCOMMENT => __( 'No avatar (from AnyComment)', 'anycomment' ),
-						self::OPTION_DEFAULT_AVATAR_MP         => __( 'No avatar (from Gravatar)', 'anycomment' ),
-						self::OPTION_DEFAULT_AVATAR_IDENTICON  => __( 'Identicon (from Gravatar)', 'anycomment' ),
-						self::OPTION_DEFAULT_AVATAR_MONSTEROID => __( 'Monsteroid (from Gravatar)', 'anycomment' ),
-						self::OPTION_DEFAULT_AVATAR_WAVATAR    => __( 'Wavatar (from Gravatar)', 'anycomment' ),
-						self::OPTION_DEFAULT_AVATAR_RETRO      => __( 'Retro (from Gravatar)', 'anycomment' ),
-						self::OPTION_DEFAULT_AVATAR_ROBOHASH   => __( 'Robohash (from Gravatar)', 'anycomment' ),
-					],
-					'description' => esc_html( __( 'Default avatar when user does not have any.', "anycomment" ) ),
-				],
-				[
-					'id'          => self::OPTION_REGISTER_DEFAULT_GROUP,
-					'title'       => __( 'Register User Group', "anycomment" ),
-					'description' => esc_html( __( 'When users will authorize via plugin, they are being registered and be assigned with group selected above.', "anycomment" ) ),
-					'type'        => 'select',
-					'options'     => [
-						self::DEFAULT_ROLE_SUBSCRIBER        => __( 'Subscriber', 'anycomment' ),
-						self::DEFAULT_ROLE_SOCIAL_SUBSCRIBER => __( 'Social Network Subscriber', 'anycomment' ),
-					]
-				],
-				[
-					'id'          => self::OPTION_COMMENT_UPDATE_TIME,
-					'title'       => __( 'Comment Update Time', "anycomment" ),
-					'type'        => 'number',
-					'description' => esc_html( __( 'Number of minutes user can update his comment. "0" or empty for no limit.', "anycomment" ) )
-				],
-				[
-					'id'          => self::OPTION_COUNT_PER_PAGE,
-					'title'       => __( 'Number of Comments Loaded', "anycomment" ),
-					'type'        => 'number',
-					'description' => esc_html( __( 'Number of comments to load initially and per page.', "anycomment" ) )
-				],
-				[
-					'id'          => self::OPTION_LOAD_ON_SCROLL,
-					'title'       => __( 'Load on Scroll', "anycomment" ),
-					'type'        => 'checkbox',
-					'description' => esc_html( __( 'Load comments when user scrolls to it.', "anycomment" ) )
-				],
 
-				[
-					'id'          => self::OPTION_SHOW_SOCIALS_IN_LOGIN_PAGE,
-					'title'       => __( 'Show Login Page Socials', "anycomment" ),
-					'type'        => 'checkbox',
-					'description' => esc_html( __( 'Show list of available socials under WordPress\'s native login form.', "anycomment" ) )
-				],
+		$form = $this->form();
 
-				[
-					'id'          => self::OPTION_SHOW_ADMIN_BAR,
-					'title'       => __( 'Show Admin Bar', "anycomment" ),
-					'type'        => 'checkbox',
-					'description' => esc_html( __( 'Show admin bar for regular WordPress users and those who logged in via social.', "anycomment" ) )
-				],
+		$form->add_section(
+			$this->section_builder()
+			     ->set_id( 'generic' )
+			     ->set_title( __( 'Generic', "anycomment" ) )
+			     ->set_wrapper( '<div class="grid-x anycomment-form-wrapper anycomment-tabs__container__tab current" id="{id}">{content}</div>' )
+			     ->set_fields( [
+				     $this->field_builder()
+				          ->checkbox()
+				          ->set_id( self::OPTION_PLUGIN_TOGGLE )
+				          ->set_title( __( 'Enable Comments', "anycomment" ) )
+				          ->set_description( esc_html( __( 'When on, comments are visible. When off, default WordPress\' comments shown. This can be used to configure social networks on fresh installation.', "anycomment" ) ) ),
 
-				[
-					'id'          => self::OPTION_SHOW_PROFILE_URL,
-					'title'       => __( 'Show Profile URL', "anycomment" ),
-					'type'        => 'checkbox',
-					'description' => esc_html( __( 'Show link to user in the social media or website when available (name of the user will be clickable).', "anycomment" ) )
-				],
+				     $this->field_builder()
+				          ->set_id( self::OPTION_DEFAULT_SORT_BY )
+				          ->select()
+				          ->set_args( [
+					          'options' => [
+						          self::SORT_DESC => __( 'Newest first', 'anycomment' ),
+						          self::SORT_ASC  => __( 'Oldest first', 'anycomment' ),
+					          ]
+				          ] )
+				          ->set_description( esc_html( __( 'Default sorting.', "anycomment" ) ) ),
 
-				[
-					'id'          => self::OPTION_SHOW_TWITTER_EMBEDS,
-					'title'       => __( 'Display Twitter Embeds', "anycomment" ),
-					'type'        => 'checkbox',
-					'description' => esc_html( __( 'Detect & display tweets from Twitter as embedded widget.', "anycomment" ) )
-				],
+				     $this->field_builder()
+				          ->set_id( self::OPTION_COMMENT_RATING )
+				          ->select()
+				          ->set_title( __( 'Comment rating', "anycomment" ) )
+				          ->set_args( [
+					          'options' => [
+						          self::COMMENT_RATING_LIKES          => __( 'Likes only', 'anycomment' ),
+						          self::COMMENT_RATING_LIKES_DISLIKES => __( 'Likes and dislikes', 'anycomment' ),
+					          ]
+				          ] )
+				          ->set_description( esc_html( __( 'Type of rating used for single comment. Option "Likes" would display only heart like, whereas "Likes and dislikes" would display up and down options.', "anycomment" ) ) ),
 
-				[
-					'id'          => self::OPTION_SHOW_VIDEO_ATTACHMENTS,
-					'title'       => __( 'Display Video Attachments', "anycomment" ),
-					'type'        => 'checkbox',
-					'description' => esc_html( __( 'Display video link from comment as attachment.', "anycomment" ) )
-				],
+				     $this->field_builder()
+				          ->set_id( self::OPTION_DEFAULT_AVATAR )
+				          ->select()
+				          ->set_title( __( 'Default Avatar', "anycomment" ) )
+				          ->set_args( [
+					          'options' => [
+						          self::OPTION_DEFAULT_AVATAR_ANYCOMMENT => __( 'No avatar (from AnyComment)', 'anycomment' ),
+						          self::OPTION_DEFAULT_AVATAR_MP         => __( 'No avatar (from Gravatar)', 'anycomment' ),
+						          self::OPTION_DEFAULT_AVATAR_IDENTICON  => __( 'Identicon (from Gravatar)', 'anycomment' ),
+						          self::OPTION_DEFAULT_AVATAR_MONSTEROID => __( 'Monsteroid (from Gravatar)', 'anycomment' ),
+						          self::OPTION_DEFAULT_AVATAR_WAVATAR    => __( 'Wavatar (from Gravatar)', 'anycomment' ),
+						          self::OPTION_DEFAULT_AVATAR_RETRO      => __( 'Retro (from Gravatar)', 'anycomment' ),
+						          self::OPTION_DEFAULT_AVATAR_ROBOHASH   => __( 'Robohash (from Gravatar)', 'anycomment' ),
+					          ]
+				          ] )
+				          ->set_description( esc_html( __( 'Default avatar when user does not have any.', "anycomment" ) ) ),
 
-				[
-					'id'          => self::OPTION_SHOW_IMAGE_ATTACHMENTS,
-					'title'       => __( 'Display Image Attachments', "anycomment" ),
-					'type'        => 'checkbox',
-					'description' => esc_html( __( 'Display image link from comment as attachment.', "anycomment" ) )
-				],
-				[
-					'id'          => self::OPTION_RATING_TOGGLE,
-					'title'       => __( 'Display Rating', "anycomment" ),
-					'type'        => 'checkbox',
-					'description' => esc_html( __( 'Display 5 star rating above comments.', "anycomment" ) )
-				],
+				     $this->field_builder()
+				          ->set_id( self::OPTION_REGISTER_DEFAULT_GROUP )
+				          ->select()
+				          ->set_title( __( 'Register User Group', "anycomment" ) )
+				          ->set_args( [
+					          'options' => [
+						          self::DEFAULT_ROLE_SUBSCRIBER        => __( 'Subscriber', 'anycomment' ),
+						          self::DEFAULT_ROLE_SOCIAL_SUBSCRIBER => __( 'Social Network Subscriber', 'anycomment' ),
+					          ]
+				          ] )
+				          ->set_description( esc_html( __( 'When users will authorize via plugin, they are being registered and be assigned with group selected above.', "anycomment" ) ) ),
 
-				[
-					'id'          => self::OPTION_READ_MORE_TOGGLE,
-					'title'       => __( 'Shorten Long Comments', "anycomment" ),
-					'type'        => 'checkbox',
-					'description' => esc_html( __( 'Shorten long comments with "Read more" message.', "anycomment" ) )
-				],
+				     $this->field_builder()
+				          ->number()
+				          ->set_id( self::OPTION_COMMENT_UPDATE_TIME )
+				          ->set_title( __( 'Comment Update Time', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Number of minutes user can update his comment. "0" or empty for no limit.', "anycomment" ) ) ),
 
-//					[
-//						'id'          => self::OPTION_MAKE_LINKS_CLICKABLE,
-//						'title'       => __( 'Links Clickable', "anycomment" ),
-//						'callback'    => 'input_checkbox',
-//						'description' => esc_html( __( 'Links in comment are clickable.', "anycomment" ) )
-//					],
+				     $this->field_builder()
+				          ->number()
+				          ->set_id( self::OPTION_COUNT_PER_PAGE )
+				          ->set_title( __( 'Number of Comments Loaded', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Number of comments to load initially and per page.', "anycomment" ) ) ),
 
-				[
-					'id'          => self::OPTION_USER_AGREEMENT_LINK,
-					'title'       => __( 'User Agreement Link', "anycomment" ),
-					'type'        => 'text',
-					'description' => esc_html( __( 'Link to User Agreement, where described how your process users data once they authorize via social network and/or add new comment.', "anycomment" ) )
-				],
-				[
-					'id'          => self::OPTION_COPYRIGHT_TOGGLE,
-					'title'       => __( 'Thanks', "anycomment" ),
-					'type'        => 'checkbox',
-					'description' => esc_html( __( 'Show AnyComment\'s link in the footer of comments. Copyright helps to bring awareness of such plugin and bring people to allow us to understand that it is a wanted product and give more often updated.', "anycomment" ) )
-				],
-			]
+				     $this->field_builder()
+				          ->checkbox()
+				          ->set_id( self::OPTION_LOAD_ON_SCROLL )
+				          ->set_title( __( 'Load on Scroll', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Load comments when user scrolls to it.', "anycomment" ) ) ),
+
+
+				     $this->field_builder()
+				          ->checkbox()
+				          ->set_id( self::OPTION_SHOW_SOCIALS_IN_LOGIN_PAGE )
+				          ->set_title( __( 'Show Login Page Socials', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Show list of available socials under WordPress\'s native login form.', "anycomment" ) ) ),
+
+
+				     $this->field_builder()
+				          ->checkbox()
+				          ->set_id( self::OPTION_SHOW_ADMIN_BAR )
+				          ->set_title( __( 'Show Admin Bar', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Show admin bar for regular WordPress users and those who logged in via social.', "anycomment" ) ) ),
+
+
+				     $this->field_builder()
+				          ->checkbox()
+				          ->set_id( self::OPTION_SHOW_PROFILE_URL )
+				          ->set_title( __( 'Show Profile URL', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Show link to user in the social media or website when available (name of the user will be clickable).', "anycomment" ) ) ),
+
+
+				     $this->field_builder()
+				          ->checkbox()
+				          ->set_id( self::OPTION_SHOW_TWITTER_EMBEDS )
+				          ->set_title( __( 'Display Twitter Embeds', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Detect & display tweets from Twitter as embedded widget.', "anycomment" ) ) ),
+
+
+				     $this->field_builder()
+				          ->checkbox()
+				          ->set_id( self::OPTION_SHOW_VIDEO_ATTACHMENTS )
+				          ->set_title( __( 'Display Video Attachments', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Display video link from comment as attachment.', "anycomment" ) ) ),
+
+
+				     $this->field_builder()
+				          ->checkbox()
+				          ->set_id( self::OPTION_SHOW_IMAGE_ATTACHMENTS )
+				          ->set_title( __( 'Display Image Attachments', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Display image link from comment as attachment.', "anycomment" ) ) ),
+
+				     $this->field_builder()
+				          ->checkbox()
+				          ->set_id( self::OPTION_RATING_TOGGLE )
+				          ->set_title( __( 'Display Rating', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Display 5 star rating above comments.', "anycomment" ) ) ),
+
+
+				     $this->field_builder()
+				          ->checkbox()
+				          ->set_id( self::OPTION_READ_MORE_TOGGLE )
+				          ->set_title( __( 'Shorten Long Comments', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Shorten long comments with "Read more" message.', "anycomment" ) ) ),
+
+
+//					$this->field_builder()
+//     ->input_checkbox()
+//     ->set_id(self::OPTION_MAKE_LINKS_CLICKABLE)
+//     ->set_title(__( 'Links Clickable', "anycomment" ))
+//     ->set_description(esc_html( __( 'Links in comment are clickable.', "anycomment" ) )),
+
+
+				     $this->field_builder()
+				          ->text()
+				          ->set_id( self::OPTION_USER_AGREEMENT_LINK )
+				          ->set_title( __( 'User Agreement Link', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Link to User Agreement, where described how your process users data once they authorize via social network and/or add new comment.', "anycomment" ) ) ),
+
+				     $this->field_builder()
+				          ->checkbox()
+				          ->set_id( self::OPTION_COPYRIGHT_TOGGLE )
+				          ->set_title( __( 'Thanks', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Show AnyComment\'s link in the footer of comments. Copyright helps to bring awareness of such plugin and bring people to allow us to understand that it is a wanted product and give more often updated.', "anycomment" ) ) ),
+
+
+			     ] )
 		);
 
-		$this->render_fields(
-			[
-				'id'   => 'section_elements',
-				'name' => __( 'Elements', "anycomment" ),
-			],
-			[
-				[
-					'id'          => self::OPTION_FORM_TYPE,
-					'title'       => __( 'Comment form', "anycomment" ),
-					'type'        => 'select',
-					'options'     => [
-						self::FORM_OPTION_ALL            => __( 'Anyone', 'anycomment' ),
-						self::FORM_OPTION_WORDPRESS_ONLY => __( 'WordPress only', 'anycomment' ),
-						self::FORM_OPTION_SOCIALS_ONLY   => __( 'Socials only', 'anycomment' ),
-						self::FORM_OPTION_GUEST_ONLY     => __( 'Guests only', 'anycomment' ),
-					],
-					'description' => esc_html( __( 'Users who able to leave comments.', "anycomment" ) ),
-				],
-				[
-					'id'          => self::OPTION_GUEST_FIELDS,
-					'title'       => __( 'Guest Fields', "anycomment" ),
-					'type'        => 'text',
-					'description' => esc_html( __( 'Use this rearrange guest form fields or remove something. {name} is required and if you do not add it, it will be added by plugin. {name} is name field, {email} is email field, {website} is website field.', "anycomment" ) )
-				],
+		/**
+		 * Section: Elements
+		 */
+		$form->add_section(
+			$this->section_builder()
+			     ->set_id( 'elements' )
+			     ->set_title( __( 'Elements', "anycomment" ) )
+			     ->set_fields( [
+				     $this->field_builder()
+				          ->select()
+				          ->set_id( self::OPTION_FORM_TYPE )
+				          ->set_title( __( 'Comment form', "anycomment" ) )
+				          ->set_args( [
+					          'options' => [
+						          self::FORM_OPTION_ALL            => __( 'Anyone', 'anycomment' ),
+						          self::FORM_OPTION_WORDPRESS_ONLY => __( 'WordPress only', 'anycomment' ),
+						          self::FORM_OPTION_SOCIALS_ONLY   => __( 'Socials only', 'anycomment' ),
+						          self::FORM_OPTION_GUEST_ONLY     => __( 'Guests only', 'anycomment' ),
+					          ],
+				          ] )
+				          ->set_description( esc_html( __( 'Users who able to leave comments.', "anycomment" ) ) ),
+
+				     $this->field_builder()
+				          ->text()
+				          ->set_id( self::OPTION_GUEST_FIELDS )
+				          ->set_title( __( 'Guest Fields', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Use this rearrange guest form fields or remove something. {name} is required and if you do not add it, it will be added by plugin. {name} is name field, {email} is email field, {website} is website field.', "anycomment" ) ) ),
 
 
-				/**
-				 * Editor options
-				 */
-				[
-					'id'          => self::OPTION_EDITOR_TOOLBAR_TOGGLE,
-					'title'       => __( 'Enable Toolbar', "anycomment" ),
-					'type'        => 'checkbox',
-					'description' => esc_html( __( 'Enable editor toolbar (show options to modify comment text - bold, italics, etc).', "anycomment" ) )
-				],
+				     /**
+				      * Editor options
+				      */
+				     $this->field_builder()
+				          ->checkbox()
+				          ->set_id( self::OPTION_EDITOR_TOOLBAR_TOGGLE )
+				          ->set_title( __( 'Enable Toolbar', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Enable editor toolbar (show options to modify comment text - bold, italics, etc).', "anycomment" ) ) ),
 
-				[
-					'id'          => self::OPTION_EDITOR_TOOLBAR_BOLD,
-					'title'       => __( 'Bold', "anycomment" ),
-					'type'        => 'checkbox',
-					'description' => esc_html( __( 'Show bold option in editor toolbar.', "anycomment" ) )
-				],
 
-				[
-					'id'          => self::OPTION_EDITOR_TOOLBAR_ITALIC,
-					'title'       => __( 'Italic', "anycomment" ),
-					'type'        => 'checkbox',
-					'description' => esc_html( __( 'Show italic option in editor toolbar.', "anycomment" ) )
-				],
+				     $this->field_builder()
+				          ->checkbox()
+				          ->set_id( self::OPTION_EDITOR_TOOLBAR_BOLD )
+				          ->set_title( __( 'Bold', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Show bold option in editor toolbar.', "anycomment" ) ) ),
 
-				[
-					'id'          => self::OPTION_EDITOR_TOOLBAR_UNDERLINE,
-					'title'       => __( 'Underline', "anycomment" ),
-					'type'        => 'checkbox',
-					'description' => esc_html( __( 'Show underline option in editor toolbar.', "anycomment" ) )
-				],
 
-				[
-					'id'          => self::OPTION_EDITOR_TOOLBAR_QUOTE,
-					'title'       => __( 'Quote', "anycomment" ),
-					'type'        => 'checkbox',
-					'description' => esc_html( __( 'Show quote option in editor toolbar.', "anycomment" ) )
-				],
+				     $this->field_builder()
+				          ->checkbox()
+				          ->set_id( self::OPTION_EDITOR_TOOLBAR_ITALIC )
+				          ->set_title( __( 'Italic', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Show italic option in editor toolbar.', "anycomment" ) ) ),
 
-				[
-					'id'          => self::OPTION_EDITOR_TOOLBAR_ORDERED,
-					'title'       => __( 'Ordered list', "anycomment" ),
-					'type'        => 'checkbox',
-					'description' => esc_html( __( 'Show ordered list option in editor toolbar.', "anycomment" ) )
-				],
 
-				[
-					'id'          => self::OPTION_EDITOR_TOOLBAR_BULLET,
-					'title'       => __( 'Unordered list', "anycomment" ),
-					'type'        => 'checkbox',
-					'description' => esc_html( __( 'Show unordered list option in editor toolbar.', "anycomment" ) )
-				],
+				     $this->field_builder()
+				          ->checkbox()
+				          ->set_id( self::OPTION_EDITOR_TOOLBAR_UNDERLINE )
+				          ->set_title( __( 'Underline', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Show underline option in editor toolbar.', "anycomment" ) ) ),
 
-				[
-					'id'          => self::OPTION_EDITOR_TOOLBAR_LINK,
-					'title'       => __( 'Link', "anycomment" ),
-					'type'        => 'checkbox',
-					'description' => esc_html( __( 'Show link option in editor toolbar.', "anycomment" ) )
-				],
 
-				[
-					'id'          => self::OPTION_EDITOR_TOOLBAR_CLEAN,
-					'title'       => __( 'Clean formatting', "anycomment" ),
-					'type'        => 'checkbox',
-					'description' => esc_html( __( 'Show clean formatting option in editor toolbar.', "anycomment" ) )
-				],
-			]
+				     $this->field_builder()
+				          ->checkbox()
+				          ->set_id( self::OPTION_EDITOR_TOOLBAR_QUOTE )
+				          ->set_title( __( 'Quote', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Show quote option in editor toolbar.', "anycomment" ) ) ),
+
+
+				     $this->field_builder()
+				          ->checkbox()
+				          ->set_id( self::OPTION_EDITOR_TOOLBAR_ORDERED )
+				          ->set_title( __( 'Ordered list', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Show ordered list option in editor toolbar.', "anycomment" ) ) ),
+
+
+				     $this->field_builder()
+				          ->checkbox()
+				          ->set_id( self::OPTION_EDITOR_TOOLBAR_BULLET )
+				          ->set_title( __( 'Unordered list', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Show unordered list option in editor toolbar.', "anycomment" ) ) ),
+
+
+				     $this->field_builder()
+				          ->checkbox()
+				          ->set_id( self::OPTION_EDITOR_TOOLBAR_LINK )
+				          ->set_title( __( 'Link', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Show link option in editor toolbar.', "anycomment" ) ) ),
+
+
+				     $this->field_builder()
+				          ->checkbox()
+				          ->set_id( self::OPTION_EDITOR_TOOLBAR_CLEAN )
+				          ->set_title( __( 'Clean formatting', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Show clean formatting option in editor toolbar.', "anycomment" ) ) ),
+			     ] )
 		);
 
-		$this->render_fields(
-			[
-				'id'   => 'section_design',
-				'name' => __( 'Design', "anycomment" ),
-			],
-			[
-				/**
-				 * Custom design
-				 */
-				[
-					'id'          => self::OPTION_DESIGN_CUSTOM_TOGGLE,
-					'title'       => __( 'Custom Design', "anycomment" ),
-					'type'        => 'checkbox',
-					'description' => esc_html( __( 'Use custom design. Enable this option to display design changes from below.', "anycomment" ) )
-				],
+		/**
+		 * Section: Design
+		 */
+		$form->add_section(
+			$this->section_builder()
+			     ->set_id( 'design' )
+			     ->set_title( __( 'Design', "anycomment" ) )
+			     ->set_fields( [
+				     $this->field_builder()
+				          ->checkbox()
+				          ->set_id( self::OPTION_DESIGN_CUSTOM_TOGGLE )
+				          ->set_title( __( 'Custom Design', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Use custom design. Enable this option to display design changes from below.', "anycomment" ) ) ),
 
-				[
-					'id'          => self::OPTION_DESIGN_FONT_SIZE,
-					'title'       => __( 'Text Size', "anycomment" ),
-					'type'        => 'text',
-					'description' => esc_html( __( 'Overal text size. You may use "px", "pt", "em" or "%".', "anycomment" ) )
-				],
-				[
-					'id'          => self::OPTION_DESIGN_FONT_FAMILY,
-					'title'       => __( 'Font Choice', "anycomment" ),
-					'type'        => 'text',
-					'description' => esc_html( __( 'Global font family.', "anycomment" ) )
-				],
 
-				[
-					'id'          => self::OPTION_DESIGN_TEXT_COLOR,
-					'title'       => __( 'Text Color', "anycomment" ),
-					'type'        => 'color',
-					'description' => esc_html( __( 'Global text color.', "anycomment" ) )
-				],
-				[
-					'id'          => self::OPTION_DESIGN_LINK_COLOR,
-					'title'       => __( 'Link Color', "anycomment" ),
-					'type'        => 'color',
-					'description' => esc_html( __( 'Links color.', "anycomment" ) )
-				],
+				     $this->field_builder()
+				          ->text()
+				          ->set_id( self::OPTION_DESIGN_FONT_SIZE )
+				          ->set_title( __( 'Text Size', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Overal text size. You may use "px", "pt", "em" or "%".', "anycomment" ) ) ),
 
-				[
-					'id'          => self::OPTION_DESIGN_GLOBAL_BACKGROUND_COLOR,
-					'title'       => __( 'Global background color', "anycomment" ),
-					'type'        => 'color',
-					'description' => esc_html( __( 'Global background color used for all comments.', "anycomment" ) )
-				],
-				[
-					'id'          => self::OPTION_DESIGN_GLOBAL_BACKGROUND_BORDER_RADIUS,
-					'title'       => __( 'Global background border radius', "anycomment" ),
-					'type'        => 'text',
-					'description' => esc_html( __( 'Global background border radius. Could be useful when you have background different then website primary color.', "anycomment" ) )
-				],
+				     $this->field_builder()
+				          ->text()
+				          ->set_id( self::OPTION_DESIGN_FONT_FAMILY )
+				          ->set_title( __( 'Font Choice', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Global font family.', "anycomment" ) ) ),
 
-				[
-					'id'          => self::OPTION_DESIGN_GLOBAL_MARGIN,
-					'title'       => __( 'Global margin', "anycomment" ),
-					'type'        => 'text',
-					'description' => esc_html( __( 'Global margin for all comments. You may use "px", "em" or "%".', "anycomment" ) )
-				],
 
-				[
-					'id'          => self::OPTION_DESIGN_GLOBAL_PADDING,
-					'title'       => __( 'Global padding', "anycomment" ),
-					'type'        => 'text',
-					'description' => esc_html( __( 'Global padding for all comments. You may use "px", "em" or "%".', "anycomment" ) )
-				],
+				     $this->field_builder()
+				          ->color()
+				          ->set_id( self::OPTION_DESIGN_TEXT_COLOR )
+				          ->set_title( __( 'Text Color', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Global text color.', "anycomment" ) ) ),
 
-				[
-					'id'          => self::OPTION_DESIGN_GLOBAL_RADIUS,
-					'title'       => __( 'Border radius', "anycomment" ),
-					'type'        => 'text',
-					'description' => esc_html( __( 'Border radius. You may use "px", "em" or "%".', "anycomment" ) )
-				],
-				[
-					'id'          => self::OPTION_DESIGN_SEMI_HIDDEN_COLOR,
-					'title'       => __( 'Semi Hidden Color', "anycomment" ),
-					'type'        => 'color',
-					'description' => esc_html( __( 'Semi hidden color. This is used for dates, action links, etc.', "anycomment" ) )
-				],
-				[
-					'id'          => self::OPTION_DESIGN_FORM_FIELD_BACKGROUND_COLOR,
-					'title'       => __( 'Form Fields Background', "anycomment" ),
-					'type'        => 'color',
-					'description' => esc_html( __( 'Form fields background color.', "anycomment" ) )
-				],
+				     $this->field_builder()
+				          ->color()
+				          ->set_id( self::OPTION_DESIGN_LINK_COLOR )
+				          ->set_title( __( 'Link Color', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Links color.', "anycomment" ) ) ),
 
-				[
-					'id'          => self::OPTION_DESIGN_ATTACHMENT_COLOR,
-					'title'       => __( 'Attachment Text Color', "anycomment" ),
-					'type'        => 'color',
-					'description' => esc_html( __( 'Attachments text color. For example, YouTube attachments do not have previews, instead they have "YouTube" text over.', "anycomment" ) )
-				],
 
-				[
-					'id'          => self::OPTION_DESIGN_ATTACHMENT_BACKGROUND_COLOR,
-					'title'       => __( 'Attachment Background Color', "anycomment" ),
-					'type'        => 'color',
-					'description' => esc_html( __( 'Attachment background color. For example, user may attach PNG image with transparent background. This color will be used as background behind the image.', "anycomment" ) )
-				],
+				     $this->field_builder()
+				          ->color()
+				          ->set_id( self::OPTION_DESIGN_GLOBAL_BACKGROUND_COLOR )
+				          ->set_title( __( 'Global background color', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Global background color used for all comments.', "anycomment" ) ) ),
 
-				[
-					'id'          => self::OPTION_DESIGN_AVATAR_RADIUS,
-					'title'       => __( 'Avatar Border Radius', "anycomment" ),
-					'type'        => 'text',
-					'description' => esc_html( __( 'Avatar border radius. You may use "px" or "%". "50%" will make avatars rounded.', "anycomment" ) )
-				],
-				[
-					'id'          => self::OPTION_DESIGN_PARENT_AVATAR_SIZE,
-					'title'       => __( 'Avatar Parent Size', "anycomment" ),
-					'type'        => 'text',
-					'description' => esc_html( __( 'Parent comment avatar size.', "anycomment" ) )
-				],
+				     $this->field_builder()
+				          ->text()
+				          ->set_id( self::OPTION_DESIGN_GLOBAL_BACKGROUND_BORDER_RADIUS )
+				          ->set_title( __( 'Global background border radius', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Global background border radius. Could be useful when you have background different then website primary color.', "anycomment" ) ) ),
 
-				[
-					'id'          => self::OPTION_DESIGN_CHILD_AVATAR_SIZE,
-					'title'       => __( 'Avatar Child Size', "anycomment" ),
-					'type'        => 'text',
-					'description' => esc_html( __( 'Child comment avatar size. Usually, this is reply comment.', "anycomment" ) )
-				],
 
-				[
-					'id'          => self::OPTION_DESIGN_BUTTON_RADIUS,
-					'title'       => __( 'Button Radius', "anycomment" ),
-					'type'        => 'text',
-					'description' => esc_html( __( 'Button border radius.', "anycomment" ) )
-				],
-				[
-					'id'          => self::OPTION_DESIGN_BUTTON_COLOR,
-					'title'       => __( 'Button Color', "anycomment" ),
-					'type'        => 'color',
-					'description' => esc_html( __( 'Button text color.', "anycomment" ) )
-				],
+				     $this->field_builder()
+				          ->text()
+				          ->set_id( self::OPTION_DESIGN_GLOBAL_MARGIN )
+				          ->set_title( __( 'Global margin', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Global margin for all comments. You may use "px", "em" or "%".', "anycomment" ) ) ),
 
-				[
-					'id'          => self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR,
-					'title'       => __( 'Button Background Color', "anycomment" ),
-					'type'        => 'color',
-					'description' => esc_html( __( 'Button background color.', "anycomment" ) )
-				],
 
-				[
-					'id'          => self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR_ACTIVE,
-					'title'       => __( 'Button Background Color Active', "anycomment" ),
-					'type'        => 'color',
-					'description' => esc_html( __( 'Button background color when hovered or focused.', "anycomment" ) )
-				],
-			]
+				     $this->field_builder()
+				          ->text()
+				          ->set_id( self::OPTION_DESIGN_GLOBAL_PADDING )
+				          ->set_title( __( 'Global padding', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Global padding for all comments. You may use "px", "em" or "%".', "anycomment" ) ) ),
+
+				     $this->field_builder()
+				          ->text()
+				          ->set_id( self::OPTION_DESIGN_GLOBAL_RADIUS )
+				          ->set_title( __( 'Border radius', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Border radius. You may use "px", "em" or "%".', "anycomment" ) ) ),
+
+				     $this->field_builder()
+				          ->color()
+				          ->set_id( self::OPTION_DESIGN_SEMI_HIDDEN_COLOR )
+				          ->set_title( __( 'Semi Hidden Color', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Semi hidden color. This is used for dates, action links, etc.', "anycomment" ) ) ),
+
+				     $this->field_builder()
+				          ->color()
+				          ->set_id( self::OPTION_DESIGN_FORM_FIELD_BACKGROUND_COLOR )
+				          ->set_title( __( 'Form Fields Background', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Form fields background color.', "anycomment" ) ) ),
+
+
+				     $this->field_builder()
+				          ->color()
+				          ->set_id( self::OPTION_DESIGN_ATTACHMENT_COLOR )
+				          ->set_title( __( 'Attachment Text Color', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Attachments text color. For example, YouTube attachments do not have previews, instead they have "YouTube" text over.', "anycomment" ) ) ),
+
+
+				     $this->field_builder()
+				          ->color()
+				          ->set_id( self::OPTION_DESIGN_ATTACHMENT_BACKGROUND_COLOR )
+				          ->set_title( __( 'Attachment Background Color', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Attachment background color. For example, user may attach PNG image with transparent background. This color will be used as background behind the image.', "anycomment" ) ) ),
+
+
+				     $this->field_builder()
+				          ->text()
+				          ->set_id( self::OPTION_DESIGN_AVATAR_RADIUS )
+				          ->set_title( __( 'Avatar Border Radius', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Avatar border radius. You may use "px" or "%". "50%" will make avatars rounded.', "anycomment" ) ) ),
+
+				     $this->field_builder()
+				          ->text()
+				          ->set_id( self::OPTION_DESIGN_PARENT_AVATAR_SIZE )
+				          ->set_title( __( 'Avatar Parent Size', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Parent comment avatar size.', "anycomment" ) ) ),
+
+
+				     $this->field_builder()
+				          ->text()
+				          ->set_id( self::OPTION_DESIGN_CHILD_AVATAR_SIZE )
+				          ->set_title( __( 'Avatar Child Size', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Child comment avatar size. Usually, this is reply comment.', "anycomment" ) ) ),
+
+
+				     $this->field_builder()
+				          ->text()
+				          ->set_id( self::OPTION_DESIGN_BUTTON_RADIUS )
+				          ->set_title( __( 'Button Radius', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Button border radius.', "anycomment" ) ) ),
+
+				     $this->field_builder()
+				          ->color()
+				          ->set_id( self::OPTION_DESIGN_BUTTON_COLOR )
+				          ->set_title( __( 'Button Color', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Button text color.', "anycomment" ) ) ),
+
+
+				     $this->field_builder()
+				          ->color()
+				          ->set_id( self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR )
+				          ->set_title( __( 'Button Background Color', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Button background color.', "anycomment" ) ) ),
+
+
+				     $this->field_builder()
+				          ->color()
+				          ->set_id( self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR_ACTIVE )
+				          ->set_title( __( 'Button Background Color Active', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Button background color when hovered or focused.', "anycomment" ) ) ),
+			     ] )
 		);
 
-		$this->render_fields(
-			[
-				'id'   => 'section_moderation',
-				'name' => __( 'Moderation', "anycomment" ),
-			],
-			[
-				[
-					'id'          => self::OPTION_MODERATE_FIRST,
-					'title'       => __( 'Moderate First', "anycomment" ),
-					'type'        => 'checkbox',
-					'description' => esc_html( __( 'Moderators should check comment before it appears.', "anycomment" ) )
-				],
-				[
-					'id'          => self::OPTION_LINKS_ON_HOLD,
-					'title'       => __( 'Links on Hold', "anycomment" ),
-					'type'        => 'checkbox',
-					'description' => esc_html( __( 'Comment with links should be marked for moderation.', "anycomment" ) )
-				],
-				[
-					'id'          => self::OPTION_MODERATE_WORDS,
-					'title'       => __( 'Spam Words', "anycomment" ),
-					'type'        => 'textarea',
-					'description' => esc_html( __( 'Comment should be marked for moderation when matched word from this list of comma-separated values.', "anycomment" ) )
-				],
-			]
+		/**
+		 * Section: Moderation
+		 */
+		$form->add_section(
+			$this->section_builder()
+			     ->set_id( 'moderation' )
+			     ->set_title( __( 'Moderation', "anycomment" ) )
+			     ->set_fields( [
+				     $this->field_builder()
+				          ->checkbox()
+				          ->set_id( self::OPTION_MODERATE_FIRST )
+				          ->set_title( __( 'Moderate First', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Moderators should check comment before it appears.', "anycomment" ) ) ),
+
+				     $this->field_builder()
+				          ->checkbox()
+				          ->set_id( self::OPTION_LINKS_ON_HOLD )
+				          ->set_title( __( 'Links on Hold', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Comment with links should be marked for moderation.', "anycomment" ) ) ),
+
+				     $this->field_builder()
+				          ->textarea()
+				          ->set_id( self::OPTION_MODERATE_WORDS )
+				          ->set_title( __( 'Spam Words', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Comment should be marked for moderation when matched word from this list of comma-separated values.', "anycomment" ) ) ),
+			     ] )
 		);
 
-		$this->render_fields(
-			[
-				'id'   => 'section_notifications',
-				'name' => __( 'Notifications', "anycomment" ),
-			],
-			[
-				[
-					'id'          => self::OPTION_NOTIFY_SENDER_NAME,
-					'title'       => __( 'Sender Name', "anycomment" ),
-					'type'        => 'text',
-					'description' => esc_html( __( 'Send name shown to email recipient. This could be your blog name.', "anycomment" ) )
-				],
-				[
-					'id'          => self::OPTION_NOTIFY_ON_NEW_COMMENT,
-					'title'       => __( 'Real-time updates', "anycomment" ),
-					'type'        => 'checkbox',
-					'description' => esc_html( __( 'Show comments in real-time. Users on the page would be notified about new comments by green alert and see comment without page reload.', "anycomment" ) )
-				],
-				[
-					'id'          => self::OPTION_INTERVAL_COMMENTS_CHECK,
-					'title'       => __( 'New Comment Interval Checking', "anycomment" ),
-					'type'        => 'number',
-					'description' => esc_html( __( 'Interval (in seconds) to check for new comments. Minimum 5 and maximum is 100 seconds.', "anycomment" ) )
-				],
+		/**
+		 * Section: Notifications
+		 */
+		$form->add_section(
+			$this->section_builder()
+			     ->set_id( 'notifications' )
+			     ->set_title( __( 'Notifications', "anycomment" ) )
+			     ->set_fields( [
+				     $this->field_builder()
+				          ->text()
+				          ->set_id( self::OPTION_NOTIFY_SENDER_NAME )
+				          ->set_title( __( 'Sender Name', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Send name shown to email recipient. This could be your blog name.', "anycomment" ) ) ),
 
-				// Admin email notifications
-				[
-					'id'          => self::OPTION_NOTIFY_ADMINISTRATOR,
-					'title'       => __( 'Notify Administrator', "anycomment" ),
-					'type'        => 'checkbox',
-					'description' => esc_html( __( 'Notify administrator via email about new comment.', "anycomment" ) )
-				],
-				[
-					'id'          => self::OPTION_NOTIFY_ADMIN_EMAIL_TEMPLATE,
-					'title'       => __( 'Admin Email Template', "anycomment" ),
-					'type'        => 'textarea',
-					'description' => esc_html( __( 'Email template sent to admin about new comment.', "anycomment" ) ),
-					'after'       => function () {
-						$supportedList = [
-							'{blogName}'           => __( 'Blog name as text', 'anycomment' ),
-							'{blogUrl}'            => __( 'Blog link as text', 'anycomment' ),
-							'{blogUrlHtml}'        => __( 'Blog name in HTML link', 'anycomment' ),
-							'{postTitle}'          => __( 'Post title as text', 'anycomment' ),
-							'{postUrl}'            => __( 'Post URL as text', 'anycomment' ),
-							'{postUrlHtml}'        => __( 'Post title in HTML link', 'anycomment' ),
-							'{commentText}'        => __( 'Comment text', 'anycomment' ),
-							'{commentFormatted}'   => __( 'Comment text nicely formatted', 'anycomment' ),
-							'{replyUrl}'           => __( 'Reply link as text', 'anycomment' ),
-							'{replyButton}'        => __( 'Reply link as button', 'anycomment' ),
-							'{adminModerationUrl}' => __( 'Direct link to admin to see all comments waiting to reviewed', 'anycomment' ),
-							'{adminEditUrl}'       => __( 'Direct link to admin to edit comment', 'anycomment' ),
-						];
+				     $this->field_builder()
+				          ->checkbox()
+				          ->set_id( self::OPTION_NOTIFY_ON_NEW_COMMENT )
+				          ->set_title( __( 'Real-time updates', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Show comments in real-time. Users on the page would be notified about new comments by green alert and see comment without page reload.', "anycomment" ) ) ),
 
-						$id = self::OPTION_NOTIFY_ADMIN_EMAIL_TEMPLATE . time();
+				     $this->field_builder()
+				          ->number()
+				          ->set_id( self::OPTION_INTERVAL_COMMENTS_CHECK )
+				          ->set_title( __( 'New Comment Interval Checking', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Interval (in seconds) to check for new comments. Minimum 5 and maximum is 100 seconds.', "anycomment" ) ) ),
 
-						$html = '<div><br><span class="button button-small" id="' . $id . '">' . __( 'More info', 'anycomment' ) . '</span><ul style="display: none;">';
 
-						foreach ( $supportedList as $code => $description ) {
-							$html .= sprintf( "<li>%s - %s</li>", $code, $description );
-						}
+				     // Admin email notifications
+				     $this->field_builder()
+				          ->checkbox()
+				          ->set_id( self::OPTION_NOTIFY_ADMINISTRATOR )
+				          ->set_title( __( 'Notify Administrator', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Notify administrator via email about new comment.', "anycomment" ) ) ),
 
-						$html .= '</ul></div>';
+				     $this->field_builder()
+				          ->textarea()
+				          ->set_id( self::OPTION_NOTIFY_ADMIN_EMAIL_TEMPLATE )
+				          ->set_title( __( 'Admin Email Template', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Email template sent to admin about new comment.', "anycomment" ) ) )
+				          ->set_after( function () {
+					          $supportedList = [
+						          '{blogName}'           => __( 'Blog name as text', 'anycomment' ),
+						          '{blogUrl}'            => __( 'Blog link as text', 'anycomment' ),
+						          '{blogUrlHtml}'        => __( 'Blog name in HTML link', 'anycomment' ),
+						          '{postTitle}'          => __( 'Post title as text', 'anycomment' ),
+						          '{postUrl}'            => __( 'Post URL as text', 'anycomment' ),
+						          '{postUrlHtml}'        => __( 'Post title in HTML link', 'anycomment' ),
+						          '{commentText}'        => __( 'Comment text', 'anycomment' ),
+						          '{commentFormatted}'   => __( 'Comment text nicely formatted', 'anycomment' ),
+						          '{replyUrl}'           => __( 'Reply link as text', 'anycomment' ),
+						          '{replyButton}'        => __( 'Reply link as button', 'anycomment' ),
+						          '{adminModerationUrl}' => __( 'Direct link to admin to see all comments waiting to reviewed', 'anycomment' ),
+						          '{adminEditUrl}'       => __( 'Direct link to admin to edit comment', 'anycomment' ),
+					          ];
 
-						$html .= '<script>jQuery("#' . $id . '").on("click", function() {jQuery(this).next("ul").toggle();});</script>';
+					          $id = self::OPTION_NOTIFY_ADMIN_EMAIL_TEMPLATE . time();
 
-						return $html;
-					}
-				],
+					          $html = '<div><br><span class="button button-small" id="' . $id . '">' . __( 'More info', 'anycomment' ) . '</span><ul style="display: none;">';
 
-				// Reply email notifications
-				[
-					'id'          => self::OPTION_NOTIFY_ON_NEW_REPLY,
-					'title'       => __( 'Notify on new replies', "anycomment" ),
-					'type'        => 'checkbox',
-					'description' => esc_html( __( 'Notify users by email (if specified) about new replies. Make sure you have proper SMTP configurations in order to send emails.', "anycomment" ) ),
-				],
-				[
-					'id'          => self::OPTION_NOTIFY_REPLY_EMAIL_TEMPLATE,
-					'title'       => __( 'Reply Email Template', "anycomment" ),
-					'type'        => 'textarea',
-					'description' => esc_html( __( 'Email template on new comment reply.', "anycomment" ) ),
-					'after'       => function () {
-						$supportedList = [
-							'{blogName}'         => __( 'Blog name as text', 'anycomment' ),
-							'{blogUrl}'          => __( 'Blog link as text', 'anycomment' ),
-							'{blogUrlHtml}'      => __( 'Blog name in HTML link', 'anycomment' ),
-							'{postTitle}'        => __( 'Post title as text', 'anycomment' ),
-							'{postUrl}'          => __( 'Post URL as text', 'anycomment' ),
-							'{postUrlHtml}'      => __( 'Post title in HTML link', 'anycomment' ),
-							'{commentText}'      => __( 'Comment text', 'anycomment' ),
-							'{commentFormatted}' => __( 'Comment text nicely formatted', 'anycomment' ),
-							'{replyUrl}'         => __( 'Reply link as text', 'anycomment' ),
-							'{replyButton}'      => __( 'Reply link as button', 'anycomment' ),
-						];
+					          foreach ( $supportedList as $code => $description ) {
+						          $html .= sprintf( "<li>%s - %s</li>", $code, $description );
+					          }
 
-						$id = self::OPTION_NOTIFY_REPLY_EMAIL_TEMPLATE . time();
+					          $html .= '</ul></div>';
 
-						$html = '<div><br><span class="button button-small" id="' . $id . '">' . __( 'More info', 'anycomment' ) . '</span><ul style="display: none;">';
+					          $html .= '<script>jQuery("#' . $id . '").on("click", function() {jQuery(this).next("ul").toggle();});</script>';
 
-						foreach ( $supportedList as $code => $description ) {
-							$html .= sprintf( "<li>%s - %s</li>", $code, $description );
-						}
+					          return $html;
+				          } ),
 
-						$html .= '</ul></div>';
+				     // Reply email notifications
+				     $this->field_builder()
+				          ->checkbox()
+				          ->set_id( self::OPTION_NOTIFY_ON_NEW_REPLY )
+				          ->set_title( __( 'Notify on new replies', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Notify users by email (if specified) about new replies. Make sure you have proper SMTP configurations in order to send emails.', "anycomment" ) ) ),
 
-						$html .= '<script>jQuery("#' . $id . '").on("click", function() {jQuery(this).next("ul").toggle();});</script>';
 
-						return $html;
-					}
-				],
+				     $this->field_builder()
+				          ->textarea()
+				          ->set_id( self::OPTION_NOTIFY_REPLY_EMAIL_TEMPLATE )
+				          ->set_title( __( 'Reply Email Template', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Email template on new comment reply.', "anycomment" ) ) )
+				          ->set_after( function () {
+					          $supportedList = [
+						          '{blogName}'         => __( 'Blog name as text', 'anycomment' ),
+						          '{blogUrl}'          => __( 'Blog link as text', 'anycomment' ),
+						          '{blogUrlHtml}'      => __( 'Blog name in HTML link', 'anycomment' ),
+						          '{postTitle}'        => __( 'Post title as text', 'anycomment' ),
+						          '{postUrl}'          => __( 'Post URL as text', 'anycomment' ),
+						          '{postUrlHtml}'      => __( 'Post title in HTML link', 'anycomment' ),
+						          '{commentText}'      => __( 'Comment text', 'anycomment' ),
+						          '{commentFormatted}' => __( 'Comment text nicely formatted', 'anycomment' ),
+						          '{replyUrl}'         => __( 'Reply link as text', 'anycomment' ),
+						          '{replyButton}'      => __( 'Reply link as button', 'anycomment' ),
+					          ];
 
-				// Subscription email notifications
-				[
-					'id'          => self::OPTION_NOTIFY_SUBSCRIBERS,
-					'title'       => __( 'Notify Post Subscribers', "anycomment" ),
-					'type'        => 'checkbox',
-					'description' => esc_html( __( 'Show subscription form and notify active post subscribers. Make sure you have proper SMTP configurations in order to send emails.', "anycomment" ) ),
-				],
+					          $id = self::OPTION_NOTIFY_REPLY_EMAIL_TEMPLATE . time();
 
-				[
-					'id'          => self::OPTION_NOTIFY_SUBSCRIBERS_EMAIL_TEMPLATE,
-					'title'       => __( 'Subscription Email Template', "anycomment" ),
-					'type'        => 'textarea',
-					'description' => esc_html( __( 'Email template for subscriptions.', "anycomment" ) ),
-					'after'       => function () {
-						$supportedList = [
-							'{blogName}'         => __( 'Blog name as text', 'anycomment' ),
-							'{blogUrl}'          => __( 'Blog link as text', 'anycomment' ),
-							'{blogUrlHtml}'      => __( 'Blog name in HTML link', 'anycomment' ),
-							'{postTitle}'        => __( 'Post title as text', 'anycomment' ),
-							'{postUrl}'          => __( 'Post URL as text', 'anycomment' ),
-							'{unsubscribeUrl}'   => __( 'Unsubscribe URL as text', 'anycomment' ),
-							'{postUrlHtml}'      => __( 'Post title in HTML link', 'anycomment' ),
-							'{commentText}'      => __( 'Comment text', 'anycomment' ),
-							'{commentFormatted}' => __( 'Comment text nicely formatted', 'anycomment' ),
-							'{replyUrl}'         => __( 'Reply link as text', 'anycomment' ),
-							'{replyButton}'      => __( 'Reply link as button', 'anycomment' ),
-						];
+					          $html = '<div><br><span class="button button-small" id="' . $id . '">' . __( 'More info', 'anycomment' ) . '</span><ul style="display: none;">';
 
-						$id = self::OPTION_NOTIFY_SUBSCRIBERS_EMAIL_TEMPLATE . time();
+					          foreach ( $supportedList as $code => $description ) {
+						          $html .= sprintf( "<li>%s - %s</li>", $code, $description );
+					          }
 
-						$html = '<div><br><span class="button button-small" id="' . $id . '">' . __( 'More info', 'anycomment' ) . '</span><ul style="display: none;">';
+					          $html .= '</ul></div>';
 
-						foreach ( $supportedList as $code => $description ) {
-							$html .= sprintf( "<li>%s - %s</li>", $code, $description );
-						}
+					          $html .= '<script>jQuery("#' . $id . '").on("click", function() {jQuery(this).next("ul").toggle();});</script>';
 
-						$html .= '</ul></div>';
+					          return $html;
+				          } ),
 
-						$html .= '<script>jQuery("#' . $id . '").on("click", function() {jQuery(this).next("ul").toggle();});</script>';
+				     // Subscription email notifications
+				     $this->field_builder()
+				          ->checkbox()
+				          ->set_id( self::OPTION_NOTIFY_SUBSCRIBERS )
+				          ->set_title( __( 'Notify Post Subscribers', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Show subscription form and notify active post subscribers. Make sure you have proper SMTP configurations in order to send emails.', "anycomment" ) ) ),
 
-						return $html;
-					}
-				],
 
-				[
-					'id'          => self::OPTION_NOTIFY_SUBSCRIBERS_CONFIRMATION_EMAIL_TEMPLATE,
-					'title'       => __( 'Subscription Confirmation Email Template', "anycomment" ),
-					'type'        => 'textarea',
-					'description' => esc_html( __( 'Email template for confirming subscription.', "anycomment" ) ),
-					'after'       => function () {
-						$supportedList = [
-							'{blogName}'           => __( 'Blog name as text', 'anycomment' ),
-							'{blogUrl}'            => __( 'Blog link as text', 'anycomment' ),
-							'{blogUrlHtml}'        => __( 'Blog name in HTML link', 'anycomment' ),
-							'{postTitle}'          => __( 'Post title as text', 'anycomment' ),
-							'{postUrl}'            => __( 'Post URL as text', 'anycomment' ),
-							'{postUrlHtml}'        => __( 'Post title in HTML link', 'anycomment' ),
-							'{confirmationUrl}'    => __( 'Confirmation link as text', 'anycomment' ),
-							'{confirmationButton}' => __( 'Confirmation link as button', 'anycomment' ),
-						];
+				     $this->field_builder()
+				          ->textarea()
+				          ->set_id( self::OPTION_NOTIFY_SUBSCRIBERS_EMAIL_TEMPLATE )
+				          ->set_title( __( 'Subscription Email Template', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Email template for subscriptions.', "anycomment" ) ) )
+				          ->set_after( function () {
+					          $supportedList = [
+						          '{blogName}'         => __( 'Blog name as text', 'anycomment' ),
+						          '{blogUrl}'          => __( 'Blog link as text', 'anycomment' ),
+						          '{blogUrlHtml}'      => __( 'Blog name in HTML link', 'anycomment' ),
+						          '{postTitle}'        => __( 'Post title as text', 'anycomment' ),
+						          '{postUrl}'          => __( 'Post URL as text', 'anycomment' ),
+						          '{unsubscribeUrl}'   => __( 'Unsubscribe URL as text', 'anycomment' ),
+						          '{postUrlHtml}'      => __( 'Post title in HTML link', 'anycomment' ),
+						          '{commentText}'      => __( 'Comment text', 'anycomment' ),
+						          '{commentFormatted}' => __( 'Comment text nicely formatted', 'anycomment' ),
+						          '{replyUrl}'         => __( 'Reply link as text', 'anycomment' ),
+						          '{replyButton}'      => __( 'Reply link as button', 'anycomment' ),
+					          ];
 
-						$id = self::OPTION_NOTIFY_SUBSCRIBERS_CONFIRMATION_EMAIL_TEMPLATE . time();
+					          $id = self::OPTION_NOTIFY_SUBSCRIBERS_EMAIL_TEMPLATE . time();
 
-						$html = '<div><br><span class="button button-small" id="' . $id . '">' . __( 'More info', 'anycomment' ) . '</span><ul style="display: none;">';
+					          $html = '<div><br><span class="button button-small" id="' . $id . '">' . __( 'More info', 'anycomment' ) . '</span><ul style="display: none;">';
 
-						foreach ( $supportedList as $code => $description ) {
-							$html .= sprintf( "<li>%s - %s</li>", $code, $description );
-						}
+					          foreach ( $supportedList as $code => $description ) {
+						          $html .= sprintf( "<li>%s - %s</li>", $code, $description );
+					          }
 
-						$html .= '</ul></div>';
+					          $html .= '</ul></div>';
 
-						$html .= '<script>jQuery("#' . $id . '").on("click", function() {jQuery(this).next("ul").toggle();});</script>';
+					          $html .= '<script>jQuery("#' . $id . '").on("click", function() {jQuery(this).next("ul").toggle();});</script>';
 
-						return $html;
-					}
-				],
-			]
+					          return $html;
+				          } ),
+
+
+				     $this->field_builder()
+				          ->textarea()
+				          ->set_id( self::OPTION_NOTIFY_SUBSCRIBERS_CONFIRMATION_EMAIL_TEMPLATE )
+				          ->set_title( __( 'Subscription Confirmation Email Template', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Email template for confirming subscription.', "anycomment" ) ) )
+				          ->set_after( function () {
+					          $supportedList = [
+						          '{blogName}'           => __( 'Blog name as text', 'anycomment' ),
+						          '{blogUrl}'            => __( 'Blog link as text', 'anycomment' ),
+						          '{blogUrlHtml}'        => __( 'Blog name in HTML link', 'anycomment' ),
+						          '{postTitle}'          => __( 'Post title as text', 'anycomment' ),
+						          '{postUrl}'            => __( 'Post URL as text', 'anycomment' ),
+						          '{postUrlHtml}'        => __( 'Post title in HTML link', 'anycomment' ),
+						          '{confirmationUrl}'    => __( 'Confirmation link as text', 'anycomment' ),
+						          '{confirmationButton}' => __( 'Confirmation link as button', 'anycomment' ),
+					          ];
+
+					          $id = self::OPTION_NOTIFY_SUBSCRIBERS_CONFIRMATION_EMAIL_TEMPLATE . time();
+
+					          $html = '<div><br><span class="button button-small" id="' . $id . '">' . __( 'More info', 'anycomment' ) . '</span><ul style="display: none;">';
+
+					          foreach ( $supportedList as $code => $description ) {
+						          $html .= sprintf( "<li>%s - %s</li>", $code, $description );
+					          }
+
+					          $html .= '</ul></div>';
+
+					          $html .= '<script>jQuery("#' . $id . '").on("click", function() {jQuery(this).next("ul").toggle();});</script>';
+
+					          return $html;
+				          } ),
+			     ] )
 		);
 
-		$this->render_fields(
-			[
-				'id'   => 'section_files',
-				'name' => __( 'Files', "anycomment" ),
-			],
-			[
-				[
-					'id'          => self::OPTION_FILES_TOGGLE,
-					'title'       => __( 'Allow File Uploads', "anycomment" ),
-					'type'        => 'checkbox',
-					'description' => esc_html( __( 'Allow to upload files.', "anycomment" ) )
-				],
-				[
-					'id'          => self::OPTION_FILES_GUEST_CAN_UPLOAD,
-					'title'       => __( 'File Upload By Guests', "anycomment" ),
-					'type'        => 'checkbox',
-					'description' => esc_html( __( 'Guest users can upload documents. Please be careful about this setting as some users may potentially misuse this and periodically upload unwanted files.', "anycomment" ) )
-				],
-				[
-					'id'          => self::OPTION_FILES_MIME_TYPES,
-					'title'       => __( 'File MIME Types', "anycomment" ),
-					'type'        => 'text',
-					'description' => esc_html( __( 'Comma-separated list of allowed MIME types (e.g. .png, .jpg, etc). Alternatively, you may write "image/*" for all image types or "audio/*" for audios.', "anycomment" ) )
-				],
-				[
-					'id'          => self::OPTION_FILES_LIMIT,
-					'title'       => __( 'File Upload Limit', "anycomment" ),
-					'type'        => 'number',
-					'description' => esc_html( __( 'Maximum number of files to upload per period defined in the field below.', "anycomment" ) )
-				],
-				[
-					'id'          => self::OPTION_FILES_LIMIT_PERIOD,
-					'title'       => __( 'File Upload Limit Period', "anycomment" ),
-					'type'        => 'number',
-					'description' => esc_html( __( 'If user will cross the limit (defined above) within specified period (in seconds) in this field, he will be give a warning.', "anycomment" ) )
-				],
-				[
-					'id'          => self::OPTION_FILES_MAX_SIZE,
-					'title'       => __( 'File Size', "anycomment" ),
-					'type'        => 'number',
-					'description' => esc_html( __( 'Maximum allowed file size in megabytes. For example, regular PNG image is about ~ 1.5-2MB, JPEG are even smaller.', "anycomment" ) )
-				],
-			]
+
+		/**
+		 * Section: Files
+		 */
+		$form->add_section(
+			$this->section_builder()
+			     ->set_id( 'files' )
+			     ->set_title( __( 'Files', "anycomment" ) )
+			     ->set_fields( [
+				     $this->field_builder()
+				          ->checkbox()
+				          ->set_id( self::OPTION_FILES_TOGGLE )
+				          ->set_title( __( 'Allow File Uploads', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Allow to upload files.', "anycomment" ) ) ),
+
+				     $this->field_builder()
+				          ->checkbox()
+				          ->set_id( self::OPTION_FILES_GUEST_CAN_UPLOAD )
+				          ->set_title( __( 'File Upload By Guests', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Guest users can upload documents. Please be careful about this setting as some users may potentially misuse this and periodically upload unwanted files.', "anycomment" ) ) ),
+
+				     $this->field_builder()
+				          ->text()
+				          ->set_id( self::OPTION_FILES_MIME_TYPES )
+				          ->set_title( __( 'File MIME Types', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Comma-separated list of allowed MIME types (e.g. .png, .jpg, etc). Alternatively, you may write "image/*" for all image types or "audio/*" for audios.', "anycomment" ) ) ),
+
+				     $this->field_builder()
+				          ->number()
+				          ->set_id( self::OPTION_FILES_LIMIT )
+				          ->set_title( __( 'File Upload Limit', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Maximum number of files to upload per period defined in the field below.', "anycomment" ) ) ),
+
+				     $this->field_builder()
+				          ->number()
+				          ->set_id( self::OPTION_FILES_LIMIT_PERIOD )
+				          ->set_title( __( 'File Upload Limit Period', "anycomment" ) )
+				          ->set_description( esc_html( __( 'If user will cross the limit (defined above) within specified period (in seconds) in this field, he will be give a warning.', "anycomment" ) ) ),
+
+				     $this->field_builder()
+				          ->number()
+				          ->set_id( self::OPTION_FILES_MAX_SIZE )
+				          ->set_title( __( 'File Size', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Maximum allowed file size in megabytes. For example, regular PNG image is about ~ 1.5-2MB, JPEG are even smaller.', "anycomment" ) ) ),
+			     ] )
 		);
 	}
 
 	/**
-	 * top level menu:
-	 * callback functions
-	 *
-	 * @param bool $wrapper Whether to wrap for with header or not.
+	 * {@inheritdoc}
 	 */
-	public function page_html( $wrapper = true ) {
-		if ( ! current_user_can( 'manage_options' ) ) {
-			return;
+	public function run() {
+		$sections_html = '<form action="" id="' . $this->get_page_slug() . '" method="post" class="anycomment-form" novalidate>';
+
+		$sections_html .= '<input type="hidden" name="option_name" value="' . $this->option_name . '">';
+
+		$options = $this->options;
+
+		foreach ( $options as $option ) {
+			$sections = $option->get_sections();
+
+			if ( ! empty( $sections ) ) {
+				foreach ( $sections as $section ) {
+					$sections_html .= $section;
+				}
+			} else {
+				$fields = $option->get_fields();
+				foreach ( $fields as $field ) {
+					$sections_html .= $field;
+				}
+			}
 		}
 
-		if ( isset( $_GET['settings-updated'] ) ) {
-			add_settings_error( $this->alert_key, 'anycomment_message', __( 'Settings Saved', 'anycomment' ), 'updated' );
+		$sections_html .= '<input type="submit" name="submit" id="submit" class="button button-primary" value="' . __( 'Save', 'anycomment' ) . '">';
+
+		$sections_html .= '</form>';
+
+		$tabs = $this->do_tab_menu();
+
+		$html = <<<EOT
+<div class="anycomment-tabs grid-x grid-margin-x">
+	<aside class="cell large-5 medium-5 small-12 anycomment-tabs__menu">
+	    $tabs
+	</aside>
+	<div class="cell auto anycomment-tabs__container">$sections_html</div>
+</div>
+EOT;
+
+		return $html;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function do_tab_menu() {
+		$options = $this->get_options();
+
+		$html = '';
+
+		foreach ( $options as $option ) {
+			$html .= '<ul>';
+
+			$sections = $option->get_sections();
+
+			foreach ( $sections as $key => $section ) {
+				$section_id = $section->get_id();
+
+				$liClasses = ( $key == 0 ? 'current' : '' );
+
+				$html .= '<li class="' . $liClasses . '" data-tab="' . $section_id . '">
+				<a href="#tab-' . $section_id . '">' . $section->get_title() . '</a>
+				</li>';
+			}
 		}
+		$html .= '</ul>';
 
-		if ( AnyCommentGenericSettings::is_design_custom() ) {
-			static::apply_style_on_design_change();
-		}
+		$html .= <<<EOT
+        <script>
+            jQuery('.anycomment-tabs__menu li').on('click', function () {
+                var data = jQuery(this).attr('data-tab') || '';
+                var tab_id = '#' + data;
 
-		settings_errors( $this->alert_key );
-		?>
-		<?php if ( $wrapper ): ?>
-            <div class="wrap">
-            <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
-		<?php endif; ?>
-        <form action="options.php" method="post" class="anycomment-form" novalidate>
-			<?php
-			settings_fields( $this->option_group );
-			?>
+                if (!data) {
+                    return false;
+                }
 
-            <div class="anycomment-tabs grid-x grid-margin-x">
-                <aside class="cell large-4 medium-5 small-12 anycomment-tabs__menu">
-					<?php $this->do_tab_menu( $this->page_slug ) ?>
-                </aside>
-                <div class="cell auto anycomment-tabs__container">
-					<?php
-					$this->do_tab_sections( $this->page_slug, false );
-					submit_button( __( 'Save', 'anycomment' ) );
-					?>
-                </div>
-            </div>
-        </form>
-		<?php if ( $wrapper ): ?>
-            </div>
-		<?php endif; ?>
-		<?php
+                jQuery('.anycomment-tabs__menu li').removeClass('current');
+                jQuery('.anycomment-tabs__container__tab').removeClass('current');
+
+                jQuery(this).addClass('current');
+                jQuery(tab_id).addClass('current');
+
+                return false;
+            })
+        </script>
+EOT;
+
+		return $html;
 	}
 
 	/**
@@ -1136,7 +1210,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 
 		$items[] = AnyComment()->version;
 
-		$options = static::instance()->get_options();
+		$options = static::instance()->get_db_options();
 
 		if ( ! empty( $options ) ) {
 			foreach ( $options as $option_name => $option_value ) {
@@ -1181,7 +1255,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return bool
 	 */
 	public static function is_enabled() {
-		return static::instance()->get_option( self::OPTION_PLUGIN_TOGGLE ) !== null;
+		return static::instance()->get_db_option( self::OPTION_PLUGIN_TOGGLE ) !== null;
 	}
 
 	/**
@@ -1190,7 +1264,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return bool
 	 */
 	public static function is_load_on_scroll() {
-		return static::instance()->get_option( self::OPTION_LOAD_ON_SCROLL ) !== null;
+		return static::instance()->get_db_option( self::OPTION_LOAD_ON_SCROLL ) !== null;
 	}
 
 	/**
@@ -1199,7 +1273,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return bool
 	 */
 	public static function is_links_on_hold() {
-		return static::instance()->get_option( self::OPTION_LINKS_ON_HOLD ) !== null;
+		return static::instance()->get_db_option( self::OPTION_LINKS_ON_HOLD ) !== null;
 	}
 
 	/**
@@ -1208,7 +1282,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return bool
 	 */
 	public static function is_moderate_first() {
-		return static::instance()->get_option( self::OPTION_MODERATE_FIRST ) !== null;
+		return static::instance()->get_db_option( self::OPTION_MODERATE_FIRST ) !== null;
 	}
 
 	/**
@@ -1217,7 +1291,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return bool
 	 */
 	public static function is_show_twitter_embeds() {
-		return static::instance()->get_option( self::OPTION_SHOW_TWITTER_EMBEDS ) !== null;
+		return static::instance()->get_db_option( self::OPTION_SHOW_TWITTER_EMBEDS ) !== null;
 	}
 
 	/**
@@ -1226,7 +1300,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return bool
 	 */
 	public static function is_show_video_attachments() {
-		return static::instance()->get_option( self::OPTION_SHOW_VIDEO_ATTACHMENTS ) !== null;
+		return static::instance()->get_db_option( self::OPTION_SHOW_VIDEO_ATTACHMENTS ) !== null;
 	}
 
 	/**
@@ -1235,7 +1309,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return bool
 	 */
 	public static function is_show_image_attachments() {
-		return static::instance()->get_option( self::OPTION_SHOW_IMAGE_ATTACHMENTS ) !== null;
+		return static::instance()->get_db_option( self::OPTION_SHOW_IMAGE_ATTACHMENTS ) !== null;
 	}
 
 	/**
@@ -1244,7 +1318,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return bool
 	 */
 	public static function is_link_clickable() {
-		return static::instance()->get_option( self::OPTION_MAKE_LINKS_CLICKABLE ) !== null;
+		return static::instance()->get_db_option( self::OPTION_MAKE_LINKS_CLICKABLE ) !== null;
 	}
 
 	/**
@@ -1253,7 +1327,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return bool
 	 */
 	public static function is_show_profile_url() {
-		return static::instance()->get_option( self::OPTION_SHOW_PROFILE_URL ) !== null;
+		return static::instance()->get_db_option( self::OPTION_SHOW_PROFILE_URL ) !== null;
 	}
 
 	/**
@@ -1262,7 +1336,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return bool
 	 */
 	public static function is_show_socials_in_login_page() {
-		return static::instance()->get_option( self::OPTION_SHOW_SOCIALS_IN_LOGIN_PAGE ) !== null;
+		return static::instance()->get_db_option( self::OPTION_SHOW_SOCIALS_IN_LOGIN_PAGE ) !== null;
 	}
 
 	/**
@@ -1271,7 +1345,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return bool
 	 */
 	public static function is_show_admin_bar() {
-		return static::instance()->get_option( self::OPTION_SHOW_ADMIN_BAR ) !== null;
+		return static::instance()->get_db_option( self::OPTION_SHOW_ADMIN_BAR ) !== null;
 	}
 
 	/**
@@ -1280,7 +1354,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return bool
 	 */
 	public static function is_notify_on_new_comment() {
-		return static::instance()->get_option( self::OPTION_NOTIFY_ON_NEW_COMMENT ) !== null;
+		return static::instance()->get_db_option( self::OPTION_NOTIFY_ON_NEW_COMMENT ) !== null;
 	}
 
 	/**
@@ -1289,7 +1363,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return bool
 	 */
 	public static function is_notify_admin() {
-		return static::instance()->get_option( self::OPTION_NOTIFY_ADMINISTRATOR ) !== null;
+		return static::instance()->get_db_option( self::OPTION_NOTIFY_ADMINISTRATOR ) !== null;
 	}
 
 	/**
@@ -1298,7 +1372,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return bool
 	 */
 	public static function is_notify_subscribers() {
-		return static::instance()->get_option( self::OPTION_NOTIFY_SUBSCRIBERS ) !== null;
+		return static::instance()->get_db_option( self::OPTION_NOTIFY_SUBSCRIBERS ) !== null;
 	}
 
 	/**
@@ -1306,7 +1380,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return string
 	 */
 	public static function get_notify_email_sender_name() {
-		$value = static::instance()->get_option( self::OPTION_NOTIFY_SENDER_NAME );
+		$value = static::instance()->get_db_option( self::OPTION_NOTIFY_SENDER_NAME );
 
 		if ( empty( $value ) ) {
 			// Get blog name in case from name is now specified
@@ -1322,7 +1396,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return string|null
 	 */
 	public static function get_notify_email_subscribers_template() {
-		return static::instance()->get_option( self::OPTION_NOTIFY_SUBSCRIBERS_EMAIL_TEMPLATE );
+		return static::instance()->get_db_option( self::OPTION_NOTIFY_SUBSCRIBERS_EMAIL_TEMPLATE );
 	}
 
 	/**
@@ -1331,7 +1405,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return string|null
 	 */
 	public static function get_notify_email_subscribers_confirmation_template() {
-		return static::instance()->get_option( self::OPTION_NOTIFY_SUBSCRIBERS_CONFIRMATION_EMAIL_TEMPLATE );
+		return static::instance()->get_db_option( self::OPTION_NOTIFY_SUBSCRIBERS_CONFIRMATION_EMAIL_TEMPLATE );
 	}
 
 	/**
@@ -1340,7 +1414,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return bool
 	 */
 	public static function is_notify_on_new_reply() {
-		return static::instance()->get_option( self::OPTION_NOTIFY_ON_NEW_REPLY ) !== null;
+		return static::instance()->get_db_option( self::OPTION_NOTIFY_ON_NEW_REPLY ) !== null;
 	}
 
 	/**
@@ -1349,7 +1423,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return string|null
 	 */
 	public static function get_notify_email_admin_template() {
-		return static::instance()->get_option( self::OPTION_NOTIFY_ADMIN_EMAIL_TEMPLATE );
+		return static::instance()->get_db_option( self::OPTION_NOTIFY_ADMIN_EMAIL_TEMPLATE );
 	}
 
 	/**
@@ -1358,7 +1432,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return string|null
 	 */
 	public static function get_notify_email_reply_template() {
-		return static::instance()->get_option( self::OPTION_NOTIFY_REPLY_EMAIL_TEMPLATE );
+		return static::instance()->get_db_option( self::OPTION_NOTIFY_REPLY_EMAIL_TEMPLATE );
 	}
 
 	/**
@@ -1367,7 +1441,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return string|null
 	 */
 	public static function get_moderate_words() {
-		return static::instance()->get_option( self::OPTION_MODERATE_WORDS );
+		return static::instance()->get_db_option( self::OPTION_MODERATE_WORDS );
 	}
 
 	/**
@@ -1376,7 +1450,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return bool
 	 */
 	public static function is_file_upload_allowed() {
-		return static::instance()->get_option( self::OPTION_FILES_TOGGLE ) !== null;
+		return static::instance()->get_db_option( self::OPTION_FILES_TOGGLE ) !== null;
 	}
 
 	/**
@@ -1385,7 +1459,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return bool
 	 */
 	public static function is_guest_can_upload() {
-		return static::instance()->get_option( self::OPTION_FILES_GUEST_CAN_UPLOAD );
+		return static::instance()->get_db_option( self::OPTION_FILES_GUEST_CAN_UPLOAD );
 	}
 
 	/**
@@ -1394,7 +1468,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return float|null
 	 */
 	public static function get_file_max_size() {
-		return static::instance()->get_option( self::OPTION_FILES_MAX_SIZE );
+		return static::instance()->get_db_option( self::OPTION_FILES_MAX_SIZE );
 	}
 
 	/**
@@ -1403,7 +1477,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return float|null
 	 */
 	public static function get_file_limit() {
-		return static::instance()->get_option( self::OPTION_FILES_LIMIT );
+		return static::instance()->get_db_option( self::OPTION_FILES_LIMIT );
 	}
 
 	/**
@@ -1412,7 +1486,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return int|null
 	 */
 	public static function get_file_upload_limit() {
-		return static::instance()->get_option( self::OPTION_FILES_LIMIT_PERIOD );
+		return static::instance()->get_db_option( self::OPTION_FILES_LIMIT_PERIOD );
 	}
 
 	/**
@@ -1421,7 +1495,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return string|null
 	 */
 	public static function get_file_mime_types() {
-		return static::instance()->get_option( self::OPTION_FILES_MIME_TYPES );
+		return static::instance()->get_db_option( self::OPTION_FILES_MIME_TYPES );
 	}
 
 	/**
@@ -1516,7 +1590,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return bool
 	 */
 	public static function is_editor_toolbar_on() {
-		$is_toolbar_on                 = static::instance()->get_option( self::OPTION_EDITOR_TOOLBAR_TOGGLE ) !== null;
+		$is_toolbar_on                 = static::instance()->get_db_option( self::OPTION_EDITOR_TOOLBAR_TOGGLE ) !== null;
 		$has_at_least_one_toolbar_item = static::is_editor_toolbar_bold() ||
 		                                 static::is_editor_toolbar_italic() ||
 		                                 static::is_editor_toolbar_underline() ||
@@ -1539,7 +1613,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return bool
 	 */
 	public static function is_editor_toolbar_bold() {
-		return static::instance()->get_option( self::OPTION_EDITOR_TOOLBAR_BOLD ) !== null;
+		return static::instance()->get_db_option( self::OPTION_EDITOR_TOOLBAR_BOLD ) !== null;
 	}
 
 	/**
@@ -1548,7 +1622,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return bool
 	 */
 	public static function is_editor_toolbar_italic() {
-		return static::instance()->get_option( self::OPTION_EDITOR_TOOLBAR_ITALIC ) !== null;
+		return static::instance()->get_db_option( self::OPTION_EDITOR_TOOLBAR_ITALIC ) !== null;
 	}
 
 	/**
@@ -1557,7 +1631,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return bool
 	 */
 	public static function is_editor_toolbar_underline() {
-		return static::instance()->get_option( self::OPTION_EDITOR_TOOLBAR_UNDERLINE ) !== null;
+		return static::instance()->get_db_option( self::OPTION_EDITOR_TOOLBAR_UNDERLINE ) !== null;
 	}
 
 	/**
@@ -1566,7 +1640,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return bool
 	 */
 	public static function is_editor_toolbar_blockquote() {
-		return static::instance()->get_option( self::OPTION_EDITOR_TOOLBAR_QUOTE ) !== null;
+		return static::instance()->get_db_option( self::OPTION_EDITOR_TOOLBAR_QUOTE ) !== null;
 	}
 
 	/**
@@ -1575,7 +1649,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return bool
 	 */
 	public static function is_editor_toolbar_ordered_list() {
-		return static::instance()->get_option( self::OPTION_EDITOR_TOOLBAR_ORDERED ) !== null;
+		return static::instance()->get_db_option( self::OPTION_EDITOR_TOOLBAR_ORDERED ) !== null;
 	}
 
 	/**
@@ -1584,7 +1658,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return bool
 	 */
 	public static function is_editor_toolbar_bullet_list() {
-		return static::instance()->get_option( self::OPTION_EDITOR_TOOLBAR_BULLET ) !== null;
+		return static::instance()->get_db_option( self::OPTION_EDITOR_TOOLBAR_BULLET ) !== null;
 	}
 
 	/**
@@ -1593,7 +1667,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return bool
 	 */
 	public static function is_editor_toolbar_link() {
-		return static::instance()->get_option( self::OPTION_EDITOR_TOOLBAR_LINK ) !== null;
+		return static::instance()->get_db_option( self::OPTION_EDITOR_TOOLBAR_LINK ) !== null;
 	}
 
 	/**
@@ -1602,7 +1676,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return bool
 	 */
 	public static function is_editor_toolbar_clean() {
-		return static::instance()->get_option( self::OPTION_EDITOR_TOOLBAR_CLEAN ) !== null;
+		return static::instance()->get_db_option( self::OPTION_EDITOR_TOOLBAR_CLEAN ) !== null;
 	}
 
 
@@ -1612,7 +1686,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return bool
 	 */
 	public static function is_design_custom() {
-		return static::instance()->get_option( self::OPTION_DESIGN_CUSTOM_TOGGLE ) !== null;
+		return static::instance()->get_db_option( self::OPTION_DESIGN_CUSTOM_TOGGLE ) !== null;
 	}
 
 	/**
@@ -1621,7 +1695,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return string
 	 */
 	public static function get_global_background_color() {
-		return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_option( self::OPTION_DESIGN_GLOBAL_BACKGROUND_COLOR ) );
+		return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_db_option( self::OPTION_DESIGN_GLOBAL_BACKGROUND_COLOR ) );
 	}
 
 	/**
@@ -1630,7 +1704,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return string
 	 */
 	public static function get_global_background_border_radius() {
-		return AnyCommentInputHelper::normalize_css_size( static::instance()->get_option( self::OPTION_DESIGN_GLOBAL_BACKGROUND_BORDER_RADIUS ) );
+		return AnyCommentInputHelper::normalize_css_size( static::instance()->get_db_option( self::OPTION_DESIGN_GLOBAL_BACKGROUND_BORDER_RADIUS ) );
 	}
 
 	/**
@@ -1639,7 +1713,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return string
 	 */
 	public static function get_global_margin() {
-		return AnyCommentInputHelper::normalize_css_size( static::instance()->get_option( self::OPTION_DESIGN_GLOBAL_MARGIN ) );
+		return AnyCommentInputHelper::normalize_css_size( static::instance()->get_db_option( self::OPTION_DESIGN_GLOBAL_MARGIN ) );
 	}
 
 	/**
@@ -1648,7 +1722,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return string
 	 */
 	public static function get_global_padding() {
-		return AnyCommentInputHelper::normalize_css_size( static::instance()->get_option( self::OPTION_DESIGN_GLOBAL_PADDING ) );
+		return AnyCommentInputHelper::normalize_css_size( static::instance()->get_db_option( self::OPTION_DESIGN_GLOBAL_PADDING ) );
 	}
 
 	/**
@@ -1657,7 +1731,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return string|null
 	 */
 	public static function get_design_font_size() {
-		return AnyCommentInputHelper::normalize_css_size( static::instance()->get_option( self::OPTION_DESIGN_FONT_SIZE ) );
+		return AnyCommentInputHelper::normalize_css_size( static::instance()->get_db_option( self::OPTION_DESIGN_FONT_SIZE ) );
 	}
 
 	/**
@@ -1666,7 +1740,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return string|null
 	 */
 	public static function get_design_font_family() {
-		return static::instance()->get_option( self::OPTION_DESIGN_FONT_FAMILY );
+		return static::instance()->get_db_option( self::OPTION_DESIGN_FONT_FAMILY );
 	}
 
 	/**
@@ -1675,7 +1749,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return string|null
 	 */
 	public static function get_design_semi_hidden_color() {
-		return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_option( self::OPTION_DESIGN_SEMI_HIDDEN_COLOR ) );
+		return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_db_option( self::OPTION_DESIGN_SEMI_HIDDEN_COLOR ) );
 	}
 
 
@@ -1685,7 +1759,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return string|null
 	 */
 	public static function get_design_link_color() {
-		return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_option( self::OPTION_DESIGN_LINK_COLOR ) );
+		return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_db_option( self::OPTION_DESIGN_LINK_COLOR ) );
 	}
 
 	/**
@@ -1694,7 +1768,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return string|null
 	 */
 	public static function get_design_text_color() {
-		return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_option( self::OPTION_DESIGN_TEXT_COLOR ) );
+		return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_db_option( self::OPTION_DESIGN_TEXT_COLOR ) );
 	}
 
 	/**
@@ -1703,7 +1777,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return string|null
 	 */
 	public static function get_design_form_field_background_color() {
-		return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_option( self::OPTION_DESIGN_FORM_FIELD_BACKGROUND_COLOR ) );
+		return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_db_option( self::OPTION_DESIGN_FORM_FIELD_BACKGROUND_COLOR ) );
 	}
 
 	/**
@@ -1712,7 +1786,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return string|null
 	 */
 	public static function get_design_attachment_color() {
-		return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_option( self::OPTION_DESIGN_ATTACHMENT_COLOR ) );
+		return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_db_option( self::OPTION_DESIGN_ATTACHMENT_COLOR ) );
 	}
 
 	/**
@@ -1721,7 +1795,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return string|null
 	 */
 	public static function get_design_attachment_background_color() {
-		return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_option( self::OPTION_DESIGN_ATTACHMENT_BACKGROUND_COLOR ) );
+		return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_db_option( self::OPTION_DESIGN_ATTACHMENT_BACKGROUND_COLOR ) );
 	}
 
 	/**
@@ -1730,7 +1804,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return string|null
 	 */
 	public static function get_design_avatar_radius() {
-		return AnyCommentInputHelper::normalize_css_size( static::instance()->get_option( self::OPTION_DESIGN_AVATAR_RADIUS ) );
+		return AnyCommentInputHelper::normalize_css_size( static::instance()->get_db_option( self::OPTION_DESIGN_AVATAR_RADIUS ) );
 	}
 
 	/**
@@ -1739,7 +1813,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return string|null
 	 */
 	public static function get_design_parent_avatar_size() {
-		return AnyCommentInputHelper::normalize_css_size( static::instance()->get_option( self::OPTION_DESIGN_PARENT_AVATAR_SIZE ) );
+		return AnyCommentInputHelper::normalize_css_size( static::instance()->get_db_option( self::OPTION_DESIGN_PARENT_AVATAR_SIZE ) );
 	}
 
 	/**
@@ -1748,7 +1822,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return string|null
 	 */
 	public static function get_design_child_avatar_size() {
-		return AnyCommentInputHelper::normalize_css_size( static::instance()->get_option( self::OPTION_DESIGN_CHILD_AVATAR_SIZE ) );
+		return AnyCommentInputHelper::normalize_css_size( static::instance()->get_db_option( self::OPTION_DESIGN_CHILD_AVATAR_SIZE ) );
 	}
 
 	/**
@@ -1757,7 +1831,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return string|null
 	 */
 	public static function get_design_button_color() {
-		return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_option( self::OPTION_DESIGN_BUTTON_COLOR ) );
+		return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_db_option( self::OPTION_DESIGN_BUTTON_COLOR ) );
 	}
 
 	/**
@@ -1766,7 +1840,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return string|null
 	 */
 	public static function get_design_button_background_color() {
-		return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_option( self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR ) );
+		return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_db_option( self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR ) );
 	}
 
 	/**
@@ -1775,7 +1849,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return string|null
 	 */
 	public static function get_design_button_background_color_active() {
-		return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_option( self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR_ACTIVE ) );
+		return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_db_option( self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR_ACTIVE ) );
 	}
 
 	/**
@@ -1784,7 +1858,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return string|null
 	 */
 	public static function get_design_button_radius() {
-		return AnyCommentInputHelper::normalize_css_size( static::instance()->get_option( self::OPTION_DESIGN_BUTTON_RADIUS ) );
+		return AnyCommentInputHelper::normalize_css_size( static::instance()->get_db_option( self::OPTION_DESIGN_BUTTON_RADIUS ) );
 	}
 
 	/**
@@ -1793,7 +1867,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return string|null
 	 */
 	public static function get_design_global_radius() {
-		return AnyCommentInputHelper::normalize_css_size( static::instance()->get_option( self::OPTION_DESIGN_GLOBAL_RADIUS ) );
+		return AnyCommentInputHelper::normalize_css_size( static::instance()->get_db_option( self::OPTION_DESIGN_GLOBAL_RADIUS ) );
 	}
 
 	/**
@@ -1804,7 +1878,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return string
 	 */
 	public static function get_interval_comments_check() {
-		$intervalInSeconds = static::instance()->get_option( self::OPTION_INTERVAL_COMMENTS_CHECK );
+		$intervalInSeconds = static::instance()->get_db_option( self::OPTION_INTERVAL_COMMENTS_CHECK );
 
 		if ( $intervalInSeconds < 5 ) {
 			$intervalInSeconds = 5;
@@ -1821,7 +1895,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return string
 	 */
 	public static function get_register_default_group() {
-		return static::instance()->get_option( self::OPTION_REGISTER_DEFAULT_GROUP );
+		return static::instance()->get_db_option( self::OPTION_REGISTER_DEFAULT_GROUP );
 	}
 
 	/**
@@ -1830,7 +1904,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return string|null
 	 */
 	public static function get_user_agreement_link() {
-		return static::instance()->get_option( self::OPTION_USER_AGREEMENT_LINK );
+		return static::instance()->get_db_option( self::OPTION_USER_AGREEMENT_LINK );
 	}
 
 	/**
@@ -1839,7 +1913,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return bool
 	 */
 	public static function is_read_more_on() {
-		return static::instance()->get_option( self::OPTION_READ_MORE_TOGGLE ) !== null;
+		return static::instance()->get_db_option( self::OPTION_READ_MORE_TOGGLE ) !== null;
 	}
 
 	/**
@@ -1848,7 +1922,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return bool
 	 */
 	public static function is_rating_on() {
-		return static::instance()->get_option( self::OPTION_RATING_TOGGLE ) !== null;
+		return static::instance()->get_db_option( self::OPTION_RATING_TOGGLE ) !== null;
 	}
 
 	/**
@@ -1857,7 +1931,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return int
 	 */
 	public static function get_per_page() {
-		$value = (int) static::instance()->get_option( self::OPTION_COUNT_PER_PAGE );
+		$value = (int) static::instance()->get_db_option( self::OPTION_COUNT_PER_PAGE );
 
 		if ( $value < 5 ) {
 			$value = 5;
@@ -1872,7 +1946,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return int
 	 */
 	public static function get_comment_update_time() {
-		$value = (int) static::instance()->get_option( self::OPTION_COMMENT_UPDATE_TIME );
+		$value = (int) static::instance()->get_db_option( self::OPTION_COMMENT_UPDATE_TIME );
 
 		if ( empty( $value ) || (int) $value === 0 || $value < 1 ) {
 			$value = 0;
@@ -1888,7 +1962,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return string
 	 */
 	public static function get_sort_order() {
-		$value = static::instance()->get_option( self::OPTION_DEFAULT_SORT_BY );
+		$value = static::instance()->get_db_option( self::OPTION_DEFAULT_SORT_BY );
 
 		if ( $value !== self::SORT_DESC && $value !== self::SORT_ASC ) {
 			return self::SORT_DESC;
@@ -1904,7 +1978,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return string
 	 */
 	public static function get_comment_rating() {
-		$value = static::instance()->get_option( self::OPTION_COMMENT_RATING );
+		$value = static::instance()->get_db_option( self::OPTION_COMMENT_RATING );
 
 		if ( $value !== self::COMMENT_RATING_LIKES && $value !== self::COMMENT_RATING_LIKES_DISLIKES ) {
 			return self::COMMENT_RATING_LIKES;
@@ -1928,7 +2002,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return null|string
 	 */
 	public static function get_default_avatar() {
-		$value = static::instance()->get_option( self::OPTION_DEFAULT_AVATAR );
+		$value = static::instance()->get_db_option( self::OPTION_DEFAULT_AVATAR );
 
 		if ( $value !== self::OPTION_DEFAULT_AVATAR_ANYCOMMENT &&
 		     $value !== self::OPTION_DEFAULT_AVATAR_MP &&
@@ -1949,7 +2023,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return string|null
 	 */
 	public static function get_form_type() {
-		return static::instance()->get_option( self::OPTION_FORM_TYPE );
+		return static::instance()->get_db_option( self::OPTION_FORM_TYPE );
 	}
 
 	/**
@@ -1966,7 +2040,7 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 */
 	public static function get_guest_fields( $asArray = false ) {
 		$instance = static::instance();
-		$value    = $instance->get_option( self::OPTION_GUEST_FIELDS );
+		$value    = $instance->get_db_option( self::OPTION_GUEST_FIELDS );
 
 		/**
 		 * Name is required. If there is no name,
@@ -2058,6 +2132,6 @@ class AnyCommentGenericSettings extends AnyCommentAdminOptions {
 	 * @return bool
 	 */
 	public static function is_copyright_on() {
-		return static::instance()->get_option( self::OPTION_COPYRIGHT_TOGGLE ) !== null;
+		return static::instance()->get_db_option( self::OPTION_COPYRIGHT_TOGGLE ) !== null;
 	}
 }
