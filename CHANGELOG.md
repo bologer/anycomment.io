@@ -9,6 +9,7 @@
 **Fixes:**
 
 * Fixed design issue when social tab was not displaying proper form styles
+* Fixed issue when Mail.Ru did not show as active when enabled
 
 
 ## 0.0.75 – 05.12.2018

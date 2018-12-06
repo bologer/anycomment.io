@@ -121,7 +121,7 @@ class AnyCommentSocialSettings extends AnyCommentOptionManager {
 	/**
 	 * Mailru
 	 */
-	const OPTION_MAILRU_TOGGLE = 'social_marilru_toggle_field';
+	const OPTION_MAILRU_TOGGLE = 'social_mailru_toggle_field';
 	const OPTION_MAILRU_CLIENT_ID = 'social_mailru_client_id_field';
 	const OPTION_MAILRU_CLIENT_SECRET = 'social_mailru_client_secret_field';
 

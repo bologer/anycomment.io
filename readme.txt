@@ -176,6 +176,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 **Fixes:**
 
 * Fixed design issue when social tab was not displaying proper form styles
+* Fixed issue when Mail.Ru did not show as active when enabled
 
 
 
