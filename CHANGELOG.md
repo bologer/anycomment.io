@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.0.76 – 06.12.2018
+
+**Enhancements:**
+
+
+
+**Fixes:**
+
+* Fixed design issue when social tab was not displaying proper form styles
+
+
 ## 0.0.75 – 05.12.2018
 
 **Enhancements:**

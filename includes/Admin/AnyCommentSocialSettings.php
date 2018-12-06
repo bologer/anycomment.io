@@ -37,7 +37,7 @@ class AnyCommentSocialSettings extends AnyCommentOptionManager {
 	 * @inheritdoc
 	 */
 	protected $section_options = [
-		'wrapper' => '<div class="anycomment-tabs__container__tab" id="{id}">{content}</div>'
+		'wrapper' => '<div class="grid-x anycomment-form-wrapper anycomment-tabs__container__tab" id="{id}">{content}</div>'
 	];
 
 	/**
@@ -167,7 +167,7 @@ class AnyCommentSocialSettings extends AnyCommentOptionManager {
 			     $this->section_builder()
 			          ->set_id( 'vkontakte' )
 			          ->set_title( __( 'Vkontakte', 'anycomment' ) )
-			          ->set_wrapper( '<div class="anycomment-tabs__container__tab current" id="{id}">{content}</div>' )
+			          ->set_wrapper( '<div class="grid-x anycomment-form-wrapper anycomment-tabs__container__tab current" id="{id}">{content}</div>' )
 			          ->set_fields( [
 				          $this->field_builder()
 				               ->checkbox()
