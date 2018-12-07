@@ -930,7 +930,7 @@ class AnyCommentSocialAuth {
 	 */
 	public static function get_user_avatar_url( $id_or_email ) {
 
-		$cache_key    = '/anycomment/rest/user/avatar_url/' . serialize( $id_or_email );
+		$cache_key    = '/anycomment/rest/user/avatar_url/' . md5( serialize( $id_or_email ) );
 		$avatar_cache = AnyComment()->cache->getItem( $cache_key );
 
 		if ( $avatar_cache->isHit() ) {
@@ -1002,7 +1002,7 @@ class AnyCommentSocialAuth {
 			] );
 		}
 
-		if ( empty( $avatar_url ) && AnyCommentIntegrationSettings::is_wp_user_avatar_active() ) {
+		if ( empty( $avatar_url ) && AnyCommentIntegrationSettings::is_wp_user_avatar_active() && function_exists( 'get_wp_user_avatar_src' ) ) {
 			$avatar_url = get_wp_user_avatar_src( $id_or_email, AnyCommentAvatars::DEFAULT_AVATAR_WIDTH );
 			$avatar_cache->expiresAfter( 60 );
 		}
