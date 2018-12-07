@@ -171,7 +171,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Enhancements:**
 
-
+* Speed improvements, comments should load even faster now
 
 **Fixes:**
 

@@ -924,11 +924,18 @@ class AnyCommentSocialAuth {
 	/**
 	 * Get user avatar by user id.
 	 *
-	 * @param int $id_or_email User ID to be searched for.
+	 * @param mixed $id_or_email User ID, user instance, comment instance or email to be searched for.
 	 *
 	 * @return mixed|null
 	 */
 	public static function get_user_avatar_url( $id_or_email ) {
+
+		$cache_key    = '/anycomment/rest/user/avatar_url/' . serialize( $id_or_email );
+		$avatar_cache = AnyComment()->cache->getItem( $cache_key );
+
+		if ( $avatar_cache->isHit() ) {
+			return $avatar_cache->get();
+		}
 		/**
 		 * Get avatar from social network.
 		 */
@@ -949,21 +956,27 @@ class AnyCommentSocialAuth {
 			}
 		}
 
+		$avatar_url = '';
+
 		if ( $userId !== null ) {
 			$social_avatar_url = AnyCommentUserMeta::get_social_avatar( $userId );
 
 			if ( ! empty( $social_avatar_url ) ) {
-				return $social_avatar_url;
+				$avatar_url = $social_avatar_url;
+				$avatar_cache->expiresAfter( 24 * 60 * 60 ); // 1 day
 			}
 		}
 
 		/**
-		 * When WP User avatar is active, user has gravatar and has user avatar within
+		 * When WP User avatar is active, user has Gravatar and has user avatar within
 		 * the plugin itself, return the plugin's version.
 		 */
-		if ( AnyCommentIntegrationSettings::is_wp_user_avatar_active() ) {
+		if ( empty( $avatar_url ) && AnyCommentIntegrationSettings::is_wp_user_avatar_active() &&
+		     function_exists( 'has_wp_user_avatar' ) &&
+		     function_exists( 'get_wp_user_avatar_src' ) ) {
 			if ( has_wp_user_avatar( $id_or_email ) ) {
-				return get_wp_user_avatar_src( $id_or_email, AnyCommentAvatars::DEFAULT_AVATAR_WIDTH );
+				$avatar_url = get_wp_user_avatar_src( $id_or_email, AnyCommentAvatars::DEFAULT_AVATAR_WIDTH );
+				$avatar_cache->expiresAfter( 60 );
 			}
 		}
 
@@ -972,22 +985,37 @@ class AnyCommentSocialAuth {
 		 * whether user has non-default gravatar avatar, if does return,
 		 * otherwise get default plugin's one.
 		 */
-		if ( static::has_gravatar( $id_or_email ) ) {
-			return get_avatar_url( $id_or_email, [ 'size' => AnyCommentAvatars::DEFAULT_AVATAR_WIDTH ] );
+		if ( empty( $avatar_url ) && static::has_gravatar( $id_or_email ) ) {
+			$avatar_url = get_avatar_url( $id_or_email, [ 'size' => AnyCommentAvatars::DEFAULT_AVATAR_WIDTH ] );
+			/**
+			 * Base on the header information from Gravatar, they put 5 mins cache on all avatars,
+			 * so why not using the same time.
+			 * @link https://meta.stackexchange.com/a/37994
+			 */
+			$avatar_cache->expiresAfter( 5 * 60 );
 		}
 
-		if ( ! AnyCommentGenericSettings::is_default_avatar_anycomment() ) {
-			return get_avatar_url( $id_or_email, [
+		if ( empty( $avatar_url ) && ! AnyCommentGenericSettings::is_default_avatar_anycomment() ) {
+			$avatar_url = get_avatar_url( $id_or_email, [
 				'size'    => AnyCommentAvatars::DEFAULT_AVATAR_WIDTH,
 				'default' => AnyCommentGenericSettings::get_default_avatar()
 			] );
 		}
 
-		if ( AnyCommentIntegrationSettings::is_wp_user_avatar_active() ) {
-			return get_wp_user_avatar_src( $id_or_email, AnyCommentAvatars::DEFAULT_AVATAR_WIDTH );
+		if ( empty( $avatar_url ) && AnyCommentIntegrationSettings::is_wp_user_avatar_active() ) {
+			$avatar_url = get_wp_user_avatar_src( $id_or_email, AnyCommentAvatars::DEFAULT_AVATAR_WIDTH );
+			$avatar_cache->expiresAfter( 60 );
 		}
 
-		return apply_filters( 'anycomment/user/no_avatar', AnyComment()->plugin_url() . '/assets/img/no-avatar.svg' );
+		if ( empty( $avatar_url ) ) {
+			$avatar_url = apply_filters( 'anycomment/user/no_avatar', AnyComment()->plugin_url() . '/assets/img/no-avatar.svg' );
+			$avatar_cache->expiresAfter( 60 );
+		}
+
+
+		$avatar_cache->set( $avatar_url )->save();
+
+		return $avatar_url;
 	}
 
 	/**
@@ -998,6 +1026,15 @@ class AnyCommentSocialAuth {
 	 * @return bool if the gravatar exists or not
 	 */
 	public static function has_gravatar( $id_or_email ) {
+
+		$cache_key = 'anycomment/has-gravatar/' . $id_or_email;
+
+		$has_gravatar = wp_cache_get( $cache_key );
+
+		if ( false !== $has_gravatar ) {
+			return $has_gravatar;
+		}
+
 		//id or email code borrowed from wp-includes/pluggable.php
 		$email = '';
 		if ( is_numeric( $id_or_email ) ) {
@@ -1028,10 +1065,6 @@ class AnyCommentSocialAuth {
 
 		$email = strtolower( trim( $email ) );
 
-		if ( isset( static::$avatarMap[ $email ] ) ) {
-			return static::$avatarMap[ $email ];
-		}
-
 		// Build the Gravatar URL by hasing the email address
 		$url = 'http://www.gravatar.com/avatar/' . md5( $email ) . '?d=404';
 
@@ -1041,7 +1074,7 @@ class AnyCommentSocialAuth {
 		// If 200 is found, the user has a Gravatar; otherwise, they don't.
 		$hasGravatar = ! preg_match( '|200|', $headers[0] ) ? false : true;
 
-		static::$avatarMap[ $email ] = $hasGravatar;
+		wp_cache_set( $cache_key, $has_gravatar );
 
 		return $hasGravatar;
 	}

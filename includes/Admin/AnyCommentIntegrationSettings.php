@@ -254,8 +254,7 @@ class AnyCommentIntegrationSettings extends AnyCommentOptionManager {
 	 * @return bool
 	 */
 	public static function is_akismet_active() {
-		return is_plugin_active( 'akismet/akismet.php' ) &&
-		       static::instance()->get_db_option( self::OPTION_AKISMET ) !== null;
+		return static::instance()->get_db_option( self::OPTION_AKISMET ) !== null;
 	}
 
 	/**
@@ -265,8 +264,7 @@ class AnyCommentIntegrationSettings extends AnyCommentOptionManager {
 	 * @return bool
 	 */
 	public static function is_wp_user_avatar_active() {
-		return is_plugin_active( 'wp-user-avatar/wp-user-avatar.php' ) &&
-		       static::instance()->get_db_option( self::OPTION_WP_USER_AVATAR ) !== null;
+		return static::instance()->get_db_option( self::OPTION_WP_USER_AVATAR ) !== null;
 	}
 
 	/**

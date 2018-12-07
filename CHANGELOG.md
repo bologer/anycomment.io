@@ -4,7 +4,7 @@
 
 **Enhancements:**
 
-
+* Speed improvements, comments should load even faster now
 
 **Fixes:**
 

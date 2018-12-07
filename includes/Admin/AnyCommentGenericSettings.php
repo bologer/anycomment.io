@@ -1220,7 +1220,7 @@ EOT;
 			}
 		}
 
-		return md5( serialize( $items ) );
+		return hash('sha256', serialize( $items ) );
 	}
 
 	/**
