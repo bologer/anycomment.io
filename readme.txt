@@ -172,11 +172,13 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 **Enhancements:**
 
 * Speed improvements, comments should load even faster now
+* "Add comment" placeholder is the comment field is not users semi hidden color from design settings, #329
 
 **Fixes:**
 
 * Fixed design issue when social tab was not displaying proper form styles
 * Fixed issue when Mail.Ru did not show as active when enabled
+* Fixed issue when some websites had problem with loading comments or widget in sidebar, #327
 
 
 

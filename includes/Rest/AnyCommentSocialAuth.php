@@ -922,6 +922,41 @@ class AnyCommentSocialAuth {
 	}
 
 	/**
+	 * Integration wrapper for WP Users Avatar as it does not work with get_avatar_src() and AnyComment has to
+	 * regex src attribute form <img> tag :sadface: (WAT?).
+	 *
+	 * Side note: How did it get 100k downloads, I don't get it.
+	 *
+	 * @link https://wordpress.org/plugins/wp-user-avatar/
+	 *
+	 * @param string $avatar Could be HTML image tag or src itself.
+	 * @param bool $custom_default_avatar Whether to check if user has personal avatar set or no.
+	 *
+	 * @return string|null NULL returned in case $custom_default_avatar if true and admin did not set custom default avatar.
+	 */
+	public static function get_wp_users_avatar( $avatar, $custom_default_avatar = true ) {
+
+		$src    = '';
+		$avatar = trim( $avatar );
+
+		if ( 0 === strpos( $avatar, '<img' ) ) {
+			preg_match( '/src=[\'"](.*?)[\'"]/m', $avatar, $matches );
+
+			if ( ! empty( $matches ) && isset( $matches[1] ) ) {
+				$src = trim( $matches[1] );
+			}
+		} else {
+			$src = trim( $avatar );
+		}
+
+		if ( $custom_default_avatar && false === strpos( $src, 'wp-content/uploads' ) ) {
+			return null;
+		}
+
+		return $src;
+	}
+
+	/**
 	 * Get user avatar by user id.
 	 *
 	 * @param mixed $id_or_email User ID, user instance, comment instance or email to be searched for.
@@ -972,11 +1007,16 @@ class AnyCommentSocialAuth {
 		 * the plugin itself, return the plugin's version.
 		 */
 		if ( empty( $avatar_url ) && AnyCommentIntegrationSettings::is_wp_user_avatar_active() &&
-		     function_exists( 'has_wp_user_avatar' ) &&
-		     function_exists( 'get_wp_user_avatar_src' ) ) {
+		     function_exists( 'has_wp_user_avatar' ) ) {
 			if ( has_wp_user_avatar( $id_or_email ) ) {
-				$avatar_url = get_wp_user_avatar_src( $id_or_email, AnyCommentAvatars::DEFAULT_AVATAR_WIDTH );
-				$avatar_cache->expiresAfter( 60 );
+				// Get <img> tag
+				$avatar_img_tag = get_avatar( $id_or_email, [ 'size' => AnyCommentAvatars::DEFAULT_AVATAR_WIDTH ] );
+				// Get clean src attribute from it as wp users avatar does not support get_avatar_url()
+				$avatar_url = static::get_wp_users_avatar( $avatar_img_tag, true );
+
+				if ( $avatar_url !== null ) {
+					$avatar_cache->expiresAfter( 60 );
+				}
 			}
 		}
 
@@ -1002,16 +1042,10 @@ class AnyCommentSocialAuth {
 			] );
 		}
 
-		if ( empty( $avatar_url ) && AnyCommentIntegrationSettings::is_wp_user_avatar_active() && function_exists( 'get_wp_user_avatar_src' ) ) {
-			$avatar_url = get_wp_user_avatar_src( $id_or_email, AnyCommentAvatars::DEFAULT_AVATAR_WIDTH );
-			$avatar_cache->expiresAfter( 60 );
-		}
-
 		if ( empty( $avatar_url ) ) {
 			$avatar_url = apply_filters( 'anycomment/user/no_avatar', AnyComment()->plugin_url() . '/assets/img/no-avatar.svg' );
 			$avatar_cache->expiresAfter( 60 );
 		}
-
 
 		$avatar_cache->set( $avatar_url )->save();
 
@@ -1027,7 +1061,7 @@ class AnyCommentSocialAuth {
 	 */
 	public static function has_gravatar( $id_or_email ) {
 
-		$cache_key = 'anycomment/has-gravatar/' . $id_or_email;
+		$cache_key = 'anycomment/has-gravatar/' . md5( serialize( $id_or_email ) );
 
 		$has_gravatar = wp_cache_get( $cache_key );
 

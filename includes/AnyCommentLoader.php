@@ -32,7 +32,6 @@ class AnyCommentLoader {
 
 		// Other
 		'AnyComment\Admin\AnyCommentWPComments',
-		'AnyComment\AnyCommentAvatars',
 
 		// Hooks
 		'AnyComment\Hooks\AnyCommentCommonHooks',

@@ -395,7 +395,7 @@
     user-select: none;
   }
   .ql-editor.ql-blank::before {
-    color: rgba(0, 0, 0, 0.6);
+    color: $semi-hidden-color;
     content: attr(data-placeholder);
     font-style: italic;
     pointer-events: none;
