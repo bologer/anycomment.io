@@ -2,13 +2,15 @@
 
 namespace AnyComment\Hooks;
 
-use AnyComment\Cache\AnyCommentRestCacheManager;
 use WP_Comment;
 
-use AnyComment\Models\AnyCommentSubscriptions;
 use AnyComment\Models\AnyCommentLikes;
 use AnyComment\AnyCommentCommentMeta;
+use AnyComment\Models\AnyCommentSubscriptions;
 use AnyComment\Models\AnyCommentUploadedFiles;
+use AnyComment\Admin\AnyCommentGenericSettings;
+use AnyComment\Cache\AnyCommentRestCacheManager;
+use AnyComment\Models\AnyCommentEmailQueue;
 
 /**
  * Class AnyCommentCommentHooks is used to control hooks related to comments.
@@ -96,6 +98,16 @@ class AnyCommentCommentHooks {
 	public function process_new_comment( $comment_id, $comment ) {
 		// Notify subscribers
 		AnyCommentSubscriptions::notify_by( $comment );
+
+		// Notify on comment reply
+		if ( AnyCommentGenericSettings::is_notify_on_new_reply() ) {
+			AnyCommentEmailQueue::add_as_reply( $comment );
+		}
+
+		// Notify admin
+		if ( AnyCommentGenericSettings::is_notify_admin() ) {
+			AnyCommentEmailQueue::add_as_admin_notification( $comment );
+		}
 
 		// Flush post comment count cache
 		AnyCommentRestCacheManager::flushPostCommentCount( $comment->comment_post_ID );

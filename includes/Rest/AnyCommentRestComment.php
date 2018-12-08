@@ -643,14 +643,6 @@ class AnyCommentRestComment extends AnyCommentRestController {
 
 		$comment = get_comment( $comment_id );
 
-		if ( AnyCommentGenericSettings::is_notify_on_new_reply() ) {
-			AnyCommentEmailQueue::add_as_reply( $comment );
-		}
-
-		if ( AnyCommentGenericSettings::is_notify_admin() ) {
-			AnyCommentEmailQueue::add_as_admin_notification( $comment );
-		}
-
 		$schema = $this->get_item_schema();
 
 		if ( ! empty( $schema['properties']['meta'] ) && isset( $request['meta'] ) ) {
