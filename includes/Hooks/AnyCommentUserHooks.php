@@ -52,11 +52,19 @@ class AnyCommentUserHooks {
 		}
 
 		/**
-		 * WP Fastest Cache
+		 * WP Fastest Cache fix.
 		 * @link https://wordpress.org/plugins/wp-fastest-cache/
 		 */
 		if ( class_exists( '\WpFastestCache' ) && method_exists( '\WpFastestCache', 'singleDeleteCache' ) ) {
 			( new \WpFastestCache() )->singleDeleteCache( false, $post_id );
+		}
+
+		/**
+		 * W3 Total Cache fix.
+		 * @link https://wordpress.org/plugins/w3-total-cache/
+		 */
+		if ( function_exists( 'w3tc_flush_post' ) ) {
+			w3tc_flush_post( $post_id );
 		}
 
 		return true;
