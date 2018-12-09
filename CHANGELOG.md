@@ -6,6 +6,7 @@
 
 * Speed improvements, comments should load even faster now
 * "Add comment" placeholder is the comment field is not users semi hidden color from design settings, #329
+* Added new hook `anycomment/user/logged_in` fires after user is successfully logged in
 
 **Fixes:**
 
@@ -13,6 +14,7 @@
 * Fixed issue when Mail.Ru did not show as active when enabled
 * Fixed issue when some websites had problem with loading comments or widget in sidebar, #327
 * Fixed issue when user was not notified about new reply when sent from admin panel, #330
+* Possible fix of invalid nonce error when dealing with cache plugins (implemented for: WP Super Cache, WP Rocket, WP Fastest Cache)
 
 ## 0.0.75 – 05.12.2018
 

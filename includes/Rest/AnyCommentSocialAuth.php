@@ -45,6 +45,10 @@ class AnyCommentSocialAuth {
 	const SOCIAL_YAHOO = 'yahoo';
 	const SOCIAL_WORDPRESS = 'wordpress';
 
+
+	// Cookie name for post URL redirect
+	const COOKIE_REDIRECT = 'post_redirect';
+
 	/**
 	 * @var \Hybridauth\Hybridauth
 	 */
@@ -155,7 +159,7 @@ class AnyCommentSocialAuth {
 	public function process_socials( WP_REST_Request $request ) {
 		$redirect        = $request->get_param( 'redirect' );
 		$social          = $request->get_param( 'social' );
-		$cookie_redirect = 'post_redirect';
+		$cookie_redirect = self::COOKIE_REDIRECT;
 
 		if ( ! $this->social_exists( $social ) || is_user_logged_in() ) {
 			wp_redirect( $redirect );
@@ -731,6 +735,19 @@ class AnyCommentSocialAuth {
 		wp_clear_auth_cookie();
 		wp_set_current_user( $userId );
 		wp_set_auth_cookie( $userId, true );
+
+		/**
+		 * Fires after user successfully logged in.
+		 *
+		 * @since 0.0.76
+		 *
+		 * @param WP_User $user Instance of user being logged in.
+		 * @param string $cookie_post_url URL to post retrieved from cookie. NULL when unable to get post URL.
+		 *
+		 * @package
+		 */
+		$cookie_post_url = isset( $_COOKIE[ self::COOKIE_REDIRECT ] ) ? $_COOKIE[ self::COOKIE_REDIRECT ] : null;
+		do_action( 'anycomment/user/logged_in', $user, $cookie_post_url );
 
 		return true;
 	}

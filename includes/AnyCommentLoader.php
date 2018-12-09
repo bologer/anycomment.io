@@ -36,6 +36,7 @@ class AnyCommentLoader {
 		// Hooks
 		'AnyComment\Hooks\AnyCommentCommonHooks',
 		'AnyComment\Hooks\AnyCommentCommentHooks',
+		'AnyComment\Hooks\AnyCommentUserHooks',
 		'AnyComment\Hooks\AnyCommentNativeLoginForm',
 
 		'AnyComment\Integrations\AnyCommentWooCommerce',

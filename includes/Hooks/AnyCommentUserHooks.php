@@ -1,0 +1,64 @@
+<?php
+
+namespace AnyComment\Hooks;
+
+/**
+ * Class AnyCommentUserHooks is used to add hooks related to the user.
+ *
+ * For example, it can hook actions such as after user logged in, etc.
+ *
+ * @author Alexander Teshabaev <sasha.tesh@gmail.com>
+ * @package AnyComment\Hooks
+ */
+class AnyCommentUserHooks {
+
+	/**
+	 * AnyCommentUserHooks constructor.
+	 */
+	public function __construct() {
+		add_action( 'anycomment/user/logged_in', [ $this, 'drop_cache_on_login' ], 11, 2 );
+	}
+
+	/**
+	 * Drop user login cache, to get rid of incorrect cookie nonce issue.
+	 *
+	 * @param \WP_User $user Instance of WordPress user.
+	 * @param string $post_url Post URL.
+	 *
+	 * @return bool False on failure to get post ID by provided URL.
+	 */
+	public function drop_cache_on_login( $user, $post_url ) {
+
+		$post_id = url_to_postid( $post_url );
+
+		if ( 0 === $post_id ) {
+			return false;
+		}
+
+		/**
+		 * WP Super Cache fix.
+		 * @link https://wordpress.org/plugins/wp-super-cache/
+		 */
+		if ( function_exists( 'wpsc_delete_post_cache' ) ) {
+			wpsc_delete_post_cache( $post_id );
+		}
+
+		/**
+		 * WP Rocket fix.
+		 * @link https://wp-rocket.me/
+		 */
+		if ( function_exists( 'rocket_clean_post' ) ) {
+			rocket_clean_post( $post_id );
+		}
+
+		/**
+		 * WP Fastest Cache
+		 * @link https://wordpress.org/plugins/wp-fastest-cache/
+		 */
+		if ( class_exists( '\WpFastestCache' ) && method_exists( '\WpFastestCache', 'singleDeleteCache' ) ) {
+			( new \WpFastestCache() )->singleDeleteCache( false, $post_id );
+		}
+
+		return true;
+	}
+}
