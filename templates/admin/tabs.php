@@ -26,7 +26,18 @@ $tabs       = [
 		'url'  => menu_page_url( $_GET['page'], false ) . '&tab=tools',
 		'text' => __( 'Tools', 'anycomment' )
 	]
-]
+];
+
+/**
+ * Filters list of available tabs.
+ *
+ * @since 0.0.76
+ *
+ * @param array $tabs An array of available tabs.
+ *
+ * @package string $active_tab Active tab.
+ */
+$tabs = apply_filters( 'anycomment/admin/tabs', $tabs, $active_tab );
 ?>
 
 <?php if ( ! empty( $tabs ) ): ?>
@@ -41,4 +52,18 @@ $tabs       = [
     </div>
 <?php endif; ?>
 
-<?php echo \AnyComment\Helpers\AnyCommentTemplate::render( 'admin/tab-' . $active_tab ) ?>
+<?php
+
+$callback = isset( $tabs[ $active_tab ]['callback'] ) ? $tabs[ $active_tab ]['callback'] : null;
+
+if ( $callback !== null ) {
+	if ( is_callable( $callback ) ) {
+		echo call_user_func( $callback );
+	} elseif ( is_readable( $callback ) ) {
+		echo \AnyComment\Helpers\AnyCommentTemplate::render( $callback );
+	} elseif ( is_string( $callback ) ) {
+		echo $callback;
+	}
+} else {
+	echo \AnyComment\Helpers\AnyCommentTemplate::render( 'admin/tab-' . $active_tab );
+}

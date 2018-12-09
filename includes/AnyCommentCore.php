@@ -141,7 +141,7 @@ class AnyCommentCore {
 		AnyCommentLoader::load();
 
 		$cacheDriver = new FileSystem( [
-			'path' => ANYCOMMENT_ABSPATH . 'cache/'
+			'path' => ANYCOMMENT_ABSPATH . '/cache/'
 		] );
 
 		$this->cache = new Pool( $cacheDriver );
