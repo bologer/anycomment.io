@@ -174,6 +174,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Speed improvements, comments should load even faster now
 * "Add comment" placeholder is the comment field is not users semi hidden color from design settings, #329
 * Added new hook `anycomment/user/logged_in` fires after user is successfully logged in
+* Added 304 code notice for WP Super Cache users, #296
 
 **Fixes:**
 

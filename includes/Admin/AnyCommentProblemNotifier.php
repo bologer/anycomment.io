@@ -119,7 +119,7 @@ class AnyCommentProblemNotifier {
 			$items[] = [
 				'level'   => self::LEVEL_LOW,
 				'type'    => self::TYPE_PLUGIN,
-				'message' => sprintf( __( "You are using %s for caching. If you're experiencing some problem with AnyComment, try to deactivate it and check whether problem was resolved", "anycomment" ), 'WP Super Cache' )
+				'message' => sprintf( __( "You are using %s for caching. Go to \"Settings\" and make sure option \"304 Not Modified...\" is unchecked. If you're experiencing some problem with AnyComment, try to deactivate it and check whether problem was resolved", "anycomment" ), 'WP Super Cache' )
 			];
 		}
 
