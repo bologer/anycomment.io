@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 11/8/18
- * Time: 9:38 PM
- */
 
 namespace AnyComment;
 
@@ -26,7 +20,7 @@ class AnyCommentSocials {
 	 *
 	 * @return array|null List of socials or NULL in case when no socials defined or so.
 	 */
-	public static function getAll( $redirectUrl = null ) {
+	public static function get_all( $redirectUrl = null ) {
 		$socials = [
 			AnyCommentSocialAuth::SOCIAL_VKONTAKTE     => [
 				'slug'    => AnyCommentSocialAuth::SOCIAL_VKONTAKTE,

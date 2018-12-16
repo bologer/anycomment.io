@@ -80,7 +80,7 @@ class AnyCommentNativeLoginForm {
 	 */
 	public function login_with( $redirectUrl = null ) {
 
-		$socials = AnyCommentSocials::getAll( $redirectUrl );
+		$socials = AnyCommentSocials::get_all( $redirectUrl );
 
 		$socials_html = '';
 		foreach ( $socials as $key => $social ):

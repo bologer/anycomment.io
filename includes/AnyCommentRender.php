@@ -145,7 +145,7 @@ class AnyCommentRender {
 				'options'      => [
 					'limit'                  => AnyCommentGenericSettings::get_per_page(),
 					'isCopyright'            => AnyCommentGenericSettings::is_copyright_on(),
-					'socials'                => AnyCommentSocials::getAll( get_permalink( $postId ) ),
+					'socials'                => AnyCommentSocials::get_all( get_permalink( $postId ) ),
 					'sort_order'             => AnyCommentGenericSettings::get_sort_order(),
 					'guestInputs'            => AnyCommentGenericSettings::get_guest_fields( true ),
 					'isNotifySubscribers'    => AnyCommentGenericSettings::is_notify_subscribers(),
