@@ -107,7 +107,7 @@ class AnyCommentAdminPages {
 			return null;
 		}
 
-		if ( $page === 'anycomment-dashboard' && ! isset( $_GET['tab'] ) ) {
+		if ( 0 === strpos( $page, 'anycomment' )) {
 			wp_enqueue_script( 'anycomment-admin-chartjs', AnyComment()->plugin_url() . '/assets/js/Chart.min.js', [], AnyComment()->version );
 		}
 

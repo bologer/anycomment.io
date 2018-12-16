@@ -57,13 +57,7 @@ $tabs = apply_filters( 'anycomment/admin/tabs', $tabs, $active_tab );
 $callback = isset( $tabs[ $active_tab ]['callback'] ) ? $tabs[ $active_tab ]['callback'] : null;
 
 if ( $callback !== null ) {
-	if ( is_callable( $callback ) ) {
-		echo call_user_func( $callback );
-	} elseif ( is_readable( $callback ) ) {
-		echo \AnyComment\Helpers\AnyCommentTemplate::render( $callback );
-	} elseif ( is_string( $callback ) ) {
-		echo $callback;
-	}
+    echo \AnyComment\Helpers\AnyCommentTemplate::render( $callback );
 } else {
 	echo \AnyComment\Helpers\AnyCommentTemplate::render( 'admin/tab-' . $active_tab );
 }

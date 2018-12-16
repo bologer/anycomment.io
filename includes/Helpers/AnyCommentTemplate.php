@@ -21,8 +21,15 @@ class AnyCommentTemplate {
 	public static function render( $name ) {
 		ob_start();
 
-		if ( is_readable( $name ) ) {
-			$path = $name;
+
+		if ( is_callable( $name ) ) {
+			echo call_user_func( $name );
+		} elseif ( is_file( $name ) || is_file( $name . '.php' ) ) {
+			if ( is_file( $name ) ) {
+				$path = $name;
+			} else {
+				$path = $name . '.php';
+			}
 		} else {
 			$path = ANYCOMMENT_ABSPATH . "/templates/{$name}.php";
 		}

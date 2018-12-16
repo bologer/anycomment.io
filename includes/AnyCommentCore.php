@@ -28,6 +28,11 @@ class AnyCommentCore {
 	public $cache;
 
 	/**
+	 * @var \Freemius
+	 */
+	public $freemius;
+
+	/**
 	 * @var
 	 */
 	public $scss;
@@ -144,6 +149,42 @@ class AnyCommentCore {
 			'path' => ANYCOMMENT_ABSPATH . '/cache/'
 		] );
 
+		$this->init_freemius();
+
 		$this->cache = new Pool( $cacheDriver );
+	}
+
+	public function init_freemius() {
+
+		if ( $this->freemius !== null ) {
+			return $this->freemius;
+		}
+
+		// Include Freemius SDK.
+		require_once ANYCOMMENT_ABSPATH . '/freemius/start.php';
+
+		$this->freemius = fs_dynamic_init( array(
+			'id'                  => '2926',
+			'slug'                => 'anycomment',
+			'type'                => 'plugin',
+			'public_key'          => 'pk_362c323f4de13a39f79eedc50082f',
+			'is_premium'          => true,
+			// If your plugin is a serviceware, set this option to false.
+			'has_premium_version' => true,
+			'has_addons'          => true,
+			'has_paid_plans'      => true,
+			'menu'                => array(
+				'slug'           => 'anycomment-dashboard',
+				'contact'        => false,
+				'support'        => false,
+			),
+			// Set the SDK to work in a sandbox mode (for development & testing).
+			// IMPORTANT: MAKE SURE TO REMOVE SECRET KEY BEFORE DEPLOYMENT.
+			'secret_key'          => 'sk_9laBnH>2T{bg0sJfRnH__0Kj0R?@a',
+		) );
+
+		do_action( 'any_fs_loaded' );
+
+		return $this->freemius;
 	}
 }

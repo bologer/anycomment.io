@@ -25,7 +25,7 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 	require __DIR__ . '/vendor/autoload.php';
 }
 
-function AnyComment() {
+function anycomment() {
 	defined( 'ANYCOMMENT_PLUGIN_FILE' ) or define( 'ANYCOMMENT_PLUGIN_FILE', __FILE__ );
 	defined( 'ANYCOMMENT_LANG' ) or define( 'ANYCOMMENT_LANG', __FILE__ );
 	defined( 'ANYCOMMENT_ABSPATH' ) or define( 'ANYCOMMENT_ABSPATH', dirname( __FILE__ ) );
@@ -35,4 +35,4 @@ function AnyComment() {
 	return \AnyComment\AnyCommentCore::instance();
 }
 
-AnyComment();
+anycomment();
