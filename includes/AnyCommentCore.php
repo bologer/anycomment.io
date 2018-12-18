@@ -161,20 +161,33 @@ class AnyCommentCore {
 			'slug'                => 'anycomment',
 			'type'                => 'plugin',
 			'public_key'          => 'pk_362c323f4de13a39f79eedc50082f',
-			'is_premium'          => true,
+			'is_premium'          => false,
 			// If your plugin is a serviceware, set this option to false.
-			'has_premium_version' => true,
+			'has_premium_version' => false,
 			'has_addons'          => true,
-			'has_paid_plans'      => true,
+			'has_paid_plans'      => false,
 			'menu'                => array(
-				'slug'           => 'anycomment-dashboard',
-				'contact'        => false,
-				'support'        => false,
+				'slug'    => 'anycomment-dashboard',
+				'contact' => false,
+				'support' => false,
 			),
 			// Set the SDK to work in a sandbox mode (for development & testing).
 			// IMPORTANT: MAKE SURE TO REMOVE SECRET KEY BEFORE DEPLOYMENT.
-			'secret_key'          => 'sk_9laBnH>2T{bg0sJfRnH__0Kj0R?@a',
+//			'secret_key'          => 'sk_9laBnH>2T{bg0sJfRnH__0Kj0R?@a',
 		) );
+
+		fs_override_i18n( [
+			'add-ons' => __( 'Add-Ons', 'anycomment' )
+		], 'anycomment' );
+
+
+		$this->freemius->add_filter( 'is_submenu_visible', function ( $is_visible, $submenu_id ) {
+			if ( $submenu_id === 'pricing' ) {
+				$is_visible = false;
+			}
+
+			return $is_visible;
+		}, 10, 2 );
 
 		do_action( 'any_fs_loaded' );
 
