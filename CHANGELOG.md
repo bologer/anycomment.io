@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.0.77 – 20.12.2018
+
+**Enhancements:**
+
+
+
+**Fixes:**
+
+* Fixed issue when user avatars did not display in the admin, #331
+
+
 ## 0.0.76 – 09.12.2018
 
 **Enhancements:**

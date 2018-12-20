@@ -199,13 +199,6 @@ class AnyCommentIntegrationSettings extends AnyCommentOptionManager {
 			     ->set_fields( [
 				     $this->field_builder()
 				          ->checkbox()
-				          ->on( 'click', 'slideToggle', [
-					          '.anycomment-form-wrapper__field-' . self::OPTION_RECAPTCHA_SITE_KEY,
-					          '.anycomment-form-wrapper__field-' . self::OPTION_RECAPTCHA_SITE_SECRET,
-					          '.anycomment-form-wrapper__field-' . self::OPTION_RECAPTCHA_USER,
-					          '.anycomment-form-wrapper__field-' . self::OPTION_RECAPTCHA_THEME,
-					          '.anycomment-form-wrapper__field-' . self::OPTION_RECAPTCHA_BADGE
-				          ] )
 				          ->set_id( self::OPTION_RECAPTCHA_TOGGLE )
 				          ->set_title( __( 'Enable', "anycomment" ) )
 				          ->set_description( __( 'Enable reCAPTCHA. Make sure you have set API keys below as it will not work properly without them.' ) ),

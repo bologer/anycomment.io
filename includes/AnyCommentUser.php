@@ -159,6 +159,6 @@ class AnyCommentUser {
 		 * @param string $unique_username Username that was produced after transliteration and sanitation via sanitize_user().
 		 * @param string $expected_username Initial value passed. It could be username already, first/last name.
 		 */
-		return apply_filters( 'anycomment_prepare_login', $unique_username, $expected_username );
+		return apply_filters( 'anycomment/user/prepare_login', $unique_username, $expected_username );
 	}
 }
