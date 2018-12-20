@@ -32,7 +32,7 @@
     "build-css": "cd src/foundation && gulp sass",
     "watch-css": "cd src/foundation && gulp watch",
     "start": "react-scripts start",
-    "build": "react-scripts build && mv build/static/js/main*.js build/static/js/main.min.js && mv build/static/css/main*.css build/static/css/main.min.css && rm -rf ../static/* && mv build/static/* ../static && cp -R src/foundation/scss/* node_modules/react-toastify/dist/ReactToastify.css ../assets/theming",
+    "build": "react-scripts build && mv build/static/js/main*.js build/static/js/main.min.js && mv build/static/css/main*.css build/static/css/main.min.css && rm -rf ../static/* && mv build/static/* ../static && rm ../static/css/*css.map && rm ../static/js/*js.map && cp -R src/foundation/scss/* node_modules/react-toastify/dist/ReactToastify.css ../assets/theming",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }

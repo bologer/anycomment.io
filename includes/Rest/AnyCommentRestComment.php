@@ -205,7 +205,11 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			$data = get_comment_count( $post_id );
 
 			if ( is_array( $data ) ) {
-				$comment_count = $data['all'];
+				if ( current_user_can( 'moderate_comments' ) ) {
+					$comment_count = $data['all'];
+				} else {
+					$comment_count = $data['approved'];
+				}
 			}
 		}
 
@@ -941,7 +945,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			],
 			'meta'               => [
 				'has_like'    => AnyCommentLikes::is_user_has_like( $comment->comment_ID ),
-				'has_dislike'    => AnyCommentLikes::is_user_has_dislike( $comment->comment_ID ),
+				'has_dislike' => AnyCommentLikes::is_user_has_dislike( $comment->comment_ID ),
 				'status'      => wp_get_comment_status( $comment ),
 				'count_text'  => AnyCommentUser::get_comment_count( $comment->comment_post_ID ),
 				'is_updated'  => AnyCommentCommentMeta::is_updated( $comment ),

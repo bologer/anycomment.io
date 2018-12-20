@@ -165,7 +165,7 @@ class CommentList extends AnyCommentComponent {
 
                     // Show toast only if new comment was added, not deleted or
                     // something like this
-                    const shouldReload = !self.state.isJustAdded && (currentCount > stateCount || currentCount < stateCount);
+                    const shouldReload = !self.state.isJustAdded && (currentCount > stateCount);
 
                     if (shouldReload) {
                         self.loadComments();
