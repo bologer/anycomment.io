@@ -171,6 +171,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Enhancements:**
 
+* Warn users about missing API keys when reCAPTCHA enabled, #333
 
 
 **Fixes:**

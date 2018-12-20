@@ -4,7 +4,7 @@
 
 **Enhancements:**
 
-
+* Warn users about missing API keys when reCAPTCHA enabled, #333
 
 **Fixes:**
 
