@@ -102,8 +102,8 @@ class AnyCommentCommentMeta {
 		$preparedArray = [ $meta_id ];
 
 		if ( $comment_id !== null ) {
-			$preparedArray[] = $comment_id;
 			$sql             .= ' AND `meta`.`comment_id` = %d';
+			$preparedArray[] = $comment_id;
 		}
 
 		$res = $wpdb->get_row( $wpdb->prepare( $sql, $preparedArray ) );

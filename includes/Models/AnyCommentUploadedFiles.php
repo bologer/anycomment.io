@@ -208,6 +208,8 @@ class AnyCommentUploadedFiles extends AnyCommentActiveRecord {
 	 * @return bool
 	 */
 	public static function can_crop( $mime_type ) {
+		$mime_type = trim( $mime_type );
+
 		if ( empty( $mime_type ) ) {
 			return false;
 		}

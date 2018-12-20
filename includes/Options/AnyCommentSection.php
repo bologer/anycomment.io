@@ -103,6 +103,11 @@ class AnyCommentSection {
 	 * @return $this
 	 */
 	public function set_description( $description ) {
+
+		if(is_callable($description)) {
+			$description = call_user_func($description);
+		}
+
 		$this->description = $description;
 
 		return $this;

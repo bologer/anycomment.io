@@ -63,14 +63,24 @@ class AnyCommentField {
 	protected $args = [];
 
 	/**
+	 * @var array List of on events.
+	 */
+	protected $client_events = [];
+
+	/**
 	 * @var null|string Page slug to which option belongs.
 	 */
 	protected $option_name = null;
 
 	/**
+	 * @var string Wrapper class name.
+	 */
+	protected $wrapper_class = 'woption-field';
+
+	/**
 	 * @var string Field wrapping element.
 	 */
-	protected $wrapper = '<div class="woption-field">{content}</div>';
+	protected $wrapper = '<div {attributes}>{content}</div>';
 
 	/**
 	 * AnyCommentField constructor.
@@ -475,6 +485,81 @@ EOT;
 	}
 
 	/**
+	 * Places client event on current field.
+	 *
+	 * @param string $event Event function name, e.g. click, change, etc.
+	 * @param string $animation Function name or complete structure as animate() to be used for animation.
+	 * @param array|string $elements Non associative list of elements IDs or classes. When no "#" or "." specified,
+	 * "#" will be automatically added to such elements.
+	 *
+	 * @return $this
+	 */
+	public function on( $event, $animation, $elements ) {
+		$this->client_events[] = [
+			'event'     => $event,
+			'animation' => $animation,
+			'elements'  => $elements
+		];
+
+		return $this;
+	}
+
+	/**
+	 * Render client events into JavaScript events.
+	 *
+	 * @return string
+	 */
+	public function render_client_events() {
+		$events = $this->client_events;
+
+		if ( empty( $events ) ) {
+			return '';
+		}
+
+		$event_rendered = '';
+
+		foreach ( $events as $event ) {
+			$event_name = isset( $event['event'] ) ? $event['event'] : null;
+			$animation  = isset( $event['animation'] ) ? $event['animation'] : null;
+			$elements   = isset( $event['elements'] ) ? $event['elements'] : null;
+
+			if ( $event_name === null || $animation === null || $elements === null ) {
+				continue;
+			}
+
+			foreach ( $elements as $key => $element ) {
+				if ( ! preg_match( '/^[#.]/', $element ) ) {
+					$elements[ $key ] = '#' . $element;
+				}
+			}
+
+			$imploded_elements = implode( ', ', $elements );
+
+			// When plain function name passed, can add () to it,
+			// as it can be passed as animate({ ... })
+			if ( false === strpos( $animation, '(' ) ) {
+				$animation = $animation . '()';
+			}
+
+			$label_for = $this->get_label_for();
+
+			$event_rendered .= <<<JS
+$('#$label_for').on('$event_name', function() {
+    $('$imploded_elements').$animation;
+});
+JS;
+		}
+
+		return <<<JS
+<script>
+	jQuery(document).ready(function() {
+    	$event_rendered
+	});
+</script>
+JS;
+	}
+
+	/**
 	 * @return string
 	 */
 	public function __toString() {
@@ -537,6 +622,18 @@ EOT;
 
 		$html .= $this->get_after();
 
-		return str_replace( '{content}', $html, $this->wrapper );
+		$html .= $this->render_client_events();
+
+		$attributes = [
+			'class' => $this->wrapper_class . ' ' . ( $this->wrapper_class . '-' . $this->get_id() )
+		];
+
+		$rendered_attributes = '';
+		foreach ( $attributes as $name => $value ) {
+			$rendered_attributes .= "$name=\"$value\" ";
+		}
+		$rendered_attributes = trim( $rendered_attributes );
+
+		return str_replace( [ '{content}', '{attributes}' ], [ $html, $rendered_attributes ], $this->wrapper );
 	}
 }
