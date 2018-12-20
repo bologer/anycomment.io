@@ -25,7 +25,7 @@ class AnyCommentCore {
 	/**
 	 * @var Pool
 	 */
-	public $cache;
+	protected static $cache;
 
 	/**
 	 * @var \Freemius
@@ -138,13 +138,27 @@ class AnyCommentCore {
 	public function includes() {
 		AnyCommentLoader::load();
 
+		$this->init_freemius();
+	}
+
+	/**
+	 * Get instance of cache.
+	 *
+	 * @return Pool
+	 */
+	public static function cache() {
+
+		if ( static::$cache !== null ) {
+			return static::$cache;
+		}
+
 		$cacheDriver = new FileSystem( [
 			'path' => ANYCOMMENT_ABSPATH . '/cache/'
 		] );
 
-		$this->init_freemius();
+		static::$cache = new Pool( $cacheDriver );
 
-		$this->cache = new Pool( $cacheDriver );
+		return static::$cache;
 	}
 
 	public function init_freemius() {

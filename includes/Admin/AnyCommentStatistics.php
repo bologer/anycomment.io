@@ -2,6 +2,8 @@
 
 namespace AnyComment\Admin;
 
+use AnyComment\AnyCommentCore;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -62,13 +64,27 @@ LIMIT $limit";
 	public static function get_comment_data() {
 		global $wpdb;
 
-		$query = "SELECT COUNT(comment_ID) as count, DATE_FORMAT(comment_date, '%d') as day 
+		$query = "SELECT COUNT(comment_ID) as count, 
+DATE_FORMAT(comment_date, '%d') as day,  
+UNIX_TIMESTAMP(comment_date) as unix_timestamp
 FROM $wpdb->comments 
 WHERE MONTH(comment_date) = MONTH(NOW())
 GROUP BY DAY(comment_date) 
 ORDER BY day ASC";
 
-		return static::prepare_data( $query );
+		$item = AnyCommentCore::cache()->getItem( 'anycomment/statistics/get_comment_data' );
+
+		if ( $item->isHit() ) {
+			return $item->get();
+		}
+
+		$prepared_data = static::prepare_data( $query );
+
+		$item->set( $prepared_data )
+		     ->expiresAfter( 5 * 60 )
+		     ->save();
+
+		return $prepared_data;
 	}
 
 	/**
@@ -79,14 +95,28 @@ ORDER BY day ASC";
 	public static function get_commentor_data() {
 		global $wpdb;
 
-		$query = "SELECT COUNT(DISTINCT comments.user_id) as count, DATE_FORMAT(comments.comment_date, '%M %d') as day 
+		$query = "SELECT COUNT(DISTINCT comments.user_id) as count, 
+DATE_FORMAT(comments.comment_date, '%M %d') as day,
+UNIX_TIMESTAMP(comments.comment_date) as unix_timestamp
 FROM $wpdb->comments  AS comments
 LEFT JOIN $wpdb->users AS users ON users.ID = comments.user_id
 WHERE MONTH(comments.comment_date) = MONTH(NOW())
 GROUP BY day
 ORDER BY day ASC";
 
-		return static::prepare_data( $query );
+		$item = AnyCommentCore::cache()->getItem( 'anycomment/statistics/get_commentor_data' );
+
+		if ( $item->isHit() ) {
+			return $item->get();
+		}
+
+		$prepared_data = static::prepare_data( $query );
+
+		$item->set( $prepared_data )
+		     ->expiresAfter( 5 * 60 )
+		     ->save();
+
+		return $prepared_data;
 	}
 
 	/**
@@ -108,7 +138,7 @@ ORDER BY day ASC";
 		$data   = [];
 
 		foreach ( $queryResult as $result ) {
-			$labels[] = $result->day;
+			$labels[] = date_i18n( 'd F', $result->unix_timestamp );
 			$data[]   = $result->count;
 		}
 

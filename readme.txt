@@ -173,6 +173,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 * Warn users about missing API keys when reCAPTCHA enabled, #333
 * Removed .map.css & .map.js files, package is not lighter, #336
+* Chart data in Console tab is now display months data in native language + it is not cached
 
 **Fixes:**
 

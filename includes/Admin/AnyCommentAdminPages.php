@@ -2,6 +2,7 @@
 
 namespace AnyComment\Admin;
 
+use AnyComment\AnyCommentCore;
 use AnyComment\Helpers\AnyCommentTemplate;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -154,7 +155,7 @@ class AnyCommentAdminPages {
 	public static function get_news( $per_page = 5 ) {
 
 		$cacheKey   = sprintf( '/anycomment/news/%s/%s/%s', AnyComment()->version, get_locale(), $per_page );
-		$cachedNews = AnyComment()->cache->getItem( $cacheKey );
+		$cachedNews = AnyCommentCore::cache()->getItem( $cacheKey );
 
 		$cachedJson = $cachedNews->get();
 

@@ -11,6 +11,7 @@ use WP_Error;
 use WP_User;
 use WP_Comment;
 
+use AnyComment\AnyCommentCore;
 use AnyComment\AnyCommentUser;
 use AnyComment\Admin\AnyCommentGenericSettings;
 use AnyComment\Admin\AnyCommentSocialSettings;
@@ -983,7 +984,7 @@ class AnyCommentSocialAuth {
 	public static function get_user_avatar_url( $id_or_email ) {
 
 		$cache_key    = '/anycomment/rest/user/avatar_url/' . md5( serialize( $id_or_email ) );
-		$avatar_cache = AnyComment()->cache->getItem( $cache_key );
+		$avatar_cache = AnyCommentCore::cache()->getItem( $cache_key );
 
 		if ( $avatar_cache->isHit() ) {
 			return $avatar_cache->get();
