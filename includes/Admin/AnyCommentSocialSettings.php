@@ -580,6 +580,7 @@ class AnyCommentSocialSettings extends AnyCommentOptionManager {
 			     $this->section_builder()
 			          ->set_id( 'yahoo' )
 			          ->set_title( __( 'Yahoo', "anycomment" ) )
+			          ->set_visible( false )
 			          ->set_fields( [
 				          $this->field_builder()
 				               ->checkbox()
@@ -617,7 +618,7 @@ class AnyCommentSocialSettings extends AnyCommentOptionManager {
 			          ->set_fields( [
 				          $this->field_builder()
 				               ->checkbox()
-				               ->set_id( self::OPTION_YAHOO_TOGGLE )
+				               ->set_id( self::OPTION_WORDPRESS_NATIVE_TOGGLE )
 				               ->set_title( __( 'Enable Native', "anycomment" ) )
 				               ->set_description( __( 'Allow WordPress native authorization', "anycomment" ) ),
 			          ] )
@@ -698,13 +699,16 @@ EOT;
 		$html = '';
 
 
-
 		foreach ( $options as $option ) {
 			$html .= '<ul>';
 
 			$sections = $option->get_sections();
 
 			foreach ( $sections as $key => $section ) {
+				if ( ! $section->is_visible() ) {
+					continue;
+				}
+
 				$section_id = $section->get_id();
 
 				$liClasses = ( $key == 0 ? 'current' : '' );
@@ -922,7 +926,7 @@ EOT;
 	 *
 	 * @return string|null
 	 */
-	public static function get_nstagram_client_secret() {
+	public static function get_instagram_client_secret() {
 		return static::instance()->get_db_option( self::OPTION_INSTAGRAM_CLIENT_SECRET );
 	}
 

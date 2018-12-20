@@ -2,6 +2,10 @@
 
 namespace AnyComment\Cache;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 /**
  * Class AnyCommentCacheManager is used as base class for managing cache of the plugin.
  */

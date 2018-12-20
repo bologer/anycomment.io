@@ -2,6 +2,10 @@
 
 namespace AnyComment\Admin;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 use AnyComment\Models\AnyCommentLikes;
 use AnyComment\AnyCommentUserMeta;
 

@@ -2,6 +2,10 @@
 
 namespace AnyComment\Cron;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 use AnyComment\Models\AnyCommentEmailQueue;
 use AnyComment\Admin\AnyCommentGenericSettings;
 

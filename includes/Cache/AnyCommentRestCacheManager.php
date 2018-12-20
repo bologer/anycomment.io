@@ -2,6 +2,10 @@
 
 namespace AnyComment\Cache;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 /**
  * Class AnyCommentRestCacheManager is used to manage cache related to REST API.
  */

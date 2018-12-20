@@ -2,6 +2,10 @@
 
 namespace AnyComment\Hooks;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 use AnyComment\Admin\AnyCommentGenericSettings;
 use AnyComment\AnyCommentSocials;
 

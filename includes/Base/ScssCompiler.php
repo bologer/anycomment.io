@@ -2,6 +2,10 @@
 
 namespace AnyComment\Base;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 use Leafo\ScssPhp\Compiler;
 
 /**

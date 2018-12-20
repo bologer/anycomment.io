@@ -1,6 +1,10 @@
 <?php
+
 namespace AnyComment\Helpers;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 /**
  * Class AnyCommentInputHelper is used to help clean inputs from unwanted data.
  *

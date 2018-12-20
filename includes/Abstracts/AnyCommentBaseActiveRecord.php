@@ -2,14 +2,26 @@
 
 namespace AnyComment\Abstracts;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
+/**
+ * Class AnyCommentBaseActiveRecord serves as a base class for all models connected to plugin's table.
+ *
+ * @author Alexander Teshabaev <sasha.tesh@gmail.com>
+ * @package AnyComment\Abstracts
+ */
 abstract class AnyCommentBaseActiveRecord {
 	/**
 	 * @var string Table name.
 	 */
 	protected static $table_name;
 
+	/**
+	 * @var string Table name prefix.
+	 */
 	protected static $table_project_prefix = 'anycomment';
-
 
 	/**
 	 * Get table name.
@@ -53,7 +65,7 @@ abstract class AnyCommentBaseActiveRecord {
 
 		$table = static::get_table_name();
 
-		$prepared_sql =  $wpdb->prepare("DELETE FROM $table WHERE $column IN(%s)", [$prepared_ids ] );
+		$prepared_sql = $wpdb->prepare( "DELETE FROM $table WHERE $column IN(%s)", [ $prepared_ids ] );
 
 		return $wpdb->query( $prepared_sql );
 	}

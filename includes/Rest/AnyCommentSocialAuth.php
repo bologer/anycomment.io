@@ -329,7 +329,7 @@ class AnyCommentSocialAuth {
 					'enabled'  => AnyCommentSocialSettings::is_instagram_active(),
 					'keys'     => [
 						'id'     => AnyCommentSocialSettings::get_instagram_client_id(),
-						'secret' => AnyCommentSocialSettings::get_nstagram_client_secret(),
+						'secret' => AnyCommentSocialSettings::get_instagram_client_secret(),
 					],
 					'callback' => static::get_instagram_callback(),
 				],

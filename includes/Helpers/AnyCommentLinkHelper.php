@@ -2,6 +2,10 @@
 
 namespace AnyComment\Helpers;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 /**
  * Class AnyCommentLinkHelper is a link helper class.
  *

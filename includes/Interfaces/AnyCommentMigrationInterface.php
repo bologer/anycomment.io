@@ -2,6 +2,10 @@
 
 namespace AnyComment\Interfaces;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 /**
  * Interface AnyCommentMigrationInterface used to control signature of migration models applied in the plugin.
  *

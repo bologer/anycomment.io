@@ -2,6 +2,10 @@
 
 namespace AnyComment\Helpers;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 /**
  * Class AnyCommentInflector is used to have string manipulation methods.
  *

@@ -2,6 +2,10 @@
 
 namespace AnyComment\Helpers;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 class AnyCommentRequest {
 	/**
 	 * Get user IP address.

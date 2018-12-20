@@ -2,6 +2,10 @@
 
 namespace AnyComment\Integrations;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 use WC_Product;
 
 /**

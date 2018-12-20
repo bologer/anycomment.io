@@ -30,6 +30,11 @@ class AnyCommentSection {
 	public $callback;
 
 	/**
+	 * @var bool Whether section should be visible or not.
+	 */
+	public $visible = true;
+
+	/**
 	 * @var string Section wrapping element.
 	 */
 	public $wrapper = '<div id="{id}" class="woption-section">{content}</div>';
@@ -104,8 +109,8 @@ class AnyCommentSection {
 	 */
 	public function set_description( $description ) {
 
-		if(is_callable($description)) {
-			$description = call_user_func($description);
+		if ( is_callable( $description ) ) {
+			$description = call_user_func( $description );
 		}
 
 		$this->description = $description;
@@ -172,6 +177,23 @@ class AnyCommentSection {
 		return $this;
 	}
 
+	/**
+	 * @return bool
+	 */
+	public function is_visible() {
+		return $this->visible;
+	}
+
+	/**
+	 * @param bool $visible
+	 * @param $this
+	 */
+	public function set_visible( $visible ) {
+		$this->visible = $visible;
+
+		return $this;
+	}
+
 
 	/**
 	 * Convert object to string.
@@ -188,6 +210,11 @@ class AnyCommentSection {
 	 * @return string
 	 */
 	public function run() {
+
+		if ( ! $this->is_visible() ) {
+			return '';
+		}
+
 		$html = '';
 
 		$title       = $this->get_title();

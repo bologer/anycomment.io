@@ -2,6 +2,10 @@
 
 namespace AnyComment\Hooks;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 /**
  * Class AnyCommentUserHooks is used to add hooks related to the user.
  *

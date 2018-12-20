@@ -2,6 +2,10 @@
 
 namespace AnyComment\Admin;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 /**
  * Class AnyCommentProblemNotifier checks active plugins, scripts, etc
  * for possible conflicts with AnyComment.

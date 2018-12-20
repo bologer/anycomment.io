@@ -2,6 +2,10 @@
 
 namespace AnyComment\Helpers;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 /**
  * Class AnyCommentTemplate is a core class for templating in AnyComment.
  *
