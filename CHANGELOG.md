@@ -6,7 +6,7 @@
 
 * Warn users about missing API keys when reCAPTCHA enabled, #333
 * Removed .map.css & .map.js files, package is not lighter, #336
-* Chart data in Console tab is now display months data in native language + it is not cached
+* Chart data in Console tab is now display months data in native language + it is now cached
 
 **Fixes:**
 
