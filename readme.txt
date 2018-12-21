@@ -179,6 +179,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 * Fixed issue when user avatars did not display in the admin, #331
 * Fixed issue when new comment alert was shown when comment was deleted or on moderation, #335
+* Fixed issue when comment notification wa sent for non-comment (related to WooCommerce)
 
 = 0.0.76 – 09.12.2018 =
 

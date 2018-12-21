@@ -98,8 +98,15 @@ class AnyCommentCommentHooks {
 	 *
 	 * @param int $comment_id Comment ID.
 	 * @param WP_Comment $comment Comment object.
+	 *
+	 * @return bool false when comment should not processed.
 	 */
 	public function process_new_comment( $comment_id, $comment ) {
+
+		if ( $comment->comment_type !== '' && $comment->comment_type !== 'review' ) {
+			return false;
+		}
+
 		// Notify subscribers
 		AnyCommentSubscriptions::notify_by( $comment );
 
@@ -115,6 +122,8 @@ class AnyCommentCommentHooks {
 
 		// Flush post comment count cache
 		AnyCommentRestCacheManager::flushPostCommentCount( $comment->comment_post_ID );
+
+		return true;
 	}
 
 	/**

@@ -2,6 +2,7 @@
 
 namespace AnyComment\Widgets\Native;
 
+use AnyComment\AnyCommentCore;
 use AnyComment\AnyCommentUserMeta;
 use AnyComment\Base\ScssCompiler;
 use AnyComment\Rest\AnyCommentSocialAuth;
@@ -45,7 +46,7 @@ class CommentList extends \WP_Widget {
 
 		$hash = md5( serialize( $array_hash ) );
 
-		$scss_widget_cache = AnyComment()->cache->getItem( 'anycomment/widgets/comment-list/' . $hash );
+		$scss_widget_cache = AnyCommentCore::cache()->getItem( 'anycomment/widgets/comment-list/' . $hash );
 		$template          = '<style>%s</style>';
 
 		if ( $scss_widget_cache->isHit() ) {
