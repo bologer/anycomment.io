@@ -2,6 +2,8 @@
 
 namespace AnyComment\Cache;
 
+use AnyComment\AnyCommentCore;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -46,7 +48,7 @@ class AnyCommentRestCacheManager extends AnyCommentCacheManager {
 		}
 
 
-		return AnyComment()->cache->getItem( static::buildPostNamespace( $postId ) );
+		return AnyCommentCore::cache()->getItem( static::buildPostNamespace( $postId ) );
 	}
 
 	/**
@@ -64,7 +66,7 @@ class AnyCommentRestCacheManager extends AnyCommentCacheManager {
 		}
 
 
-		return AnyComment()->cache->getItem( static::buildPostCommentCountNamespace( $postId ) );
+		return AnyCommentCore::cache()->getItem( static::buildPostCommentCountNamespace( $postId ) );
 	}
 
 	/**
@@ -83,14 +85,14 @@ class AnyCommentRestCacheManager extends AnyCommentCacheManager {
 			return false;
 		}
 
-		return AnyComment()->cache->getItem( static::buildCommentNamespace( $postId, $commentId ) );
+		return AnyCommentCore::cache()->getItem( static::buildCommentNamespace( $postId, $commentId ) );
 	}
 
 	/**
 	 * Flush all REST API cache.
 	 */
 	public static function flush() {
-		return AnyComment()->cache->deleteItem( static::getNamespace() );
+		return AnyCommentCore::cache()->deleteItem( static::getNamespace() );
 	}
 
 	/**
@@ -108,7 +110,7 @@ class AnyCommentRestCacheManager extends AnyCommentCacheManager {
 			return false;
 		}
 
-		return AnyComment()->cache->deleteItem( static::buildPostCommentCountNamespace( $postId ) );
+		return AnyCommentCore::cache()->deleteItem( static::buildPostCommentCountNamespace( $postId ) );
 	}
 
 	/**
@@ -126,7 +128,7 @@ class AnyCommentRestCacheManager extends AnyCommentCacheManager {
 			return false;
 		}
 
-		return AnyComment()->cache->deleteItem( static::buildPostNamespace( $postId ) );
+		return AnyCommentCore::cache()->deleteItem( static::buildPostNamespace( $postId ) );
 	}
 
 	/**
@@ -152,10 +154,10 @@ class AnyCommentRestCacheManager extends AnyCommentCacheManager {
 			$commentParent = (int) $tmpComment->comment_parent;
 
 			if ( $commentParent !== 0 ) {
-				AnyComment()->cache->deleteItem( static::buildCommentNamespace( $tmpComment->comment_post_ID, $commentParent ) );
+				AnyCommentCore::cache()->deleteItem( static::buildCommentNamespace( $tmpComment->comment_post_ID, $commentParent ) );
 			}
 
-			AnyComment()->cache->deleteItem( static::buildCommentNamespace( $tmpComment->comment_post_ID, $commentId ) );
+			AnyCommentCore::cache()->deleteItem( static::buildCommentNamespace( $tmpComment->comment_post_ID, $commentId ) );
 
 			$commentId = $tmpComment->comment_parent;
 

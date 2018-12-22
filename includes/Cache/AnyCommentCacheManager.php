@@ -2,6 +2,8 @@
 
 namespace AnyComment\Cache;
 
+use AnyComment\AnyCommentCore;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -20,7 +22,7 @@ class AnyCommentCacheManager {
 	 * Flush all cache globally.
 	 */
 	public static function flushAll() {
-		return AnyComment()->cache->deleteItem( static::getRootNamespace() );
+		return AnyCommentCore::cache()->deleteItem( static::getRootNamespace() );
 	}
 
 	/**
