@@ -131,7 +131,7 @@ class CommentList extends \WP_Widget {
 				$comment_text       = wp_trim_words( $comment->comment_content, 10 );
 				$comment_datetime   = date( 'c', strtotime( $comment->comment_date ) );
 				$comment_human_time = human_time_diff( current_time( 'timestamp' ), strtotime( $comment->comment_date ) ) . ' ' . __( 'ago', 'anycomment' );
-				$comment_link       = esc_url( get_comment_link( $comment ) );
+				$comment_link       = rtrim(get_permalink( $comment->comment_post_ID ), '/') . '#comment-' . $comment->comment_ID;
 				$post_title         = get_the_title( $comment->comment_post_ID );
 				$author_name        = $comment->comment_author;
 				$author_avatar_url  = AnyCommentSocialAuth::get_user_avatar_url( $comment->comment_author_email );

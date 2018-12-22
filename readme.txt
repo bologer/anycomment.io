@@ -169,13 +169,11 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 = 0.0.78 – 22.12.2018 =
 
-**Enhancements:**
-
-
 **Fixes:**
 
 * Fixed issue when sending comment did not clear the field, but comment was actually added
 * Fixed issue when real-time update did not work properly
+* Fixed issue with anchors in specific comment, e.g. domain.com/page.html/#comment-1
 
 = 0.0.77 – 21.12.2018 =
 

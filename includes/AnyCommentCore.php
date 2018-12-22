@@ -2,7 +2,6 @@
 
 namespace AnyComment;
 
-
 use AnyComment\Admin\AnyCommentGenericSettings;
 
 use AnyComment\Migrations\AnyCommentMigrationManager;
