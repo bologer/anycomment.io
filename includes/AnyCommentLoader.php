@@ -16,7 +16,6 @@ class AnyCommentLoader {
 		// Rest
 		'AnyComment\Rest\AnyCommentRestComment',
 		'AnyComment\Rest\AnyCommentRestLikes',
-		'AnyComment\Rest\AnyCommentRestUsers',
 		'AnyComment\Rest\AnyCommentRestDocuments',
 		'AnyComment\Rest\AnyCommentRestRate',
 		'AnyComment\Rest\AnyCommentRestSubscriptions',

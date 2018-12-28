@@ -8,7 +8,7 @@
 			foreach ( $posts as $key => $post ): ?>
                 <li>
                     <div class="anycomment-dashboard__sidebar-news-date">
-						<?php echo date( 'm.d.Y', strtotime( $post['date'] ) ) ?>
+						<?php echo date( 'd.m.Y', strtotime( $post['date'] ) ) ?>
 
 						<?php
 

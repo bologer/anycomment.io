@@ -5,7 +5,7 @@ Tags: anycomment, comments, ajax comments, comment, comment moderation, custom c
 Requires at least: 4.7
 Tested up to: 5.0
 Requires PHP: 5.4
-Stable tag: 0.0.78
+Stable tag: 0.0.79
 License: GPLv2 or later
 License URI: http://www.gnu.org/
 
@@ -166,6 +166,17 @@ Most of the hosting providers support single button-like installation of SSL cer
 It could only be difficult for website who have HTTP only and hight traffic as transfer to HTTPs can cause some traffic lose.
 
 == Changelog ==
+
+= 0.0.79 – 28.12.2018 =
+
+**Enhancements:**
+
+* Sidebar news is now showing proper date format
+* Introducing new REST API filter `anycomment/rest/comments/item_for_response` to control single comment output data
+
+
+**Fixes:**
+
 
 = 0.0.78 – 22.12.2018 =
 

@@ -1008,6 +1008,22 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 				          ->set_description( esc_html( __( 'Maximum allowed file size in megabytes. For example, regular PNG image is about ~ 1.5-2MB, JPEG are even smaller.', "anycomment" ) ) ),
 			     ] )
 		);
+
+		/**
+		 * Section: Kek
+		 */
+		$form->add_section(
+			$this->section_builder()
+			     ->set_id( 'kek' )
+			     ->set_title( __( 'Files', "anycomment" ) )
+			     ->set_fields( [
+				     $this->field_builder()
+				          ->code()
+				          ->set_id( 'kek' )
+				          ->set_title( __( 'COde snippet', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Allow to upload files.', "anycomment" ) ) ),
+			     ])
+		);
 	}
 
 	/**

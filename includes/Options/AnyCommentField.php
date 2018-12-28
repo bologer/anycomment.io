@@ -11,6 +11,7 @@ namespace AnyComment\Options;
 class AnyCommentField {
 
 	const TYPE_TEXTAREA = 'textarea';
+	const TYPE_TEXTAREA_CODE = 'code';
 	const TYPE_SELECT = 'select';
 	const TYPE_CHECKBOX = 'checkbox';
 	const TYPE_TEXT = 'text';
@@ -338,6 +339,16 @@ class AnyCommentField {
 	}
 
 	/**
+	 * Set textarea code type.
+	 * @return $this
+	 */
+	public function code() {
+		$this->set_type( self::TYPE_TEXTAREA_CODE );
+
+		return $this;
+	}
+
+	/**
 	 * Get field value is was previously set.
 	 *
 	 * @return null|string
@@ -485,6 +496,21 @@ EOT;
 	}
 
 	/**
+	 * Helper to render textarea with code inside.
+	 *
+	 * @return string
+	 */
+	public function input_textarea_code() {
+		$for   = $this->get_label_for();
+		$name  = $this->get_id();
+		$value = $this->get_value();
+
+		return <<<EOT
+            <textarea rows="5" id="$for" name="$name" class="anycomment-code" data-mode="php">$value</textarea>
+EOT;
+	}
+
+	/**
 	 * Places client event on current field.
 	 *
 	 * @param string $event Event function name, e.g. click, change, etc.
@@ -607,6 +633,9 @@ JS;
 				break;
 			case 'textarea':
 				$field_html = $this->input_textarea();
+				break;
+			case 'code':
+				$field_html = $this->input_textarea_code();
 				break;
 			case 'color':
 				$field_html = $this->input_color();

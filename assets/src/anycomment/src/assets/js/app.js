@@ -3,6 +3,10 @@ import $ from 'jquery';
 import 'select2'
 import '@claviska/jquery-minicolors'
 
+import CodeMirror from 'codemirror';
+import 'codemirror/mode/javascript/javascript';
+import 'codemirror/mode/php/php';
+
 window.$ = $;
 
 // import Foundation from 'foundation-sites';
@@ -19,4 +23,22 @@ $(document).ready(function ($) {
     });
 
     $('.anycomment-input-color').minicolors();
+
+
+    var codes = document.querySelectorAll('.anycomment-code');
+
+    if(codes.length > 0) {
+        for(var i = 0; i <codes.length; i++) {
+            let element = codes[i];
+            let conf = {}; //lineNumbers: true
+
+            const mode = element.dataset.mode || '';
+
+            if (mode) {
+                conf.mode = mode;
+            }
+
+            CodeMirror.fromTextArea(element, conf);
+        }
+    }
 });

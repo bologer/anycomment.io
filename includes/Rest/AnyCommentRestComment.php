@@ -955,6 +955,17 @@ class AnyCommentRestComment extends AnyCommentRestController {
 
 		$data['meta'] = array_merge( $data['meta'], (array) AnyCommentLikes::get_summary( $comment->comment_ID ) );
 
+		/**
+		 * Filters comment data.
+		 *
+		 * @since 0.0.79
+		 *
+		 * @param array $data Comment data, see structure above.
+		 *
+		 * @package WP_Comment $comment Comment object.
+		 */
+		$data = apply_filters( 'anycomment/rest/comments/item_for_response', $data, $comment );
+
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 		$data    = $this->add_additional_fields_to_object( $data, $request );
 		$data    = $this->filter_response_by_context( $data, $context );
