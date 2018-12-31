@@ -173,6 +173,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 * Sidebar news is now showing proper date format
 * Introducing new REST API filter `anycomment/rest/comments/item_for_response` to control single comment output data
+* Steam username is now clickable, #346
 
 
 **Fixes:**
