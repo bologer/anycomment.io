@@ -10,9 +10,7 @@ Error: CSS import directives may only be used at the root of a document.
 62:   @import '../../../node_modules/select2/dist/css/select2.css';
 63: 
 64:   @import '../../../node_modules/codemirror/lib/codemirror.css';
-65: 
-66:   @import "components/buttons";
-67: }
+65: }
 
 Backtrace:
 app.scss:62
@@ -50,4 +48,4 @@ app.scss:62
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: CSS import directives may only be used at the root of a document.\A         on line 62 of app.scss\A \A 57:   @import \"vendor/jqueryminicolors.scss\";\A 58: \A 59:   @import \"components/admin\";\A 60: \A 61:   // Select 2\A 62:   @import '../../../node_modules/select2/dist/css/select2.css';\A 63: \A 64:   @import '../../../node_modules/codemirror/lib/codemirror.css';\A 65: \A 66:   @import \"components/buttons\";\A 67: }"; }
+  content: "Error: CSS import directives may only be used at the root of a document.\A         on line 62 of app.scss\A \A 57:   @import \"vendor/jqueryminicolors.scss\";\A 58: \A 59:   @import \"components/admin\";\A 60: \A 61:   // Select 2\A 62:   @import '../../../node_modules/select2/dist/css/select2.css';\A 63: \A 64:   @import '../../../node_modules/codemirror/lib/codemirror.css';\A 65: }"; }
