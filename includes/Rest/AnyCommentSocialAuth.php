@@ -299,6 +299,7 @@ class AnyCommentSocialAuth {
 						'id'     => AnyCommentSocialSettings::get_facebook_app_id(),
 						'secret' => AnyCommentSocialSettings::get_facebook_app_secret(),
 					],
+					'adapter'  => '\AnyComment\Providers\Facebook',
 					'callback' => static::get_facebook_callback(),
 				],
 				self::$providers[ self::SOCIAL_TWITTER ]       => [
