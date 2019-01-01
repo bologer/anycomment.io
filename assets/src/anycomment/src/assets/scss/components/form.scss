@@ -119,28 +119,7 @@ $border-color: #b6c1c6;
     }
 
     input[type="submit"] {
-      background: $green;
-      color: #fff;
-      font-size: 21px;
-      font-weight: 400;
-      height: 50px;
-      line-height: 50px;
-      padding: 0 30px;
-      text-align: center;
-      @include border-radius(38px);
-
-      &,
-      &:hover,
-      &:focus,
-      &:active {
-        border-color: transparent;
-        box-shadow: none;
-        text-shadow: none;
-      }
-
-      &:hover {
-        background: lighten($green, 5%);
-      }
+      margin-top: 40px;
     }
   }
 }
