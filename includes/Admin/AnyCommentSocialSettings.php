@@ -999,7 +999,7 @@ EOT;
 	 * @return string|null
 	 */
 	public static function get_steam_secret() {
-		return static::instance()->get_db_option( self::OPTION_STEAM_SECRET ) !== null;
+		return static::instance()->get_db_option( self::OPTION_STEAM_SECRET );
 	}
 
 	/**
