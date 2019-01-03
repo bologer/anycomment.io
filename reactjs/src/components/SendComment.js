@@ -272,12 +272,18 @@ class SendComment extends AnyCommentComponent {
             params.attachments = JSON.stringify(attachments);
         }
 
+        let headers = {};
+
+        if (settings.nonce) {
+            headers = {'X-WP-Nonce': settings.nonce};
+        }
+
         this.props.axios
             .request({
                 method: 'post',
                 url: url,
                 data: params,
-                headers: {'X-WP-Nonce': settings.nonce}
+                headers: headers
             })
             .then(function (response) {
                 self.prepareInitialForm();
@@ -359,12 +365,18 @@ class SendComment extends AnyCommentComponent {
             params.attachments = JSON.stringify(attachments);
         }
 
+        let headers = {};
+
+        if (settings.nonce) {
+            headers = {'X-WP-Nonce': settings.nonce};
+        }
+
         this.props.axios
             .request({
                 method: 'post',
                 url: url,
                 params: params,
-                headers: {'X-WP-Nonce': settings.nonce}
+                headers: headers
             })
             .then(function (response) {
                 self.prepareInitialForm();

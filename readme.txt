@@ -114,7 +114,7 @@ So far we support the following:
 * Facebook
 * Google
 * Twitter
-* VK
+* Vkontakte
 * Odnoklassniki
 * GitHub
 * Instagram
@@ -178,6 +178,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Fixes:**
 
+* Possible fix of issue when error toast was shown about invalid nonce, #342
 
 = 0.0.78 – 22.12.2018 =
 

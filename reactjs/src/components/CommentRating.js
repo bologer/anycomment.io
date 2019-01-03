@@ -52,6 +52,12 @@ class CommentRating extends AnyCommentComponent {
     handleRequest = (type, callback) => {
         const settings = this.getSettings();
         const self = this;
+        let headers = {};
+
+        if (settings.nonce) {
+            headers = {'X-WP-Nonce': settings.nonce};
+        }
+
         this.props.axios
             .request({
                 method: 'post',
@@ -61,7 +67,7 @@ class CommentRating extends AnyCommentComponent {
                     post: this.props.comment.post,
                     type: type
                 },
-                headers: {'X-WP-Nonce': settings.nonce}
+                headers: headers
             })
             .then(function (response) {
                 self.setState({

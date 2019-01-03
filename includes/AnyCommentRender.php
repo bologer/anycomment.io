@@ -39,7 +39,6 @@ class AnyCommentRender {
 			add_filter( 'comments_template', [ $this, 'override_comment' ], 999 );
 
 			add_shortcode( 'anycomment', [ $this, 'override_comment' ] );
-
 		}
 
 		add_filter( 'logout_url', [ $this, 'logout_redirect' ], 10, 2 );
@@ -127,11 +126,12 @@ class AnyCommentRender {
 
 			wp_localize_script( 'anycomment-js-bundle', 'anyCommentApiSettings', [
 				'postId'       => $postId,
-				'nonce'        => wp_create_nonce( 'wp_rest' ),
+				'nonce'        => is_user_logged_in() ? wp_create_nonce( 'wp_rest' ) : null,
 				'locale'       => get_locale(),
 				'restUrl'      => esc_url_raw( rest_url( 'anycomment/v1/' ) ),
 				'commentCount' => ( $res = get_comment_count( $postId ) ) !== null ? (int) $res['all'] : 0,
 				'errors'       => self::$errors,
+				'user'         => AnyCommentUser::getSafeUser(),
 				'urls'         => [
 					'logout'  => wp_logout_url(),
 					'postUrl' => $postPermalink,
@@ -186,7 +186,6 @@ class AnyCommentRender {
 
 
 				],
-				'user'         => AnyCommentUser::getSafeUser(),
 				'i18'          => [
 					'error_generic'                  => __( "Oops, something went wrong...", "anycomment" ),
 					'loading'                        => __( 'Loading...', 'anycomment' ),

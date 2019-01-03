@@ -103,10 +103,16 @@ class CommentList extends AnyCommentComponent {
             rnd: timestamp
         };
 
+        let headers = {};
+
+        if (settings.nonce) {
+            headers = {'X-WP-Nonce': settings.nonce};
+        }
+
         return this.props.axios
             .get('/comments', {
                 params: params,
-                headers: {'X-WP-Nonce': settings.nonce}
+                headers: headers
             })
             .then(function (response) {
                 self.setState({
@@ -351,7 +357,7 @@ class CommentList extends AnyCommentComponent {
                         {!isLastPage ?
                             <div className="anycomment comment-single-load-more">
                                 <span onClick={(e) => this.handleLoadMore(e)}
-                                  className="anycomment anycomment-btn">{settings.i18.load_more}</span>
+                                      className="anycomment anycomment-btn">{settings.i18.load_more}</span>
                             </div>
                             : ''}
                     </ul>
