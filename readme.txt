@@ -179,6 +179,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 **Fixes:**
 
 * Possible fix of issue when error toast was shown about invalid nonce, #342
+* Fixed memory exhaustion caused by integration with WP Users Avatar, #348
 
 = 0.0.78 – 22.12.2018 =
 

@@ -31,7 +31,7 @@ class AnyCommentAvatars {
 	 */
 	public function __construct() {
 		if ( is_admin() ) {
-			add_filter( 'get_avatar', [ $this, 'override_avatar_globally' ], 10, 5 );
+			add_filter( 'get_avatar', [ $this, 'override_avatar_globally' ], 99, 5 );
 		}
 	}
 
@@ -48,6 +48,7 @@ class AnyCommentAvatars {
 	 * @return string
 	 */
 	public function override_avatar_globally( $avatar_html, $id_or_email, $size, $default, $alt ) {
+
 		return sprintf( "<img alt=\"%s\" src=\"%s\" class=\"avatar avatar-%s photo\" height=\"%s\" width=\"%s\" />",
 			$alt,
 			AnyCommentSocialAuth::get_user_avatar_url( $id_or_email ),

@@ -922,41 +922,6 @@ class AnyCommentSocialAuth {
 	}
 
 	/**
-	 * Integration wrapper for WP Users Avatar as it does not work with get_avatar_src() and AnyComment has to
-	 * regex src attribute form <img> tag :sadface: (WAT?).
-	 *
-	 * Side note: How did it get 100k downloads, I don't get it.
-	 *
-	 * @link https://wordpress.org/plugins/wp-user-avatar/
-	 *
-	 * @param string $avatar Could be HTML image tag or src itself.
-	 * @param bool $custom_default_avatar Whether to check if user has personal avatar set or no.
-	 *
-	 * @return string|null NULL returned in case $custom_default_avatar if true and admin did not set custom default avatar.
-	 */
-	public static function get_wp_users_avatar( $avatar, $custom_default_avatar = true ) {
-
-		$src    = '';
-		$avatar = trim( $avatar );
-
-		if ( 0 === strpos( $avatar, '<img' ) ) {
-			preg_match( '/src=[\'"](.*?)[\'"]/m', $avatar, $matches );
-
-			if ( ! empty( $matches ) && isset( $matches[1] ) ) {
-				$src = trim( $matches[1] );
-			}
-		} else {
-			$src = trim( $avatar );
-		}
-
-		if ( $custom_default_avatar && false === strpos( $src, 'wp-content/uploads' ) ) {
-			return null;
-		}
-
-		return $src;
-	}
-
-	/**
 	 * Get user avatar by user id.
 	 *
 	 * @param mixed $id_or_email User ID, user instance, comment instance or email to be searched for.
@@ -965,36 +930,59 @@ class AnyCommentSocialAuth {
 	 */
 	public static function get_user_avatar_url( $id_or_email ) {
 
-		$cache_key    = '/anycomment/rest/user/avatar_url/' . md5( serialize( $id_or_email ) );
+		$cache_key    = 'anycomment/user/avatar_url/' . md5( serialize( $id_or_email ) );
 		$avatar_cache = AnyCommentCore::cache()->getItem( $cache_key );
 
 		if ( $avatar_cache->isHit() ) {
 			return $avatar_cache->get();
 		}
-		/**
-		 * Get avatar from social network.
-		 */
-		$userId = null;
+
+		$user_id     = null;
+		$email       = null;
 
 		if ( is_numeric( $id_or_email ) ) {
-			$userId = $id_or_email;
+			$user_id = $id_or_email;
+			$user    = get_user_by( 'id', $user_id );
+
+			if ( $user !== false ) {
+				$email = $user->user_email;
+			}
 		} elseif ( is_string( $id_or_email ) && ( $user = get_user_by( 'email', $id_or_email ) ) !== false ) {
-			$userId = $user->ID;
+			$user_id = $user->ID;
+			$email   = $id_or_email;
 		} elseif ( $id_or_email instanceof WP_User ) {
-			$userId = $id_or_email->ID;
+			$user_id = $id_or_email->ID;
+			$email   = $id_or_email->user_email;
 		} elseif ( $id_or_email instanceof WP_Comment ) {
 
 			if ( (int) $id_or_email->user_id !== 0 ) {
-				$userId = $id_or_email->user_id;
-			} elseif ( ! empty( $id_or_email->comment_author_email ) ) {
-				$id_or_email = $id_or_email->comment_author_email;
+				$user_id = $id_or_email->user_id;
 			}
+
+			$email = $id_or_email->comment_author_email;
 		}
 
 		$avatar_url = '';
 
-		if ( $userId !== null ) {
-			$social_avatar_url = AnyCommentUserMeta::get_social_avatar( $userId );
+		/**
+		 * When WP User avatar is active, user has Gravatar and has user avatar within
+		 * the plugin itself, return the plugin's version.
+		 */
+		if ( empty( $avatar_url ) &&
+		     AnyCommentIntegrationSettings::is_wp_user_avatar_active() &&
+		     function_exists( 'has_wp_user_avatar' ) &&
+		     function_exists( 'get_wp_user_avatar_src' ) ) {
+			if ( has_wp_user_avatar( $email ) ) {
+				$avatar_url = get_wp_user_avatar_src( $id_or_email );
+
+				if ( $avatar_url !== null ) {
+					$avatar_cache->expiresAfter( 60 );
+				}
+			}
+		}
+
+		if ( empty($avatar_url) && $user_id !== null ) {
+			$social_avatar_url = AnyCommentUserMeta::get_social_avatar( $user_id );
 
 			if ( ! empty( $social_avatar_url ) ) {
 				$avatar_url = $social_avatar_url;
@@ -1003,29 +991,11 @@ class AnyCommentSocialAuth {
 		}
 
 		/**
-		 * When WP User avatar is active, user has Gravatar and has user avatar within
-		 * the plugin itself, return the plugin's version.
-		 */
-		if ( empty( $avatar_url ) && AnyCommentIntegrationSettings::is_wp_user_avatar_active() &&
-		     function_exists( 'has_wp_user_avatar' ) ) {
-			if ( has_wp_user_avatar( $id_or_email ) ) {
-				// Get <img> tag
-				$avatar_img_tag = get_avatar( $id_or_email, [ 'size' => AnyCommentAvatars::DEFAULT_AVATAR_WIDTH ] );
-				// Get clean src attribute from it as wp users avatar does not support get_avatar_url()
-				$avatar_url = static::get_wp_users_avatar( $avatar_img_tag, true );
-
-				if ( $avatar_url !== null ) {
-					$avatar_cache->expiresAfter( 60 );
-				}
-			}
-		}
-
-		/**
 		 * As user does not have social avatar, it is required to che
 		 * whether user has non-default gravatar avatar, if does return,
 		 * otherwise get default plugin's one.
 		 */
-		if ( empty( $avatar_url ) && static::has_gravatar( $id_or_email ) ) {
+		if ( empty( $avatar_url ) && static::has_gravatar( $email, true ) ) {
 			$avatar_url = get_avatar_url( $id_or_email, [ 'size' => AnyCommentAvatars::DEFAULT_AVATAR_WIDTH ] );
 			/**
 			 * Base on the header information from Gravatar, they put 5 mins cache on all avatars,
@@ -1056,10 +1026,12 @@ class AnyCommentSocialAuth {
 	 * Utility function to check if a gravatar exists for a given email or id
 	 *
 	 * @param int|string|object $id_or_email A user ID,  email address, or comment object
+	 * @param bool $skip_checks Whether to skip checks for user email or not as it could have been previously checked
+	 * already.
 	 *
 	 * @return bool if the gravatar exists or not
 	 */
-	public static function has_gravatar( $id_or_email ) {
+	public static function has_gravatar( $id_or_email, $skip_checks = false ) {
 
 		$cache_key = 'anycomment/has-gravatar/' . md5( serialize( $id_or_email ) );
 
@@ -1071,30 +1043,36 @@ class AnyCommentSocialAuth {
 
 		//id or email code borrowed from wp-includes/pluggable.php
 		$email = '';
-		if ( is_numeric( $id_or_email ) ) {
-			$id   = (int) $id_or_email;
-			$user = get_userdata( $id );
-			if ( $user ) {
-				$email = $user->user_email;
-			}
-		} elseif ( is_object( $id_or_email ) ) {
-			// No avatar for pingbacks or trackbacks
-			$allowed_comment_types = apply_filters( 'get_avatar_comment_types', array( 'comment' ) );
-			if ( ! empty( $id_or_email->comment_type ) && ! in_array( $id_or_email->comment_type, (array) $allowed_comment_types ) ) {
-				return false;
-			}
 
-			if ( ! empty( $id_or_email->user_id ) ) {
-				$id   = (int) $id_or_email->user_id;
+		// When checks should be skipped, setting email itself
+		if ( $skip_checks ) {
+			$email = $id_or_email;
+		} else {
+			if ( is_numeric( $id_or_email ) ) {
+				$id   = (int) $id_or_email;
 				$user = get_userdata( $id );
 				if ( $user ) {
 					$email = $user->user_email;
 				}
-			} elseif ( ! empty( $id_or_email->comment_author_email ) ) {
-				$email = $id_or_email->comment_author_email;
+			} elseif ( is_object( $id_or_email ) ) {
+				// No avatar for pingbacks or trackbacks
+				$allowed_comment_types = apply_filters( 'get_avatar_comment_types', array( 'comment' ) );
+				if ( ! empty( $id_or_email->comment_type ) && ! in_array( $id_or_email->comment_type, (array) $allowed_comment_types ) ) {
+					return false;
+				}
+
+				if ( ! empty( $id_or_email->user_id ) ) {
+					$id   = (int) $id_or_email->user_id;
+					$user = get_userdata( $id );
+					if ( $user ) {
+						$email = $user->user_email;
+					}
+				} elseif ( ! empty( $id_or_email->comment_author_email ) ) {
+					$email = $id_or_email->comment_author_email;
+				}
+			} else {
+				$email = $id_or_email;
 			}
-		} else {
-			$email = $id_or_email;
 		}
 
 		$email = strtolower( trim( $email ) );
