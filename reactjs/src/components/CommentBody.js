@@ -36,17 +36,45 @@ class CommentBody extends AnyCommentComponent {
 
         const options = this.getOptions();
 
-        if (!options.isShowTwitterEmbeds) {
-            return [];
-        }
-
         let embedsToRender = [];
-        const twitterRe = /https:\/\/twitter\.com\/.*\/([0-9]{1,})/gm,
-            twitterMatches = twitterRe.exec(content);
 
-        if (twitterMatches !== null) {
-            embedsToRender.push(<TweetEmbed id={twitterMatches[1]}/>);
+        if (options.isShowTwitterEmbeds) {
+            const twitterRe = /https:\/\/twitter\.com\/.*\/([0-9]{1,})/gm,
+                twitterMatches = twitterRe.exec(content);
+
+            if (twitterMatches !== null) {
+                embedsToRender.push(<TweetEmbed id={twitterMatches[1]}/>);
+            }
         }
+
+        if (options.isShowVideoAttachments) {
+            // YouTube
+            const youTubeRe = /youtube\.com.*?(\?v=|\/embed\/)(.{11})|(youtu\.be\/(.{11}))/gm,
+                youTubeMatches = content.match(youTubeRe),
+                collectedIds = [];
+
+            if (youTubeMatches && youTubeMatches.length > 0) {
+                let i = 0;
+                for (; i < youTubeMatches.length; i++) {
+                    const youTubeVideoId = youTubeMatches[i].match(/.{11}$/)[0] || '';
+
+                    // Should skip when id not found or when ID repeats
+                    if (!youTubeVideoId || collectedIds[youTubeVideoId] !== undefined) {
+                        continue;
+                    }
+
+                    collectedIds[youTubeVideoId] = youTubeVideoId;
+
+                    embedsToRender.push(<iframe width="260" height="150"
+                                                src={"https://www.youtube.com/embed/" + youTubeVideoId}
+                                                frameBorder="0"
+                                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                                className="comment-single-body__text-embeds--youtube"
+                                                allowFullScreen></iframe>);
+                }
+            }
+        }
+
 
         return embedsToRender;
     }

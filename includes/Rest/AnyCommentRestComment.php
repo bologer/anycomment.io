@@ -626,6 +626,12 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			return new WP_Error( $error_code, __( 'Comment field exceeds maximum length allowed.', 'anycomment' ), array( 'status' => 400 ) );
 		}
 
+		if ( ! current_user_can( 'moderate_comments' ) ) {
+			$filter_comment = AnyCommentComments::filter_moderate_words( $prepared_comment['comment_content'] );
+
+			$prepared_comment['comment_content'] = $filter_comment['filtered_text'];
+		}
+
 		$comment_id = wp_insert_comment( wp_filter_comment( wp_slash( (array) $prepared_comment ) ) );
 
 		if ( ! $comment_id ) {
@@ -638,7 +644,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		}
 
 		$should_moderate    = ! current_user_can( 'moderate_comments' ) && AnyCommentGenericSettings::is_moderate_first();
-		$has_filtered_words = ! current_user_can( 'moderate_comments' ) && AnyCommentComments::has_moderate_words( $prepared_comment['comment_content'] );
+		$has_filtered_words = isset( $filter_comment ) && $filter_comment['match_count'] > 0;
 		$has_links          = ! current_user_can( 'moderate_comments' ) && AnyCommentGenericSettings::is_links_on_hold() && AnyCommentComments::has_links( $comment_id );
 
 		if ( $should_moderate || $has_filtered_words || $has_links ) {

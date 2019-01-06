@@ -187,6 +187,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Fixed issue when core CSS style was loaded before </body> instead of <head>
 * Fixed issue when reCAPTCHA position did not cache no matter what was set in admin settings
 * Fixed issue when comments failed to load due to missing site key for reCAPTCHA
+* Fixed issue when link from YouTube was not attached as video below the comment, #244
 
 = 0.0.78 – 22.12.2018 =
 
