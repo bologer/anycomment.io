@@ -206,7 +206,7 @@ EOT;
 		$number = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
 
 		$font_size        = isset( $instance['scss_font_size'] ) ? $instance['scss_font_size'] : '14px';
-		$background_color = isset( $instance['scss_background_color'] ) ? $instance['scss_background_color'] : '#fff';
+		$background_color = isset( $instance['scss_background_color'] ) ? $instance['scss_background_color'] : 'transparent';
 		$comment_color    = isset( $instance['scss_comment_color'] ) ? $instance['scss_comment_color'] : '#2A2E2E';
 		$author_color     = isset( $instance['scss_author_color'] ) ? $instance['scss_author_color'] : '#1DA1F2';
 		$avatar_size      = isset( $instance['scss_avatar_size'] ) ? $instance['scss_avatar_size'] : '30px';

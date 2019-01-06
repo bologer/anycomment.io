@@ -21,6 +21,7 @@
 * Fixed issue when reCAPTCHA position did not cache no matter what was set in admin settings
 * Fixed issue when comments failed to load due to missing site key for reCAPTCHA
 * Fixed issue when link from YouTube was not attached as video below the comment, #244
+* Fixed issue when background color was ignored in comment list for widget
 
 ## 0.0.78 – 22.12.2018
 

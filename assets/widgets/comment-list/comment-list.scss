@@ -1,5 +1,5 @@
 $font-size: 14px !default;
-$background-color: #fff !default;
+$background-color: transparent !default;
 $author-color: #1DA1F2 !default;
 $semi-hidden-color: #B6C1C6 !default;
 $comment-color: #2A2E2E !default;
@@ -23,6 +23,8 @@ $avatar-size: 30px !default;
 }
 
 #anycomment-comments-widget-wrapper {
+  background-color: $background-color;
+
   .anycomment-comments-widget {
     padding: 0;
     margin: $global-comment-margin 0;
