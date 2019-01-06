@@ -1,0 +1,18 @@
+$global-radius: 4px;
+$global-padding: 10px 0;
+
+$font-size: 13px;
+
+$parent-avatar-size: 30px;
+$child-avatar-size: 25px;
+
+$comment-parent-space: $parent-avatar-size + 10;
+$comment-child-space: $parent-avatar-size + 5;
+$comment-field-padding: 33px 5px 5px ($parent-avatar-size + 30);
+
+$form-after-space: 20px;
+
+$comment-field-default-height: 80px;
+
+$btn-height: 35px;
+$btn-padding: 0 40px;

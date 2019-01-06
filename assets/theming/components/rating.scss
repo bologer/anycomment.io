@@ -35,4 +35,21 @@
       width: $child-avatar-size + 10;
     }
   }
+
+  // Mobile styles
+  @media (max-width: 500px) {
+    @import '../common/mobile_variables';
+
+    .anycomment-comment-rating {
+      top: $parent-avatar-size + 10;
+      width: $parent-avatar-size;
+    }
+
+    .comment-single-replies {
+      .anycomment-comment-rating {
+        top: $child-avatar-size + 10;
+        width: $child-avatar-size + 10;
+      }
+    }
+  }
 }

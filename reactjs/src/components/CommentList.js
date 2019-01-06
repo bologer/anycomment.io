@@ -60,11 +60,16 @@ class CommentList extends AnyCommentComponent {
         const self = this;
         const settings = this.props.settings;
 
+        let headers = {};
+
+        if (settings.nonce) {
+            headers = {'X-WP-Nonce': settings.nonce};
+        }
 
         this.props.axios({
             method: 'POST',
             url: '/comments/delete/' + comment.id,
-            headers: {'X-WP-Nonce': settings.nonce}
+            headers: headers
         }).then(function () {
             self.loadComments();
         }).catch(function (error) {
@@ -212,10 +217,16 @@ class CommentList extends AnyCommentComponent {
             order_by: this.state.orderBy,
         };
 
+        let headers = {};
+
+        if (settings.nonce) {
+            headers = {'X-WP-Nonce': settings.nonce};
+        }
+
         return this.props.axios
             .get('/comments', {
                 params: params,
-                headers: {'X-WP-Nonce': settings.nonce}
+                headers: headers
             })
             .then(function (response) {
                 self.setState({

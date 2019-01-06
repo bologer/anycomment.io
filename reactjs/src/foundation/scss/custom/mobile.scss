@@ -1,22 +1,24 @@
 #{$root} {
-  $global-radius: 4px;
-  $global-padding: 10px 0;
 
-  $font-size: 13px;
+  @import '../common/mobile_variables';
 
-  $parent-avatar-size: 40px;
-  $child-avatar-size: 30px;
+  @mixin avatar() {
+    background-size: cover;
+    background-position: center center;
+    border: 1px solid $semi-hidden-color;
+    background-color: #DDE2E5;
+    border-radius: $avatar-border-radius;
+  }
 
-  $comment-parent-space: $parent-avatar-size + 10;
-  $comment-child-space: $parent-avatar-size + 5;
-  $comment-field-padding: 33px 5px 5px ($parent-avatar-size + 30);
+  @mixin avatar-parent() {
+    width: $parent-avatar-size;
+    height: $parent-avatar-size;
+  }
 
-  $form-after-space: 20px;
-
-  $comment-field-default-height: 80px;
-
-  $btn-height: 35px;
-  $btn-padding: 0 40px;
+  @mixin avatar-child() {
+    width: $child-avatar-size;
+    height: $child-avatar-size;
+  }
 
   @media (max-width: 500px) {
 
@@ -33,12 +35,37 @@
       }
     }
 
-    .anycomment-send-comment-body.anycomment-send-comment-body-authorized {
-      .anycomment-send-comment-body-outliner {
+    .anycomment-form-reply {
+      padding-left: 0;
+
+      .anycomment-form {
+        &__submit {
+          &-status {
+            margin-right: 0;
+            margin-bottom: 6px;
+          }
+        }
+      }
+    }
+
+    .anycomment-form.anycomment-form-authorized {
+      .anycomment-form-body-outliner {
         &__avatar {
-          margin-top: -($parent-avatar-size/2);
-          @include avatar();
-          @include avatar-parent();
+          top: 18px;
+          left: 13px;
+          width: $parent-avatar-size;
+          height: $parent-avatar-size;
+        }
+      }
+    }
+
+    .anycomment-form {
+      .anycomment-form-body-outliner {
+        &_logo {
+          left: 17px;
+          top: 16px;
+          width: $parent-avatar-size;
+          height: $parent-avatar-size;
         }
       }
     }
@@ -165,13 +192,6 @@
           }
         }
       }
-    }
-
-    // Footer
-    .anycomment-copy-footer {
-      margin-top: $big-space;
-      padding-top: $medium-space;
-      font-size: $font-size - 3;
     }
 
     // Comments list
@@ -304,19 +324,26 @@
         & > .comment-single-replies {
           // Second level
           & > ul.anycomment-list-child {
-            margin-left: $comment-parent-space;
+            margin-left: $comment-parent-space / 2;
 
             // Third level
             & > li {
               & > .comment-single-replies {
                 & > ul.anycomment-list-child {
-                  margin-left: $comment-parent-space;
+                  margin-left: $comment-parent-space / 2;
                 }
               }
             }
           }
         }
       }
+    }
+
+    // Footer
+    .anycomment-copy-footer {
+      margin-top: $big-space;
+      padding-top: $medium-space;
+      font-size: $font-size - 3;
     }
   }
 }

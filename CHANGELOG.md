@@ -8,11 +8,13 @@
 * Introducing new REST API filter `anycomment/rest/comments/item_for_response` to control single comment output data
 * Steam is now showing proper username, avatar & profile URL, #346
 * Facebook username is now clickable, #344
+* Improved mobile layouts, #351
 
 **Fixes:**
 
 * Possible fix of issue when error toast was shown about invalid nonce, #342
 * Fixed memory exhaustion caused by integration with WP Users Avatar, #348
+* Fixed issue when some of the websites had styles for bullet points and they were shown in the attachment list 
 
 ## 0.0.78 – 22.12.2018
 

@@ -287,4 +287,31 @@
       justify-content: flex-end;
     }
   }
+
+  // Mobile styles
+  @media (max-width: 500px) {
+    .anycomment-form {
+
+      &-body {
+        &-outliner {
+          &__logo {
+            left: 16px;
+            top: 18px;
+            width: 25px;
+            height: 25px;
+          }
+        }
+      }
+
+      &__inputs {
+        flex-direction: column;
+        margin-bottom: 10px;
+
+        &-item {
+          padding: 0;
+          margin-bottom: 4px;
+        }
+      }
+    }
+  }
 }
