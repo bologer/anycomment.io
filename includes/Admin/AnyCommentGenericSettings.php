@@ -112,6 +112,13 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 	const OPTION_EDITOR_TOOLBAR_LINK = 'option_editor_toolbar_link';
 	const OPTION_EDITOR_TOOLBAR_CLEAN = 'option_editor_toolbar_clean';
 
+	/**
+	 * Datetime format.
+	 */
+	const OPTION_COMMENT_DATETIME_FORMAT = 'option_datetime_format';
+
+	const DATETIME_FORMAT_RELATIVE = 'relative'; // e.g. 1 hours ago
+	const DATETIME_FORMAT_NATIVE = 'native'; // Native WordPress's, defined in "Settings" -> "Generic"
 
 	/**
 	 * Default user group on register.
@@ -402,6 +409,18 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 					          ]
 				          ] )
 				          ->set_description( esc_html( __( 'When users will authorize via plugin, they are being registered and be assigned with group selected above.', "anycomment" ) ) ),
+
+				     $this->field_builder()
+				          ->set_id( self::OPTION_COMMENT_DATETIME_FORMAT )
+				          ->select()
+				          ->set_title( __( 'Date & Time Format', "anycomment" ) )
+				          ->set_args( [
+					          'options' => [
+						          self::DATETIME_FORMAT_RELATIVE => __( 'Relative (e.g. 1 minute ago)', 'anycomment' ),
+						          self::DATETIME_FORMAT_NATIVE   => __( 'Absolute (format taken from WordPress)', 'anycomment' ),
+					          ]
+				          ] )
+				          ->set_description( esc_html( __( 'Choose comment date & time format.', "anycomment" ) ) ),
 
 				     $this->field_builder()
 				          ->number()
@@ -1022,7 +1041,7 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 				          ->set_id( 'kek' )
 				          ->set_title( __( 'COde snippet', "anycomment" ) )
 				          ->set_description( esc_html( __( 'Allow to upload files.', "anycomment" ) ) ),
-			     ])
+			     ] )
 		);
 	}
 
@@ -1236,7 +1255,7 @@ EOT;
 			}
 		}
 
-		return hash('sha256', serialize( $items ) );
+		return hash( 'sha256', serialize( $items ) );
 	}
 
 	/**
@@ -1903,6 +1922,24 @@ EOT;
 		}
 
 		return $intervalInSeconds;
+	}
+
+
+	/**
+	 * Get default date & time format.
+	 *
+	 * Notice: default value is relative when nothing is defined.
+	 *
+	 * @return mixed|null
+	 */
+	public static function get_datetime_format() {
+		$value = static::instance()->get_db_option( self::OPTION_COMMENT_DATETIME_FORMAT );
+
+		if ( $value !== self::DATETIME_FORMAT_NATIVE && $value !== self::DATETIME_FORMAT_RELATIVE ) {
+			return self::DATETIME_FORMAT_RELATIVE;
+		}
+
+		return $value;
 	}
 
 	/**

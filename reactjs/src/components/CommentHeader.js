@@ -70,6 +70,12 @@ class CommentHeader extends AnyCommentComponent {
                 className="anycomment comment-single-body-header__author-reply">{replyText}</span>);
         }
 
+        const datetime = settings.options.dateFormat === 'relative' ?
+            <TimeAgo className="anycomment comment-single-body-header__date"
+                     date={comment.date_gmt} formatter={formatter}/> :
+            <time className="anycomment comment-single-body-header__date"
+                  dateTime={comment.date}>{comment.date_native}</time>;
+
         return (
             <header className="anycomment comment-single-body-header">
 
@@ -97,13 +103,9 @@ class CommentHeader extends AnyCommentComponent {
                                     </ul>
                                 </DropdownContent>
                             </Dropdown> : ''}
-
                     </div>
                 </div>
-                <a href={'#comment-' + comment.id} className="anycomment">
-                    <TimeAgo className="anycomment comment-single-body-header__date"
-                             date={comment.date_gmt} formatter={formatter}/>
-                </a>
+                <a href={'#comment-' + comment.id} className="anycomment">{datetime}</a>
             </header>
         );
     }

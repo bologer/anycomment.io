@@ -926,6 +926,8 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			'profile_url'     => $profileUrl
 		];
 
+		$native_date = mysql2date( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $comment->comment_date );
+
 		$data = array(
 			'id'                 => (int) $comment->comment_ID,
 			'post'               => (int) $comment->comment_post_ID,
@@ -935,6 +937,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			'author_name'        => $comment->comment_author,
 			'date'               => mysql2date( 'c', $comment->comment_date, false ),
 			'date_gmt'           => mysql2date( 'c', $comment->comment_date_gmt, false ),
+			'date_native'        => $native_date,
 			'content'            => $comment->comment_content,
 			'avatar_url'         => AnyCommentSocialAuth::get_user_avatar_url( (int) $comment->user_id !== 0 ? $comment->user_id : $comment->comment_author_email ),
 			'children'           => $child_comments,

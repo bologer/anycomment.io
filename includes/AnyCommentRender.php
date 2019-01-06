@@ -171,7 +171,8 @@ class AnyCommentRender {
 				'isRatingOn'             => AnyCommentGenericSettings::is_rating_on(),
 				'isReadMoreOn'           => AnyCommentGenericSettings::is_read_more_on(),
 
-				'commentRating' => AnyCommentGenericSettings::get_comment_rating(),
+				'commentRating'   => AnyCommentGenericSettings::get_comment_rating(),
+				'dateFormat' => AnyCommentGenericSettings::get_datetime_format(),
 
 				'isEditorOn'           => AnyCommentGenericSettings::is_editor_toolbar_on(),
 				'editorToolbarOptions' => AnyCommentGenericSettings::get_editor_toolbar_options(),

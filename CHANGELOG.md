@@ -10,6 +10,7 @@
 * Facebook username is now clickable, #344
 * Improved mobile layouts, #351
 * Now when comments are closed instead of comment form, it says "Comments closed.", replies and edits are not allowed, #347
+* Now possible to choose comment date between relative (e.g. 1 minute ago) and absolute (defined in WordPress's settings), #350
 
 **Fixes:**
 
