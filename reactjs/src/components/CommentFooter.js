@@ -33,7 +33,7 @@ class CommentFooter extends AnyCommentComponent {
     };
 
     render() {
-        const settings = this.props.settings;
+        const settings = this.getSettings();
         const comment = this.props.comment;
         const isGuest = this.isGuest();
 
@@ -50,9 +50,11 @@ class CommentFooter extends AnyCommentComponent {
         return (
             <footer className="anycomment comment-single-body__actions">
                 <ul className="anycomment">
-                    <li className="anycomment"><a className="anycomment" href="javascript:void(0)"
-                                                  onClick={(e) => this.props.onReply(e)}>{replyIcon}{settings.i18.reply}</a>
-                    </li>
+
+                    {settings.post.comments_open ?
+                        <li className="anycomment"><a className="anycomment" href="javascript:void(0)"
+                                                      onClick={(e) => this.props.onReply(e)}>{replyIcon}{settings.i18.reply}</a>
+                        </li> : ''}
 
                     {settings.options.commentRating === 'likes' ?
                         <li className="anycomment">
@@ -63,7 +65,7 @@ class CommentFooter extends AnyCommentComponent {
                             </a>
                         </li> : ''}
 
-                    {!isGuest && comment.permissions.can_edit_comment ?
+                    {!isGuest && comment.permissions.can_edit_comment && settings.post.comments_open ?
                         <li className="anycomment"><a className="anycomment" href="javascript:void(0)"
                                                       onClick={(e) => this.props.onEdit(e)}>{editIcon}{settings.i18.edit}</a>
                         </li> : ''}

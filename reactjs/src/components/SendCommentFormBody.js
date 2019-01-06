@@ -86,14 +86,19 @@ class SendCommentFormBody extends AnyCommentComponent {
             settings = this.getSettings(),
             toastId = toast(settings.i18.file_upload_in_progress, {autoClose: false});
 
+        let headers = {};
+
+        headers['Content-Type'] = `multipart/form-data; boundary=${filesToUpload._boundary}`;
+
+        if (settings.nonce) {
+            headers['X-WP-Nonce'] = settings.nonce;
+        }
+
         self.props.axios
             .post('/documents',
                 filesToUpload,
                 {
-                    headers: {
-                        'X-WP-Nonce': settings.nonce,
-                        'Content-Type': `multipart/form-data; boundary=${filesToUpload._boundary}`,
-                    },
+                    headers: headers,
                     timeout: 30000,
                 })
             .then(function (response) {

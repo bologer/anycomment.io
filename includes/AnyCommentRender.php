@@ -45,6 +45,8 @@ class AnyCommentRender {
 
 		add_filter( 'script_loader_tag', [ $this, 'add_async_to_bundle' ], 10, 2 );
 
+		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_assets' ] );
+
 		self::$errors = AnyCommentSocialAuth::getErrors( true, true );
 	}
 
@@ -91,6 +93,169 @@ class AnyCommentRender {
 	}
 
 	/**
+	 * Enqueue required core assets.
+	 */
+	public function enqueue_assets() {
+
+		if ( post_password_required() ) {
+			return false;
+		}
+
+		wp_enqueue_script( 'anycomment-js-bundle', AnyComment()->plugin_url() . '/static/js/main.min.js', [], md5( AnyComment()->version ) );
+
+		if ( AnyCommentGenericSettings::is_design_custom() ) {
+			$url = AnyCommentGenericSettings::get_custom_design_stylesheet_url();
+
+			wp_enqueue_style( 'anycomment-custom-styles', $url, [], md5( AnyComment()->version ) );
+		} else {
+			wp_enqueue_style( 'anycomment-styles', AnyComment()->plugin_url() . '/static/css/main.min.css', [], md5( AnyComment()->version ) );
+		}
+
+
+		if ( strpos( AnyCommentGenericSettings::get_design_font_family(), 'Noto-Sans' ) !== false ) {
+			wp_enqueue_style( 'anycomment-google-font', 'https://fonts.googleapis.com/css?family=Noto+Sans:400,700&amp;subset=cyrillic' );
+		}
+
+		$postId        = get_the_ID();
+		$postPermalink = get_permalink( $postId );
+
+		wp_localize_script( 'anycomment-js-bundle', 'anyCommentApiSettings', [
+			'postId'       => $postId,
+			'nonce'        => is_user_logged_in() ? wp_create_nonce( 'wp_rest' ) : null,
+			'locale'       => get_locale(),
+			'restUrl'      => esc_url_raw( rest_url( 'anycomment/v1/' ) ),
+			'commentCount' => ( $res = get_comment_count( $postId ) ) !== null ? (int) $res['all'] : 0,
+			'errors'       => self::$errors,
+			'user'         => AnyCommentUser::getSafeUser(),
+			'urls'         => [
+				'logout'  => wp_logout_url(),
+				'postUrl' => $postPermalink,
+			],
+			'post'         => [
+				'id'            => $postId,
+				'permalink'     => $postPermalink,
+				'comments_open' => comments_open(),
+			],
+			'rating'       => [
+				'value'    => AnyCommentRating::get_average_by_post( $postId ),
+				'count'    => AnyCommentRating::get_count_by_post( $postId ),
+				'hasRated' => AnyCommentRating::current_user_rated( $postId, get_current_user_id() )
+			],
+			// Options from plugin
+			'options'      => [
+				'limit'                  => AnyCommentGenericSettings::get_per_page(),
+				'isCopyright'            => AnyCommentGenericSettings::is_copyright_on(),
+				'socials'                => AnyCommentSocials::get_all( get_permalink( $postId ) ),
+				'sort_order'             => AnyCommentGenericSettings::get_sort_order(),
+				'guestInputs'            => AnyCommentGenericSettings::get_guest_fields( true ),
+				'isNotifySubscribers'    => AnyCommentGenericSettings::is_notify_subscribers(),
+				'isShowProfileUrl'       => AnyCommentGenericSettings::is_show_profile_url(),
+				'isShowImageAttachments' => AnyCommentGenericSettings::is_show_image_attachments(),
+				'isShowVideoAttachments' => AnyCommentGenericSettings::is_show_video_attachments(),
+				'isShowTwitterEmbeds'    => AnyCommentGenericSettings::is_show_twitter_embeds(),
+				'isModerateFirst'        => AnyCommentGenericSettings::is_moderate_first(),
+				'userAgreementLink'      => AnyCommentGenericSettings::get_user_agreement_link(),
+				'notifyOnNewComment'     => AnyCommentGenericSettings::is_notify_on_new_comment(),
+				'intervalCommentsCheck'  => AnyCommentGenericSettings::get_interval_comments_check(),
+				'isLoadOnScroll'         => AnyCommentGenericSettings::is_load_on_scroll(),
+				'isFormTypeAll'          => AnyCommentGenericSettings::is_form_type_all(),
+				'isFormTypeGuests'       => AnyCommentGenericSettings::is_form_type_guests(),
+				'isFormTypeSocials'      => AnyCommentGenericSettings::is_form_type_socials(),
+				'isFormTypeWordpress'    => AnyCommentGenericSettings::is_form_type_wordpress(),
+				'isFileUploadAllowed'    => AnyCommentGenericSettings::is_file_upload_allowed(),
+				'isGuestCanUpload'       => AnyCommentGenericSettings::is_guest_can_upload(),
+				'fileMimeTypes'          => AnyCommentGenericSettings::get_file_mime_types(),
+				'fileLimit'              => AnyCommentGenericSettings::get_file_limit(),
+				'fileMaxSize'            => AnyCommentGenericSettings::get_file_max_size(),
+				'fileUploadLimit'        => AnyCommentGenericSettings::get_file_upload_limit(),
+				'isRatingOn'             => AnyCommentGenericSettings::is_rating_on(),
+				'isReadMoreOn'           => AnyCommentGenericSettings::is_read_more_on(),
+
+				'commentRating' => AnyCommentGenericSettings::get_comment_rating(),
+
+				'isEditorOn'           => AnyCommentGenericSettings::is_editor_toolbar_on(),
+				'editorToolbarOptions' => AnyCommentGenericSettings::get_editor_toolbar_options(),
+
+				'reCaptchaOn'        => AnyCommentIntegrationSettings::is_recaptcha_active(),
+				'reCaptchaUserAll'   => AnyCommentIntegrationSettings::is_recaptcha_user_all(),
+				'reCaptchaUserGuest' => AnyCommentIntegrationSettings::is_recaptcha_user_guest(),
+				'reCaptchaUserAuth'  => AnyCommentIntegrationSettings::is_recaptcha_user_auth(),
+				'reCaptchaSiteKey'   => AnyCommentIntegrationSettings::get_recaptcha_site_key(),
+				'reCaptchaTheme'     => AnyCommentIntegrationSettings::get_recaptcha_theme(),
+				'reCaptchaPosition'  => AnyCommentIntegrationSettings::get_recaptcha_badge(),
+
+
+			],
+			'i18'          => [
+				'error_generic'                  => __( "Oops, something went wrong...", "anycomment" ),
+				'loading'                        => __( 'Loading...', 'anycomment' ),
+				'load_more'                      => __( "Load more", "anycomment" ),
+				'waiting_moderation'             => __( "Waiting moderation", "anycomment" ),
+				'edited'                         => __( "Edited", "anycomment" ),
+				'button_send'                    => __( 'Send', 'anycomment' ),
+				'button_save'                    => __( 'Save', 'anycomment' ),
+				'button_reply'                   => __( 'Reply', 'anycomment' ),
+				'sorting'                        => __( 'Sorting', 'anycomment' ),
+				'sort_by'                        => __( 'Sort by', 'anycomment' ),
+				'sort_oldest'                    => __( 'oldest', 'anycomment' ),
+				'sort_newest'                    => __( 'newest', 'anycomment' ),
+				'reply_to'                       => __( 'reply to', 'anycomment' ),
+				'editing'                        => __( 'editing', 'anycomment' ),
+				'add_comment'                    => __( 'Your comment...', 'anycomment' ),
+				'no_comments'                    => __( 'No comments to display', "anycomment" ),
+				'footer_copyright'               => __( 'Add Anycomment to your site', 'anycomment' ),
+				'reply'                          => __( 'Reply', 'anycomment' ),
+				'edit'                           => __( 'Edit', 'anycomment' ),
+				'delete'                         => __( 'Delete', 'anycomment' ),
+				'comments_closed'                => __( 'Comments are closed.', 'anycomment' ),
+				'subscribed'                     => is_user_logged_in() ?
+					__( 'You were subscribed successfully', 'anycomment' ) :
+					__( 'Check you email to confirm subscription', 'anycomment' ),
+				'subscribe'                      => __( 'Subscribe', 'anycomment' ),
+				'subscribe_pre_paragraph'        => is_user_logged_in() ?
+					__( 'You may subscribe to new comments by clicking "Subscribe" button below:', 'anycomment' ) :
+					__( 'You may subscribe to new comments for this post by entering your email below:', 'anycomment' ),
+				'cancel'                         => __( 'Cancel', 'anycomment' ),
+				'quick_login'                    => __( 'Quick Login', 'anycomment' ),
+				'guest'                          => __( 'Guest', 'anycomment' ),
+				'login'                          => __( 'Login', 'anycomment' ),
+				'logout'                         => __( 'Logout', 'anycomment' ),
+				'comment_waiting_moderation'     => __( 'Comment will be shown once reviewed by moderator.', 'anycomment' ),
+				'new_comment_was_added'          => __( 'New comment was added', 'anycomment' ),
+				'author'                         => __( 'Author', 'anycomment' ),
+				'name'                           => __( 'Name', 'anycomment' ),
+				'email'                          => __( 'Email', 'anycomment' ),
+				'website'                        => __( 'Website', 'anycomment' ),
+				'already_rated'                  => __( 'You have already rated', 'anycomment' ),
+				'accept_user_agreement'          => sprintf(
+					__( 'I accept the <a href="%s"%s>User Agreement</a>', 'anycomment' ),
+					AnyCommentGenericSettings::get_user_agreement_link(),
+					' target="_blank" '
+				),
+				'upload_file'                    => __( 'Upload file', 'anycomment' ),
+				'file_upload_in_progress'        => __( "Uploading...", 'anycomment' ),
+				'file_uploaded'                  => __( "Uploaded!", 'anycomment' ),
+				'file_too_big'                   => __( "File %s is too big", 'anycomment' ),
+				'file_limit'                     => sprintf( __( "You may upload %s file(s) at maximum", 'anycomment' ), AnyCommentGenericSettings::get_file_limit() ),
+				'file_not_selected_or_extension' => __( "No file selected or select proper extension", 'anycomment' ),
+				'read_more'                      => __( 'Read more', 'anycomment' ),
+				'show_less'                      => __( 'Show less', 'anycomment' ),
+				'hide_this_message'              => __( 'Hide this message', 'anycomment' ),
+				'login_with'                     => __( 'Login with', 'anycomment' ),
+				'or_as_guest'                    => __( 'or as guest:', 'anycomment' ),
+
+				/**
+				 * Lightbox
+				 */
+				'lighbox_close'                  => __( 'Close (Esc)', 'anycomment' ),
+				'lighbox_left_arrow'             => __( 'Previous (Left arrow key)', 'anycomment' ),
+				'lighbox_right_arrow'            => __( 'Next (Right arrow key)', 'anycomment' ),
+				'lighbox_image_count_separator'  => __( ' of ', 'anycomment' ),
+			]
+		] );
+	}
+
+	/**
 	 * Make custom template for comments.
 	 *
 	 * @param array $atts List of options applied if used as shortcode.
@@ -104,155 +269,6 @@ class AnyCommentRender {
 		), $atts );
 
 		$isInclude = $params['include'];
-
-		if ( ! post_password_required() && comments_open() ) {
-			wp_enqueue_script( 'anycomment-js-bundle', AnyComment()->plugin_url() . '/static/js/main.min.js', [], md5( AnyComment()->version ) );
-
-			if ( AnyCommentGenericSettings::is_design_custom() ) {
-				$url = AnyCommentGenericSettings::get_custom_design_stylesheet_url();
-
-				wp_enqueue_style( 'anycomment-custom-styles', $url, [], md5( AnyComment()->version ) );
-			} else {
-				wp_enqueue_style( 'anycomment-styles', AnyComment()->plugin_url() . '/static/css/main.min.css', [], md5( AnyComment()->version ) );
-			}
-
-
-			if ( strpos( AnyCommentGenericSettings::get_design_font_family(), 'Noto-Sans' ) !== false ) {
-				wp_enqueue_style( 'anycomment-google-font', 'https://fonts.googleapis.com/css?family=Noto+Sans:400,700&amp;subset=cyrillic' );
-			}
-
-			$postId        = get_the_ID();
-			$postPermalink = get_permalink( $postId );
-
-			wp_localize_script( 'anycomment-js-bundle', 'anyCommentApiSettings', [
-				'postId'       => $postId,
-				'nonce'        => is_user_logged_in() ? wp_create_nonce( 'wp_rest' ) : null,
-				'locale'       => get_locale(),
-				'restUrl'      => esc_url_raw( rest_url( 'anycomment/v1/' ) ),
-				'commentCount' => ( $res = get_comment_count( $postId ) ) !== null ? (int) $res['all'] : 0,
-				'errors'       => self::$errors,
-				'user'         => AnyCommentUser::getSafeUser(),
-				'urls'         => [
-					'logout'  => wp_logout_url(),
-					'postUrl' => $postPermalink,
-				],
-				'rating'       => [
-					'value'    => AnyCommentRating::get_average_by_post( $postId ),
-					'count'    => AnyCommentRating::get_count_by_post( $postId ),
-					'hasRated' => AnyCommentRating::current_user_rated( $postId, get_current_user_id() )
-				],
-				// Options from plugin
-				'options'      => [
-					'limit'                  => AnyCommentGenericSettings::get_per_page(),
-					'isCopyright'            => AnyCommentGenericSettings::is_copyright_on(),
-					'socials'                => AnyCommentSocials::get_all( get_permalink( $postId ) ),
-					'sort_order'             => AnyCommentGenericSettings::get_sort_order(),
-					'guestInputs'            => AnyCommentGenericSettings::get_guest_fields( true ),
-					'isNotifySubscribers'    => AnyCommentGenericSettings::is_notify_subscribers(),
-					'isShowProfileUrl'       => AnyCommentGenericSettings::is_show_profile_url(),
-					'isShowImageAttachments' => AnyCommentGenericSettings::is_show_image_attachments(),
-					'isShowVideoAttachments' => AnyCommentGenericSettings::is_show_video_attachments(),
-					'isShowTwitterEmbeds'    => AnyCommentGenericSettings::is_show_twitter_embeds(),
-					'isModerateFirst'        => AnyCommentGenericSettings::is_moderate_first(),
-					'userAgreementLink'      => AnyCommentGenericSettings::get_user_agreement_link(),
-					'notifyOnNewComment'     => AnyCommentGenericSettings::is_notify_on_new_comment(),
-					'intervalCommentsCheck'  => AnyCommentGenericSettings::get_interval_comments_check(),
-					'isLoadOnScroll'         => AnyCommentGenericSettings::is_load_on_scroll(),
-					'isFormTypeAll'          => AnyCommentGenericSettings::is_form_type_all(),
-					'isFormTypeGuests'       => AnyCommentGenericSettings::is_form_type_guests(),
-					'isFormTypeSocials'      => AnyCommentGenericSettings::is_form_type_socials(),
-					'isFormTypeWordpress'    => AnyCommentGenericSettings::is_form_type_wordpress(),
-					'isFileUploadAllowed'    => AnyCommentGenericSettings::is_file_upload_allowed(),
-					'isGuestCanUpload'       => AnyCommentGenericSettings::is_guest_can_upload(),
-					'fileMimeTypes'          => AnyCommentGenericSettings::get_file_mime_types(),
-					'fileLimit'              => AnyCommentGenericSettings::get_file_limit(),
-					'fileMaxSize'            => AnyCommentGenericSettings::get_file_max_size(),
-					'fileUploadLimit'        => AnyCommentGenericSettings::get_file_upload_limit(),
-					'isRatingOn'             => AnyCommentGenericSettings::is_rating_on(),
-					'isReadMoreOn'           => AnyCommentGenericSettings::is_read_more_on(),
-
-					'commentRating' => AnyCommentGenericSettings::get_comment_rating(),
-
-					'isEditorOn'           => AnyCommentGenericSettings::is_editor_toolbar_on(),
-					'editorToolbarOptions' => AnyCommentGenericSettings::get_editor_toolbar_options(),
-
-					'reCaptchaOn'        => AnyCommentIntegrationSettings::is_recaptcha_active(),
-					'reCaptchaUserAll'   => AnyCommentIntegrationSettings::is_recaptcha_user_all(),
-					'reCaptchaUserGuest' => AnyCommentIntegrationSettings::is_recaptcha_user_guest(),
-					'reCaptchaUserAuth'  => AnyCommentIntegrationSettings::is_recaptcha_user_auth(),
-					'reCaptchaSiteKey'   => AnyCommentIntegrationSettings::get_recaptcha_site_key(),
-					'reCaptchaTheme'     => AnyCommentIntegrationSettings::get_recaptcha_theme(),
-					'reCaptchaPosition'  => AnyCommentIntegrationSettings::get_recaptcha_badge(),
-
-
-				],
-				'i18'          => [
-					'error_generic'                  => __( "Oops, something went wrong...", "anycomment" ),
-					'loading'                        => __( 'Loading...', 'anycomment' ),
-					'load_more'                      => __( "Load more", "anycomment" ),
-					'waiting_moderation'             => __( "Waiting moderation", "anycomment" ),
-					'edited'                         => __( "Edited", "anycomment" ),
-					'button_send'                    => __( 'Send', 'anycomment' ),
-					'button_save'                    => __( 'Save', 'anycomment' ),
-					'button_reply'                   => __( 'Reply', 'anycomment' ),
-					'sorting'                        => __( 'Sorting', 'anycomment' ),
-					'sort_by'                        => __( 'Sort by', 'anycomment' ),
-					'sort_oldest'                    => __( 'oldest', 'anycomment' ),
-					'sort_newest'                    => __( 'newest', 'anycomment' ),
-					'reply_to'                       => __( 'reply to', 'anycomment' ),
-					'editing'                        => __( 'editing', 'anycomment' ),
-					'add_comment'                    => __( 'Your comment...', 'anycomment' ),
-					'no_comments'                    => __( 'No comments to display', "anycomment" ),
-					'footer_copyright'               => __( 'Add Anycomment to your site', 'anycomment' ),
-					'reply'                          => __( 'Reply', 'anycomment' ),
-					'edit'                           => __( 'Edit', 'anycomment' ),
-					'delete'                         => __( 'Delete', 'anycomment' ),
-					'subscribed'                     => is_user_logged_in() ?
-						__( 'You were subscribed successfully', 'anycomment' ) :
-						__( 'Check you email to confirm subscription', 'anycomment' ),
-					'subscribe'                      => __( 'Subscribe', 'anycomment' ),
-					'subscribe_pre_paragraph'        => is_user_logged_in() ?
-						__( 'You may subscribe to new comments by clicking "Subscribe" button below:', 'anycomment' ) :
-						__( 'You may subscribe to new comments for this post by entering your email below:', 'anycomment' ),
-					'cancel'                         => __( 'Cancel', 'anycomment' ),
-					'quick_login'                    => __( 'Quick Login', 'anycomment' ),
-					'guest'                          => __( 'Guest', 'anycomment' ),
-					'login'                          => __( 'Login', 'anycomment' ),
-					'logout'                         => __( 'Logout', 'anycomment' ),
-					'comment_waiting_moderation'     => __( 'Comment will be shown once reviewed by moderator.', 'anycomment' ),
-					'new_comment_was_added'          => __( 'New comment was added', 'anycomment' ),
-					'author'                         => __( 'Author', 'anycomment' ),
-					'name'                           => __( 'Name', 'anycomment' ),
-					'email'                          => __( 'Email', 'anycomment' ),
-					'website'                        => __( 'Website', 'anycomment' ),
-					'already_rated'                  => __( 'You have already rated', 'anycomment' ),
-					'accept_user_agreement'          => sprintf(
-						__( 'I accept the <a href="%s"%s>User Agreement</a>', 'anycomment' ),
-						AnyCommentGenericSettings::get_user_agreement_link(),
-						' target="_blank" '
-					),
-					'upload_file'                    => __( 'Upload file', 'anycomment' ),
-					'file_upload_in_progress'        => __( "Uploading...", 'anycomment' ),
-					'file_uploaded'                  => __( "Uploaded!", 'anycomment' ),
-					'file_too_big'                   => __( "File %s is too big", 'anycomment' ),
-					'file_limit'                     => sprintf( __( "You may upload %s file(s) at maximum", 'anycomment' ), AnyCommentGenericSettings::get_file_limit() ),
-					'file_not_selected_or_extension' => __( "No file selected or select proper extension", 'anycomment' ),
-					'read_more'                      => __( 'Read more', 'anycomment' ),
-					'show_less'                      => __( 'Show less', 'anycomment' ),
-					'hide_this_message'              => __( 'Hide this message', 'anycomment' ),
-					'login_with'                     => __( 'Login with', 'anycomment' ),
-					'or_as_guest'                    => __( 'or as guest:', 'anycomment' ),
-
-					/**
-					 * Lightbox
-					 */
-					'lighbox_close'                  => __( 'Close (Esc)', 'anycomment' ),
-					'lighbox_left_arrow'             => __( 'Previous (Left arrow key)', 'anycomment' ),
-					'lighbox_right_arrow'            => __( 'Next (Right arrow key)', 'anycomment' ),
-					'lighbox_image_count_separator'  => __( ' of ', 'anycomment' ),
-				]
-			] );
-		}
 
 		$path = ANYCOMMENT_ABSPATH . '/templates/comments.php';
 

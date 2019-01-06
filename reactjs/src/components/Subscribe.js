@@ -46,6 +46,12 @@ class Subscribe extends AnyCommentComponent {
         const email = user !== null ? user.data.user_email : this.state.email;
         const {settings} = this.props;
 
+        let headers = {};
+
+        if (settings.nonce) {
+            headers = {'X-WP-Nonce': settings.nonce};
+        }
+
         this.props.axios
             .request({
                 method: 'post',
@@ -54,7 +60,7 @@ class Subscribe extends AnyCommentComponent {
                     email: email,
                     post: settings.postId,
                 },
-                headers: {'X-WP-Nonce': settings.nonce}
+                headers: headers
             })
             .then(function (response) {
                 self.showSuccess(settings.i18.subscribed);

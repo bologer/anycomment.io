@@ -76,12 +76,18 @@ class CommentAttachments extends AnyCommentComponent {
             url = '/documents/delete',
             self = this;
 
+        let headers = {};
+
+        if (settings.nonce) {
+            headers = {'X-WP-Nonce': settings.nonce};
+        }
+
         this.props.axios
             .request({
                 method: 'post',
                 url: url,
                 params: {id: obj.file_id},
-                headers: {'X-WP-Nonce': settings.nonce}
+                headers: headers
             })
             .then(function (response) {
                 if (response.data.success) {

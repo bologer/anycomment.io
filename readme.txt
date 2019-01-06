@@ -176,12 +176,16 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Steam is now showing proper username, avatar & profile URL, #346
 * Facebook username is now clickable, #344
 * Improved mobile layouts, #351
+* Now when comments are closed instead of comment form, it says "Comments closed.", replies and edits are not allowed, #347
 
 **Fixes:**
 
 * Possible fix of issue when error toast was shown about invalid nonce, #342
 * Fixed memory exhaustion caused by integration with WP Users Avatar, #348
 * Fixed issue when some of the websites had styles for bullet points and they were shown in the attachment list
+* Fixed issue when core CSS style was loaded before </body> instead of <head>
+* Fixed issue when reCAPTCHA position did not cache no matter what was set in admin settings
+* Fixed issue when comments failed to load due to missing site key for reCAPTCHA
 
 = 0.0.78 – 22.12.2018 =
 

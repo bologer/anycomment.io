@@ -52,6 +52,7 @@ class CommentRating extends AnyCommentComponent {
     handleRequest = (type, callback) => {
         const settings = this.getSettings();
         const self = this;
+
         let headers = {};
 
         if (settings.nonce) {

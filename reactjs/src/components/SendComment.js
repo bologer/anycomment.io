@@ -38,7 +38,7 @@ class SendComment extends AnyCommentComponent {
 
         this.reCaptchaSiteKey = options.reCaptchaSiteKey;
         this.reCaptchaTheme = options.reCaptchaTheme;
-        this.reCaptchaBadge = options.reCaptchaBadge;
+        this.reCaptchaBadge = options.reCaptchaPosition;
 
         this.editorRef = React.createRef();
     }
@@ -514,6 +514,10 @@ class SendComment extends AnyCommentComponent {
         const settings = this.getSettings();
         const translations = settings.i18;
 
+        if (!settings.post.comments_open) {
+            return <div className="anycomment anycomment-alert anycomment-alert-default">{translations.comments_closed}</div>;
+        }
+
         const {
             buttonEnabled,
             buttonText,
@@ -527,7 +531,7 @@ class SendComment extends AnyCommentComponent {
 
         let reCaptcha = '';
 
-        if (this.isCaptchaOn()) {
+        if (this.isCaptchaOn() && this.reCaptchaSiteKey) {
             reCaptcha = <ReCAPTCHA
                 ref={recapchaRef}
                 theme={this.reCaptchaTheme}

@@ -135,6 +135,17 @@
       }
     }
   }
+
+  .anycomment-alert {
+    padding: 10px;
+    color: $text-color;
+    @include border-radius($global-radius);
+  }
+
+  .anycomment-alert.anycomment-alert-default {
+    background-color: #f2f2f2;
+    color: grey;
+  }
 }
 
 

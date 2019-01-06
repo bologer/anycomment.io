@@ -60,6 +60,13 @@ class Comment extends AnyCommentComponent {
 
         const settings = this.getSettings();
         const self = this;
+
+        let headers = {};
+
+        if (settings.nonce) {
+            headers = {'X-WP-Nonce': settings.nonce};
+        }
+
         this.props.axios
             .request({
                 method: 'post',
@@ -69,7 +76,7 @@ class Comment extends AnyCommentComponent {
                     post: this.props.comment.post,
                     type: 1
                 },
-                headers: {'X-WP-Nonce': settings.nonce}
+                headers: headers
             })
             .then(function (response) {
                 self.setState({
@@ -96,6 +103,7 @@ class Comment extends AnyCommentComponent {
     render() {
         const comment = this.props.comment;
         const commentId = 'comment-' + comment.id;
+        const settings = this.getSettings();
 
         const {action, likesCount, hasLike} = this.state;
 
@@ -114,15 +122,16 @@ class Comment extends AnyCommentComponent {
                 </ul>
             </div> : '';
 
-        const replyForm = action ? <div className="comment-single-form-wrapper">
-            <SendComment
-                action={action}
-                comment={comment}
-                handleUnsetAction={this.handleUnsetAction}
-                handleJustAdded={this.props.handleJustAdded}
-                loadComments={this.props.loadComments}
-            />
-        </div> : '';
+        const replyForm = action && settings.post.comments_open ?
+            <div className="comment-single-form-wrapper">
+                <SendComment
+                    action={action}
+                    comment={comment}
+                    handleUnsetAction={this.handleUnsetAction}
+                    handleJustAdded={this.props.handleJustAdded}
+                    loadComments={this.props.loadComments}
+                />
+            </div> : '';
 
         return (
             <li

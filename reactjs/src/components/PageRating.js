@@ -37,6 +37,12 @@ class PageRating extends AnyCommentComponent {
             return false;
         }
 
+        let headers = {};
+
+        if (settings.nonce) {
+            headers = {'X-WP-Nonce': settings.nonce};
+        }
+
         return this.props.axios
             .request({
                 method: 'post',
@@ -45,7 +51,7 @@ class PageRating extends AnyCommentComponent {
                     rating: rating,
                     post: settings.postId
                 },
-                headers: {'X-WP-Nonce': settings.nonce}
+                headers: headers
             })
             .then(function (response) {
                 self.setState({
