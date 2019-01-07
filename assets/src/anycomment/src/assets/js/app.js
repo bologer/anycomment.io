@@ -4,8 +4,9 @@ import 'select2'
 import '@claviska/jquery-minicolors'
 
 import CodeMirror from 'codemirror';
-import 'codemirror/mode/javascript/javascript';
+import 'codemirror/mode/css/css';
 import 'codemirror/mode/php/php';
+import 'codemirror/mode/javascript/javascript';
 
 window.$ = $;
 
@@ -27,8 +28,8 @@ $(document).ready(function ($) {
 
     var codes = document.querySelectorAll('.anycomment-code');
 
-    if(codes.length > 0) {
-        for(var i = 0; i <codes.length; i++) {
+    if (codes.length > 0) {
+        for (var i = 0; i < codes.length; i++) {
             let element = codes[i];
             let conf = {}; //lineNumbers: true
 
@@ -38,7 +39,11 @@ $(document).ready(function ($) {
                 conf.mode = mode;
             }
 
-            CodeMirror.fromTextArea(element, conf);
+            conf.theme = element.dataset.theme || 'monokai';
+
+            CodeMirror.fromTextArea(element, conf).on('change', function (instance, changeObj) {
+                element.value = instance.getValue();
+            });
         }
     }
 });

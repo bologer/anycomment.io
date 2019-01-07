@@ -218,6 +218,12 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 
 
 	/**
+	 * Editor options.
+	 */
+	const OPTION_EDITOR_CSS = 'option_editor_css'; // Add custom CSS
+
+
+	/**
 	 * @inheritdoc
 	 */
 	protected $option_group = 'anycomment-generic-group';
@@ -1029,18 +1035,19 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 		);
 
 		/**
-		 * Section: Kek
+		 * Section: Editor
 		 */
 		$form->add_section(
 			$this->section_builder()
-			     ->set_id( 'kek' )
-			     ->set_title( __( 'Files', "anycomment" ) )
+			     ->set_id( 'editor' )
+			     ->set_title( __( 'Editor', "anycomment" ) )
 			     ->set_fields( [
 				     $this->field_builder()
 				          ->code()
-				          ->set_id( 'kek' )
-				          ->set_title( __( 'COde snippet', "anycomment" ) )
-				          ->set_description( esc_html( __( 'Allow to upload files.', "anycomment" ) ) ),
+				          ->set_id( self::OPTION_EDITOR_CSS )
+				          ->set_args( [ 'mode' => 'css' ] )
+				          ->set_title( __( 'Custom CSS', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Write custom CSS, it will be only related to AnyComment. Notice: you may require to drop the cache after your changes if you have any caching plugin installed.', "anycomment" ) ) ),
 			     ] )
 		);
 	}
@@ -2177,6 +2184,15 @@ EOT;
 	 */
 	public static function is_form_type_guests() {
 		return static::get_form_type() === self::FORM_OPTION_GUEST_ONLY;
+	}
+
+	/**
+	 * Get custom CSS style to be rendered on frontend.
+	 *
+	 * @return mixed|null
+	 */
+	public static function get_editor_css() {
+		return static::instance()->get_db_option( self::OPTION_EDITOR_CSS );
 	}
 
 	/**

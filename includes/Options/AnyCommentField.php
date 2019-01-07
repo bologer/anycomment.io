@@ -505,8 +505,12 @@ EOT;
 		$name  = $this->get_id();
 		$value = $this->get_value();
 
+		$args = $this->get_args();
+
+		$data_mode = isset( $args['mode'] ) ? trim( $args['mode'] ) : 'php';
+
 		return <<<EOT
-            <textarea rows="5" id="$for" name="$name" class="anycomment-code" data-mode="php">$value</textarea>
+            <textarea rows="5" id="$for" name="$name" class="anycomment-code" data-mode="$data_mode">$value</textarea>
 EOT;
 	}
 

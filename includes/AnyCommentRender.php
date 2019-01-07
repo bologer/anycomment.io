@@ -47,6 +47,8 @@ class AnyCommentRender {
 
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_assets' ] );
 
+		add_action( 'wp_head', [ $this, 'enqueue_custom_css' ], 99 );
+
 		self::$errors = AnyCommentSocialAuth::getErrors( true, true );
 	}
 
@@ -90,6 +92,18 @@ class AnyCommentRender {
 		}
 
 		return str_replace( ' src', ' async="async" src', $tag );
+	}
+
+	/**
+	 * Enqueue custom CSS styles.
+	 */
+	public function enqueue_custom_css() {
+		$css_styles = AnyCommentGenericSettings::get_editor_css();
+		echo <<<EOT
+<style>
+$css_styles
+</style>
+EOT;
 	}
 
 	/**
@@ -171,8 +185,8 @@ class AnyCommentRender {
 				'isRatingOn'             => AnyCommentGenericSettings::is_rating_on(),
 				'isReadMoreOn'           => AnyCommentGenericSettings::is_read_more_on(),
 
-				'commentRating'   => AnyCommentGenericSettings::get_comment_rating(),
-				'dateFormat' => AnyCommentGenericSettings::get_datetime_format(),
+				'commentRating' => AnyCommentGenericSettings::get_comment_rating(),
+				'dateFormat'    => AnyCommentGenericSettings::get_datetime_format(),
 
 				'isEditorOn'           => AnyCommentGenericSettings::is_editor_toolbar_on(),
 				'editorToolbarOptions' => AnyCommentGenericSettings::get_editor_toolbar_options(),

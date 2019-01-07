@@ -167,7 +167,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 == Changelog ==
 
-= 0.0.79 – 28.12.2018 =
+= 0.0.79 – 07.01.2019 =
 
 **Enhancements:**
 
@@ -178,6 +178,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Improved mobile layouts, #351
 * Now when comments are closed instead of comment form, it says "Comments closed.", replies and edits are not allowed, #347
 * Now possible to choose comment date between relative (e.g. 1 minute ago) and absolute (defined in WordPress's settings), #350
+* Added ability to add custom CSS via "Editor" tab in "Settings", #341
 
 **Fixes:**
 
