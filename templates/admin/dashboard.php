@@ -75,6 +75,10 @@ if ( ! defined( 'ABSPATH' ) ) {
                             border-radius: 10px;
                         }
 
+                        .anycomment-analytics-promo h2 {
+                            color: #fff !important;
+                        }
+
                         .anycomment-analytics-promo p {
                             font-size: 12pt;
                             margin: 0;
@@ -117,11 +121,12 @@ if ( ! defined( 'ABSPATH' ) ) {
                         }
                     </style>
                     <div class="anycomment-analytics-promo">
-                        <p>Совсем скоро выйдет первый аддон (дополнение) «AnyComment Аналитика», прямо сейчас есть
-                            возможность
+                        <h2>Профессиональная аналитика</h2>
+                        <p>Совсем скоро выйдет первый аддон (дополнение) «AnyComment Аналитика». Подпишитесь, чтобы
+                            получить
                             <a href="https://anycomment.io/aa-promo/?utm_source=anycomment_sidebar" target="_blank">получить
-                                скидку</a> <span class="anycomment-analytics-promo--highlight">20%</span> для всех
-                            подписывшихся.</p>
+                                скидку</a> <span class="anycomment-analytics-promo--highlight">20%</span>, а так же быть
+                            в курсе событий. Предложение ограничено до момента выхода аддона.</p>
                         <div>
                             <a href="https://anycomment.io/aa-promo/?utm_source=anycomment_sidebar" target="_blank"
                                class="anycomment-analytics-promo__more">Подробнее</a>
