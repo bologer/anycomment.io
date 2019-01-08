@@ -115,7 +115,7 @@ EOT;
 			return false;
 		}
 
-		wp_enqueue_script( 'anycomment-js-bundle', AnyComment()->plugin_url() . '/static/js/main.min.js', [], md5( AnyComment()->version ) );
+		wp_enqueue_script( 'anycomment-js-bundle', AnyComment()->plugin_url() . '/static/js/main.min.js', [], md5( AnyComment()->version ), true );
 
 		if ( AnyCommentGenericSettings::is_design_custom() ) {
 			$url = AnyCommentGenericSettings::get_custom_design_stylesheet_url();

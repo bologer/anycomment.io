@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.0.80 – 08.01.2019
+
+**Fixes:**
+
+* Fixed issue when main js asset was loading in <head> instead of before </body>
+
+
 ## 0.0.79 – 07.01.2019
 
 **Enhancements:**
