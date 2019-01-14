@@ -171,7 +171,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Fixes:**
 
-* Fixed issue when main js asset was loading in <head> instead of before </body>
+* Fixed issue when main js asset was loading in `<head>` instead of before `</body>`
 
 = 0.0.79 – 07.01.2019 =
 
@@ -191,7 +191,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Possible fix of issue when error toast was shown about invalid nonce, #342
 * Fixed memory exhaustion caused by integration with WP Users Avatar, #348
 * Fixed issue when some of the websites had styles for bullet points and they were shown in the attachment list
-* Fixed issue when core CSS style was loaded before </body> instead of <head>
+* Fixed issue when core CSS style was loaded before `</body>` instead of `<head>`
 * Fixed issue when reCAPTCHA position did not cache no matter what was set in admin settings
 * Fixed issue when comments failed to load due to missing site key for reCAPTCHA
 * Fixed issue when link from YouTube was not attached as video below the comment, #244
@@ -365,7 +365,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Fixed issue with social icon conflict with existing Fontawesome library, #288
 * Fixed issue when user agreement checkbox was misaligned on some of the websites
 * Fixed issue when dropdown was too narrow and some options were not seen well, #289
-* Fixed issue when links and other tags were missing attributes (e.g. <a> was missing href)
+* Fixed issue when links and other tags were missing attributes (e.g. `<a>` was missing href)
 
 
 = 0.0.67 – 01.11.2018 =

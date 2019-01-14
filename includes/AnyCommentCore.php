@@ -29,7 +29,7 @@ class AnyCommentCore {
 	/**
 	 * @var \Freemius
 	 */
-//	public $freemius;
+	public $freemius;
 
 	/**
 	 * @var
@@ -137,7 +137,7 @@ class AnyCommentCore {
 	public function includes() {
 		AnyCommentLoader::load();
 
-//		$this->init_freemius();
+		$this->init_freemius();
 	}
 
 	/**
@@ -162,44 +162,44 @@ class AnyCommentCore {
 
 	public function init_freemius() {
 
-//		if ( $this->freemius !== null ) {
-//			return $this->freemius;
-//		}
-//
-//		// Include Freemius SDK.
-//		require_once ANYCOMMENT_ABSPATH . '/freemius/start.php';
-//
-//		$this->freemius = fs_dynamic_init( array(
-//			'id'                  => '2926',
-//			'slug'                => 'anycomment',
-//			'type'                => 'plugin',
-//			'public_key'          => 'pk_362c323f4de13a39f79eedc50082f',
-//			'is_premium'          => false,
-//			// If your plugin is a serviceware, set this option to false.
-//			'has_premium_version' => false,
-//			'has_addons'          => true,
-//			'has_paid_plans'      => false,
-//			'menu'                => array(
-//				'slug'    => 'anycomment-dashboard',
-//				'contact' => false,
-//				'support' => false,
-//			),
-//		) );
-//
-//		fs_override_i18n( [
-//			'add-ons' => __( 'Add-Ons', 'anycomment' )
-//		], 'anycomment' );
-//
-//
-//		$this->freemius->add_filter( 'is_submenu_visible', function ( $is_visible, $submenu_id ) {
-//			if ( $submenu_id === 'pricing' ) {
-//				$is_visible = false;
-//			}
-//
-//			return $is_visible;
-//		}, 10, 2 );
-//
-//		do_action( 'any_fs_loaded' );
+		if ( $this->freemius !== null ) {
+			return $this->freemius;
+		}
+
+		// Include Freemius SDK.
+		require_once ANYCOMMENT_ABSPATH . '/freemius/start.php';
+
+		$this->freemius = fs_dynamic_init( array(
+			'id'                  => '2926',
+			'slug'                => 'anycomment',
+			'type'                => 'plugin',
+			'public_key'          => 'pk_362c323f4de13a39f79eedc50082f',
+			'is_premium'          => false,
+			// If your plugin is a serviceware, set this option to false.
+			'has_premium_version' => false,
+			'has_addons'          => true,
+			'has_paid_plans'      => false,
+			'menu'                => array(
+				'slug'    => 'anycomment-dashboard',
+				'contact' => false,
+				'support' => false,
+			),
+		) );
+
+		fs_override_i18n( [
+			'add-ons' => __( 'Add-Ons', 'anycomment' )
+		], 'anycomment' );
+
+
+		$this->freemius->add_filter( 'is_submenu_visible', function ( $is_visible, $submenu_id ) {
+			if ( $submenu_id === 'pricing' ) {
+				$is_visible = false;
+			}
+
+			return $is_visible;
+		}, 10, 2 );
+
+		do_action( 'any_fs_loaded' );
 
 		return $this->freemius;
 	}
