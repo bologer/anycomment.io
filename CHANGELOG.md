@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.0.81 – 16.01.2019
+
+**Enhancements:**
+
+* New hook `anycomment/admin/options/update` with two arguments fired after some set of options being updated
+
+
+**Fixes:**
+
+* Fixed issue when user avatar did not change when settings were updated, #361
+
+
 ## 0.0.80 – 08.01.2019
 
 **Fixes:**

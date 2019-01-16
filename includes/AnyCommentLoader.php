@@ -5,6 +5,8 @@ namespace AnyComment;
 /**
  * Class AnyCommentLoader is used as main plugin loader.
  *
+ * Define list of classes to be automatically constructed.
+ *
  * @author Alexander Teshabaev <sasha.tesh@gmail.com>
  * @package AnyComment
  */
@@ -57,7 +59,7 @@ class AnyCommentLoader {
 	/**
 	 * Load list of classes to be invoked immediately.
 	 */
-	public static function load() {
+	public static function load () {
 		if ( ! empty( static::$load ) ) {
 			foreach ( static::$load as $namespace ) {
 				if ( class_exists( $namespace ) ) {

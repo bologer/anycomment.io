@@ -34,7 +34,7 @@ class AnyCommentRender {
 	/**
 	 * AC_Render constructor.
 	 */
-	public function __construct() {
+	public function __construct () {
 		if ( AnyCommentGenericSettings::is_enabled() ) {
 			add_filter( 'comments_template', [ $this, 'override_comment' ], 999 );
 
@@ -48,6 +48,7 @@ class AnyCommentRender {
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_assets' ] );
 
 		add_action( 'wp_head', [ $this, 'enqueue_custom_css' ], 99 );
+		add_action( 'wp_head', [ $this, 'enqueue_base_json' ], 99 );
 
 		self::$errors = AnyCommentSocialAuth::getErrors( true, true );
 	}
@@ -62,7 +63,7 @@ class AnyCommentRender {
 	 *
 	 * @return string
 	 */
-	function logout_redirect( $logout_url ) {
+	function logout_redirect ( $logout_url ) {
 		$permaLink = get_permalink();
 		if ( $permaLink !== false && is_singular() ) {
 			$query = parse_url( $logout_url, PHP_URL_QUERY );
@@ -86,7 +87,7 @@ class AnyCommentRender {
 	 * @return mixed
 	 * @since 0.0.66
 	 */
-	function add_async_to_bundle( $tag, $handle ) {
+	function add_async_to_bundle ( $tag, $handle ) {
 		if ( 'anycomment-js-bundle' !== $handle ) {
 			return $tag;
 		}
@@ -97,7 +98,7 @@ class AnyCommentRender {
 	/**
 	 * Enqueue custom CSS styles.
 	 */
-	public function enqueue_custom_css() {
+	public function enqueue_custom_css () {
 		$css_styles = AnyCommentGenericSettings::get_editor_css();
 		echo <<<EOT
 <style>
@@ -107,33 +108,16 @@ EOT;
 	}
 
 	/**
-	 * Enqueue required core assets.
+	 * Enqueue base json into head specifically, so it cannot be cached the way it is done in wp_localize_script() or
+	 * any other way of loading such objects or assets.
+	 *
+	 * This object is used by frontend to gather information about website and user state.
 	 */
-	public function enqueue_assets() {
-
-		if ( post_password_required() ) {
-			return false;
-		}
-
-		wp_enqueue_script( 'anycomment-js-bundle', AnyComment()->plugin_url() . '/static/js/main.min.js', [], md5( AnyComment()->version ), true );
-
-		if ( AnyCommentGenericSettings::is_design_custom() ) {
-			$url = AnyCommentGenericSettings::get_custom_design_stylesheet_url();
-
-			wp_enqueue_style( 'anycomment-custom-styles', $url, [], md5( AnyComment()->version ) );
-		} else {
-			wp_enqueue_style( 'anycomment-styles', AnyComment()->plugin_url() . '/static/css/main.min.css', [], md5( AnyComment()->version ) );
-		}
-
-
-		if ( strpos( AnyCommentGenericSettings::get_design_font_family(), 'Noto-Sans' ) !== false ) {
-			wp_enqueue_style( 'anycomment-google-font', 'https://fonts.googleapis.com/css?family=Noto+Sans:400,700&amp;subset=cyrillic' );
-		}
-
+	public function enqueue_base_json () {
 		$postId        = get_the_ID();
 		$postPermalink = get_permalink( $postId );
 
-		wp_localize_script( 'anycomment-js-bundle', 'anyCommentApiSettings', [
+		$json = json_encode( [
 			'postId'       => $postId,
 			'nonce'        => is_user_logged_in() ? wp_create_nonce( 'wp_rest' ) : null,
 			'locale'       => get_locale(),
@@ -153,7 +137,7 @@ EOT;
 			'rating'       => [
 				'value'    => AnyCommentRating::get_average_by_post( $postId ),
 				'count'    => AnyCommentRating::get_count_by_post( $postId ),
-				'hasRated' => AnyCommentRating::current_user_rated( $postId, get_current_user_id() )
+				'hasRated' => AnyCommentRating::current_user_rated( $postId, get_current_user_id() ),
 			],
 			// Options from plugin
 			'options'      => [
@@ -266,8 +250,38 @@ EOT;
 				'lighbox_left_arrow'             => __( 'Previous (Left arrow key)', 'anycomment' ),
 				'lighbox_right_arrow'            => __( 'Next (Right arrow key)', 'anycomment' ),
 				'lighbox_image_count_separator'  => __( ' of ', 'anycomment' ),
-			]
+			],
 		] );
+		echo <<<EOT
+<script>
+    var anyCommentApiSettings = $json;
+</script>
+EOT;
+	}
+
+	/**
+	 * Enqueue required core assets.
+	 */
+	public function enqueue_assets () {
+
+		if ( post_password_required() ) {
+			return false;
+		}
+
+		wp_enqueue_script( 'anycomment-js-bundle', AnyComment()->plugin_url() . '/static/js/main.min.js', [], md5( AnyComment()->version ), true );
+
+		if ( AnyCommentGenericSettings::is_design_custom() ) {
+			wp_enqueue_style( 'anycomment-custom-styles', AnyCommentGenericSettings::get_custom_design_stylesheet_url(), [], md5( AnyComment()->version ) );
+		} else {
+			wp_enqueue_style( 'anycomment-styles', AnyComment()->plugin_url() . '/static/css/main.min.css', [], md5( AnyComment()->version ) );
+		}
+
+
+		if ( strpos( AnyCommentGenericSettings::get_design_font_family(), 'Noto-Sans' ) !== false ) {
+			wp_enqueue_style( 'anycomment-google-font', 'https://fonts.googleapis.com/css?family=Noto+Sans:400,700&amp;subset=cyrillic' );
+		}
+
+		return true;
 	}
 
 	/**
@@ -277,7 +291,7 @@ EOT;
 	 *
 	 * @return string
 	 */
-	public function override_comment( $atts ) {
+	public function override_comment ( $atts ) {
 
 		$params = shortcode_atts( array(
 			'include' => false,

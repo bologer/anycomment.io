@@ -2,6 +2,8 @@
 
 namespace AnyComment\Hooks;
 
+use AnyComment\Cache\UserCache;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -19,8 +21,21 @@ class AnyCommentUserHooks {
 	/**
 	 * AnyCommentUserHooks constructor.
 	 */
-	public function __construct() {
+	public function __construct () {
 		add_action( 'anycomment/user/logged_in', [ $this, 'drop_cache_on_login' ], 11, 2 );
+
+		add_action( 'anycomment/admin/options/update', [ $this, 'drop_cache_on_options_update' ], 11, 2 );
+	}
+
+	/**
+	 * Drop cache related to options update.
+	 *
+	 * @param string $option Single setting.
+	 * @param array $options List of updated settings.
+	 */
+	public function drop_cache_on_options_update ( $option, $options ) {
+		// Flush all cache related to users
+		UserCache::flushAll();
 	}
 
 	/**
@@ -31,7 +46,7 @@ class AnyCommentUserHooks {
 	 *
 	 * @return bool False on failure to get post ID by provided URL.
 	 */
-	public function drop_cache_on_login( $user, $post_url ) {
+	public function drop_cache_on_login ( $user, $post_url ) {
 
 		$post_id = url_to_postid( $post_url );
 

@@ -30,7 +30,7 @@ class AnyCommentOptionManager {
 	protected $default_options;
 
 	/**
-	 * @var AnyCommentAdminOptions Instance of current object.
+	 * @var AnyCommentOptionManager Instance of current object.
 	 */
 	private static $_instances;
 
@@ -59,14 +59,14 @@ class AnyCommentOptionManager {
 	/**
 	 * AC_Options constructor.
 	 */
-	public function __construct() {
+	public function __construct () {
 		add_action( 'init', [ $this, 'init' ] );
 	}
 
 	/**
 	 * Init class.
 	 */
-	public function init() {
+	public function init () {
 		register_setting( $this->option_group, $this->option_name );
 
 		$action_name = $this->get_page_slug();
@@ -74,7 +74,7 @@ class AnyCommentOptionManager {
 		add_action( 'rest_api_init', function () use ( $action_name ) {
 			register_rest_route( 'anycomment/v1', "/$action_name/", array(
 				'methods'  => 'POST',
-				'callback' => [ $this, 'process_rest' ]
+				'callback' => [ $this, 'process_rest' ],
 			) );
 		} );
 
@@ -104,9 +104,7 @@ jQuery('$form_id').on('submit', function(e) {
 	    error: function(err) {
 	        console.log(err);
 	    }
-	})
-	
-	console.log();
+	});
 });
 JS;
 			echo '<script>' . $js . '</script>';
@@ -120,7 +118,7 @@ JS;
 	 *
 	 * @return mixed|\WP_Error|\WP_REST_Response
 	 */
-	public function process_rest( $request ) {
+	public function process_rest ( $request ) {
 
 
 		$response = new \WP_REST_Response();
@@ -130,14 +128,24 @@ JS;
 		}
 
 		$option_name = trim( $request['option_name'] );
+		$options     = $request->get_params();
 
-		$options = $request->get_params();
 		unset( $options['option_name'] );
+
+		/**
+		 * Fires before settings were updated.
+		 *
+		 * @since 0.0.81
+		 *
+		 * @param string $option_name Name of the option which is being updated.
+		 * @param array $options List of options to update without option name.
+		 */
+		do_action( 'anycomment/admin/options/update', $option_name, $options );
 
 		$this->update_db_option( $options, $option_name );
 
 		$response->set_data( [
-			'success' => true
+			'success' => true,
 		] );
 
 		return rest_ensure_response( $response );
@@ -150,18 +158,18 @@ JS;
 	 *
 	 * @return void
 	 */
-	public function add_option( $options ) {
+	public function add_option ( $options ) {
 		$this->options[] = $options;
 	}
 
 	/**
 	 * @return AnyCommentOption
 	 */
-	public function form() {
+	public function form () {
 		$this->fielder = new AnyCommentOption( [
 			'page_slug'    => $this->page_slug,
 			'option_name'  => $this->option_name,
-			'option_group' => $this->option_group
+			'option_group' => $this->option_group,
 		] );
 
 		$this->add_option( $this->fielder );
@@ -174,7 +182,7 @@ JS;
 	 *
 	 * @return AnyCommentSection
 	 */
-	public function section_builder() {
+	public function section_builder () {
 		return new AnyCommentSection( $this->section_options );
 	}
 
@@ -183,7 +191,7 @@ JS;
 	 *
 	 * @return AnyCommentField
 	 */
-	public function field_builder() {
+	public function field_builder () {
 
 		/**
 		 * Set page slug for field when not defined on the class level.
@@ -196,7 +204,7 @@ JS;
 		return new AnyCommentField( $options );
 	}
 
-	public function run() {
+	public function run () {
 		$html = '';
 
 		$options = $this->options;
@@ -232,7 +240,7 @@ JS;
 	 *
 	 * @return mixed
 	 */
-	public function get_page_slug() {
+	public function get_page_slug () {
 		return str_replace( '-', '_', $this->page_slug );
 	}
 
@@ -241,7 +249,7 @@ JS;
 	 *
 	 * @param string $page
 	 */
-	protected function do_tab_menu() {
+	protected function do_tab_menu () {
 		global $wp_settings_sections, $wp_settings_fields;
 
 		if ( ! isset( $wp_settings_sections[ $page ] ) ) {
@@ -303,7 +311,7 @@ JS;
 	 *
 	 * @return bool
 	 */
-	public function has_options() {
+	public function has_options () {
 		$options = $this->get_db_options();
 
 		if ( $options === null ) {
@@ -325,7 +333,7 @@ JS;
 	 *
 	 * @return AnyCommentOption[]|null
 	 */
-	public function get_options() {
+	public function get_options () {
 		return $this->options;
 	}
 
@@ -336,7 +344,7 @@ JS;
 	 *
 	 * @return mixed|null
 	 */
-	public function get_db_option( $name ) {
+	public function get_db_option ( $name ) {
 		$options = $this->get_db_options();
 
 		$optionValue = isset( $options[ $name ] ) ? trim( $options[ $name ] ) : null;
@@ -349,7 +357,7 @@ JS;
 	 *
 	 * @return AnyCommentOption[]|null
 	 */
-	public function get_db_options() {
+	public function get_db_options () {
 
 		$option = get_option( $this->option_name, null );
 
@@ -368,7 +376,7 @@ JS;
 	 * @param mixed $value Value of the option.
 	 * @param null|string $option_name Option name. When not specified current option_name will be used.
 	 */
-	public function update_db_option( $value, $option_name = null ) {
+	public function update_db_option ( $value, $option_name = null ) {
 
 		$option = null;
 
@@ -386,7 +394,7 @@ JS;
 	 *
 	 * @return self
 	 */
-	public static function instance() {
+	public static function instance () {
 		$className = get_called_class();
 
 		if ( ! isset( self::$_instances[ $className ] ) ) {

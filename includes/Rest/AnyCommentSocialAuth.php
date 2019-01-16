@@ -11,7 +11,7 @@ use WP_Error;
 use WP_User;
 use WP_Comment;
 
-use AnyComment\AnyCommentCore;
+use AnyComment\Cache\UserCache;
 use AnyComment\AnyCommentUser;
 use AnyComment\Admin\AnyCommentGenericSettings;
 use AnyComment\Admin\AnyCommentSocialSettings;
@@ -121,7 +121,7 @@ class AnyCommentSocialAuth {
 	/**
 	 * AC_SocialAuth constructor.
 	 */
-	public function __construct() {
+	public function __construct () {
 		// When only guests allowed, social should not be allowed
 		if ( ! AnyCommentGenericSettings::is_form_type_guests() ) {
 			$this->init_rest_route();
@@ -132,14 +132,14 @@ class AnyCommentSocialAuth {
 	 * Get REST namespace.
 	 * @return string
 	 */
-	private static function get_rest_namespace() {
+	private static function get_rest_namespace () {
 		return sprintf( '%s/%s', static::$rest_prefix, static::$rest_version );
 	}
 
 	/**
 	 * Used to initiate REST routes to log in client, etc.
 	 */
-	private function init_rest_route() {
+	private function init_rest_route () {
 		add_action( 'rest_api_init', function () {
 			$namespace = static::get_rest_namespace();
 			$route     = '/auth/(?P<social>\w[\w\s]*)/';
@@ -157,7 +157,7 @@ class AnyCommentSocialAuth {
 	 *
 	 * @return mixed
 	 */
-	public function process_socials( WP_REST_Request $request ) {
+	public function process_socials ( WP_REST_Request $request ) {
 		$redirect        = $request->get_param( 'redirect' );
 		$social          = $request->get_param( 'social' );
 		$cookie_redirect = self::COOKIE_REDIRECT;
@@ -220,7 +220,7 @@ class AnyCommentSocialAuth {
 	 *
 	 * @return null|string NULL when unable to get provider name.
 	 */
-	public function get_provider_name( $social ) {
+	public function get_provider_name ( $social ) {
 		if ( ! $this->social_exists( $social ) ) {
 			return null;
 		}
@@ -235,7 +235,7 @@ class AnyCommentSocialAuth {
 	 *
 	 * @return bool
 	 */
-	public function social_exists( $social ) {
+	public function social_exists ( $social ) {
 		return isset( self::$providers[ strtolower( $social ) ] );
 	}
 
@@ -246,7 +246,7 @@ class AnyCommentSocialAuth {
 	 *
 	 * @return mixed
 	 */
-	public function get_verbal_name( $social ) {
+	public function get_verbal_name ( $social ) {
 		$verbals = [
 			self::SOCIAL_VKONTAKTE     => __( 'Vkontakte', 'anycomment' ),
 			self::SOCIAL_FACEBOOK      => __( 'Facebook', 'anycomment' ),
@@ -272,14 +272,14 @@ class AnyCommentSocialAuth {
 	 * Prepare authentication.
 	 * @throws \Hybridauth\Exception\InvalidArgumentException on failure.
 	 */
-	private function prepare_auth() {
+	private function prepare_auth () {
 		$config = [
 			'providers' => [
 				self::$providers[ self::SOCIAL_VKONTAKTE ]     => [
 					'enabled'  => AnyCommentSocialSettings::is_vk_active(),
 					'keys'     => [
 						'id'     => AnyCommentSocialSettings::get_vk_app_id(),
-						'secret' => AnyCommentSocialSettings::get_vk_secure_key()
+						'secret' => AnyCommentSocialSettings::get_vk_secure_key(),
 					],
 					'callback' => static::get_vk_callback(),
 				],
@@ -287,7 +287,7 @@ class AnyCommentSocialAuth {
 					'enabled'  => AnyCommentSocialSettings::is_google_active(),
 					'keys'     => [
 						'id'     => AnyCommentSocialSettings::get_google_client_id(),
-						'secret' => AnyCommentSocialSettings::get_google_secret()
+						'secret' => AnyCommentSocialSettings::get_google_secret(),
 					],
 					'scope'    => 'profile https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.profile.emails.read',
 					'callback' => static::get_google_callback(),
@@ -384,7 +384,7 @@ class AnyCommentSocialAuth {
 						'secret' => AnyCommentSocialSettings::get_yahoo_client_secret(),
 					],
 					'callback' => static::get_yahoo_callback(),
-				]
+				],
 			],
 		];
 
@@ -400,7 +400,7 @@ class AnyCommentSocialAuth {
 	 * @throws \Hybridauth\Exception\InvalidArgumentException
 	 * @throws \Hybridauth\Exception\UnexpectedValueException
 	 */
-	private function authenticate( $social ) {
+	private function authenticate ( $social ) {
 		if ( $this->_auth === null ) {
 			return false;
 		}
@@ -417,7 +417,7 @@ class AnyCommentSocialAuth {
 	 *
 	 * @return string
 	 */
-	public static function get_vk_callback( $redirect = null ) {
+	public static function get_vk_callback ( $redirect = null ) {
 		return static::get_callback_url( self::SOCIAL_VKONTAKTE, $redirect );
 	}
 
@@ -428,7 +428,7 @@ class AnyCommentSocialAuth {
 	 *
 	 * @return string
 	 */
-	public static function get_ok_callback( $redirect = null ) {
+	public static function get_ok_callback ( $redirect = null ) {
 		return static::get_callback_url( self::SOCIAL_ODNOKLASSNIKI, $redirect );
 	}
 
@@ -439,7 +439,7 @@ class AnyCommentSocialAuth {
 	 *
 	 * @return string
 	 */
-	public static function get_instagram_callback( $redirect = null ) {
+	public static function get_instagram_callback ( $redirect = null ) {
 		return static::get_callback_url( self::SOCIAL_INSTAGRAM, $redirect );
 	}
 
@@ -450,7 +450,7 @@ class AnyCommentSocialAuth {
 	 *
 	 * @return string
 	 */
-	public static function get_twitch_callback( $redirect = null ) {
+	public static function get_twitch_callback ( $redirect = null ) {
 		return static::get_callback_url( self::SOCIAL_TWITCH, $redirect );
 	}
 
@@ -461,7 +461,7 @@ class AnyCommentSocialAuth {
 	 *
 	 * @return string
 	 */
-	public static function get_dribbble_callback( $redirect = null ) {
+	public static function get_dribbble_callback ( $redirect = null ) {
 		return static::get_callback_url( self::SOCIAL_DRIBBBLE, $redirect );
 	}
 
@@ -472,7 +472,7 @@ class AnyCommentSocialAuth {
 	 *
 	 * @return string
 	 */
-	public static function get_steam_callback( $redirect = null ) {
+	public static function get_steam_callback ( $redirect = null ) {
 		return static::get_callback_url( self::SOCIAL_STEAM, $redirect );
 	}
 
@@ -483,7 +483,7 @@ class AnyCommentSocialAuth {
 	 *
 	 * @return string
 	 */
-	public static function get_yandex_callback( $redirect = null ) {
+	public static function get_yandex_callback ( $redirect = null ) {
 		return static::get_callback_url( self::SOCIAL_YANDEX, $redirect );
 	}
 
@@ -494,7 +494,7 @@ class AnyCommentSocialAuth {
 	 *
 	 * @return string
 	 */
-	public static function get_mailru_callback( $redirect = null ) {
+	public static function get_mailru_callback ( $redirect = null ) {
 		return static::get_callback_url( self::SOCIAL_MAILRU, $redirect );
 	}
 
@@ -505,7 +505,7 @@ class AnyCommentSocialAuth {
 	 *
 	 * @return string
 	 */
-	public static function get_yahoo_callback( $redirect = null ) {
+	public static function get_yahoo_callback ( $redirect = null ) {
 		return static::get_callback_url( self::SOCIAL_YAHOO, $redirect );
 	}
 
@@ -516,7 +516,7 @@ class AnyCommentSocialAuth {
 	 *
 	 * @return string
 	 */
-	public static function get_wordpress_callback( $redirect = null ) {
+	public static function get_wordpress_callback ( $redirect = null ) {
 		return static::get_callback_url( self::SOCIAL_WORDPRESS, $redirect );
 	}
 
@@ -527,7 +527,7 @@ class AnyCommentSocialAuth {
 	 *
 	 * @return string
 	 */
-	public static function get_google_callback( $redirect = null ) {
+	public static function get_google_callback ( $redirect = null ) {
 		return static::get_callback_url( self::SOCIAL_GOOGLE, $redirect );
 	}
 
@@ -538,7 +538,7 @@ class AnyCommentSocialAuth {
 	 *
 	 * @return string
 	 */
-	public static function get_github_callback( $redirect = null ) {
+	public static function get_github_callback ( $redirect = null ) {
 		return static::get_callback_url( self::SOCIAL_GITHUB, $redirect );
 	}
 
@@ -549,7 +549,7 @@ class AnyCommentSocialAuth {
 	 *
 	 * @return string
 	 */
-	public static function get_facebook_callback( $redirect = null ) {
+	public static function get_facebook_callback ( $redirect = null ) {
 		return static::get_callback_url( self::SOCIAL_FACEBOOK, $redirect );
 	}
 
@@ -560,7 +560,7 @@ class AnyCommentSocialAuth {
 	 *
 	 * @return string
 	 */
-	public static function get_twitter_callback( $redirect = null ) {
+	public static function get_twitter_callback ( $redirect = null ) {
 		return static::get_callback_url( self::SOCIAL_TWITTER, $redirect );
 	}
 
@@ -573,7 +573,7 @@ class AnyCommentSocialAuth {
 	 *
 	 * @return string
 	 */
-	public static function get_callback_url( $social_type, $redirect = null, $addHash = false ) {
+	public static function get_callback_url ( $social_type, $redirect = null, $addHash = false ) {
 		$url = static::get_rest_namespace() . "/auth/" . $social_type;
 
 		if ( $redirect !== null ) {
@@ -595,7 +595,7 @@ class AnyCommentSocialAuth {
 	 *
 	 * @return bool|WP_Error WP_Error on failure.
 	 */
-	private function process_authentication( $user, $social ) {
+	private function process_authentication ( $user, $social ) {
 		$email = isset( $user->email ) && ! empty( $user->email ) ?
 			$user->email :
 			null;
@@ -651,7 +651,7 @@ class AnyCommentSocialAuth {
 	 *
 	 * @return bool|WP_Error
 	 */
-	public function auth_user( $user_profile, $social, $field, $value, array $user_data, array $user_meta ) {
+	public function auth_user ( $user_profile, $social, $field, $value, array $user_data, array $user_meta ) {
 
 		// Transliterate display name into username, so it is looks
 		// more friendly, as previously it was as "social_username"
@@ -743,13 +743,13 @@ class AnyCommentSocialAuth {
 	 *
 	 * @return string|null string on success, null on failure.
 	 */
-	public function upload_photo( $social, $user_profile ) {
+	public function upload_photo ( $social, $user_profile ) {
 		$photoUrl = null;
 
 		if ( ! empty( $user_profile->photoURL ) ) {
 			$localUrl = AnyCommentUploadHandler::upload_avatar( $user_profile->photoURL, [
 				$social,
-				$user_profile->identifier
+				$user_profile->identifier,
 			] );
 
 			if ( $localUrl !== false ) {
@@ -760,7 +760,7 @@ class AnyCommentSocialAuth {
 		return $photoUrl;
 	}
 
-	public function is_user_from_social( $user, $social ) {
+	public function is_user_from_social ( $user, $social ) {
 		$social_from_meta = trim( get_user_meta( $user->ID, self::META_SOCIAL_TYPE, true ) );
 		$social           = trim( $social );
 
@@ -781,7 +781,7 @@ class AnyCommentSocialAuth {
 	 *
 	 * @return false|WP_User false on failure.
 	 */
-	public function get_user_by( $field, $value, $social = null ) {
+	public function get_user_by ( $field, $value, $social = null ) {
 
 		$user = false;
 
@@ -795,7 +795,7 @@ class AnyCommentSocialAuth {
 			 */
 			$prepared_sql = $wpdb->prepare( "SELECT user_id, meta_value FROM {$wpdb->usermeta} WHERE meta_key = %s AND meta_value = %s", [
 				self::META_SOCIAL_ORIGINAL_USERNAME,
-				$value
+				$value,
 			] );
 			$user_meta    = $wpdb->get_row( $prepared_sql );
 
@@ -838,7 +838,7 @@ class AnyCommentSocialAuth {
 	 * @see wp_insert_user() for how `$userdata` param is being processed.
 	 * @see add_user_meta() for how `$usermeta` param is being processed.
 	 */
-	public function insert_user( $user_data, $user_meta ) {
+	public function insert_user ( $user_data, $user_meta ) {
 		if ( ! isset( $user_data['userpass'] ) ) {
 			// Generate some random password for user
 			$user_data['user_pass'] = wp_generate_password( 12, true );
@@ -875,7 +875,7 @@ class AnyCommentSocialAuth {
 	 *
 	 * @return bool
 	 */
-	public function update_user_meta( $user_id, $usermeta ) {
+	public function update_user_meta ( $user_id, $usermeta ) {
 		if ( ! get_user_by( 'id', $user_id ) || ! is_array( $usermeta ) || ! empty( $usermeta ) ) {
 			return false;
 		}
@@ -900,7 +900,7 @@ class AnyCommentSocialAuth {
 	 *
 	 * @return string|null NULL returned when user does not have any avatar.
 	 */
-	public function get_active_user_avatar_url() {
+	public function get_active_user_avatar_url () {
 		$active_user = $user = wp_get_current_user();
 		if ( $active_user instanceof WP_User ) {
 
@@ -917,7 +917,7 @@ class AnyCommentSocialAuth {
 	 *
 	 * @return mixed
 	 */
-	public static function get_user_social_type( $user_id ) {
+	public static function get_user_social_type ( $user_id ) {
 		return get_user_meta( $user_id, 'anycomment_social', true );
 	}
 
@@ -928,17 +928,16 @@ class AnyCommentSocialAuth {
 	 *
 	 * @return mixed|null
 	 */
-	public static function get_user_avatar_url( $id_or_email ) {
+	public static function get_user_avatar_url ( $id_or_email ) {
 
-		$cache_key    = 'anycomment/user/avatar_url/' . md5( serialize( $id_or_email ) );
-		$avatar_cache = AnyCommentCore::cache()->getItem( $cache_key );
+		$avatar_cache = UserCache::getAvatar( $id_or_email );
 
 		if ( $avatar_cache->isHit() ) {
 			return $avatar_cache->get();
 		}
 
-		$user_id     = null;
-		$email       = null;
+		$user_id = null;
+		$email   = null;
 
 		if ( is_numeric( $id_or_email ) ) {
 			$user_id = $id_or_email;
@@ -981,7 +980,7 @@ class AnyCommentSocialAuth {
 			}
 		}
 
-		if ( empty($avatar_url) && $user_id !== null ) {
+		if ( empty( $avatar_url ) && $user_id !== null ) {
 			$social_avatar_url = AnyCommentUserMeta::get_social_avatar( $user_id );
 
 			if ( ! empty( $social_avatar_url ) ) {
@@ -1008,7 +1007,7 @@ class AnyCommentSocialAuth {
 		if ( empty( $avatar_url ) && ! AnyCommentGenericSettings::is_default_avatar_anycomment() ) {
 			$avatar_url = get_avatar_url( $id_or_email, [
 				'size'    => AnyCommentAvatars::DEFAULT_AVATAR_WIDTH,
-				'default' => AnyCommentGenericSettings::get_default_avatar()
+				'default' => AnyCommentGenericSettings::get_default_avatar(),
 			] );
 		}
 
@@ -1031,7 +1030,7 @@ class AnyCommentSocialAuth {
 	 *
 	 * @return bool if the gravatar exists or not
 	 */
-	public static function has_gravatar( $id_or_email, $skip_checks = false ) {
+	public static function has_gravatar ( $id_or_email, $skip_checks = false ) {
 
 		$cache_key = 'anycomment/has-gravatar/' . md5( serialize( $id_or_email ) );
 
@@ -1099,7 +1098,7 @@ class AnyCommentSocialAuth {
 	 *
 	 * @return string|array|null
 	 */
-	public static function getErrors( $decode = true, $andClean = false ) {
+	public static function getErrors ( $decode = true, $andClean = false ) {
 		$errors = isset( $_COOKIE[ self::COOKIE_ERROR_STORAGE ] ) ? $_COOKIE[ self::COOKIE_ERROR_STORAGE ] : null;
 
 		if ( $errors === null ) {
@@ -1124,7 +1123,7 @@ class AnyCommentSocialAuth {
 	 *
 	 * @return bool
 	 */
-	public function addError( $errorMessage ) {
+	public function addError ( $errorMessage ) {
 
 		$errors = static::getErrors();
 
@@ -1143,7 +1142,7 @@ class AnyCommentSocialAuth {
 	/**
 	 * Clean cookie errors.
 	 */
-	public static function cleanErrors() {
+	public static function cleanErrors () {
 		if ( static::getErrors( false ) !== null ) {
 			setcookie( self::COOKIE_ERROR_STORAGE, null, - 1, '/' );
 		}
