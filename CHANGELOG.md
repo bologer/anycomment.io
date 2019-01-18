@@ -10,6 +10,7 @@
 **Fixes:**
 
 * Fixed issue when user avatar did not change when settings were updated, #361
+* Fixed issue when moderators did not see admin bar while hide admin bar options was enabled, #359
 
 
 ## 0.0.80 – 08.01.2019
