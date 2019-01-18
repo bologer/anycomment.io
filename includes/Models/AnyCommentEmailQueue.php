@@ -48,7 +48,7 @@ class AnyCommentEmailQueue extends AnyCommentActiveRecord {
 	/**
 	 * AnyCommentEmailQueue constructor.
 	 */
-	public function __construct() {
+	public function __construct () {
 		$this->created_at = current_time( 'mysql' );
 	}
 
@@ -56,7 +56,7 @@ class AnyCommentEmailQueue extends AnyCommentActiveRecord {
 	/**
 	 * @return \wpdb
 	 */
-	public static function db() {
+	public static function db () {
 		global $wpdb;
 
 		return $wpdb;
@@ -66,7 +66,7 @@ class AnyCommentEmailQueue extends AnyCommentActiveRecord {
 	 * Get latest
 	 * @return AnyCommentEmailQueue|null|object
 	 */
-	public static function get_newest() {
+	public static function get_newest () {
 		$tableName = static::get_table_name();
 		$sql       = "SELECT * FROM `$tableName` ORDER BY `id` DESC LIMIT 1";
 
@@ -78,7 +78,7 @@ class AnyCommentEmailQueue extends AnyCommentActiveRecord {
 	 *
 	 * @return null|AnyCommentEmailQueue[]
 	 */
-	public static function grab_replies_to_send() {
+	public static function grab_replies_to_send () {
 		$tableName = static::get_table_name();
 		$sql       = "SELECT * FROM `$tableName` WHERE `is_sent` = 0";
 
@@ -92,7 +92,7 @@ class AnyCommentEmailQueue extends AnyCommentActiveRecord {
 	 *
 	 * @return bool
 	 */
-	public static function is_sent( $email_id ) {
+	public static function is_sent ( $email_id ) {
 		if ( empty( $email_id ) || ! is_numeric( $email_id ) ) {
 			return false;
 		}
@@ -125,7 +125,7 @@ class AnyCommentEmailQueue extends AnyCommentActiveRecord {
 	 *
 	 * @return bool
 	 */
-	public static function mark_as_sent( $email_id ) {
+	public static function mark_as_sent ( $email_id ) {
 		if ( empty( $email_id ) || ! is_numeric( $email_id ) ) {
 			return false;
 		}
@@ -146,13 +146,15 @@ class AnyCommentEmailQueue extends AnyCommentActiveRecord {
 	 * - not a reply to the same user
 	 * - make sure parent user has email (some socials do not provide email in the API)
 	 *
-	 * @param WP_Comment $comment Instance of comment model.
+	 * @param WP_Comment|int $comment Instance of comment model or ID.
 	 *
 	 * @return AnyCommentEmailQueue|bool|int
 	 */
-	public static function add_as_reply( $comment ) {
+	public static function add_as_reply ( $comment ) {
 
-		if ( ! $comment instanceof WP_Comment || (int) $comment->comment_parent === 0 ) {
+		$comment = get_comment( $comment );
+
+		if ( empty( $comment ) || (int) $comment->comment_ID === 0 ) {
 			return false;
 		}
 
@@ -207,12 +209,15 @@ AND `comments`.`comment_ID`=%d";
 	 *
 	 * Notice: no email will be send if admin email from settings is matching one from comment.
 	 *
-	 * @param WP_Comment $comment Comment to be added as notification to admin.
+	 * @param WP_Comment|int $comment Comment to be added as notification to admin.
 	 *
 	 * @return AnyCommentEmailQueue|bool|int
 	 */
-	public static function add_as_admin_notification( $comment ) {
-		if ( ! $comment instanceof WP_Comment ) {
+	public static function add_as_admin_notification ( $comment ) {
+
+		$comment = get_comment( $comment );
+
+		if ( empty( $comment ) || (int) $comment->comment_ID === 0 ) {
 			return false;
 		}
 
@@ -249,7 +254,7 @@ AND `comments`.`comment_ID`=%d";
 	 *
 	 * @return AnyCommentEmailQueue|bool|int
 	 */
-	public static function add_as_subscriber_notification( $subscriber, $comment ) {
+	public static function add_as_subscriber_notification ( $subscriber, $comment ) {
 		if ( ! $comment instanceof WP_Comment ) {
 			return false;
 		}
@@ -287,7 +292,7 @@ AND `comments`.`comment_ID`=%d";
 	 *
 	 * @return AnyCommentEmailQueue|bool|int
 	 */
-	public static function add_as_subscriber_confirmation_notification( $subscriber ) {
+	public static function add_as_subscriber_confirmation_notification ( $subscriber ) {
 
 		$email = new self();
 
@@ -324,7 +329,7 @@ AND `comments`.`comment_ID`=%d";
 	 *
 	 * @return bool
 	 */
-	public function save() {
+	public function save () {
 
 		if ( ! isset( $this->ip ) ) {
 			$this->ip = AnyCommentRequest::get_user_ip();
@@ -376,7 +381,7 @@ AND `comments`.`comment_ID`=%d";
 	 *
 	 * @return string
 	 */
-	public static function generate_subscribe_confirmation_email( $subscriber ) {
+	public static function generate_subscribe_confirmation_email ( $subscriber ) {
 		$token = $subscriber->token;
 
 		$post           = get_post( $subscriber->post_ID );
@@ -448,7 +453,7 @@ AND `comments`.`comment_ID`=%d";
 	 *
 	 * @return string HTML formatted content of email.
 	 */
-	public static function generate_subscribe_email( $subscription, $email ) {
+	public static function generate_subscribe_email ( $subscription, $email ) {
 		$comment        = get_comment( $email->comment_ID );
 		$post           = get_post( $email->post_ID );
 		$cleanPermalink = get_permalink( $post );
@@ -545,7 +550,7 @@ AND `comments`.`comment_ID`=%d";
 	 *
 	 * @return string HTML formatted content of email.
 	 */
-	public static function generate_reply_email( $email ) {
+	public static function generate_reply_email ( $email ) {
 		$comment        = get_comment( $email->comment_ID );
 		$post           = get_post( $email->post_ID );
 		$cleanPermalink = get_permalink( $post );
@@ -629,7 +634,7 @@ AND `comments`.`comment_ID`=%d";
 	 * @return string
 	 * todo: need rewrite as duplicate code of email template above, for now good enought
 	 */
-	public static function generate_admin_email( $email ) {
+	public static function generate_admin_email ( $email ) {
 		$comment        = get_comment( $email->comment_ID );
 		$post           = get_post( $email->post_ID );
 		$cleanPermalink = get_permalink( $post );
@@ -691,7 +696,7 @@ AND `comments`.`comment_ID`=%d";
 			$reply_url,
 			$reply_button,
 			$admin_moderation_url,
-			$admin_edit_url
+			$admin_edit_url,
 		];
 
 		$template = AnyCommentGenericSettings::get_notify_email_admin_template();
@@ -708,7 +713,7 @@ AND `comments`.`comment_ID`=%d";
 	 *
 	 * @return string
 	 */
-	public static function prepare_email_template( $content, $search, $replacement ) {
+	public static function prepare_email_template ( $content, $search, $replacement ) {
 		$content = str_replace( $search, $replacement, $content );
 
 		$content = preg_replace( '/\{.*?\}/', '', $content );

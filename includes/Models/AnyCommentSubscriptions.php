@@ -51,7 +51,7 @@ class AnyCommentSubscriptions extends AnyCommentActiveRecord {
 	 *
 	 * @return $this|null
 	 */
-	public static function find_by_token( $token ) {
+	public static function find_by_token ( $token ) {
 
 		$token = trim( $token );
 
@@ -76,7 +76,7 @@ class AnyCommentSubscriptions extends AnyCommentActiveRecord {
 	 *
 	 * @return $this|null
 	 */
-	public static function find_by_email_post( $email, $post_id ) {
+	public static function find_by_email_post ( $email, $post_id ) {
 
 		if ( empty( $email ) || empty( $post_id ) ) {
 			return null;
@@ -86,7 +86,7 @@ class AnyCommentSubscriptions extends AnyCommentActiveRecord {
 		$table        = static::get_table_name();
 		$prepared_sql = $wpdb->prepare( "SELECT * FROM $table WHERE email = %s AND post_ID = %d", [
 			$email,
-			$post_id
+			$post_id,
 		] );
 
 		$row = $wpdb->get_row( $prepared_sql );
@@ -101,7 +101,7 @@ class AnyCommentSubscriptions extends AnyCommentActiveRecord {
 	 *
 	 * @return false|int
 	 */
-	public static function refresh_token_by( $where ) {
+	public static function refresh_token_by ( $where ) {
 		global $wpdb;
 
 		if ( isset( $where['id'] ) ) {
@@ -130,7 +130,7 @@ class AnyCommentSubscriptions extends AnyCommentActiveRecord {
 	 *
 	 * @return false|int false on failure, int when some rows affected (success).
 	 */
-	public static function mark_as_active_by_token( $token, $unset_token = true ) {
+	public static function mark_as_active_by_token ( $token, $unset_token = true ) {
 		global $wpdb;
 		$table = static::get_table_name();
 
@@ -153,7 +153,7 @@ class AnyCommentSubscriptions extends AnyCommentActiveRecord {
 	 *
 	 * @return false|int false on failure, int when some rows affected (success).
 	 */
-	public static function mark_as_inactive_by_token( $token, $unset_token = true ) {
+	public static function mark_as_inactive_by_token ( $token, $unset_token = true ) {
 		global $wpdb;
 		$table = static::get_table_name();
 
@@ -177,7 +177,7 @@ class AnyCommentSubscriptions extends AnyCommentActiveRecord {
 	 *
 	 * @return bool
 	 */
-	public static function notify_by( $comment ) {
+	public static function notify_by ( $comment ) {
 
 		if ( ! AnyCommentGenericSettings::is_notify_subscribers() ) {
 			return false;
@@ -185,14 +185,14 @@ class AnyCommentSubscriptions extends AnyCommentActiveRecord {
 
 		$working_comment = get_comment( $comment );
 
-		if ( (int) $working_comment->comment_post_ID === 0 ) {
+		if ( empty( $working_comment ) || (int) $working_comment->comment_ID === 0 ) {
 			return false;
 		}
 
 		global $wpdb;
 
 		$table = static::get_table_name();
-		$sql   = "SELECT * FROM $table WHERE post_ID=%d AND is_active=1 AND confirmed_at IS NOT NULL";
+		$sql   = "SELECT * FROM $table WHERE post_ID = %d AND is_active = 1 AND confirmed_at IS NOT NULL";
 
 		/**
 		 * @var AnyCommentSubscriptions[]|null $subscribers
@@ -220,7 +220,7 @@ class AnyCommentSubscriptions extends AnyCommentActiveRecord {
 	 *
 	 * @return false|int
 	 */
-	public function delete_by_id( $id ) {
+	public function delete_by_id ( $id ) {
 		global $wpdb;
 
 		return $wpdb->delete( static::get_table_name(), [ 'ID' => $id ] );
@@ -234,7 +234,7 @@ class AnyCommentSubscriptions extends AnyCommentActiveRecord {
 	 *
 	 * @return bool
 	 */
-	public static function is_subscribed_by( $email, $post = null ) {
+	public static function is_subscribed_by ( $email, $post = null ) {
 
 		$condition_array = [ $email ];
 		$condition       = "email = %s";
@@ -269,7 +269,7 @@ class AnyCommentSubscriptions extends AnyCommentActiveRecord {
 	/**
 	 * Set token for the model.
 	 */
-	public function set_token() {
+	public function set_token () {
 		$this->token = static::generate_token( 32 );
 	}
 
@@ -280,7 +280,7 @@ class AnyCommentSubscriptions extends AnyCommentActiveRecord {
 	 *
 	 * @return string
 	 */
-	public static function generate_token( $length = 16 ) {
+	public static function generate_token ( $length = 16 ) {
 		return bin2hex( openssl_random_pseudo_bytes( $length ) );
 	}
 
@@ -290,7 +290,7 @@ class AnyCommentSubscriptions extends AnyCommentActiveRecord {
 	 *
 	 * @return false|$this
 	 */
-	public function save() {
+	public function save () {
 
 		if ( ! isset( $this->user_agent ) ) {
 			$this->user_agent = AnyCommentRequest::get_user_agent();
