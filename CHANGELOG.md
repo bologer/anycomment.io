@@ -11,6 +11,7 @@
 
 * Fixed issue when user avatar did not change when settings were updated, #361
 * Fixed issue when moderators did not see admin bar while hide admin bar options was enabled, #359
+* Fixed issue when users/admins were notified about about new comment even thought it was not process by Akismet yet, #358
 
 
 ## 0.0.80 – 08.01.2019

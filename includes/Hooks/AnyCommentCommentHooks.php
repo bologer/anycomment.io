@@ -8,13 +8,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use WP_Comment;
 
-use AnyComment\Models\AnyCommentLikes;
 use AnyComment\AnyCommentCommentMeta;
+use AnyComment\Models\AnyCommentLikes;
+use AnyComment\Models\AnyCommentEmailQueue;
 use AnyComment\Models\AnyCommentSubscriptions;
 use AnyComment\Models\AnyCommentUploadedFiles;
 use AnyComment\Admin\AnyCommentGenericSettings;
 use AnyComment\Cache\AnyCommentRestCacheManager;
-use AnyComment\Models\AnyCommentEmailQueue;
+use AnyComment\Admin\AnyCommentIntegrationSettings;
 
 /**
  * Class AnyCommentCommentHooks is used to control hooks related to comments.
@@ -24,14 +25,14 @@ class AnyCommentCommentHooks {
 	/**
 	 * AnyCommentCommentHooks constructor.
 	 */
-	public function __construct() {
+	public function __construct () {
 		$this->init();
 	}
 
 	/**
 	 * Init method of all related hooks.
 	 */
-	private function init() {
+	private function init () {
 		// Should delete files, likes, etc before comment is deleted
 		// as WP by default remove comment meta, which is required to determine attachments IDs
 		add_action( 'delete_comment', [ $this, 'process_deleted_comment' ], 10, 2 );
@@ -54,6 +55,11 @@ class AnyCommentCommentHooks {
 
 		add_action( 'wp_insert_comment', [ $this, 'process_new_comment' ], 9, 2 );
 
+		/**
+		 * @see update_metadata() to find this hook (it is dynamically constructed) based on meta type
+		 */
+		add_action( "updated_comment_meta", [ $this, 'process_comment_meta_update' ], 10, 4 );
+
 		remove_filter( 'pre_comment_content', 'wp_filter_post_kses' );
 		remove_filter( 'pre_comment_content', 'wp_filter_kses' );
 
@@ -68,7 +74,7 @@ class AnyCommentCommentHooks {
 	 *
 	 * @return mixed
 	 */
-	public function kses_allowed_html_for_quill( $data ) {
+	public function kses_allowed_html_for_quill ( $data ) {
 		global $allowedtags;
 
 		$allowedtags = [];
@@ -101,23 +107,31 @@ class AnyCommentCommentHooks {
 	 *
 	 * @return bool false when comment should not processed.
 	 */
-	public function process_new_comment( $comment_id, $comment ) {
+	public function process_new_comment ( $comment_id, $comment ) {
 
 		if ( $comment->comment_type !== '' && $comment->comment_type !== 'review' ) {
 			return false;
 		}
 
-		// Notify subscribers
-		AnyCommentSubscriptions::notify_by( $comment );
+		// If Akismet is not active, then we may process notifications normally
+		// otherwise we should wait until it will be filtered and confired by Akismet that it is safe
+		// to notify user about it. Otherwise, it may cause possible spam attack
+		$is_akismet_active = AnyCommentIntegrationSettings::is_akismet_active() && is_plugin_active( 'akismet/akismet.php' );
 
-		// Notify on comment reply
-		if ( AnyCommentGenericSettings::is_notify_on_new_reply() ) {
-			AnyCommentEmailQueue::add_as_reply( $comment );
-		}
+		if ( ! $is_akismet_active ) {
 
-		// Notify admin
-		if ( AnyCommentGenericSettings::is_notify_admin() ) {
-			AnyCommentEmailQueue::add_as_admin_notification( $comment );
+			// Notify subscribers
+			AnyCommentSubscriptions::notify_by( $comment );
+
+			// Notify on comment reply
+			if ( AnyCommentGenericSettings::is_notify_on_new_reply() ) {
+				AnyCommentEmailQueue::add_as_reply( $comment );
+			}
+
+			// Notify admin
+			if ( AnyCommentGenericSettings::is_notify_admin() ) {
+				AnyCommentEmailQueue::add_as_admin_notification( $comment );
+			}
 		}
 
 		// Flush post comment count cache
@@ -127,12 +141,41 @@ class AnyCommentCommentHooks {
 	}
 
 	/**
+	 * Check update meta for comment.
+	 *
+	 * @param int $meta_id ID of the metadata entry to update.
+	 * @param int $object_id Object ID.
+	 * @param string $meta_key Meta key.
+	 * @param mixed $_meta_value Meta value.
+	 *
+	 * @see update_metadata() for further information about list of params. They are based on what is provided by the hook.
+	 */
+	public function process_comment_meta_update ( $meta_id, $object_id, $meta_key, $_meta_value ) {
+		// Akismet comment checking.
+		// When Akismet option is active, meta about comment status changed to success -> should notify
+		if ( AnyCommentIntegrationSettings::is_akismet_active() && $meta_key === 'akismet_result' && $_meta_value == 'true' ) {
+			// Notify subscribers
+			AnyCommentSubscriptions::notify_by( $object_id );
+
+			// Notify on comment reply
+			if ( AnyCommentGenericSettings::is_notify_on_new_reply() ) {
+				AnyCommentEmailQueue::add_as_reply( $object_id );
+			}
+
+			// Notify admin
+			if ( AnyCommentGenericSettings::is_notify_admin() ) {
+				AnyCommentEmailQueue::add_as_admin_notification( $object_id );
+			}
+		}
+	}
+
+	/**
 	 * Process comment which will be deleted soon in order to clean-up after it.
 	 *
 	 * @param int $comment_id Comment ID.
 	 * @param WP_Comment $comment Comment object.
 	 */
-	public function process_deleted_comment( $comment_id, $comment ) {
+	public function process_deleted_comment ( $comment_id, $comment ) {
 		// Delete likes of a comment
 		AnyCommentLikes::deleteLikes( $comment_id );
 
@@ -155,7 +198,7 @@ class AnyCommentCommentHooks {
 	 * @param int $comment_id Comment ID.
 	 * @param array $data Comment data.
 	 */
-	public function process_edit_comment( $comment_id, $data ) {
+	public function process_edit_comment ( $comment_id, $data ) {
 		// Mark comment as updated
 		AnyCommentCommentMeta::mark_updated( $comment_id, $data );
 	}
@@ -166,7 +209,7 @@ class AnyCommentCommentHooks {
 	 * @param int $comment_id Comment ID.
 	 * @param int $status Status to be assigned.
 	 */
-	public function process_set_status_comment( $comment_id, $status ) {
+	public function process_set_status_comment ( $comment_id, $status ) {
 	}
 
 	/**
@@ -177,6 +220,6 @@ class AnyCommentCommentHooks {
 	 * @param int $comment_id Comment ID.
 	 * @param WP_Comment $comment Comment object.
 	 */
-	public function process_soft_comment( $comment_id, $comment ) {
+	public function process_soft_comment ( $comment_id, $comment ) {
 	}
 }
