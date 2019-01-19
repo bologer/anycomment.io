@@ -289,11 +289,6 @@ class SendComment extends AnyCommentComponent {
                 self.prepareInitialForm();
                 self.props.handleJustAdded();
                 self.props.loadComments();
-                return true;
-            })
-            .catch(function (error) {
-                self.setState({buttonEnabled: true});
-                self.showError(error);
 
                 if (settings.options.isModerateFirst) {
                     const user = self.getCurrentUser();
@@ -303,6 +298,11 @@ class SendComment extends AnyCommentComponent {
                     }
                 }
 
+                return true;
+            })
+            .catch(function (error) {
+                self.setState({buttonEnabled: true});
+                self.showError(error);
             });
 
         return false;
@@ -515,7 +515,8 @@ class SendComment extends AnyCommentComponent {
         const translations = settings.i18;
 
         if (!settings.post.comments_open) {
-            return <div className="anycomment anycomment-alert anycomment-alert-default">{translations.comments_closed}</div>;
+            return <div
+                className="anycomment anycomment-alert anycomment-alert-default">{translations.comments_closed}</div>;
         }
 
         const {
