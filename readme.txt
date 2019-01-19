@@ -180,6 +180,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 * Fixed issue when moderators did not see admin bar while hide admin bar options was enabled, #359
 * Fixed issue when users/admins were notified about about new comment even thought it was not process by Akismet yet, #358
 * Fixed issue when authorized users did not see alert about comment being moderated, #365
+* Fixed issue when alert message on the top right was not see as some themes have floating header
 
 = 0.0.80 – 08.01.2019 =
 
