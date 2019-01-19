@@ -28,19 +28,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 						$links = [
 							'telegram'  => [
 								'text' => __( 'Telegram', 'anycomment' ),
-								'url'  => \AnyComment\Helpers\AnyCommentLinkHelper::get_telegram()
+								'url'  => \AnyComment\Helpers\AnyCommentLinkHelper::get_telegram(),
 							],
 							'vkontakte' => [
 								'text' => __( 'Vkontakte', 'anycomment' ),
-								'url'  => \AnyComment\Helpers\AnyCommentLinkHelper::get_vkontakte()
+								'url'  => \AnyComment\Helpers\AnyCommentLinkHelper::get_vkontakte(),
 							],
 							'website'   => [
 								'text' => __( 'Website', 'anycomment' ),
-								'url'  => \AnyComment\Helpers\AnyCommentLinkHelper::get_official_website()
+								'url'  => \AnyComment\Helpers\AnyCommentLinkHelper::get_official_website(),
 							],
 							'github'    => [
 								'text' => __( 'GitHub', 'anycomment' ),
-								'url'  => \AnyComment\Helpers\AnyCommentLinkHelper::get_github()
+								'url'  => \AnyComment\Helpers\AnyCommentLinkHelper::get_github(),
 							],
 						];
 
@@ -122,11 +122,11 @@ if ( ! defined( 'ABSPATH' ) ) {
                     </style>
                     <div class="anycomment-analytics-promo">
                         <h2>Профессиональная аналитика</h2>
-                        <p>Совсем скоро выйдет первый аддон (дополнение) «AnyComment Аналитика». Подпишитесь, чтобы
-                            получить
-                            <a href="https://anycomment.io/aa-promo/?utm_source=anycomment_sidebar" target="_blank">получить
-                                скидку</a> <span class="anycomment-analytics-promo--highlight">20%</span>, а так же быть
-                            в курсе событий. Предложение ограничено до момента выхода аддона.</p>
+                        <p>Совсем скоро выйдет первый аддон (дополнение) «AnyComment Аналитика». <a
+                                    href="https://anycomment.io/aa-promo/?utm_source=anycomment_sidebar"
+                                    target="_blank">Подпишитесь</a>, чтобы получить скидку <span
+                                    class="anycomment-analytics-promo--highlight">20%</span>, а так же быть
+                            в курсе даты выхода. Предложение ограничено до момента выхода аддона.</p>
                         <div>
                             <a href="https://anycomment.io/aa-promo/?utm_source=anycomment_sidebar" target="_blank"
                                class="anycomment-analytics-promo__more">Подробнее</a>
