@@ -5,6 +5,7 @@
 **Enhancements:**
 
 * New hook `anycomment/admin/options/update` with two arguments fired after some set of options being updated
+* Added support for Internet Explorer 9+
 
 
 **Fixes:**
