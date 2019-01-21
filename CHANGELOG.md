@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.0.81 – 16.01.2019
+## 0.0.81 – 23.01.2019
 
 **Enhancements:**
 
@@ -15,6 +15,7 @@
 * Fixed issue when users/admins were notified about about new comment even thought it was not process by Akismet yet, #358
 * Fixed issue when authorized users did not see alert about comment being moderated, #365
 * Fixed issue when alert message on the top right was not see as some themes have floating header
+* Fixed 200 when comments template did not exist on the page, #362
 
 
 ## 0.0.80 – 08.01.2019
