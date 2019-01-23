@@ -14,28 +14,19 @@
         display: inline-flex;
         flex-direction: row-reverse;
 
-        &-item {
-          svg {
-            color: #ddd;
-            width: 22px;
-            height: 22px;
-            cursor: pointer;
-          }
+        // svg element
+        svg {
+          color: #ddd;
+          width: 22px;
+          height: 22px;
+          cursor: pointer;
         }
 
-        &-item-active {
-          svg {
-            color: #EEBA64;
-            /* make hover effect work properly in IE */
-            pointer-events: none;
-          }
-        }
-
-        &-item:hover svg,
-        &-item:hover ~ span svg,
-        &-item-active:hover > span svg,
-        &-item-active:hover ~ span:hover ~ label svg {
+        // svg element
+        svg.anycomment-rating__stars-active {
           color: #EEBA64;
+          /* make hover effect work properly in IE */
+          pointer-events: none;
         }
       }
 

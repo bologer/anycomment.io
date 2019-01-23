@@ -16,6 +16,7 @@
 * Fixed issue when authorized users did not see alert about comment being moderated, #365
 * Fixed issue when alert message on the top right was not see as some themes have floating header
 * Fixed 200 when comments template did not exist on the page, #362
+* Fixed issue when stars were showing incorrect half of the rating, #355
 
 
 ## 0.0.80 – 08.01.2019

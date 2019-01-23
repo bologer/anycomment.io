@@ -126,7 +126,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                                     href="https://anycomment.io/aa-promo/?utm_source=anycomment_sidebar"
                                     target="_blank">Подпишитесь</a>, чтобы получить скидку <span
                                     class="anycomment-analytics-promo--highlight">20%</span>, а так же быть
-                            в курсе даты выхода. Предложение ограничено до момента выхода аддона.</p>
+                            в курсе даты выхода. Предложение ограничено до момента презентации аддона.</p>
                         <div>
                             <a href="https://anycomment.io/aa-promo/?utm_source=anycomment_sidebar" target="_blank"
                                class="anycomment-analytics-promo__more">Подробнее</a>

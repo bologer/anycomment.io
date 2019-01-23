@@ -4,7 +4,12 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 export default class Icon extends Component {
 
     render() {
-        const classes = 'anycomment anycomment-icon';
+        let classes = 'anycomment anycomment-icon',
+            customClass = this.props.class || '';
+
+        if (customClass) {
+            classes += ' ' + customClass;
+        }
 
         return <FontAwesomeIcon
             icon={this.props.icon}
