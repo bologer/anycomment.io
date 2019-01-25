@@ -137,7 +137,7 @@ class AnyCommentCore {
 	public function includes() {
 		AnyCommentLoader::load();
 
-		$this->init_freemius();
+//		$this->init_freemius();
 	}
 
 	/**
