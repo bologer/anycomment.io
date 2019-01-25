@@ -1,11 +1,11 @@
 # Changelog
 
-## 0.0.81 – 23.01.2019
+## 0.0.81 – 25.01.2019
 
 **Enhancements:**
 
 * New hook `anycomment/admin/options/update` with two arguments fired after some set of options being updated
-* Added support for Internet Explorer 9+
+* Added support for Internet Explorer 9+ (need more testing)
 
 
 **Fixes:**
