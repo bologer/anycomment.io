@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.0.82 – 25.01.2019
+
+**Fixes:**
+
+* Removed Freemius integration left by mistake, it should come a bit later
+
+
 ## 0.0.81 – 25.01.2019
 
 **Enhancements:**
