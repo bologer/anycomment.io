@@ -22,7 +22,7 @@ class AnyCommentTemplate {
 	 *
 	 * @return mixed
 	 */
-	public static function render( $name ) {
+	public static function render ( $name ) {
 		ob_start();
 
 
@@ -36,6 +36,10 @@ class AnyCommentTemplate {
 			}
 		} else {
 			$path = ANYCOMMENT_ABSPATH . "/templates/{$name}.php";
+		}
+
+		if ( ! is_file( $path ) ) {
+			return '';
 		}
 
 		include $path;

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.0.83 – 25.01.2019
+
+**Enhancements:**
+
+
+**Fixes:**
+
+* Fixed IE error on "Object doesn't support property or method 'isNaN'"
+
 ## 0.0.82 – 25.01.2019
 
 **Fixes:**

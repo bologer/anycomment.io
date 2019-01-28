@@ -19,7 +19,7 @@ class AnyCommentCore {
 	 *
 	 * @var string
 	 */
-	public $version = '0.0.82';
+	public $version = '0.0.83';
 
 	/**
 	 * @var Pool
@@ -137,7 +137,7 @@ class AnyCommentCore {
 	public function includes() {
 		AnyCommentLoader::load();
 
-//		$this->init_freemius();
+		$this->init_freemius();
 	}
 
 	/**
