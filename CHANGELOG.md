@@ -4,6 +4,7 @@
 
 **Enhancements:**
 
+* Added ability to specify number of words before "..." in the recent comments widget, #374
 
 **Fixes:**
 

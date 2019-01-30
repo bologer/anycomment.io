@@ -20,7 +20,7 @@ class CommentList extends \WP_Widget {
 	 *
 	 * @since 2.8.0
 	 */
-	public function __construct() {
+	public function __construct () {
 		$widget_ops = array(
 			'classname'                   => 'CommentList',
 			'description'                 => __( 'Your site&#8217;s most recent comments displayed using AnyComment.' ),
@@ -37,7 +37,7 @@ class CommentList extends \WP_Widget {
 	 *
 	 * @return string
 	 */
-	public function compile_styles( $instance ) {
+	public function compile_styles ( $instance ) {
 		$mtime = filemtime( AnyComment()->plugin_path() . '/assets/widgets/comment-list/comment-list.scss' );
 
 		$array_hash   = [];
@@ -86,7 +86,7 @@ class CommentList extends \WP_Widget {
 	 *                        'before_widget', and 'after_widget'.
 	 * @param array $instance Settings for the current Recent Comments widget instance.
 	 */
-	public function widget( $args, $instance ) {
+	public function widget ( $args, $instance ) {
 		$output = $this->compile_styles( $instance );
 
 		if ( ! isset( $args['widget_id'] ) ) {
@@ -95,7 +95,9 @@ class CommentList extends \WP_Widget {
 
 		$title = ! empty( $instance['title'] ) ? $instance['title'] : '';
 
-		$number = ( ! empty( $instance['number'] ) ) ? absint( $instance['number'] ) : 5;
+		$number          = ( ! empty( $instance['number'] ) ) ? absint( $instance['number'] ) : 5;
+		$read_more_limit = ( ! empty( $instance['read_more_limit'] ) ) ? absint( $instance['read_more_limit'] ) : 10;
+
 		if ( ! $number ) {
 			$number = 5;
 		}
@@ -111,7 +113,7 @@ class CommentList extends \WP_Widget {
 		$comments = get_comments( apply_filters( 'widget_comments_args', array(
 			'number'      => $number,
 			'status'      => 'approve',
-			'post_status' => 'publish'
+			'post_status' => 'publish',
 		), $instance ) );
 
 		$output .= $args['before_widget'];
@@ -128,10 +130,10 @@ class CommentList extends \WP_Widget {
 			 */
 			foreach ( (array) $comments as $comment ) {
 
-				$comment_text       = wp_trim_words( $comment->comment_content, 10 );
+				$comment_text       = wp_trim_words( $comment->comment_content, $read_more_limit );
 				$comment_datetime   = date( 'c', strtotime( $comment->comment_date ) );
 				$comment_human_time = human_time_diff( current_time( 'timestamp' ), strtotime( $comment->comment_date ) ) . ' ' . __( 'ago', 'anycomment' );
-				$comment_link       = rtrim(get_permalink( $comment->comment_post_ID ), '/') . '#comment-' . $comment->comment_ID;
+				$comment_link       = rtrim( get_permalink( $comment->comment_post_ID ), '/' ) . '#comment-' . $comment->comment_ID;
 				$post_title         = get_the_title( $comment->comment_post_ID );
 				$author_name        = $comment->comment_author;
 				$author_avatar_url  = AnyCommentSocialAuth::get_user_avatar_url( $comment->comment_author_email );
@@ -181,10 +183,11 @@ EOT;
 	 *
 	 * @return array Updated settings to save.
 	 */
-	public function update( $new_instance, $old_instance ) {
+	public function update ( $new_instance, $old_instance ) {
 		$instance                          = $old_instance;
 		$instance['title']                 = sanitize_text_field( $new_instance['title'] );
 		$instance['number']                = absint( $new_instance['number'] );
+		$instance['read_more_limit']       = absint( $new_instance['read_more_limit'] );
 		$instance['scss_font_size']        = sanitize_text_field( $new_instance['scss_font_size'] );
 		$instance['scss_background_color'] = sanitize_text_field( $new_instance['scss_background_color'] );
 		$instance['scss_comment_color']    = sanitize_text_field( $new_instance['scss_comment_color'] );
@@ -201,9 +204,10 @@ EOT;
 	 *
 	 * @param array $instance Current settings.
 	 */
-	public function form( $instance ) {
-		$title  = isset( $instance['title'] ) ? $instance['title'] : '';
-		$number = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
+	public function form ( $instance ) {
+		$title           = isset( $instance['title'] ) ? $instance['title'] : '';
+		$number          = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
+		$read_more_limit = isset( $instance['read_more_limit'] ) ? absint( $instance['read_more_limit'] ) : 10;
 
 		$font_size        = isset( $instance['scss_font_size'] ) ? $instance['scss_font_size'] : '14px';
 		$background_color = isset( $instance['scss_background_color'] ) ? $instance['scss_background_color'] : 'transparent';
@@ -215,6 +219,12 @@ EOT;
             <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>"
                    name="<?php echo $this->get_field_name( 'title' ); ?>" type="text"
                    value="<?php echo esc_attr( $title ); ?>"/></p>
+
+        <p>
+            <label for="<?php echo $this->get_field_id( 'read_more_limit' ); ?>"><?php _e( 'Number words before "...":', 'anycomment' ); ?></label>
+            <input class="tiny-text" id="<?php echo $this->get_field_id( 'read_more_limit' ); ?>"
+                   name="<?php echo $this->get_field_name( 'read_more_limit' ); ?>" type="number" step="1" min="1"
+                   value="<?php echo $read_more_limit; ?>" size="3"/></p>
 
         <p>
             <label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of comments to show:', 'anycomment' ); ?></label>
