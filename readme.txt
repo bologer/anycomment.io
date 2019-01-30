@@ -175,7 +175,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 **Fixes:**
 
 * Fixed IE error on "Object doesn't support property or method 'isNaN'"
-
+* Fixed "Notice: Trying to get property of non-object" in "Emails" page, #373
 
 = 0.0.82 – 25.01.2019 =
 
