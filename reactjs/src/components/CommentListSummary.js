@@ -24,10 +24,13 @@ export default class CommentListSummary extends AnyCommentComponent {
             settings.i18.sort_oldest :
             settings.i18.sort_newest;
 
+        /**
+         * @link https://github.com/bologer/anycomment.io/issues/370 for further information about commentCountText being set via dangerouslySetInnerHTML
+         */
         return (
             <div className="anycomment anycomment-summary">
                 <div className="anycomment anycomment-summary-count"
-                     id="comment-count">{this.props.commentCountText}</div>
+                     dangerouslySetInnerHTML={{__html: this.props.commentCountText}}></div>
                 <div className="anycomment anycomment-summary-sort">
                     {settings.i18.sort_by}&nbsp;<span className="anycomment-link"
                                                       onClick={this.handleSorting}>{sortString}</span>&nbsp;
