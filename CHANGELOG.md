@@ -5,6 +5,7 @@
 **Enhancements:**
 
 * Added ability to specify number of words before "..." in the recent comments widget, #374
+* Reverted close comments behaviour. Now when "Close discussion" is unchecked, comment box would be hidden completely and not styles and scripts would be loaded, #371
 
 **Fixes:**
 

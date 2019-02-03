@@ -99,6 +99,11 @@ class AnyCommentRender {
 	 * Enqueue custom CSS styles.
 	 */
 	public function enqueue_custom_css () {
+
+		if ( ! comments_open() || post_password_required() ) {
+			return;
+		}
+
 		$css_styles = AnyCommentGenericSettings::get_editor_css();
 		echo <<<EOT
 <style>
@@ -114,6 +119,11 @@ EOT;
 	 * This object is used by frontend to gather information about website and user state.
 	 */
 	public function enqueue_base_json () {
+
+		if ( ! comments_open() || post_password_required() ) {
+			return;
+		}
+
 		$postId        = get_the_ID();
 		$postPermalink = get_permalink( $postId );
 
@@ -264,7 +274,7 @@ EOT;
 	 */
 	public function enqueue_assets () {
 
-		if ( post_password_required() ) {
+		if ( ! comments_open() || post_password_required() ) {
 			return false;
 		}
 
@@ -297,11 +307,11 @@ EOT;
 			'include' => false,
 		), $atts );
 
-		$isInclude = $params['include'];
+		$should_include = $params['include'];
 
 		$path = ANYCOMMENT_ABSPATH . '/templates/comments.php';
 
-		if ( $isInclude ) {
+		if ( $should_include ) {
 			return AnyCommentTemplate::render( 'comments' );
 		}
 
