@@ -87,7 +87,7 @@ class CommentHeader extends AnyCommentComponent {
                         {this.isModerated() ?
                             <Tooltip message={settings.i18.waiting_moderation}><Icon icon={faGavel}/></Tooltip> : ''}
 
-                        {this.isUpdated() ? <Tooltip message={settings.i18.edited}><Icon icon={faPen}/></Tooltip> : ''}
+                        {settings.options.isShowUpdatedInfo && this.isUpdated() ? <Tooltip message={settings.i18.edited}><Icon icon={faPen}/></Tooltip> : ''}
 
                         {!this.isGuest() && comment.permissions.can_edit_comment ?
                             <Dropdown>

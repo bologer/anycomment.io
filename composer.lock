@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "72ca4f04779d871c9043372568f03b11",
+    "content-hash": "7cb9df1000d8a0eaf31ecd7031768c89",
     "packages": [
         {
             "name": "hybridauth/hybridauth",
-            "version": "v3.0.0-rc.7",
+            "version": "v3.0.0-rc.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hybridauth/hybridauth.git",
-                "reference": "a635b61b65d798ff1557628cacce28cd992fcbb7"
+                "reference": "6123c31700bda7acd49cef7f1f0c138b60f39070"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hybridauth/hybridauth/zipball/a635b61b65d798ff1557628cacce28cd992fcbb7",
-                "reference": "a635b61b65d798ff1557628cacce28cd992fcbb7",
+                "url": "https://api.github.com/repos/hybridauth/hybridauth/zipball/6123c31700bda7acd49cef7f1f0c138b60f39070",
+                "reference": "6123c31700bda7acd49cef7f1f0c138b60f39070",
                 "shasum": ""
             },
             "require": {
@@ -61,7 +61,7 @@
                 "social",
                 "twitter"
             ],
-            "time": "2018-08-15T05:54:25+00:00"
+            "time": "2019-01-03T11:08:24+00:00"
         },
         {
             "name": "leafo/scssphp",
