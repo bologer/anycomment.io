@@ -14,6 +14,7 @@
 * Fixed "Notice: Trying to get property of non-object" in "Emails" page, #373
 * Fixed issue when WordPress native login did not redirect back to comments
 * Fixed issue with thousand separator being &nbsp; instead of as space, #370
+* Fixed issue when Akismet filtering was not working properly
 
 ## 0.0.82 – 25.01.2019
 

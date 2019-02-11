@@ -37,28 +37,11 @@ class AnyCommentCommentHooks {
 		// as WP by default remove comment meta, which is required to determine attachments IDs
 		add_action( 'delete_comment', [ $this, 'process_deleted_comment' ], 10, 2 );
 
-		// Should drop comment cache after it was deleted, just in case
-//		add_action( 'deleted_comment', [ $this, 'process_soft_comment' ], 10, 2 );
-
 		// After comment was updated
 		add_action( 'edit_comment', [ $this, 'process_edit_comment' ], 10, 2 );
 
-		// After comment was trashed, marked as spam, etc
-//		add_action( 'trashed_comment', [ $this, 'process_soft_comment' ], 10, 2 );
-//		add_action( 'untrashed_comment', [ $this, 'process_soft_comment' ], 10, 2 );
-//		add_action( 'spam_comment', [ $this, 'process_soft_comment' ], 10, 2 );
-//		add_action( 'unspam_comment', [ $this, 'process_soft_comment' ], 10, 2 );
-
-		// On comment status change
-//		add_action( 'wp_set_comment_status', [ $this, 'process_set_status_comment' ], 10, 2 );
-
 
 		add_action( 'wp_insert_comment', [ $this, 'process_new_comment' ], 9, 2 );
-
-		/**
-		 * @see update_metadata() to find this hook (it is dynamically constructed) based on meta type
-		 */
-		add_action( "updated_comment_meta", [ $this, 'process_comment_meta_update' ], 10, 4 );
 
 		remove_filter( 'pre_comment_content', 'wp_filter_post_kses' );
 		remove_filter( 'pre_comment_content', 'wp_filter_kses' );
@@ -109,17 +92,20 @@ class AnyCommentCommentHooks {
 	 */
 	public function process_new_comment ( $comment_id, $comment ) {
 
-		if ( $comment->comment_type !== '' && $comment->comment_type !== 'review' ) {
-			return false;
+		$should_notify = true;
+
+		// Check Akismet
+		$is_akismet_active = AnyCommentIntegrationSettings::is_akismet_active() && is_plugin_active( 'akismet/akismet.php' );
+		if ( $is_akismet_active && class_exists( '\Akismet' ) ) {
+			$last_comment = \Akismet::get_last_comment();
+
+			// When false returned from Akismet API it means it is spam comment
+			if ( is_array( $last_comment ) && isset( $last_comment['akismet_result'] ) && $last_comment['akismet_result'] == 'false' ) {
+				$should_notify = false;
+			}
 		}
 
-		// If Akismet is not active, then we may process notifications normally
-		// otherwise we should wait until it will be filtered and confired by Akismet that it is safe
-		// to notify user about it. Otherwise, it may cause possible spam attack
-		$is_akismet_active = AnyCommentIntegrationSettings::is_akismet_active() && is_plugin_active( 'akismet/akismet.php' );
-
-		if ( ! $is_akismet_active ) {
-
+		if ( $should_notify ) {
 			// Notify subscribers
 			AnyCommentSubscriptions::notify_by( $comment );
 
@@ -140,34 +126,6 @@ class AnyCommentCommentHooks {
 		return true;
 	}
 
-	/**
-	 * Check update meta for comment.
-	 *
-	 * @param int $meta_id ID of the metadata entry to update.
-	 * @param int $object_id Object ID.
-	 * @param string $meta_key Meta key.
-	 * @param mixed $_meta_value Meta value.
-	 *
-	 * @see update_metadata() for further information about list of params. They are based on what is provided by the hook.
-	 */
-	public function process_comment_meta_update ( $meta_id, $object_id, $meta_key, $_meta_value ) {
-		// Akismet comment checking.
-		// When Akismet option is active, meta about comment status changed to success -> should notify
-		if ( AnyCommentIntegrationSettings::is_akismet_active() && $meta_key === 'akismet_result' && $_meta_value == 'true' ) {
-			// Notify subscribers
-			AnyCommentSubscriptions::notify_by( $object_id );
-
-			// Notify on comment reply
-			if ( AnyCommentGenericSettings::is_notify_on_new_reply() ) {
-				AnyCommentEmailQueue::add_as_reply( $object_id );
-			}
-
-			// Notify admin
-			if ( AnyCommentGenericSettings::is_notify_admin() ) {
-				AnyCommentEmailQueue::add_as_admin_notification( $object_id );
-			}
-		}
-	}
 
 	/**
 	 * Process comment which will be deleted soon in order to clean-up after it.
