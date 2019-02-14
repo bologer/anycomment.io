@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.0.84 – 14.02.2019
+
+**Enhancements:**
+
+* Payment integration with Freemius to buy add-on directly from plugin
+* Cache basting mechanism on successful user authentication, #380
+
+
+**Fixes:**
+
+
+
 ## 0.0.83 – 12.02.2019
 
 **Enhancements:**

@@ -167,11 +167,20 @@ class AnyCommentSocialAuth {
 			exit();
 		}
 
+
+
 		if ( $redirect !== null ) {
 			setcookie( $cookie_redirect, $redirect, time() + 3600 );
 		} else {
-			$redirectCookie = isset( $_COOKIE[ $cookie_redirect ] ) ? $_COOKIE[ $cookie_redirect ] : null;
+			$redirectCookie = isset( $_COOKIE[ $cookie_redirect ] ) ?
+				$_COOKIE[ $cookie_redirect ] :
+				null;
 
+			// Add GET param to bast cache on redirect back to post
+			$get_params = parse_url( $redirect, PHP_URL_QUERY );
+			$redirectCookie   .= ( ! empty( $get_params ) ? '&' : '?' ) . 'ac=' . uniqid();
+
+			// Add anchor
 			$anchor = parse_url( $redirectCookie, PHP_URL_FRAGMENT );
 			if ( $redirectCookie !== null && empty( $anchor ) ) {
 				$redirectCookie .= '#comments';
