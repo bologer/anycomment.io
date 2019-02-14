@@ -9,11 +9,11 @@ Stable tag: 0.0.83
 License: GPLv2 or later
 License URI: http://www.gnu.org/
 
-AnyComment is blazing-fast commenting plugin for WordPress.
+AnyComment is blazing-fast commenting plugin based on React for WordPress.
 
 == Description ==
 
-AnyComment is blazing-fast commenting plugin for WordPress.
+AnyComment is blazing-fast commenting plugin base on React for WordPress.
 
 It stands for simplicity & speed. We value feedback, so if you have any failures or suggestions - please let us know in [support forum](https://wordpress.org/support/plugin/anycomment) or [GitHub](https://github.com/bologer/anycomment.io/issues)!
 
@@ -41,19 +41,19 @@ And good new is AnyComment is free & no dependency on third party services, all 
 
 = Features =
 * All comments stored in your own database. We reuse native comment's table, so all of the default WordPress functionality comes out of the box.
-* Social network authorization via Facebook, VK, Twitter, Google, Odnoklassniki, GitHub, Instagram, Twitch or Dribble
+* Social network authorization via Facebook, VK, Twitter, Google, Odnoklassniki, GitHub, Instagram, Twitch or Dribbble
 * Ability to define who can leave comment: guests only, with social authorization or both
 * Ability to upload files (define allowed extensions, limit, who can upload, etc)
 * When user leaves a tweet link in the comment, plugin can embed it as external Twitter widget (can be disabled)
 * Ability to customize  design
 * Blazing-fast comments based on React & WordPress REST API
 * Alert notification in comment area when new comment was added
-* Ability to send email on new comment reply
-* Ability to send email notification about new comment to administrator
+* Notifications about new comment reply
+* Notifications about new comment to administrator
 * Ability to specify comma-separated list of words to be used to hold comments for moderators
 * Ability to have bold, italics, underline, quotes, links or clear formatting. Each type can be disabled separately or the whole toolbar together
 * Image and video URLs as attachment (control via admin)
-* Provide `Privacy Policy` link, so users know how their data processed and used (when not provided, no checkbox will be shown to users)
+* GDRP compliant, ability to provide `Privacy Policy` link, so users know how their data processed and used (when not provided, no checkbox will be shown to users)
 * Social avatars shown globally
 * Likes (see likes count per comment/user in admin)
 * Ability to rate (1-5 stars) page in comments (1-5 stars)
@@ -167,7 +167,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 == Changelog ==
 
-= 0.0.83 – 25.01.2019 =
+= 0.0.83 – 12.02.2019 =
 
 **Enhancements:**
 
