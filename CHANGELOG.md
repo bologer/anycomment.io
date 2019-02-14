@@ -10,7 +10,7 @@
 
 **Fixes:**
 
-
+* Fixed issue with Akismet when some websites did not have notifications and some had error when adding new comment
 
 ## 0.0.83 – 12.02.2019
 

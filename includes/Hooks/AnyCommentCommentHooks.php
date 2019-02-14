@@ -95,8 +95,8 @@ class AnyCommentCommentHooks {
 		$should_notify = true;
 
 		// Check Akismet
-		$is_akismet_active = AnyCommentIntegrationSettings::is_akismet_active() && is_plugin_active( 'akismet/akismet.php' );
-		if ( $is_akismet_active && class_exists( '\Akismet' ) ) {
+		$is_akismet_active = AnyCommentIntegrationSettings::is_akismet_active();
+		if ( $is_akismet_active ) {
 			$last_comment = \Akismet::get_last_comment();
 
 			// When false returned from Akismet API it means it is spam comment

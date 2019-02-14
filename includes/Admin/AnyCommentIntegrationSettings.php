@@ -110,7 +110,7 @@ class AnyCommentIntegrationSettings extends AnyCommentOptionManager {
 	 * @inheritdoc
 	 */
 	protected $section_options = [
-		'wrapper' => '<div class="grid-x anycomment-form-wrapper anycomment-tabs__container__tab" id="{id}">{content}</div>'
+		'wrapper' => '<div class="grid-x anycomment-form-wrapper anycomment-tabs__container__tab" id="{id}">{content}</div>',
 	];
 
 	/**
@@ -128,7 +128,7 @@ class AnyCommentIntegrationSettings extends AnyCommentOptionManager {
 	 *
 	 * @param bool $init if required to init the modle.
 	 */
-	public function __construct( $init = true ) {
+	public function __construct ( $init = true ) {
 		parent::__construct();
 
 		if ( $init ) {
@@ -139,7 +139,7 @@ class AnyCommentIntegrationSettings extends AnyCommentOptionManager {
 	/**
 	 * Initiate hooks.
 	 */
-	private function init_hooks() {
+	private function init_hooks () {
 		add_action( 'admin_init', [ $this, 'init_options' ] );
 	}
 
@@ -147,7 +147,7 @@ class AnyCommentIntegrationSettings extends AnyCommentOptionManager {
 	 * Init options.
 	 * @return bool False on failure.
 	 */
-	public function init_options() {
+	public function init_options () {
 
 		$form = $this->form();
 
@@ -248,8 +248,8 @@ class AnyCommentIntegrationSettings extends AnyCommentOptionManager {
 						          self::OPTION_RECAPTCHA_BADGE_BOTTOM_RIGHT  => __( 'Bottom right', 'anycomment' ),
 						          self::OPTION_RECAPTCHA_BADGE_BOTTOM_LEFT   => __( 'Bottom left', 'anycomment' ),
 						          self::OPTION_RECAPTCHA_BADGE_BOTTOM_INLINE => __( 'Inline', 'anycomment' ),
-					          ]
-				          ] )
+					          ],
+				          ] ),
 
 			     ] )
 		);
@@ -262,8 +262,13 @@ class AnyCommentIntegrationSettings extends AnyCommentOptionManager {
 	 *
 	 * @return bool
 	 */
-	public static function is_akismet_active() {
-		return static::instance()->get_db_option( self::OPTION_AKISMET ) !== null;
+	public static function is_akismet_active () {
+
+		if ( ! function_exists( 'is_plugin_active' ) ) {
+			include_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+
+		return static::instance()->get_db_option( self::OPTION_AKISMET ) !== null && is_plugin_active( 'akismet/akismet.php' );
 	}
 
 	/**
@@ -272,7 +277,7 @@ class AnyCommentIntegrationSettings extends AnyCommentOptionManager {
 	 * @since 0.0.3
 	 * @return bool
 	 */
-	public static function is_wp_user_avatar_active() {
+	public static function is_wp_user_avatar_active () {
 		return static::instance()->get_db_option( self::OPTION_WP_USER_AVATAR ) !== null;
 	}
 
@@ -282,7 +287,7 @@ class AnyCommentIntegrationSettings extends AnyCommentOptionManager {
 	 * @since 0.0.56
 	 * @return bool
 	 */
-	public static function is_recaptcha_active() {
+	public static function is_recaptcha_active () {
 		return static::instance()->get_db_option( self::OPTION_RECAPTCHA_TOGGLE ) !== null;
 	}
 
@@ -292,7 +297,7 @@ class AnyCommentIntegrationSettings extends AnyCommentOptionManager {
 	 * @since 0.0.56
 	 * @return bool
 	 */
-	public static function is_recaptcha_user_all() {
+	public static function is_recaptcha_user_all () {
 		return static::get_recaptcha_user() === self::OPTION_RECAPTCHA_USER_ALL;
 	}
 
@@ -302,7 +307,7 @@ class AnyCommentIntegrationSettings extends AnyCommentOptionManager {
 	 * @since 0.0.56
 	 * @return bool
 	 */
-	public static function is_recaptcha_user_guest() {
+	public static function is_recaptcha_user_guest () {
 		return static::get_recaptcha_user() === self::OPTION_RECAPTCHA_USER_GUEST;
 	}
 
@@ -312,7 +317,7 @@ class AnyCommentIntegrationSettings extends AnyCommentOptionManager {
 	 * @since 0.0.56
 	 * @return bool
 	 */
-	public static function is_recaptcha_user_auth() {
+	public static function is_recaptcha_user_auth () {
 		return static::get_recaptcha_user() === self::OPTION_RECAPTCHA_USER_AUTH;
 	}
 
@@ -322,7 +327,7 @@ class AnyCommentIntegrationSettings extends AnyCommentOptionManager {
 	 * @since 0.0.56
 	 * @return string|null
 	 */
-	public static function get_recaptcha_user() {
+	public static function get_recaptcha_user () {
 		$user = static::instance()->get_db_option( self::OPTION_RECAPTCHA_USER );
 
 		if ( $user !== self::OPTION_RECAPTCHA_USER_ALL &&
@@ -340,7 +345,7 @@ class AnyCommentIntegrationSettings extends AnyCommentOptionManager {
 	 * @since 0.0.56
 	 * @return string|null
 	 */
-	public static function get_recaptcha_site_key() {
+	public static function get_recaptcha_site_key () {
 		return static::instance()->get_db_option( self::OPTION_RECAPTCHA_SITE_KEY );
 	}
 
@@ -350,7 +355,7 @@ class AnyCommentIntegrationSettings extends AnyCommentOptionManager {
 	 * @since 0.0.56
 	 * @return string|null
 	 */
-	public static function get_recaptcha_site_secret() {
+	public static function get_recaptcha_site_secret () {
 		return static::instance()->get_db_option( self::OPTION_RECAPTCHA_SITE_SECRET );
 	}
 
@@ -360,7 +365,7 @@ class AnyCommentIntegrationSettings extends AnyCommentOptionManager {
 	 * @since 0.0.56
 	 * @return string|null
 	 */
-	public static function get_recaptcha_theme() {
+	public static function get_recaptcha_theme () {
 		$theme = static::instance()->get_db_option( self::OPTION_RECAPTCHA_THEME );
 
 		if ( $theme !== self::OPTION_RECAPTCHA_THEME_LIGHT && $theme !== self::OPTION_RECAPTCHA_THEME_DARK ) {
@@ -376,7 +381,7 @@ class AnyCommentIntegrationSettings extends AnyCommentOptionManager {
 	 * @since 0.0.56
 	 * @return string|null
 	 */
-	public static function get_recaptcha_badge() {
+	public static function get_recaptcha_badge () {
 		$badge = static::instance()->get_db_option( self::OPTION_RECAPTCHA_BADGE );
 
 
@@ -392,7 +397,7 @@ class AnyCommentIntegrationSettings extends AnyCommentOptionManager {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function run() {
+	public function run () {
 		$sections_html = '<form action="" id="' . $this->get_page_slug() . '" method="post" class="anycomment-form" novalidate>';
 
 		$sections_html .= '<input type="hidden" name="option_name" value="' . $this->option_name . '">';
@@ -435,7 +440,7 @@ EOT;
 	/**
 	 * {@inheritdoc}
 	 */
-	protected function do_tab_menu() {
+	protected function do_tab_menu () {
 		$options = $this->get_options();
 
 		$html = '';

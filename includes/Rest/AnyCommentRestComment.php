@@ -633,7 +633,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		}
 
 
-		if ( AnyCommentIntegrationSettings::is_akismet_active() && is_plugin_active( 'akismet/akismet.php' ) ) {
+		if ( AnyCommentIntegrationSettings::is_akismet_active() ) {
 			apply_filters( 'preprocess_comment', $prepared_comment );
 		}
 
