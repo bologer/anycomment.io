@@ -45,14 +45,14 @@ class AnyCommentCore {
 	/**
 	 * AnyComment constructor.
 	 */
-	public function __construct() {
+	public function __construct () {
 		$this->init();
 	}
 
 	/**
 	 * Init method to invoke starting scripts.
 	 */
-	public function init() {
+	public function init () {
 		$this->includes();
 		$this->init_textdomain();
 		$this->init_hooks();
@@ -61,7 +61,7 @@ class AnyCommentCore {
 	/**
 	 * Load locale.
 	 */
-	public function init_textdomain() {
+	public function init_textdomain () {
 		load_plugin_textdomain( "anycomment", false, basename( dirname( __FILE__ ) ) . '/languages' );
 	}
 
@@ -75,7 +75,7 @@ class AnyCommentCore {
 	 * @see AnyComment()
 	 * @return AnyCommentCore Instance of plugin.
 	 */
-	public static function instance() {
+	public static function instance () {
 		if ( is_null( self::$_instance ) ) {
 			self::$_instance = new self();
 		}
@@ -86,7 +86,7 @@ class AnyCommentCore {
 	/**
 	 * Initiate hooks.
 	 */
-	private function init_hooks() {
+	private function init_hooks () {
 		register_activation_hook( __FILE__, [ $this, 'activation' ] );
 		register_uninstall_hook( __FILE__, sprintf( '%s::uninstall', get_called_class() ) );
 
@@ -101,7 +101,7 @@ class AnyCommentCore {
 	/**
 	 * Activation method.
 	 */
-	public function activation() {
+	public function activation () {
 		// Apply migrations
 		( new AnyCommentMigrationManager() )->apply_all();
 	}
@@ -109,7 +109,7 @@ class AnyCommentCore {
 	/**
 	 * Uninstall method.
 	 */
-	public static function uninstall() {
+	public static function uninstall () {
 		remove_role( AnyCommentGenericSettings::DEFAULT_ROLE_SOCIAL_SUBSCRIBER );
 
 		( new AnyCommentMigrationManager() )->drop_all();
@@ -119,7 +119,7 @@ class AnyCommentCore {
 	 * Get the plugin url.
 	 * @return string
 	 */
-	public function plugin_url() {
+	public function plugin_url () {
 		return untrailingslashit( plugins_url( '/', ANYCOMMENT_PLUGIN_FILE ) );
 	}
 
@@ -127,14 +127,14 @@ class AnyCommentCore {
 	 * Get the plugin path.
 	 * @return string
 	 */
-	public function plugin_path() {
+	public function plugin_path () {
 		return untrailingslashit( plugin_dir_path( ANYCOMMENT_PLUGIN_FILE ) );
 	}
 
 	/**
 	 * Include required core files used in admin and on the frontend.
 	 */
-	public function includes() {
+	public function includes () {
 		AnyCommentLoader::load();
 
 		$this->init_freemius();
@@ -145,14 +145,14 @@ class AnyCommentCore {
 	 *
 	 * @return Pool
 	 */
-	public static function cache() {
+	public static function cache () {
 
 		if ( static::$cache !== null ) {
 			return static::$cache;
 		}
 
 		$cacheDriver = new FileSystem( [
-			'path' => ANYCOMMENT_ABSPATH . '/cache/'
+			'path' => ANYCOMMENT_ABSPATH . '/cache/',
 		] );
 
 		static::$cache = new Pool( $cacheDriver );
@@ -160,7 +160,7 @@ class AnyCommentCore {
 		return static::$cache;
 	}
 
-	public function init_freemius() {
+	public function init_freemius () {
 
 		if ( $this->freemius !== null ) {
 			return $this->freemius;
@@ -187,7 +187,12 @@ class AnyCommentCore {
 		) );
 
 		fs_override_i18n( [
-			'add-ons' => __( 'Add-Ons', 'anycomment' )
+			'add-ons'          => __( 'Add-Ons', 'anycomment' ),
+			'opt-in-connect'   => translate_with_gettext_context( 'Allow & Continue', 'verb', 'anycomment' ),
+			'skip'             => translate_with_gettext_context( 'Skip', 'verb', 'anycomment' ),
+			'what-permissions' => __( 'What permissions are being granted?', 'anycomment' ),
+			'privacy-policy'   => __( 'Privacy Policy', 'anycomment' ),
+			'tos'              => __( 'Terms of Service', 'anycomment' ),
 		], 'anycomment' );
 
 
@@ -198,6 +203,49 @@ class AnyCommentCore {
 
 			return $is_visible;
 		}, 10, 2 );
+
+		/**
+		 * @link https://freemius.com/help/documentation/wordpress-sdk/opt-in-message/
+		 */
+		// Existing users
+		$this->freemius->add_filter( 'connect_message_on_update', function (
+			$message,
+			$user_first_name,
+			$product_title,
+			$user_login,
+			$site_link,
+			$freemius_link
+		) {
+			return sprintf(
+				__( 'Hey %1$s', 'anycomment' ) . ',<br>' .
+				__( 'Please help us improve %2$s! If you opt-in, some data about your usage of %2$s will be sent to %5$s. If you skip this, that\'s okay! %2$s will still work just fine.', 'anycomment' ),
+				$user_first_name,
+				'<b>' . $product_title . '</b>',
+				'<b>' . $user_login . '</b>',
+				$site_link,
+				$freemius_link
+			);
+		}, 10, 6 );
+
+		// New users
+		$this->freemius->add_filter( 'connect_message', function (
+			$message,
+			$user_first_name,
+			$product_title,
+			$user_login,
+			$site_link,
+			$freemius_link
+		) {
+			return sprintf(
+				__( 'Hey %1$s', 'anycomment', 'anycomment' ) . ',<br>' .
+				__( 'never miss an important update from AnyComment – opt-in to our security and feature updates notifications, and non-sensitive diagnostic tracking with freemius.com.', 'anycomment' ),
+				$user_first_name,
+				'<b>' . $product_title . '</b>',
+				'<b>' . $user_login . '</b>',
+				$site_link,
+				$freemius_link
+			);
+		}, 10, 6 );
 
 		do_action( 'any_fs_loaded' );
 
