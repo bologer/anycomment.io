@@ -176,6 +176,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Fixes:**
 
+* Fixed issue with Akismet when some websites did not have notifications and some had error when adding new comment
 
 
 = 0.0.83 – 12.02.2019 =
