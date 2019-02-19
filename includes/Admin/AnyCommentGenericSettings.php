@@ -140,6 +140,7 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 	const OPTION_COMMENT_UPDATE_TIME = 'option_comment_update_time'; // Comment update time.
 	const OPTION_USER_AGREEMENT_LINK = 'option_comments_user_agreement_link'; // Link to the user agreement.
 	const OPTION_LOAD_ON_SCROLL = 'options_load_on_scroll'; // Load comments on scroll to it.
+	const OPTION_MODERATE_FIRST_COMMENT_ONLY = 'options_moderate_first_comment'; // Moderate only first comment, any further should pass normally
 	const OPTION_MODERATE_FIRST = 'options_moderate_first'; // Mark comments for moderation before they are added.
 	const OPTION_MODERATE_WORDS = 'options_moderate_words'; // List of words to mark comments as spam.
 	const OPTION_LINKS_ON_HOLD = 'options_links_on_hold'; // Put comments with links on hold.
@@ -370,6 +371,7 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 				     $this->field_builder()
 				          ->set_id( self::OPTION_DEFAULT_SORT_BY )
 				          ->select()
+				          ->set_title( __( 'Sorting', 'anycomment' ) )
 				          ->set_args( [
 					          'options' => [
 						          self::SORT_DESC => __( 'Newest first', 'anycomment' ),
@@ -791,6 +793,12 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 				          ->set_id( self::OPTION_MODERATE_FIRST )
 				          ->set_title( __( 'Moderate First', "anycomment" ) )
 				          ->set_description( esc_html( __( 'Moderators should check comment before it appears.', "anycomment" ) ) ),
+
+				     $this->field_builder()
+				          ->checkbox()
+				          ->set_id( self::OPTION_MODERATE_FIRST_COMMENT_ONLY )
+				          ->set_title( __( 'Moderate first comment only', 'anycomment' ) )
+				          ->set_description( __( 'Moderate only first comment any further should be posted without pre moderation. When "Moderate First" option enabled, comments from users with at least one approved comment would be accepted automatically.' ) ),
 
 				     $this->field_builder()
 				          ->checkbox()
@@ -1334,6 +1342,15 @@ EOT;
 	 */
 	public static function is_moderate_first () {
 		return static::instance()->get_db_option( self::OPTION_MODERATE_FIRST ) !== null;
+	}
+
+	/**
+	 * Check whether it is required to moderate only first comment.
+	 *
+	 * @return bool
+	 */
+	public static function is_moderate_first_comment_only () {
+		return static::instance()->get_db_option( self::OPTION_MODERATE_FIRST_COMMENT_ONLY ) !== null;
 	}
 
 	/**

@@ -641,6 +641,8 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			apply_filters( 'preprocess_comment', $prepared_comment );
 		}
 
+		// Get count before new comment inserted
+		$comment_count = AnyCommentUser::get_comment_count_by_user( $prepared_comment['comment_author_email'], true );
 
 		$comment_id = wp_insert_comment( wp_filter_comment( wp_slash( (array) $prepared_comment ) ) );
 
@@ -656,6 +658,11 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		$should_moderate    = ! current_user_can( 'moderate_comments' ) && AnyCommentGenericSettings::is_moderate_first();
 		$has_filtered_words = isset( $filter_comment ) && $filter_comment['match_count'] > 0;
 		$has_links          = ! current_user_can( 'moderate_comments' ) && AnyCommentGenericSettings::is_links_on_hold() && AnyCommentComments::has_links( $comment_id );
+
+
+		if ( AnyCommentGenericSettings::is_moderate_first_comment_only() && $comment_count < 1 ) {
+			$should_moderate = true;
+		}
 
 		if ( $should_moderate || $has_filtered_words || $has_links ) {
 			$this->handle_status_param( 'hold', $comment_id );

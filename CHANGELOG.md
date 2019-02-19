@@ -4,7 +4,7 @@
 
 **Enhancements:**
 
-
+* Added new option to hold only first comment and any further can pass without pre moderation, #353 
 
 **Fixes:**
 

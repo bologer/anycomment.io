@@ -20,7 +20,7 @@ class AnyCommentUser {
 	 *
 	 * @return null|WP_User
 	 */
-	public static function getSafeUser() {
+	public static function getSafeUser () {
 		$user = wp_get_current_user();
 
 		if ( $user->ID == 0 ) {
@@ -44,7 +44,7 @@ class AnyCommentUser {
 	 *
 	 * @return string
 	 */
-	public static function get_comment_count( $post_id ) {
+	public static function get_comment_count ( $post_id ) {
 		$count = get_comments_number( $post_id );
 
 		return sprintf( _nx( '%s comment', '%s comments', $count, 'REST API Comments Count', 'anycomment' ), number_format_i18n( $count ) );
@@ -57,7 +57,7 @@ class AnyCommentUser {
 	 *
 	 * @return bool
 	 */
-	public static function is_old_to_edit( $comment ) {
+	public static function is_old_to_edit ( $comment ) {
 		$commentTime = strtotime( $comment->comment_date_gmt );
 
 		$minutes = AnyCommentGenericSettings::get_comment_update_time();
@@ -79,7 +79,7 @@ class AnyCommentUser {
 	 *
 	 * @return bool
 	 */
-	public static function can_edit_comment( $comment ) {
+	public static function can_edit_comment ( $comment ) {
 		if ( current_user_can( 'moderate_comments' ) ||
 		     current_user_can( 'edit_comment', $comment->comment_ID ) ) {
 			return true;
@@ -106,7 +106,7 @@ class AnyCommentUser {
 	 * @return string
 	 * @since 0.0.70
 	 */
-	public static function prepare_login( $expected_username ) {
+	public static function prepare_login ( $expected_username ) {
 
 		// Transliterate to remove junky chars
 		$prepared_username = AnyCommentInflector::transliterate( $expected_username );
@@ -160,5 +160,49 @@ class AnyCommentUser {
 		 * @param string $expected_username Initial value passed. It could be username already, first/last name.
 		 */
 		return apply_filters( 'anycomment/user/prepare_login', $unique_username, $expected_username );
+	}
+
+	/**
+	 * Get comment count by specified user id or email.
+	 *
+	 * @param int|string $id_or_email
+	 * @param bool $only_approved Whether to count only approved or not.
+	 *
+	 * @return int
+	 */
+	public static function get_comment_count_by_user ( $id_or_email, $only_approved = false ) {
+
+		$field = '';
+
+		if ( is_string( $id_or_email ) ) {
+			$field = 'email';
+		} elseif ( is_numeric( $id_or_email ) ) {
+			$field = 'id';
+		}
+
+		if ( empty( $field ) ) {
+			return 0;
+		}
+
+		$user = get_user_by( $field, $id_or_email );
+
+		// When no user found and field is not email (as this is the only field we can use to search for guest users
+		// should return 0
+		if ( ! $user && $field !== 'email' ) {
+			return 0;
+		}
+
+		$db_field       = $user instanceof WP_User ? 'user_id' : 'comment_author_email';
+		$db_field_value = $user instanceof WP_User ? $user->ID : $id_or_email;
+
+		global $wpdb;
+
+		$sql = $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->comments} WHERE $db_field = %s", $db_field_value );
+
+		if ( $only_approved ) {
+			$sql .= ' AND `comment_approved` = 1';
+		}
+
+		return (int) $wpdb->get_var( $sql );
 	}
 }
