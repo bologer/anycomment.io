@@ -65,7 +65,6 @@ class AnyCommentRestCacheManager extends AnyCommentCacheManager {
 			return false;
 		}
 
-
 		return AnyCommentCore::cache()->getItem( static::buildPostCommentCountNamespace( $postId ) );
 	}
 

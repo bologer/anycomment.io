@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.0.85 – 19.02.2019
+
+**Enhancements:**
+
+
+
+**Fixes:**
+
+* Fixed issue when shortcode was inserted on non-WordPress page, e.g. HTML caused notic error on comment count, #385
+
+
 ## 0.0.84 – 14.02.2019
 
 **Enhancements:**

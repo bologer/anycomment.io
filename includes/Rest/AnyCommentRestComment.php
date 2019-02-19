@@ -195,6 +195,10 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		$post_id = $request->get_param( 'post' );
 		$cache   = AnyCommentRestCacheManager::getPostCommentCount( $post_id );
 
+		if ( ! $cache ) {
+			return rest_ensure_response( 0 );
+		}
+
 		if ( $cache->isHit() ) {
 			return rest_ensure_response( $cache->get() );
 		}
