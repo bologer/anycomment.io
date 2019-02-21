@@ -26,24 +26,60 @@ if ( isset( $_GET['action'] ) ) {
 	}
 }
 
+if ( isset( $_GET['hypercomment_url'] ) && ! empty( $_GET['hypercomment_url'] ) ) {
+	$hc = new \AnyComment\Import\HyperComments( $_GET['hypercomment_url'] );
+
+	$hc->process();
+
+	wp_redirect( $url );
+
+	return;
+}
+
 ?>
 
 <div class="anycomment-tab">
     <h2><?php echo __( 'Tools', 'anycomment' ) ?></h2>
     <p><?php echo __( 'This page will have helpers and debug information related to the plugin. For example, version of plugin, WordPress or PHP. Also you may drop comments or global plugins cache, open comments for all posts, pages or WooCommerce products (when plugin activated).', 'anycomment' ) ?></p>
 
+    <hr>
+    <h3><?php echo __( 'Cache Manager', 'anycomment' ) ?></h3>
+    <a href="<?php echo $url . "&action=cache-flush-all" ?>"
+       class="button button-primary"><?php echo __( "Flush All", 'anycomment' ) ?></a>
+    <a href="<?php echo $url . "&action=cache-flush-rest" ?>"
+       class="button button-primary"><?php echo __( "Flush Comments", 'anycomment' ) ?></a>
+
+    <hr>
+    <h3><?php echo __( 'Other Helpers', 'anycomment' ) ?></h3>
+    <a href="<?php echo $url . "&action=open-all-comments" ?>"
+       class="button button-primary"><?php echo __( "Open All Comments", 'anycomment' ) ?></a>
+    <a href="<?php echo $url . "&action=open-posts-comments" ?>"
+       class="button button-primary"><?php echo __( "Open Posts Comments", 'anycomment' ) ?></a>
+    <a href="<?php echo $url . "&action=open-pages-comments" ?>"
+       class="button button-primary"><?php echo __( "Open Pages Comments", 'anycomment' ) ?></a>
+    <a href="<?php echo $url . "&action=open-products-comments" ?>"
+       class="button button-primary"><?php echo __( "Open WooCommerce Product Comments", 'anycomment' ) ?></a>
+
+    <hr>
+    <h3><?php echo __( 'Import HyperComments', 'anycomment' ) ?></h3>
+
+    <p><?php echo __( 'Enter URL or attach XML file to start importing comments from HyperComments.', 'anycomment' ) ?></p>
+
+    <form action="" method="GET">
+        <input type="hidden" name="page" value="anycomment-dashboard">
+        <input type="hidden" name="tab" value="tools">
+        <div class="grid-x">
+            <div class="cell shrink"><input type="text" name="hypercomment_url"
+                                            placeholder="http://static.hypercomments.com/data/export/hcexport_XXX.xml">
+            </div>
+        </div>
+        <input type="submit" value="<?php echo __( 'Import', 'anycomment' ) ?>" class="button button-default">
+    </form>
 
     <h3><?php echo __( 'Debug Information', 'anycomment' ) ?></h3>
 	<?php
 
-	global $wp_version;
-
-
 	$preparedData = \AnyComment\AnyCommentDebugReport::prepare();
-
-	function anycomment_get_debug_summary( $debugData ) {
-
-	}
 
 	?>
     <table class="form-table">
@@ -66,22 +102,4 @@ if ( isset( $_GET['action'] ) ) {
         </tr>
         </tbody>
     </table>
-
-    <hr>
-    <h3><?php echo __( 'Cache Manager', 'anycomment' ) ?></h3>
-    <a href="<?php echo $url . "&action=cache-flush-all" ?>"
-       class="button button-primary"><?php echo __( "Flush All", 'anycomment' ) ?></a>
-    <a href="<?php echo $url . "&action=cache-flush-rest" ?>"
-       class="button button-primary"><?php echo __( "Flush Comments", 'anycomment' ) ?></a>
-
-    <hr>
-    <h3><?php echo __( 'Other Helpers', 'anycomment' ) ?></h3>
-    <a href="<?php echo $url . "&action=open-all-comments" ?>"
-       class="button button-primary"><?php echo __( "Open All Comments", 'anycomment' ) ?></a>
-    <a href="<?php echo $url . "&action=open-posts-comments" ?>"
-       class="button button-primary"><?php echo __( "Open Posts Comments", 'anycomment' ) ?></a>
-    <a href="<?php echo $url . "&action=open-pages-comments" ?>"
-       class="button button-primary"><?php echo __( "Open Pages Comments", 'anycomment' ) ?></a>
-    <a href="<?php echo $url . "&action=open-products-comments" ?>"
-       class="button button-primary"><?php echo __( "Open WooCommerce Product Comments", 'anycomment' ) ?></a>
 </div>

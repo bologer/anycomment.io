@@ -151,8 +151,14 @@ class AnyCommentCore {
 			return static::$cache;
 		}
 
+		$cache_path = ABSPATH . str_replace( '/', DIRECTORY_SEPARATOR, 'wp-content/uploads/cache/anycomment' );
+
+		if ( ! @file_exists( $cache_path ) ) {
+			@mkdir( $cache_path, 0755, true );
+		}
+
 		$cacheDriver = new FileSystem( [
-			'path' => ANYCOMMENT_ABSPATH . '/cache/',
+			'path' => $cache_path,
 		] );
 
 		static::$cache = new Pool( $cacheDriver );
