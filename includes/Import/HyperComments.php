@@ -233,8 +233,7 @@ class HyperComments {
 		}
 
 		if ( $this->tag === 'URL' ) {
-			// todo: change to real URL
-			$this->post_url = trim( 'http://anywp.loc/blog/2019/01/10/test-3/' );
+			$this->post_url = trim( $data );
 			$this->post     = get_post( url_to_postid( $this->post_url ) );
 		} elseif ( $this->tmpHandle ) {
 			$data = trim( $data );
