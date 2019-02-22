@@ -176,8 +176,8 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Fixes:**
 
-* Fixed issue when shortcode was inserted on non-WordPress page, e.g. HTML caused notic error on comment count, #385
-
+* Fixed issue when shortcode was inserted on non-WordPress page, e.g. HTML caused notice error on comment count, #385
+* Fixed issue when ArgumentCountError fatal was given on  execution of delete_comment hook by Akismet, #383
 
 = 0.0.84 – 14.02.2019 =
 

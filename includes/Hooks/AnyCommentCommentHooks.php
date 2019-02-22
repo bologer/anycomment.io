@@ -132,8 +132,18 @@ class AnyCommentCommentHooks {
 	 *
 	 * @param int $comment_id Comment ID.
 	 * @param WP_Comment $comment Comment object.
+	 * @return bool
 	 */
-	public function process_deleted_comment ( $comment_id, $comment ) {
+	public function process_deleted_comment ( $comment_id, $comment = null ) {
+
+		if ( $comment === null ) {
+			$comment = get_comment( $comment_id );
+		}
+
+		if ( empty( $comment ) ) {
+			return false;
+		}
+
 		// Delete likes of a comment
 		AnyCommentLikes::deleteLikes( $comment_id );
 
@@ -148,6 +158,8 @@ class AnyCommentCommentHooks {
 				AnyCommentUploadedFiles::delete( $comment_meta->file_id );
 			}
 		}
+
+		return true;
 	}
 
 	/**
