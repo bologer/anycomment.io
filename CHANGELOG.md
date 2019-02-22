@@ -6,6 +6,7 @@
 
 * Added new option to hold only first comment and any further can pass without pre moderation, #353 
 * Added ability to import comments from HyperComments inside "Tools" tab by specifying URL to XML file, #326
+* Migrated Google+ to Google People API, #343
 
 **Fixes:**
 
