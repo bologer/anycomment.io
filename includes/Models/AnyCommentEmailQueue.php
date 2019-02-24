@@ -6,6 +6,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+use AnyComment\Helpers\AnyCommentTemplate;
+use AnyComment\Rest\AnyCommentSocialAuth;
 use WP_Comment;
 
 use AnyComment\EmailEndpoints;
@@ -535,81 +537,99 @@ AND `comments`.`comment_ID`=%d";
 	 * Prepare email body.
 	 *
 	 * Subs to replace:
-	 * '{blogName}',
-	 * '{blogUrl}',
-	 * '{blogUrlHtml}',
-	 * '{postTitle}',
-	 * '{postUrl}',
-	 * '{postUrlHtml}',
-	 * '{commentText}',
-	 * '{commentFormatted}',
-	 * '{replyUrl}',
-	 * '{replyButton}'
+	 * - {firstParagraph}
+	 * - {commentAuthorImgSrc}
+	 * - {commentAuthorName}
+	 * - {commentAuthorText}
+	 * - {commentAuthorDate}
+	 * - {commentAuthorReplyUrl}
+	 * - {commentAuthorReplyText}
+	 *
+	 * - {commentReplyAuthorParagraph}
+	 * - {commentReplyAuthorText}
+	 * - {commentReplyAuthorImgSrc}
 	 *
 	 * @param AnyCommentEmailQueue $email
 	 *
 	 * @return string HTML formatted content of email.
 	 */
 	public static function generate_reply_email ( $email ) {
+		/**
+		 * - {firstParagraph}
+		 * - {commentAuthorImgSrc}
+		 * - {commentAuthorName}
+		 * - {commentAuthorText}
+		 * - {commentAuthorDate}
+		 * - {commentAuthorReplyUrl}
+		 * - {commentAuthorReplyText}
+		 *
+		 * - {commentReplyAuthorParagraph}
+		 * - {commentReplyAuthorText}
+		 * - {commentReplyAuthorImgSrc}
+		 */
 		$comment        = get_comment( $email->comment_ID );
 		$post           = get_post( $email->post_ID );
 		$cleanPermalink = get_permalink( $post );
-		$reply_url      = sprintf( '%s#comment-%s', $cleanPermalink, $comment->comment_ID );
 
 		$blog_name     = get_option( 'blogname' );
 		$blog_url      = get_option( 'siteurl' );
 		$blog_url_html = sprintf( '<a href="%s">%s</a>', $blog_url, $blog_name );
 
-		$post_title    = '';
-		$post_url      = '';
 		$post_url_html = '';
-
-		$comment_text      = '';
-		$comment_formatted = '';
 
 		if ( $post !== null ) {
 			$post_title    = $post->post_title;
 			$post_url      = $cleanPermalink;
 			$post_url_html = sprintf( '<a href="%s">%s</a>', $post_url, $post_title );
 		}
+		$comment_author_img_src = AnyCommentSocialAuth::get_user_avatar_url( $comment->comment_author_email );
 
-		if ( $comment !== null ) {
-			$comment_text = $comment->comment_content;
+		$comment_author_name = $comment->comment_author;
+		$comment_author_text = $comment->comment_content;
 
-			$comment_formatted = '<div style="background-color:#eee; padding: 10px; font-size: 12pt; font-family: Verdana, Arial, sans-serif; line-height: 1.5;">';
-			$comment_formatted .= $comment_text;
-			$comment_formatted .= '</div>';
+		$date_format = get_option( 'date_format' );
+		$time_format = get_option( 'time_format' );
+
+		$comment_author_date = date( $date_format . ", " . $time_format );
+
+		$comment_author_reply_url = sprintf( '%s#comment-%s', $cleanPermalink, $comment->comment_ID );
+
+		$reply_comment = get_comment( $comment->comment_parent );
+
+		$comment_reply_author_img_src = '';
+		$comment_reply_author_text    = '';
+		if ( ! empty( $reply_comment ) ) {
+			$comment_reply_author_img_src = AnyCommentSocialAuth::get_user_avatar_url( $reply_comment->comment_author_email );
+			$comment_reply_author_text    = $reply_comment->comment_content;
 		}
 
-		$reply_button = '<p><a href="' . $reply_url . '" style="font-size: 15px;text-decoration:none;font-weight: 400;text-align: center;color: #fff;padding: 0 50px;line-height: 48px;background-color: #53af4a;display: inline-block;vertical-align: middle;border: 0;outline: 0;cursor: pointer;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;-webkit-appearance: none;-moz-appearance: none;appearance: none;white-space: nowrap;border-radius: 24px;">' . __( 'See', 'anycomment' ) . '</a></p>';
-
 		$search = [
-			'{blogName}',
-			'{blogUrl}',
-			'{blogUrlHtml}',
-			'{postTitle}',
-			'{postUrl}',
-			'{postUrlHtml}',
-			'{commentText}',
-			'{commentFormatted}',
-			'{replyUrl}',
-			'{replyButton}',
+			'{firstParagraph}',
+			'{commentAuthorImgSrc}',
+			'{commentAuthorName}',
+			'{commentAuthorText}',
+			'{commentAuthorDate}',
+			'{commentAuthorReplyUrl}',
+			'{commentAuthorReplyText}',
+			'{commentReplyAuthorParagraph}',
+			'{commentReplyAuthorText}',
+			'{commentReplyAuthorImgSrc}',
 		];
 
 		$replacement = [
-			$blog_name,
-			$blog_url,
-			$blog_url_html,
-			$post_title,
-			$post_url,
-			$post_url_html,
-			$comment_text,
-			$comment_formatted,
-			$reply_url,
-			$reply_button,
+			sprintf( __( 'New reply for %s on %s.', 'anycomment' ), $post_url_html, $blog_url_html),
+			$comment_author_img_src,
+			$comment_author_name,
+			$comment_author_text,
+			$comment_author_date,
+			$comment_author_reply_url,
+			__( 'Reply', 'anycomment' ),
+			sprintf( __( '%s replied to the following:', 'anycomment' ), $comment_author_name ),
+			$comment_reply_author_text,
+			$comment_reply_author_img_src,
 		];
 
-		$template = AnyCommentGenericSettings::get_notify_email_reply_template();
+		$template = AnyCommentTemplate::render( 'emails/reply-notification' );
 
 		return static::prepare_email_template( $template, $search, $replacement );
 	}
@@ -638,21 +658,14 @@ AND `comments`.`comment_ID`=%d";
 		$comment        = get_comment( $email->comment_ID );
 		$post           = get_post( $email->post_ID );
 		$cleanPermalink = get_permalink( $post );
-		$reply_url      = sprintf( '%s#comment-%s', $cleanPermalink, $comment->comment_ID );
 
 		$blog_name     = get_option( 'blogname' );
 		$blog_url      = get_option( 'siteurl' );
 		$blog_url_html = sprintf( '<a href="%s">%s</a>', $blog_url, $blog_name );
 
-		$post_title    = '';
-		$post_url      = '';
 		$post_url_html = '';
 
-		$comment_text      = '';
-		$comment_formatted = '';
-
-		$admin_moderation_url = esc_url( admin_url( 'edit-comments.php?comment_status=moderated' ) );
-		$admin_edit_url       = esc_url( admin_url( 'comment.php?action=editcomment&c=' . $comment->comment_ID ) );
+		$admin_edit_url = esc_url( admin_url( 'comment.php?action=editcomment&c=' . $comment->comment_ID ) );
 
 		if ( $post !== null ) {
 			$post_title    = $post->post_title;
@@ -660,46 +673,37 @@ AND `comments`.`comment_ID`=%d";
 			$post_url_html = sprintf( '<a href="%s">%s</a>', $post_url, $post_title );
 		}
 
-		if ( $comment !== null ) {
-			$comment_text = $comment->comment_content;
+		$comment_author_img_src = AnyCommentSocialAuth::get_user_avatar_url( $comment->comment_author_email );
 
-			$comment_formatted = '<div style="background-color:#eee; padding: 10px; font-size: 12pt; font-family: Verdana, Arial, sans-serif; line-height: 1.5;">';
-			$comment_formatted .= $comment_text;
-			$comment_formatted .= '</div>';
-		}
+		$comment_author_name = $comment->comment_author;
+		$comment_author_text = $comment->comment_content;
 
-		$reply_button = '<p><a href="' . $reply_url . '" style="font-size: 15px;text-decoration:none;font-weight: 400;text-align: center;color: #fff;padding: 0 50px;line-height: 48px;background-color: #53af4a;display: inline-block;vertical-align: middle;border: 0;outline: 0;cursor: pointer;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;-webkit-appearance: none;-moz-appearance: none;appearance: none;white-space: nowrap;border-radius: 24px;">' . __( 'See', 'anycomment' ) . '</a></p>';
+		$date_format = get_option( 'date_format' );
+		$time_format = get_option( 'time_format' );
 
-		$search      = [
-			'{blogName}',
-			'{blogUrl}',
-			'{blogUrlHtml}',
-			'{postTitle}',
-			'{postUrl}',
-			'{postUrlHtml}',
-			'{commentText}',
-			'{commentFormatted}',
-			'{replyUrl}',
-			'{replyButton}',
-			'{adminModerationUrl}',
-			'{adminEditUrl}',
+		$comment_author_date = date( $date_format . ", " . $time_format );
+
+		$search = [
+			'{firstParagraph}',
+			'{commentAuthorImgSrc}',
+			'{commentAuthorName}',
+			'{commentAuthorText}',
+			'{commentAuthorDate}',
+			'{commentAuthorSeeUrl}',
+			'{commentAuthorSeeText}',
 		];
+
 		$replacement = [
-			$blog_name,
-			$blog_url,
-			$blog_url_html,
-			$post_title,
-			$post_url,
-			$post_url_html,
-			$comment_text,
-			$comment_formatted,
-			$reply_url,
-			$reply_button,
-			$admin_moderation_url,
+			sprintf( __( 'New comment for %s on %s.', 'anycomment' ), $post_url_html, $blog_url_html),
+			$comment_author_img_src,
+			$comment_author_name,
+			$comment_author_text,
+			$comment_author_date,
 			$admin_edit_url,
+			__( 'Moderate', 'anycomment' ),
 		];
 
-		$template = AnyCommentGenericSettings::get_notify_email_admin_template();
+		$template = AnyCommentTemplate::render( 'emails/admin-notification' );
 
 		return static::prepare_email_template( $template, $search, $replacement );
 	}
@@ -718,7 +722,7 @@ AND `comments`.`comment_ID`=%d";
 
 		$content = preg_replace( '/\{.*?\}/', '', $content );
 
-		$content = trim( nl2br( $content ) );
+		$content = preg_replace( '/\v(?:[\v\h]+)/', '', trim( $content ) );
 
 		return apply_filters( 'anycomment_prepare_email_template', $content, $content, $search, $replacement );
 	}

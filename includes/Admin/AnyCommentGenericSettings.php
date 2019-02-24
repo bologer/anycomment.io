@@ -41,11 +41,6 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 	const OPTION_NOTIFY_ADMINISTRATOR = 'option_notify_administrator';
 
 	/**
-	 * Reply email template.
-	 */
-	const OPTION_NOTIFY_REPLY_EMAIL_TEMPLATE = 'option_notify_reply_email_template';
-
-	/**
 	 * Subscribers email template.
 	 */
 	const OPTION_NOTIFY_SUBSCRIBERS_EMAIL_TEMPLATE = 'option_notify_subscribe_email_template';
@@ -54,11 +49,6 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 	 * Subscribers confirmation email template.
 	 */
 	const OPTION_NOTIFY_SUBSCRIBERS_CONFIRMATION_EMAIL_TEMPLATE = 'option_notify_subscribe_confirmation_email_template';
-
-	/**
-	 * Admin email template.
-	 */
-	const OPTION_NOTIFY_ADMIN_EMAIL_TEMPLATE = 'option_notify_admin_email_template';
 
 	/**
 	 * Checkbox whether plugin is active or not. Can be used to set-up API keys, etc,
@@ -269,8 +259,6 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 		self::OPTION_FILES_MIME_TYPES                               => 'image/*, .pdf',
 
 		// Notifications
-		self::OPTION_NOTIFY_REPLY_EMAIL_TEMPLATE                    => "New reply for you in {blogUrlHtml}.\nFrom post {postUrlHtml}.\n\n{commentFormatted}\n{replyButton}",
-		self::OPTION_NOTIFY_ADMIN_EMAIL_TEMPLATE                    => "New comment posted in {blogUrlHtml}.\nFor post {postUrlHtml}.\n\n{commentFormatted}\n{replyButton}",
 		self::OPTION_NOTIFY_SUBSCRIBERS_EMAIL_TEMPLATE              => "New comment in {blogUrlHtml}.\nFrom post {postUrlHtml}.\n\n{commentFormatted}\n{replyButton}\n\nYou were subscribed to this post.\n\nYou may unbsubscribe by following this link:\n{unsubscribeUrl}",
 		self::OPTION_NOTIFY_SUBSCRIBERS_CONFIRMATION_EMAIL_TEMPLATE => "You were subscribed to {postUrlHtml} on {postTitle}.\n\nPlease follow link below to confirm this action or ignore this message if you think you received this by mistake.\n\n{confirmatiomButton}\n\nOr use link below:\n{confirmationUrl}",
 
@@ -848,42 +836,6 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 				          ->set_title( __( 'Notify Administrator', "anycomment" ) )
 				          ->set_description( esc_html( __( 'Notify administrator via email about new comment.', "anycomment" ) ) ),
 
-				     $this->field_builder()
-				          ->textarea()
-				          ->set_id( self::OPTION_NOTIFY_ADMIN_EMAIL_TEMPLATE )
-				          ->set_title( __( 'Admin Email Template', "anycomment" ) )
-				          ->set_description( esc_html( __( 'Email template sent to admin about new comment.', "anycomment" ) ) )
-				          ->set_after( function () {
-					          $supportedList = [
-						          '{blogName}'           => __( 'Blog name as text', 'anycomment' ),
-						          '{blogUrl}'            => __( 'Blog link as text', 'anycomment' ),
-						          '{blogUrlHtml}'        => __( 'Blog name in HTML link', 'anycomment' ),
-						          '{postTitle}'          => __( 'Post title as text', 'anycomment' ),
-						          '{postUrl}'            => __( 'Post URL as text', 'anycomment' ),
-						          '{postUrlHtml}'        => __( 'Post title in HTML link', 'anycomment' ),
-						          '{commentText}'        => __( 'Comment text', 'anycomment' ),
-						          '{commentFormatted}'   => __( 'Comment text nicely formatted', 'anycomment' ),
-						          '{replyUrl}'           => __( 'Reply link as text', 'anycomment' ),
-						          '{replyButton}'        => __( 'Reply link as button', 'anycomment' ),
-						          '{adminModerationUrl}' => __( 'Direct link to admin to see all comments waiting to reviewed', 'anycomment' ),
-						          '{adminEditUrl}'       => __( 'Direct link to admin to edit comment', 'anycomment' ),
-					          ];
-
-					          $id = self::OPTION_NOTIFY_ADMIN_EMAIL_TEMPLATE . time();
-
-					          $html = '<div><br><span class="button button-small" id="' . $id . '">' . __( 'More info', 'anycomment' ) . '</span><ul style="display: none;">';
-
-					          foreach ( $supportedList as $code => $description ) {
-						          $html .= sprintf( "<li>%s - %s</li>", $code, $description );
-					          }
-
-					          $html .= '</ul></div>';
-
-					          $html .= '<script>jQuery("#' . $id . '").on("click", function() {jQuery(this).next("ul").toggle();});</script>';
-
-					          return $html;
-				          } ),
-
 				     // Reply email notifications
 				     $this->field_builder()
 				          ->checkbox()
@@ -891,40 +843,6 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 				          ->set_title( __( 'Notify on new replies', "anycomment" ) )
 				          ->set_description( esc_html( __( 'Notify users by email (if specified) about new replies. Make sure you have proper SMTP configurations in order to send emails.', "anycomment" ) ) ),
 
-
-				     $this->field_builder()
-				          ->textarea()
-				          ->set_id( self::OPTION_NOTIFY_REPLY_EMAIL_TEMPLATE )
-				          ->set_title( __( 'Reply Email Template', "anycomment" ) )
-				          ->set_description( esc_html( __( 'Email template on new comment reply.', "anycomment" ) ) )
-				          ->set_after( function () {
-					          $supportedList = [
-						          '{blogName}'         => __( 'Blog name as text', 'anycomment' ),
-						          '{blogUrl}'          => __( 'Blog link as text', 'anycomment' ),
-						          '{blogUrlHtml}'      => __( 'Blog name in HTML link', 'anycomment' ),
-						          '{postTitle}'        => __( 'Post title as text', 'anycomment' ),
-						          '{postUrl}'          => __( 'Post URL as text', 'anycomment' ),
-						          '{postUrlHtml}'      => __( 'Post title in HTML link', 'anycomment' ),
-						          '{commentText}'      => __( 'Comment text', 'anycomment' ),
-						          '{commentFormatted}' => __( 'Comment text nicely formatted', 'anycomment' ),
-						          '{replyUrl}'         => __( 'Reply link as text', 'anycomment' ),
-						          '{replyButton}'      => __( 'Reply link as button', 'anycomment' ),
-					          ];
-
-					          $id = self::OPTION_NOTIFY_REPLY_EMAIL_TEMPLATE . time();
-
-					          $html = '<div><br><span class="button button-small" id="' . $id . '">' . __( 'More info', 'anycomment' ) . '</span><ul style="display: none;">';
-
-					          foreach ( $supportedList as $code => $description ) {
-						          $html .= sprintf( "<li>%s - %s</li>", $code, $description );
-					          }
-
-					          $html .= '</ul></div>';
-
-					          $html .= '<script>jQuery("#' . $id . '").on("click", function() {jQuery(this).next("ul").toggle();});</script>';
-
-					          return $html;
-				          } ),
 
 				     // Subscription email notifications
 				     $this->field_builder()
@@ -1483,24 +1401,6 @@ EOT;
 	 */
 	public static function is_notify_on_new_reply () {
 		return static::instance()->get_db_option( self::OPTION_NOTIFY_ON_NEW_REPLY ) !== null;
-	}
-
-	/**
-	 * Get admin email template format.
-	 *
-	 * @return string|null
-	 */
-	public static function get_notify_email_admin_template () {
-		return static::instance()->get_db_option( self::OPTION_NOTIFY_ADMIN_EMAIL_TEMPLATE );
-	}
-
-	/**
-	 * Get reply email template format.
-	 *
-	 * @return string|null
-	 */
-	public static function get_notify_email_reply_template () {
-		return static::instance()->get_db_option( self::OPTION_NOTIFY_REPLY_EMAIL_TEMPLATE );
 	}
 
 	/**
