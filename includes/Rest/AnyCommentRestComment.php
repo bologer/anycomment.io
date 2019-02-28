@@ -909,6 +909,14 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			$prepared_args['status'] = 'approve';
 		}
 
+		if ( isset( $request['order'] ) ) {
+			$prepared_args['order'] = $request['order'];
+		}
+
+		if ( isset( $request['orderby'] ) ) {
+			$prepared_args['orderby'] = $this->normalize_query_param( $request['orderby'] );
+		}
+
 		$query          = new WP_Comment_Query;
 		$child_comments = $query->query( $prepared_args );
 

@@ -11,6 +11,7 @@
 
 **Fixes:**
 
+* Fixed issued when nested comments were not sorted properly, #384
 * Fixed issue when shortcode was inserted on non-WordPress page, e.g. HTML caused notice error on comment count, #385
 * Fixed issue when ArgumentCountError fatal was given on  execution of delete_comment hook by Akismet, #383
 
