@@ -168,7 +168,6 @@ class AnyCommentSocialAuth {
 		}
 
 
-
 		if ( $redirect !== null ) {
 			setcookie( $cookie_redirect, $redirect, time() + 3600 );
 		} else {
@@ -177,8 +176,8 @@ class AnyCommentSocialAuth {
 				null;
 
 			// Add GET param to bast cache on redirect back to post
-			$get_params = parse_url( $redirect, PHP_URL_QUERY );
-			$redirectCookie   .= ( ! empty( $get_params ) ? '&' : '?' ) . 'ac=' . uniqid();
+			$get_params     = parse_url( $redirect, PHP_URL_QUERY );
+			$redirectCookie .= ( ! empty( $get_params ) ? '&' : '?' ) . 'ac=' . uniqid();
 
 			// Add anchor
 			$anchor = parse_url( $redirectCookie, PHP_URL_FRAGMENT );
@@ -255,7 +254,7 @@ class AnyCommentSocialAuth {
 	 *
 	 * @return mixed
 	 */
-	public function get_verbal_name ( $social ) {
+	public static function get_verbal_name ( $social ) {
 		$verbals = [
 			self::SOCIAL_VKONTAKTE     => __( 'Vkontakte', 'anycomment' ),
 			self::SOCIAL_FACEBOOK      => __( 'Facebook', 'anycomment' ),
@@ -269,6 +268,7 @@ class AnyCommentSocialAuth {
 			self::SOCIAL_YAHOO         => __( 'Yahoo', 'anycomment' ),
 			self::SOCIAL_YANDEX        => __( 'Yandex', 'anycomment' ),
 			self::SOCIAL_MAILRU        => __( 'Mail.Ru', 'anycomment' ),
+			self::SOCIAL_STEAM         => __( 'Steam', 'anycomment' ),
 			self::SOCIAL_WORDPRESS     => __( 'WordPress', 'anycomment' ),
 		];
 
@@ -701,7 +701,7 @@ class AnyCommentSocialAuth {
 
 		if ( $found_user_social !== null && $field === 'email' && $found_user_social !== $social ) {
 			return new WP_Error( 'use_original_social_account', sprintf( __( "Please use %s to login as this %s seems to be already taken.", "anycomment" ),
-				$this->get_verbal_name( $found_user_social ),
+				static::get_verbal_name( $found_user_social ),
 				( $field === 'email' ? __( "email", 'anycomment' ) : __( "login", 'anycomment' ) )
 			) );
 		}
