@@ -1,5 +1,5 @@
 <div class="anycomment-tab anycomment-dashboard__tab" id="anycomment-dashboard">
-    <div class="grid-x grid-margin-x anycomment-dashboard__splitter">
+    <div class="grid-x anycomment-dashboard__splitter">
         <div class="cell large-6 medium-12 small-12 anycomment-dashboard__splitter-half anycomment-dashboard__splitter-half-commentators">
             <div class="grid-x align-center">
                 <div class="cell shrink">
@@ -104,7 +104,7 @@
                 }, 1000);
             </script>
         </div>
-        <div class="cell large-4 medium-4 small-12 anycomment-dashboard__statistics-userlist">
+        <div class="large-4 medium-4 small-12 anycomment-dashboard__statistics-userlist">
             <h2><?php echo __( 'Most Active Users', 'anycomment' ) ?></h2>
 			<?php
 			$users = \AnyComment\Admin\AnyCommentStatistics::get_most_active_users();

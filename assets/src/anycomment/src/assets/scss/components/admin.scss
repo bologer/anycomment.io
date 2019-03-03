@@ -381,7 +381,11 @@ a:focus {
     &__statistics {
       &-graph,
       &-userlist {
-        width: 100%;
+        width: 100% !important;
+      }
+
+      &-graph {
+        border-right: 0;
       }
     }
   }
@@ -408,6 +412,15 @@ a:focus {
     &__sidebar {
       position: relative !important;
       @include border-radius(0 0 16px 16px);
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .anycomment-dashboard {
+    &__splitter-half:first-child {
+      border-right: 0;
+      margin-left: 0;
     }
   }
 }
