@@ -9,6 +9,7 @@
 * Added ability to import comments from HyperComments inside "Tools" tab by specifying URL to XML file, #326
 * Migrated Google+ to Google People API, #343
 * Cache directory was moved from plugin to wp-content/cache/anycomment
+* Added iThemes Security to the conflict list, #378
 
 **Fixes:**
 

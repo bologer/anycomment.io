@@ -24,7 +24,7 @@ class AnyCommentProblemNotifier {
 	 * Get list of problematic issue analyzed from website.
 	 * @return array
 	 */
-	public static function get_problem_list() {
+	public static function get_problem_list () {
 		$items = [];
 
 		global $wp_version;
@@ -33,7 +33,15 @@ class AnyCommentProblemNotifier {
 			$items[] = [
 				'level'   => self::LEVEL_CRITICAL,
 				'type'    => self::TYPE_GENERIC,
-				'message' => sprintf( __( 'WordPress version you are using is lower then 3.7. AnyComment rely on REST API. WordPress introduced it in 3.7.', 'anycomment' ) )
+				'message' => sprintf( __( 'WordPress version you are using is lower then 3.7. AnyComment rely on REST API. WordPress introduced it in 3.7.', 'anycomment' ) ),
+			];
+		}
+
+		if ( is_plugin_active( 'better-wp-security/better-wp-security.php' ) ) {
+			$items[] = [
+				'level'   => self::LEVEL_LOW,
+				'type'    => self::TYPE_PLUGIN,
+				'message' => sprintf( 'You have iThemes Security activated, please make sure "Filter Long URL Strings" is "Off" as it may cause problems.', 'anycomment' ),
 			];
 		}
 
@@ -41,7 +49,7 @@ class AnyCommentProblemNotifier {
 			$items[] = [
 				'level'   => self::LEVEL_CRITICAL,
 				'type'    => self::TYPE_PLUGIN,
-				'message' => sprintf( 'You have Clearfy activated, please make sure "Remove REST API Links" is "Off" under "Performance" tab and all options under "Server headers and response" in "SEO" tab are "Off" as it may cause problems to load comments.', 'anycomment' )
+				'message' => sprintf( 'You have Clearfy activated, please make sure "Remove REST API Links" is "Off" under "Performance" tab and all options under "Server headers and response" in "SEO" tab are "Off" as it may cause problems to load comments.', 'anycomment' ),
 			];
 		}
 
@@ -51,7 +59,7 @@ class AnyCommentProblemNotifier {
 				'type'    => self::TYPE_PLUGIN,
 				'message' => sprintf( __( 'You have All In One WP Security activated, please make sure "Disallow Unauthorized REST Requests" is unchecked in <a href="%s">here</a> and "Bad Query Strings" is unchecked in <a href="%s">here</a> tab as it may cause problems to load comments.', 'anycomment' ),
 					'/wp-admin/admin.php?page=aiowpsec_misc&tab=tab4',
-					'/wp-admin/admin.php?page=aiowpsec_firewall&tab=tab2' )
+					'/wp-admin/admin.php?page=aiowpsec_firewall&tab=tab2' ),
 			];
 		}
 
@@ -59,7 +67,7 @@ class AnyCommentProblemNotifier {
 			$items[] = [
 				'level'   => self::LEVEL_CRITICAL,
 				'type'    => self::TYPE_PLUGIN,
-				'message' => sprintf( __( "You are using %s for comments. This is same type of plugin as AnyComment, please deactivate it as it may cause problems.", "anycomment" ), 'wpDiscuz' )
+				'message' => sprintf( __( "You are using %s for comments. This is same type of plugin as AnyComment, please deactivate it as it may cause problems.", "anycomment" ), 'wpDiscuz' ),
 			];
 		}
 
@@ -67,7 +75,7 @@ class AnyCommentProblemNotifier {
 			$items[] = [
 				'level'   => self::LEVEL_CRITICAL,
 				'type'    => self::TYPE_PLUGIN,
-				'message' => sprintf( __( "You are using %s for comments. This is same type of plugin as AnyComment, please deactivate it as it may cause problems.", "anycomment" ), 'Jetpack' )
+				'message' => sprintf( __( "You are using %s for comments. This is same type of plugin as AnyComment, please deactivate it as it may cause problems.", "anycomment" ), 'Jetpack' ),
 			];
 		}
 
@@ -75,7 +83,7 @@ class AnyCommentProblemNotifier {
 			$items[] = [
 				'level'   => self::LEVEL_CRITICAL,
 				'type'    => self::TYPE_PLUGIN,
-				'message' => sprintf( __( "You are using %s for comments. This is same type of plugin as AnyComment, please deactivate it as it may cause problems.", "anycomment" ), 'Disqus Comment System ' )
+				'message' => sprintf( __( "You are using %s for comments. This is same type of plugin as AnyComment, please deactivate it as it may cause problems.", "anycomment" ), 'Disqus Comment System ' ),
 			];
 		}
 
@@ -83,7 +91,7 @@ class AnyCommentProblemNotifier {
 			$items[] = [
 				'level'   => self::LEVEL_CRITICAL,
 				'type'    => self::TYPE_PLUGIN,
-				'message' => sprintf( __( "You are using %s. This plugin is used to disable comments, please deactivate it as it may cause problems.", "anycomment" ), 'Disable Comments' )
+				'message' => sprintf( __( "You are using %s. This plugin is used to disable comments, please deactivate it as it may cause problems.", "anycomment" ), 'Disable Comments' ),
 			];
 		}
 
@@ -91,7 +99,7 @@ class AnyCommentProblemNotifier {
 			$items[] = [
 				'level'   => self::LEVEL_LOW,
 				'type'    => self::TYPE_PLUGIN,
-				'message' => sprintf( __( "You are using %s for caching. If you're experiencing some problem with AnyComment, try to deactivate it and check whether problem was resolved", "anycomment" ), 'PageSpeed Ninja' )
+				'message' => sprintf( __( "You are using %s for caching. If you're experiencing some problem with AnyComment, try to deactivate it and check whether problem was resolved", "anycomment" ), 'PageSpeed Ninja' ),
 			];
 		}
 
@@ -99,7 +107,7 @@ class AnyCommentProblemNotifier {
 			$items[] = [
 				'level'   => self::LEVEL_LOW,
 				'type'    => self::TYPE_PLUGIN,
-				'message' => sprintf( __( "You are using %s for caching. If you're experiencing some problem with AnyComment, try to deactivate it and check whether problem was resolved", "anycomment" ), 'Swift Performance Lite' )
+				'message' => sprintf( __( "You are using %s for caching. If you're experiencing some problem with AnyComment, try to deactivate it and check whether problem was resolved", "anycomment" ), 'Swift Performance Lite' ),
 			];
 		}
 
@@ -107,7 +115,7 @@ class AnyCommentProblemNotifier {
 			$items[] = [
 				'level'   => self::LEVEL_LOW,
 				'type'    => self::TYPE_PLUGIN,
-				'message' => sprintf( __( "You are using %s for caching. If you're experiencing some problem with AnyComment, try to deactivate it and check whether problem was resolved", "anycomment" ), 'WP Fastest Cache' )
+				'message' => sprintf( __( "You are using %s for caching. If you're experiencing some problem with AnyComment, try to deactivate it and check whether problem was resolved", "anycomment" ), 'WP Fastest Cache' ),
 			];
 		}
 
@@ -115,7 +123,7 @@ class AnyCommentProblemNotifier {
 			$items[] = [
 				'level'   => self::LEVEL_LOW,
 				'type'    => self::TYPE_PLUGIN,
-				'message' => sprintf( __( "You are using %s for caching. If you're experiencing some problem with AnyComment, try to deactivate it and check whether problem was resolved", "anycomment" ), 'LiteSpeed Cache' )
+				'message' => sprintf( __( "You are using %s for caching. If you're experiencing some problem with AnyComment, try to deactivate it and check whether problem was resolved", "anycomment" ), 'LiteSpeed Cache' ),
 			];
 		}
 
@@ -123,7 +131,7 @@ class AnyCommentProblemNotifier {
 			$items[] = [
 				'level'   => self::LEVEL_LOW,
 				'type'    => self::TYPE_PLUGIN,
-				'message' => sprintf( __( "You are using %s for caching. Go to \"Settings\" and make sure option \"304 Not Modified...\" is unchecked. If you're experiencing some problem with AnyComment, try to deactivate it and check whether problem was resolved", "anycomment" ), 'WP Super Cache' )
+				'message' => sprintf( __( "You are using %s for caching. Go to \"Settings\" and make sure option \"304 Not Modified...\" is unchecked. If you're experiencing some problem with AnyComment, try to deactivate it and check whether problem was resolved", "anycomment" ), 'WP Super Cache' ),
 			];
 		}
 
@@ -131,7 +139,7 @@ class AnyCommentProblemNotifier {
 			$items[] = [
 				'level'   => self::LEVEL_LOW,
 				'type'    => self::TYPE_PLUGIN,
-				'message' => sprintf( __( "You are using %s for caching. If you're experiencing some problem with AnyComment, try to deactivate it and check whether problem was resolved", "anycomment" ), 'W3 Total Cache' )
+				'message' => sprintf( __( "You are using %s for caching. If you're experiencing some problem with AnyComment, try to deactivate it and check whether problem was resolved", "anycomment" ), 'W3 Total Cache' ),
 			];
 		}
 
@@ -139,7 +147,7 @@ class AnyCommentProblemNotifier {
 			$items[] = [
 				'level'   => self::LEVEL_LOW,
 				'type'    => self::TYPE_PLUGIN,
-				'message' => sprintf( __( "You are using %s for caching. If you're experiencing some problem with AnyComment, try to deactivate it and check whether problem was resolved", "anycomment" ), 'Comet Cache' )
+				'message' => sprintf( __( "You are using %s for caching. If you're experiencing some problem with AnyComment, try to deactivate it and check whether problem was resolved", "anycomment" ), 'Comet Cache' ),
 			];
 		}
 
@@ -147,7 +155,7 @@ class AnyCommentProblemNotifier {
 			$items[] = [
 				'level'   => self::LEVEL_LOW,
 				'type'    => self::TYPE_PLUGIN,
-				'message' => sprintf( __( "You are using %s for caching. If you're experiencing some problem with AnyComment, try to deactivate it and check whether problem was resolved", "anycomment" ), 'Autoptimize' )
+				'message' => sprintf( __( "You are using %s for caching. If you're experiencing some problem with AnyComment, try to deactivate it and check whether problem was resolved", "anycomment" ), 'Autoptimize' ),
 			];
 		}
 
@@ -155,7 +163,7 @@ class AnyCommentProblemNotifier {
 			$items[] = [
 				'level'   => self::LEVEL_LOW,
 				'type'    => self::TYPE_PLUGIN,
-				'message' => sprintf( __( "You are using %s for caching. If you're experiencing some problem with AnyComment, try to deactivate it and check whether problem was resolved", "anycomment" ), 'Redis Object Cache' )
+				'message' => sprintf( __( "You are using %s for caching. If you're experiencing some problem with AnyComment, try to deactivate it and check whether problem was resolved", "anycomment" ), 'Redis Object Cache' ),
 			];
 		}
 
@@ -163,7 +171,7 @@ class AnyCommentProblemNotifier {
 			$items[] = [
 				'level'   => self::LEVEL_CRITICAL,
 				'type'    => self::TYPE_PLUGIN,
-				'message' => sprintf( __( "You are using %s. If you're experiencing some problem with AnyComment, try to set option 'Show in REST API' as 'true' in 'Add/Edit Taxonomies' or deactivate it and check whether problem was resolved", "anycomment" ), 'Custom Post Type UI' )
+				'message' => sprintf( __( "You are using %s. If you're experiencing some problem with AnyComment, try to set option 'Show in REST API' as 'true' in 'Add/Edit Taxonomies' or deactivate it and check whether problem was resolved", "anycomment" ), 'Custom Post Type UI' ),
 			];
 		}
 
@@ -171,7 +179,7 @@ class AnyCommentProblemNotifier {
 			$items[] = [
 				'level'   => self::LEVEL_CRITICAL,
 				'type'    => self::TYPE_GENERIC,
-				'message' => sprintf( __( "It looks like you have hooks related to REST API in %s which may cause failure to load comments. If you are not sure how to fix it, contact plugin developer in on the contacts available in 'Help' tab.", "anycomment" ), get_template_directory() . '/functions.php' )
+				'message' => sprintf( __( "It looks like you have hooks related to REST API in %s which may cause failure to load comments. If you are not sure how to fix it, contact plugin developer in on the contacts available in 'Help' tab.", "anycomment" ), get_template_directory() . '/functions.php' ),
 			];
 		}
 
@@ -184,7 +192,7 @@ class AnyCommentProblemNotifier {
 	 *
 	 * @return bool
 	 */
-	public static function has_functionphp_problem() {
+	public static function has_functionphp_problem () {
 		$file_path = get_template_directory() . '/functions.php';
 
 		if ( ! file_exists( $file_path ) ) {
@@ -216,7 +224,7 @@ class AnyCommentProblemNotifier {
 				$count ++;
 			}
 		}
-		
+
 		return $count > 0;
 	}
 }
