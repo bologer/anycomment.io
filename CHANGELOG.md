@@ -5,18 +5,18 @@
 **Enhancements:**
 
 * Improved Email notifications UI, no more template, it is is now unified: has avatar, author name, reply comment data, etc
-* Added new option to hold only first comment and any further can pass without pre moderation, #353 
-* Added ability to import comments from HyperComments inside "Tools" tab by specifying URL to XML file, #326
-* Migrated Google+ to Google People API, #343
+* \#353, Added new option to hold only first comment and any further can pass without pre moderation
+* \#326, Added ability to import comments from HyperComments inside "Tools" tab by specifying URL to XML file
+* \#343, Migrated Google+ to Google People API
 * Cache directory was moved from plugin to wp-content/cache/anycomment
-* Added iThemes Security to the conflict list, #378
+* \#378, Added iThemes Security to the conflict list
 
 **Fixes:**
 
-* Fixed broken layout in screens < 1400 inside admin dashboard, #382
-* Fixed issued when nested comments were not sorted properly, #384
-* Fixed issue when shortcode was inserted on non-WordPress page, e.g. HTML caused notice error on comment count, #385
-* Fixed issue when ArgumentCountError fatal was given on  execution of delete_comment hook by Akismet, #383
+* \#382, Fixed broken layout in screens < 1400 inside admin dashboard
+* \#384, Fixed issued when nested comments were not sorted properly
+* \#385, Fixed issue when shortcode was inserted on non-WordPress page, e.g. HTML caused notice error on comment count
+* \#383, Fixed issue when ArgumentCountError fatal was given on  execution of delete_comment hook by Akismet
 
 
 ## 0.0.84 – 14.02.2019
