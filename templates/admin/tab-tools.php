@@ -27,13 +27,21 @@ if ( isset( $_GET['action'] ) ) {
 }
 
 if ( isset( $_GET['hypercomment_url'] ) && ! empty( $_GET['hypercomment_url'] ) ) {
-	$hc = new \AnyComment\Import\HyperComments( $_GET['hypercomment_url'] );
+	$hc = new \AnyComment\Import\HyperComments( sanitize_text_field( $_GET['hypercomment_url'] ) );
 
 	$hc->process();
 
 	wp_redirect( $url );
 
-	return;
+	exit;
+}
+
+if ( isset( $_GET['hypercomment_revert'] ) ) {
+	\AnyComment\Import\HyperComments::revert();
+
+	wp_redirect( $url );
+
+	exit;
 }
 
 ?>
@@ -69,12 +77,24 @@ if ( isset( $_GET['hypercomment_url'] ) && ! empty( $_GET['hypercomment_url'] ) 
         <input type="hidden" name="page" value="anycomment-dashboard">
         <input type="hidden" name="tab" value="tools">
         <div class="grid-x">
-            <div class="cell shrink"><input type="text" name="hypercomment_url"
-                                            placeholder="http://static.hypercomments.com/data/export/hcexport_XXX.xml">
+            <div class="cell auto">
+                <input type="text" name="hypercomment_url"
+                       placeholder="http://static.hypercomments.com/data/export/hcexport_XXX.xml">
             </div>
         </div>
         <input type="submit" value="<?php echo __( 'Import', 'anycomment' ) ?>" class="button button-default">
+        <p><?php echo __( 'Clicking on "Import"  would copy all comments from provided XML document via URL to your website. It would automatically match posts, pages and create comments for them. It means after page reloaded, you may go and check for imported comments.', 'anycomment' ) ?></p>
     </form>
+
+    <form action="" method="GET">
+        <input type="hidden" name="page" value="anycomment-dashboard">
+        <input type="hidden" name="tab" value="tools">
+        <input type="hidden" name="hypercomment_revert" value="">
+        <input type="submit" value="<?php echo __( 'Revert', 'anycomment' ) ?>" class="button button-danger">
+        <p><?php echo __( 'This action would delete all imported comments from HyperComment that were improted via this tool.', 'anycomment' ) ?></p>
+    </form>
+
+    <hr>
 
     <h3><?php echo __( 'Debug Information', 'anycomment' ) ?></h3>
 	<?php

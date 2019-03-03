@@ -84,7 +84,7 @@ class HyperComments {
 	 *
 	 * @return bool
 	 */
-	public function revert () {
+	public static function revert () {
 		global $wpdb;
 
 		$sql = "DELETE c, cm FROM {$wpdb->comments} c";
