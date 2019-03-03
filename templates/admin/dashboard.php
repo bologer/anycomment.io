@@ -62,6 +62,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 </div>
             </div>
             <aside class="cell large-3 medium-12 anycomment-dashboard__sidebar">
+				<?php echo \AnyComment\Helpers\AnyCommentTemplate::render( 'admin/add-ons' ) ?>
 				<?php echo \AnyComment\Helpers\AnyCommentTemplate::render( 'admin/help-sidebar' ) ?>
 				<?php echo \AnyComment\Helpers\AnyCommentTemplate::render( 'admin/news-sidebar' ) ?>
             </aside>

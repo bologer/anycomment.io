@@ -63,7 +63,7 @@ if ( isset( $_GET['hypercomment_url'] ) && ! empty( $_GET['hypercomment_url'] ) 
     <hr>
     <h3><?php echo __( 'Import HyperComments', 'anycomment' ) ?></h3>
 
-    <p><?php echo __( 'Enter URL or attach XML file to start importing comments from HyperComments.', 'anycomment' ) ?></p>
+    <p><?php echo __( 'Enter URL to XML file to start importing comments from HyperComments.', 'anycomment' ) ?></p>
 
     <form action="" method="GET">
         <input type="hidden" name="page" value="anycomment-dashboard">
