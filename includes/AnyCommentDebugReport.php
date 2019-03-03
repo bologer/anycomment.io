@@ -22,7 +22,7 @@ class AnyCommentDebugReport {
 	 *
 	 * @return array
 	 */
-	public static function prepare() {
+	public static function prepare () {
 
 		global $wp_version;
 
@@ -32,8 +32,12 @@ class AnyCommentDebugReport {
 			[ 'name' => __( 'PHP Version', 'anycomment' ), 'value' => PHP_VERSION ],
 			[ 'name' => __( 'Locale', 'anycomment' ), 'value' => get_locale() ],
 			[
+				'name'  => __( 'Extensions Loaded', 'anycomment' ),
+				'value' => implode( ', ', get_loaded_extensions() ),
+			],
+			[
 				'name'  => __( 'Generic Settings', 'anycomment' ),
-				'value' => json_encode( get_option( 'anycomment-generic' ) )
+				'value' => json_encode( get_option( 'anycomment-generic' ) ),
 			],
 			[ 'name' => __( 'Active Plugins', 'anycomment' ), 'value' => static::get_active_plugins_formatted() ],
 			[ 'name' => __( 'Generated at', 'anycomment' ), 'value' => date( 'c' ) ],
@@ -50,7 +54,7 @@ class AnyCommentDebugReport {
 	 * @see AnyCommentDebugReport::prepare() for further information.
 	 * @return string
 	 */
-	public static function generate( $preparedData = null ) {
+	public static function generate ( $preparedData = null ) {
 
 		if ( $preparedData === null ) {
 			$preparedData = static::prepare();
@@ -69,7 +73,7 @@ class AnyCommentDebugReport {
 	 *
 	 * @return string
 	 */
-	public static function get_active_plugins_formatted() {
+	public static function get_active_plugins_formatted () {
 		$active_plugins = get_option( 'active_plugins', null );
 
 		if ( $active_plugins === null ) {
