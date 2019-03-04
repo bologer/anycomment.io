@@ -92,10 +92,17 @@ And good new is AnyComment is free & no dependency on third party services, all 
 == Screenshots ==
 
 1. Plugin dashboard. Analytics on current month and most active users.
-2. Social settings view.
-3. Settings view.
-4. White theme.
-5. Dark theme.
+2. Social settings view. Ability to configure each social network.
+3. "Generic" tab settings. Ability to control embeds, default user group, toggle comments, sorting, etc.
+4. "Elements" tab settings. Ability to control comment elements, such as editor actions, guest fields, etc.
+5. "Design" tab settings. Ability to control the way comments look, so they fit the best to you website.
+6. "Moderation" tab settings. Ability to control comment filtering.
+7. "Notification" tab settings. Ability to control email notifications for admin, replies and subscribers.
+8. "Files" tab settings. Ability to control file upload settings. Maximum size, mime types, etc.
+9. "Editor" tab settings. Ability to specify custom CSS styles.
+10. "Integration" tab. Ability to control different integrations, such as Akismet, reCAPTCHA.
+11. "Shortcodes" tab. It shows all available shortcodes. For example, put comments in custom place.
+12. "Tools" tab. It allows to clear internal plugin cache, copy debug report and import comments from HyperComments.
 
 == Frequently Asked Questions ==
 
@@ -112,14 +119,16 @@ And good new is AnyComment is free & no dependency on third party services, all 
 So far we support the following:
 
 * Facebook
-* Google
 * Twitter
+* Google
 * Vkontakte
 * Odnoklassniki
 * GitHub
 * Instagram
 * Twitch
 * Dribbble
+* Yandex
+* Mail.Ru
 * Steam
 
 = Can I contribute? =
