@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.0.86 – 10.03.2019
+
+**Enhancements:**
+
+
+**Fixes:**
+
+* Email notifications now responsive and have crossbrowser support
+* Changed no avatar from SVG to PNG so it can be displayed normally in email clients
+
+
 ## 0.0.85 – 19.02.2019
 
 **Enhancements:**

@@ -537,7 +537,8 @@ AND `comments`.`comment_ID`=%d";
 	 * Prepare email body.
 	 *
 	 * Subs to replace:
-	 * - {firstParagraph}
+	 * - {helloParagraph}
+	 * - {afterHelloParagraph}
 	 * - {commentAuthorImgSrc}
 	 * - {commentAuthorName}
 	 * - {commentAuthorText}
@@ -555,7 +556,8 @@ AND `comments`.`comment_ID`=%d";
 	 */
 	public static function generate_reply_email ( $email ) {
 		/**
-		 * - {firstParagraph}
+		 * - {helloParagraph}
+		 * - {afterHelloParagraph}
 		 * - {commentAuthorImgSrc}
 		 * - {commentAuthorName}
 		 * - {commentAuthorText}
@@ -585,7 +587,7 @@ AND `comments`.`comment_ID`=%d";
 		$comment_author_img_src = AnyCommentSocialAuth::get_user_avatar_url( $comment->comment_author_email );
 
 		$comment_author_name = $comment->comment_author;
-		$comment_author_text = $comment->comment_content;
+		$comment_author_text = wp_trim_words( $comment->comment_content, 15 );
 
 		$date_format = get_option( 'date_format' );
 		$time_format = get_option( 'time_format' );
@@ -598,13 +600,18 @@ AND `comments`.`comment_ID`=%d";
 
 		$comment_reply_author_img_src = '';
 		$comment_reply_author_text    = '';
+
+		$reply_comment_user = null;
 		if ( ! empty( $reply_comment ) ) {
 			$comment_reply_author_img_src = AnyCommentSocialAuth::get_user_avatar_url( $reply_comment->comment_author_email );
-			$comment_reply_author_text    = $reply_comment->comment_content;
+			$comment_reply_author_text    = wp_trim_words( $reply_comment->comment_content, 15 );
+
+			$reply_comment_user = get_user_by( 'email', $reply_comment->comment_author_email );
 		}
 
 		$search = [
-			'{firstParagraph}',
+			'{helloParagraph}',
+			'{afterHelloParagraph}',
 			'{commentAuthorImgSrc}',
 			'{commentAuthorName}',
 			'{commentAuthorText}',
@@ -616,8 +623,21 @@ AND `comments`.`comment_ID`=%d";
 			'{commentReplyAuthorImgSrc}',
 		];
 
+		$reply_name = '';
+
+		if ( $reply_comment_user instanceof \WP_User ) {
+			if ( ! empty( $reply_comment_user->first_name ) ) {
+				$reply_name = $reply_comment_user->first_name;
+			} elseif ( ! empty( $reply_comment_user->user_login ) ) {
+				$reply_name = $reply_comment_user->user_login;
+			} else {
+				$reply_name = $reply_comment_user->display_name;
+			}
+		}
+
 		$replacement = [
-			sprintf( __( 'New reply for %s on %s.', 'anycomment' ), $post_url_html, $blog_url_html),
+			sprintf( __( 'Hello %s,', 'anycomment' ), $reply_name ),
+			sprintf( __( 'New reply for %s on %s.', 'anycomment' ), $post_url_html, $blog_url_html ),
 			$comment_author_img_src,
 			$comment_author_name,
 			$comment_author_text,
@@ -629,7 +649,7 @@ AND `comments`.`comment_ID`=%d";
 			$comment_reply_author_img_src,
 		];
 
-		$template = AnyCommentTemplate::render( 'emails/reply-notification' );
+		$template = AnyCommentTemplate::render( ANYCOMMENT_ABSPATH . '/templates/emails/reply.html' );
 
 		return static::prepare_email_template( $template, $search, $replacement );
 	}
@@ -684,17 +704,19 @@ AND `comments`.`comment_ID`=%d";
 		$comment_author_date = date( $date_format . ", " . $time_format );
 
 		$search = [
-			'{firstParagraph}',
+			'{helloParagraph}',
+			'{afterHelloParagraph}',
 			'{commentAuthorImgSrc}',
 			'{commentAuthorName}',
 			'{commentAuthorText}',
 			'{commentAuthorDate}',
-			'{commentAuthorSeeUrl}',
-			'{commentAuthorSeeText}',
+			'{commentAuthorModerateUrl}',
+			'{commentAuthorModerateText}',
 		];
 
 		$replacement = [
-			sprintf( __( 'New comment for %s on %s.', 'anycomment' ), $post_url_html, $blog_url_html),
+			__( 'Hello,', 'anycomment' ),
+			sprintf( __( 'New comment for %s on %s.', 'anycomment' ), $post_url_html, $blog_url_html ),
 			$comment_author_img_src,
 			$comment_author_name,
 			$comment_author_text,
@@ -703,7 +725,7 @@ AND `comments`.`comment_ID`=%d";
 			__( 'Moderate', 'anycomment' ),
 		];
 
-		$template = AnyCommentTemplate::render( 'emails/admin-notification' );
+		$template = AnyCommentTemplate::render( ANYCOMMENT_ABSPATH . '/templates/emails/admin.html' );
 
 		return static::prepare_email_template( $template, $search, $replacement );
 	}

@@ -1,0 +1,34 @@
+---
+subject: Admin notification email template
+---
+
+<container>
+
+    <spacer size="16"></spacer>
+    <spacer size="16"></spacer>
+
+    <row>
+        <columns small="12">
+            <p>{helloParagraph}</p>
+            <spacer size="10"></spacer>
+            <p>{afterHelloParagraph}</p>
+        </columns>
+    </row>
+
+    <spacer size="16"></spacer>
+
+    <row>
+        <columns large="2" medium="2" small="12">
+            <img src="{commentAuthorImgSrc}" width="38" height="38" align="right">
+        </columns>
+        <columns large="10" medium="9" small="12">
+            <p><strong>{commentAuthorName}</strong></p>
+            <p>{commentAuthorText}</p>
+            <p class="comment-date"><strong>{commentAuthorDate}</strong></p>
+            <button class="medium" href="{commentAuthorModerateUrl}">{commentAuthorModerateText}</button>
+        </columns>
+    </row>
+
+    <spacer size="16"></spacer>
+    <spacer size="16"></spacer>
+</container>

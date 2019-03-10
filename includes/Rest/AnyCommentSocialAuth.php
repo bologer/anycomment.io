@@ -1021,7 +1021,7 @@ class AnyCommentSocialAuth {
 		}
 
 		if ( empty( $avatar_url ) ) {
-			$avatar_url = apply_filters( 'anycomment/user/no_avatar', AnyComment()->plugin_url() . '/assets/img/no-avatar.svg' );
+			$avatar_url = apply_filters( 'anycomment/user/no_avatar', AnyComment()->plugin_url() . '/assets/img/no-avatar.png' );
 			$avatar_cache->expiresAfter( 60 );
 		}
 

@@ -1,0 +1,50 @@
+---
+subject: Reply email template
+---
+
+<container>
+
+    <spacer size="16"></spacer>
+    <spacer size="16"></spacer>
+
+    <row>
+        <columns small="12">
+            <p>{helloParagraph}</p>
+            <spacer size="10"></spacer>
+            <p>{afterHelloParagraph}</p>
+        </columns>
+    </row>
+
+    <spacer size="16"></spacer>
+
+    <row>
+        <columns large="2" medium="2" small="12">
+            <img src="{commentAuthorImgSrc}" width="38" height="38" align="right">
+        </columns>
+        <columns large="10" medium="9" small="12">
+            <p><strong>{commentAuthorName}</strong></p>
+            <p>{commentAuthorText}</p>
+            <p class="comment-date"><strong>{commentAuthorDate}</strong></p>
+            <button class="medium" href="{commentAuthorReplyUrl}">{commentAuthorReplyText}</button>
+
+            <spacer size="5"></spacer>
+
+            <row>
+                <columns large="12">
+                    <p class="reply-paragraph"><strong>{commentReplyAuthorParagraph}</strong></p>
+                    <row>
+                        <columns large="1" medium="1" small="12">
+                            <img src="{commentReplyAuthorImgSrc}" width="26" height="26" align="left">
+                        </columns>
+                        <columns large="11" medium="1" small="12">
+                            <p class="reply-comment-text">{commentReplyAuthorText}</p>
+                        </columns>
+                    </row>
+                </columns>
+            </row>
+        </columns>
+    </row>
+
+    <spacer size="16"></spacer>
+    <spacer size="16"></spacer>
+</container>
