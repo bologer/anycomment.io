@@ -744,8 +744,6 @@ AND `comments`.`comment_ID`=%d";
 
 		$content = preg_replace( '/\{.*?\}/', '', $content );
 
-		$content = preg_replace( '/\v(?:[\v\h]+)/', '', trim( $content ) );
-
 		return apply_filters( 'anycomment_prepare_email_template', $content, $content, $search, $replacement );
 	}
 }
