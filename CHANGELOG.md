@@ -4,6 +4,8 @@
 
 **Enhancements:**
 
+* Added `target_url` property to `[anycomment_socials]` shortcode which allows to specify URL where to redirect user after authorization
+
 **Fixes:**
 
 * Fixed issue `ERR_TOO_MANY_REDIRECTS` error when logging in via social on admin login form

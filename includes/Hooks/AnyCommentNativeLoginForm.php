@@ -49,16 +49,16 @@ class AnyCommentNativeLoginForm {
 	 * Possible options:
 	 * - only_socials (default: false) display just list of socials, without starting paragraph.
 	 * - output (default: true) true would `echo` the result HTML, false would `return` it.
+	 * - target_url: (default: current URI) URL where to redirect user after authorization
 	 */
 	public function social_list ( $atts ) {
 		$params = shortcode_atts( array(
 			'only_socials' => false,
 			'output'       => false,
+			'target_url'   => home_url( isset( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI'] : '' ),
 		), $atts );
 
-		$redirect_url = home_url( isset( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI'] : '' );
-
-		$socials = $this->login_with($redirect_url);
+		$socials = $this->login_with( $params['target_url'] );
 		$html    = '';
 
 		if ( ! $params['only_socials'] ) {

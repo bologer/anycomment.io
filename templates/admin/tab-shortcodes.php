@@ -14,6 +14,8 @@
                 <textarea name="" readonly
                           onclick="this.select()">[anycomment_socials]</textarea>
                 <p class="description"><?php echo __( 'Use this shortcode do display list of available social networks.', 'anycomment' ) ?></p>
+                <p class="description"><?php echo __( 'Possible options:' ) ?></p>
+                <p class="description"><?php echo sprintf( __( '- %s: to display only socials icons without starting paragraph, <br>- %s: URL where to redirect user after authorization' ), 'only_socials', 'target_url' ) ?></p>
             </td>
         </tr>
         </tbody>
