@@ -6,6 +6,7 @@
 
 **Fixes:**
 
+* Fixed issue `ERR_TOO_MANY_REDIRECTS` error when logging in via social on admin login form
 * Fixed issue when successful submission alert was shown twice in admin
 * Email notifications now responsive and have crossbrowser support
 * Changed no avatar from SVG to PNG so it can be displayed normally in email clients

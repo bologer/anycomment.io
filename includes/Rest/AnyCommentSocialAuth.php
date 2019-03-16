@@ -175,14 +175,18 @@ class AnyCommentSocialAuth {
 				$_COOKIE[ $cookie_redirect ] :
 				null;
 
-			// Add GET param to bast cache on redirect back to post
-			$get_params     = parse_url( $redirect, PHP_URL_QUERY );
-			$redirectCookie .= ( ! empty( $get_params ) ? '&' : '?' ) . 'ac=' . uniqid();
+			if ( false !== strpos( $redirectCookie, 'wp-login.php' ) ) {
+				$redirectCookie = home_url( '/wp-admin/' );
+			} else {
+				// Add GET param to bast cache on redirect back to post
+				$get_params     = parse_url( $redirectCookie, PHP_URL_QUERY );
+				$redirectCookie .= ( ! empty( $get_params ) ? '&' : '?' ) . 'ac=' . uniqid();
 
-			// Add anchor
-			$anchor = parse_url( $redirectCookie, PHP_URL_FRAGMENT );
-			if ( $redirectCookie !== null && empty( $anchor ) ) {
-				$redirectCookie .= '#comments';
+				// Add anchor
+				$anchor = parse_url( $redirectCookie, PHP_URL_FRAGMENT );
+				if ( $redirectCookie !== null && empty( $anchor ) ) {
+					$redirectCookie .= '#comments';
+				}
 			}
 
 			$redirect = $redirectCookie !== null ? $redirectCookie : '/';

@@ -18,14 +18,14 @@ class AnyCommentNativeLoginForm {
 	/**
 	 * AnyCommentNativeLoginForm constructor.
 	 */
-	public function __construct() {
+	public function __construct () {
 		$this->init();
 	}
 
 	/**
 	 * Init model.
 	 */
-	public function init() {
+	public function init () {
 		if ( AnyCommentGenericSettings::is_show_socials_in_login_page() ) {
 			add_action( 'login_form', [ $this, 'social_list_login_form' ], 11 );
 		}
@@ -37,7 +37,7 @@ class AnyCommentNativeLoginForm {
 	 * Used to display list available socials to login as alternative to
 	 * regular login details.
 	 */
-	public function social_list_login_form() {
+	public function social_list_login_form () {
 		$this->social_list( [ 'output' => true ] );
 	}
 
@@ -50,13 +50,15 @@ class AnyCommentNativeLoginForm {
 	 * - only_socials (default: false) display just list of socials, without starting paragraph.
 	 * - output (default: true) true would `echo` the result HTML, false would `return` it.
 	 */
-	public function social_list( $atts ) {
+	public function social_list ( $atts ) {
 		$params = shortcode_atts( array(
 			'only_socials' => false,
-			'output'       => false
+			'output'       => false,
 		), $atts );
 
-		$socials = $this->login_with();
+		$redirect_url = home_url( isset( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI'] : '' );
+
+		$socials = $this->login_with($redirect_url);
 		$html    = '';
 
 		if ( ! $params['only_socials'] ) {
@@ -82,7 +84,7 @@ class AnyCommentNativeLoginForm {
 	 *
 	 * @return string
 	 */
-	public function login_with( $redirectUrl = null ) {
+	public function login_with ( $redirectUrl = null ) {
 
 		$socials = AnyCommentSocials::get_all( $redirectUrl );
 
