@@ -4,9 +4,9 @@
 
 **Enhancements:**
 
-
 **Fixes:**
 
+* Fixed issue when successful submission alert was shown twice in admin
 * Email notifications now responsive and have crossbrowser support
 * Changed no avatar from SVG to PNG so it can be displayed normally in email clients
 
