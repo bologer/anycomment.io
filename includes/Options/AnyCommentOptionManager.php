@@ -22,7 +22,7 @@ class AnyCommentOptionManager {
 	/**
 	 * @var string Key used to display option alers.
 	 */
-	protected $alert_key = 'anycomment-options-alert';
+	protected $alert_key = 'anycomment-form-alert';
 
 	/**
 	 * @var array Default options. When options specified in this list do not exist in the form options, default ones will be used instead.
@@ -56,11 +56,53 @@ class AnyCommentOptionManager {
 	 */
 	protected $field_options = [];
 
+
 	/**
 	 * AC_Options constructor.
 	 */
 	public function __construct () {
 		add_action( 'init', [ $this, 'init' ] );
+
+		$transient_key = $this->alert_key . get_current_user_id();
+
+		$transient = get_transient( $transient_key );
+
+		if ( ! empty( $transient ) ) {
+
+			$transient = (array) $transient;
+
+			$type    = (string) $transient['type'];
+			$message = (string) $transient['message'];
+
+			delete_transient( $transient_key );
+
+			add_action( 'admin_notices', function () use ( $type, $message ) {
+				?>
+                <div class="notice notice-<?php echo $type ?> is-dismissible">
+                    <p><?php esc_html_e( $message ) ?></p>
+                </div>
+				<?php
+			} );
+		}
+
+		add_action( 'admin_post_' . $this->option_name, function () use ( $transient_key ) {
+
+			if ( ! ( $this->save_form() instanceof \WP_Error ) ) {
+				set_transient( $transient_key, [
+					'type'    => 'success',
+					'message' => __( 'Saved successfully', 'anycomment' ),
+				], 60 );
+
+			} else {
+				set_transient( $transient_key, [
+					'type'    => 'error',
+					'message' => __( 'Failed to save form. Please try again.', 'anycomment' ),
+				], 60 );
+			}
+
+			wp_redirect( isset( $_POST['redirect'] ) ? $_POST['redirect'] : '/' );
+			exit();
+		} );
 	}
 
 	/**
@@ -68,69 +110,30 @@ class AnyCommentOptionManager {
 	 */
 	public function init () {
 		register_setting( $this->option_group, $this->option_name );
-
-		$action_name = $this->get_page_slug();
-
-		add_action( 'rest_api_init', function () use ( $action_name ) {
-			register_rest_route( 'anycomment/v1', "/$action_name/", array(
-				'methods'  => 'POST',
-				'callback' => [ $this, 'process_rest' ],
-			) );
-		} );
-
-		add_action( 'admin_footer', function () use ( $action_name ) {
-			$form_id         = '#' . $this->get_page_slug();
-			$url             = rest_url( 'anycomment/v1/' . $action_name );
-			$success_message = __( "Settings saved", 'anycomment' );
-			$js              = <<<JS
-jQuery('$form_id').on('submit', function(e) {
-	e.preventDefault();
-	
-	var data = jQuery(this).serialize();
-	
-	if(!data) {
-	    return false;
-	}
-	
-	jQuery.ajax({
-	    method: 'POST',
-	    url: '$url',
-	    data: data,
-	    success: function(data) {
-	        if(data.success) {
-	            alert('$success_message');
-	        }
-	    },
-	    error: function(err) {
-	        console.log(err);
-	    }
-	});
-});
-JS;
-			echo '<script>' . $js . '</script>';
-		} );
 	}
 
 	/**
-	 * Process REST request to save the form.
+	 * Process form submission.
 	 *
-	 * @param \WP_REST_Request $request
-	 *
-	 * @return mixed|\WP_Error|\WP_REST_Response
+	 * @return mixed|\WP_Error
 	 */
-	public function process_rest ( $request ) {
+	public function save_form () {
 
-
-		$response = new \WP_REST_Response();
-
-		if ( ! isset( $request['option_name'] ) ) {
-			return new \WP_Error( 403, __( 'Option name is required', 'anycomment' ), [ 'status' => 403 ] );
+		if ( ! wp_verify_nonce( $_POST['nonce'], $this->option_name ) ) {
+			return new \WP_Error( '', __( 'Invalid nonce', 'anycomment' ) );
 		}
 
-		$option_name = trim( $request['option_name'] );
-		$options     = $request->get_params();
+		$option_name = isset( $_POST['action'] ) ? sanitize_text_field( trim( $_POST['action'] ) ) : null;
+		$options     = $_POST;
 
-		unset( $options['option_name'] );
+
+		if ( empty( $option_name ) ) {
+			return new \WP_Error( '', __( 'No page slug provided', 'anycomment' ) );
+		}
+
+		unset( $options['action'] );
+		unset( $options['redirect'] );
+		unset( $options['nonce'] );
 
 		/**
 		 * Fires before settings were updated.
@@ -144,11 +147,7 @@ JS;
 
 		$this->update_db_option( $options, $option_name );
 
-		$response->set_data( [
-			'success' => true,
-		] );
-
-		return rest_ensure_response( $response );
+		return true;
 	}
 
 	/**
@@ -204,14 +203,21 @@ JS;
 		return new AnyCommentField( $options );
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
 	public function run () {
 		$html = '';
 
 		$options = $this->options;
 
-		$html .= '<form action="" id="' . $this->get_page_slug() . '" method="post" class="anycomment-form" novalidate>';
+		$html .= '<form action="' . esc_url( admin_url( "admin-post.php" ) ) . '" id="' . $this->get_page_slug() . '" method="post" class="anycomment-form" novalidate>';
 
-		$html .= '<input type="hidden" name="option_name" value="' . $this->option_name . '">';
+		$redirect_url = isset( $_SERVER['REQUEST_URI'] ) ? esc_url( $_SERVER['REQUEST_URI'] ) : '';
+
+		$html .= '<input type="hidden" name="redirect" value="' . $redirect_url . '">';
+		$html .= '<input type="hidden" name="action" value="' . $this->option_name . '">';
+		$html .= '<input type="hidden" name="nonce" value="' . wp_create_nonce( $this->option_name ) . '" />';
 
 		foreach ( $options as $option ) {
 			$sections = $option->get_sections();
@@ -228,7 +234,7 @@ JS;
 			}
 		}
 
-		$html .= '<input type="submit" value="' . __( 'Save', 'anycomment' ) . '">';
+		$html .= '<input type="submit" class="button" value="' . __( 'Save', 'anycomment' ) . '">';
 
 		$html .= '</form>';
 
