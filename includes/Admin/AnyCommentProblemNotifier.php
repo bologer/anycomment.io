@@ -33,7 +33,7 @@ class AnyCommentProblemNotifier {
 			$items[] = [
 				'level'   => self::LEVEL_CRITICAL,
 				'type'    => self::TYPE_GENERIC,
-				'message' => sprintf( __( 'WordPress version you are using is lower then 3.7. AnyComment rely on REST API. WordPress introduced it in 3.7.', 'anycomment' ) ),
+				'message' => __( 'WordPress version you are using is lower then 3.7. AnyComment rely on REST API. WordPress introduced it in 3.7.', 'anycomment' ),
 			];
 		}
 
@@ -41,7 +41,7 @@ class AnyCommentProblemNotifier {
 			$items[] = [
 				'level'   => self::LEVEL_LOW,
 				'type'    => self::TYPE_PLUGIN,
-				'message' => sprintf( 'You have iThemes Security activated, please make sure "Filter Long URL Strings" is "Off" as it may cause problems.', 'anycomment' ),
+				'message' => __( 'You have iThemes Security activated, please make sure "Filter Long URL Strings" is "Off" as it may cause problems.', 'anycomment' ),
 			];
 		}
 
@@ -49,7 +49,7 @@ class AnyCommentProblemNotifier {
 			$items[] = [
 				'level'   => self::LEVEL_CRITICAL,
 				'type'    => self::TYPE_PLUGIN,
-				'message' => sprintf( 'You have Clearfy activated, please make sure "Remove REST API Links" is "Off" under "Performance" tab and all options under "Server headers and response" in "SEO" tab are "Off" as it may cause problems to load comments.', 'anycomment' ),
+				'message' => __( 'You have Clearfy activated, please make sure "Remove REST API Links" is "Off" under "Performance" tab and all options under "Server headers and response" in "SEO" tab are "Off" as it may cause problems to load comments.', 'anycomment' ),
 			];
 		}
 
