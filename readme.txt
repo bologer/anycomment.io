@@ -176,13 +176,16 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 == Changelog ==
 
-= 0.0.86 – 10.03.2019 =
+= 0.0.86 – 18.03.2019 =
 
 **Enhancements:**
 
+* Added `target_url` property to `[anycomment_socials]` shortcode which allows to specify URL where to redirect user after authorization
 
 **Fixes:**
 
+* Fixed issue `ERR_TOO_MANY_REDIRECTS` error when logging in via social on admin login form
+* Fixed issue when successful submission alert was shown twice in admin
 * Email notifications now responsive and have crossbrowser support
 * Changed no avatar from SVG to PNG so it can be displayed normally in email clients
 
