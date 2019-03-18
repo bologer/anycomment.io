@@ -398,9 +398,13 @@ class AnyCommentIntegrationSettings extends AnyCommentOptionManager {
 	 * {@inheritdoc}
 	 */
 	public function run () {
-		$sections_html = '<form action="" id="' . $this->get_page_slug() . '" method="post" class="anycomment-form" novalidate>';
+		$sections_html = '<form action="' . esc_url( admin_url( "admin-post.php" ) ) . '" id="' . $this->get_page_slug() . '" method="post" class="anycomment-form" novalidate>';
 
-		$sections_html .= '<input type="hidden" name="option_name" value="' . $this->option_name . '">';
+		$redirect_url = isset( $_SERVER['REQUEST_URI'] ) ? esc_url( $_SERVER['REQUEST_URI'] ) : '';
+
+		$sections_html .= '<input type="hidden" name="redirect" value="' . $redirect_url . '">';
+		$sections_html .= '<input type="hidden" name="action" value="' . $this->option_name . '">';
+		$sections_html .= '<input type="hidden" name="nonce" value="' . wp_create_nonce( $this->option_name ) . '" />';
 
 		$options = $this->options;
 

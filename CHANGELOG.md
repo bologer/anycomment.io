@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.0.87 – 18.03.2019
+
+**Fixes:**
+
+* Fixed issue when settings were not saving in admin
+
+
 ## 0.0.86 – 18.03.2019
 
 **Enhancements:**
