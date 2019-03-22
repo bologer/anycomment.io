@@ -88,7 +88,7 @@ class AnyCommentRestSubscriptions extends AnyCommentRestController {
 		}
 
 		if ( AnyCommentSubscriptions::is_subscribed_by( $email, $post ) ) {
-			return new WP_Error( 'rest_already_subscribed', __( 'This email is already subscribed for this post.', 'anycomment' ), [ 'status' => 403 ] );
+			return new WP_Error( 'rest_already_subscribed', __( 'You are already subscribed to this post.', 'anycomment' ), [ 'status' => 403 ] );
 		}
 
 
@@ -127,14 +127,14 @@ class AnyCommentRestSubscriptions extends AnyCommentRestController {
 		}
 
 		if ( false === $model->save() ) {
-			return new WP_Error( 'rest_subscription_failure', __( 'Error, failed to subscribe. Please try again later.', 'anycomemnt' ), [ 'status' => 403 ] );
+			return new WP_Error( 'rest_subscription_failure', __( 'The subscription failed. Please try again later.', 'anycomemnt' ), [ 'status' => 403 ] );
 		}
 
 		if ( $send_confirmation_email ) {
 			$confirmation_sent = AnyCommentEmailQueue::add_as_subscriber_confirmation_notification( $model );
 
 			if ( ! $confirmation_sent ) {
-				return new WP_Error( 'rest_subscription_failure', __( 'Error, failed to subscribe. Please try again later.', 'anycomemnt' ), [ 'status' => 403 ] );
+				return new WP_Error( 'rest_subscription_failure', __( 'The subscription failed. Please try again later.', 'anycomemnt' ), [ 'status' => 403 ] );
 			}
 		}
 
