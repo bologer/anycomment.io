@@ -354,7 +354,7 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 				          ->checkbox()
 				          ->set_id( self::OPTION_PLUGIN_TOGGLE )
 				          ->set_title( __( 'Enable Comments', "anycomment" ) )
-				          ->set_description( esc_html( __( 'When on, comments are visible. When off, default WordPress\' comments shown. This can be used to configure social networks on fresh installation.', "anycomment" ) ) ),
+				          ->set_description( esc_html( __( 'When on, AnyComment is enabled. When off, default WordPress\' comments are shown. This is handy for customizing social networks before implementation.', "anycomment" ) ) ),
 
 				     $this->field_builder()
 				          ->set_id( self::OPTION_DEFAULT_SORT_BY )
@@ -395,19 +395,19 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 						          self::OPTION_DEFAULT_AVATAR_ROBOHASH   => __( 'Robohash (from Gravatar)', 'anycomment' ),
 					          ],
 				          ] )
-				          ->set_description( esc_html( __( 'Default avatar when user does not have any.', "anycomment" ) ) ),
+				          ->set_description( esc_html( __( 'Default avatar when user does not have one.', "anycomment" ) ) ),
 
 				     $this->field_builder()
 				          ->set_id( self::OPTION_REGISTER_DEFAULT_GROUP )
 				          ->select()
-				          ->set_title( __( 'Register User Group', "anycomment" ) )
+				          ->set_title( __( 'Default user role for comment subscribers', "anycomment" ) )
 				          ->set_args( [
 					          'options' => [
 						          self::DEFAULT_ROLE_SUBSCRIBER        => __( 'Subscriber', 'anycomment' ),
-						          self::DEFAULT_ROLE_SOCIAL_SUBSCRIBER => __( 'Social Network Subscriber', 'anycomment' ),
+						          self::DEFAULT_ROLE_SOCIAL_SUBSCRIBER => __( 'Default user role for social network subscribers', 'anycomment' ),
 					          ],
 				          ] )
-				          ->set_description( esc_html( __( 'When users will authorize via plugin, they are being registered and be assigned with group selected above.', "anycomment" ) ) ),
+				          ->set_description( esc_html( __( 'If users choose to create an account when commenting they will be assigned this user role in WordPress.', "anycomment" ) ) ),
 
 				     $this->field_builder()
 				          ->set_id( self::OPTION_COMMENT_DATETIME_FORMAT )
@@ -425,74 +425,74 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 				          ->number()
 				          ->set_id( self::OPTION_COMMENT_UPDATE_TIME )
 				          ->set_title( __( 'Comment Update Time', "anycomment" ) )
-				          ->set_description( esc_html( __( 'Number of minutes user can update his comment. "0" or empty for no limit.', "anycomment" ) ) ),
+				          ->set_description( esc_html( __( 'Number of minutes users can edit their comment. Use \"0\" or empty for no limit.', "anycomment" ) ) ),
 
 				     $this->field_builder()
 				          ->number()
 				          ->set_id( self::OPTION_COUNT_PER_PAGE )
-				          ->set_title( __( 'Number of Comments Loaded', "anycomment" ) )
-				          ->set_description( esc_html( __( 'Number of comments to load initially and per page.', "anycomment" ) ) ),
+				          ->set_title( __( 'Number of Comments to show on page load', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Number of comments to load initially and during pagination.', "anycomment" ) ) ),
 
 				     $this->field_builder()
 				          ->checkbox()
 				          ->set_id( self::OPTION_LOAD_ON_SCROLL )
-				          ->set_title( __( 'Load on Scroll', "anycomment" ) )
-				          ->set_description( esc_html( __( 'Load comments when user scrolls to it.', "anycomment" ) ) ),
+				          ->set_title( __( 'Hide comments on page load', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Do not load the comments until the user has scrolled to the end of the post. Saves server resources and reduces page load time.', "anycomment" ) ) ),
 
 
 				     $this->field_builder()
 				          ->checkbox()
 				          ->set_id( self::OPTION_SHOW_SOCIALS_IN_LOGIN_PAGE )
-				          ->set_title( __( 'Show Login Page Socials', "anycomment" ) )
-				          ->set_description( esc_html( __( 'Show list of available socials under WordPress\'s native login form.', "anycomment" ) ) ),
+				          ->set_title( __( 'Offer social login on the WordPress login page', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Let your users login to WordPress using your configured social networks.', "anycomment" ) ) ),
 
 
 				     $this->field_builder()
 				          ->checkbox()
 				          ->set_id( self::OPTION_SHOW_ADMIN_BAR )
-				          ->set_title( __( 'Show Admin Bar', "anycomment" ) )
-				          ->set_description( esc_html( __( 'Show admin bar for regular WordPress users and those who logged in via social.', "anycomment" ) ) ),
+				          ->set_title( __( 'Use Admin Bar', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Show the admin bar to logged-in users, including those who logged in with a social profile.', "anycomment" ) ) ),
 
 
 				     $this->field_builder()
 				          ->checkbox()
 				          ->set_id( self::OPTION_SHOW_PROFILE_URL )
-				          ->set_title( __( 'Show Profile URL', "anycomment" ) )
-				          ->set_description( esc_html( __( 'Show link to user in the social media or website when available (name of the user will be clickable).', "anycomment" ) ) ),
+				          ->set_title( __( 'Use Profile URLs', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Link commenter names to their WordPress or social media profile.', "anycomment" ) ) ),
 
 
 				     $this->field_builder()
 				          ->checkbox()
 				          ->set_id( self::OPTION_SHOW_TWITTER_EMBEDS )
 				          ->set_title( __( 'Display Twitter Embeds', "anycomment" ) )
-				          ->set_description( esc_html( __( 'Detect & display tweets from Twitter as embedded widget.', "anycomment" ) ) ),
+				          ->set_description( esc_html( __( 'Detect & display twitter URLS as comment embeds.', "anycomment" ) ) ),
 
 
 				     $this->field_builder()
 				          ->checkbox()
 				          ->set_id( self::OPTION_SHOW_VIDEO_ATTACHMENTS )
 				          ->set_title( __( 'Display Video Attachments', "anycomment" ) )
-				          ->set_description( esc_html( __( 'Display video link from comment as attachment.', "anycomment" ) ) ),
+				          ->set_description( esc_html( __( 'Display video links (YouTube etc) inline in the comments', "anycomment" ) ) ),
 
 
 				     $this->field_builder()
 				          ->checkbox()
 				          ->set_id( self::OPTION_SHOW_IMAGE_ATTACHMENTS )
 				          ->set_title( __( 'Display Image Attachments', "anycomment" ) )
-				          ->set_description( esc_html( __( 'Display image link from comment as attachment.', "anycomment" ) ) ),
+				          ->set_description( esc_html( __( 'Display attached images within the comments.', "anycomment" ) ) ),
 
 				     $this->field_builder()
 				          ->checkbox()
 				          ->set_id( self::OPTION_RATING_TOGGLE )
-				          ->set_title( __( 'Display Rating', "anycomment" ) )
-				          ->set_description( esc_html( __( 'Display 5 star rating above comments.', "anycomment" ) ) ),
+				          ->set_title( __( 'Feature top-rated comments', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Display comments with more than 5 upvotes or stars at the top of the comments area.', "anycomment" ) ) ),
 
 
 				     $this->field_builder()
 				          ->checkbox()
 				          ->set_id( self::OPTION_READ_MORE_TOGGLE )
 				          ->set_title( __( 'Shorten Long Comments', "anycomment" ) )
-				          ->set_description( esc_html( __( 'Shorten long comments with "Read more" message.', "anycomment" ) ) ),
+				          ->set_description( esc_html( __( 'Truncate long comments with "Read more" link.', "anycomment" ) ) ),
 
 
 //					$this->field_builder()
@@ -505,14 +505,14 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 				     $this->field_builder()
 				          ->text()
 				          ->set_id( self::OPTION_USER_AGREEMENT_LINK )
-				          ->set_title( __( 'User Agreement Link', "anycomment" ) )
-				          ->set_description( esc_html( __( 'Link to User Agreement, where described how your process users data once they authorize via social network and/or add new comment.', "anycomment" ) ) ),
+				          ->set_title( __( 'Fine Print Link', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Link to your User Agreement, Privacy Policy, or Comment Policy', "anycomment" ) ) ),
 
 				     $this->field_builder()
 				          ->checkbox()
 				          ->set_id( self::OPTION_COPYRIGHT_TOGGLE )
-				          ->set_title( __( 'Thanks', "anycomment" ) )
-				          ->set_description( esc_html( __( 'Show AnyComment\'s link in the footer of comments. Copyright helps to bring awareness of such plugin and bring people to allow us to understand that it is a wanted product and give more often updated.', "anycomment" ) ) ),
+				          ->set_title( __( 'Say Thanks', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Show your appreciation and show AnyComment\'s logo in the footer of comments. It will help spread the word to all of WordPress!', "anycomment" ) ) ),
 
 
 			     ] )
@@ -524,33 +524,33 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 		$form->add_section(
 			$this->section_builder()
 			     ->set_id( 'elements' )
-			     ->set_title( __( 'Elements', "anycomment" ) )
+			     ->set_title( __( 'Common Elements', "anycomment" ) )
 			     ->set_fields( [
 				     $this->field_builder()
 				          ->select()
 				          ->set_id( self::OPTION_FORM_TYPE )
-				          ->set_title( __( 'Comment form', "anycomment" ) )
+				          ->set_title( __( 'Who can comment?', "anycomment" ) )
 				          ->set_args( [
 					          'options' => [
-						          self::FORM_OPTION_ALL            => __( 'Anyone', 'anycomment' ),
-						          self::FORM_OPTION_WORDPRESS_ONLY => __( 'WordPress only', 'anycomment' ),
-						          self::FORM_OPTION_SOCIALS_ONLY   => __( 'Socials only', 'anycomment' ),
-						          self::FORM_OPTION_GUEST_ONLY     => __( 'Guests only', 'anycomment' ),
+						          self::FORM_OPTION_ALL            => __( 'WordPress users, Social Network Users, as well as public and anonymous guests.', 'anycomment' ),
+						          self::FORM_OPTION_WORDPRESS_ONLY => __( 'WordPress users only', 'anycomment' ),
+						          self::FORM_OPTION_SOCIALS_ONLY   => __( 'Social Network users only', 'anycomment' ),
+						          self::FORM_OPTION_GUEST_ONLY     => __( 'Any public or anonymous guests', 'anycomment' ),
 					          ],
 				          ] )
-				          ->set_description( esc_html( __( 'Users who able to leave comments.', "anycomment" ) ) ),
+				          ->set_description( esc_html( __( 'Which kind of users should be able to leave comments?', "anycomment" ) ) ),
 
 				     $this->field_builder()
 				          ->text()
 				          ->set_id( self::OPTION_GUEST_FIELDS )
-				          ->set_title( __( 'Guest Fields', "anycomment" ) )
-				          ->set_description( esc_html( __( 'Use this rearrange guest form fields or remove something. {name} is required and if you do not add it, it will be added by plugin. {name} is name field, {email} is email field, {website} is website field.', "anycomment" ) ) ),
+				          ->set_title( __( 'Comment form fields', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Modify the default WordPress fields that display on the comment form (name, email, website).', "anycomment" ) ) ),
 
 				     $this->field_builder()
 				          ->checkbox()
 				          ->set_id( self::OPTION_SHOW_UPDATED_INFO )
 				          ->set_title( __( 'Show updated info', "anycomment" ) )
-				          ->set_description( esc_html__( 'Show updated icon on each comment once it was modified.', "anycomment" ) ),
+				          ->set_description( esc_html__( 'Show an icon on comments which have been edited by the user. Great for transparency.', "anycomment" ) ),
 
 
 				     /**
@@ -559,8 +559,8 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 				     $this->field_builder()
 				          ->checkbox()
 				          ->set_id( self::OPTION_EDITOR_TOOLBAR_TOGGLE )
-				          ->set_title( __( 'Enable Toolbar', "anycomment" ) )
-				          ->set_description( esc_html( __( 'Enable editor toolbar (show options to modify comment text - bold, italics, etc).', "anycomment" ) ) ),
+				          ->set_title( __( 'Enable WYSIWYG Toolbar', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Enable a simple toolbar for adding bold, italic, etc to comments.', "anycomment" ) ) ),
 
 
 				     $this->field_builder()
@@ -615,8 +615,8 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 				     $this->field_builder()
 				          ->checkbox()
 				          ->set_id( self::OPTION_EDITOR_TOOLBAR_CLEAN )
-				          ->set_title( __( 'Clean formatting', "anycomment" ) )
-				          ->set_description( esc_html( __( 'Show clean formatting option in editor toolbar.', "anycomment" ) ) ),
+				          ->set_title( __( 'Clear formatting', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Show clear all formatting option in editor toolbar.', "anycomment" ) ) ),
 			     ] )
 		);
 
@@ -632,7 +632,7 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 				          ->checkbox()
 				          ->set_id( self::OPTION_DESIGN_CUSTOM_TOGGLE )
 				          ->set_title( __( 'Custom Design', "anycomment" ) )
-				          ->set_description( esc_html( __( 'Use custom design. Enable this option to display design changes from below.', "anycomment" ) ) ),
+				          ->set_description( esc_html( __( 'Enable this option to display design changes from below.', "anycomment" ) ) ),
 
 
 				     $this->field_builder()
@@ -717,7 +717,7 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 				          ->color()
 				          ->set_id( self::OPTION_DESIGN_ATTACHMENT_BACKGROUND_COLOR )
 				          ->set_title( __( 'Attachment Background Color', "anycomment" ) )
-				          ->set_description( esc_html( __( 'Attachment background color. For example, user may attach PNG image with transparent background. This color will be used as background behind the image.', "anycomment" ) ) ),
+				          ->set_description( esc_html( __( 'Attachment background color. For example, a user may attach a PNG image with transparent background. This color will be used as the background behind the image.', "anycomment" ) ) ),
 
 
 				     $this->field_builder()
@@ -779,8 +779,8 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 				     $this->field_builder()
 				          ->checkbox()
 				          ->set_id( self::OPTION_MODERATE_FIRST )
-				          ->set_title( __( 'Moderate First', "anycomment" ) )
-				          ->set_description( esc_html( __( 'Moderators should check comment before it appears.', "anycomment" ) ) ),
+				          ->set_title( __( 'Moderate All Comments', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Hold all comments until they have been approved by a moderator.', "anycomment" ) ) ),
 
 				     $this->field_builder()
 				          ->checkbox()
@@ -791,7 +791,7 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 				     $this->field_builder()
 				          ->checkbox()
 				          ->set_id( self::OPTION_LINKS_ON_HOLD )
-				          ->set_title( __( 'Links on Hold', "anycomment" ) )
+				          ->set_title( __( 'Hold all comments with links', "anycomment" ) )
 				          ->set_description( esc_html( __( 'Comment with links should be marked for moderation.', "anycomment" ) ) ),
 
 				     $this->field_builder()
@@ -820,21 +820,21 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 				          ->checkbox()
 				          ->set_id( self::OPTION_NOTIFY_ON_NEW_COMMENT )
 				          ->set_title( __( 'Real-time updates', "anycomment" ) )
-				          ->set_description( esc_html( __( 'Show comments in real-time. Users on the page would be notified about new comments by green alert and see comment without page reload.', "anycomment" ) ) ),
+				          ->set_description( esc_html( __( 'Show new comments in real-time. Users would be notified about new comments by a green alert while the new comments load instantly on the page.', "anycomment" ) ) ),
 
 				     $this->field_builder()
 				          ->number()
 				          ->set_id( self::OPTION_INTERVAL_COMMENTS_CHECK )
 				          ->set_title( __( 'New Comment Interval Checking', "anycomment" ) )
-				          ->set_description( esc_html( __( 'Interval (in seconds) to check for new comments. Minimum 5 and maximum is 100 seconds.', "anycomment" ) ) ),
+				          ->set_description( esc_html( __( 'Interval (in seconds) to check for new comments. The minimum is 5 and the maximum is 100.', "anycomment" ) ) ),
 
 
 				     // Admin email notifications
 				     $this->field_builder()
 				          ->checkbox()
 				          ->set_id( self::OPTION_NOTIFY_ADMINISTRATOR )
-				          ->set_title( __( 'Notify Administrator', "anycomment" ) )
-				          ->set_description( esc_html( __( 'Notify administrator via email about new comment.', "anycomment" ) ) ),
+				          ->set_title( __( 'Notify Administrators of new comments', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Send all new comments to the site administrator via email.', "anycomment" ) ) ),
 
 				     // Reply email notifications
 				     $this->field_builder()
@@ -940,8 +940,8 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 				     $this->field_builder()
 				          ->checkbox()
 				          ->set_id( self::OPTION_FILES_GUEST_CAN_UPLOAD )
-				          ->set_title( __( 'File Upload By Guests', "anycomment" ) )
-				          ->set_description( esc_html( __( 'Guest users can upload documents. Please be careful about this setting as some users may potentially misuse this and periodically upload unwanted files.', "anycomment" ) ) ),
+				          ->set_title( __( 'Allow Guests to Upload Files', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Allow guest user to upload files to their comments. Please be careful about this setting as some users may misuse this and upload unwanted files.', "anycomment" ) ) ),
 
 				     $this->field_builder()
 				          ->text()
@@ -959,12 +959,12 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 				          ->number()
 				          ->set_id( self::OPTION_FILES_LIMIT_PERIOD )
 				          ->set_title( __( 'File Upload Limit Period', "anycomment" ) )
-				          ->set_description( esc_html( __( 'If user will cross the limit (defined above) within specified period (in seconds) in this field, he will be give a warning.', "anycomment" ) ) ),
+				          ->set_description( esc_html( __( 'Number of seconds in which a user can upload the limited number of files as defined above.', "anycomment" ) ) ),
 
 				     $this->field_builder()
 				          ->number()
 				          ->set_id( self::OPTION_FILES_MAX_SIZE )
-				          ->set_title( __( 'File Size', "anycomment" ) )
+				          ->set_title( __( 'Max File Size', "anycomment" ) )
 				          ->set_description( esc_html( __( 'Maximum allowed file size in megabytes. For example, regular PNG image is about ~ 1.5-2MB, JPEG are even smaller.', "anycomment" ) ) ),
 			     ] )
 		);
@@ -975,14 +975,14 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 		$form->add_section(
 			$this->section_builder()
 			     ->set_id( 'editor' )
-			     ->set_title( __( 'Editor', "anycomment" ) )
+			     ->set_title( __( 'Custom CSS', "anycomment" ) )
 			     ->set_fields( [
 				     $this->field_builder()
 				          ->code()
 				          ->set_id( self::OPTION_EDITOR_CSS )
 				          ->set_args( [ 'mode' => 'css' ] )
 				          ->set_title( __( 'Custom CSS', "anycomment" ) )
-				          ->set_description( esc_html( __( 'Write custom CSS, it will be only related to AnyComment. Notice: you may require to drop the cache after your changes if you have any caching plugin installed.', "anycomment" ) ) ),
+				          ->set_description( esc_html( __( 'Apply your own CSS to the AnyComment area by pasting it here. Please clear any cache plugins after saving.', "anycomment" ) ) ),
 			     ] )
 		);
 	}
