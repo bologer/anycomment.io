@@ -698,7 +698,7 @@ class AnyCommentSocialAuth {
 		$user = $this->get_user_by( $field, $value );
 
 		if ( $user !== false && ! AnyCommentUserMeta::is_social_login( $user ) ) {
-			return new WP_Error( 'use_wordpress_to_login', __( "Please use normal login form, as this email is associated with a WordPress user.", "anycomment" ) );
+			return new WP_Error( 'use_wordpress_to_login', __( "Please login to the site with your WordPress user account.", "anycomment" ) );
 		}
 
 		$found_user_social = AnyCommentUserMeta::get_social_type( $user );
