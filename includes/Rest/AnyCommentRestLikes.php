@@ -101,7 +101,7 @@ class AnyCommentRestLikes extends AnyCommentRestController {
 		}
 
 		if ( 'trash' === $post->post_status ) {
-			return new WP_Error( 'rest_comment_like_trash_post', __( 'Sorry, you are not allowed to create a comment on this post.', 'anycomment' ), array( 'status' => 403 ) );
+			return new WP_Error( 'rest_comment_like_trash_post', __( 'Sorry, you are not allowed to create comment on this post.', 'anycomment' ), array( 'status' => 403 ) );
 		}
 
 		$type = $request['type'];
