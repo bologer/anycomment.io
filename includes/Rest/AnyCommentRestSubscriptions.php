@@ -40,7 +40,7 @@ class AnyCommentRestSubscriptions extends AnyCommentRestController {
 				'permission_callback' => [ $this, 'create_item_permissions_check' ],
 				'args'                => [
 					'email' => [
-						'description' => __( "User email to subscribe", 'anycomment' ),
+						'description' => __( "Email address to subscribe", 'anycomment' ),
 						'type'        => 'int'
 					],
 					'post'  => [
