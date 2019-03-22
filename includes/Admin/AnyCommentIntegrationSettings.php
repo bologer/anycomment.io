@@ -162,7 +162,7 @@ class AnyCommentIntegrationSettings extends AnyCommentOptionManager {
 					          ->set_id( self::OPTION_AKISMET )
 					          ->checkbox()
 					          ->set_title( __( 'Filter Spam via Akismet', "anycomment" ) )
-					          ->set_description( sprintf( __( 'Filter all new comments through <a href="%s">Akismet Anti-Spam</a> plugin.', "anycomment" ), "https://wordpress.org/plugins/akismet/" ) ),
+					          ->set_description( sprintf( __( 'Filter all new comments through <a href="%s">Akismet Anti-Spam</a>.', "anycomment" ), "https://wordpress.org/plugins/akismet/" ) ),
 				     ] )
 			);
 		}
@@ -177,7 +177,7 @@ class AnyCommentIntegrationSettings extends AnyCommentOptionManager {
 					          ->set_id( self::OPTION_WP_USER_AVATAR )
 					          ->checkbox()
 					          ->set_title( __( 'Force WP User Avatars', "anycomment" ) )
-					          ->set_description( sprintf( __( 'Use <a href="%s">WP User Avatar</a> for handling avatars in the plugin.', "anycomment" ), "https://wordpress.org/plugins/wp-user-avatar/" ) ),
+					          ->set_description( sprintf( __( 'Use <a href="%s">WP User Avatar</a> for handling avatars.', "anycomment" ), "https://wordpress.org/plugins/wp-user-avatar/" ) ),
 				     ] )
 			);
 		}
@@ -207,13 +207,13 @@ class AnyCommentIntegrationSettings extends AnyCommentOptionManager {
 				          ->text()
 				          ->set_id( self::OPTION_RECAPTCHA_SITE_KEY )
 				          ->set_title( __( 'Site key', "anycomment" ) )
-				          ->set_description( sprintf( __( 'reCAPTCHA site key. Can be found <a href="%s">here</a> (register your website if does not exist). Please note that you should choose "Invisible" type in order for it to work.', "anycomment" ), "http://www.google.com/recaptcha/admin" ) ),
+				          ->set_description( sprintf( __( 'reCAPTCHA site key. Can be found <a href="%s">here</a> (register your website if does not exist). Please note that you should choose "Invisible" in order for it to work.', "anycomment" ), "http://www.google.com/recaptcha/admin" ) ),
 
 				     $this->field_builder()
 				          ->text()
 				          ->set_id( self::OPTION_RECAPTCHA_SITE_SECRET )
 				          ->set_title( __( 'Site secret', "anycomment" ) )
-				          ->set_description( sprintf( __( 'reCAPTCHA site secret. Can be found <a href="%s">here</a> (register your website if does not exist). Please note that you should choose "Invisible" type in order for it to work.', "anycomment" ), "http://www.google.com/recaptcha/admin" ) ),
+				          ->set_description( sprintf( __( 'reCAPTCHA site secret. Can be found <a href="%s">here</a> (register your website if does not exist). Please note that you should choose "Invisible" in order for it to work.', "anycomment" ), "http://www.google.com/recaptcha/admin" ) ),
 
 				     $this->field_builder()
 				          ->select()

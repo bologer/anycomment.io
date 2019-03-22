@@ -1262,7 +1262,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 					),
 				),
 				'type'              => array(
-					'description' => __( 'Type of Comment for the object.', 'anycomment' ),
+					'description' => __( 'Type of comment for the object.', 'anycomment' ),
 					'type'        => 'string',
 					'context'     => array( 'view', 'edit', 'embed' ),
 					'readonly'    => true,
