@@ -146,7 +146,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 				$post = get_post( $post_id );
 
 				if ( ! empty( $post_id ) && $post && ! $this->check_read_post_permission( $post, $request ) ) {
-					return new WP_Error( 'rest_cannot_read_post', __( 'Sorry, you are not allowed to read the post for this comment.', 'anycomment' ), array( 'status' => rest_authorization_required_code() ) );
+					return new WP_Error( 'rest_cannot_read_post', __( 'Sorry, you are not allowed to access the post for this comment.', 'anycomment' ), array( 'status' => rest_authorization_required_code() ) );
 				} elseif ( 0 === $post_id && ! current_user_can( 'moderate_comments' ) ) {
 					return new WP_Error( 'rest_cannot_read', __( 'Sorry, you are not allowed to read comments without a post.', 'anycomment' ), array( 'status' => rest_authorization_required_code() ) );
 				}
@@ -422,7 +422,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		}
 
 		if ( $post && ! $this->check_read_post_permission( $post, $request ) ) {
-			return new WP_Error( 'rest_cannot_read_post', __( 'Sorry, you are not allowed to read the post for this comment.', 'anycomment' ), array( 'status' => rest_authorization_required_code() ) );
+			return new WP_Error( 'rest_cannot_read_post', __( 'Sorry, you are not allowed to access the post for this comment.', 'anycomment' ), array( 'status' => rest_authorization_required_code() ) );
 		}
 
 		return true;
@@ -465,9 +465,9 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			$user = get_user_by( 'email', $request['author_email'] );
 
 			if ( $user instanceof WP_User && AnyCommentUserMeta::is_social_login( $user->ID ) ) {
-				return new WP_Error( 'rest_use_social_to_login', __( 'Email was used as social authorization. Please login using this method.', 'anycomment' ), [ 'status' => 403 ] );
+				return new WP_Error( 'rest_use_social_to_login', __( 'It looks like you have previously logged in using a social profile. Please do so again.', 'anycomment' ), [ 'status' => 403 ] );
 			} elseif ( $user instanceof WP_User ) {
-				return new WP_Error( 'rest_login_to_leave_comment', __( "User with such email is registered. Please login to leave a comment.", 'anycomment' ), [ 'status' => 403 ] );
+				return new WP_Error( 'rest_login_to_leave_comment', __( "Please login using your email address in order to comment.", 'anycomment' ), [ 'status' => 403 ] );
 			}
 		}
 
@@ -499,28 +499,28 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		}
 
 		if ( empty( $request['post'] ) ) {
-			return new WP_Error( 'rest_comment_invalid_post_id', __( 'Sorry, you are not allowed to create this comment without a post.', 'anycomment' ), array( 'status' => 403 ) );
+			return new WP_Error( 'rest_comment_invalid_post_id', __( 'Sorry, you are not allowed to create a comment without a post!', 'anycomment' ), array( 'status' => 403 ) );
 		}
 
 		$post = get_post( (int) $request['post'] );
 		if ( ! $post ) {
-			return new WP_Error( 'rest_comment_invalid_post_id', __( 'Sorry, you are not allowed to create this comment without a post.', 'anycomment' ), array( 'status' => 403 ) );
+			return new WP_Error( 'rest_comment_invalid_post_id', __( 'Sorry, you are not allowed to create this comment without a post!', 'anycomment' ), array( 'status' => 403 ) );
 		}
 
 		if ( 'draft' === $post->post_status ) {
-			return new WP_Error( 'rest_comment_draft_post', __( 'Sorry, you are not allowed to create a comment on this post.', 'anycomment' ), array( 'status' => 403 ) );
+			return new WP_Error( 'rest_comment_draft_post', __( 'Sorry, you are not allowed to  comment on this post.', 'anycomment' ), array( 'status' => 403 ) );
 		}
 
 		if ( 'trash' === $post->post_status ) {
-			return new WP_Error( 'rest_comment_trash_post', __( 'Sorry, you are not allowed to create a comment on this post.', 'anycomment' ), array( 'status' => 403 ) );
+			return new WP_Error( 'rest_comment_trash_post', __( 'Sorry, you are not allowed to  comment on this post.', 'anycomment' ), array( 'status' => 403 ) );
 		}
 
 		if ( ! $this->check_read_post_permission( $post, $request ) ) {
-			return new WP_Error( 'rest_cannot_read_post', __( 'Sorry, you are not allowed to read the post for this comment.', 'anycomment' ), array( 'status' => rest_authorization_required_code() ) );
+			return new WP_Error( 'rest_cannot_read_post', __( 'Sorry, you are not allowed to access the post for this comment.', 'anycomment' ), array( 'status' => rest_authorization_required_code() ) );
 		}
 
 		if ( ! comments_open( $post->ID ) ) {
-			return new WP_Error( 'rest_comment_closed', __( 'Sorry, comments are closed for this item.', 'anycomment' ), array( 'status' => 403 ) );
+			return new WP_Error( 'rest_comment_closed', __( 'Sorry, comments are closed for this post.', 'anycomment' ), array( 'status' => 403 ) );
 		}
 
 		return true;
@@ -538,7 +538,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	public function create_item ( $request ) {
 
 		if ( ! empty( $request['id'] ) ) {
-			return new WP_Error( 'rest_comment_exists', __( 'Cannot create existing comment.', 'anycomment' ), array( 'status' => 400 ) );
+			return new WP_Error( 'rest_comment_exists', __( 'Error: this seems like a duplicate comment.', 'anycomment' ), array( 'status' => 400 ) );
 		}
 
 		$checkCaptcha = AnyCommentIntegrationSettings::is_recaptcha_active() && (
@@ -568,7 +568,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		 * comment_content. See wp_handle_comment_submission().
 		 */
 		if ( $this->is_comment_empty( $prepared_comment['comment_content'] ) ) {
-			return new WP_Error( 'rest_comment_content_invalid', __( 'Comment cannot be empty.', 'anycomment' ), [ 'status' => 400 ] );
+			return new WP_Error( 'rest_comment_content_invalid', __( 'The comment area cannot be empty. Did you forget to post your thoughts?', 'anycomment' ), [ 'status' => 400 ] );
 		}
 
 		// Setting remaining values before wp_insert_comment so we can use wp_allow_comment().
@@ -579,7 +579,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		$should_use_wordpress_login_form = ! is_user_logged_in() && AnyCommentGenericSettings::is_form_type_wordpress();
 
 		if ( $should_use_wordpress_login_form ) {
-			return new WP_Error( 'rest_use_wordpress_to_login', __( 'Please login to leave a comment', 'anycomment' ), [ 'status' => 400 ] );
+			return new WP_Error( 'rest_use_wordpress_to_login', __( 'Please login or register to leave a comment', 'anycomment' ), [ 'status' => 400 ] );
 		}
 
 		$should_use_social = ! is_user_logged_in() && AnyCommentGenericSettings::is_form_type_socials();
@@ -603,11 +603,11 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			}
 
 			if ( AnyCommentGenericSettings::is_guest_field_email_on() && empty( $prepared_comment['comment_author_email'] ) ) {
-				return new WP_Error( 'rest_comment_email_empty', __( 'Email field is required.', 'anycomment' ), [ 'status' => 400 ] );
+				return new WP_Error( 'rest_comment_email_empty', __( 'Email is required.', 'anycomment' ), [ 'status' => 400 ] );
 			}
 
 			if ( AnyCommentGenericSettings::is_guest_field_email_on() && ! empty( $prepared_comment['comment_author_email'] ) && ! is_email( $prepared_comment['comment_author_email'] ) ) {
-				return new WP_Error( 'rest_comment_email_invalid', __( 'Provide valid email address.', 'anycomment' ), [ 'status' => 400 ] );
+				return new WP_Error( 'rest_comment_email_invalid', __( 'Please provide a valid email address.', 'anycomment' ), [ 'status' => 400 ] );
 			}
 		}
 
@@ -627,7 +627,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		if ( is_wp_error( $check_comment_lengths ) ) {
 			$error_code = $check_comment_lengths->get_error_code();
 
-			return new WP_Error( $error_code, __( 'Comment field exceeds maximum length allowed.', 'anycomment' ), array( 'status' => 400 ) );
+			return new WP_Error( $error_code, __( 'Your comment is too lengthy.', 'anycomment' ), array( 'status' => 400 ) );
 		}
 
 		if ( ! current_user_can( 'moderate_comments' ) ) {
@@ -647,7 +647,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		$comment_id = wp_insert_comment( wp_filter_comment( wp_slash( (array) $prepared_comment ) ) );
 
 		if ( ! $comment_id ) {
-			return new WP_Error( 'rest_comment_failed_create', __( 'Creating comment failed.', 'anycomment' ), array( 'status' => 500 ) );
+			return new WP_Error( 'rest_comment_failed_create', __( 'Sorry, creating your comment failed. Please try again.', 'anycomment' ), array( 'status' => 500 ) );
 		}
 
 		// Process attachments
@@ -868,11 +868,11 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		// If this type doesn't support trashing, error out.
 		if ( ! $supports_trash ) {
 			/* translators: %s: force=true */
-			return new WP_Error( 'rest_trash_not_supported', sprintf( __( "The comment does not support trashing. Set '%s' to delete.", 'anycomment' ), 'force=true' ), array( 'status' => 501 ) );
+			return new WP_Error( 'rest_trash_not_supported', sprintf( __( "This comment does not support trashing. Set '%s' to delete.", 'anycomment' ), 'force=true' ), array( 'status' => 501 ) );
 		}
 
 		if ( 'trash' === $comment->comment_approved ) {
-			return new WP_Error( 'rest_already_trashed', __( 'The comment has already been trashed.', 'anycomment' ), array( 'status' => 410 ) );
+			return new WP_Error( 'rest_already_trashed', __( 'This comment has already been trashed.', 'anycomment' ), array( 'status' => 410 ) );
 		}
 
 		$result   = wp_trash_comment( $comment->comment_ID );
@@ -881,7 +881,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 
 
 		if ( ! $result ) {
-			return new WP_Error( 'rest_cannot_delete', __( 'The comment cannot be deleted.', 'anycomment' ), array( 'status' => 500 ) );
+			return new WP_Error( 'rest_cannot_delete', __( 'This comment cannot be deleted.', 'anycomment' ), array( 'status' => 500 ) );
 		}
 
 		return $response;
@@ -1160,7 +1160,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 					'readonly'    => true,
 				),
 				'author'            => array(
-					'description' => __( 'The ID of the user object, if author was a user.', 'anycomment' ),
+					'description' => __( 'The ID of the user object if the author is a WordPress user.', 'anycomment' ),
 					'type'        => 'integer',
 					'context'     => array( 'view', 'edit', 'embed' ),
 				),
@@ -1316,7 +1316,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		);
 
 		$query_params['author'] = array(
-			'description' => __( 'Limit result set to comments assigned to specific user IDs. Requires authorization.', 'anycomment' ),
+			'description' => __( 'Limit results to comments assigned to specific user IDs. Requires authorization.', 'anycomment' ),
 			'type'        => 'array',
 			'items'       => array(
 				'type' => 'integer',
@@ -1324,7 +1324,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		);
 
 		$query_params['author_exclude'] = array(
-			'description' => __( 'Ensure result set excludes comments assigned to specific user IDs. Requires authorization.', 'anycomment' ),
+			'description' => __( 'Ensure results exclude comments assigned to specific user IDs. Requires authorization.', 'anycomment' ),
 			'type'        => 'array',
 			'items'       => array(
 				'type' => 'integer',
@@ -1333,7 +1333,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 
 		$query_params['author_email'] = array(
 			'default'     => null,
-			'description' => __( 'Limit result set to that from a specific author email. Requires authorization.', 'anycomment' ),
+			'description' => __( 'Limit results to those from a specific author email. Requires authorization.', 'anycomment' ),
 			'format'      => 'email',
 			'type'        => 'string',
 		);
@@ -1394,7 +1394,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 
 		$query_params['parent'] = array(
 			'default'     => array(),
-			'description' => __( 'Limit result set to comments of specific parent IDs.', 'anycomment' ),
+			'description' => __( 'Limit results to comments of specific parent IDs.', 'anycomment' ),
 			'type'        => 'array',
 			'items'       => array(
 				'type' => 'integer',
@@ -1403,7 +1403,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 
 		$query_params['parent_exclude'] = array(
 			'default'     => array(),
-			'description' => __( 'Ensure result set excludes specific parent IDs.', 'anycomment' ),
+			'description' => __( 'Ensure results exclude specific parent IDs.', 'anycomment' ),
 			'type'        => 'array',
 			'items'       => array(
 				'type' => 'integer',
@@ -1412,7 +1412,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 
 		$query_params['post'] = array(
 			'default'     => array(),
-			'description' => __( 'Limit result set to comments assigned to specific post IDs.', 'anycomment' ),
+			'description' => __( 'Limit results to comments assigned to specific post IDs.', 'anycomment' ),
 			'type'        => 'array',
 			'items'       => array(
 				'type' => 'integer',
@@ -1421,7 +1421,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 
 		$query_params['status'] = array(
 			'default'           => 'approve',
-			'description'       => __( 'Limit result set to comments assigned a specific status. Requires authorization.', 'anycomment' ),
+			'description'       => __( 'Limit results to comments assigned a specific status. Requires authorization.', 'anycomment' ),
 			'sanitize_callback' => 'sanitize_key',
 			'type'              => 'string',
 			'validate_callback' => 'rest_validate_request_arg',
@@ -1429,7 +1429,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 
 		$query_params['type'] = array(
 			'default'           => 'comment',
-			'description'       => __( 'Limit result set to comments assigned a specific type. Requires authorization.', 'anycomment' ),
+			'description'       => __( 'Limit results to comments assigned a specific type. Requires authorization.', 'anycomment' ),
 			'sanitize_callback' => 'sanitize_key',
 			'type'              => 'string',
 			'validate_callback' => 'rest_validate_request_arg',
