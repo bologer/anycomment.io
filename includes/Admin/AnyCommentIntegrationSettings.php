@@ -223,7 +223,7 @@ class AnyCommentIntegrationSettings extends AnyCommentOptionManager {
 					          'options' => [
 						          self::OPTION_RECAPTCHA_USER_ALL   => __( 'For all', 'anycomment' ),
 						          self::OPTION_RECAPTCHA_USER_GUEST => __( 'For guests only', 'anycomment' ),
-						          self::OPTION_RECAPTCHA_USER_AUTH  => __( 'For logged in only', 'anycomment' ),
+						          self::OPTION_RECAPTCHA_USER_AUTH  => __( 'For logged in users only', 'anycomment' ),
 					          ],
 				          ] )
 				          ->set_description( __( 'Users affected by capcha.', "anycomment" ) ),
