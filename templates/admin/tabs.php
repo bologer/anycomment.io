@@ -4,7 +4,7 @@ $tabs       = [
 	'dashboard'   => [ 'url' => menu_page_url( $_GET['page'], false ), 'text' => __( 'Dashboard', 'anycomment' ) ],
 	'social'      => [
 		'url'  => menu_page_url( $_GET['page'], false ) . '&tab=social',
-		'text' => __( 'Social', 'anycomment' )
+		'text' => __( 'Social Login', 'anycomment' )
 	],
 	'settings'    => [
 		'url'  => menu_page_url( $_GET['page'], false ) . '&tab=settings',
@@ -12,7 +12,7 @@ $tabs       = [
 	],
 	'integration' => [
 		'url'  => menu_page_url( $_GET['page'], false ) . '&tab=integration',
-		'text' => __( 'Integration', 'anycomment' )
+		'text' => __( 'Integrations', 'anycomment' )
 	],
 	'shortcodes'  => [
 		'url'  => menu_page_url( $_GET['page'], false ) . '&tab=shortcodes',
