@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.0.88 – 26.03.2019
+
+**Enhancements:**
+
+
+
+**Fixes:**
+
+* Fixed issue when strings in settings having quotes were escaped with "\"
+
+
 ## 0.0.87 – 18.03.2019
 
 **Fixes:**

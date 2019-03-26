@@ -135,6 +135,9 @@ class AnyCommentOptionManager {
 		unset( $options['redirect'] );
 		unset( $options['nonce'] );
 
+		// Removes issue when e.g. ' were changed to \' and after a few saves it was already \\ and so on
+		$options = array_map( 'stripslashes_deep', $options );
+
 		/**
 		 * Fires before settings were updated.
 		 *
