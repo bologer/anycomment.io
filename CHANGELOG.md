@@ -4,11 +4,13 @@
 
 **Enhancements:**
 
-
+* \#388, Improved instructions for Mail.Ru (added screenshots) and changed "Private key" to "Secret key" in option description
+which caused error `Incorrect signature` when incorrect key was specified
 
 **Fixes:**
 
 * Fixed issue when strings in settings having quotes were escaped with "\"
+* Fixed issue when HyperComments import caused property of undefined notice on `comment_content`
 
 
 ## 0.0.87 – 18.03.2019

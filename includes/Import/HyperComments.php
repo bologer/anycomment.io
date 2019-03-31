@@ -215,7 +215,13 @@ class HyperComments {
 				$this->comment['unused']['parent_id'] = $data;
 				break;
 			case 'TEXT':
-				$this->comment['comment_content'] .= $data;
+				if ( isset( $this->comment['comment_content'] ) ) {
+					// This allows to glue together long comments
+					$this->comment['comment_content'] .= $data;
+				} else {
+					// This is for short or one-line comments
+					$this->comment['comment_content'] = $data;
+				}
 				break;
 			case 'NICK':
 				$this->comment['comment_author'] = $data;
