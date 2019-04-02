@@ -465,7 +465,7 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 				          ->checkbox()
 				          ->set_id( self::OPTION_SHOW_TWITTER_EMBEDS )
 				          ->set_title( __( 'Display Twitter Embeds', "anycomment" ) )
-				          ->set_description( esc_html( __( 'Detect & display twitter URLS as comment embeds.', "anycomment" ) ) ),
+				          ->set_description( esc_html( __( 'Detect & display Twitter URLS as comment embeds.', "anycomment" ) ) ),
 
 
 				     $this->field_builder()
