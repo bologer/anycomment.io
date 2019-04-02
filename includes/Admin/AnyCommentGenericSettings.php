@@ -791,7 +791,7 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 				     $this->field_builder()
 				          ->checkbox()
 				          ->set_id( self::OPTION_LINKS_ON_HOLD )
-				          ->set_title( __( 'Hold all comments with links', "anycomment" ) )
+				          ->set_title( __( 'Hold All Comments with Links', "anycomment" ) )
 				          ->set_description( esc_html( __( 'Comment with links should be marked for moderation.', "anycomment" ) ) ),
 
 				     $this->field_builder()
