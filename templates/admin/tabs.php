@@ -4,7 +4,7 @@ $tabs       = [
 	'dashboard'   => [ 'url' => menu_page_url( $_GET['page'], false ), 'text' => __( 'Dashboard', 'anycomment' ) ],
 	'social'      => [
 		'url'  => menu_page_url( $_GET['page'], false ) . '&tab=social',
-		'text' => __( 'Social Login', 'anycomment' )
+		'text' => __( 'Authentication', 'anycomment' )
 	],
 	'settings'    => [
 		'url'  => menu_page_url( $_GET['page'], false ) . '&tab=settings',
