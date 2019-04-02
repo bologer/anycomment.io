@@ -568,7 +568,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		 * comment_content. See wp_handle_comment_submission().
 		 */
 		if ( $this->is_comment_empty( $prepared_comment['comment_content'] ) ) {
-			return new WP_Error( 'rest_comment_content_invalid', __( 'The comment area cannot be empty. Did you forget to post your thoughts?', 'anycomment' ), [ 'status' => 400 ] );
+			return new WP_Error( 'rest_comment_content_invalid', __( 'Please enter a comment.', 'anycomment' ), [ 'status' => 400 ] );
 		}
 
 		// Setting remaining values before wp_insert_comment so we can use wp_allow_comment().
