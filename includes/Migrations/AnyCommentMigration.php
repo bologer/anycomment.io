@@ -78,6 +78,10 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 			'version'     => '0.0.74',
 			'description' => 'Migrate adds `type` column to anycomment_likes table'
 		],
+		'0.0.88' => [
+			'version'     => '0.0.88',
+			'description' => 'Clean-up generic options from infinite backslashes added by safe WordPress POST'
+		],
 	];
 
 	/**

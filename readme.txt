@@ -180,8 +180,8 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Enhancements:**
 
-* #388, Improved instructions for Mail.Ru (added screenshots) and changed "Private key" to "Secret key" in option description
-which caused error `Incorrect signature` when incorrect key was specified
+* Improved instructions for Mail.Ru (added screenshots) and changed "Private key" to "Secret key" in option description
+which caused error `Incorrect signature` when incorrect key was specified, #388
 
 
 **Fixes:**
