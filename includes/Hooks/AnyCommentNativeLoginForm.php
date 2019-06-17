@@ -62,7 +62,7 @@ class AnyCommentNativeLoginForm {
 		$html    = '';
 
 		if ( ! $params['only_socials'] ) {
-			$word_line = __( 'or use any social:', 'anycomment' );
+			$word_line = __( 'or use your social profile:', 'anycomment' );
 			$html      .= '<div style="margin: 0 0 10px;"><div class="anycomment-socials-preparagraph">' . $word_line . '</div>';
 		}
 

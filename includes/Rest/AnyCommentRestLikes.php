@@ -75,11 +75,11 @@ class AnyCommentRestLikes extends AnyCommentRestController {
 	 */
 	public function create_item_permissions_check( $request ) {
 		if ( empty( $request['post'] ) ) {
-			return new WP_Error( 'rest_comment_like_invalid_post_id', __( 'Sorry, post does not exist.', 'anycomment' ), array( 'status' => 403 ) );
+			return new WP_Error( 'rest_comment_like_invalid_post_id', __( 'Sorry, that post does not exist.', 'anycomment' ), array( 'status' => 403 ) );
 		}
 
 		if ( empty( $request['comment'] ) ) {
-			return new WP_Error( 'rest_comment_like_invalid_post_id', __( 'Sorry, comment that you liked does not exist.', 'anycomment' ), array( 'status' => 403 ) );
+			return new WP_Error( 'rest_comment_like_invalid_post_id', __( 'Sorry, the comment that you liked does not exist.', 'anycomment' ), array( 'status' => 403 ) );
 		}
 
 		$commentId = (int) $request['comment'];
@@ -87,7 +87,7 @@ class AnyCommentRestLikes extends AnyCommentRestController {
 		$comment = get_comment( $commentId );
 
 		if ( ! $comment ) {
-			return new WP_Error( 'rest_comment_like_invalid_post_id', __( 'Sorry, comment that you liked does not exist.', 'anycomment' ), array( 'status' => 403 ) );
+			return new WP_Error( 'rest_comment_like_invalid_post_id', __( 'Sorry, the comment that you liked does not exist.', 'anycomment' ), array( 'status' => 403 ) );
 		}
 
 		$post = get_post( (int) $request['post'] );
@@ -97,17 +97,17 @@ class AnyCommentRestLikes extends AnyCommentRestController {
 		}
 
 		if ( 'draft' === $post->post_status ) {
-			return new WP_Error( 'rest_comment_like_draft_post', __( 'Sorry, you are not allowed to create a comment on this post.', 'anycomment' ), array( 'status' => 403 ) );
+			return new WP_Error( 'rest_comment_like_draft_post', __( 'Sorry, you are not allowed to a comment on this post.', 'anycomment' ), array( 'status' => 403 ) );
 		}
 
 		if ( 'trash' === $post->post_status ) {
-			return new WP_Error( 'rest_comment_like_trash_post', __( 'Sorry, you are not allowed to create a comment on this post.', 'anycomment' ), array( 'status' => 403 ) );
+			return new WP_Error( 'rest_comment_like_trash_post', __( 'Sorry, you are not allowed to comment on this post.', 'anycomment' ), array( 'status' => 403 ) );
 		}
 
 		$type = $request['type'];
 
 		if ( $type !== AnyCommentLikes::TYPE_LIKE && $type !== AnyCommentLikes::TYPE_DISLIKE ) {
-			return new WP_Error( 'rest_comment_rating_invalid', sprintf( __( 'Sorry, rating type can be only %s or %s.', 'anycomment' ), AnyCommentLikes::TYPE_LIKE, AnyCommentLikes::TYPE_DISLIKE ), array( 'status' => 403 ) );
+			return new WP_Error( 'rest_comment_rating_invalid', sprintf( __( 'Sorry, the rating type can be only %s or %s.', 'anycomment' ), AnyCommentLikes::TYPE_LIKE, AnyCommentLikes::TYPE_DISLIKE ), array( 'status' => 403 ) );
 		}
 
 		return true;

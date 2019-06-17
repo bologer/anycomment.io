@@ -5,7 +5,7 @@
             <td>
                 <textarea name="" readonly
                           onclick="this.select()">[anycomment include="true"]</textarea>
-                <p class="description"><?php echo __( 'Use this shortcode do display comment box in custom place (e.g. landing page).', 'anycomment' ) ?></p>
+                <p class="description"><?php echo __( 'Use this shortcode to display a comment box on any type of supported content. Please note that the page or post must have comments enabled (e.g. a landing page).', 'anycomment' ) ?></p>
             </td>
         </tr>
 

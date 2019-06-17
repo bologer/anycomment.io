@@ -48,7 +48,7 @@ if ( isset( $_GET['hypercomment_revert'] ) ) {
 
 <div class="anycomment-tab">
     <h2><?php echo __( 'Tools', 'anycomment' ) ?></h2>
-    <p><?php echo __( 'This page will have helpers and debug information related to the plugin. For example, version of plugin, WordPress or PHP. Also you may drop comments or global plugins cache, open comments for all posts, pages or WooCommerce products (when plugin activated).', 'anycomment' ) ?></p>
+    <p><?php echo __( 'Tools and debug information to help with AnyComment.', 'anycomment' ) ?></p>
 
     <hr>
     <h3><?php echo __( 'Cache Manager', 'anycomment' ) ?></h3>

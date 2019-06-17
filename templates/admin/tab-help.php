@@ -1,6 +1,6 @@
 <div class="anycomment-tab">
     <h2><?php echo __( 'Need Help', 'anycomment' ) ?></h2>
-    <p><?php echo __( 'Easiest way to get help is to use one of the links below', 'anycomment' ) ?></p>
+    <p><?php echo __( 'The easiest way to get help is to use one of the links below', 'anycomment' ) ?></p>
     <ul>
         <li><a href="<?php echo \AnyComment\Helpers\AnyCommentLinkHelper::get_vkontakte() ?>"
                target="_blank"><?php echo __( 'Vkontakte Group', 'anycomment' ) ?></a></li>

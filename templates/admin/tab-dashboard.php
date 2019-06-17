@@ -4,11 +4,11 @@
             <div class="grid-x align-center">
                 <div class="cell shrink">
                     <img src="<?php echo AnyComment()->plugin_url() . '/assets/img/dashboard-users.svg' ?>"
-                         alt="<?php echo __( 'Commentators', 'anycomment' ) ?>">
+                         alt="<?php echo __( 'Commenters', 'anycomment' ) ?>">
 
                     <div class="anycomment-dashboard__splitter-half-description">
                         <span><?php echo \AnyComment\Admin\AnyCommentStatistics::get_commentor_count() ?></span>
-                        <span><?php echo __( 'Commentators', 'anycomment' ) ?></span>
+                        <span><?php echo __( 'Commenters', 'anycomment' ) ?></span>
                     </div>
                 </div>
             </div>

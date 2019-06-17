@@ -69,8 +69,8 @@ class EmailEndpoints {
 
 				// Generate message to the end user about successful action
 				$message = $is_cancel ?
-					__( "You were unsubscribed successfully. You will be redirect back to the post in a momemnt.", "anycomment" ) :
-					__( "Your email confirmed. You will redirected back to post in a moment.", "anycomment" );
+					__( "You have unsubscribed successfully. You will be redirected back to the post in a moment.", "anycomment" ) :
+					__( "Success! You will be redirected back to the post in a moment.", "anycomment" );
 
 				// Generate post permalink to redirect user back to the post where he was subscribed
 				$permalink = get_permalink( $token_model->post_ID );

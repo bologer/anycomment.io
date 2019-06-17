@@ -210,7 +210,7 @@ EOT;
 				'error_generic'                  => __( "Oops, something went wrong...", "anycomment" ),
 				'loading'                        => __( 'Loading...', 'anycomment' ),
 				'load_more'                      => __( "Load more", "anycomment" ),
-				'waiting_moderation'             => __( "Waiting moderation", "anycomment" ),
+				'waiting_moderation'             => __( "Awaiting moderation", "anycomment" ),
 				'edited'                         => __( "Edited", "anycomment" ),
 				'button_send'                    => __( 'Send', 'anycomment' ),
 				'button_save'                    => __( 'Save', 'anycomment' ),
@@ -223,30 +223,30 @@ EOT;
 				'editing'                        => __( 'editing', 'anycomment' ),
 				'add_comment'                    => __( 'Your comment...', 'anycomment' ),
 				'no_comments'                    => __( 'No comments to display', "anycomment" ),
-				'footer_copyright'               => __( 'Add Anycomment to your site', 'anycomment' ),
+				'footer_copyright'               => __( 'Add AnyComment to your site', 'anycomment' ),
 				'reply'                          => __( 'Reply', 'anycomment' ),
 				'edit'                           => __( 'Edit', 'anycomment' ),
 				'delete'                         => __( 'Delete', 'anycomment' ),
 				'comments_closed'                => __( 'Comments are closed.', 'anycomment' ),
 				'subscribed'                     => is_user_logged_in() ?
-					__( 'You were subscribed successfully', 'anycomment' ) :
-					__( 'Check you email to confirm subscription', 'anycomment' ),
+					__( 'You have subscribed successfully', 'anycomment' ) :
+					__( 'Please check you email to confirm subscription', 'anycomment' ),
 				'subscribe'                      => __( 'Subscribe', 'anycomment' ),
 				'subscribe_pre_paragraph'        => is_user_logged_in() ?
-					__( 'You may subscribe to new comments by clicking "Subscribe" button below:', 'anycomment' ) :
-					__( 'You may subscribe to new comments for this post by entering your email below:', 'anycomment' ),
+					__( 'Subscribe to new comments:', 'anycomment' ) :
+					__( 'Subscribe to new comments for this post by entering your email below:', 'anycomment' ),
 				'cancel'                         => __( 'Cancel', 'anycomment' ),
 				'quick_login'                    => __( 'Quick Login', 'anycomment' ),
 				'guest'                          => __( 'Guest', 'anycomment' ),
 				'login'                          => __( 'Login', 'anycomment' ),
 				'logout'                         => __( 'Logout', 'anycomment' ),
-				'comment_waiting_moderation'     => __( 'Comment will be shown once reviewed by moderator.', 'anycomment' ),
+				'comment_waiting_moderation'     => __( 'There are new comments on this post.', 'anycomment' ),
 				'new_comment_was_added'          => __( 'New comment was added', 'anycomment' ),
 				'author'                         => __( 'Author', 'anycomment' ),
 				'name'                           => __( 'Name', 'anycomment' ),
 				'email'                          => __( 'Email', 'anycomment' ),
 				'website'                        => __( 'Website', 'anycomment' ),
-				'already_rated'                  => __( 'You have already rated', 'anycomment' ),
+				'already_rated'                  => __( 'You may vote only once', 'anycomment' ),
 				'accept_user_agreement'          => sprintf(
 					__( 'I accept the <a href="%s"%s>User Agreement</a>', 'anycomment' ),
 					AnyCommentGenericSettings::get_user_agreement_link(),
@@ -255,14 +255,14 @@ EOT;
 				'upload_file'                    => __( 'Upload file', 'anycomment' ),
 				'file_upload_in_progress'        => __( "Uploading...", 'anycomment' ),
 				'file_uploaded'                  => __( "Uploaded!", 'anycomment' ),
-				'file_too_big'                   => __( "File %s is too big", 'anycomment' ),
-				'file_limit'                     => sprintf( __( "You may upload %s file(s) at maximum", 'anycomment' ), AnyCommentGenericSettings::get_file_limit() ),
-				'file_not_selected_or_extension' => __( "No file selected or select proper extension", 'anycomment' ),
+				'file_too_big'                   => __( "The file %s is too large", 'anycomment' ),
+				'file_limit'                     => sprintf( __( "The maximum number of uploads is %s.", 'anycomment' ), AnyCommentGenericSettings::get_file_limit() ),
+				'file_not_selected_or_extension' => __( "Please select a file with a valid extension", 'anycomment' ),
 				'read_more'                      => __( 'Read more', 'anycomment' ),
 				'show_less'                      => __( 'Show less', 'anycomment' ),
 				'hide_this_message'              => __( 'Hide this message', 'anycomment' ),
 				'login_with'                     => __( 'Login with', 'anycomment' ),
-				'or_as_guest'                    => __( 'or as guest:', 'anycomment' ),
+				'or_as_guest'                    => __( 'or comment as a guest:', 'anycomment' ),
 
 				/**
 				 * Lightbox

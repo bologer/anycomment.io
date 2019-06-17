@@ -16,12 +16,12 @@ msgstr ""
 
 #: includes/EmailEndpoints.php:72
 msgid ""
-"You were unsubscribed successfully. You will be redirect back to the post in "
-"a momemnt."
+"You were unsubscribed successfully. You will be redirected back to the post in "
+"a moment."
 msgstr ""
 
 #: includes/EmailEndpoints.php:73
-msgid "Your email confirmed. You will redirected back to post in a moment."
+msgid "Success! You will be redirected back to the post in a moment."
 msgstr ""
 
 #: includes/AnyCommentDebugReport.php:30
@@ -180,7 +180,7 @@ msgid "Load more"
 msgstr ""
 
 #: includes/AnyCommentRender.php:213
-msgid "Waiting moderation"
+msgid "Awaiting moderation"
 msgstr ""
 
 #: includes/AnyCommentRender.php:214
@@ -238,7 +238,7 @@ msgid "No comments to display"
 msgstr ""
 
 #: includes/AnyCommentRender.php:226
-msgid "Add Anycomment to your site"
+msgid "Add AnyComment to your site"
 msgstr ""
 
 #: includes/AnyCommentRender.php:228
@@ -262,7 +262,7 @@ msgid "You were subscribed successfully"
 msgstr ""
 
 #: includes/AnyCommentRender.php:233
-msgid "Check you email to confirm subscription"
+msgid "Please check you email to confirm subscription"
 msgstr ""
 
 #: includes/AnyCommentRender.php:234
@@ -271,7 +271,7 @@ msgstr ""
 
 #: includes/AnyCommentRender.php:236
 msgid ""
-"You may subscribe to new comments by clicking \"Subscribe\" button below:"
+"You may subscribe to new comments by clicking \"Subscribe\" below:"
 msgstr ""
 
 #: includes/AnyCommentRender.php:237
@@ -300,11 +300,11 @@ msgid "Logout"
 msgstr ""
 
 #: includes/AnyCommentRender.php:243
-msgid "Comment will be shown once reviewed by moderator."
+msgid "Comment will be shown once reviewed by the moderator."
 msgstr ""
 
 #: includes/AnyCommentRender.php:244
-msgid "New comment was added"
+msgid "There are new comments on this post"
 msgstr ""
 
 #: includes/AnyCommentRender.php:245
@@ -347,7 +347,7 @@ msgstr ""
 
 #: includes/AnyCommentRender.php:258
 #, php-format
-msgid "File %s is too big"
+msgid "File %s is too large"
 msgstr ""
 
 #: includes/AnyCommentRender.php:259
@@ -356,7 +356,7 @@ msgid "You may upload %s file(s) at maximum"
 msgstr ""
 
 #: includes/AnyCommentRender.php:260
-msgid "No file selected or select proper extension"
+msgid "That filetype is not allowed"
 msgstr ""
 
 #: includes/AnyCommentRender.php:261
@@ -447,7 +447,7 @@ msgid "Moderate"
 msgstr ""
 
 #: includes/Hooks/AnyCommentNativeLoginForm.php:63
-msgid "or use any social:"
+msgid "or use any social network:"
 msgstr ""
 
 #: includes/Rest/AnyCommentRestSubscriptions.php:43
@@ -486,7 +486,7 @@ msgstr ""
 #: includes/Rest/AnyCommentRestLikes.php:104
 #: includes/Rest/AnyCommentRestComment.php:511
 #: includes/Rest/AnyCommentRestComment.php:515
-msgid "Sorry, you are not allowed to create a comment on this post."
+msgid "Sorry, you are not allowed to comment on this post."
 msgstr ""
 
 #: includes/Rest/AnyCommentRestSubscriptions.php:91
@@ -503,7 +503,7 @@ msgid "File ID"
 msgstr ""
 
 #: includes/Rest/AnyCommentRestDocuments.php:92
-msgid "Sorry, guests unable to delete files."
+msgid "Sorry, guests are unable to delete files."
 msgstr ""
 
 #: includes/Rest/AnyCommentRestDocuments.php:99
@@ -511,7 +511,7 @@ msgid "File does not exist."
 msgstr ""
 
 #: includes/Rest/AnyCommentRestDocuments.php:104
-msgid "Sorry, such file is unavailable"
+msgid "Sorry, the file is unavailable"
 msgstr ""
 
 #: includes/Rest/AnyCommentRestDocuments.php:115
@@ -520,7 +520,7 @@ msgstr ""
 
 #: includes/Rest/AnyCommentRestDocuments.php:137
 msgid ""
-"Sorry, you have reached upload limit. Wait a little bit before uploading "
+"You have reached the upload limit. Please wait a little bit before uploading "
 "again."
 msgstr ""
 
@@ -554,8 +554,8 @@ msgstr ""
 
 #: includes/Rest/AnyCommentSocialAuth.php:697
 msgid ""
-"Please use normal login form, as this email is associated with a WordPress "
-"user."
+"Please login to the site with your WordPress "
+"user account."
 msgstr ""
 
 #: includes/Rest/AnyCommentSocialAuth.php:703
@@ -593,12 +593,12 @@ msgstr ""
 
 #: includes/Rest/AnyCommentRestLikes.php:82
 #: includes/Rest/AnyCommentRestLikes.php:90
-msgid "Sorry, comment that you liked does not exist."
+msgid "That comment no longer exists."
 msgstr ""
 
 #: includes/Rest/AnyCommentRestLikes.php:110
 #, php-format
-msgid "Sorry, rating type can be only %s or %s."
+msgid "Sorry, the rating type can be only %s or %s."
 msgstr ""
 
 #: includes/Rest/AnyCommentRestLikes.php:127
@@ -662,11 +662,11 @@ msgid "Sorry, you are not allowed to read this comment."
 msgstr ""
 
 #: includes/Rest/AnyCommentRestComment.php:468
-msgid "Email was used as social authorization. Please login using this method."
+msgid "It looks like you have previously logged in using a social account. Please do so again or use a different email address."
 msgstr ""
 
 #: includes/Rest/AnyCommentRestComment.php:470
-msgid "User with such email is registered. Please login to leave a comment."
+msgid "This email address is already registered. Please login to comment."
 msgstr ""
 
 #. %s: request parameter
@@ -691,16 +691,16 @@ msgid "Cannot create existing comment."
 msgstr ""
 
 #: includes/Rest/AnyCommentRestComment.php:551
-msgid "Captcha is incorrect. Please try again."
+msgid "The Captcha is incorrect. Please try again."
 msgstr ""
 
 #: includes/Rest/AnyCommentRestComment.php:571
 #: includes/Rest/AnyCommentRestComment.php:773
-msgid "Comment cannot be empty."
+msgid "You must leave a comment."
 msgstr ""
 
 #: includes/Rest/AnyCommentRestComment.php:582
-msgid "Please login to leave a comment"
+msgid "Please register or login to leave a comment"
 msgstr ""
 
 #: includes/Rest/AnyCommentRestComment.php:588
@@ -716,7 +716,7 @@ msgid "Email field is required."
 msgstr ""
 
 #: includes/Rest/AnyCommentRestComment.php:610
-msgid "Provide valid email address."
+msgid "Please provide a valid email address."
 msgstr ""
 
 #: includes/Rest/AnyCommentRestComment.php:630
@@ -759,7 +759,7 @@ msgid "The comment has already been trashed."
 msgstr ""
 
 #: includes/Rest/AnyCommentRestComment.php:884
-msgid "The comment cannot be deleted."
+msgid "This comment cannot be deleted."
 msgstr ""
 
 #: includes/Rest/AnyCommentRestComment.php:1113
@@ -767,7 +767,7 @@ msgid "Invalid comment author ID."
 msgstr ""
 
 #: includes/Rest/AnyCommentRestComment.php:1163
-msgid "The ID of the user object, if author was a user."
+msgid "The ID of the user object, if the author was a user."
 msgstr ""
 
 #: includes/Rest/AnyCommentRestComment.php:1168
@@ -827,7 +827,7 @@ msgid "State of the object."
 msgstr ""
 
 #: includes/Rest/AnyCommentRestComment.php:1265
-msgid "Type of Comment for the object."
+msgid "Type of comment for the object."
 msgstr ""
 
 #. %d: avatar image size in pixels
@@ -935,7 +935,7 @@ msgstr ""
 #: includes/Admin/AnyCommentIntegrationSettings.php:165
 #, php-format
 msgid ""
-"Filter all new comments through <a href=\"%s\">Akismet Anti-Spam</a> plugin."
+"Filter all new comments through <a href=\"%s\">Akismet Anti-Spam</a>."
 msgstr ""
 
 #: includes/Admin/AnyCommentIntegrationSettings.php:174
@@ -1017,7 +1017,7 @@ msgid "For guests only"
 msgstr ""
 
 #: includes/Admin/AnyCommentIntegrationSettings.php:226
-msgid "For logged in only"
+msgid "For logged in users only"
 msgstr ""
 
 #: includes/Admin/AnyCommentIntegrationSettings.php:229
@@ -1067,8 +1067,8 @@ msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:357
 msgid ""
-"When on, comments are visible. When off, default WordPress' comments shown. "
-"This can be used to configure social networks on fresh installation."
+"When on, AnyComment is enabled. When off, default WordPress' comments shown. "
+"This is handy for customizing social networks before implementation."
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:365
@@ -1134,7 +1134,7 @@ msgid "Robohash (from Gravatar)"
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:398
-msgid "Default avatar when user does not have any."
+msgid "Default avatar when user does not have one."
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:403
@@ -1147,8 +1147,8 @@ msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:410
 msgid ""
-"When users will authorize via plugin, they are being registered and be "
-"assigned with group selected above."
+"If users choose to create an account when commenting they will be "
+"assigned this user role in WordPress."
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:415
@@ -1173,50 +1173,50 @@ msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:428
 msgid ""
-"Number of minutes user can update his comment. \"0\" or empty for no limit."
+"Number of minutes users can edit their comment. Use \"0\" or empty for no limit."
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:433
-msgid "Number of Comments Loaded"
+msgid "Number of Comments to show on page load"
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:434
-msgid "Number of comments to load initially and per page."
+msgid "Number of comments to load initially and during pagination."
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:439
-msgid "Load on Scroll"
+msgid "Hide comments on page load"
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:440
-msgid "Load comments when user scrolls to it."
+msgid "Do not load the comments until the user has scrolled to the end of the post. Saves server resources and reduces pageload time."
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:446
-msgid "Show Login Page Socials"
+msgid "Extend social login to the WordPress login page"
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:447
-msgid "Show list of available socials under WordPress's native login form."
+msgid "Let your users login to WordPress using your configured social networks."
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:453
-msgid "Show Admin Bar"
+msgid "Use Admin Bar"
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:454
 msgid ""
-"Show admin bar for regular WordPress users and those who logged in via "
-"social."
+"Show the admin bar to logged-in users, including those who logged in with a "
+"social network."
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:460
-msgid "Show Profile URL"
+msgid "Use Profile URLs"
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:461
 msgid ""
-"Show link to user in the social media or website when available (name of the "
+"Link user names and gravatars to their WordPress profile or social media profile ( thename of the "
 "user will be clickable)."
 msgstr ""
 
@@ -1225,7 +1225,7 @@ msgid "Display Twitter Embeds"
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:468
-msgid "Detect & display tweets from Twitter as embedded widget."
+msgid "Detect & display twitter URLS as comment embeds."
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:474
@@ -1233,7 +1233,7 @@ msgid "Display Video Attachments"
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:475
-msgid "Display video link from comment as attachment."
+msgid "Display video links (YouTube etc) inline in the comments."
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:481
@@ -1241,15 +1241,15 @@ msgid "Display Image Attachments"
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:482
-msgid "Display image link from comment as attachment."
+msgid "Display attached images as images within comments."
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:487
-msgid "Display Rating"
+msgid "Feature top-rated comments"
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:488
-msgid "Display 5 star rating above comments."
+msgid "Display comments with more than 5 upvotes at the top of the comments area."
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:494
@@ -1257,7 +1257,7 @@ msgid "Shorten Long Comments"
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:495
-msgid "Shorten long comments with \"Read more\" message."
+msgid "Shorten long comments with a \"Read more\" link."
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:508
@@ -1266,58 +1266,53 @@ msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:509
 msgid ""
-"Link to User Agreement, where described how your process users data once "
-"they authorize via social network and/or add new comment."
+"Link to your User Agreement, Privacy Policy, or Comment Policy."
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:514
-msgid "Thanks"
+msgid "Say Thanks"
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:515
 msgid ""
-"Show AnyComment's link in the footer of comments. Copyright helps to bring "
-"awareness of such plugin and bring people to allow us to understand that it "
-"is a wanted product and give more often updated."
+"Show your appreciation and show AnyComment's logo in the footer of comments. It will help spread the word to all of WordPress!"
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:527
-msgid "Elements"
+msgid "Comment Elements"
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:532
-msgid "Comment form"
+msgid "Who can comment?"
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:535
-msgid "Anyone"
+msgid "WordPress users, Social Network Users, as well as public and anonymous guests."
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:536
-msgid "WordPress only"
+msgid "WordPress users only"
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:537
-msgid "Socials only"
+msgid "Social Network users only"
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:538
-msgid "Guests only"
+msgid "Any public or anonymous guests"
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:541
-msgid "Users who able to leave comments."
+msgid "Which kind of users should be able to leave comments?"
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:546
-msgid "Guest Fields"
+msgid "Comment form fields"
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:547
 msgid ""
-"Use this rearrange guest form fields or remove something. {name} is required "
-"and if you do not add it, it will be added by plugin. {name} is name field, "
-"{email} is email field, {website} is website field."
+"Modify the default WordPress fields that display on the comment form (name, email, website)."
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:552
@@ -1325,17 +1320,16 @@ msgid "Show updated info"
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:553
-msgid "Show updated icon on each comment once it was modified."
+msgid "Show an icon on comments which have been edited by the user. Good for transparency."
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:562
-msgid "Enable Toolbar"
+msgid "Enable WYSIWYG Toolbar"
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:563
 msgid ""
-"Enable editor toolbar (show options to modify comment text - bold, italics, "
-"etc)."
+"Enable a simple toolbard for adding bold, italic, etc to comments."
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:569
@@ -1395,11 +1389,11 @@ msgid "Show link option in editor toolbar."
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:618
-msgid "Clean formatting"
+msgid "Clear formatting"
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:619
-msgid "Show clean formatting option in editor toolbar."
+msgid "Show clear formatting option in editor toolbar."
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:629
@@ -1407,12 +1401,12 @@ msgid "Design"
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:634
-msgid "Custom Design"
+msgid "Use Custom Design Settings"
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:635
 msgid ""
-"Use custom design. Enable this option to display design changes from below."
+"Enable this option to display design changes from below."
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:641
@@ -1521,7 +1515,7 @@ msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:720
 msgid ""
-"Attachment background color. For example, user may attach PNG image with "
+"Attachment background color. For example, a user may attach a PNG image with a "
 "transparent background. This color will be used as background behind the "
 "image."
 msgstr ""
@@ -1589,11 +1583,11 @@ msgid "Moderation"
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:782
-msgid "Moderate First"
+msgid "Moderate All comments"
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:783
-msgid "Moderators should check comment before it appears."
+msgid "Hold all comments until they have been approved by a moderator."
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:788
@@ -1601,7 +1595,7 @@ msgid "Moderate first comment only"
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:794
-msgid "Links on Hold"
+msgid "Hold all comments with links"
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:795
@@ -1636,8 +1630,8 @@ msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:823
 msgid ""
-"Show comments in real-time. Users on the page would be notified about new "
-"comments by green alert and see comment without page reload."
+"Show new comments in real-time. Users on the page would be notified about new "
+"comments by a green alert and new comments load instantly in the stream."
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:828
@@ -1646,16 +1640,16 @@ msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:829
 msgid ""
-"Interval (in seconds) to check for new comments. Minimum 5 and maximum is "
+"Interval (in seconds) to check for new comments. The minimum 5 and maximum is "
 "100 seconds."
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:836
-msgid "Notify Administrator"
+msgid "Notify Administrators of new comments"
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:837
-msgid "Notify administrator via email about new comment."
+msgid "Send all new comments to the site administrator via email."
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:843
@@ -1768,16 +1762,16 @@ msgid "Allow File Uploads"
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:938
-msgid "Allow to upload files."
+msgid "Allow users to upload files to their comment."
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:943
-msgid "File Upload By Guests"
+msgid "Allow Guests to Upload Files"
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:944
 msgid ""
-"Guest users can upload documents. Please be careful about this setting as "
+"Guest users can upload files to their comments. Please be careful about this setting as "
 "some users may potentially misuse this and periodically upload unwanted "
 "files."
 msgstr ""
@@ -1790,7 +1784,7 @@ msgstr ""
 msgid ""
 "Comma-separated list of allowed MIME types (e.g. .png, .jpg, etc). "
 "Alternatively, you may write \"image/*\" for all image types or \"audio/*\" "
-"for audios."
+"for audio files."
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:955
@@ -1808,12 +1802,11 @@ msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:962
 msgid ""
-"If user will cross the limit (defined above) within specified period (in "
-"seconds) in this field, he will be give a warning."
+"Number of seconds in which a user can upload the limited number of files as defined above."
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:967
-msgid "File Size"
+msgid "Max File Size"
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:968
@@ -1823,7 +1816,7 @@ msgid ""
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:978
-msgid "Editor"
+msgid "Custom CSS"
 msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:984
@@ -1832,9 +1825,7 @@ msgstr ""
 
 #: includes/Admin/AnyCommentGenericSettings.php:985
 msgid ""
-"Write custom CSS, it will be only related to AnyComment. Notice: you may "
-"require to drop the cache after your changes if you have any caching plugin "
-"installed."
+"Apply your own CSS to the AnyComment area by pasting it here. Please clear any cache plugins after saving."
 msgstr ""
 
 #: includes/Admin/AnyCommentWPComments.php:40
@@ -2301,10 +2292,7 @@ msgstr ""
 
 #: templates/admin/tab-tools.php:43
 msgid ""
-"This page will have helpers and debug information related to the plugin. For "
-"example, version of plugin, WordPress or PHP. Also you may drop comments or "
-"global plugins cache, open comments for all posts, pages or WooCommerce "
-"products (when plugin activated)."
+"Tools and debug information to help with AnyComment."
 msgstr ""
 
 #: templates/admin/tab-tools.php:46
@@ -2391,7 +2379,7 @@ msgstr ""
 
 #: templates/admin/tab-shortcodes.php:8
 msgid ""
-"Use this shortcode do display comment box in custom place (e.g. landing page)"
+"Use this shortcode to display a comment box on any type of supported content. Please note that the page or post must have comments enabled (e.g. landing page)"
 "."
 msgstr ""
 
@@ -2427,7 +2415,7 @@ msgid "Good job! It looks like everything is okay."
 msgstr ""
 
 #: templates/admin/tab-dashboard.php:7 templates/admin/tab-dashboard.php:11
-msgid "Commentators"
+msgid "Commenters"
 msgstr ""
 
 #: templates/admin/tab-dashboard.php:20 templates/admin/tab-dashboard.php:23
@@ -2456,7 +2444,7 @@ msgid "Need Help"
 msgstr ""
 
 #: templates/admin/tab-help.php:3
-msgid "Easiest way to get help is to use one of the links below"
+msgid "The easiest way to get help is to use one of the links below"
 msgstr ""
 
 #: templates/admin/tab-help.php:6
@@ -2497,7 +2485,7 @@ msgid "Demo"
 msgstr ""
 
 #: templates/admin/tabs.php:7
-msgid "Social"
+msgid "Social Login"
 msgstr ""
 
 #: templates/admin/tabs.php:11
@@ -2505,7 +2493,7 @@ msgid "Settings"
 msgstr ""
 
 #: templates/admin/tabs.php:15
-msgid "Integration"
+msgid "Integrations"
 msgstr ""
 
 #: templates/admin/tabs.php:19
