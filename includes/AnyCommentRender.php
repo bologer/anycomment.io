@@ -116,7 +116,7 @@ EOT;
 	 */
 	public function enqueue_scripts () {
 
-		if ( ! comments_open() || post_password_required() ) {
+		if ( is_singular() || ! comments_open() || post_password_required()  ) {
 			return false;
 		}
 
