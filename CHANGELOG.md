@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.0.89 – 11.08.2019
+
+**Enhancements:**
+
+
+
+
+**Fixes:**
+
+* Fixed issue when post subscription form was having bad layout on mobile, #396
+
+
 ## 0.0.88 – 07.04.2019
 
 **Enhancements:**
