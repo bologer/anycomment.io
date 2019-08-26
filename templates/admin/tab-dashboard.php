@@ -90,8 +90,8 @@ use AnyComment\Admin\AnyCommentStatistics;
             <h2><?php echo __('Overal Statistics', 'anycomment') ?></h2>
             <?php
 
-            $comments = \AnyComment\Admin\AnyCommentStatistics::get_comment_data();
-            $users = \AnyComment\Admin\AnyCommentStatistics::get_commentor_data();
+            $comments = AnyCommentStatistics::get_comment_data();
+            $users = AnyCommentStatistics::get_commentor_data();
             ?>
             <canvas id="anycomment-dashboard-chart"></canvas>
 
@@ -165,7 +165,7 @@ use AnyComment\Admin\AnyCommentStatistics;
         <div class="large-4 medium-4 small-12 anycomment-dashboard__statistics-userlist">
             <h2><?php echo __('Most Active Users', 'anycomment') ?></h2>
             <?php
-            $users = \AnyComment\Admin\AnyCommentStatistics::get_most_active_users();
+            $users = AnyCommentStatistics::get_most_active_users();
 
             if (!empty($users)): ?>
                 <ul>
