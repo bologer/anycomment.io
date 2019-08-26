@@ -206,13 +206,13 @@ class AnyCommentIntegrationSettings extends AnyCommentOptionManager {
 				     $this->field_builder()
 				          ->text()
 				          ->set_id( self::OPTION_RECAPTCHA_SITE_KEY )
-				          ->set_title( __( 'Site key', "anycomment" ) )
+				          ->set_title( __( 'reCAPTCHA Site key', "anycomment" ) )
 				          ->set_description( sprintf( __( 'reCAPTCHA site key. Can be found <a href="%s">here</a> (register your website if does not exist). Please note that you should choose "Invisible" type in order for it to work.', "anycomment" ), "http://www.google.com/recaptcha/admin" ) ),
 
 				     $this->field_builder()
 				          ->text()
 				          ->set_id( self::OPTION_RECAPTCHA_SITE_SECRET )
-				          ->set_title( __( 'Site secret', "anycomment" ) )
+				          ->set_title( __( 'reCAPTCHA Site secret', "anycomment" ) )
 				          ->set_description( sprintf( __( 'reCAPTCHA site secret. Can be found <a href="%s">here</a> (register your website if does not exist). Please note that you should choose "Invisible" type in order for it to work.', "anycomment" ), "http://www.google.com/recaptcha/admin" ) ),
 
 				     $this->field_builder()
