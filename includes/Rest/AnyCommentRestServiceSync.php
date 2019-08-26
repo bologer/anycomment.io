@@ -49,19 +49,19 @@ class AnyCommentRestServiceSync extends AnyCommentRestController
     public function register_routes()
     {
 
-        register_rest_route($this->namespace, '/' . $this->rest_base . '/import', [
-            [
-                'methods' => WP_REST_Server::CREATABLE,
-                'callback' => [$this, 'import'],
-                'args' => [
-                    'post' => [
-                        'description' => __('Unique post ID', 'anycomment'),
-                        'type' => 'integer',
-                    ],
-                ],
-            ],
-            'schema' => [$this, 'get_public_item_schema'],
-        ]);
+//        register_rest_route($this->namespace, '/' . $this->rest_base . '/import', [
+//            [
+//                'methods' => WP_REST_Server::CREATABLE,
+//                'callback' => [$this, 'import'],
+//                'args' => [
+//                    'post' => [
+//                        'description' => __('Unique post ID', 'anycomment'),
+//                        'type' => 'integer',
+//                    ],
+//                ],
+//            ],
+//            'schema' => [$this, 'get_public_item_schema'],
+//        ]);
 
         register_rest_route($this->namespace, '/' . $this->rest_base . '/keys', [
             [
@@ -136,6 +136,17 @@ class AnyCommentRestServiceSync extends AnyCommentRestController
 
         if ($home_parsed['host'] !== $remote_parsed['host']) {
             return $this->asFailure('API key provided for application does not match host one.');
+        }
+
+        $app_id = AnyCommentServiceSyncCron::getSyncAppId();
+
+        if (empty($app_id)) {
+            $options = (array)AnyCommentIntegrationSettings::instance()->get_db_options();
+
+            $options[AnyCommentIntegrationSettings::OPTION_ANYCOMMENT_SAAS_COMMENTS_SHOW] = 1;
+            $options[AnyCommentIntegrationSettings::OPTION_ANYCOMMENT_SAAS_COMMENTS_SYNC] = 1;
+
+            AnyCommentIntegrationSettings::instance()->update_db_option($options);
         }
 
         update_option(AnyCommentServiceSyncCron::getSyncAppIdOptionName(), $param_app_id);
