@@ -1,7 +1,9 @@
 <?php
+
 use AnyComment\Helpers\AnyCommentLinkHelper;
 use AnyComment\Cron\AnyCommentServiceSyncCron;
 use AnyComment\Admin\AnyCommentStatistics;
+
 ?>
 
 <div class="anycomment-tab anycomment-dashboard__tab" id="anycomment-dashboard">
@@ -12,12 +14,19 @@ use AnyComment\Admin\AnyCommentStatistics;
                 <div class="small-12">
                     <br>
                     <div class="callout success">
-                        <h3>Новинка! У AnyComment <a href="https://anycomment.io" target="_blank">появилась облачная
-                                версия</a>!</h3>
-                        <p>Теперь AnyComment будет иметь две версии (1) как сейчас и (2) как сервис.</p>
-                        <p>Если говорить простым языком, AnyComment начнет работать как Disqus или любое другое облачное
-                            решение, только в разы быстрее, с отличной поддержкой, понимаением, прозрачностью и
-                            обратной связью со своей аудиторией.</p>
+                        <h3>AnyComment теперь и <a href="https://anycomment.io" target="_blank">в облаке</a>!</h3>
+                        <p>Теперь AnyComment будет в двух версиях:</p>
+                        <ul>
+                            <li>1) Плагин, который после установки работает локально на вашем сайте.</li>
+                            <li>2) Современное, облачное SaaS решение, которое работает на наших серверах.</li>
+                        </ul>
+                        <p><strong>Почему стиот перейти на облачное решение?</strong></p>
+                        <ul>
+                            <li>- В х2 раза быстрее</li>
+                            <li>- Качественная поддержка</li>
+                            <li>- Никакой нагрузки на ваш сайт</li>
+                            <li>- Бесплатный тариф + адекватная стоимость</li>
+                        </ul>
 
                         <p><a class="button" href="https://anycomment.io" target="_blank">Подробнее</a></p>
 
@@ -49,6 +58,9 @@ use AnyComment\Admin\AnyCommentStatistics;
                                     информация по синхронизации комментариев
                                 </li>
                             </ul>
+
+                            <p>Если у вас возникли вопросы, пишите на support@anycomment.io. Мы постараемся помочь вам
+                                как можно быстрее!</p>
                         <?php endif; ?>
                     </div>
                 </div>
