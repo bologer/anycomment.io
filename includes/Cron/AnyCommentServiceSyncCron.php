@@ -3,6 +3,7 @@
 namespace AnyComment\Cron;
 
 use AnyComment\AnyCommentServiceApi;
+use AnyComment\Admin\AnyCommentIntegrationSettings;
 
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
@@ -15,10 +16,12 @@ class AnyCommentServiceSyncCron
      */
     public function __construct()
     {
-        $token = static::getSyncApiKey();
+        if (AnyCommentIntegrationSettings::is_sass_comments_sync()) {
+            $token = static::getSyncApiKey();
 
-        if (!empty($token)) {
-            $this->init();
+            if (!empty($token)) {
+                $this->init();
+            }
         }
     }
 
