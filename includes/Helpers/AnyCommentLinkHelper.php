@@ -110,8 +110,17 @@ class AnyCommentLinkHelper {
 	 * @return string
 	 */
 	public static function get_official_website() {
-		return "https://anycomment.io/";
+		return "https://plugin.anycomment.io/";
 	}
+
+    /**
+     * Get SaaS URL.
+     *
+     * @return string
+     */
+	public static function get_service_website() {
+	    return 'https://anycomment.io';
+    }
 
 	/**
 	 * Get short version of the language.
