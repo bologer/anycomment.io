@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.0.90 – 27.08.2019
+
+**Fixes:**
+
+- Fixed wrong API URL
+
 ## 0.0.89 – 27.08.2019
 
 **Other:**
