@@ -11,7 +11,7 @@ class AnyCommentServiceApi
     /**
      * @var string API url.
      */
-    private $_url = 'http://anyservice.loc';
+    private $_url = 'https://anycomment.io';
 
     /**
      * @var string API version.
