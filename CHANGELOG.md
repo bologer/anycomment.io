@@ -1,14 +1,14 @@
 # Changelog
 
-## 0.0.89 – 11.08.2019
+## 0.0.89 – 27.08.2019
 
-**Enhancements:**
+**Other:**
 
-
-
+* Introducing AnyComment.Cloud, comments synchronization, new options in "Integrations". It is now possible to switch between SaaS and local AnyComment
 
 **Fixes:**
 
+* Fixed issue when "Integration" tabs were glued together
 * Fixed issue when post subscription form was having bad layout on mobile, #396
 
 

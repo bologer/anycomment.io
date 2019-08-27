@@ -168,21 +168,21 @@ class AnyCommentIntegrationSettings extends AnyCommentOptionManager
         $form->add_section(
             $this->section_builder()
                 ->set_id('anycomment-saas')
-                ->set_title(__('AnyComment SaaS', "anycomment"))
+                ->set_title(__('AnyComment.Cloud', "anycomment"))
                 ->set_wrapper('<div class="grid-x anycomment-form-wrapper anycomment-tabs__container__tab current" id="{id}">{content}</div>')
                 ->set_fields([
 
                     $this->field_builder()
                         ->set_id(self::OPTION_ANYCOMMENT_SAAS_COMMENTS_SHOW)
                         ->checkbox()
-                        ->set_title(__('Display Cloud comments', "anycomment"))
-                        ->set_description(sprintf(__('Display comments from <a href="%s" target="_blank">AnyComment service</a> instead of original AnyComment form.', "anycomment"), AnyCommentLinkHelper::get_service_website())),
+                        ->set_title(__('Display comments', "anycomment"))
+                        ->set_description(sprintf(__('Display comments from <a href="%s" target="_blank">AnyComment.Cloud</a> instead of original AnyComment form.', "anycomment"), AnyCommentLinkHelper::get_service_website())),
 
                     $this->field_builder()
                         ->set_id(self::OPTION_ANYCOMMENT_SAAS_COMMENTS_SYNC)
                         ->checkbox()
                         ->set_title(__('Synchronize comments with service', "anycomment"))
-                        ->set_description(sprintf(__('Synchronize all comments from website with <a href="%s" target="_blank">AnyComment service</a>.', "anycomment"), AnyCommentLinkHelper::get_service_website())),
+                        ->set_description(sprintf(__('Synchronize all comments from website with <a href="%s" target="_blank">AnyComment.Cloud</a>.', "anycomment"), AnyCommentLinkHelper::get_service_website())),
 
                 ])
         );

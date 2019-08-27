@@ -176,14 +176,20 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 == Changelog ==
 
-= 0.0.89 – 11.08.2019 =
+= 0.0.89 – 27.08.2019 =
 
-**Enhancements:**
+**Other:**
 
+* Introducing AnyComment.Cloud, comments synchronization, new options in "Integrations". It is now possible to switch between SaaS and local AnyComment
 
 **Fixes:**
 
+* Fixed issue when "Integration" tabs were glued together
 * Fixed issue when post subscription form was having bad layout on mobile, #396
+
+This is minor update, since this update AnyComment would start bringing update more often.
+
+Thank you for your patience, during this time we were working hard on AnyComment.Cloud. Now we are back!
 
 
 = 0.0.88 – 07.04.2019 =
