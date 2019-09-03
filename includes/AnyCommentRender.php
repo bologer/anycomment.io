@@ -39,14 +39,13 @@ class AnyCommentRender {
 			add_filter( 'comments_template', [ $this, 'override_comment' ], 999 );
 
 			add_shortcode( 'anycomment', [ $this, 'override_comment' ] );
-		}
 
-		add_filter( 'logout_url', [ $this, 'logout_redirect' ], 10, 2 );
+            add_filter( 'logout_url', [ $this, 'logout_redirect' ], 10, 2 );
 
-		add_filter( 'script_loader_tag', [ $this, 'add_async_to_bundle' ], 10, 2 );
+            add_filter( 'script_loader_tag', [ $this, 'add_async_to_bundle' ], 10, 2 );
 
-		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
-
+            add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
+        }
 		add_action( 'wp_head', [ $this, 'enqueue_custom_css' ], 99 );
 
 		self::$errors = AnyCommentSocialAuth::getErrors( true, true );
@@ -116,7 +115,7 @@ EOT;
 	 */
 	public function enqueue_scripts () {
 
-		if ( is_singular() || ! comments_open() || post_password_required()  ) {
+		if ( is_singular() || ! comments_open() || post_password_required()  || AnyCommentIntegrationSettings::is_sass_comments_show() ) {
 			return false;
 		}
 

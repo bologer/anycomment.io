@@ -31,7 +31,13 @@ class AnyCommentServiceApi
      */
     public static function request()
     {
-        return (new self);
+        $model = new self();
+        if (ANYCOMMENT_DEBUG) {
+            // todo: move to config
+            $model->setUrl('http://anyservice.loc');
+        }
+
+        return ($model);
     }
 
     /**
@@ -84,5 +90,21 @@ class AnyCommentServiceApi
         }
 
         return $url;
+    }
+
+    /**
+     * @param string $url
+     */
+    public function setUrl($url)
+    {
+        $this->_url = $url;
+    }
+
+    /**
+     * @param int $timeout
+     */
+    public function setTimeout($timeout)
+    {
+        $this->_timeout = $timeout;
     }
 }
