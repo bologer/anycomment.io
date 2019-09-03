@@ -17,6 +17,7 @@ class AnyCommentLoader {
 	public static $load = [
 		// Rest
 		'AnyComment\Rest\AnyCommentRestComment',
+		'AnyComment\Rest\AnyCommentRestServiceSync',
 		'AnyComment\Rest\AnyCommentRestLikes',
 		'AnyComment\Rest\AnyCommentRestDocuments',
 		'AnyComment\Rest\AnyCommentRestRate',
@@ -45,6 +46,7 @@ class AnyCommentLoader {
 
 		// Crontabs
 		'AnyComment\Cron\AnyCommentEmailQueueCron',
+		'AnyComment\Cron\AnyCommentServiceSyncCron',
 
 		// Emails
 		'AnyComment\EmailEndpoints',

@@ -1,3 +1,3 @@
 <div class="anycomment-tab">
-	<?= \AnyComment\Admin\AnyCommentAdminPages::get_integrations()->run() ?>
+	<?php echo \AnyComment\Admin\AnyCommentAdminPages::get_integrations()->run() ?>
 </div>

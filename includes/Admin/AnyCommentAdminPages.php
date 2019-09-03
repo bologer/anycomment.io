@@ -175,7 +175,7 @@ class AnyCommentAdminPages {
 		$shortLocale = substr( $locale, 0, 2 );
 
 
-		$url = sprintf( 'https://anycomment.io/%swp-json/wp/v2/posts', strpos( $locale, 'en' ) !== false ? $shortLocale . '/' : '' );
+		$url = sprintf( 'https://plugin.anycomment.io/%swp-json/wp/v2/posts', strpos( $locale, 'en' ) !== false ? $shortLocale . '/' : '' );
 
 		$options = [
 			'method'  => 'GET',

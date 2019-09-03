@@ -20,7 +20,7 @@
       &--icon {
         position: absolute;
         left: 13px;
-        top: 7px;
+        top: 5px;
 
         svg {
           font-size: 15px;
@@ -48,4 +48,30 @@
       margin-left: 30px;
     }
   }
+
+  @media(max-width: 600px) {
+    .anycomment-subscribe {
+
+      form {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+      }
+
+      &__submit,
+      &__email {
+        margin: 0 0 5px 0;
+        width: 100%;
+
+        input {
+          width: 100%;
+        }
+      }
+
+      &__close {
+        margin-left: 0;
+      }
+    }
+  }
+
 }

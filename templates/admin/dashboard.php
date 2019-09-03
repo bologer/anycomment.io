@@ -21,7 +21,6 @@ if ( ! defined( 'ABSPATH' ) ) {
                         <h2><?php echo __( 'AnyComment', 'anycomment' ) ?>
                             &nbsp;<sup><?php echo AnyComment()->version ?></sup></h2>
                     </div>
-
                     <div class="cell auto anycomment-dashboard__header-official">
 						<?php
 
