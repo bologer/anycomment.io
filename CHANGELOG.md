@@ -9,6 +9,7 @@
 **Fixes:**
 
 * Fixed issue when synchronization summary was showing wrong exported count
+* Fixed issue when comments stopped displaying after v. 0.0.89
 
 
 ## 0.0.90 – 27.08.2019

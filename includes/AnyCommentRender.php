@@ -115,7 +115,7 @@ EOT;
 	 */
 	public function enqueue_scripts () {
 
-		if ( is_singular() || ! comments_open() || post_password_required()  || AnyCommentIntegrationSettings::is_sass_comments_show() ) {
+		if ( !is_singular() || ! comments_open() || post_password_required()  || AnyCommentIntegrationSettings::is_sass_comments_show() ) {
 			return false;
 		}
 
