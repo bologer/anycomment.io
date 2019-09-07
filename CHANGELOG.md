@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.0.91 – 07.09.2019
+
+**Enhancements:**
+
+
+
+**Fixes:**
+
+* Fixed issue when synchronization summary was showing wrong exported count
+
+
 ## 0.0.90 – 27.08.2019
 
 **Fixes:**
