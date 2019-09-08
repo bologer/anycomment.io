@@ -4,12 +4,15 @@
 
 **Enhancements:**
 
+* [anycomment] shortcode does not require `include` param anymore, it is there by default
+* [anycomment] would not be shown even when post has closed comments or password protected
 
 
 **Fixes:**
 
 * Fixed issue when synchronization summary was showing wrong exported count
 * Fixed issue when comments stopped displaying after v. 0.0.89
+* Fixed multiple internalization strings
 
 
 ## 0.0.90 – 27.08.2019
