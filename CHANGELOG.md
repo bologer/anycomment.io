@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.0.91 – 07.09.2019
+## 0.0.91 – 08.09.2019
 
 **Enhancements:**
 
@@ -11,7 +11,6 @@
 **Fixes:**
 
 * Fixed issue when synchronization summary was showing wrong exported count
-* Fixed issue when comments stopped displaying after v. 0.0.89
 * Fixed multiple internalization strings
 
 
