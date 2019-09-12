@@ -53,6 +53,7 @@ class AnyCommentMigration_0_0_68 extends AnyCommentMigration {
 
 		$table = $wpdb->prefix . $this->table;
 		$sql   = "DROP TABLE IF EXISTS $table;";
+
 		$wpdb->query( $sql );
 
 		return true;

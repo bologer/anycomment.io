@@ -72,10 +72,12 @@ class AnyCommentMigrationManager {
 			return true;
 		}
 
+		$migrationList = array_reverse($migrationList);
+
 		foreach ( $migrationList as $key => $migrationVersion ) {
 			$format        = $this->get_file_format();
 			$migrationName = sprintf( $format, $migrationVersion );
-			$path          = sprintf( ANYCOMMENT_ABSPATH . 'includes/Migrations/%s.php', $migrationName );
+			$path          = sprintf( rtrim(ANYCOMMENT_ABSPATH, '/\\') . '/includes/Migrations/%s.php', $migrationName );
 
 			if ( ! file_exists( $path ) ) {
 				continue;
@@ -83,10 +85,11 @@ class AnyCommentMigrationManager {
 
 			include_once( $path );
 
+            $namespace = "\AnyComment\Migrations\\$migrationName";
 			/**
 			 * @var $model AnyCommentMigration
 			 */
-			$model = new $migrationName();
+			$model = new $namespace();
 
 			if ( $model->is_applied() && $model->down() ) {
 				AnyCommentOptions::update_migration( $migrationVersion );

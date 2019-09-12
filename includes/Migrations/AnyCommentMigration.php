@@ -22,10 +22,6 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 			'version'     => '0.0.45',
 			'description' => 'VK option name change from short "vk" to "vkontake" & creation of "email_queue" table to keep email to send'
 		],
-		'0.0.50' => [
-			'version'     => '0.0.50',
-			'description' => 'Added "subject", "email" columns and modified "sent_at" to be NULL by default in "email_queue" table'
-		],
 		'0.0.52' => [
 			'version'     => '0.0.52',
 			'description' => 'Create "uploaded_files" table to store log history of all uploaded files'
@@ -33,10 +29,6 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 		'0.0.56' => [
 			'version'     => '0.0.56',
 			'description' => 'Reupload avatars to make them smaller in size and therefore speed-up comments loading'
-		],
-		'0.0.57' => [
-			'version'     => '0.0.57',
-			'description' => 'Add "url_thumbnail" column to keep image thumbnail together with original url and type for MIME type'
 		],
 		'0.0.59' => [
 			'version'     => '0.0.59',
@@ -46,26 +38,6 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 			'version'     => '0.0.61',
 			'description' => 'Create anycomment_rating table for keeping rating information'
 		],
-		'0.0.62' => [
-			'version'     => '0.0.62',
-			'description' => 'Create anycomment_rating table if does not exist. Fix for 0.0.61 when table was not created'
-		],
-		'0.0.63' => [
-			'version'     => '0.0.63',
-			'description' => 'Create anycomment_rating table if does not exist. Fix for 0.0.62 when table was not created'
-		],
-		'0.0.64' => [
-			'version'     => '0.0.64',
-			'description' => 'Adding AUTO INCREMENT for anycomment_rating as it was missing after recent update'
-		],
-		'0.0.65' => [
-			'version'     => '0.0.65',
-			'description' => 'Fixing AUTO INCREMENT for anycomment_email_queue and adding BIGINT for anycomment_rating'
-		],
-		'0.0.66' => [
-			'version'     => '0.0.66',
-			'description' => 'Fixing issue when anycomment_email_queue was missing some of the columns after recent update to previous migrations'
-		],
 		'0.0.68' => [
 			'version'     => '0.0.68',
 			'description' => 'Create anycomment_subscription table to keep track of who is subscribing for comments'
@@ -73,10 +45,6 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 		'0.0.70' => [
 			'version'     => '0.0.70',
 			'description' => 'Migrate existing social users to new username format'
-		],
-		'0.0.74' => [
-			'version'     => '0.0.74',
-			'description' => 'Migrate adds `type` column to anycomment_likes table'
 		],
 		'0.0.88' => [
 			'version'     => '0.0.88',

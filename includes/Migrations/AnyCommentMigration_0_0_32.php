@@ -31,9 +31,10 @@ class AnyCommentMigration_0_0_32 extends AnyCommentMigration {
 
 		$sql = "CREATE TABLE `$table` (
 			  `ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-			  `user_ID` bigint(20) UNSIGNED NOT NULL,
+			  `user_ID` bigint(20) UNSIGNED NULL,
 			  `comment_ID` bigint(20) UNSIGNED NOT NULL,
 			  `post_ID` bigint(20) UNSIGNED NOT NULL,
+			  `type` TINYINT(1) DEFAULT 1,
 			  `user_agent` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
 			  `ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
 			  `liked_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',

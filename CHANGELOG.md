@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.0.92 – 12.09.2019
+
+**Enhancements:**
+
+
+
+**Fixes:**
+
+- Fixed multiple installation bugs, when it was not possible to upload files or make likes, #411
+
+
 ## 0.0.90 – 27.08.2019
 
 **Fixes:**

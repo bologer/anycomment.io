@@ -31,21 +31,16 @@ class AnyCommentMigration_0_0_61 extends AnyCommentMigration {
 		 * Create email queue table
 		 */
 		$sql = "CREATE TABLE `$table` (
-				  `ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+				  `ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
 				  `post_ID` bigint(20) UNSIGNED NOT NULL,
 				  `user_ID` bigint(20) UNSIGNED DEFAULT NULL,
 				  `rating` smallint(1) SIGNED DEFAULT 5,
 				  `ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
 				  `user_agent` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
 				  `created_at` bigint(20) NOT NULL,
+				  PRIMARY KEY (`ID`),
 				  INDEX post_ID (`post_ID`),
-				  INDEX user_ID (`user_ID`),
-				  FOREIGN KEY (post_ID)
-				        REFERENCES {$wpdb->posts}(ID)
-				        ON DELETE CASCADE,
-				  FOREIGN KEY (user_ID)
-				        REFERENCES {$wpdb->users}(ID)
-				        ON DELETE CASCADE
+				  INDEX user_ID (`user_ID`)
 				) $charset_collate;";
 
 		return $wpdb->query( $sql ) !== false;
@@ -59,6 +54,8 @@ class AnyCommentMigration_0_0_61 extends AnyCommentMigration {
 		$table = $wpdb->prefix . $this->table;
 		$sql   = "DROP TABLE IF EXISTS `$table`;";
 		$wpdb->query( $sql );
+
+		return true;
 	}
 }
 

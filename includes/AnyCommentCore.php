@@ -20,7 +20,7 @@ class AnyCommentCore
      *
      * @var string
      */
-    public $version = '0.0.90';
+    public $version = '0.0.92';
 
     /**
      * @var Pool
@@ -100,7 +100,6 @@ class AnyCommentCore
     {
         register_activation_hook(__FILE__, [$this, 'activation']);
         register_uninstall_hook(__FILE__, sprintf('%s::uninstall', get_called_class()));
-
 
         add_action('init', function () {
             if (version_compare(AnyCommentOptions::get_migration(), $this->version, '<')) {
