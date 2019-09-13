@@ -4,7 +4,8 @@
 
 **Enhancements:**
 
-
+- Changed cache directory directory from `wp-content/uploads/cache/anycomment` to `wp-content/cache/anycomment`
+- Plugin interface is not translated to Ukrainian, more to come  
 
 **Fixes:**
 

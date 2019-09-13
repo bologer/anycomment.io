@@ -167,7 +167,7 @@ class AnyCommentCore
             return static::$cache;
         }
 
-        $cache_path = ABSPATH . str_replace('/', DIRECTORY_SEPARATOR, 'wp-content/uploads/cache/anycomment');
+        $cache_path = ABSPATH . str_replace('/', DIRECTORY_SEPARATOR, 'wp-content/cache/anycomment');
 
         if (!@file_exists($cache_path)) {
             @mkdir($cache_path, 0755, true);
