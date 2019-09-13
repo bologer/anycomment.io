@@ -188,6 +188,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 - Fixed multiple installation bugs, when it was not possible to upload files or make likes, #411
 - Fixed issue when comments when they were closed
+- Fixed issue when users with & were having &amp; in the name, now name displayed properly, #399
 
 = 0.0.91 – 08.09.2019 =
 

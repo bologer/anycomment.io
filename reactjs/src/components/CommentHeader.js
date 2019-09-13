@@ -38,6 +38,19 @@ class CommentHeader extends AnyCommentComponent {
         return comment.meta.is_updated || false;
     };
 
+    /**
+     * Normalizes name to render proper name without HTML entities.
+     *
+     * @param name
+     * @return {*}
+     */
+    normalizeAuthorName = (name) => {
+
+        name = name.replace('&amp;', '&');
+
+        return name;
+    };
+
     render() {
         const {comment, settings} = this.props;
 
@@ -49,11 +62,13 @@ class CommentHeader extends AnyCommentComponent {
 
         const formatter = buildFormatter(languageStrings);
 
+        const commentAuthorName = this.normalizeAuthorName(comment.author_name);
+
         const authorName = settings.options.isShowProfileUrl && comment.owner.profile_url.trim() !== '' ?
             <a className="anycomment comment-single-body-header__author-name" target="_blank"
                href={comment.owner.profile_url}
-               rel="noopener noreferrer">{comment.author_name}</a> :
-            <span className="anycomment comment-single-body-header__author-name">{comment.author_name}</span>;
+               rel="noopener noreferrer">{commentAuthorName}</a> :
+            <span className="anycomment comment-single-body-header__author-name">{commentAuthorName}</span>;
 
         let additionalTags = [];
 
