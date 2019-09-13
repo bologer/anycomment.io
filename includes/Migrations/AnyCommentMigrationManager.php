@@ -29,7 +29,7 @@ class AnyCommentMigrationManager {
 	public function apply_all() {
 		$migrationList = AnyCommentMigration::get_list_up();
 
-		if ( $migrationList === null ) {
+		if ( empty($migrationList) ) {
 			return true;
 		}
 
