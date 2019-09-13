@@ -285,10 +285,10 @@ EOT;
     public function override_comment()
     {
         if (!is_singular() || !comments_open() || post_password_required() || AnyCommentIntegrationSettings::is_sass_comments_show()) {
-            remove_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
+            remove_action('wp_enqueue_scripts', [$this, 'enqueue_scripts'], 11);
         }
 
-        return ANYCOMMENT_ABSPATH . '/templates/comments.php';
+        return ANYCOMMENT_ABSPATH . str_replace('/', DIRECTORY_SEPARATOR, '/templates/override-comments.php');
     }
 
     /**

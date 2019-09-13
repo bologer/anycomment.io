@@ -182,11 +182,12 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 - Changed cache directory directory from `wp-content/uploads/cache/anycomment` to `wp-content/cache/anycomment`
 - Plugin interface is not translated to Ukrainian, more to come
+- Main plugin character was updated in admin dashboard and for users without avatar
 
 **Fixes:**
 
 - Fixed multiple installation bugs, when it was not possible to upload files or make likes, #411
-
+- Fixed issue when comments when they were closed
 
 = 0.0.91 – 08.09.2019 =
 

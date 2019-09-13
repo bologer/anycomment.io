@@ -5,7 +5,7 @@ use AnyComment\Admin\AnyCommentIntegrationSettings;
 use AnyComment\Helpers\AnyCommentLinkHelper;
 
 /**
- * This template is used to display comments.
+ * This is a generic template which renders comments from local WordPress or SaaS (Cloud version).
  */
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly

@@ -73,8 +73,8 @@ use AnyComment\Admin\AnyCommentStatistics;
         <div class="cell large-6 medium-12 small-12 anycomment-dashboard__splitter-half anycomment-dashboard__splitter-half-commentators">
             <div class="grid-x align-center">
                 <div class="cell shrink">
-                    <img src="<?php echo AnyComment()->plugin_url() . '/assets/img/dashboard-users.svg' ?>"
-                         alt="<?php echo __('Commentators', 'anycomment') ?>">
+                    <img src="<?php echo AnyComment()->plugin_url() . '/assets/img/main-character.svg' ?>"
+                         alt="<?php echo __('Commentators', 'anycomment') ?>"><br><br>
 
                     <div class="anycomment-dashboard__splitter-half-description">
                         <span><?php echo AnyCommentStatistics::get_commentor_count() ?></span>
