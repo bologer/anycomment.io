@@ -11,6 +11,18 @@
 
 - Fixed multiple installation bugs, when it was not possible to upload files or make likes, #411
 
+## 0.0.91 – 08.09.2019
+
+**Enhancements:**
+
+* [anycomment] shortcode does not require `include` param anymore, it is there by default
+* [anycomment] would not be shown even when post has closed comments or password protected
+
+
+**Fixes:**
+
+* Fixed issue when synchronization summary was showing wrong exported count
+* Fixed multiple internalization strings
 
 ## 0.0.90 – 27.08.2019
 

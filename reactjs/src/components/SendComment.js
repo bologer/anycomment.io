@@ -514,11 +514,6 @@ class SendComment extends AnyCommentComponent {
         const settings = this.getSettings();
         const translations = settings.i18;
 
-        if (!settings.post.comments_open) {
-            return <div
-                className="anycomment anycomment-alert anycomment-alert-default">{translations.comments_closed}</div>;
-        }
-
         const {
             buttonEnabled,
             buttonText,

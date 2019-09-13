@@ -313,7 +313,7 @@ class AnyCommentServiceSyncCron
             $info['complete_percent'] = $remaining > 0 ?
                 round((1 - $remaining / $global_total) * 100, 2) :
                 100;
-            $info['current'] = $comment_id;
+            $info['current'] = $global_total - $remaining;
             $info['remaining'] = $remaining;
         }
 
