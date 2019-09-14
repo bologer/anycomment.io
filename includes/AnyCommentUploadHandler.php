@@ -7,6 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use WP_Error;
+use AnyComment\Admin\AnyCommentGenericSettings;
 
 /**
  * Class AnyCommentUploadHandler is used to handle avatar upload for social medias
@@ -106,14 +107,12 @@ class AnyCommentUploadHandler {
 			return false;
 		}
 
-		$timeout_seconds = 5;
-
 		if ( ! function_exists( 'wp_handle_upload' ) ) {
 			require_once( ABSPATH . 'wp-admin/includes/file.php' );
 		}
 
 		// Download file to temp dir
-		$temp_file = download_url( $profileUrl, $timeout_seconds );
+		$temp_file = download_url( $profileUrl, 5 );
 
 		if ( is_wp_error( $temp_file ) ) {
 			return false;
@@ -125,18 +124,16 @@ class AnyCommentUploadHandler {
 			return false;
 		}
 
+		$savePath = static::get_save_dir();
 
-		$upload_dir = wp_get_upload_dir();
+		if($savePath === null) {
+            wp_delete_file( $temp_file['file'] );
+            return false;
+        }
 
-		// When unable to get upload dir, should delete original file as well
-		if ( $upload_dir['error'] !== false ) {
-			wp_delete_file( $temp_file['file'] );
+        $fileName = static::getFileName( $metaIdentifier );
 
-			return false;
-		}
-
-		$fileName = static::getFileName( $metaIdentifier );
-		$savePath = $upload_dir['path'] . DIRECTORY_SEPARATOR . $fileName;
+		$savePath = $savePath . DIRECTORY_SEPARATOR . $fileName;
 
 		$instance->resize( AnyCommentAvatars::DEFAULT_AVATAR_WIDTH, AnyCommentAvatars::DEFAULT_AVATAR_HEIGHT, true );
 
@@ -146,42 +143,81 @@ class AnyCommentUploadHandler {
 			return false;
 		}
 
-		// Array based on $_FILE as seen in PHP file uploads
-		$file = array(
-			'name'     => $croppedImage['file'],
-			'type'     => $croppedImage['mime-type'],
-			'tmp_name' => $croppedImage['path'],
-			'error'    => 0,
-			'size'     => filesize( $croppedImage['path'] ),
-		);
-
-		$overrides = [
-			// Tells WordPress to not look for the POST form
-			// fields that would normally be present as
-			// we downloaded the file from a remote server, so there
-			// will be no form fields
-			// Default is true
-			'test_form' => false,
-
-			// Setting this to false lets WordPress allow empty files, not recommended
-			// Default is true
-			'test_size' => true,
-		];
-
-		// Move the temporary file into the uploads directory
-		$results = wp_handle_sideload( $file, $overrides );
-
-		if ( ! empty( $results['error'] ) ) {
-			return false;
-		}
-
-		unlink( $temp_file );
-
-		$localUrl = $results['url'];  // URL to the file in the uploads dir
-
-		// Perform any actions here based in the above results
-		return $localUrl;
+		return static::get_serve_url() . '/' . $fileName;
 	}
+
+    /**
+     * Get save directory.
+     *
+     * When options save directory specified - it would be used, otherwise default save path would be used.
+     *
+     * @return string|null
+     */
+	public static function get_save_dir() {
+	    $options_save_path = AnyCommentGenericSettings::get_file_save_path();
+
+	    if(!empty($options_save_path)) {
+	        return $options_save_path;
+        }
+
+	    return static::get_default_save_dir();
+    }
+
+    /**
+     * Returns URL where file can be served.
+     *
+     * When URL in options is not specified, it uses default folder.
+     *
+     * @return string|null
+     */
+    public static function get_serve_url() {
+        $options_serve_url = AnyCommentGenericSettings::get_file_save_serve_url();
+
+        if(!empty($options_serve_url)) {
+            return $options_serve_url;
+        }
+
+        return static::get_default_server_dir();
+    }
+
+    /**
+     * Returns absolute default save directory path.
+     *
+     * @return string|null
+     */
+	public static function get_default_save_dir() {
+        $upload_dir = wp_get_upload_dir();
+
+        if(isset($upload_dir['error']) && !empty($upload_dir['error'])) {
+            return null;
+        }
+
+        $ds = DIRECTORY_SEPARATOR;
+
+        $path = $upload_dir['basedir'] . $ds . 'anycomment' . $ds . date('Y') . $ds . date('m');
+
+        // When path does not exist, we should create it
+        if(!is_dir($path)) {
+            @mkdir($path, 0755, true);
+        }
+
+        return $path;
+    }
+
+    /**
+     * Returns default URL where file can be served.
+     *
+     * @return string|null
+     */
+    public static function get_default_server_dir() {
+        $upload_dir = wp_get_upload_dir();
+
+        if(isset($upload_dir['error']) && !empty($upload_dir['error'])) {
+            return null;
+        }
+
+        return $path = $upload_dir['baseurl'] . '/' . date('Y') . '/' . date('m');
+    }
 
 
 	/**

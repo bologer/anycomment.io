@@ -8,6 +8,7 @@
 - Plugin interface is not translated to Ukrainian, more to come  
 - Main plugin character was updated in admin dashboard and for users without avatar
 - Added ability to replace spam words with custom character, e.g. "world:#" would make comment "Hello world" as "Hello #####", #340
+- Added ability to specify custom directory to save files with URL where they would served, #163
 
 **Fixes:**
 

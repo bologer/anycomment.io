@@ -6,6 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+use AnyComment\AnyCommentUploadHandler;
 use AnyComment\Base\ScssCompiler;
 use AnyComment\Helpers\AnyCommentInputHelper;
 use AnyComment\Options\AnyCommentOptionManager;
@@ -153,6 +154,8 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 	const OPTION_FILES_LIMIT = 'options_files_limit';
 	const OPTION_FILES_LIMIT_PERIOD = 'options_files_limit_period';
 	const OPTION_FILES_MAX_SIZE = 'options_files_max_size';
+	const OPTION_FILES_SAVE_PATH = 'options_files_save_path';
+	const OPTION_FILES_SAVE_SERVE_URL = 'options_files_save_serve_url';
 
 	/**
 	 * Design
@@ -798,7 +801,7 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 				          ->textarea()
 				          ->set_id( self::OPTION_MODERATE_WORDS )
 				          ->set_title( __( 'Spam Words', "anycomment" ) )
-				          ->set_description( esc_html( __( 'Comment should be marked for moderation when matched word from this list of comma-separated values.', "anycomment" ) ) ),
+				          ->set_description( esc_html( __( 'Comment should be marked for moderation when matched word from this list of comma-separated values. Also you may replace words with the folowing syntax: "word:*", where word is the matching word and after ":" is the replacement character. Example, "wor:*" would make "Hello world" as "Hello ***ld"', "anycomment" ) ) ),
 			     ] )
 		);
 
@@ -942,6 +945,18 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 				          ->set_id( self::OPTION_FILES_GUEST_CAN_UPLOAD )
 				          ->set_title( __( 'File Upload By Guests', "anycomment" ) )
 				          ->set_description( esc_html( __( 'Guest users can upload documents. Please be careful about this setting as some users may potentially misuse this and periodically upload unwanted files.', "anycomment" ) ) ),
+
+                     $this->field_builder()
+                         ->text()
+                         ->set_id( self::OPTION_FILES_SAVE_PATH )
+                         ->set_title( __( 'Save directory', "anycomment" ) )
+                         ->set_description( esc_html( sprintf(__( 'Absolute path where all files would be stored, including social avatars. When empty, %s would be used. Notice folder must have correct permission & owner. Notice that AnyComment would add year and month automatically to the folder you specify to limit number of files per directory.', "anycomment" ), AnyCommentUploadHandler::get_default_save_dir()) ) ),
+
+                     $this->field_builder()
+                         ->text()
+                         ->set_id( self::OPTION_FILES_SAVE_SERVE_URL )
+                         ->set_title( __( 'Save directory serve', "anycomment" ) )
+                         ->set_description( esc_html( sprintf(__( 'URL where file can served. For example, when directory specified, it is required to specify path where image would served. When empty, %s would be used. Notice that AnyComment would add year and month automatically to the URL.', "anycomment" ), AnyCommentUploadHandler::get_default_server_dir()) ) ),
 
 				     $this->field_builder()
 				          ->text()
@@ -1443,6 +1458,55 @@ EOT;
 	public static function get_file_max_size () {
 		return static::instance()->get_db_option( self::OPTION_FILES_MAX_SIZE );
 	}
+
+    /**
+     * Get files save path.
+     *
+     * @return string|null
+     */
+    public static function get_file_save_path () {
+        $path = static::instance()->get_db_option( self::OPTION_FILES_SAVE_PATH );
+
+        if(empty($path)) {
+            return null;
+        }
+
+        $path = rtrim($path, '/\\');
+
+        $ds = DIRECTORY_SEPARATOR;
+
+        $path .= $ds . date('Y') . $ds . date('m');
+
+        if(!is_dir($path)) {
+            @mkdir($path, 0755, true);
+
+            if(!is_dir($path)) {
+                return null;
+            }
+        }
+
+        return $path;
+    }
+
+    /**
+     * Get files save URL.
+     *
+     * @return string|null
+     */
+    public static function get_file_save_serve_url () {
+        $url = static::instance()->get_db_option( self::OPTION_FILES_SAVE_SERVE_URL );
+
+        if(empty($url)) {
+            return null;
+        }
+
+        $url = rtrim($url, '/');
+
+        $url .= '/' . date('Y') . '/' . date('m');
+
+        return $url;
+    }
+
 
 	/**
 	 * Get file upload limit.
