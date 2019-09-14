@@ -19,14 +19,14 @@ It stands for simplicity & speed. We value feedback, so if you have any failures
 
 = Resources =
 * [Official website](http://anycomment.io/en/)
-* [All guides](https://anycomment.io/en/category/tutorials/)
-* [Configure socials](https://anycomment.io/en/category/tutorials/socials/)
+* [All guides](https://plugin.anycomment.io/en/category/tutorials/)
+* [Configure socials](https://plugin.anycomment.io/en/category/tutorials/socials/)
 * [GitHub repository](https://github.com/bologer/anycomment.io)
 * [VK.com group](http://vk.com/anycomment)
 * [Telegram group](https://t.me/joinchat/BEUJEQ9aMmQsFX65MNRCDg)
 
 = Demo =
-Feel free to use [this demo page](https://anycomment.io/demo/). Every time new version is released, demo plugin will be updated as well, so you always see the latest version.
+Feel free to use [this demo page](https://plugin.anycomment.io/demo/). Every time new version is released, demo plugin will be updated as well, so you always see the latest version.
 
 = Get Started =
 
@@ -163,8 +163,8 @@ AnyComment is GDRP compliant.
 You can read more about General Data Protection Regulation on [Wikipedia](https://en.wikipedia.org/wiki/General_Data_Protection_Regulation).
 
 Read guide on how to create "Privacy Policy" page:
-- [English version](https://anycomment.io/how-to-create-privacy-policy-page-in-wordpress/)
-- [Russian version](https://anycomment.io/ru/kak-sozdat-stranitsu-politiki-konfidentsialnosti-v-wordpress/)
+- [English version](https://plugin.anycomment.io/how-to-create-privacy-policy-page-in-wordpress/)
+- [Russian version](https://plugin.anycomment.io/ru/kak-sozdat-stranitsu-politiki-konfidentsialnosti-v-wordpress/)
 
 = Why Does Facebook Require HTTPs? =
 
@@ -850,7 +850,7 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 
 **Fixes:**
 
-* Added [Facebook guide](https://anycomment.io/en/api-facebook/) details regarding "Status" & HTTPs requirement & fixed other guides, also added instruction on how and where to find "Callback URI", #102
+* Added [Facebook guide](https://plugin.anycomment.io/en/api-facebook/) details regarding "Status" & HTTPs requirement & fixed other guides, also added instruction on how and where to find "Callback URI", #102
 * Cosmetic style corrections (fixed height/alignment/decoration of button, make inline guest inputs 100%), #104
 * Fixed issue when link in news sidebar lead to 404 page,  #109
 * Plugin was not showing comment box until option to show comment was enabled and at least one social was configured. Now this logic is a bit different (plugin allows guest users), so now only required to enable option to show comment box, #112
@@ -912,8 +912,8 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 
 > *IMPORTANT NOTE 2:* this plugin update includes email sending features, which might require SMTP configuration.
 > We recommend to install [WP Mail SMTP](https://wordpress.org/plugins/wp-mail-smtp/) and follow on the instruction below:
-> [English guide on SendPulse example](https://anycomment.io/en/smtp-sendpulse/)
-> [Инструкция на русском на примере SendPulse](https://anycomment.io/smtp-sendpulse/)
+> [English guide on SendPulse example](https://plugin.anycomment.io/en/smtp-sendpulse/)
+> [Инструкция на русском на примере SendPulse](https://plugin.anycomment.io/smtp-sendpulse/)
 
 **Enhancements:**
 
