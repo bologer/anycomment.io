@@ -342,6 +342,7 @@ class CommentList extends AnyCommentComponent {
                 <React.Fragment>
                     {sendComment}
                     {commentListSummary}
+                    {subscription}
                     <ul id="anycomment-load-container" className="anycomment anycomment-list">
                         <li className="anycomment comment-single comment-no-comments">{settings.i18.no_comments}</li>
                     </ul>
