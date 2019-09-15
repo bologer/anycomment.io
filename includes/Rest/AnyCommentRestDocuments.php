@@ -194,29 +194,29 @@ class AnyCommentRestDocuments extends AnyCommentRestController {
 				// Get smaller version of file
 				$imageEditor = wp_get_image_editor( $original_file['file'], [ 'mime_type' => $file_mime_type ] );
 
-				if ( is_wp_error( $imageEditor ) ) {
-					continue;
-				}
+				if ( !is_wp_error( $imageEditor ) ) {
 
-				$imageEditor->resize( 60, 60, true );
+                    $imageEditor->resize( 60, 60, true );
 
-				$thumbnail_name = AnyCommentUploadHandler::get_file_name( 'thumbnail_' . $file['name'] );
+                    $savePath = AnyCommentUploadHandler::get_save_dir();
 
-				$upload_dir = wp_get_upload_dir();
+                    if($savePath === null) {
+                        wp_delete_file($original_file['file']);
+                        continue;
+                    }
 
-				// When unable to get upload dir, should delete original file as well
-				if ( $upload_dir['error'] !== false ) {
-					wp_delete_file( $original_file['file'] );
-					continue;
-				}
+                    $thumbnail_name = AnyCommentUploadHandler::get_file_name( 'thumbnail_' . $file['name'] );
 
-				$savePath = $upload_dir['path'] . DIRECTORY_SEPARATOR . $thumbnail_name;
+                    $savePath .= DIRECTORY_SEPARATOR . $thumbnail_name;
 
-				$croppedImage = $imageEditor->save( $savePath, $file_mime_type );
+                    $croppedImage = $imageEditor->save( $savePath, $file_mime_type );
 
-				if ( ! is_wp_error( $croppedImage ) ) {
-					$uploaded_files[ $key ]['file_thumbnail'] = $upload_dir['url'] . DIRECTORY_SEPARATOR . $croppedImage['file'];
-				}
+                    if ( ! is_wp_error( $croppedImage ) ) {
+                        $serve_url = AnyCommentUploadHandler::get_serve_url();
+
+                        $uploaded_files[ $key ]['file_thumbnail'] = $serve_url . '/' . $thumbnail_name;
+                    }
+                }
 			}
 		}
 

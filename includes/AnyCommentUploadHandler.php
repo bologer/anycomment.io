@@ -49,15 +49,9 @@ class AnyCommentUploadHandler {
 	 *  - size
 	 * ]
 	 *
-	 * @param string $return Can be all, to return array,
-	 * - `all` will return all of the data below
-	 * - `url` URL to the file
-	 * - `file` absolute path to the file
-	 * - `type` file's MIME type
-	 *
 	 * @return WP_Error|string|array WP_Error in case of error. String is
 	 */
-	public static function save( $file, $return = 'all' ) {
+	public static function save( $file ) {
 
 		if ( ! isset( $file['error'] ) ) {
 			$file['error'] = 0;
@@ -65,7 +59,7 @@ class AnyCommentUploadHandler {
 
 		// When no size defined
 		if ( ! isset( $file['size'] ) && isset( $file['tmp_name'] ) ) {
-			$file['size'] = filesize( $file['path'] );
+			$file['size'] = @filesize( $file['path'] );
 		}
 
 		$file_name = static::get_file_name( $file['name'] );
@@ -76,19 +70,30 @@ class AnyCommentUploadHandler {
 
 		$file['name'] = $file_name;
 
-		$moved_file = wp_handle_sideload( $file, [ 'test_form' => false, 'test_size' => true ] );
+        $save_path = static::get_save_dir();
 
-		if ( $moved_file && ! isset( $moved_file['error'] ) ) {
-			if ( $return === 'all' ) {
-				return $moved_file;
-			}
+        $error = new WP_Error('error_uploading', 'Unable to upload file');
 
-			return $moved_file[ $return ];
-		}
+        if($save_path === null) {
+            return $error;
+        }
 
-		$error = isset( $moved_file['error'] ) ? $moved_file['error'] : 'Unable to upload file';
+        $absolute_save_path = $save_path . DIRECTORY_SEPARATOR . $file_name;
 
-		return new WP_Error( 'error_uploading', $error );
+        if(!@copy($file['tmp_name'], $absolute_save_path)) {
+            return $error;
+        }
+
+        $serve_url = static::get_serve_url();
+
+        $serve_url .= '/' . $file_name;
+
+
+        return [
+            'url' => $serve_url,
+            'file' => $absolute_save_path,
+            'type' => $file['type']
+        ];
 	}
 
 	/**
