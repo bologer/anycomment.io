@@ -124,6 +124,14 @@ class AnyCommentCore
     {
         remove_role(AnyCommentGenericSettings::DEFAULT_ROLE_SOCIAL_SUBSCRIBER);
 
+        // Clean directory with files
+        $dir_name = AnyCommentUploadHandler::get_save_dir();
+
+        if (is_dir($dir_name)) {
+            @rmdir($dir_name);
+        }
+
+        // Drop all migrations
         (new AnyCommentMigrationManager())->drop_all();
     }
 

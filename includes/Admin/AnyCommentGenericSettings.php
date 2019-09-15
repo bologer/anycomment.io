@@ -789,7 +789,7 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 				          ->checkbox()
 				          ->set_id( self::OPTION_MODERATE_FIRST_COMMENT_ONLY )
 				          ->set_title( __( 'Moderate first comment only', 'anycomment' ) )
-				          ->set_description( __( 'Moderate only first comment any further should be posted without pre moderation. When "Moderate First" option enabled, comments from users with at least one approved comment would be accepted automatically.' ) ),
+				          ->set_description( __( 'Moderate only first comment any further should be posted without pre moderation. When "Moderate First" option enabled, comments from users with at least one approved comment would be accepted automatically.', "anycomment" ) ),
 
 				     $this->field_builder()
 				          ->checkbox()

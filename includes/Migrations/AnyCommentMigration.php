@@ -158,8 +158,6 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 				unset( $list[ $key ] );
 				continue;
 			}
-
-			break;
 		}
 
 		return static::get_clean_versions( $list );
@@ -183,7 +181,7 @@ class AnyCommentMigration implements AnyCommentMigrationInterface {
 		}
 
 		foreach ( $list as $key => $listVersion ) {
-			if ( version_compare( $listVersion, $currentVersion, '<=' ) ) {
+			if ( version_compare( $listVersion, $currentVersion, '<' ) ) {
 				unset( $list[ $key ] );
 				continue;
 			}

@@ -57,6 +57,17 @@ class AnyCommentOptions {
 		return update_option( static::prepare_option( $option ), $value );
 	}
 
+    /**
+     * Wrapper for WordPress delete_option() to delete option.
+     *
+     * @param string $option Name of option to retrieve. Expected to not be SQL-escaped.
+     *
+     * @return bool
+     */
+    public static function delete( $option) {
+        return delete_option( static::prepare_option( $option ));
+    }
+
 	/**
 	 * Prepare options name.
 	 *
@@ -96,4 +107,13 @@ class AnyCommentOptions {
 	public static function get_migration() {
 		return static::get( self::OPTION_MIGRATION, '0.0.1' );
 	}
+
+    /**
+     * Delete migration.
+     *
+     * @return string
+     */
+    public static function delete_migration() {
+        return static::delete( self::OPTION_MIGRATION);
+    }
 }
