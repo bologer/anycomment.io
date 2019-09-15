@@ -18,6 +18,7 @@
 - Fixed issue when subscription form is not showing when there are no comments, #400
 - Fixed issue when moderation stop-word did not work properly, #405
 - Possible fix to issue when wrong comment count was displayed on the post, #390
+- Fixed issue when WooCommerce notes were sending emails notifications like new comments
 
 ## 0.0.91 – 08.09.2019
 

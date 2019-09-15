@@ -105,6 +105,10 @@ class AnyCommentCommentHooks {
 			}
 		}
 
+		if(!empty($comment->comment_type)) {
+		    $should_notify = false;
+        }
+
 		if ( $should_notify ) {
 			// Notify subscribers
 			AnyCommentSubscriptions::notify_by( $comment );
@@ -120,8 +124,10 @@ class AnyCommentCommentHooks {
 			}
 		}
 
-		// Flush post comment count cache
-		AnyCommentRestCacheManager::flushPostCommentCount( $comment->comment_post_ID );
+		if(empty($comment->comment_type)) {
+            // Flush post comment count cache
+            AnyCommentRestCacheManager::flushPostCommentCount( $comment->comment_post_ID );
+        }
 
 		return true;
 	}
