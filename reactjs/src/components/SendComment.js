@@ -290,12 +290,10 @@ class SendComment extends AnyCommentComponent {
                 self.props.handleJustAdded();
                 self.props.loadComments();
 
-                if (settings.options.isModerateFirst) {
-                    const user = self.getCurrentUser();
+                const {data} = response;
 
-                    if (!('moderate_comments' in user.allcaps)) {
-                        toast.success(settings.i18.comment_waiting_moderation);
-                    }
+                if(data && data.response && typeof data.response === 'string') {
+                    toast.success(data.response);
                 }
 
                 return true;
@@ -383,8 +381,10 @@ class SendComment extends AnyCommentComponent {
                 self.props.handleJustAdded();
                 self.props.loadComments();
 
-                if (settings.options.isModerateFirst) {
-                    toast.success(settings.i18.comment_waiting_moderation);
+                const {data} = response;
+
+                if(data && data.response && typeof data.response === 'string') {
+                    toast.success(data.response);
                 }
 
                 return true;

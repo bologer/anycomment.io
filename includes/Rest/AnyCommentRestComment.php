@@ -664,7 +664,10 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			$should_moderate = true;
 		}
 
+		$message = null;
+
 		if ( $should_moderate || $has_filtered_words || $has_links ) {
+		    $message = __('Comment will be shown once reviewed by moderator.', 'anycomment');
 			$this->handle_status_param( 'hold', $comment_id );
 		}
 
@@ -690,8 +693,13 @@ class AnyCommentRestComment extends AnyCommentRestController {
 
 		$request->set_param( 'context', $context );
 
-		$response = $this->prepare_item_for_response( $comment, $request );
-		$response = rest_ensure_response( $response );
+		$data = [
+		    'status' => 'ok',
+            'response' => $message,
+            'error' => null
+        ];
+
+		$response = rest_ensure_response( $data );
 
 		$response->set_status( 201 );
 		$response->header( 'Location', rest_url( sprintf( '%s/%s/%d', $this->namespace, $this->rest_base, $comment_id ) ) );
