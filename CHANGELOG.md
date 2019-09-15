@@ -17,6 +17,7 @@
 - Fixed issue when users with & were having &amp; in the name, now name displayed properly, #399
 - Fixed issue when subscription form is not showing when there are no comments, #400
 - Fixed issue when moderation stop-word did not work properly, #405
+- Possible fix to issue when wrong comment count was displayed on the post, #390
 
 ## 0.0.91 – 08.09.2019
 

@@ -45,7 +45,7 @@ class AnyCommentUser {
 	 * @return string
 	 */
 	public static function get_comment_count ( $post_id ) {
-		$count = get_comments_number( $post_id );
+		$count = !empty($post_id) ? get_comments_number( $post_id ) : 0;
 
 		return sprintf( _nx( '%s comment', '%s comments', $count, 'REST API Comments Count', 'anycomment' ), number_format_i18n( $count ) );
 	}
