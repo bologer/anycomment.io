@@ -37,6 +37,8 @@ HTML;
     $title = null;
     $author = null;
 
+    $root_id = 'anycomment-app';
+
     if (!empty($post)) {
         $page_url = get_permalink($post);
 
@@ -45,16 +47,18 @@ HTML;
         $title = $post->post_title;
         $preview = $post_thumbnail_url !== false ? $post_thumbnail_url : null;
         $author = get_the_author_meta('user_nicename', $post->post_author);
+
+        $root_id .= '-' . $post->ID;
     }
     ?>
     <div id="comments" class="comments-area">
-        <div id="anycomment-app"></div>
+        <div id="<?= $root_id ?>"></div>
     </div>
     <script>
         AnyComment = window.AnyComment || [];
         AnyComment.Comments = [];
         AnyComment.Comments.push({
-            root: "anycomment-app",
+            root: "<?= $root_id ?>",
             app_id: <?php echo $app_id ?>,
             language: "<?php echo AnyCommentLinkHelper::get_language() ?>",
             preview: "<?php echo $preview ?>",

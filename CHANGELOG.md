@@ -2,6 +2,10 @@
 
 ## 0.0.93 – 17.09.2019
 
+**Enhancements:**
+
+- AnyComment Cloud can be now loaded in the infinite load scripts 
+
 **Fixes:**
 
 - Fixed issue when file preview was missing, #414

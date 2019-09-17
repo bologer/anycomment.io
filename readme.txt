@@ -180,11 +180,12 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Enhancements:**
 
-
+- AnyComment Cloud can be now loaded in the infinite load scripts
 
 **Fixes:**
 
-
+- Fixed issue when file preview was missing, #414
+- Fixed authorization issue when "Plain" permalink was selected, #413
 
 = 0.0.92 – 15.09.2019 =
 
