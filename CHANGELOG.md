@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.0.93 – 17.09.2019
+
+**Fixes:**
+
+- Fixed issue when file preview was missing, #414
+- Fixed authorization issue when "Plain" permalink was selected, #413 
+
 ## 0.0.92 – 15.09.2019
 
 **Enhancements:**

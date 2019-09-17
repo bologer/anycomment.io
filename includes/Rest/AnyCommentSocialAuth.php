@@ -589,8 +589,18 @@ class AnyCommentSocialAuth {
 	public static function get_callback_url ( $social_type, $redirect = null, $addHash = false ) {
 		$url = static::get_rest_namespace() . "/auth/" . $social_type;
 
+
 		if ( $redirect !== null ) {
-			$url .= "?redirect=$redirect";
+
+		    $permalink = get_option( 'permalink_structure' );
+
+		    if(empty($permalink)) {
+		        $url .= '&';
+            } else {
+		        $url .= '?';
+            }
+
+		    $url .= "redirect=$redirect";
 		}
 
 		if ( $addHash ) {

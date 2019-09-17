@@ -221,7 +221,7 @@ class AnyCommentUploadHandler {
             return null;
         }
 
-        return $path = $upload_dir['baseurl'] . '/' . date('Y') . '/' . date('m');
+        return $path = $upload_dir['baseurl'] . '/anycomment/' . date('Y') . '/' . date('m');
     }
 
 
