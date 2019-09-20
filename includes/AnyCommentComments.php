@@ -74,7 +74,7 @@ class AnyCommentComments
                 if (isset($matches[0])) {
                     $match = trim($matches[0]);
                     $match_char_length = AnyCommentStringHelper::mb_strlen($match);
-                    $filter_matches['match_count'] = $filter_matches['match_count']++;
+                    $filter_matches['match_count']++;
                     $filter_matches['matches'][] = $word;
                     if ($replace_character !== null) {
                         $filter_matches['filtered_text'] = str_replace($match, str_repeat($replace_character, $match_char_length), $filter_matches['filtered_text']);
