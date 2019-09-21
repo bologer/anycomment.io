@@ -3,7 +3,7 @@ Contributors: ateshabaev
 Donate link: https://www.paypal.me/TeshabaevA
 Tags: anycomment, comments, ajax comments, comment, comment moderation, custom comment form, comment email, anycomment.io
 Requires at least: 4.7
-Tested up to: 5.1
+Tested up to: 5.2
 Requires PHP: 5.4
 Stable tag: 0.0.94
 License: GPLv2 or later
