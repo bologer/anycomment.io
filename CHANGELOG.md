@@ -4,7 +4,7 @@
 
 **Enhancements:**
 
-
+- Added option to make comments discoverable by search engines (SEO)
 
 **Fixes:**
 
