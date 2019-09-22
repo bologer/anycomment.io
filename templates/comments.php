@@ -76,8 +76,8 @@ HTML;
 <?php endif; ?>
 
 <?php if (AnyCommentGenericSettings::is_seo_on()) : ?>
-<!--    <noscript>-->
+    <noscript>
         <?php echo (new AnyCommentSeoFriendly($post->ID))->render() ?>
-<!--    </noscript>-->
+    </noscript>
 <?php endif; ?>
 
