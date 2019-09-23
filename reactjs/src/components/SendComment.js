@@ -373,7 +373,7 @@ class SendComment extends AnyCommentComponent {
             .request({
                 method: 'post',
                 url: url,
-                params: params,
+                data: params,
                 headers: headers
             })
             .then(function (response) {
