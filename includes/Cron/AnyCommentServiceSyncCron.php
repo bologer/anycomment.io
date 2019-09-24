@@ -73,7 +73,7 @@ class AnyCommentServiceSyncCron
 
         global $wpdb;
 
-        $prepare = $wpdb->prepare("SELECT * FROM {$wpdb->comments} WHERE comment_id > %d LIMIT 5", $comment_id);
+        $prepare = $wpdb->prepare("SELECT * FROM {$wpdb->comments} WHERE comment_id > %d LIMIT 10", $comment_id);
 
         $comments = $wpdb->get_results($prepare);
 
