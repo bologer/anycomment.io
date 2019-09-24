@@ -176,6 +176,18 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 == Changelog ==
 
+
+= 0.0.94 – 24.09.2019 =
+
+**Enhancements:**
+
+- Added option to make comments discoverable by search engines (SEO)
+- Added display=swap to default Google Font (better Google page speed results)
+
+**Fixes:**
+
+- Fixed issue when stop-words did not go to moderation
+
 = 0.0.93 – 17.09.2019 =
 
 **Enhancements:**
