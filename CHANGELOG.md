@@ -5,6 +5,7 @@
 **Enhancements:**
 
 - Added option to make comments discoverable by search engines (SEO)
+- Added display=swap to default Google Font (better Google page speed results) 
 
 **Fixes:**
 

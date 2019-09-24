@@ -130,7 +130,7 @@ EOT;
 
 
         if (strpos(AnyCommentGenericSettings::get_design_font_family(), 'Noto-Sans') !== false) {
-            wp_enqueue_style('anycomment-google-font', 'https://fonts.googleapis.com/css?family=Noto+Sans:400,700&amp;subset=cyrillic');
+            wp_enqueue_style('anycomment-google-font', 'https://fonts.googleapis.com/css?family=Noto+Sans:400,700&subset=cyrillic&display=swap');
         }
 
         $postId = get_the_ID();
