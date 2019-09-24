@@ -218,6 +218,13 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 	 */
 	const OPTION_EDITOR_CSS = 'option_editor_css'; // Add custom CSS
 
+    const OPTION_SEO_TOGGLE = 'option_seo_toggle';
+    const OPTION_SEO_DISPLAY_LIMIT = 'option_seo_display_limit';
+    const OPTION_SEO_SORTING = 'option_seo_sorting';
+
+    const SEO_SORTING_NEW2OLD = 'newest_to_old';
+    const SEO_SORTING_OLD2NEW = 'old_to_new';
+
 
 	/**
 	 * @inheritdoc
@@ -989,16 +996,48 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 		 */
 		$form->add_section(
 			$this->section_builder()
-			     ->set_id( 'editor' )
-			     ->set_title( __( 'Editor', "anycomment" ) )
+                ->set_id( 'seo' )
+                ->set_title( __( 'SEO', "anycomment" ) )
 			     ->set_fields( [
-				     $this->field_builder()
-				          ->code()
-				          ->set_id( self::OPTION_EDITOR_CSS )
-				          ->set_args( [ 'mode' => 'css' ] )
-				          ->set_title( __( 'Custom CSS', "anycomment" ) )
-				          ->set_description( esc_html( __( 'Write custom CSS, it will be only related to AnyComment. Notice: you may require to drop the cache after your changes if you have any caching plugin installed.', "anycomment" ) ) ),
+                     $this->field_builder()
+                         ->checkbox()
+                         ->set_id( self::OPTION_SEO_TOGGLE )
+                         ->set_title( __( 'Search Engine Visibility', "anycomment" ) )
+                         ->set_description( esc_html( __( 'Allow search engines to discover comments.', "anycomment" ) ) ),
+                     $this->field_builder()
+                         ->number()
+                         ->set_id( self::OPTION_SEO_DISPLAY_LIMIT )
+                         ->set_title( __( 'Limit Comments', "anycomment" ) )
+                         ->set_description( esc_html( __( 'Number of comments to be seen by search engines. Lower the number - faster comments would load.', "anycomment" ) ) ),
+                     $this->field_builder()
+                         ->set_id( self::OPTION_SEO_SORTING )
+                         ->select()
+                         ->set_title( __( 'Sorting', "anycomment" ) )
+                         ->set_args( [
+                             'options' => [
+                                 self::SEO_SORTING_NEW2OLD => __( 'Newest to oldest', 'anycomment' ),
+                                 self::SEO_SORTING_OLD2NEW         => __( 'Oldest to newest', 'anycomment' ),
+                             ],
+                         ] )
+                         ->set_description( esc_html( __( 'Choose how comments would be sorted.', "anycomment" ) ) ),
 			     ] )
+            );
+
+        /**
+         * Section: Seo
+         */
+		$form->add_section(
+            $this->section_builder()
+                ->set_id( 'editor' )
+                ->set_title( __( 'Editor', "anycomment" ) )
+                ->set_fields( [
+                    $this->field_builder()
+                        ->code()
+                        ->set_id( self::OPTION_EDITOR_CSS )
+                        ->set_args( [ 'mode' => 'css' ] )
+                        ->set_title( __( 'Custom CSS', "anycomment" ) )
+                        ->set_description( esc_html( __( 'Write custom CSS, it will be only related to AnyComment. Notice: you may require to drop the cache after your changes if you have any caching plugin installed.', "anycomment" ) ) ),
+                ] )
 		);
 	}
 
@@ -2198,6 +2237,45 @@ EOT;
 	public static function get_editor_css () {
 		return static::instance()->get_db_option( self::OPTION_EDITOR_CSS );
 	}
+
+    /**
+     * Check whether SEO option is on or not.
+     *
+     * @return bool
+     */
+    public static function is_seo_on () {
+        return static::instance()->get_db_option( self::OPTION_SEO_TOGGLE ) !== null;
+    }
+
+    /**
+     * Get SEO limit.
+     *
+     * @return bool
+     */
+    public static function get_seo_limit () {
+        $limit = static::instance()->get_db_option( self::OPTION_SEO_DISPLAY_LIMIT );
+
+        if(empty($limit)) {
+            $limit = 50;
+        }
+
+        return $limit;
+    }
+
+    /**
+     * Get SEO sorting.
+     *
+     * @return bool
+     */
+    public static function get_seo_sorting () {
+        $sorting = static::instance()->get_db_option( self::OPTION_SEO_SORTING );
+
+        if(!empty($sorting) && $sorting !== self::SEO_SORTING_OLD2NEW && $sorting !== self::SEO_SORTING_NEW2OLD) {
+            $sorting = self::SEO_SORTING_NEW2OLD;
+        }
+
+        return $sorting;
+    }
 
 	/**
 	 * Check whether copyright should on or not.

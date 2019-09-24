@@ -4,6 +4,8 @@ namespace AnyComment\Cron;
 
 use AnyComment\AnyCommentServiceApi;
 use AnyComment\Admin\AnyCommentIntegrationSettings;
+use AnyComment\AnyCommentUserMeta;
+use AnyComment\Rest\AnyCommentSocialAuth;
 
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
@@ -71,7 +73,7 @@ class AnyCommentServiceSyncCron
 
         global $wpdb;
 
-        $prepare = $wpdb->prepare("SELECT * FROM {$wpdb->comments} WHERE comment_id > %d LIMIT 5", $comment_id);
+        $prepare = $wpdb->prepare("SELECT * FROM {$wpdb->comments} WHERE comment_id > %d LIMIT 10", $comment_id);
 
         $comments = $wpdb->get_results($prepare);
 
@@ -118,13 +120,30 @@ class AnyCommentServiceSyncCron
                 return false;
             }
 
+            $profileUrl = null;
+
+            if (( $socialUrl = AnyCommentUserMeta::get_social_profile_url( $user->ID ) ) !== null ) {
+                $profileUrl = $socialUrl;
+            }  elseif ( ! empty( $user->user_url )  ) {
+                $profileUrl = $user->user_url;
+            } elseif ( ! empty( $comment->comment_author_url ) ) {
+                $profileUrl = $comment->comment_author_url;
+            }
+
             $author = [
                 'name' => $user->user_nicename,
                 'username' => $user->user_login,
                 'email' => $user->user_email,
-                'avatar' => get_avatar_url($user->ID)
+                'avatar' => AnyCommentSocialAuth::get_user_avatar_url( $user->ID ),
+                'url' => $profileUrl
             ];
         } else {
+            $profileUrl = null;
+
+            if ( ! empty( $comment->comment_author_url ) ) {
+                $profileUrl = $comment->comment_author_url;
+            }
+
             $author = [
                 'name' => $comment->comment_author,
                 'email' => !empty($comment->comment_author_email) ?
@@ -132,8 +151,11 @@ class AnyCommentServiceSyncCron
                     null,
                 'avatar' => !empty($comment->comment_author_email) ?
                     get_avatar_url($comment->comment_author_email) :
-                    null
+                    null,
+                'url' => $profileUrl
             ];
+
+
         }
 
         $body = [

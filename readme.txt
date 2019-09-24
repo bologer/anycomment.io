@@ -3,9 +3,9 @@ Contributors: ateshabaev
 Donate link: https://www.paypal.me/TeshabaevA
 Tags: anycomment, comments, ajax comments, comment, comment moderation, custom comment form, comment email, anycomment.io
 Requires at least: 4.7
-Tested up to: 5.1
+Tested up to: 5.2
 Requires PHP: 5.4
-Stable tag: 0.0.93
+Stable tag: 0.0.94
 License: GPLv2 or later
 License URI: http://www.gnu.org/
 
@@ -175,7 +175,6 @@ Most of the hosting providers support single button-like installation of SSL cer
 It could only be difficult for website who have HTTP only and hight traffic as transfer to HTTPs can cause some traffic lose.
 
 == Changelog ==
-
 
 = 0.0.94 – 24.09.2019 =
 

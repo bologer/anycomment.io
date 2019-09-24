@@ -1,5 +1,7 @@
 <?php
 
+use AnyComment\Admin\AnyCommentGenericSettings;
+use AnyComment\AnyCommentSeoFriendly;
 use AnyComment\Cron\AnyCommentServiceSyncCron;
 use AnyComment\Admin\AnyCommentIntegrationSettings;
 use AnyComment\Helpers\AnyCommentLinkHelper;
@@ -10,6 +12,8 @@ use AnyComment\Helpers\AnyCommentLinkHelper;
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly
 }
+
+$post = get_post();
 
 if (AnyCommentIntegrationSettings::is_sass_comments_show()):
 
@@ -30,8 +34,6 @@ HTML;
             return;
         }
     }
-
-    $post = get_post();
 
     $preview = null;
     $title = null;
@@ -71,5 +73,11 @@ HTML;
     <div id="comments" class="comments-area">
         <div id="anycomment-root"></div>
     </div>
+<?php endif; ?>
+
+<?php if (AnyCommentGenericSettings::is_seo_on()) : ?>
+    <noscript>
+        <?php echo (new AnyCommentSeoFriendly($post->ID))->render() ?>
+    </noscript>
 <?php endif; ?>
 
