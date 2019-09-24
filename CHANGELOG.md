@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.0.94 – 20.09.2019
+## 0.0.94 – 24.09.2019
 
 **Enhancements:**
 
@@ -10,7 +10,6 @@
 **Fixes:**
 
 - Fixed issue when stop-words did not go to moderation
-
 
 ## 0.0.93 – 17.09.2019
 
