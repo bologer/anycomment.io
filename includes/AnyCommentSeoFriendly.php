@@ -34,7 +34,7 @@ class AnyCommentSeoFriendly
     {
         if (is_numeric($post_id)) {
             $this->_post_id = $post_id;
-            $this->_args = array_merge($this->_args, ['post_ID' => $post_id]);
+            $this->_args = array_merge($this->_args, ['post_id' => $post_id]);
         }
     }
 
