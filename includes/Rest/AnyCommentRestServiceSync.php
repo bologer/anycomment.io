@@ -149,8 +149,8 @@ class AnyCommentRestServiceSync extends AnyCommentRestController
             AnyCommentIntegrationSettings::instance()->update_db_option($options);
         }
 
-        update_option(AnyCommentServiceSyncCron::getSyncAppIdOptionName(), $param_app_id);
-        update_option(AnyCommentServiceSyncCron::getSyncApiKeyOptionName(), $param_api_key);
+        update_option(AnyCommentServiceApi::getSyncAppIdOptionName(), $param_app_id);
+        update_option(AnyCommentServiceApi::getSyncApiKeyOptionName(), $param_api_key);
 
         return $this->asOk('App ID and API key were synced successfully');
     }

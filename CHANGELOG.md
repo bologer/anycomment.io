@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.0.95 – 29.09.2019
+
+**Enhancements:**
+
+- Now AnyComment Cloud would can sync comments from service to your website
+
+**Fixes:**
+
+- Fixed issue when SEO indexing was showing same comments on all pages
+- Fixed issue when long comments were not added (thanks to greysman)
+
 ## 0.0.94 – 24.09.2019
 
 **Enhancements:**

@@ -5,7 +5,7 @@ Tags: anycomment, comments, ajax comments, comment, comment moderation, custom c
 Requires at least: 4.7
 Tested up to: 5.2
 Requires PHP: 5.4
-Stable tag: 0.0.94
+Stable tag: 0.0.95
 License: GPLv2 or later
 License URI: http://www.gnu.org/
 
@@ -18,7 +18,7 @@ AnyComment is blazing-fast commenting plugin base on React for WordPress.
 It stands for simplicity & speed. We value feedback, so if you have any failures or suggestions - please let us know in [support forum](https://wordpress.org/support/plugin/anycomment) or [GitHub](https://github.com/bologer/anycomment.io/issues)!
 
 = Resources =
-* [Official website](http://anycomment.io/en/)
+* [Official website](https://plugin.anycomment.io/en/)
 * [All guides](https://plugin.anycomment.io/en/category/tutorials/)
 * [Configure socials](https://plugin.anycomment.io/en/category/tutorials/socials/)
 * [GitHub repository](https://github.com/bologer/anycomment.io)
@@ -42,6 +42,8 @@ And good new is AnyComment is free & no dependency on third party services, all 
 = Features =
 * All comments stored in your own database. We reuse native comment's table, so all of the default WordPress functionality comes out of the box.
 * Social network authorization via Facebook, VK, Twitter, Google, Odnoklassniki, GitHub, Instagram, Twitch or Dribbble
+* SEO Indexing
+* Ability to switch to cloud version
 * Ability to define who can leave comment: guests only, with social authorization or both
 * Ability to upload files (define allowed extensions, limit, who can upload, etc)
 * When user leaves a tweet link in the comment, plugin can embed it as external Twitter widget (can be disabled)
@@ -175,6 +177,17 @@ Most of the hosting providers support single button-like installation of SSL cer
 It could only be difficult for website who have HTTP only and hight traffic as transfer to HTTPs can cause some traffic lose.
 
 == Changelog ==
+
+= 0.0.95 – 29.09.2019 =
+
+**Enhancements:**
+
+- Now AnyComment Cloud would can sync comments from service to your website
+
+**Fixes:**
+
+- Fixed issue when SEO indexing was showing same comments on all pages
+- Fixed issue when long comments were not added (thanks to greysman)
 
 = 0.0.94 – 24.09.2019 =
 

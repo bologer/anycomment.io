@@ -5,6 +5,7 @@ namespace AnyComment\Cron;
 use AnyComment\AnyCommentServiceApi;
 use AnyComment\Admin\AnyCommentIntegrationSettings;
 use AnyComment\AnyCommentUserMeta;
+use AnyComment\Api\AnyCommentServiceSyncIn;
 use AnyComment\Rest\AnyCommentSocialAuth;
 
 if (!defined('ABSPATH')) {
@@ -19,7 +20,7 @@ class AnyCommentServiceSyncCron
     public function __construct()
     {
         if (AnyCommentIntegrationSettings::is_sass_comments_sync()) {
-            $token = static::getSyncApiKey();
+            $token = AnyCommentServiceApi::getSyncApiKey();
 
             if (!empty($token)) {
                 $this->init();
@@ -59,11 +60,37 @@ class AnyCommentServiceSyncCron
     }
 
     /**
-     * Processing syncing of comments.
+     * Processing two-syncing syncing of comments.
      *
      * @return bool
      */
     public function sync_comments()
+    {
+        // Sync to the service
+        $is_out_success = $this->sync_comments_out();
+
+        // Sync from the service
+        $is_in_success = $this->sync_comments_in();
+
+        return $is_out_success && $is_in_success;
+    }
+
+    /**
+     * Sync comments from the service.
+     *
+     * @return bool
+     */
+    public function sync_comments_in()
+    {
+        return (new AnyCommentServiceSyncIn())->sync();
+    }
+
+    /**
+     * Send comments to the service.
+     *
+     * @return bool
+     */
+    public function sync_comments_out()
     {
         $comment_id = static::getSyncCommentId();
 
@@ -122,11 +149,11 @@ class AnyCommentServiceSyncCron
 
             $profileUrl = null;
 
-            if (( $socialUrl = AnyCommentUserMeta::get_social_profile_url( $user->ID ) ) !== null ) {
+            if (($socialUrl = AnyCommentUserMeta::get_social_profile_url($user->ID)) !== null) {
                 $profileUrl = $socialUrl;
-            }  elseif ( ! empty( $user->user_url )  ) {
+            } elseif (!empty($user->user_url)) {
                 $profileUrl = $user->user_url;
-            } elseif ( ! empty( $comment->comment_author_url ) ) {
+            } elseif (!empty($comment->comment_author_url)) {
                 $profileUrl = $comment->comment_author_url;
             }
 
@@ -134,13 +161,13 @@ class AnyCommentServiceSyncCron
                 'name' => $user->user_nicename,
                 'username' => $user->user_login,
                 'email' => $user->user_email,
-                'avatar' => AnyCommentSocialAuth::get_user_avatar_url( $user->ID ),
+                'avatar' => AnyCommentSocialAuth::get_user_avatar_url($user->ID),
                 'url' => $profileUrl
             ];
         } else {
             $profileUrl = null;
 
-            if ( ! empty( $comment->comment_author_url ) ) {
+            if (!empty($comment->comment_author_url)) {
                 $profileUrl = $comment->comment_author_url;
             }
 
@@ -174,7 +201,11 @@ class AnyCommentServiceSyncCron
             'author' => $author
         ];
 
-        $resp = AnyCommentServiceApi::request()->post('client/comment/add', $body, ['token' => $this->getSyncApiKey()]);
+        $resp = AnyCommentServiceApi::request()->post(
+            'client/comment/add',
+            $body,
+            ['token' => AnyCommentServiceApi::getSyncApiKey()]
+        );
 
         if (is_wp_error($resp)) {
             return false;
@@ -205,27 +236,6 @@ class AnyCommentServiceSyncCron
         return false;
     }
 
-    /**
-     * Get sync App ID from SaaS.
-     *
-     * @param null $default
-     * @return mixed|void
-     */
-    public static function getSyncAppId($default = null)
-    {
-        return get_option(static::getSyncAppIdOptionName(), $default);
-    }
-
-    /**
-     * Get sync API key from SaaS.
-     *
-     * @param null $default
-     * @return mixed|void
-     */
-    public static function getSyncApiKey($default = null)
-    {
-        return get_option(static::getSyncApiKeyOptionName(), $default);
-    }
 
     /**
      * Get last sync comment id.
@@ -270,37 +280,9 @@ class AnyCommentServiceSyncCron
     /**
      * @return string
      */
-    public static function getSyncAppIdOptionName()
-    {
-        return 'anycomment_sync_app_id';
-    }
-
-    /**
-     * @return string
-     */
-    public static function getSyncApiKeyOptionName()
-    {
-        return 'anycomment_sync_api_key';
-    }
-
-    /**
-     * @return string
-     */
     public static function getSyncCommentIdOptionName()
     {
         return 'anycomment_last_sync_id';
-    }
-
-    /**
-     * Check whether app id and api key are available for syncing.
-     *
-     * @return bool
-     */
-    public static function isSyncReady()
-    {
-        $app_id = static::getSyncAppId();
-        $api_key = static::getSyncApiKey();
-        return !empty($app_id) && !empty($api_key);
     }
 
     /**
