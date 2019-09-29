@@ -2,7 +2,7 @@
 
 use AnyComment\Admin\AnyCommentGenericSettings;
 use AnyComment\AnyCommentSeoFriendly;
-use AnyComment\Cron\AnyCommentServiceSyncCron;
+use AnyComment\AnyCommentServiceApi;
 use AnyComment\Admin\AnyCommentIntegrationSettings;
 use AnyComment\Helpers\AnyCommentLinkHelper;
 
@@ -17,7 +17,7 @@ $post = get_post();
 
 if (AnyCommentIntegrationSettings::is_sass_comments_show()):
 
-    $app_id = AnyCommentServiceSyncCron::getSyncAppId();
+    $app_id = AnyCommentServiceApi::getSyncAppId();
 
 
     if (empty($app_id)) {

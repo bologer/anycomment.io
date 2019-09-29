@@ -107,4 +107,54 @@ class AnyCommentServiceApi
     {
         $this->_timeout = $timeout;
     }
+
+    /**
+     * Check whether app id and key available.
+     *
+     * @return bool
+     */
+    public static function is_ready()
+    {
+        $app_id = AnyCommentServiceApi::getSyncAppId();
+        $api_key = AnyCommentServiceApi::getSyncApiKey();
+        return !empty($app_id) && !empty($api_key);
+    }
+
+    /**
+     * @return string
+     */
+    public static function getSyncAppIdOptionName()
+    {
+        return 'anycomment_sync_app_id';
+    }
+
+    /**
+     * @return string
+     */
+    public static function getSyncApiKeyOptionName()
+    {
+        return 'anycomment_sync_api_key';
+    }
+
+    /**
+     * Get sync App ID from SaaS.
+     *
+     * @param null $default
+     * @return mixed|void
+     */
+    public static function getSyncAppId($default = null)
+    {
+        return get_option(static::getSyncAppIdOptionName(), $default);
+    }
+
+    /**
+     * Get sync API key from SaaS.
+     *
+     * @param null $default
+     * @return mixed|void
+     */
+    public static function getSyncApiKey($default = null)
+    {
+        return get_option(static::getSyncApiKeyOptionName(), $default);
+    }
 }

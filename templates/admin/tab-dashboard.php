@@ -1,5 +1,6 @@
 <?php
 
+use AnyComment\AnyCommentServiceApi;
 use AnyComment\Helpers\AnyCommentLinkHelper;
 use AnyComment\Cron\AnyCommentServiceSyncCron;
 use AnyComment\Admin\AnyCommentStatistics;
@@ -34,7 +35,7 @@ use AnyComment\Admin\AnyCommentStatistics;
 
                         <?php
 
-                        if (AnyCommentServiceSyncCron::isSyncReady()):
+                        if (AnyCommentServiceApi::is_ready()):
                             $syncInfo = AnyCommentServiceSyncCron::getSyncInfo();
 
                             if ($syncInfo['complete_percent'] === 100): ?>

@@ -7,6 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use WP_Comment;
+use AnyComment\Api\AnyCommentServiceSyncIn;
 
 use AnyComment\AnyCommentCommentMeta;
 use AnyComment\Models\AnyCommentLikes;
@@ -106,6 +107,12 @@ class AnyCommentCommentHooks {
 		}
 
 		if(!empty($comment->comment_type)) {
+		    $should_notify = false;
+        }
+
+		$meta = get_comment_meta($comment->comment_ID, AnyCommentServiceSyncIn::getCommentImportedMetaKey());
+
+		if(!empty($meta)) {
 		    $should_notify = false;
         }
 
