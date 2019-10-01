@@ -17,6 +17,14 @@ AnyComment is blazing-fast commenting plugin base on React for WordPress.
 
 It stands for simplicity & speed. We value feedback, so if you have any failures or suggestions - please let us know in [support forum](https://wordpress.org/support/plugin/anycomment) or [GitHub](https://github.com/bologer/anycomment.io/issues)!
 
+You can simply switch without any migrations from the following plugins:
+- Jetpack
+- wpDiscuz
+- Disqus
+- Cackle
+- Hypercomments
+- Vuukle
+
 = Resources =
 * [Official website](https://plugin.anycomment.io/en/)
 * [All guides](https://plugin.anycomment.io/en/category/tutorials/)
