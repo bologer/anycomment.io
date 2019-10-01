@@ -100,7 +100,18 @@ class AnyCommentServiceSyncCron
 
         global $wpdb;
 
-        $prepare = $wpdb->prepare("SELECT * FROM {$wpdb->comments} WHERE comment_id > %d LIMIT 10", $comment_id);
+        // Select only those which are not exported to the service yet
+        $meta_key = AnyCommentServiceSyncIn::getCommentImportedMetaKey();
+        $sql = <<<SQL
+SELECT c.* FROM {$wpdb->comments} AS c 
+WHERE NOT EXISTS (
+	SELECT * 
+	FROM {$wpdb->commentmeta} cm
+	WHERE c.comment_ID = cm.comment_id AND cm.meta_key = %s
+) AND c.comment_id > %d AND (c.comment_type IS NULL OR c.comment_type = '') LIMIT 10
+SQL;
+
+        $prepare = $wpdb->prepare($sql, $meta_key, $comment_id);
 
         $comments = $wpdb->get_results($prepare);
 
@@ -122,16 +133,19 @@ class AnyCommentServiceSyncCron
      */
     public function sync_comment(\WP_Comment $comment)
     {
-
         $post = get_post($comment->comment_post_ID);
 
         if (empty($post)) {
+            // Skip this comment as we cannot save it without post URL
+            static::update_sync_comment_id($comment->comment_ID);
             return false;
         }
 
         $page_url = get_permalink($post);
 
         if ($page_url === false) {
+            // Skip this comment as we have to have URL in order to display comments
+            static::update_sync_comment_id($comment->comment_ID, true);
             return false;
         }
 
@@ -144,6 +158,7 @@ class AnyCommentServiceSyncCron
             $user = get_userdata($comment->user_id);
 
             if ($user === false) {
+                static::update_sync_comment_id($comment->comment_ID, true);
                 return false;
             }
 
@@ -207,33 +222,42 @@ class AnyCommentServiceSyncCron
             ['token' => AnyCommentServiceApi::getSyncApiKey()]
         );
 
-        if (is_wp_error($resp)) {
+        if (is_wp_error($resp) || !isset($resp['response']['code'])) {
+            static::update_sync_comment_id($comment->comment_ID, true);
             return false;
         }
 
-        if (!isset($resp['response']['code'])) {
-            return false;
-        }
+        $response_code = (int)$resp['response']['code'];
 
-        if ((int)$resp['response']['code'] === 200) {
+        if ($response_code === 200) {
             $jsonString = wp_remote_retrieve_body($resp);
             $data = json_decode($jsonString, true);
 
-            if (!isset($data['status'])) {
-                return false;
-            }
-
-            if ($data['status'] === 'fail') {
-                return false;
-            }
-
             if (isset($data['response']['id']) && is_int($data['response']['id'])) {
-                update_option(self::getSyncCommentIdOptionName(), $comment->comment_ID);
+                static::update_sync_comment_id($comment->comment_ID);
                 return true;
             }
         }
 
+        static::update_sync_comment_id($comment->comment_ID, true);
+
         return false;
+    }
+
+    /**
+     * Updates comment's id in the database.
+     *
+     * @param int $comment_id
+     * @param bool $mark_failed Mark comment as failed in meta.
+     * @return bool
+     */
+    public static function update_sync_comment_id($comment_id, $mark_failed = false)
+    {
+        if ($mark_failed) {
+            update_comment_meta($comment_id, self::getSyncFailedOptionName(), 1);
+        }
+
+        return update_option(self::getSyncCommentIdOptionName(), $comment_id);
     }
 
 
@@ -283,6 +307,14 @@ class AnyCommentServiceSyncCron
     public static function getSyncCommentIdOptionName()
     {
         return 'anycomment_last_sync_id';
+    }
+
+    /**
+     * @return string
+     */
+    public static function getSyncFailedOptionName()
+    {
+        return 'anycomment_sync_failed';
     }
 
     /**

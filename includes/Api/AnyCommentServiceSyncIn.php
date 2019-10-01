@@ -89,11 +89,11 @@ class AnyCommentServiceSyncIn
             return true;
         }
 
-        $items = array_reverse($items);
-
         foreach ($items as $key => $comment) {
             $this->process_comment($comment, $users, $pages);
         }
+
+        return true;
     }
 
     /**
@@ -279,7 +279,7 @@ class AnyCommentServiceSyncIn
 
         if (empty($option_value)) {
             global $wpdb;
-            $sql = "SELECT comment_date FROM {$wpdb->comments} ORDER BY comment_ID ASC LIMIT 1";
+            $sql = "SELECT comment_date FROM {$wpdb->comments} WHERE comment_type = '' OR comment_type IS NULL ORDER BY comment_ID ASC LIMIT 1";
 
             $date_time = $wpdb->get_var($sql);
 

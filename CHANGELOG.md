@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.0.96 – 01.10.2019
+
+**Enhancements:**
+
+- Multiple synchronization improvements
+
 ## 0.0.95 – 30.09.2019
 
 **Enhancements:**
