@@ -20,7 +20,7 @@ class AnyCommentCore
      *
      * @var string
      */
-    public $version = '0.0.96';
+    public $version = '0.0.97';
 
     /**
      * @var Pool

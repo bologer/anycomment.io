@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.0.97 – 03.10.2019
+
+**Fixes:**
+
+- Fixed issue when it wasn't possible to make initial sync service -> website 
+
+
 ## 0.0.96 – 01.10.2019
 
 **Enhancements:**

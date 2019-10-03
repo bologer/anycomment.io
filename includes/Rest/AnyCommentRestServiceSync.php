@@ -138,7 +138,7 @@ class AnyCommentRestServiceSync extends AnyCommentRestController
             return $this->asFailure('API key provided for application does not match host one.');
         }
 
-        $app_id = AnyCommentServiceSyncCron::getSyncAppId();
+        $app_id = AnyCommentServiceApi::getSyncAppId();
 
         if (empty($app_id)) {
             $options = (array)AnyCommentIntegrationSettings::instance()->get_db_options();
