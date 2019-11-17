@@ -53,4 +53,13 @@
       }
     }
   }
+  @media (max-width: 425px) {
+    .anycomment-global-header {
+      flex-direction: column;
+
+      .anycomment-rating {
+        margin-bottom: 10px;
+      }
+    }
+  }
 }
