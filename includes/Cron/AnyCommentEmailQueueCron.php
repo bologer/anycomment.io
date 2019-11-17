@@ -66,7 +66,9 @@ class AnyCommentEmailQueueCron {
 		 */
 		foreach ( $emails as $key => $email ) {
 
-			if ( empty( $email->email ) ) {
+			$notifications_on = AnyCommentGenericSettings::is_notify_admin() && AnyCommentGenericSettings::is_notify_on_new_reply();
+
+			if ( empty( $email->email ) || ! $notifications_on ) {
 				AnyCommentEmailQueue::mark_as_sent( $email->ID );
 				continue;
 			}
@@ -78,7 +80,7 @@ class AnyCommentEmailQueueCron {
 			$body    = $email->content;
 
 			// Hook specified sender name from settings
-			add_filter( 'wp_mail_from_name', function ($from_name) {
+			add_filter( 'wp_mail_from_name', function ( $from_name ) {
 				return AnyCommentGenericSettings::get_notify_email_sender_name();
 			}, 99 );
 

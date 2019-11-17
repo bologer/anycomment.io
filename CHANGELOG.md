@@ -13,7 +13,7 @@
 - [SEO] Star rating should start to appear in Google search results again
 - [Cloud] Fixed issue when `uk-UA` was treated as English in fallback, now trated as `ru-RU` until translated to native
 - Fixed issue "Trying to get property of a non object" on 404 page, #421
-
+- No emails sent when notification options are off even they were added to the email queue, #420
 
 ## 0.0.97 – 03.10.2019
 
