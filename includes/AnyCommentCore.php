@@ -6,6 +6,8 @@ use AnyComment\Admin\AnyCommentGenericSettings;
 
 use AnyComment\Migrations\AnyCommentMigrationManager;
 
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 use Stash\Driver\FileSystem;
 use Stash\Pool;
 
@@ -26,6 +28,11 @@ class AnyCommentCore
      * @var Pool
      */
     protected static $cache;
+
+    /**
+     * @var Logger
+     */
+    protected static $log;
 
     /**
      * @var \Freemius
@@ -170,24 +177,63 @@ class AnyCommentCore
      */
     public static function cache()
     {
+        if (static::$cache == null) {
+            $cache_path = ABSPATH . str_replace('/', DIRECTORY_SEPARATOR, 'wp-content/cache/anycomment');
 
-        if (static::$cache !== null) {
-            return static::$cache;
+            if (!@file_exists($cache_path)) {
+                @mkdir($cache_path, 0755, true);
+            }
+
+            $cacheDriver = new FileSystem([
+                'path' => $cache_path,
+            ]);
+
+            static::$cache = new Pool($cacheDriver);
         }
-
-        $cache_path = ABSPATH . str_replace('/', DIRECTORY_SEPARATOR, 'wp-content/cache/anycomment');
-
-        if (!@file_exists($cache_path)) {
-            @mkdir($cache_path, 0755, true);
-        }
-
-        $cacheDriver = new FileSystem([
-            'path' => $cache_path,
-        ]);
-
-        static::$cache = new Pool($cacheDriver);
 
         return static::$cache;
+    }
+
+    /**
+     * Trying to build log instance or returns existing one.
+     *
+     * @return Logger
+     */
+    public static function logger()
+    {
+        if (static::$log === null) {
+
+            try {
+                $log_path = ABSPATH . str_replace('/', DIRECTORY_SEPARATOR, 'wp-content/uploads/anycomment/logs');
+
+                if (@is_dir($log_path)) {
+                    @mkdir($log_path, '0755', true);
+                }
+
+                // Create .htaccess and index.html to hide direct access to log data
+                $htaccess_path = $log_path . DIRECTORY_SEPARATOR . '.htaccess';
+                $index_path = $log_path . DIRECTORY_SEPARATOR . 'index.html';
+
+                if (!@file_exists($htaccess_path)) {
+                    @file_put_contents($htaccess_path, 'deny from all');
+                }
+
+                if (!@file_exists($index_path)) {
+                    @file_put_contents($index_path, '');
+                }
+
+                $log_file = $log_path . DIRECTORY_SEPARATOR . 'debug.log';
+
+                // create a log channel
+                $log = new Logger('anycomment');
+                $log->pushHandler(new StreamHandler($log_file, Logger::WARNING));
+
+                static::$log = $log;
+            } catch (\Exception $exception) {
+            }
+        }
+
+        return static::$log;
     }
 
     public function init_freemius()

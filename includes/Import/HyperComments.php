@@ -2,6 +2,8 @@
 
 namespace AnyComment\Import;
 
+use AnyComment\AnyCommentCore;
+
 /**
  * Class HyperComments is used to export comments from HyperComments to AnyComment or local database.
  *
@@ -52,7 +54,7 @@ class HyperComments {
 	 *
 	 * @param string $url URL where to download XML file.
 	 */
-	public function __construct ( $url ) {
+	public function __construct( $url ) {
 		$this->_url = $url;
 
 		$this->prepare_save_dir();
@@ -63,7 +65,7 @@ class HyperComments {
 	 *
 	 * @return bool
 	 */
-	public function process () {
+	public function process() {
 
 		if ( empty( $this->_url ) ) {
 			return false;
@@ -84,7 +86,7 @@ class HyperComments {
 	 *
 	 * @return bool
 	 */
-	public static function revert () {
+	public static function revert() {
 		global $wpdb;
 
 		$sql = "DELETE c, cm FROM {$wpdb->comments} c";
@@ -99,7 +101,7 @@ class HyperComments {
 	/**
 	 * Prepare saving directory.
 	 */
-	public function prepare_save_dir () {
+	public function prepare_save_dir() {
 		$upload_dirs = wp_upload_dir();
 
 		$unique_name = wp_unique_filename( $upload_dirs['basedir'], uniqid() );
@@ -110,7 +112,7 @@ class HyperComments {
 	/**
 	 * @return bool
 	 */
-	public function download () {
+	public function download() {
 		$response = wp_remote_get( $this->_url, [
 			'stream'   => true,
 			'filename' => $this->save_dir,
@@ -133,7 +135,7 @@ class HyperComments {
 	 *
 	 * @return bool
 	 */
-	public function read_by_pieces ( $file, $chunkSize = 4096 ) {
+	public function read_by_pieces( $file, $chunkSize = 4096 ) {
 
 		if ( file_exists( $file ) ) {
 
@@ -150,7 +152,15 @@ class HyperComments {
 				fclose( $handle );
 				xml_parser_free( $this->parser );
 
-			} catch ( \Exception $e ) {
+			} catch ( \Exception $exception ) {
+				AnyCommentCore::logger()->error( sprintf(
+					'Failed  read HyperComments file "%s" as exception was thrown: "%s", in %s:%s',
+					$file,
+					$exception->getMessage(),
+					$exception->getFile(),
+					$exception->getLine()
+				) );
+
 				$this->clean_up();
 
 				return false;
@@ -167,7 +177,7 @@ class HyperComments {
 	 * @param $tag
 	 * @param $attr
 	 */
-	public function tag_start ( $parser, $tag, $attr ) {
+	public function tag_start( $parser, $tag, $attr ) {
 		$this->tag = $tag;
 
 		if ( $tag == 'COMMENT' && ! empty( $this->post ) ) {
@@ -182,7 +192,7 @@ class HyperComments {
 	 * @param $parser
 	 * @param $tag
 	 */
-	public function tag_end ( $parser, $tag ) {
+	public function tag_end( $parser, $tag ) {
 		if ( $tag == 'COMMENT' ) {
 			$this->save_comment();
 			$this->comment = [];
@@ -205,7 +215,7 @@ class HyperComments {
 	 * @param $parser
 	 * @param $data
 	 */
-	public function cdata ( $parser, $data ) {
+	public function cdata( $parser, $data ) {
 
 		switch ( $this->tag ) {
 			case 'ID':
@@ -258,7 +268,7 @@ class HyperComments {
 	/**
 	 * Save processed comment to database.
 	 */
-	public function save_comment () {
+	public function save_comment() {
 
 		if ( empty( $this->post ) ) {
 			return false;
@@ -302,7 +312,7 @@ class HyperComments {
 	/**
 	 * This make clean-up task.
 	 */
-	public function clean_up () {
+	public function clean_up() {
 		$this->delete_saved_file();
 	}
 
@@ -311,7 +321,7 @@ class HyperComments {
 	 *
 	 * @return bool
 	 */
-	public function delete_saved_file () {
+	public function delete_saved_file() {
 		if ( file_exists( $this->save_dir ) ) {
 			if ( @unlink( $this->save_dir ) ) {
 				return true;

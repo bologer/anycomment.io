@@ -12,6 +12,7 @@
 - [SEO] Fixed issue when schema validator was giving error about `itemReviewed` prop
 - [SEO] Star rating should start to appear in Google search results again
 - [Cloud] Fixed issue when `uk-UA` was treated as English in fallback, now trated as `ru-RU` until translated to native
+- Fixed issue "Trying to get property of a non object" on 404 page, #421
 
 
 ## 0.0.97 – 03.10.2019

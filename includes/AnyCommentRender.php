@@ -133,37 +133,50 @@ EOT;
             wp_enqueue_style('anycomment-google-font', 'https://fonts.googleapis.com/css?family=Noto+Sans:400,700&subset=cyrillic&display=swap');
         }
 
-        $postId = get_the_ID();
-        $postPermalink = get_permalink($postId);
+        $post_id = get_the_ID();
+        $post_permalink = get_permalink($post_id);
+
+        try {
+            $comments_open = comments_open();
+        } catch (\Exception $exception) {
+            AnyCommentCore::logger()->error(sprintf(
+                'Failed to check if possible to open comments as exception was thrown: %s in %s:%s',
+                $exception->getMessage(),
+                $exception->getFile(),
+                $exception->getLine()
+            ));
+            $comments_open = false;
+        }
+
 
         // time added just in case so it is never cached
         wp_localize_script('anycomment-js-bundle', 'anyCommentApiSettings', [
-            'postId' => $postId,
+            'postId' => $post_id,
             'nonce' => is_user_logged_in() ? wp_create_nonce('wp_rest') : null,
             'locale' => get_locale(),
             'restUrl' => esc_url_raw(rest_url('anycomment/v1/')),
-            'commentCount' => ($res = get_comment_count($postId)) !== null ? (int)$res['all'] : 0,
+            'commentCount' => ($res = get_comment_count($post_id)) !== null ? (int)$res['all'] : 0,
             'errors' => self::$errors,
             'user' => AnyCommentUser::getSafeUser(),
             'urls' => [
                 'logout' => wp_logout_url(),
-                'postUrl' => $postPermalink,
+                'postUrl' => $post_permalink,
             ],
             'post' => [
-                'id' => $postId,
-                'permalink' => $postPermalink,
-                'comments_open' => comments_open(),
+                'id' => $post_id,
+                'permalink' => $post_permalink,
+                'comments_open' => $comments_open,
             ],
             'rating' => [
-                'value' => AnyCommentRating::get_average_by_post($postId),
-                'count' => AnyCommentRating::get_count_by_post($postId),
-                'hasRated' => AnyCommentRating::current_user_rated($postId, get_current_user_id()),
+                'value' => AnyCommentRating::get_average_by_post($post_id),
+                'count' => AnyCommentRating::get_count_by_post($post_id),
+                'hasRated' => AnyCommentRating::current_user_rated($post_id, get_current_user_id()),
             ],
             // Options from plugin
             'options' => [
                 'limit' => AnyCommentGenericSettings::get_per_page(),
                 'isCopyright' => AnyCommentGenericSettings::is_copyright_on(),
-                'socials' => AnyCommentSocials::get_all(get_permalink($postId)),
+                'socials' => AnyCommentSocials::get_all(get_permalink($post_id)),
                 'sort_order' => AnyCommentGenericSettings::get_sort_order(),
                 'guestInputs' => AnyCommentGenericSettings::get_guest_fields(true),
                 'isShowUpdatedInfo' => AnyCommentGenericSettings::is_show_updated_info(),

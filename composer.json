@@ -18,6 +18,7 @@
   "require": {
     "tedivm/stash": "0.14.*",
     "leafo/scssphp": "^0.7.7",
-    "hybridauth/hybridauth": "v3.0.0-rc.9"
+    "hybridauth/hybridauth": "v3.0.0-rc.9",
+    "monolog/monolog": "^1.0"
   }
 }

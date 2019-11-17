@@ -6,6 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+use AnyComment\AnyCommentCore;
 use Leafo\ScssPhp\Compiler;
 
 /**
@@ -53,11 +54,11 @@ class ScssCompiler {
 	/**
 	 * Set formatter.
 	 *
-	 * @see Compiler::setFormatter() for further information.
-	 *
 	 * @param string $formatter
 	 *
 	 * @return $this
+	 * @see Compiler::setFormatter() for further information.
+	 *
 	 */
 	public function set_formatter( $formatter ) {
 		$this->_formatter = $formatter;
@@ -68,11 +69,11 @@ class ScssCompiler {
 	/**
 	 * Set SCSS import path.
 	 *
-	 * @see Compiler::setImportPaths() for further information.
-	 *
 	 * @param string $import_path
 	 *
 	 * @return $this
+	 * @see Compiler::setImportPaths() for further information.
+	 *
 	 */
 	public function set_import_path( $import_path ) {
 		$this->_import_path = $import_path;
@@ -83,11 +84,11 @@ class ScssCompiler {
 	/**
 	 * Set variables to be replaced.
 	 *
-	 * @see Compiler::setVariables() for further information.
-	 *
 	 * @param array $variables
 	 *
 	 * @return $this
+	 * @see Compiler::setVariables() for further information.
+	 *
 	 */
 	public function set_variables( $variables ) {
 		$this->_variables = $variables;
@@ -184,6 +185,9 @@ class ScssCompiler {
 		$scss_content = $this->prepare_scss();
 
 		if ( $scss_content === null ) {
+			AnyCommentCore::logger()->error(sprintf(
+				''
+			));
 			return false;
 		}
 
@@ -196,6 +200,13 @@ class ScssCompiler {
 		try {
 			$compiled_css = $compiler->compile( $scss_content );
 		} catch ( \Exception $exception ) {
+			AnyCommentCore::logger()->error( sprintf(
+				'Failed to compile SCSS, exception thrown: "%s", in %s:%s',
+				$exception->getMessage(),
+				$exception->getFile(),
+				$exception->getLine()
+			) );
+
 			return false;
 		}
 
