@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.0.98 – 17.11.2019
+
+**Enhancements:**
+
+
+
+**Fixes:**
+
+- [SEO] Fixed marked-up issue when snippet had extra `div`
+- [SEO] Fixed issue when schema validator was giving error about `itemReviewed` prop
+- [SEO] Star rating should start to appear in Google search results again
+- [Cloud] Fixed issue when `uk-UA` was treated as English in fallback, now trated as `ru-RU` until translated to native
+
+
 ## 0.0.97 – 03.10.2019
 
 **Fixes:**

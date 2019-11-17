@@ -3,6 +3,7 @@
 namespace AnyComment;
 
 use AnyComment\Admin\AnyCommentGenericSettings;
+use AnyComment\Cache\AnyCommentCacheManager;
 use AnyComment\Models\AnyCommentLikes;
 use AnyComment\Models\AnyCommentRating;
 
@@ -57,7 +58,7 @@ class AnyCommentSeoFriendly
             'number' => AnyCommentGenericSettings::get_seo_limit()
         ]);
 
-        $cacheKey = '/anycomment/seo/' . md5(serialize($this->_args));
+        $cacheKey = AnyCommentCacheManager::getRootNamespace() . '/seo/' . md5(serialize($this->_args));
 
         $cacheItem = AnyCommentCore::cache()->getItem($cacheKey);
 
@@ -91,11 +92,18 @@ class AnyCommentSeoFriendly
         $rating_value = AnyCommentRating::get_average_by_post($this->_post_id);
         $review_count = AnyCommentRating::get_count_by_post($this->_post_id);
 
+        $post = get_post($this->_post_id);
+
+        $post_name = $post->post_title;
+        $post_url = get_permalink($post);
+
         return <<<HTML
-<div itemscope="" itemtype="http://schema.org/Article">
-    <div itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating">
-    <span itemprop="ratingValue">$rating_value</span>
-    <span itemprop="reviewCount">$review_count</span></div>
+<div itemscope itemtype="http://schema.org/Product">
+    <meta itemprop="name" content="$post_name">
+    <meta itemprop="url" content="$post_url">
+    <div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+        <span itemprop="ratingValue">$rating_value</span>
+        <span itemprop="reviewCount">$review_count</span>
     </div>
 </div>
 HTML;

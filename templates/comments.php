@@ -48,7 +48,15 @@ HTML;
 
         $title = $post->post_title;
         $preview = $post_thumbnail_url !== false ? $post_thumbnail_url : null;
-        $author = get_the_author_meta('user_nicename', $post->post_author);
+
+        $first_name = get_the_author_meta('first_name', $post->post_author);
+        $last_name = get_the_author_meta('last_name', $post->post_author);
+
+        if (!empty($first_name) || !empty($last_name)) {
+            $author = trim($first_name . ' ' . $last_name);
+        } else {
+            $author = get_the_author_meta('nickname', $post->post_author);
+        }
 
         $root_id .= '-' . $post->ID;
     }
@@ -62,7 +70,7 @@ HTML;
         AnyComment.Comments.push({
             root: "<?= $root_id ?>",
             app_id: <?php echo $app_id ?>,
-            language: "<?php echo AnyCommentLinkHelper::get_language() ?>",
+            language: "<?php echo AnyCommentLinkHelper::get_saas_languages() ?>",
             preview: "<?php echo $preview ?>",
             title: "<?php echo $title ?>",
             author: "<?php echo $author ?>",
