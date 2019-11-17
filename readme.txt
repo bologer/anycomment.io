@@ -190,7 +190,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Enhancements:**
 
-
+- Mobile improvements for page rating & profile dropdown, #419
 
 **Fixes:**
 
@@ -199,7 +199,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 - [SEO] Star rating should start to appear in Google search results again
 - [Cloud] Fixed issue when `uk-UA` was treated as English in fallback, now trated as `ru-RU` until translated to native
 - Fixed issue "Trying to get property of a non object" on 404 page, #421
-- No emails sent when notification options are off even they were added to the email queue, #420
+- Fixed issue when no emails sent when notification options are off even they were added to the email queue, #420
 
 = 0.0.97 – 03.10.2019 =
 

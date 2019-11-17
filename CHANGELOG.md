@@ -3,8 +3,8 @@
 ## 0.0.98 – 17.11.2019
 
 **Enhancements:**
-- Mobile improvements for page rating & profile dropdown, #419
 
+- Mobile improvements for page rating & profile dropdown, #419
 
 **Fixes:**
 
