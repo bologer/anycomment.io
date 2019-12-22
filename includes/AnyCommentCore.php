@@ -18,11 +18,9 @@ use Stash\Pool;
 class AnyCommentCore
 {
     /**
-     * AnyComment version.
-     *
-     * @var string
+     * @var string AnyComment version.
      */
-    public $version = '0.0.98';
+    public $version = '0.0.99';
 
     /**
      * @var Pool
@@ -166,8 +164,6 @@ class AnyCommentCore
     public function includes()
     {
         AnyCommentLoader::load();
-
-        $this->init_freemius();
     }
 
     /**
@@ -180,7 +176,7 @@ class AnyCommentCore
         if (static::$cache == null) {
             $cache_path = ABSPATH . str_replace('/', DIRECTORY_SEPARATOR, 'wp-content/cache/anycomment');
 
-            if (!@file_exists($cache_path)) {
+            if ( ! @file_exists($cache_path)) {
                 @mkdir($cache_path, 0755, true);
             }
 
@@ -212,13 +208,13 @@ class AnyCommentCore
 
                 // Create .htaccess and index.html to hide direct access to log data
                 $htaccess_path = $log_path . DIRECTORY_SEPARATOR . '.htaccess';
-                $index_path = $log_path . DIRECTORY_SEPARATOR . 'index.html';
+                $index_path    = $log_path . DIRECTORY_SEPARATOR . 'index.html';
 
-                if (!@file_exists($htaccess_path)) {
+                if ( ! @file_exists($htaccess_path)) {
                     @file_put_contents($htaccess_path, 'deny from all');
                 }
 
-                if (!@file_exists($index_path)) {
+                if ( ! @file_exists($index_path)) {
                     @file_put_contents($index_path, '');
                 }
 
@@ -234,98 +230,5 @@ class AnyCommentCore
         }
 
         return static::$log;
-    }
-
-    public function init_freemius()
-    {
-
-        if ($this->freemius !== null) {
-            return $this->freemius;
-        }
-
-        // Include Freemius SDK.
-        require_once ANYCOMMENT_ABSPATH . '/freemius/start.php';
-
-        $this->freemius = fs_dynamic_init(array(
-            'id' => '2926',
-            'slug' => 'anycomment',
-            'type' => 'plugin',
-            'public_key' => 'pk_362c323f4de13a39f79eedc50082f',
-            'is_premium' => false,
-            // If your plugin is a serviceware, set this option to false.
-            'has_premium_version' => false,
-            'has_addons' => true,
-            'has_paid_plans' => false,
-            'menu' => array(
-                'slug' => 'anycomment-dashboard',
-                'contact' => false,
-                'support' => false,
-            ),
-        ));
-
-        fs_override_i18n([
-            'add-ons' => __('Add-Ons', 'anycomment'),
-            'opt-in-connect' => translate_with_gettext_context('Allow & Continue', 'verb', 'anycomment'),
-            'skip' => translate_with_gettext_context('Skip', 'verb', 'anycomment'),
-            'what-permissions' => __('What permissions are being granted?', 'anycomment'),
-            'privacy-policy' => __('Privacy Policy', 'anycomment'),
-            'tos' => __('Terms of Service', 'anycomment'),
-        ], 'anycomment');
-
-
-        $this->freemius->add_filter('is_submenu_visible', function ($is_visible, $submenu_id) {
-            if ($submenu_id === 'pricing') {
-                $is_visible = false;
-            }
-
-            return $is_visible;
-        }, 10, 2);
-
-        /**
-         * @link https://freemius.com/help/documentation/wordpress-sdk/opt-in-message/
-         */
-        // Existing users
-        $this->freemius->add_filter('connect_message_on_update', function (
-            $message,
-            $user_first_name,
-            $product_title,
-            $user_login,
-            $site_link,
-            $freemius_link
-        ) {
-            return sprintf(
-                __('Hey %1$s', 'anycomment') . ',<br>' .
-                __('Please help us improve %2$s! If you opt-in, some data about your usage of %2$s will be sent to %5$s. If you skip this, that\'s okay! %2$s will still work just fine.', 'anycomment'),
-                $user_first_name,
-                '<b>' . $product_title . '</b>',
-                '<b>' . $user_login . '</b>',
-                $site_link,
-                $freemius_link
-            );
-        }, 10, 6);
-
-        // New users
-        $this->freemius->add_filter('connect_message', function (
-            $message,
-            $user_first_name,
-            $product_title,
-            $user_login,
-            $site_link,
-            $freemius_link
-        ) {
-            return sprintf(
-                __('Hey %1$s', 'anycomment', 'anycomment') . ',<br>' .
-                __('never miss an important update from AnyComment – opt-in to our security and feature updates notifications, and non-sensitive diagnostic tracking with freemius.com.', 'anycomment'),
-                $user_first_name,
-                '<b>' . $product_title . '</b>',
-                '<b>' . $user_login . '</b>',
-                $site_link,
-                $freemius_link
-            );
-        }, 10, 6);
-
-        do_action('any_fs_loaded');
-
-        return $this->freemius;
     }
 }

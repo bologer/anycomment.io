@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.0.99 – 22.12.2019
+
+**Enhancements:**
+- Freemius was cut-out. This removes problems for some websites + speeds-up plugin a bit.
+
+**Fixes:**
+
+
+
 ## 0.0.98 – 17.11.2019
 
 **Enhancements:**
