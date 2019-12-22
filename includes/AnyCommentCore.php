@@ -33,11 +33,6 @@ class AnyCommentCore
     protected static $log;
 
     /**
-     * @var \Freemius
-     */
-    public $freemius;
-
-    /**
      * @var AnyCommentServiceApi
      */
     public $service;
