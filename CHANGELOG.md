@@ -3,7 +3,9 @@
 ## 0.0.99 – 22.12.2019
 
 **Enhancements:**
+
 - Freemius was cut-out. This removes problems for some websites + speeds-up plugin a bit.
+- Added support for BuddyPress, when somebody send "@" + username in comment. This user would be mentioned, #422
 
 **Fixes:**
 

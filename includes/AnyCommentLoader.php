@@ -43,6 +43,7 @@ class AnyCommentLoader {
 		'AnyComment\Hooks\AnyCommentNativeLoginForm',
 
 		'AnyComment\Integrations\AnyCommentWooCommerce',
+		'AnyComment\Integrations\AnyCommentBuddyPress',
 
 		// Crontabs
 		'AnyComment\Cron\AnyCommentEmailQueueCron',

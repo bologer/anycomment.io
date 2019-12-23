@@ -78,6 +78,7 @@ And good new is AnyComment is free & no dependency on third party services, all 
 * [WP Mail SMTP](https://wordpress.org/plugins/wp-mail-smtp/) to set-up SMTP server
 * [WP User Avatar](https://wordpress.org/plugins/wp-user-avatar/) to upload global or personal avatar
 * [reCAPTCHA](https://www.google.com/recaptcha) to fight spam messages
+* [BuddyPress](https://wordpress.org/plugins/buddypress/) when somebody sends comment with "@" sign + username.
 
 = TODO features =
 * Option: ability to specify thanks message and/or page when user left his first comment, #88
@@ -191,6 +192,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 **Enhancements:**
 
 - Freemius was cut-out. This removes problems for some websites + speeds-up plugin a bit.
+- Added support for BuddyPress, anytime comment would contain "@" + username, user would be mentioned, #422
 
 **Fixes:**
 
