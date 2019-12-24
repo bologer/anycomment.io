@@ -123,6 +123,7 @@ And good new is AnyComment is free & no dependency on third party services, all 
 * Activate it from `Plugins` section in admin panel
 * Go to preferred social media and register to get API access (API key, secrets, etc)
 * Specify required API details in special social network settings
+* Enable comments in Generic settings to replace native comments
 * Go to some post and try to authorize using any of the enabled social networks and leave a comment!
 
 = What social networks does AnyComment support? =
