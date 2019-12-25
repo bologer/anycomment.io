@@ -67,7 +67,7 @@ class AnyCommentSeoFriendly
         }
 
         $html = '';
-        $html .= $this->prepare_rating();
+//        $html .= $this->prepare_rating();
         $html .= $this->prepare_comments();
 
         $cacheItem
@@ -80,7 +80,7 @@ class AnyCommentSeoFriendly
 
     /**
      * Prepares rating.
-     *
+     * todo: make configuration to toggle it. Currently this is off, because Google puts sanctions on websites with it
      * @return string
      */
     public function prepare_rating()

@@ -9,6 +9,7 @@
 
 **Fixes:**
 
+- Removed rating from SEO indexing
 
 
 ## 0.0.98 – 17.11.2019

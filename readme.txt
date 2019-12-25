@@ -197,7 +197,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Fixes:**
 
-
+- Removed rating from SEO indexing
 
 = 0.0.98 – 17.11.2019 =
 
