@@ -23,6 +23,5 @@ AnyComment source conforms to [PSR2](https://www.php-fig.org/psr/psr-2/).
 * [Official website](http://anycomment.io/en/)
 * [All guides](https://anycomment.io/en/category/tutorials/)
 * [Configure socials](https://anycomment.io/en/category/tutorials/socials/)
-* [GitHub repository](https://github.com/bologer/anycomment.io)
 * [VK.com group](http://vk.com/anycomment)
-* [Telegram group](https://t.me/joinchat/BEUJEQ9aMmQsFX65MNRCDg)
+* [Telegram group](https://t.me/anycomment)
