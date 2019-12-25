@@ -7,21 +7,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use WC_Product;
+use AnyComment\Base\AnyCommentBaseObject;
 
 /**
  * Class AnyCommentWooCommerce is used as integration for WooCommerce.
  */
-class AnyCommentWooCommerce {
-
-	/**
-	 * AnyCommentWooCommerce constructor.
-	 */
-	public function __construct() {
-		$this->init();
-	}
-
-	/**
-	 * Init hooks.
+class AnyCommentWooCommerce extends AnyCommentBaseObject {
+    /**
+	 * @inheritDoc
 	 */
 	public function init() {
 		add_filter( 'woocommerce_product_tabs', [ $this, 'woo_new_product_tab' ], 999 );

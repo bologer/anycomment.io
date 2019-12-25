@@ -7,6 +7,7 @@ if ( ! defined('ABSPATH')) {
 }
 
 use WP_Comment;
+use AnyComment\Base\AnyCommentBaseObject;
 use AnyComment\Api\AnyCommentServiceSyncIn;
 use AnyComment\Integrations\AnyCommentBuddyPress;
 
@@ -22,21 +23,12 @@ use AnyComment\Admin\AnyCommentIntegrationSettings;
 /**
  * Class AnyCommentCommentHooks is used to control hooks related to comments.
  */
-class AnyCommentCommentHooks
+class AnyCommentCommentHooks extends AnyCommentBaseObject
 {
-
     /**
-     * AnyCommentCommentHooks constructor.
+     * @inheritDoc
      */
-    public function __construct()
-    {
-        $this->init();
-    }
-
-    /**
-     * Init method of all related hooks.
-     */
-    private function init()
+    public function init()
     {
         // Should delete files, likes, etc before comment is deleted
         // as WP by default remove comment meta, which is required to determine attachments IDs

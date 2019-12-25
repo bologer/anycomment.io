@@ -6,21 +6,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+use AnyComment\Base\AnyCommentBaseObject;
 use AnyComment\Models\AnyCommentEmailQueue;
 use AnyComment\Admin\AnyCommentGenericSettings;
 
-class AnyCommentEmailQueueCron {
+/**
+ * Class AnyCommentEmailQueueCron handles email queue corn job.
+ *
+ * @author Alexander Teshabaev <sasha.tesh@gmail.com>
+ * @package AnyComment\Cron
+ */
+class AnyCommentEmailQueueCron extends AnyCommentBaseObject {
 	/**
-	 * AnyCommentEmailCron constructor.
+	 * @inheritDoc
 	 */
-	public function __construct() {
-		$this->init();
-	}
-
-	/**
-	 * Init class.
-	 */
-	private function init() {
+	public function init() {
 
 		add_filter( 'cron_schedules', [ $this, 'add_minute_interval' ] );
 

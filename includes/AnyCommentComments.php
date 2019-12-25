@@ -12,8 +12,6 @@ use AnyComment\Admin\AnyCommentGenericSettings;
 
 class AnyCommentComments
 {
-
-
     /**
      * Check for moderates list of words.
      *

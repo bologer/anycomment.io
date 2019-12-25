@@ -2,6 +2,7 @@
 
 namespace AnyComment;
 
+use AnyComment\Base\AnyCommentBaseObject;
 use AnyComment\Rest\AnyCommentSocialAuth;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -11,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class AnyCommentAvatars is used as helper to manage avatars.
  */
-class AnyCommentAvatars {
+class AnyCommentAvatars extends AnyCommentBaseObject {
 
 	/**
 	 * Default avatar width.
@@ -23,18 +24,15 @@ class AnyCommentAvatars {
 	 */
 	const DEFAULT_AVATAR_HEIGHT = 60;
 
-
-	/**
-	 * AnyCommentAvatars constructor.
-	 *
-	 * Allow to override all avatars in admin.
-	 */
-	public function __construct() {
-		if ( is_admin() ) {
-			add_filter( 'get_avatar', [ $this, 'override_avatar_globally' ], 99, 5 );
-		}
-	}
-
+    /**
+     * @inheritDoc
+     */
+	public function init()
+    {
+        if ( is_admin() ) {
+            add_filter( 'get_avatar', [ $this, 'override_avatar_globally' ], 99, 5 );
+        }
+    }
 
 	/**
 	 * Override avatar globally.

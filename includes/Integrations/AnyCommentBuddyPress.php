@@ -2,6 +2,8 @@
 
 namespace AnyComment\Integrations;
 
+use AnyComment\Base\AnyCommentBaseObject;
+
 /**
  * Class AnyCommentBuddyPress helps to handle mentions with "@" login based on provided text or list of recipients
  * directly.
@@ -21,18 +23,10 @@ namespace AnyComment\Integrations;
  * @author Alexander Teshabaev <sasha.tesh@gmail.com>
  * @package AnyComment\Integrations
  */
-class AnyCommentBuddyPress
+class AnyCommentBuddyPress extends AnyCommentBaseObject
 {
     /**
-     * AnyCommentBuddyPress constructor.
-     */
-    public function __construct()
-    {
-        $this->init();
-    }
-
-    /**
-     * Prepares class instance.
+     * @inheritDoc
      */
     public function init()
     {

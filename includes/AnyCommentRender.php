@@ -6,6 +6,7 @@ if ( ! defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 
+use AnyComment\Base\AnyCommentBaseObject;
 use AnyComment\Helpers\AnyCommentTemplate;
 use AnyComment\Models\AnyCommentRating;
 use AnyComment\Rest\AnyCommentSocialAuth;
@@ -15,7 +16,7 @@ use AnyComment\Admin\AnyCommentIntegrationSettings;
 /**
  * AnyCommentRender helps to render comments on client side.
  */
-class AnyCommentRender
+class AnyCommentRender extends AnyCommentBaseObject
 {
     /**
      * Sort old.
@@ -33,9 +34,9 @@ class AnyCommentRender
     public static $errors = null;
 
     /**
-     * AC_Render constructor.
+     * @inheritDoc
      */
-    public function __construct()
+    public function init()
     {
         if (AnyCommentGenericSettings::is_enabled()) {
             add_filter('comments_template', [$this, 'override_comment'], 999);

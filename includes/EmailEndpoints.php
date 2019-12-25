@@ -2,6 +2,7 @@
 
 namespace AnyComment;
 
+use AnyComment\Base\AnyCommentBaseObject;
 use AnyComment\Models\AnyCommentSubscriptions;
 
 /**
@@ -13,17 +14,10 @@ use AnyComment\Models\AnyCommentSubscriptions;
  * @package AnyComment
  * @since 0.0.70
  */
-class EmailEndpoints {
+class EmailEndpoints extends AnyCommentBaseObject {
 
 	const CANCEL_QUERY_PARAM = 'anycomment_cancel_subscription';
 	const CONFIRM_QUERY_PARAM = 'anycomment_confirm_subscription';
-
-	/**
-	 * EmailEndpoints constructor.
-	 */
-	public function __construct() {
-		$this->init();
-	}
 
 	/**
 	 * Init hooks.

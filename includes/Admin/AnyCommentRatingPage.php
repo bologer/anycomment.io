@@ -2,21 +2,18 @@
 
 namespace AnyComment\Admin;
 
+use AnyComment\Base\AnyCommentBaseObject;
 use AnyComment\Helpers\AnyCommentTemplate;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-class AnyCommentRatingPage {
-	public function __construct() {
-		$this->init_hooks();
-	}
-
+class AnyCommentRatingPage extends AnyCommentBaseObject {
 	/**
 	 * Initiate hooks.
 	 */
-	private function init_hooks() {
+	public function init() {
 		add_action( 'admin_menu', [ $this, 'add_menu' ] );
 	}
 

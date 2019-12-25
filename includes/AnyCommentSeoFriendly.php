@@ -29,7 +29,7 @@ class AnyCommentSeoFriendly
 
     /**
      * AnyCommentSeoFriendly constructor.
-     * @param $args
+     * @param int $post_id Post ID to generate SEO structures.
      */
     public function __construct($post_id)
     {

@@ -2,6 +2,7 @@
 
 namespace AnyComment\Hooks;
 
+use AnyComment\Base\AnyCommentBaseObject;
 use AnyComment\Cache\UserCache;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -16,14 +17,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @author Alexander Teshabaev <sasha.tesh@gmail.com>
  * @package AnyComment\Hooks
  */
-class AnyCommentUserHooks {
+class AnyCommentUserHooks extends AnyCommentBaseObject {
 
 	/**
-	 * AnyCommentUserHooks constructor.
+	 * @inheritDoc
 	 */
-	public function __construct () {
+	public function init() {
 		add_action( 'anycomment/user/logged_in', [ $this, 'drop_cache_on_login' ], 11, 2 );
-
 		add_action( 'anycomment/admin/options/update', [ $this, 'drop_cache_on_options_update' ], 11, 2 );
 	}
 

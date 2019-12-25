@@ -3,6 +3,7 @@
 namespace AnyComment\Admin;
 
 use AnyComment\AnyCommentCore;
+use AnyComment\Base\AnyCommentBaseObject;
 use AnyComment\Helpers\AnyCommentTemplate;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -12,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * AnyCommentAdminPages helps to process website authentication.
  */
-class AnyCommentAdminPages {
+class AnyCommentAdminPages extends AnyCommentBaseObject  {
 	/**
 	 * @var AnyCommentSocialSettings
 	 */
@@ -29,20 +30,14 @@ class AnyCommentAdminPages {
 	private static $_page_integrations;
 
 	/**
-	 * AnyCommentAdminPages constructor.
-	 */
-	public function __construct() {
-		$this->init_hooks();
-		$this->init();
-	}
-
-	/**
 	 * Include pages.
 	 */
-	private function init() {
+	public function init() {
 		static::$_page_socials      = new AnyCommentSocialSettings();
 		static::$_page_generic      = new AnyCommentGenericSettings();
 		static::$_page_integrations = new AnyCommentIntegrationSettings();
+
+		$this->init_hooks();
 	}
 
 	/**

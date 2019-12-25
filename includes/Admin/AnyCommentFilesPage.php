@@ -2,23 +2,28 @@
 
 namespace AnyComment\Admin;
 
+use AnyComment\Base\AnyCommentBaseObject;
 use AnyComment\Helpers\AnyCommentTemplate;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-class AnyCommentFilesPage {
-	public function __construct() {
-		$this->init_hooks();
-	}
+/**
+ * Class AnyCommentFilesPage renders paginated list of files.
+ *
+ * @author Alexander Teshabaev <sasha.tesh@gmail.com>
+ * @package AnyComment\Admin
+ */
+class AnyCommentFilesPage extends AnyCommentBaseObject  {
 
-	/**
-	 * Initiate hooks.
-	 */
-	private function init_hooks() {
-		add_action( 'admin_menu', [ $this, 'add_menu' ] );
-	}
+    /**
+     * @inheritDoc
+     */
+	public function init()
+    {
+        add_action( 'admin_menu', [ $this, 'add_menu' ] );
+    }
 
 	/**
 	 * Init admin menu.

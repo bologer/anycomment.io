@@ -6,40 +6,33 @@ use AnyComment\AnyCommentServiceApi;
 use AnyComment\Admin\AnyCommentIntegrationSettings;
 use AnyComment\AnyCommentUserMeta;
 use AnyComment\Api\AnyCommentServiceSyncIn;
+use AnyComment\Base\AnyCommentBaseObject;
 use AnyComment\Rest\AnyCommentSocialAuth;
 
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 
-class AnyCommentServiceSyncCron
+class AnyCommentServiceSyncCron extends AnyCommentBaseObject
 {
     /**
-     * AnyCommentEmailCron constructor.
+     * Init class.
      */
-    public function __construct()
+    public function init()
     {
         if (AnyCommentIntegrationSettings::is_sass_comments_sync()) {
             $token = AnyCommentServiceApi::getSyncApiKey();
 
             if (!empty($token)) {
-                $this->init();
+                add_filter('cron_schedules', [$this, 'add_minute_interval']);
+
+                if (!wp_next_scheduled('anycomment_service_sync_cron')) {
+                    wp_schedule_event(time(), 'every_minute', 'anycomment_service_sync_cron');
+                }
+
+                add_action('anycomment_service_sync_cron', [$this, 'sync_comments']);
             }
         }
-    }
-
-    /**
-     * Init class.
-     */
-    private function init()
-    {
-        add_filter('cron_schedules', [$this, 'add_minute_interval']);
-
-        if (!wp_next_scheduled('anycomment_service_sync_cron')) {
-            wp_schedule_event(time(), 'every_minute', 'anycomment_service_sync_cron');
-        }
-
-        add_action('anycomment_service_sync_cron', [$this, 'sync_comments']);
     }
 
     /**

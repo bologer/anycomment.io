@@ -4,6 +4,7 @@ namespace AnyComment;
 
 use AnyComment\Admin\AnyCommentGenericSettings;
 
+use AnyComment\Base\AnyCommentBaseObject;
 use AnyComment\Migrations\AnyCommentMigrationManager;
 
 use Monolog\Logger;
@@ -15,7 +16,7 @@ use Stash\Pool;
  * Main AnyComment Class.
  *
  */
-class AnyCommentCore
+class AnyCommentCore extends AnyCommentBaseObject
 {
     /**
      * @var string AnyComment version.
@@ -47,14 +48,6 @@ class AnyCommentCore
      * @var null|AnyCommentCore
      */
     private static $_instance = null;
-
-    /**
-     * AnyComment constructor.
-     */
-    public function __construct()
-    {
-        $this->init();
-    }
 
     /**
      * Init method to invoke starting scripts.

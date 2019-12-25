@@ -2,6 +2,7 @@
 
 namespace AnyComment\Admin;
 
+use AnyComment\Base\AnyCommentBaseObject;
 use AnyComment\Helpers\AnyCommentTemplate;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -15,15 +16,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @package AnyComment\Admin
  * @since 0.0.70
  */
-class AnyCommentSubscriptionsPage {
-	public function __construct() {
-		$this->init_hooks();
-	}
+class AnyCommentSubscriptionsPage extends AnyCommentBaseObject {
 
 	/**
 	 * Initiate hooks.
 	 */
-	private function init_hooks() {
+	public function init() {
 		add_action( 'admin_menu', [ $this, 'add_menu' ] );
 	}
 

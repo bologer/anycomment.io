@@ -8,22 +8,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use AnyComment\Admin\AnyCommentGenericSettings;
 use AnyComment\AnyCommentSocials;
+use AnyComment\Base\AnyCommentBaseObject;
 
 /**
  * Class AnyCommentNativeLoginForm is used to enhance WordPress's native
  * login form via hooks.
  */
-class AnyCommentNativeLoginForm {
+class AnyCommentNativeLoginForm extends AnyCommentBaseObject {
 
 	/**
-	 * AnyCommentNativeLoginForm constructor.
-	 */
-	public function __construct () {
-		$this->init();
-	}
-
-	/**
-	 * Init model.
+	 * @inheritDoc
 	 */
 	public function init () {
 		if ( AnyCommentGenericSettings::is_show_socials_in_login_page() ) {

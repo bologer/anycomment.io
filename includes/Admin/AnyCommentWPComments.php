@@ -6,6 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+use AnyComment\Base\AnyCommentBaseObject;
 use AnyComment\Models\AnyCommentLikes;
 use AnyComment\AnyCommentUserMeta;
 
@@ -15,13 +16,9 @@ use AnyComment\AnyCommentUserMeta;
  *
  * @since 0.0.35
  */
-class AnyCommentWPComments {
+class AnyCommentWPComments extends AnyCommentBaseObject {
 
-	public function __construct() {
-		$this->init();
-	}
-
-	private function init() {
+	public function init() {
 		add_filter( 'manage_edit-comments_columns', [ $this, 'manage_comment_columns' ] );
 		add_action( 'manage_comments_custom_column', [ $this, 'add_comment_columns' ], null, 2 );
 

@@ -7,21 +7,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use AnyComment\Admin\AnyCommentGenericSettings;
+use AnyComment\Base\AnyCommentBaseObject;
 
 /**
  * Class AnyCommentCommonHooks consists of common hooks.
  *
  * @since 0.0.58
  */
-class AnyCommentCommonHooks {
-	public function __construct () {
-		$this->init();
-	}
-
-	/**
-	 * Init hooks.
-	 */
-	public function init () {
+class AnyCommentCommonHooks extends AnyCommentBaseObject {
+    /**
+     * @inheritDoc
+     */
+    public function init () {
 		if ( ! AnyCommentGenericSettings::is_show_admin_bar() ) {
 			add_action( 'init', [ $this, 'hide_admin_bar' ] );
 			add_action( 'template_redirect', [ $this, 'redirect_on_hidden_admin_bar' ], 9999 );
