@@ -2,7 +2,7 @@
 
 namespace AnyComment\Helpers;
 
-if (!defined('ABSPATH')) {
+if ( ! defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 
@@ -131,6 +131,22 @@ class AnyCommentLinkHelper
     public static function get_service_website()
     {
         return 'https://anycomment.io';
+    }
+
+    /**
+     * Returns service URL prepared for documentation.
+     *
+     * @param string $language
+     *
+     * @return string
+     */
+    public static function get_service_documentation($language = null)
+    {
+        if($language === null) {
+            $language = static::get_language();
+        }
+
+        return sprintf('%s/%s/docs', static::get_service_website(), $language);
     }
 
     /**

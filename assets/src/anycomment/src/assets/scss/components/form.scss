@@ -111,15 +111,15 @@ $border-color: #b6c1c6;
         @include colored-switches($warning-color)
       }
     }
+  }
 
-    .select2-container .select2-selection--single,
-    input[type="text"],
-    input[type="number"] {
-      height: 39px;
-    }
+  .select2-container .select2-selection--single,
+  input[type="text"],
+  input[type="number"] {
+    height: 39px;
+  }
 
-    input[type="submit"] {
-      margin-top: 40px;
-    }
+  input[type="submit"] {
+    margin-top: 40px;
   }
 }

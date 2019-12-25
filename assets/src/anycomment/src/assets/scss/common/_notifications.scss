@@ -1,0 +1,43 @@
+.anycomment-notification {
+  padding: 20px;
+  border-radius: 4px;
+  border: 1px solid #d8d8d8;
+
+  &--center {
+    text-align: center;
+  }
+
+  &__icon {
+    margin-bottom: 20px;
+  }
+
+  &__icon--center {
+    text-align: center;
+  }
+
+  &__header {
+    margin: 0 0 8px 0;
+    color: #212b36;
+    font-size: 18px;
+  }
+
+  &__header--center {
+    text-align: center;
+  }
+
+  &__body {
+    color: #66788a;
+  }
+
+  &__body--center {
+    text-align: center;
+  }
+
+  &__footer {
+    margin-top: 20px;
+  }
+
+  &__footer--center {
+    text-align: center;
+  }
+}

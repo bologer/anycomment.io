@@ -3,6 +3,7 @@
 namespace AnyComment\Admin;
 
 use AnyComment\Helpers\AnyCommentLinkHelper;
+use AnyComment\Helpers\AnyCommentTemplate;
 use AnyComment\Options\AnyCommentOptionManager;
 
 if (!defined('ABSPATH')) {
@@ -169,6 +170,7 @@ class AnyCommentIntegrationSettings extends AnyCommentOptionManager
             $this->section_builder()
                 ->set_id('anycomment-saas')
                 ->set_title(__('AnyComment.Cloud', "anycomment"))
+                ->set_description(AnyCommentTemplate::render('admin/notifications/sync-information'))
                 ->set_wrapper('<div class="grid-x anycomment-form-wrapper anycomment-tabs__container__tab current" id="{id}">{content}</div>')
                 ->set_fields([
 
