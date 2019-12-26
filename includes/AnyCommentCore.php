@@ -34,18 +34,7 @@ class AnyCommentCore extends AnyCommentBaseObject
     protected static $log;
 
     /**
-     * @var AnyCommentServiceApi
-     */
-    public $service;
-
-    /**
-     * @var
-     */
-    public $scss;
-
-    /**
-     * Instance of AnyComment.
-     * @var null|AnyCommentCore
+     * @var null|AnyCommentCore Instance of AnyComment.
      */
     private static $_instance = null;
 
@@ -81,6 +70,13 @@ class AnyCommentCore extends AnyCommentBaseObject
     {
         if (is_null(self::$_instance)) {
             self::$_instance = new self();
+
+            /**
+             * Fires after AnyComment was loaded.
+             *
+             * @since 0.0.3
+             */
+            do_action( 'anycomment/loaded' );
         }
 
         return self::$_instance;

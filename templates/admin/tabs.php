@@ -40,12 +40,12 @@ $tabs       = [
 $tabs = apply_filters( 'anycomment/admin/tabs', $tabs, $active_tab );
 ?>
 
-<?php if ( ! empty( $tabs ) ): ?>
+<?php if ( ! empty( $tabs ) && is_array($tabs) ): ?>
     <div class="grid-x grid-margin-x anycomment-dashboard__tabs">
         <ul class="cell">
 			<?php foreach ( $tabs as $key => $tab ): ?>
-                <li<?php echo $active_tab === $key ? ' class="active"' : '' ?>><a
-                            href="<?php echo $tab['url'] ?>"><?php echo $tab['text'] ?></a>
+                <li<?php echo $active_tab === $key ? ' class="active"' : '' ?> id="anycomment-tab-<?php echo $key?>">
+                    <a href="<?php echo $tab['url'] ?>"><?php echo $tab['text'] ?></a>
                 </li>
 			<?php endforeach; ?>
         </ul>

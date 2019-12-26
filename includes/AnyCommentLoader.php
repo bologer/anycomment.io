@@ -42,6 +42,9 @@ class AnyCommentLoader {
 		'AnyComment\Hooks\AnyCommentUserHooks',
 		'AnyComment\Hooks\AnyCommentNativeLoginForm',
 
+        // Libraries
+        'AnyComment\Libraries\AnyCommentUserTour',
+
 		'AnyComment\Integrations\AnyCommentWooCommerce',
 		'AnyComment\Integrations\AnyCommentBuddyPress',
 

@@ -36,10 +36,3 @@ function anycomment() {
 }
 
 anycomment();
-
-/**
- * Fires after AnyComment was loaded.
- *
- * @since 0.0.3
- */
-do_action( 'anycomment/loaded' );
