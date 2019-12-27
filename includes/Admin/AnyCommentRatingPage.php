@@ -2,14 +2,14 @@
 
 namespace AnyComment\Admin;
 
-use AnyComment\Base\AnyCommentBaseObject;
+use AnyComment\Base\BaseObject;
 use AnyComment\Helpers\AnyCommentTemplate;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-class AnyCommentRatingPage extends AnyCommentBaseObject {
+class AnyCommentRatingPage extends BaseObject {
 	/**
 	 * Initiate hooks.
 	 */

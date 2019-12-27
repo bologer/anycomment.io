@@ -7,12 +7,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use WC_Product;
-use AnyComment\Base\AnyCommentBaseObject;
+use AnyComment\Base\BaseObject;
 
 /**
  * Class AnyCommentWooCommerce is used as integration for WooCommerce.
  */
-class AnyCommentWooCommerce extends AnyCommentBaseObject {
+class AnyCommentWooCommerce extends BaseObject {
     /**
 	 * @inheritDoc
 	 */

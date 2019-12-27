@@ -2,7 +2,7 @@
 
 namespace AnyComment;
 
-use AnyComment\Base\AnyCommentBaseObject;
+use AnyComment\Base\BaseObject;
 use AnyComment\Models\AnyCommentSubscriptions;
 
 /**
@@ -14,7 +14,7 @@ use AnyComment\Models\AnyCommentSubscriptions;
  * @package AnyComment
  * @since 0.0.70
  */
-class EmailEndpoints extends AnyCommentBaseObject {
+class EmailEndpoints extends BaseObject {
 
 	const CANCEL_QUERY_PARAM = 'anycomment_cancel_subscription';
 	const CONFIRM_QUERY_PARAM = 'anycomment_confirm_subscription';

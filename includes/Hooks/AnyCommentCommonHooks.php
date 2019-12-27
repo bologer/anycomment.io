@@ -7,14 +7,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use AnyComment\Admin\AnyCommentGenericSettings;
-use AnyComment\Base\AnyCommentBaseObject;
+use AnyComment\Base\BaseObject;
 
 /**
  * Class AnyCommentCommonHooks consists of common hooks.
  *
  * @since 0.0.58
  */
-class AnyCommentCommonHooks extends AnyCommentBaseObject {
+class AnyCommentCommonHooks extends BaseObject {
     /**
      * @inheritDoc
      */

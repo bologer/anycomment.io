@@ -2,7 +2,7 @@
 
 namespace AnyComment\Admin;
 
-use AnyComment\Base\AnyCommentBaseObject;
+use AnyComment\Base\BaseObject;
 use AnyComment\Helpers\AnyCommentTemplate;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @author Alexander Teshabaev <sasha.tesh@gmail.com>
  * @package AnyComment\Admin
  */
-class AnyCommentFilesPage extends AnyCommentBaseObject  {
+class AnyCommentFilesPage extends BaseObject  {
 
     /**
      * @inheritDoc

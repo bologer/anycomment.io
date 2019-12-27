@@ -2,7 +2,7 @@
 
 namespace AnyComment\Admin;
 
-use AnyComment\Base\AnyCommentBaseObject;
+use AnyComment\Base\BaseObject;
 use AnyComment\Helpers\AnyCommentTemplate;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @package AnyComment\Admin
  * @since 0.0.70
  */
-class AnyCommentSubscriptionsPage extends AnyCommentBaseObject {
+class AnyCommentSubscriptionsPage extends BaseObject {
 
 	/**
 	 * Initiate hooks.

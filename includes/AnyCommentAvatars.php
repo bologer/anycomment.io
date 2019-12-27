@@ -2,7 +2,7 @@
 
 namespace AnyComment;
 
-use AnyComment\Base\AnyCommentBaseObject;
+use AnyComment\Base\BaseObject;
 use AnyComment\Rest\AnyCommentSocialAuth;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class AnyCommentAvatars is used as helper to manage avatars.
  */
-class AnyCommentAvatars extends AnyCommentBaseObject {
+class AnyCommentAvatars extends BaseObject {
 
 	/**
 	 * Default avatar width.

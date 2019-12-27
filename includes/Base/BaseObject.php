@@ -3,17 +3,17 @@
 namespace AnyComment\Base;
 
 /**
- * Class AnyCommentBaseObject is base class implementation.
+ * Class BaseObject is base class implementation.
  *
  * @since 0.0.99
  *
  * @author Alexander Teshabaev <sasha.tesh@gmail.com>
  * @package AnyComment\Base
  */
-class AnyCommentBaseObject
+class BaseObject
 {
     /**
-     * AnyCommentBaseObject constructor.
+     * BaseObject constructor.
      */
     public function __construct()
     {

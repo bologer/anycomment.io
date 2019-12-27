@@ -2,7 +2,7 @@
 
 namespace AnyComment\Hooks;
 
-use AnyComment\Base\AnyCommentBaseObject;
+use AnyComment\Base\BaseObject;
 use AnyComment\Cache\UserCache;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @author Alexander Teshabaev <sasha.tesh@gmail.com>
  * @package AnyComment\Hooks
  */
-class AnyCommentUserHooks extends AnyCommentBaseObject {
+class AnyCommentUserHooks extends BaseObject {
 
 	/**
 	 * @inheritDoc

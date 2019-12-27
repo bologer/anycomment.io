@@ -2,21 +2,23 @@
 
 namespace AnyComment;
 
-use AnyComment\Admin\AnyCommentGenericSettings;
 
-use AnyComment\Base\AnyCommentBaseObject;
-use AnyComment\Migrations\AnyCommentMigrationManager;
-
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
-use Stash\Driver\FileSystem;
 use Stash\Pool;
+use Monolog\Logger;
+use AnyComment\Base\Notice;
+use AnyComment\Base\Request;
+use Stash\Driver\FileSystem;
+use AnyComment\Base\BaseObject;
+use Monolog\Handler\StreamHandler;
+use AnyComment\Controller\ControllerManager;
+use AnyComment\Admin\AnyCommentGenericSettings;
+use AnyComment\Migrations\AnyCommentMigrationManager;
 
 /**
  * Main AnyComment Class.
  *
  */
-class AnyCommentCore extends AnyCommentBaseObject
+class AnyCommentCore extends BaseObject
 {
     /**
      * @var string AnyComment version.
@@ -34,9 +36,20 @@ class AnyCommentCore extends AnyCommentBaseObject
     protected static $log;
 
     /**
-     * @var null|AnyCommentCore Instance of AnyComment.
+     * @var Request
      */
-    private static $_instance = null;
+    protected $request;
+
+    /**
+     * @var Notice
+     */
+    protected $notice;
+
+    /**
+     * @var AnyCommentCore Holds plugin instance.
+     */
+    private static $_instance;
+
 
     /**
      * Init method to invoke starting scripts.
@@ -76,7 +89,7 @@ class AnyCommentCore extends AnyCommentBaseObject
              *
              * @since 0.0.3
              */
-            do_action( 'anycomment/loaded' );
+            do_action('anycomment/loaded');
         }
 
         return self::$_instance;
@@ -148,6 +161,13 @@ class AnyCommentCore extends AnyCommentBaseObject
     public function includes()
     {
         AnyCommentLoader::load();
+
+        $this->request = new Request();
+        $this->notice  = new Notice();
+
+        add_action('init', function () {
+            (new ControllerManager($this->getRequest()->get()))->resolve();
+        });
     }
 
     /**
@@ -214,5 +234,25 @@ class AnyCommentCore extends AnyCommentBaseObject
         }
 
         return static::$log;
+    }
+
+    /**
+     * Returns request object class.
+     *
+     * @return Request
+     */
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+    /**
+     * Returns notice component object class.
+     *
+     * @return Notice
+     */
+    public function getNotice()
+    {
+        return $this->notice;
     }
 }

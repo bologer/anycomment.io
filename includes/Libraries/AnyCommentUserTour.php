@@ -6,7 +6,7 @@ if ( ! defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 
-use AnyComment\Base\AnyCommentBaseObject;
+use AnyComment\Base\BaseObject;
 
 /**
  * Class AnyCommentUserTour tracks specific GET parameter and marks specific user tour as seen.
@@ -16,7 +16,7 @@ use AnyComment\Base\AnyCommentBaseObject;
  * @author Alexander Teshabaev <sasha.tesh@gmail.com>
  * @package AnyComment\Libraries
  */
-class AnyCommentUserTour extends AnyCommentBaseObject
+class AnyCommentUserTour extends BaseObject
 {
     /**
      * Tracking GET param name. When available would remove notice for specific page.

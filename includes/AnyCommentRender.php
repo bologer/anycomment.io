@@ -6,7 +6,7 @@ if ( ! defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 
-use AnyComment\Base\AnyCommentBaseObject;
+use AnyComment\Base\BaseObject;
 use AnyComment\Helpers\AnyCommentTemplate;
 use AnyComment\Models\AnyCommentRating;
 use AnyComment\Rest\AnyCommentSocialAuth;
@@ -16,7 +16,7 @@ use AnyComment\Admin\AnyCommentIntegrationSettings;
 /**
  * AnyCommentRender helps to render comments on client side.
  */
-class AnyCommentRender extends AnyCommentBaseObject
+class AnyCommentRender extends BaseObject
 {
     /**
      * Sort old.

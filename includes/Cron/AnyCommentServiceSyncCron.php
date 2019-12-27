@@ -6,14 +6,14 @@ use AnyComment\AnyCommentServiceApi;
 use AnyComment\Admin\AnyCommentIntegrationSettings;
 use AnyComment\AnyCommentUserMeta;
 use AnyComment\Api\AnyCommentServiceSyncIn;
-use AnyComment\Base\AnyCommentBaseObject;
+use AnyComment\Base\BaseObject;
 use AnyComment\Rest\AnyCommentSocialAuth;
 
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 
-class AnyCommentServiceSyncCron extends AnyCommentBaseObject
+class AnyCommentServiceSyncCron extends BaseObject
 {
     /**
      * Init class.

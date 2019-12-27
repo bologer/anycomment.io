@@ -3,7 +3,7 @@
 namespace AnyComment\Admin;
 
 use AnyComment\AnyCommentCore;
-use AnyComment\Base\AnyCommentBaseObject;
+use AnyComment\Base\BaseObject;
 use AnyComment\Helpers\AnyCommentTemplate;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * AnyCommentAdminPages helps to process website authentication.
  */
-class AnyCommentAdminPages extends AnyCommentBaseObject  {
+class AnyCommentAdminPages extends BaseObject  {
 	/**
 	 * @var AnyCommentSocialSettings
 	 */

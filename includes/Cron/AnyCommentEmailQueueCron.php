@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use AnyComment\Base\AnyCommentBaseObject;
+use AnyComment\Base\BaseObject;
 use AnyComment\Models\AnyCommentEmailQueue;
 use AnyComment\Admin\AnyCommentGenericSettings;
 
@@ -16,7 +16,7 @@ use AnyComment\Admin\AnyCommentGenericSettings;
  * @author Alexander Teshabaev <sasha.tesh@gmail.com>
  * @package AnyComment\Cron
  */
-class AnyCommentEmailQueueCron extends AnyCommentBaseObject {
+class AnyCommentEmailQueueCron extends BaseObject {
 	/**
 	 * @inheritDoc
 	 */

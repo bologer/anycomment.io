@@ -8,13 +8,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use AnyComment\Admin\AnyCommentGenericSettings;
 use AnyComment\AnyCommentSocials;
-use AnyComment\Base\AnyCommentBaseObject;
+use AnyComment\Base\BaseObject;
 
 /**
  * Class AnyCommentNativeLoginForm is used to enhance WordPress's native
  * login form via hooks.
  */
-class AnyCommentNativeLoginForm extends AnyCommentBaseObject {
+class AnyCommentNativeLoginForm extends BaseObject {
 
 	/**
 	 * @inheritDoc

@@ -3,6 +3,7 @@
 use AnyComment\Helpers\AnyCommentLinkHelper;
 use AnyComment\Helpers\AnyCommentTemplate;
 use AnyComment\Libraries\AnyCommentUserTour;
+use AnyComment\Widgets\NoticeOutput;
 
 if ( ! defined('ABSPATH')) {
     exit; // Exit if accessed directly
@@ -61,6 +62,8 @@ $current_tab = isset($_GET['tab']) ? $_GET['tab'] : 'dashboard';
                             ?>
                         </div>
                     </header>
+
+                    <?php echo NoticeOutput::render(); ?>
 
                     <?php echo AnyCommentTemplate::render('admin/tabs') ?>
 

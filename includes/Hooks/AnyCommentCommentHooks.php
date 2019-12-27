@@ -7,7 +7,7 @@ if ( ! defined('ABSPATH')) {
 }
 
 use WP_Comment;
-use AnyComment\Base\AnyCommentBaseObject;
+use AnyComment\Base\BaseObject;
 use AnyComment\Api\AnyCommentServiceSyncIn;
 use AnyComment\Integrations\AnyCommentBuddyPress;
 
@@ -23,7 +23,7 @@ use AnyComment\Admin\AnyCommentIntegrationSettings;
 /**
  * Class AnyCommentCommentHooks is used to control hooks related to comments.
  */
-class AnyCommentCommentHooks extends AnyCommentBaseObject
+class AnyCommentCommentHooks extends BaseObject
 {
     /**
      * @inheritDoc

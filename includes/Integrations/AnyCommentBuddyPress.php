@@ -2,7 +2,7 @@
 
 namespace AnyComment\Integrations;
 
-use AnyComment\Base\AnyCommentBaseObject;
+use AnyComment\Base\BaseObject;
 
 /**
  * Class AnyCommentBuddyPress helps to handle mentions with "@" login based on provided text or list of recipients
@@ -23,7 +23,7 @@ use AnyComment\Base\AnyCommentBaseObject;
  * @author Alexander Teshabaev <sasha.tesh@gmail.com>
  * @package AnyComment\Integrations
  */
-class AnyCommentBuddyPress extends AnyCommentBaseObject
+class AnyCommentBuddyPress extends BaseObject
 {
     /**
      * @inheritDoc
