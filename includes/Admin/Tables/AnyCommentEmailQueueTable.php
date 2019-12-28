@@ -159,8 +159,6 @@ class AnyCommentEmailQueueTable extends WP_List_Table {
 				return $user_html;
 			case 'subject':
 				return $item[ $column_name ];
-			case 'content':
-				return esc_html( $item[ $column_name ] );
 			case 'ip':
 				return $item[ $column_name ];
 			case 'url':
@@ -219,7 +217,6 @@ class AnyCommentEmailQueueTable extends WP_List_Table {
 			'comment_ID' => __( 'Comment', 'anycomment' ),
 			'email'      => __( 'Email', 'anycomment' ),
 			'subject'    => __( 'Subject', 'anycomment' ),
-			'content'    => __( 'Content', 'anycomment' ),
 			'ip'         => __( 'IP', 'anycomment' ),
 			'is_sent'    => __( 'Is Sent?', 'anycomment' ),
 			'created_at' => __( 'Date', 'anycomment' ),

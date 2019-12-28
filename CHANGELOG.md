@@ -14,6 +14,7 @@
 **Fixes:**
 
 - Removed rating from SEO indexing
+- Removed long content column from "Email" page, #430
 
 
 ## 0.0.98 – 17.11.2019
