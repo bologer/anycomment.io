@@ -9,7 +9,7 @@
 - Moved AnyComment Cloud message to Integration tab, improved UI/UX of synchronization logic 
 - Added helper tour around plugin to help new users to know how to configure plugin
 - It is now possible to download report ZIP archive to help AnyComment know about your environment, plugin version, etc
-- Added "Addons" tab which has list of available addons, controller via "anycomment/admin/addons" hook
+- Added "Addons" tab which has list of available addons, controller via "anycomment/admin/addons" hook, #435
 
 **Fixes:**
 
