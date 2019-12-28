@@ -73,9 +73,7 @@ $current_tab = isset($_GET['tab']) ? $_GET['tab'] : 'dashboard';
                     </div>
                 </div>
                 <aside class="large-3 medium-12 anycomment-dashboard__sidebar">
-                    <?php echo AnyCommentTemplate::render('admin/add-ons') ?>
-                    <?php echo AnyCommentTemplate::render('admin/help-sidebar') ?>
-                    <?php echo AnyCommentTemplate::render('admin/news-sidebar') ?>
+                    <?php echo AnyCommentTemplate::render('admin/_sidebar') ?>
                 </aside>
             </div>
         </div>

@@ -1,44 +1,35 @@
-<?php if ( ! class_exists( '\AnyCommentAnalytics' ) ): ?>
+<?php
+
+use AnyComment\Helpers\AnyCommentLinkHelper;
+
+if (class_exists('\AnyCommentAnalytics')): ?>
     <div class="anycomment-dashboard__sidebar--widget anycomment-dashboard__sidebar--promo">
         <div class="anycomment-dashboard__sidebar--promo-hinter">
-			<?php echo __( 'Add-On', 'anycomment' ) ?>
+            <?php echo __('Add-On', 'anycomment') ?>
         </div>
-        <h2><?php echo __( 'AnyComment Analytics', 'anycomment' ) ?></h2>
-		<?php
+        <h2><?php echo __('AnyComment Analytics', 'anycomment') ?></h2>
+        <?php
 
-		$tries = [
-			'paragraphs' => [
-				esc_html__( 'Get to know your website via in-depth analytics for only $9.99!', 'anycomment' ),
-				esc_html__( 'All analytical data you wanted to know in one add-on!', 'anycomment' ),
-				esc_html__( 'Nothing supports AnyComment better then buying an add-on!', 'anycomment' ),
-				esc_html__( 'In-depth analytics about comments, users and posts. Only for $9.99.', 'anycomment' ),
-				esc_html__( 'All analytical data of AnyComment summarized, prepared and visualized as graphs!', 'anycomment' ),
-			],
-			'buttons'    => [
-				esc_html__( 'Buy', 'anycomment' ),
-				esc_html__( 'Details', 'anycomment' ),
-				esc_html__( 'More', 'anycomment' ),
-				esc_html__( 'Purchase', 'anycomment' ),
-				esc_html__( 'Learn more', 'anycomment' ),
-			],
-		];
 
-		$chosen_key = rand( 0, count( $tries['paragraphs'] ) - 1 );
+        $language = AnyCommentLinkHelper::get_language();
 
-		$query_params = http_build_query( [
-			'utm_source'   => 'AnyComment',
-			'utm_medium'   => 'plugin',
-			'utm_campaign' => 'sidebar_promo',
-			'utm_term'     => 'p' . $chosen_key,
-			'utm_content'  => 'button',
-		] );
+        switch ($language) {
+            // List of translated languages
+            case 'ru':
+                break;
+            default:
+                $language = '';
+        }
 
-		$url = 'https://anycomment.io/analytics/?' . $query_params;
-		?>
-        <p class="anycomment-addon-p"><?php echo $tries['paragraphs'][ $chosen_key ] ?></p>
+        $url = sprintf('https://%swordpress.org/plugins/anycomment-analytics/', $language);
+        ?>
+        <p class="anycomment-addon-p">
+            <?php esc_html_e('It is an advanced analytics for AnyComment & it is free!',
+                'anycomment'); ?>
+        </p>
         <p class="anycomment-addon-button-p">
             <a class="anycomment-addon-button"
-               href="<?php echo $url ?>"><?php echo $tries['buttons'][ $chosen_key ] ?></a>
+               href="<?php echo $url ?>"><?php esc_html_e('Download', 'anycomment'); ?></a>
         </p>
     </div>
 
