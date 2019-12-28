@@ -14,6 +14,10 @@ $tabs       = [
 		'url'  => menu_page_url( $_GET['page'], false ) . '&tab=integration',
 		'text' => __( 'Integration', 'anycomment' )
 	],
+	'addons'  => [
+		'url'  => menu_page_url( $_GET['page'], false ) . '&tab=addons',
+		'text' => __( 'Addons', 'anycomment' )
+	],
 	'shortcodes'  => [
 		'url'  => menu_page_url( $_GET['page'], false ) . '&tab=shortcodes',
 		'text' => __( 'Shortcodes', 'anycomment' )
