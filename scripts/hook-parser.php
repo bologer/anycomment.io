@@ -139,13 +139,17 @@ class HookDocumentation {
 		$content     .= $description . PHP_EOL;
 
 		$function = $this->generateFunction( $hook );
+		$location = $hook->path . ':' . $hook->line;
 
 		$content .= <<<EOT
 ```php
 $function
 ```
 
+Location: $location
+
 EOT;
+
 
 		if ( ! empty( $hook->docBlock->tags ) ) {
 			$content .= '#### Arguments' . PHP_EOL;
