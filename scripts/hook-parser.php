@@ -2,11 +2,10 @@
 
 
 include __DIR__ . '/../../phpdoc-parser/vendor/autoload.php';
-//include __DIR__ . '/../../phpdoc-parser/lib/runner.php';
 
 
 $hooksParser = new HooksParser( [
-	'scanDirectory'     => '/Users/alex/PhpstormProjects/anycomment-wp/wp-content/plugins/anycomment',
+	'scanDirectory'     => dirname( __FILE__ ) . '/../../anycomment',
 	'ignoreDirectories' => [
 		'vendor',
 		'languages'
@@ -15,47 +14,173 @@ $hooksParser = new HooksParser( [
 
 $parsedItems = $hooksParser->parse();
 
-var_dump( $parsedItems );
+$hooksDocumentation = new HookDocumentation( $parsedItems );
+$hooksDocumentation->setSaveLocation(dirname( __FILE__ ) . '/../docs/hooks.md');
+$hooksDocumentation->write();
 
-$markdownContent = '';
+/**
+ * Class HookDocumentation helps to generate automatic .md doc about hooks in the plugin.
+ */
+class HookDocumentation {
 
-foreach ( $parsedItems as $item ) {
-	$title       = $item->name;
-	$description = $item->docBlock->description;
+	/**
+	 * @var HookDto[]
+	 */
+	private $_hooks;
 
-	$markdownContent .= <<<EOT
-	
-### $title
+	/**
+	 * @var string Path to the place where to save .md file.
+	 */
+	private $_saveLocation;
 
-$description
+	/**
+	 * @var string Generated content of markdown document.
+	 */
+	private $_markdownContent = '';
+
+	/**
+	 * HookDocumentation constructor.
+	 *
+	 * @param HookDto[] $hooks
+	 */
+	public function __construct( $hooks ) {
+		$this->_hooks = $hooks;
+	}
+
+	/**
+	 * @param HookDto[] $hooks
+	 */
+	public function setHooks( $hooks ) {
+		$this->_hooks = $hooks;
+	}
+
+	/**
+	 * @param string $saveLocation
+	 */
+	public function setSaveLocation( $saveLocation ) {
+		$this->_saveLocation = $saveLocation;
+	}
+
+	/**
+	 * Writes documentation.
+	 *
+	 * @return bool
+	 * @throws Exception
+	 */
+	public function write() {
+
+		foreach ( $this->_hooks as $item ) {
+			$this->generateSingleHook( $item );
+		}
+
+		return $this->saveContent();
+	}
+
+	/**
+	 * Generates hook function.
+	 *
+	 * @param HookDto $hook
+	 */
+	protected function generateFunction( $hook ) {
+		// Function execution
+		$function = '';
+
+		switch ( $hook->type ) {
+			case 'filter':
+				$function = 'apply_filters(';
+				break;
+			case 'action':
+				$function = 'do_action(';
+				break;
+			default:
+		}
+
+		$function .= sprintf( '"%s"', $hook->name );
+
+		if ( empty( $hook->docBlock->tags ) ) {
+			$function .= ')';
+		} else {
+			/**
+			 * @var HookTagDto $tag
+			 */
+			foreach ( $hook->docBlock->tags as $tag ) {
+				if(empty($tag->variable)) {
+					continue;
+				}
+
+				if ( empty( $tag->types ) ) {
+					$function .= ', ' . $tag->variable;
+				} else {
+					$function .= ', ' . implode( '|', $tag->types ) . ' ' . $tag->variable;
+				}
+			}
+
+
+			$function .= ')';
+		}
+
+		return $function;
+	}
+
+	/**
+	 * Generates single hook.
+	 *
+	 * @param HookDto $hook
+	 * @return void
+	 */
+	protected function generateSingleHook( $hook ) {
+
+		$content = $this->_markdownContent;
+
+		// Title & Description
+		$title       = $hook->name;
+		$description = $hook->docBlock->description;
+		$content     .= '### ' . $title . PHP_EOL;
+		$content     .= $description . PHP_EOL;
+
+		$function = $this->generateFunction( $hook );
+
+		$content .= <<<EOT
+```php
+$function
+```
 
 EOT;
 
-	$arguments = '';
+		if ( ! empty( $hook->docBlock->tags ) ) {
+			$content .= '#### Arguments' . PHP_EOL;
+			foreach ( $hook->docBlock->tags as $tag ) {
+				if ( $tag->name === 'param' ) {
+					$content .= sprintf(
+						            '* `%s` (%s) %s',
+						            $tag->variable,
+						            '_' . implode( '_|_', $tag->types ) . '_',
+						            $tag->content
+					            ) . PHP_EOL;
+				}
 
-	if ( ! empty( $item->docBlock->tags ) ) {
-		$markdownContent .= '#### Arguments' . PHP_EOL;
-		foreach ( $item->docBlock->tags as $tag ) {
-			if ( $tag->name === 'param' ) {
-				$markdownContent .= sprintf(
-					                    '* `%s` (%s) %s',
-					                    $tag->variable,
-					                    '_' . implode( '_|_', $tag->types ) . '_',
-					                    $tag->content
-				                    ) . PHP_EOL;
 			}
-
 		}
+
+		$this->_markdownContent = $content;
 	}
 
-	var_dump( $item->docBlock->tags );
+	/**
+	 * Saves markdown content into specified location.
+	 *
+	 * @return bool
+	 * @throws Exception
+	 */
+	protected function saveContent() {
+		$filePath = $this->_saveLocation;
 
-//	$markdownContent .= implode(', ', $item->docBlock->tags);
+		if ( ! file_exists( $filePath ) ) {
+			throw new \Exception( sprintf( 'Location %s does not exist', $this->_saveLocation ) );
+		}
+
+		return @file_put_contents( $filePath, $this->_markdownContent ) !== false;
+	}
 }
-
-$filePath = dirname( __FILE__ ) . '/../docs/hooks.md';
-
-file_put_contents( $filePath, $markdownContent );
 
 
 class HookTagDto {
@@ -80,6 +205,11 @@ class HookDto {
 	 * @var string
 	 */
 	public $name;
+
+	/**
+	 * @var string
+	 */
+	public $path;
 
 	/**
 	 * @var integer
@@ -143,7 +273,7 @@ class HooksParser {
 
 
 	/**
-	 * @var ParsedItem[] List of parsed hooks. Empty array when nothing was parsed.
+	 * @var HookDto[] List of parsed hooks. Empty array when nothing was parsed.
 	 */
 	private $_foundHooks = [];
 
@@ -167,14 +297,16 @@ class HooksParser {
 
 		$parsed = \WP_Parser\parse_files( $filePaths, $this->scanDirectory );
 
-		$hooks = [];
-
 		foreach ( $parsed as $p ) {
 			if ( isset( $p['hooks'] ) ) {
+
+				var_dump( $p );
+
 				foreach ( $p['hooks'] as $hook ) {
 					$hookDto = new HookDto();
 
 					$hookDto->name      = $hook['name'];
+					$hookDto->path      = $p['path'];
 					$hookDto->line      = $hook['line'];
 					$hookDto->endLine   = $hook['end_line'];
 					$hookDto->type      = $hook['type'];
@@ -191,19 +323,19 @@ class HooksParser {
 						$tagDto               = new HookTagDto();
 						$tagDto->name         = $tag['name'];
 						$tagDto->content      = $tag['content'];
-						$tagDto->types        = $tag['types'];
-						$tagDto->variable     = $tag['variable'];
+						$tagDto->types        = $tag['types'] ?? [];
+						$tagDto->variable     = $tag['variable'] ?? null;
 						$hookDocBlock->tags[] = $tagDto;
 					}
 
 					$hookDto->docBlock = $hookDocBlock;
 
-					$hooks[] = $hookDto;
+					$this->_foundHooks[] = $hookDto;
 				}
 			}
 		}
 
-		return $hooks;
+		return $this->_foundHooks;
 	}
 
 	/**
