@@ -36,12 +36,14 @@ function maybeStartTour() {
 
         if (introShow === 1) {
             if (stepsPageMap[currentTab]) {
+                const anycomment = window.anycomment || {};
+
                 intro.setOptions({
                     steps: stepsPageMap[currentTab],
-                    nextLabel: 'Далее',
-                    prevLabel: 'Назад',
-                    skipLabel: 'Пропустить',
-                    doneLabel: 'Скрыть',
+                    nextLabel: anycomment.tourNextLabel,
+                    prevLabel: anycomment.tourPreviousLabel,
+                    skipLabel: anycomment.tourSkipLabel,
+                    doneLabel: anycomment.tourDoneLabel,
                 });
                 intro.start();
 

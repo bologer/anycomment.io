@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * AnyCommentAdminPages helps to process website authentication.
  */
-class AnyCommentAdminPages extends BaseObject  {
+class AnyCommentAdminPages extends BaseObject {
 	/**
 	 * @var AnyCommentSocialSettings
 	 */
@@ -103,7 +103,7 @@ class AnyCommentAdminPages extends BaseObject  {
 			return null;
 		}
 
-		if ( 0 === strpos( $page, 'anycomment' )) {
+		if ( 0 === strpos( $page, 'anycomment' ) ) {
 			wp_enqueue_script( 'anycomment-admin-chartjs', AnyComment()->plugin_url() . '/assets/js/Chart.min.js', [], AnyComment()->version );
 		}
 
@@ -111,6 +111,14 @@ class AnyCommentAdminPages extends BaseObject  {
 
 		wp_enqueue_style( 'anycomment-admin-styles', AnyComment()->plugin_url() . '/assets/css/admin.min.css', [], AnyComment()->version );
 		wp_enqueue_style( 'anycomment-admin-roboto-font', 'https://fonts.googleapis.com/css?family=Roboto:300,400,700&amp;subset=cyrillic' );
+
+
+		wp_localize_script('anycomment-main-admin', 'anycomment', [
+			'tourNextLabel'     => esc_html__( 'Next', 'anycomment' ),
+			'tourPreviousLabel' => esc_html__( 'Back', 'anycomment' ),
+			'tourSkipLabel'     => esc_html__( 'Skip', 'anycomment' ),
+			'tourDoneLabel'     => esc_html__( 'Hide', 'anycomment' ),
+		]);
 	}
 
 	/**
