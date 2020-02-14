@@ -1,7 +1,6 @@
 {
   "name": "reactjs",
   "version": "0.1.0",
-  "private": true,
   "homepage": "/wp-content/plugins/anycomment",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.6",
@@ -33,9 +32,21 @@
   "scripts": {
     "build-css": "cd src/foundation && gulp sass",
     "watch-css": "cd src/foundation && gulp watch",
-    "start": "react-scripts start",
+    "start": "ENV=development ./node_modules/.bin/parcel src/index.pug",
     "build": "react-scripts build && mv build/static/js/main*.js build/static/js/main.min.js && mv build/static/css/main*.css build/static/css/main.min.css && rm -rf ../static/* && mv build/static/* ../static && rm ../static/css/*css.map && rm ../static/js/*js.map && cp -R src/foundation/scss/* node_modules/react-toastify/dist/ReactToastify.css ../assets/theming",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "build:prod": "ENV=production ./node_modules/.bin/parcel build src/index.pug --no-source-maps --public-url /",
+    "init-dev": "./scripts/init.sh dev",
+    "init-prod": "./scripts/init.sh prod"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/preset-react": "^7.8.3",
+    "parcel": "^1.12.4",
+    "pug": "^2.0.4",
+    "@babel/plugin-proposal-class-properties": "^7.7.0",
+    "@babel/plugin-transform-arrow-functions": "^7.0.0",
+    "@babel/preset-env": "^7.7.1",
+    "@babel/types": "^7.7.2",
+    "typescript": "^3.7.2"
   }
 }

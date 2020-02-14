@@ -8,3 +8,4 @@ static/css/main-custom-*.min.css
 static/css/*css.map
 static/js/*js.map
 vendor
+.idea
