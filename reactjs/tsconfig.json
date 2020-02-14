@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "outDir": "./dist/",
+    "resolveJsonModule": true,
+    "paths": {
+      "~/*": [
+        "*"
+      ]
+    },
+    "module": "esnext",
+    "moduleResolution": "node",
+    "newLine": "LF",
+    "target": "es5",
+    "sourceMap": false,
+    "declarationMap": false,
+    "declaration": false,
+    "composite": false,
+    "jsx": "react",
+    "lib": [
+      "dom",
+      "es2015"
+    ],
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "esModuleInterop": true,
+    "noImplicitAny": false
+  },
+  "include": [
+    "src/**/*",
+    "__tests__/**/*"
+  ],
+  "exclude": [
+    ".git",
+    "node_modules"
+  ]
+}
