@@ -18,10 +18,21 @@ In order to start, you need:
 # Coding Standard
 AnyComment source conforms to [PSR2](https://www.php-fig.org/psr/psr-2/).
 
-
 # Resources
 * [Official website](http://anycomment.io/en/)
 * [All guides](https://anycomment.io/en/category/tutorials/)
 * [Configure socials](https://anycomment.io/en/category/tutorials/socials/)
 * [VK.com group](http://vk.com/anycomment)
 * [Telegram group](https://t.me/anycomment)
+
+
+## Development 
+
+- Clone project to `wp-content/plugins/anycomment` folder of your docker or local WordPress directory
+- Go to cloned directory
+- Set `ANYCOMMENT_DEBUG` to `true` in `anycomment.php`
+- Change directory to `reactjs`, run `npm install` to install required packages
+- Run `npm start` to start development server
+- Open WordPress admin panel and activate AnyComment in the list
+- Go to "Generic" settings tab & enable "Enable Comments" option
+- Open some page and you should see AnyComment's comments
