@@ -74,7 +74,7 @@ class CommentHeader extends AnyCommentComponent {
 
         if (comment.owner.is_post_author) {
             additionalTags.push(<span
-                className="anycomment comment-single-body-header__author-owner">{settings.i18.author}</span>);
+                className="anycomment comment-single-body-header__author-owner" key='owner'>{settings.i18.author}</span>);
         }
 
         if (comment.parent_author_name.trim() !== '') {
@@ -82,7 +82,7 @@ class CommentHeader extends AnyCommentComponent {
             let replyText = <a onClick={() => this.moveToCommentAndHighlight(commentHash, 1500)}
                                href={commentHash}>{settings.i18.reply_to + ' ' + comment.parent_author_name}</a>;
             additionalTags.push(<span
-                className="anycomment comment-single-body-header__author-reply">{replyText}</span>);
+                className="anycomment comment-single-body-header__author-reply" key={`reply${replyText}`}>{replyText}</span>);
         }
 
         const datetime = settings.options.dateFormat === 'relative' ?

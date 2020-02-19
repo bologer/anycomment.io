@@ -38,7 +38,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	 *
 	 * @since 4.7.0
 	 */
-	public function __construct () {
+	public function __construct() {
 		$this->namespace = 'anycomment/v1';
 		$this->rest_base = 'comments';
 
@@ -55,7 +55,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	 *
 	 * @since 4.7.0
 	 */
-	public function register_routes () {
+	public function register_routes() {
 
 		register_rest_route( $this->namespace, '/' . $this->rest_base . '/count', [
 			[
@@ -134,13 +134,13 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	/**
 	 * Checks if a given request has access to read comments.
 	 *
-	 * @since 4.7.0
-	 *
 	 * @param WP_REST_Request $request Full details about the request.
 	 *
 	 * @return WP_Error|bool True if the request has read access, error object otherwise.
+	 * @since 4.7.0
+	 *
 	 */
-	public function get_items_permissions_check ( $request ) {
+	public function get_items_permissions_check( $request ) {
 		if ( ! empty( $request['post'] ) ) {
 			foreach ( (array) $request['post'] as $post_id ) {
 				$post = get_post( $post_id );
@@ -190,7 +190,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	 *
 	 * @return WP_Error|WP_REST_Response Response object on success, or error object on failure.
 	 */
-	public function get_count ( $request ) {
+	public function get_count( $request ) {
 
 		$post_id = $request->get_param( 'post' );
 		$cache   = AnyCommentRestCacheManager::getPostCommentCount( $post_id );
@@ -225,13 +225,13 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	/**
 	 * Retrieves a list of comment items.
 	 *
-	 * @since 4.7.0
-	 *
 	 * @param WP_REST_Request $request Full details about the request.
 	 *
 	 * @return WP_Error|WP_REST_Response Response object on success, or error object on failure.
+	 * @since 4.7.0
+	 *
 	 */
-	public function get_items ( $request ) {
+	public function get_items( $request ) {
 
 		// Retrieve the list of registered collection query parameters.
 		$registered = $this->get_collection_params();
@@ -331,6 +331,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			$prepared_args['count'] = true;
 
 			$total_comments = $query->query( $prepared_args );
+
 			try {
 				$max_pages = ceil( $total_comments / $request['per_page'] );
 			} catch ( \Exception $exception ) {
@@ -338,9 +339,31 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			}
 		}
 
-		$response = rest_ensure_response( $comments );
-		$response->header( 'X-WP-Total', $total_comments );
-		$response->header( 'X-WP-TotalPages', $max_pages );
+		try {
+			$current_page = absint( $request['offset'] / $request['per_page'] ) + 1;
+
+			if ( $current_page > $max_pages ) {
+				$current_page = $max_pages;
+			}
+		} catch ( \Exception $exception ) {
+			$current_page = 1;
+		}
+
+		$envelope = [
+			'status'   => 'ok',
+			'response' => [
+				'items' => $comments,
+				'meta'  => [
+					'total_count'  => $total_comments,
+					'page_count'   => $max_pages,
+					'current_page' => $current_page,
+					'per_page'     => $request['per_page']
+				]
+			],
+			'error'    => null
+		];
+
+		$response = rest_ensure_response( $envelope );
 
 		$base = add_query_arg( $request->get_query_params(), rest_url( sprintf( '%s/%s', $this->namespace, $this->rest_base ) ) );
 
@@ -368,13 +391,13 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	/**
 	 * Get the comment, if the ID is valid.
 	 *
-	 * @since 4.7.2
-	 *
 	 * @param int $id Supplied ID.
 	 *
 	 * @return WP_Comment|WP_Error Comment object if ID is valid, WP_Error otherwise.
+	 * @since 4.7.2
+	 *
 	 */
-	protected function get_comment ( $id ) {
+	protected function get_comment( $id ) {
 		$error = new WP_Error( 'rest_comment_invalid_id', __( 'Invalid comment ID.', 'anycomment' ), array( 'status' => 404 ) );
 		if ( (int) $id <= 0 ) {
 			return $error;
@@ -399,13 +422,13 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	/**
 	 * Checks if a given request has access to read the comment.
 	 *
-	 * @since 4.7.0
-	 *
 	 * @param WP_REST_Request $request Full details about the request.
 	 *
 	 * @return WP_Error|bool True if the request has read access for the item, error object otherwise.
+	 * @since 4.7.0
+	 *
 	 */
-	public function get_item_permissions_check ( $request ) {
+	public function get_item_permissions_check( $request ) {
 		$comment = $this->get_comment( $request['id'] );
 		if ( is_wp_error( $comment ) ) {
 			return $comment;
@@ -431,13 +454,13 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	/**
 	 * Retrieves a comment.
 	 *
-	 * @since 4.7.0
-	 *
 	 * @param WP_REST_Request $request Full details about the request.
 	 *
 	 * @return WP_Error|WP_REST_Response Response object on success, or error object on failure.
+	 * @since 4.7.0
+	 *
 	 */
-	public function get_item ( $request ) {
+	public function get_item( $request ) {
 		$comment = $this->get_comment( $request['id'] );
 		if ( is_wp_error( $comment ) ) {
 			return $comment;
@@ -452,13 +475,13 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	/**
 	 * Checks if a given request has access to create a comment.
 	 *
-	 * @since 4.7.0
-	 *
 	 * @param WP_REST_Request $request Full details about the request.
 	 *
 	 * @return WP_Error|bool True if the request has access to create items, error object otherwise.
+	 * @since 4.7.0
+	 *
 	 */
-	public function create_item_permissions_check ( $request ) {
+	public function create_item_permissions_check( $request ) {
 
 		if ( ! is_user_logged_in() ) {
 
@@ -529,13 +552,13 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	/**
 	 * Creates a comment.
 	 *
-	 * @since 4.7.0
-	 *
 	 * @param WP_REST_Request $request Full details about the request.
 	 *
 	 * @return WP_Error|WP_REST_Response Response object on success, or error object on failure.
+	 * @since 4.7.0
+	 *
 	 */
-	public function create_item ( $request ) {
+	public function create_item( $request ) {
 
 		if ( ! empty( $request['id'] ) ) {
 			return new WP_Error( 'rest_comment_exists', __( 'Cannot create existing comment.', 'anycomment' ), array( 'status' => 400 ) );
@@ -667,7 +690,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		$message = null;
 
 		if ( $should_moderate || $has_filtered_words || $has_links ) {
-		    $message = __('Comment will be shown once reviewed by moderator.', 'anycomment');
+			$message = __( 'Comment will be shown once reviewed by moderator.', 'anycomment' );
 			$this->handle_status_param( 'hold', $comment_id );
 		}
 
@@ -694,10 +717,10 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		$request->set_param( 'context', $context );
 
 		$data = [
-		    'status' => 'ok',
-            'response' => $message,
-            'error' => null
-        ];
+			'status'   => 'ok',
+			'response' => $message,
+			'error'    => null
+		];
 
 		$response = rest_ensure_response( $data );
 
@@ -710,13 +733,13 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	/**
 	 * Checks if a given REST request has access to update a comment.
 	 *
-	 * @since 4.7.0
-	 *
 	 * @param WP_REST_Request $request Full details about the request.
 	 *
 	 * @return WP_Error|bool True if the request has access to update the item, error object otherwise.
+	 * @since 4.7.0
+	 *
 	 */
-	public function update_item_permissions_check ( $request ) {
+	public function update_item_permissions_check( $request ) {
 		$comment = $this->get_comment( $request['id'] );
 		if ( is_wp_error( $comment ) ) {
 			return $comment;
@@ -734,13 +757,13 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	/**
 	 * Updates a comment.
 	 *
-	 * @since 4.7.0
-	 *
 	 * @param WP_REST_Request $request Full details about the request.
 	 *
 	 * @return WP_Error|WP_REST_Response Response object on success, or error object on failure.
+	 * @since 4.7.0
+	 *
 	 */
-	public function update_item ( $request ) {
+	public function update_item( $request ) {
 		$comment = $this->get_comment( $request['id'] );
 		if ( is_wp_error( $comment ) ) {
 			return $comment;
@@ -825,13 +848,13 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	/**
 	 * Checks if a given request has access to delete a comment.
 	 *
-	 * @since 4.7.0
-	 *
 	 * @param WP_REST_Request $request Full details about the request.
 	 *
 	 * @return WP_Error|bool True if the request has access to delete the item, error object otherwise.
+	 * @since 4.7.0
+	 *
 	 */
-	public function delete_item_permissions_check ( $request ) {
+	public function delete_item_permissions_check( $request ) {
 		$comment = $this->get_comment( $request['id'] );
 		if ( is_wp_error( $comment ) ) {
 			return $comment;
@@ -847,13 +870,13 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	/**
 	 * Deletes a comment.
 	 *
-	 * @since 4.7.0
-	 *
 	 * @param WP_REST_Request $request Full details about the request.
 	 *
 	 * @return WP_Error|WP_REST_Response Response object on success, or error object on failure.
+	 * @since 4.7.0
+	 *
 	 */
-	public function delete_item ( $request ) {
+	public function delete_item( $request ) {
 		$comment = $this->get_comment( $request['id'] );
 		if ( is_wp_error( $comment ) ) {
 			return $comment;
@@ -864,10 +887,11 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		 *
 		 * Return false to disable trash support for the post.
 		 *
-		 * @since 4.7.0
-		 *
 		 * @param bool $supports_trash Whether the post type support trashing.
 		 * @param WP_Post $comment The comment object being considered for trashing support.
+		 *
+		 * @since 4.7.0
+		 *
 		 */
 		$supports_trash = apply_filters( 'rest_comment_trashable', ( EMPTY_TRASH_DAYS > 0 ), $comment );
 
@@ -898,14 +922,14 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	/**
 	 * Prepares a single comment output for response.
 	 *
-	 * @since 4.7.0
-	 *
 	 * @param WP_Comment $comment Comment object.
 	 * @param WP_REST_Request $request Request object.
 	 *
 	 * @return WP_REST_Response Response object.
+	 * @since 4.7.0
+	 *
 	 */
-	public function prepare_item_for_response ( $comment, $request ) {
+	public function prepare_item_for_response( $comment, $request ) {
 
 
 		$prepared_args['parent']  = $comment->comment_ID;
@@ -989,7 +1013,6 @@ class AnyCommentRestComment extends AnyCommentRestController {
 				'has_like'    => AnyCommentLikes::is_user_has_like( $comment->comment_ID ),
 				'has_dislike' => AnyCommentLikes::is_user_has_dislike( $comment->comment_ID ),
 				'status'      => wp_get_comment_status( $comment ),
-				'count_text'  => AnyCommentUser::get_comment_count( $comment->comment_post_ID ),
 				'is_updated'  => AnyCommentCommentMeta::is_updated( $comment ),
 				'updated_by'  => AnyCommentCommentMeta::get_updated_by( $comment ),
 			],
@@ -1000,9 +1023,9 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		/**
 		 * Filters comment data.
 		 *
-		 * @since 0.0.79
-		 *
 		 * @param array $data Comment data, see structure above.
+		 *
+		 * @since 0.0.79
 		 *
 		 * @package WP_Comment $comment Comment object.
 		 */
@@ -1025,7 +1048,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	 *
 	 * @return string The normalized query parameter.
 	 */
-	protected function normalize_query_param ( $query_param ) {
+	protected function normalize_query_param( $query_param ) {
 		$prefix = 'comment_';
 
 		switch ( $query_param ) {
@@ -1057,7 +1080,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	 *
 	 * @return string Comment status.
 	 */
-	protected function prepare_status_response ( $comment_approved ) {
+	protected function prepare_status_response( $comment_approved ) {
 
 		switch ( $comment_approved ) {
 			case 'hold':
@@ -1088,7 +1111,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	 *
 	 * @return array|WP_Error Prepared comment, otherwise WP_Error object.
 	 */
-	protected function prepare_item_for_database ( $request ) {
+	protected function prepare_item_for_database( $request ) {
 		$prepared_comment = array();
 
 		/*
@@ -1155,7 +1178,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	 *
 	 * @return array
 	 */
-	public function get_item_schema () {
+	public function get_item_schema() {
 		$schema = array(
 			'$schema'    => 'http://json-schema.org/draft-04/schema#',
 			'title'      => 'comment',
@@ -1312,7 +1335,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	 *
 	 * @return array Comments collection parameters.
 	 */
-	public function get_collection_params () {
+	public function get_collection_params() {
 		$query_params = parent::get_collection_params();
 
 		$query_params['context']['default'] = 'view';
@@ -1468,7 +1491,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	 *
 	 * @return bool Whether the status was changed.
 	 */
-	protected function handle_status_param ( $new_status, $comment_id ) {
+	protected function handle_status_param( $new_status, $comment_id ) {
 		$old_status = wp_get_comment_status( $comment_id );
 
 		if ( $new_status === $old_status ) {
@@ -1515,7 +1538,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	 *
 	 * @return bool Whether post can be read.
 	 */
-	protected function check_read_post_permission ( $post, $request ) {
+	protected function check_read_post_permission( $post, $request ) {
 		$posts_controller = new WP_REST_Posts_Controller( $post->post_type );
 		$post_type        = get_post_type_object( $post->post_type );
 
@@ -1551,7 +1574,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	 *
 	 * @return bool Whether the comment can be read.
 	 */
-	protected function check_read_permission ( $comment, $request ) {
+	protected function check_read_permission( $comment, $request ) {
 		if ( ! empty( $comment->comment_post_ID ) ) {
 			$post = get_post( $comment->comment_post_ID );
 			if ( $post ) {
@@ -1583,7 +1606,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	 *
 	 * @return bool Whether the comment can be edited or deleted.
 	 */
-	protected function check_edit_permission ( $comment ) {
+	protected function check_edit_permission( $comment ) {
 
 		if ( 0 === (int) get_current_user_id() ) {
 			return false;
@@ -1614,7 +1637,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	 *
 	 * @return bool
 	 */
-	public function is_comment_empty ( $comment_text ) {
+	public function is_comment_empty( $comment_text ) {
 		$comment_text = trim( $comment_text );
 
 		if ( empty( $comment_text ) ) {
@@ -1639,7 +1662,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	 *
 	 * @return bool
 	 */
-	public function is_old_to_edit ( $comment, $minutes = 5 ) {
+	public function is_old_to_edit( $comment, $minutes = 5 ) {
 		return AnyCommentUser::is_old_to_edit( $comment, $minutes );
 	}
 
@@ -1657,7 +1680,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	 * @return WP_Error|string The sanitized email address, if valid,
 	 *                         otherwise an error.
 	 */
-	public function check_comment_author_email ( $value, $request, $param ) {
+	public function check_comment_author_email( $value, $request, $param ) {
 		$email = (string) $value;
 		if ( empty( $email ) ) {
 			return $email;
@@ -1678,7 +1701,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	 *
 	 * @return bool|WP_Error
 	 */
-	public function check_recaptcha ( $token ) {
+	public function check_recaptcha( $token ) {
 		$response = wp_remote_post( 'https://www.google.com/recaptcha/api/siteverify', [
 			'body' => [
 				'secret'   => AnyCommentIntegrationSettings::get_recaptcha_site_secret(),

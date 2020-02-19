@@ -163,7 +163,7 @@ class AnyCommentCore extends BaseObject
         AnyCommentLoader::load();
 
         $this->request = new Request();
-        $this->notice  = new Notice();
+        $this->notice = new Notice();
 
         add_action('init', function () {
             (new ControllerManager($this->getRequest()->get()))->resolve();
@@ -178,17 +178,26 @@ class AnyCommentCore extends BaseObject
     public static function cache()
     {
         if (static::$cache == null) {
-            $cache_path = ABSPATH . str_replace('/', DIRECTORY_SEPARATOR, 'wp-content/cache/anycomment');
 
-            if ( ! @file_exists($cache_path)) {
-                @mkdir($cache_path, 0755, true);
+            try {
+                $cache_path = ABSPATH . str_replace('/', DIRECTORY_SEPARATOR, 'wp-content/cache/anycomment');
+
+                if (!@file_exists($cache_path)) {
+                    @mkdir($cache_path, 0755, true);
+                }
+
+                $cacheDriver = new FileSystem([
+                    'path' => $cache_path,
+                ]);
+
+                static::$cache = new Pool($cacheDriver);
+            } catch (\Exception $exception) {
+                $logger = static::logger();
+
+                if ($logger !== null) {
+                    static::logger()->error('Failed to initiate cache, exception: ' . $exception->getMessage());
+                }
             }
-
-            $cacheDriver = new FileSystem([
-                'path' => $cache_path,
-            ]);
-
-            static::$cache = new Pool($cacheDriver);
         }
 
         return static::$cache;
@@ -212,13 +221,13 @@ class AnyCommentCore extends BaseObject
 
                 // Create .htaccess and index.html to hide direct access to log data
                 $htaccess_path = $log_path . DIRECTORY_SEPARATOR . '.htaccess';
-                $index_path    = $log_path . DIRECTORY_SEPARATOR . 'index.html';
+                $index_path = $log_path . DIRECTORY_SEPARATOR . 'index.html';
 
-                if ( ! @file_exists($htaccess_path)) {
+                if (!@file_exists($htaccess_path)) {
                     @file_put_contents($htaccess_path, 'deny from all');
                 }
 
-                if ( ! @file_exists($index_path)) {
+                if (!@file_exists($index_path)) {
                     @file_put_contents($index_path, '');
                 }
 

@@ -73,7 +73,7 @@ class PageRating extends AnyCommentComponent {
         const options = this.getOptions();
 
         if (!options.isRatingOn) {
-            return (null);
+            return null;
         }
 
         const {value, count, hasRated} = this.state;

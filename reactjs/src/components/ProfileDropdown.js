@@ -35,7 +35,7 @@ export default class ProfileDropdown extends AnyCommentComponent {
         }
 
         let items = [
-            <li onClick={(e) => this.handleChange(e, 'logout')}><a href="">{settings.i18.logout}</a></li>
+            <li key={0} onClick={(e) => this.handleChange(e, 'logout')}><a href="">{settings.i18.logout}</a></li>
         ];
 
         return (

@@ -1,7 +1,7 @@
 import React from 'react';
 import AnyCommentComponent from "./AnyCommentComponent";
-import Icon from './Icon'
-import {faReply, faHeart, faEdit} from '@fortawesome/free-solid-svg-icons'
+import Icon from './Icon';
+import {faReply, faHeart, faEdit} from '@fortawesome/free-solid-svg-icons';
 
 /**
  * CommentFooter renders single comment actions such as
@@ -22,6 +22,7 @@ class CommentFooter extends AnyCommentComponent {
      * Handle like action.
      */
     handleLike = (e) => {
+        e.preventDefault();
 
         if (!this.state.processLikeStates) {
             this.setState({
@@ -37,14 +38,14 @@ class CommentFooter extends AnyCommentComponent {
         const comment = this.props.comment;
         const isGuest = this.isGuest();
 
-        const replyIcon = <Icon icon={faReply}/>;
-        const likeIcon = <Icon icon={faHeart} style={this.props.hasLike ? {color: '#EC4568'} : ''}/>;
-        const editIcon = <Icon icon={faEdit}/>;
+        const replyIcon = <Icon icon={faReply} />;
+        const likeIcon = <Icon icon={faHeart} style={this.props.hasLike ? {color: '#EC4568'} : ''} />;
+        const editIcon = <Icon icon={faEdit} />;
 
         let likeActionClass = "anycomment comment-single-body__actions-like";
 
         if (this.state.processLikeStates) {
-            likeActionClass += " comment-single-body__actions-like-" + (this.props.hasLike ? 'active' : 'static')
+            likeActionClass += " comment-single-body__actions-like-" + (this.props.hasLike ? 'active' : 'static');
         }
 
         return (
@@ -52,22 +53,22 @@ class CommentFooter extends AnyCommentComponent {
                 <ul className="anycomment">
 
                     {settings.post.comments_open ?
-                        <li className="anycomment"><a className="anycomment" href="javascript:void(0)"
-                                                      onClick={(e) => this.props.onReply(e)}>{replyIcon}{settings.i18.reply}</a>
+                        <li className="anycomment"><a className="anycomment" href="#"
+                                                      onClick={this.props.onReply}>{replyIcon}{settings.i18.reply}</a>
                         </li> : ''}
 
                     {settings.options.commentRating === 'likes' ?
                         <li className="anycomment">
-                            <a href="javascript:void(0)"
+                            <a href="#"
                                className={likeActionClass}
-                               onClick={(e) => this.handleLike(e)}>{likeIcon}
+                               onClick={this.handleLike}>{likeIcon}
                                 <span itemProp="upvoteCount">{this.props.likesCount}</span>
                             </a>
                         </li> : ''}
 
                     {!isGuest && comment.permissions.can_edit_comment && settings.post.comments_open ?
-                        <li className="anycomment"><a className="anycomment" href="javascript:void(0)"
-                                                      onClick={(e) => this.props.onEdit(e)}>{editIcon}{settings.i18.edit}</a>
+                        <li className="anycomment"><a className="anycomment" href="#"
+                                                      onClick={this.props.onEdit}>{editIcon}{settings.i18.edit}</a>
                         </li> : ''}
                 </ul>
             </footer>

@@ -9,58 +9,59 @@ use AnyComment\Helpers\AnyCommentLinkHelper;
 /**
  * This is a generic template which renders comments from local WordPress or SaaS (Cloud version).
  */
-if (!defined('ABSPATH')) {
-    exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
 }
 
 $post = get_post();
 
-if (AnyCommentIntegrationSettings::is_sass_comments_show()):
+if ( AnyCommentIntegrationSettings::is_sass_comments_show() ):
 
-    $app_id = AnyCommentServiceApi::getSyncAppId();
+	$app_id = AnyCommentServiceApi::getSyncAppId();
 
 
-    if (empty($app_id)) {
-        if (current_user_can('manage_options') || current_user_can('manage_network')) {
-            $message = sprintf(
-                __('In order to use AnyComment.Cloud, you need to <a href="%s" target="_blank">register</a>, add website and click "Synchronize". This notification is not shown to regular users, just administrators and moderators.', 'anycomment'),
-                AnyCommentLinkHelper::get_service_website() . '/site/signup'
-            );
-            echo <<<HTML
+	if ( empty( $app_id ) ) {
+		if ( current_user_can( 'manage_options' ) || current_user_can( 'manage_network' ) ) {
+			$message = sprintf(
+				__( 'In order to use AnyComment.Cloud, you need to <a href="%s" target="_blank">register</a>, add website and click "Synchronize". This notification is not shown to regular users, just administrators and moderators.', 'anycomment' ),
+				AnyCommentLinkHelper::get_service_website() . '/site/signup'
+			);
+			echo <<<HTML
 <div id="comments" class="comments-area">
     <p style="color: red;">$message</p>
 </div>
 HTML;
-            return;
-        }
-    }
 
-    $preview = null;
-    $title = null;
-    $author = null;
+			return;
+		}
+	}
 
-    $root_id = 'anycomment-app';
+	$preview = null;
+	$title   = null;
+	$author  = null;
 
-    if (!empty($post)) {
-        $page_url = get_permalink($post);
+	$root_id = 'anycomment-app';
 
-        $post_thumbnail_url = get_the_post_thumbnail_url($post);
+	if ( ! empty( $post ) ) {
+		$page_url = get_permalink( $post );
 
-        $title = $post->post_title;
-        $preview = $post_thumbnail_url !== false ? $post_thumbnail_url : null;
+		$post_thumbnail_url = get_the_post_thumbnail_url( $post );
 
-        $first_name = get_the_author_meta('first_name', $post->post_author);
-        $last_name = get_the_author_meta('last_name', $post->post_author);
+		$title   = $post->post_title;
+		$preview = $post_thumbnail_url !== false ? $post_thumbnail_url : null;
 
-        if (!empty($first_name) || !empty($last_name)) {
-            $author = trim($first_name . ' ' . $last_name);
-        } else {
-            $author = get_the_author_meta('nickname', $post->post_author);
-        }
+		$first_name = get_the_author_meta( 'first_name', $post->post_author );
+		$last_name  = get_the_author_meta( 'last_name', $post->post_author );
 
-        $root_id .= '-' . $post->ID;
-    }
-    ?>
+		if ( ! empty( $first_name ) || ! empty( $last_name ) ) {
+			$author = trim( $first_name . ' ' . $last_name );
+		} else {
+			$author = get_the_author_meta( 'nickname', $post->post_author );
+		}
+
+		$root_id .= '-' . $post->ID;
+	}
+	?>
     <div id="comments" class="comments-area">
         <div id="<?= $root_id ?>"></div>
     </div>
@@ -74,18 +75,25 @@ HTML;
             preview: "<?php echo $preview ?>",
             title: "<?php echo $title ?>",
             author: "<?php echo $author ?>",
-        })
+        });
     </script>
     <script type="text/javascript" async src="https://cdn.anycomment.io/assets/js/launcher.js"></script>
 <?php else: ?>
     <div id="comments" class="comments-area">
         <div id="anycomment-root"></div>
+        <script>
+            AnyComment = window.AnyComment || [];
+            AnyComment.WP = [];
+            AnyComment.WP.push({
+                root: 'anycomment-root',
+            });
+        </script>
     </div>
 <?php endif; ?>
 
-<?php if (AnyCommentGenericSettings::is_seo_on()) : ?>
+<?php if ( AnyCommentGenericSettings::is_seo_on() ) : ?>
     <noscript>
-        <?php echo (new AnyCommentSeoFriendly($post->ID))->render() ?>
+		<?php echo ( new AnyCommentSeoFriendly( $post->ID ) )->render() ?>
     </noscript>
 <?php endif; ?>
 

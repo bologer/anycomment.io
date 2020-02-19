@@ -109,7 +109,7 @@ class CommentAttachments extends AnyCommentComponent {
         const {attachments} = this.props;
 
         if (!attachments || attachments.length <= 0)
-            return (null);
+            return null;
 
         const renderedGallery = attachments.map((obj, i) => {
             const type = (obj.file_type || ''),
@@ -181,7 +181,7 @@ class CommentAttachments extends AnyCommentComponent {
             {attachments, settings} = this.props;
 
         if (!attachments || attachments.length <= 0) {
-            return (null);
+            return null;
         }
 
         const theme = {

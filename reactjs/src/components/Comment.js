@@ -6,6 +6,7 @@ import CommentFooter from './CommentFooter';
 import CommentBody from './CommentBody';
 import CommentAttachments from "./CommentAttachments";
 import SendComment from './SendComment'
+import {fetchDeleteComment} from '../core/comment/CommentActions';
 
 
 /**
@@ -19,7 +20,6 @@ class Comment extends AnyCommentComponent {
         this.state = {
             likesCount: props.comment.meta.likes,
             hasLike: props.comment.meta.has_like,
-
             action: '',
         };
     }
@@ -97,7 +97,7 @@ class Comment extends AnyCommentComponent {
      */
     onDelete = (e, comment) => {
         e.preventDefault();
-        this.props.handleDelete(comment);
+        dispatch(fetchDeleteComment(comment.id));
     };
 
     render() {
@@ -112,7 +112,6 @@ class Comment extends AnyCommentComponent {
                 <ul className="anycomment anycomment-list anycomment-list-child">
                     {comment.children.map(childrenComment => (
                         <Comment
-                            handleDelete={this.props.handleDelete}
                             loadComments={this.props.loadComments}
                             handleUnsetAction={this.handleUnsetAction}
                             handleJustAdded={this.props.handleJustAdded}
@@ -129,7 +128,6 @@ class Comment extends AnyCommentComponent {
                     comment={comment}
                     handleUnsetAction={this.handleUnsetAction}
                     handleJustAdded={this.props.handleJustAdded}
-                    loadComments={this.props.loadComments}
                 />
             </div> : '';
 
@@ -164,8 +162,6 @@ class Comment extends AnyCommentComponent {
             </li>
         )
     }
-
-
 }
 
 export default Comment;

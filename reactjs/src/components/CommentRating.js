@@ -89,7 +89,7 @@ class CommentRating extends AnyCommentComponent {
         const {settings} = this.props;
 
         if (settings.options.commentRating !== 'likes_dislikes') {
-            return (null);
+            return null;
         }
 
         const {rating, hasLike, hasDislike} = this.state;

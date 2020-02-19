@@ -99,7 +99,7 @@ class Subscribe extends AnyCommentComponent {
 
     render() {
         if (!this.shouldRender()) {
-            return (null);
+            return null;
         }
 
         const {email} = this.state;

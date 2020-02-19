@@ -1,8 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import {toast} from 'react-toastify';
-import CommonHelper from "./helpers/CommonHelper";
-
 
 /**
  * Generic wrapper for React component.
@@ -13,129 +10,14 @@ class AnyCommentComponent extends React.Component {
         settings: 'anyCommentApiSettings' in window ? window.anyCommentApiSettings : null,
         user: 'anyCommentApiSettings' in window ? window.anyCommentApiSettings.user : null,
         axios: axios.create({
-            baseURL: 'anyCommentApiSettings' in window ? window.anyCommentApiSettings.restUrl : '',
+            baseURL: process.env.ENV === 'dev' ?
+                process.env.API_URL :
+                ('anyCommentApiSettings' in window ? window.anyCommentApiSettings.restUrl : ''),
             timeout: 10000,
         }),
     };
 
-    /**
-     * Move to comment and highlight it for some period.
-     *
-     * @param id
-     * @param highlightTime
-     * @param e
-     * @returns {boolean}
-     */
-    moveToCommentAndHighlight(id, highlightTime = 2500, e) {
 
-        if (!id) {
-            return false;
-        }
-
-        if (id.indexOf('#') !== -1) {
-            id = id.replace('#', '');
-        }
-
-        const element = document.getElementById(id),
-            highlightClass = 'comment-single-highlight';
-
-        if (!element) {
-            return false;
-        }
-
-        this.moveToElement(id, function () {
-
-            element.classList.add(highlightClass);
-
-            setTimeout(function () {
-                element.classList.remove(highlightClass);
-            }, highlightTime);
-        });
-
-        return false;
-    }
-
-    /**
-     * Move to specified element.
-     *
-     * @param id
-     * @param callback
-     */
-    moveToElement(id, callback) {
-        CommonHelper.moveToElement(id, callback);
-    }
-
-    /**
-     * Check for generic comments anchor.
-     * Primarily this can be used to move users directly to comments section.
-     *
-     * @returns {boolean}
-     */
-    hasCommentSectionAnchor() {
-        const hash = window.location.hash;
-        return hash !== '' && /#(comments|respond|to-comments|load-comments)$/.test(hash);
-    }
-
-    /**
-     * Check for specific comments.
-     * Can be used to load user to specific comment.
-     *
-     * @returns {boolean}
-     */
-    hasSpecificCommentAnchor() {
-        const hash = window.location.hash;
-        return hash !== "" && /#comment-\d{1,20}$/.test(hash);
-    }
-
-    /**
-     * Show success message toast.
-     * @param message
-     * @param options
-     */
-    showSuccess(message, options = null) {
-        if (!message) {
-            return false;
-        }
-
-        toast.success(message, options);
-    }
-
-    /**
-     * Show error message toast. It can accept axios error, message
-     * will be automatically retrieved.
-     *
-     * @param data
-     * @param options
-     * @returns {boolean}
-     */
-    showError(data, options = null, toastId = null) {
-        if (!data) {
-            return false;
-        }
-
-        let message = '';
-
-        if ('response' in data && 'data' in data.response) {
-            message = data.response.data.message;
-        } else {
-            message = data;
-        }
-
-        if (toastId !== null) {
-            if (!('render' in options)) {
-                options.render = message;
-            }
-
-            if (!('type' in options)) {
-                options.type = toast.TYPE.ERROR;
-            }
-
-            toast.update(toastId, options);
-            return;
-        }
-
-        toast.error(message, options);
-    }
 
     /**
      * Check whether user is guest or not.
@@ -179,7 +61,7 @@ class AnyCommentComponent extends React.Component {
 
 
     getComment() {
-        return this.localGet('anycomment-content')
+        return this.localGet('anycomment-content');
     }
 
     getAuthorName() {
@@ -195,7 +77,7 @@ class AnyCommentComponent extends React.Component {
     }
 
     dropComment() {
-        this.localDelete('anycomment-content')
+        this.localDelete('anycomment-content');
     }
 
     dropAuthorName() {
