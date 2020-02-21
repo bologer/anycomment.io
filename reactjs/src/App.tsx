@@ -14,9 +14,6 @@ import { commentsVisible, handleScrollToComments } from './helpers/comment'
 
 const store = configureStore({});
 
-const ROOT_ELEMENT = 'anycomment-root';
-const ROOT_ELEMENT_INNER = 'anycomment-root-inner';
-
 /**
  * App is main component of the application.
  */
