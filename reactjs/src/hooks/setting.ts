@@ -14,7 +14,7 @@ import {
  * @param defaultValue
  */
 export function useOption(key: keyof ConfigurationOption, defaultValue: any = undefined) {
-    const context = useContext<ContextValueProps | undefined>(AnyCommentContext);
+    const context = useContext<ContextValueProps>(AnyCommentContext);
 
     if (!context || typeof context === 'object' && !context.settings.options) {
         return defaultValue;
@@ -28,25 +28,25 @@ export function useOption(key: keyof ConfigurationOption, defaultValue: any = un
 /**
  * Get all available configuration options.
  */
-export function useOptions(): ConfigurationOption | undefined {
-    const contextValue = useContext<ContextValueProps | undefined>(AnyCommentContext);
+export function useOptions(): ConfigurationOption {
+    const contextValue = useContext<ContextValueProps>(AnyCommentContext);
 
     return contextValue && contextValue.settings.options;
 }
 
-export function useSettings(): SettingContextProps | undefined {
-    const contextValue = useContext<ContextValueProps | undefined>(AnyCommentContext);
+export function useSettings(): SettingContextProps {
+    const contextValue = useContext<ContextValueProps>(AnyCommentContext);
 
     return contextValue && contextValue.settings;
 }
 
-export function useConfig(): ConfigProps | undefined {
-    const contextValue = useContext<ContextValueProps | undefined>(AnyCommentContext);
+export function useConfig(): ConfigProps {
+    const contextValue = useContext<ContextValueProps>(AnyCommentContext);
 
     return contextValue && contextValue.config;
 }
 
-export function getSettings(): SettingContextProps | undefined {
+export function getSettings(): SettingContextProps {
     // @ts-ignore
-    return 'anyCommentApiSettings' in window ? window.anyCommentApiSettings : undefined;
+    return window.anyCommentApiSettings;
 }

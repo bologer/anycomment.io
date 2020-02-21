@@ -191,7 +191,7 @@ export interface AnyCommentProviderProps {
 
 export default function AnyCommentProvider({settings, config, children}: AnyCommentProviderProps & ContextValueProps) {
 
-    const Context: Context<ContextValueProps | undefined> = AnyCommentContext;
+    const Context: Context<ContextValueProps | {}> = AnyCommentContext;
 
     const contextValue = {
         settings,
