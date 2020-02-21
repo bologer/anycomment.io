@@ -160,7 +160,7 @@ EOT;
 		// time added just in case so it is never cached
 		wp_localize_script( 'anycomment-js-bundle', 'anyCommentApiSettings', [
 			'postId'       => $post_id,
-			'nonce'        => is_user_logged_in() ? wp_create_nonce( 'wp_rest' ) : null,
+			'nonce'        => wp_create_nonce( 'wp_rest' ),
 			'locale'       => get_locale(),
 			'restUrl'      => esc_url_raw( rest_url( 'anycomment/v1/' ) ),
 			'commentCount' => ( $res = get_comment_count( $post_id ) ) !== null ? (int) $res['all'] : 0,
