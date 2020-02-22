@@ -1,15 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import Comment from './Comment'
+import CommentItem from './CommentItem'
 import SendComment from './SendComment'
 import {toast} from 'react-toastify';
-import CommentListSummary from "./CommentListSummary";
+import CommentSortHeader from "./CommentSortHeader";
 import Subscribe from './Subscribe'
 import {useOptions, useSettings} from '~/hooks/setting';
 import {hasSpecificCommentAnchor} from "~/helpers/url";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchComments, fetchLoadMore} from "~/core/comment/CommentActions";
 import {StoreProps} from "~/store/reducers";
-import {CommentItem} from "~/typings/models/CommentItem";
+import {CommentModel} from "~/typings/models/CommentModel";
 import {moveToCommentAndHighlight} from "~/helpers/comment";
 import {showError, showSuccess} from "~/helpers/snackbars";
 import {ListResponse} from "~/typings/ListResponse";
@@ -35,7 +35,7 @@ export default function CommentContainer() {
     const [comment, setComment] = useState<CommentItem | undefined>(undefined);
 
     useEffect(() => {
-        dispatch(fetchComments({postId: settings.postId, order: options.sort_order, perPage: options.limit}));
+        dispatch(fetchComments({postId: settings.postId}));
         checkForAnchor();
         //
         // if (options.notifyOnNewComment) {
@@ -54,7 +54,7 @@ export default function CommentContainer() {
     function handleLoadMore() {
         const newOffset = offset + options.limit;
 
-        dispatch(fetchLoadMore({postId: settings.postId, offset: newOffset, perPage: options.limit}));
+        dispatch(fetchLoadMore({postId: settings.postId, offset: newOffset}));
         setOffset(newOffset);
     }
 
@@ -98,7 +98,7 @@ export default function CommentContainer() {
         setComment(undefined);
     }
 
-    function onFetched(response: ListResponse<CommentItem>) {
+    function onFetched(response: ListResponse<CommentModel>) {
 
         if (response.items.length === 0) {
             return (
@@ -112,7 +112,7 @@ export default function CommentContainer() {
             return (
                 <>
                     {response.items.map(comment => (
-                        <Comment
+                        <CommentItem
                             handleUnsetAction={handleUnsetAction}
                             handleJustAdded={handleJustAdded}
                             key={comment.id}
@@ -130,6 +130,8 @@ export default function CommentContainer() {
                 </>
             )
         }
+
+        return null;
     }
 
     return (
@@ -140,7 +142,7 @@ export default function CommentContainer() {
                 handleUnsetAction={handleUnsetAction}
                 handleJustAdded={handleJustAdded}
             />
-            <CommentListSummary />
+            <CommentSortHeader />
             <Subscribe />
 
             <ReducerResolver

@@ -64,14 +64,13 @@
     // List of inputs: name, email, website
     &__inputs {
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       flex-grow: 2;
       justify-content: space-between;
       margin-bottom: 20px;
 
       &-item {
-        flex-grow: 1;
-        padding-right: 5px;
+        margin-bottom: 4px;
 
         &:last-of-type {
           padding-right: 0;
@@ -303,7 +302,6 @@
       }
 
       &__inputs {
-        flex-direction: column;
         margin-bottom: 10px;
 
         &-item {

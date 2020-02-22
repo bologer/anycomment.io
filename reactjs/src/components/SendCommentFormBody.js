@@ -1,11 +1,11 @@
-import React from 'react'
-import AnyCommentComponent from "./AnyCommentComponent"
-import Dropzone from 'react-dropzone'
-import {toast} from 'react-toastify'
-import CommentAttachments from './CommentAttachments'
-import CommentEditor from './CommentEditor';
+import React from 'react';
+import AnyCommentComponent from "./AnyCommentComponent";
+import Dropzone from 'react-dropzone';
+import {toast} from 'react-toastify';
+import CommentAttachments from './CommentAttachments';
 import Icon from "./Icon";
-import {faPaperclip} from '@fortawesome/free-solid-svg-icons'
+import {faPaperclip} from '@fortawesome/free-solid-svg-icons';
+import Editor from './Editor';
 
 /**
  * Display comment field of the form.
@@ -19,6 +19,7 @@ class SendCommentFormBody extends AnyCommentComponent {
             dropzoneActive: false,
         };
 
+        this.editorRef = React.createRef();
 
         this.onDragEnter = this.onDragEnter.bind(this);
         this.onDragLeave = this.onDragLeave.bind(this);
@@ -101,7 +102,7 @@ class SendCommentFormBody extends AnyCommentComponent {
                     headers: headers,
                     timeout: 30000,
                 })
-            .then(function (response) {
+            .then(function(response) {
 
                 const files = response.data.files,
                     attachments = self.props.attachments;
@@ -123,7 +124,7 @@ class SendCommentFormBody extends AnyCommentComponent {
                     className: 'rotateY animated'
                 });
             })
-            .catch(function (error) {
+            .catch(function(error) {
                 self.showError(error, {
                     autoClose: 1500
                 }, toastId);
@@ -147,11 +148,16 @@ class SendCommentFormBody extends AnyCommentComponent {
         return false;
     };
 
+    handleEditorRef = (editorRef) => {
+        this.editorRef = editorRef;
+        this.editorRef.focus();
+    };
+
     render() {
         const settings = this.getSettings();
         const options = settings.options;
         const {dropzoneActive} = this.state;
-        const {attachments} = this.props;
+        const {attachments, comment} = this.props;
 
         let dropzoneRef;
 
@@ -164,10 +170,14 @@ class SendCommentFormBody extends AnyCommentComponent {
                 <div className="anycomment anycomment-form-body-outliner__select-file"
                      title={settings.i18.upload_file}
                      onClick={() => {
-                         dropzoneRef.open()
-                     }}><Icon icon={faPaperclip}/></div> : ''}
+                         dropzoneRef.open();
+                     }}><Icon icon={faPaperclip} /></div> : ''}
 
-            <CommentEditor {...this.props} />
+            <Editor
+                entropy={comment && comment.id}
+                refHandler={this.handleEditorRef}
+                placeholder={settings.i18.add_comment}
+            />
         </div>;
 
         if (!canUpload) {
@@ -190,8 +200,8 @@ class SendCommentFormBody extends AnyCommentComponent {
             <CommentAttachments
                 handleAttachmentChange={this.props.handleAttachmentChange}
                 attachments={attachments}
-                showDeleteAction={!this.isGuest()}/>
-        </Dropzone>
+                showDeleteAction={!this.isGuest()} />
+        </Dropzone>;
     }
 }
 

@@ -7,26 +7,31 @@ import {StoreProps} from "~/store/reducers";
 import {CommentReducerProps} from "~/core/comment/commentReducers";
 import ReducerResolver from "~/components/ReducerResolver";
 import {ListResponse} from "~/typings/ListResponse";
-import {CommentItem} from "~/typings/models/CommentItem";
-import {fetchComments} from "~/core/comment/CommentActions";
+import {fetchCommentsSalient} from "~/core/comment/CommentActions";
+import {CommentModel} from "~/typings/models/CommentModel";
 
-export default function CommentListSummary() {
+/**
+ * Renders header with elements to sort them asc./desc. order.
+ *
+ * @constructor
+ */
+export default function CommentSortHeader() {
 
     const settings = useSettings();
-
     const dispatch = useDispatch();
     const {list: comments, listFilter} = useSelector<StoreProps, CommentReducerProps>(state => state.comments);
 
     function handleSorting() {
-        dispatch(fetchComments({postId: settings.postId, order: listFilter.order === 'asc' ? 'desc' : 'asc'}))
+        const newOrder = listFilter && listFilter.order === 'asc' ? 'desc' : 'asc';
+        dispatch(fetchCommentsSalient({postId: settings.postId, order: newOrder}))
     }
 
-    function onFetched(response: ListResponse<CommentItem>) {
-        const faSort = listFilter.order === 'asc' ?
+    function onFetched(response: ListResponse<CommentModel>) {
+        const faSort = listFilter && listFilter.order === 'asc' ?
             faSortAmountDown :
             faSortAmountUp;
 
-        const sortString = listFilter.order === 'asc' ?
+        const sortString = listFilter && listFilter.order === 'desc' ?
             settings.i18.sort_oldest :
             settings.i18.sort_newest;
 
@@ -47,3 +52,5 @@ export default function CommentListSummary() {
         <ReducerResolver reducer={comments} fetched={onFetched} showLoader={false} />
     )
 }
+
+CommentSortHeader.displayName = 'CommentSortHeader';

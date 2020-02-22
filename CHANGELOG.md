@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.1.0 - xx.03.2020
+- Now only one form displayed on 'reply' or 'update' actions
+- Comments: rewritten React Hooks
+- Comments: data management rewritten to Redux
+- Comments: rewritten to TypeScript
+- Comments: changed bundle builder to ParcelJS
+- Comments: using Formik to manage forms
+- Comments: website settings now propagated using React Context
+- Comments: now send button is always active. Previously button was changed to active when user started typing.
+- Comments: moved back to classic editor, no more bubble style
+- Comments: removed redundant "Guest" sign from guest users
+- Comments: comment form is now standardized with cloud version which proved to have better UI/UX
+- Comments: replaced Google+ icon with generic Google one, as it was deprecated
+
 ## 0.0.99 – 04.01.2020
 
 **Enhancements:**

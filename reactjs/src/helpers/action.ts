@@ -2,24 +2,25 @@ import axios from '../config/api';
 import qs from 'qs';
 import {AxiosPromise, AxiosError, AxiosResponse, AxiosRequestConfig} from "axios";
 import {getSettings} from "~/hooks/setting";
-import {red} from "@material-ui/core/colors";
 
-export interface FetchGenericProps {
+export interface FetchActions {
+    pre?: string;
+    success: string | ((response: any) => void);
+    failure: string;
+    always?: string;
+}
+
+export interface FetchProps {
     method?: string;
     url: string;
     params?: {};
     data?: {},
-    actions: {
-        pre?: string;
-        success: string;
-        failure: string;
-        always?: string;
-    };
+    actions: FetchActions;
     headers?: {},
     axiosProps?: AxiosRequestConfig;
 }
 
-export function fetchGeneric({
+export function fetch({
     method = 'get',
     url,
     data,
@@ -32,7 +33,7 @@ export function fetchGeneric({
     },
     headers = {},
     ...axiosProps
-}: FetchGenericProps): AxiosPromise {
+}: FetchProps): AxiosPromise {
 
     if (!headers || headers && !headers['X-WP-Nonce']) {
         const settings = getSettings();
@@ -57,7 +58,11 @@ export function fetchGeneric({
             headers,
             ...axiosProps,
         }).then(function(response: AxiosResponse) {
-            dispatch({type: success, payload: response.data});
+            if (typeof success === 'string') {
+                dispatch({type: success, payload: response.data});
+            } else if (typeof success === 'function') {
+                dispatch(success(response.data));
+            }
         }).catch(function(error: AxiosError) {
             dispatch({type: failure, payload: error});
         }).finally(() => {
@@ -69,7 +74,6 @@ export function fetchGeneric({
 }
 
 export interface ManageResponseProps {
-    formik?: FormikActions<any> | null;
     reducer: any;
     dispatch?: any;
     onSuccess?: (response: any | null | undefined) => void;

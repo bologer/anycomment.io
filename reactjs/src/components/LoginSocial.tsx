@@ -1,6 +1,6 @@
 import React from 'react'
-import SocialIcon from './SocialIcon'
-import { SocialItemOption } from './AnyCommentProvider';
+import SocialIcon from "~/components/SocialIcon";
+import {SocialItemOption} from './AnyCommentProvider';
 
 export interface LoginSocialProps {
     social: SocialItemOption;
@@ -21,7 +21,7 @@ export default function LoginSocial({social}: LoginSocialProps) {
                target="_parent"
                title={social.label}
                className={"anycomment-login-with-list-" + social.slug}>
-                <SocialIcon slug={social.slug} alt={social.label} />
+                <SocialIcon slug={social.slug} title={social.label} />
             </a>
         </li>
     );

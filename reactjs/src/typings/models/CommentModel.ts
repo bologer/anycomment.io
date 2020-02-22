@@ -5,7 +5,7 @@ export interface CommentOwner {
     profile_url: string;
 }
 
-export interface CommentItem {
+export interface CommentModel {
     id: number;
     post: number;
     parent: number;
@@ -17,7 +17,7 @@ export interface CommentItem {
     date_native: string; // e.g. "14.02.2020 17:38"
     content: string;
     avatar_url: string;
-    children: null | CommentItem[];
+    children: null | CommentModel[];
     owner: CommentOwner;
     attachments: [];
     permissions: {

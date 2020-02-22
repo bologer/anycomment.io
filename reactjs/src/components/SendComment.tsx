@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import SendCommentGuest from './CommentFormGuest';
 import SendCommentFormBody from './SendCommentFormBody';
+import SendCommentFormBodyAvatar from './SendCommentFormBodyAvatar'
 import ReCAPTCHA from "react-google-recaptcha";
 import {toast} from 'react-toastify';
 import DataProcessing from './DataProcessing'
@@ -8,20 +9,27 @@ import Icon from './Icon'
 import {faTimes} from '@fortawesome/free-solid-svg-icons'
 import {useOptions, useSettings} from "~/hooks/setting";
 import {useFormik} from "formik";
-import {CommentItem} from "~/typings/models/CommentItem";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchComments, fetchCreateComment} from "~/core/comment/CommentActions";
+import {
+    fetchCommentsSalient,
+    fetchCreateComment,
+    invalidateCommentForm,
+} from "~/core/comment/CommentActions";
 import {StoreProps} from "~/store/reducers";
 import {CommentReducerProps} from "~/core/comment/commentReducers";
 import {manageReducer} from "~/helpers/action";
 import {isGuest} from "~/helpers/user";
 import ReactQuill from "react-quill";
+import {CommentModel} from "~/typings/models/CommentModel";
+import styled from 'styled-components';
+import LoginSocialList from "~/components/LoginSocialList";
+import {SocialItemOption} from "~/components/AnyCommentProvider";
 
 const recapchaRef = React.createRef();
 
 export interface SendCommentProps {
     action: 'reply' | 'update' | undefined;
-    comment?: CommentItem;
+    comment?: CommentModel;
     handleUnsetAction: () => void; //todo: adopt
     handleJustAdded: () => void; //todo: adopt
 }
@@ -36,6 +44,42 @@ export interface FormValues {
     comment_html: string;
     is_agreement_accepted: boolean;
 }
+
+const Wrapper = styled.div`
+    width: 100%;
+    display: flex;
+`;
+
+const AvatarColumn = styled.div`
+  padding: 0 10px 0 0;
+`;
+
+const EditorColumn = styled.div`
+    margin-left: 0;
+    max-width: 100%;
+    flex: 1 1 0%;
+`;
+
+const GuestFieldsRoot = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 15px;
+`;
+
+const GuestHeader = styled.div`
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 15px;
+    color: rgb(105, 111, 113);
+`;
+
+const SocialListColumn = styled.div`
+    padding-right: 20px;
+`;
+
+const GuestFieldsColumn = styled.div`
+    flex: 1 1 0;
+`;
 
 /**
  * Class SendComment is used process comment before it will be sent.
@@ -54,7 +98,6 @@ export default function SendComment({
 
     const [attachments, setAttachments] = useState<[]>([]);
     const [button_text, setButtonText] = useState(settings.i18.button_send);
-    const [button_enabled, setButtonEnabled] = useState(false);
 
     const formik = useFormik<FormValues>({
         initialValues: {
@@ -69,9 +112,6 @@ export default function SendComment({
         },
         onSubmit: values => {
 
-
-            setButtonEnabled(false);
-
             // if (isCaptchaOn()) {
             //     recapchaRef.current.execute();
             //
@@ -84,40 +124,41 @@ export default function SendComment({
             //             }
             //
             //             return handleGuest(event);
+
             //         }
             //     }, 100);
             // }
 
-            let params = {
-                content: comment_html,
+            let data = {
+                content: values.comment_html,
                 post: settings.postId,
             };
 
-            if (isGuest() && !edit_id) {
-                params.parent = reply_id;
+            if (isReply()) {
+                data.parent = comment.id;
             }
 
-            if (isCaptchaOn()) {
-                params.captcha = recapchaRef.current.getValue();
-
-                if (!params.captcha) {
-                    return false;
-                }
-            }
+            // if (isCaptchaOn()) {
+            //     data.captcha = recapchaRef.current.getValue();
+            //
+            //     if (!data.captcha) {
+            //         return false;
+            //     }
+            // }
 
             if (attachments && attachments.length > 0) {
-                params.attachments = JSON.stringify(attachments);
+                data.attachments = JSON.stringify(attachments);
             }
 
             if (isGuest() && !settings.options.isFormTypeSocials) {
-                params.author_name = author_name;
+                data.author_name = values.author_name;
 
-                if (author_email !== '') {
-                    params.author_email = author_email;
+                if (values.author_email) {
+                    data.author_email = values.author_email;
                 }
 
-                if (author_website !== '') {
-                    params.author_url = author_website;
+                if (values.author_website) {
+                    data.author_url = values.author_website;
                 }
 
                 // this.storeAuthorName(author_name);
@@ -125,7 +166,7 @@ export default function SendComment({
                 // this.storeAuthorWebsite(author_website);
             }
 
-            dispatch(fetchCreateComment(params));
+            dispatch(fetchCreateComment(settings.postId, data));
         },
     });
 
@@ -145,7 +186,7 @@ export default function SendComment({
     useEffect(() => {
         prepareRemembered();
         prepareForm();
-    }, []);
+    }, [action, comment]);
 
     useEffect(() => {
         manageReducer({
@@ -153,7 +194,7 @@ export default function SendComment({
             onSuccess: () => {
                 prepareInitialForm();
                 handleJustAdded();
-                dispatch(fetchComments({postId: settings.postId, order: options.sort_order}));
+                dispatch(fetchCommentsSalient({postId: settings.postId, order: options.sort_order}));
 
                 // const {data} = response;
                 //
@@ -180,20 +221,6 @@ export default function SendComment({
      */
     function isUpdate() {
         return action === 'update';
-    }
-
-    /**
-     * Check whether comment field is empty or not.
-     *
-     * @returns {boolean}
-     */
-    function isCommentEmpty(text: string) {
-        if (text.trim() === '') {
-            return true;
-        }
-
-        const re = /^<p>(<br>|<br\/>|<br\s\/>|\s+|)<\/p>$/gm;
-        return re.test(text);
     }
 
     /**
@@ -227,10 +254,10 @@ export default function SendComment({
         formik.setFieldValue('reply_id', 0);
         formik.setFieldValue('edit_id', '');
         formik.setFieldValue('comment_html', '');
-        formik.setFieldValue('button_enabled', false);
         setAttachments([]);
         // dropComment();
         handleUnsetAction();
+        dispatch(invalidateCommentForm());
     }
 
     /**
@@ -240,11 +267,14 @@ export default function SendComment({
      */
     function prepareReplyForm(comment) {
 
-        formik.setFieldValue('reply_name', comment.author_name);
-        formik.setFieldValue('edit_id', '');
-        formik.setFieldValue('comment_html', '');
+        formik.setValues({
+            ...formik.values,
+            reply_name: comment.author_name,
+            edit_id: '',
+            comment_html: '',
+        }, false);
+
         setButtonText(settings.i18.button_reply);
-        setButtonEnabled(false);
 
         focusCommentField();
     }
@@ -259,12 +289,15 @@ export default function SendComment({
         const commentHtml = comment.content.trim();
 
         if (commentHtml !== '') {
-            formik.setFieldValue('reply_name', '');
-            formik.setFieldValue('edit_id', comment.id);
-            formik.setFieldValue('comment_html', comment.content);
+
+            formik.setValues({
+                ...formik.values,
+                reply_name: '',
+                edit_id: comment.id,
+                comment_html: comment.content,
+            });
 
             setButtonText(settings.i18.button_save);
-            setButtonEnabled(true);
 
             if (comment.attachments && comment.attachments.length > 0) {
                 setAttachments(comment.attachments);
@@ -291,9 +324,7 @@ export default function SendComment({
      * @param text
      */
     function handleEditorChange(text) {
-        setButtonEnabled(!isCommentEmpty(text));
-
-        formik.setFieldValue('comment_html', text);
+        formik.setFieldValue('comment_html', text, false);
         // storeComment(text);
     }
 
@@ -312,7 +343,7 @@ export default function SendComment({
      * @param e
      */
     function handleAgreement(e) {
-        formik.setFieldValue('is_agreement_accepted', e.target.checked);
+        formik.setFieldValue('is_agreement_accepted', e.target.checked, false);
     }
 
     /**
@@ -334,6 +365,39 @@ export default function SendComment({
 
     function onCaptchaError(error) {
         toast.error(error);
+    }
+
+    /**
+     * Check whether it is required to show social icons.
+     *
+     * @returns {*}
+     */
+    function showSocialIcons() {
+        const isAllowedByFormType = options.isFormTypeWordpress || options.isFormTypeSocials || options.isFormTypeAll;
+
+        return isAllowedByFormType && hasAtLeastOneSocial();
+    }
+
+    /**
+     * Check whether at least one social is enabled.
+     *
+     * @returns {boolean}
+     */
+    function hasAtLeastOneSocial() {
+        const socials: SocialItemOption[] = settings.options.socials;
+
+        if (!socials) {
+            return false;
+        }
+
+        let visibleCount = 0;
+        for (let key in socials) {
+            if (socials.hasOwnProperty(key) && socials[key].visible) {
+                visibleCount++;
+            }
+        }
+
+        return visibleCount > 0;
     }
 
     /**
@@ -411,52 +475,75 @@ export default function SendComment({
     }
 
     return (
-        <div
-            className={"anycomment anycomment-form" + formClasses}>
-            <form onSubmit={formik.handleSubmit}>
-                {isGuest() ?
-                    <SendCommentGuest formik={formik} /> :
+
+        <Wrapper className={"anycomment anycomment-form" + formClasses}>
+            {!isGuest() && (
+                <AvatarColumn>
+                    <SendCommentFormBodyAvatar />
+                </AvatarColumn>
+            )}
+            <EditorColumn>
+                <form onSubmit={formik.handleSubmit}>
                     <SendCommentFormBody
+                        comment={comment}
                         attachments={attachments}
                         handleEditorChange={handleEditorChange}
                         editorRef={editorRef}
                         commentHTML={comment_html}
-                        handleAttachmentChange={handleAttachmentChange} />}
+                        handleAttachmentChange={handleAttachmentChange} />
 
-
-                <div className="anycomment anycomment-form__terms">
                     {isGuest() && (
-                        <DataProcessing isAgreementAccepted={is_agreement_accepted}
-                                        onAccept={handleAgreement} />
+                        <>
+                            <GuestFieldsRoot>
+                                {showSocialIcons() && (
+                                    <SocialListColumn>
+                                        <GuestHeader>{settings.i18.login_with}</GuestHeader>
+                                        <div className="anycomment anycomment-form__guest-socials">
+                                            <LoginSocialList />
+                                        </div>
+                                    </SocialListColumn>
+                                )}
+                                <GuestFieldsColumn>
+                                    {options.isFormTypeAll && <GuestHeader>{settings.i18.or_as_guest}</GuestHeader>}
+                                    <SendCommentGuest formik={formik} />
+                                </GuestFieldsColumn>
+                            </GuestFieldsRoot>
+
+                            <div className="anycomment anycomment-form__terms">
+                                <DataProcessing
+                                    isAgreementAccepted={is_agreement_accepted}
+                                    onAccept={handleAgreement} />
+                            </div>
+                        </>
                     )}
-                </div>
 
-                <div className="anycomment anycomment-form__submit">
-                    {isUpdate() || isReply() ? <div
-                        className="anycomment anycomment-form__submit-status">{submitStatus}
-                        <span className="anycomment anycomment-form__submit-status-action"
-                              onClick={prepareInitialForm}><Icon icon={faTimes} /></span>
-                    </div> : ''}
-                    <div className="anycomment anycomment-form__submit-button">
-                        <input type="submit" disabled={!button_enabled}
-                               className="anycomment-btn anycomment-send-comment-body__btn"
-                               value={button_text} />
+                    <div className="anycomment anycomment-form__submit">
+                        {isUpdate() || isReply() && (
+                            <div
+                                className="anycomment anycomment-form__submit-status">{submitStatus}
+                                <span className="anycomment anycomment-form__submit-status-action"
+                                      onClick={prepareInitialForm}><Icon icon={faTimes} /></span>
+                            </div>
+                        )}
+                        <div className="anycomment anycomment-form__submit-button">
+                            <input
+                                type="submit"
+                                className="anycomment-btn anycomment-send-comment-body__btn"
+                                value={button_text}
+                            />
+                        </div>
                     </div>
-                </div>
 
-                <input
-                    type="hidden"
-                    name="parent"
-                    value={reply_id}
-                    className="anycomment"
-                    onChange={formik.handleChange} />
-
-                {!isGuest() && (
-                    <input type="hidden" name="edit_id" value={edit_id} onChange={formik.handleChange} />
-                )}
-
-                {reCaptcha}
-            </form>
-        </div>
+                    <input
+                        type="hidden"
+                        name="parent"
+                        value={reply_id}
+                        className="anycomment"
+                        onChange={formik.handleChange}
+                    />
+                    {reCaptcha}
+                </form>
+            </EditorColumn>
+        </Wrapper>
     );
 }

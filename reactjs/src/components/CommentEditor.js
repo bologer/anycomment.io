@@ -1,6 +1,5 @@
 import React, {Fragment} from 'react';
 import AnyCommentComponent from "./AnyCommentComponent";
-import SendCommentFormBodyAvatar from './SendCommentFormBodyAvatar'
 import ReactQuill from 'react-quill';
 
 class CommentEditor extends AnyCommentComponent {
@@ -61,17 +60,14 @@ class CommentEditor extends AnyCommentComponent {
         let editorRef = this.props.editorRef;
 
         return (
-            <Fragment>
-                <SendCommentFormBodyAvatar/>
-                <ReactQuill
-                    className={'anycomment-quill-editor anycomment-lang-' + this.getLocale()}
-                    theme="bubble"
-                    value={commentHTML}
-                    placeholder={settings.i18.add_comment}
-                    ref={editorRef}
-                    modules={this.getModules()}
-                    onChange={handleEditorChange}/>
-            </Fragment>
+            <ReactQuill
+                className={'anycomment-quill-editor anycomment-lang-' + this.getLocale()}
+                theme="bubble"
+                value={commentHTML}
+                placeholder={settings.i18.add_comment}
+                ref={editorRef}
+                modules={this.getModules()}
+                onChange={handleEditorChange} />
         );
     }
 }

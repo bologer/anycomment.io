@@ -13,16 +13,6 @@ export default function CommentFormGuest({formik}: CommentFormGuestProps) {
     const settings = useSettings();
     const options = useOptions();
     const translations = settings.i18;
-    const inputs: string[] = settings.options.guestInputs;
-
-    /**
-     * Check whether it is required to show social icons.
-     *
-     * @returns {*}
-     */
-    function showSocialIcons() {
-        return options.isFormTypeWordpress || options.isFormTypeSocials || options.isFormTypeAll;
-    }
 
     /**
      * Check whether it is required to show guest fields such as name, email, website.
@@ -32,6 +22,8 @@ export default function CommentFormGuest({formik}: CommentFormGuestProps) {
     function showGuestFields() {
         return options.isFormTypeGuests || options.isFormTypeAll;
     }
+
+    const inputs: string[] = settings.options.guestInputs;
 
     let elementInputs: React.ReactElement[] = [];
 
@@ -47,6 +39,7 @@ export default function CommentFormGuest({formik}: CommentFormGuestProps) {
                            onChange={formik.handleChange}
                     />
                 </div>);
+
         } else if (el === 'email') {
             elementInputs.push(
                 <div className="anycomment anycomment-form__inputs-item anycomment-form__inputs-email">
@@ -70,16 +63,9 @@ export default function CommentFormGuest({formik}: CommentFormGuestProps) {
         }
     });
 
-    return <React.Fragment>
-        {showSocialIcons() && (
-            <div className="anycomment anycomment-form__guest-socials">
-                <LoginSocialList />
-            </div>
-        )}
-
-        <div
-            className={"anycomment anycomment-form__inputs anycomment-form__inputs-" + elementInputs.length}>
+    return (
+        <div className={"anycomment anycomment-form__inputs anycomment-form__inputs-" + elementInputs.length}>
             {elementInputs}
         </div>
-    </React.Fragment>;
+    );
 }
