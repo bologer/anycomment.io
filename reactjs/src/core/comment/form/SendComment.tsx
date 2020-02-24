@@ -1,19 +1,17 @@
 import React, {useEffect, useRef, useState} from 'react';
-import SendCommentGuest from './CommentFormGuest';
 import SendCommentFormBody from './SendCommentFormBody';
 import SendCommentFormBodyAvatar from './SendCommentFormBodyAvatar'
 import ReCAPTCHA from "react-google-recaptcha";
-import {toast} from 'react-toastify';
 import DataProcessing from './DataProcessing'
-import Icon from './Icon'
+import Icon from '~/components/Icon'
 import {faTimes} from '@fortawesome/free-solid-svg-icons'
 import {useOptions, useSettings} from "~/hooks/setting";
 import {useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
 import {
     fetchCommentsSalient,
-    fetchCreateComment,
-    invalidateCommentForm,
+    fetchCreateComment, fetchUpdateComment,
+    invalidateCommentForm, invalidateCreateComment, invalidateUpdateComment,
 } from "~/core/comment/CommentActions";
 import {StoreProps} from "~/store/reducers";
 import {CommentReducerProps} from "~/core/comment/commentReducers";
@@ -22,25 +20,21 @@ import {isGuest} from "~/helpers/user";
 import ReactQuill from "react-quill";
 import {CommentModel} from "~/typings/models/CommentModel";
 import styled from 'styled-components';
-import LoginSocialList from "~/components/LoginSocialList";
+import LoginSocialList from "./LoginSocialList";
 import {SocialItemOption} from "~/components/AnyCommentProvider";
+import {successSnackbar} from "~/core/notifications/NotificationActions";
 
 const recapchaRef = React.createRef();
 
 export interface SendCommentProps {
-    action: 'reply' | 'update' | undefined;
+    action?: 'reply' | 'update';
     comment?: CommentModel;
-    handleUnsetAction: () => void; //todo: adopt
-    handleJustAdded: () => void; //todo: adopt
 }
 
 export interface FormValues {
-    reply_id: number;
     author_name: string;
     author_email: string;
     author_website: string;
-    reply_name: string;
-    edit_id: string;
     comment_html: string;
     is_agreement_accepted: boolean;
 }
@@ -84,29 +78,21 @@ const GuestFieldsColumn = styled.div`
 /**
  * Class SendComment is used process comment before it will be sent.
  */
-export default function SendComment({
-    action,
-    comment,
-    handleUnsetAction,
-    handleJustAdded,
-}: SendCommentProps) {
+export default function SendComment({action, comment}: SendCommentProps) {
 
     const dispatch = useDispatch();
-    const {create} = useSelector<StoreProps, CommentReducerProps>(state => state.comments);
+    const {create, update} = useSelector<StoreProps, CommentReducerProps>(state => state.comments);
     const options = useOptions();
     const settings = useSettings();
 
     const [attachments, setAttachments] = useState<[]>([]);
-    const [button_text, setButtonText] = useState(settings.i18.button_send);
+    const [buttonText, setButtonText] = useState(settings.i18.button_send);
 
     const formik = useFormik<FormValues>({
         initialValues: {
-            reply_id: 0,
             author_name: '',
             author_email: '',
             author_website: '',
-            reply_name: '',
-            edit_id: '',
             comment_html: '',
             is_agreement_accepted: false,
         },
@@ -160,23 +146,19 @@ export default function SendComment({
                 if (values.author_website) {
                     data.author_url = values.author_website;
                 }
-
-                // this.storeAuthorName(author_name);
-                // this.storeAuthorEmail(author_email);
-                // this.storeAuthorWebsite(author_website);
             }
 
-            dispatch(fetchCreateComment(settings.postId, data));
+            if (!action || isReply()) {
+                dispatch(fetchCreateComment(settings.postId, data));
+            }
+
+            if (isUpdate()) {
+                dispatch(fetchUpdateComment(comment && comment.id, data))
+            }
         },
     });
 
     const {
-        reply_id,
-        author_name,
-        author_email,
-        author_website,
-        reply_name,
-        edit_id,
         comment_html,
         is_agreement_accepted,
     } = formik.values;
@@ -191,19 +173,34 @@ export default function SendComment({
     useEffect(() => {
         manageReducer({
             reducer: create,
-            onSuccess: () => {
+            onSuccess: (response) => {
                 prepareInitialForm();
-                handleJustAdded();
                 dispatch(fetchCommentsSalient({postId: settings.postId, order: options.sort_order}));
 
-                // const {data} = response;
-                //
-                // if (data && data.response && typeof data.response === 'string') {
-                //     toast.success(data.response);
-                // }
+                if (response.message) {
+                    dispatch(successSnackbar(response.message));
+                }
+
+                dispatch(invalidateCreateComment());
             },
         });
     }, [create]);
+
+    useEffect(() => {
+        manageReducer({
+            reducer: update,
+            onSuccess: (response) => {
+                prepareInitialForm();
+                dispatch(fetchCommentsSalient({postId: settings.postId, order: options.sort_order}));
+
+                if (response.message) {
+                    dispatch(successSnackbar(response.message));
+                }
+
+                dispatch(invalidateUpdateComment());
+            },
+        });
+    }, [update]);
 
     /**
      * Check whether reply to comment action is called.
@@ -233,7 +230,7 @@ export default function SendComment({
     function prepareForm() {
         switch (action) {
             case 'reply':
-                prepareReplyForm(comment);
+                prepareReplyForm();
                 break;
             case 'update':
                 prepareUpdateForm(comment);
@@ -248,32 +245,19 @@ export default function SendComment({
      * Reinit comment form. Initial comment form state.
      */
     function prepareInitialForm() {
-        formik.setFieldValue('comment_text', '');
-        formik.setFieldValue('reply_name', '');
         formik.setFieldValue('button_text', settings.i18.button_send);
-        formik.setFieldValue('reply_id', 0);
-        formik.setFieldValue('edit_id', '');
         formik.setFieldValue('comment_html', '');
         setAttachments([]);
         // dropComment();
-        handleUnsetAction();
         dispatch(invalidateCommentForm());
     }
 
     /**
      * Prepare comment form for comment reply state.
-     *
-     * @param comment
      */
-    function prepareReplyForm(comment) {
+    function prepareReplyForm() {
 
-        formik.setValues({
-            ...formik.values,
-            reply_name: comment.author_name,
-            edit_id: '',
-            comment_html: '',
-        }, false);
-
+        formik.setFieldValue('comment_html', '', false);
         setButtonText(settings.i18.button_reply);
 
         focusCommentField();
@@ -290,12 +274,7 @@ export default function SendComment({
 
         if (commentHtml !== '') {
 
-            formik.setValues({
-                ...formik.values,
-                reply_name: '',
-                edit_id: comment.id,
-                comment_html: comment.content,
-            });
+            formik.setFieldValue('comment_html', comment.content);
 
             setButtonText(settings.i18.button_save);
 
@@ -443,6 +422,63 @@ export default function SendComment({
         // }, 300);
     }
 
+    /**
+     * Check whether it is required to show guest fields such as name, email, website.
+     *
+     * @returns {*}
+     */
+    function showGuestFields() {
+        return options.isFormTypeGuests || options.isFormTypeAll;
+    }
+
+    function renderGuestFields() {
+        const inputs: string[] = settings.options.guestInputs;
+
+        let elementInputs: React.ReactElement[] = [];
+
+        inputs.forEach(el => {
+            if (el === 'name') {
+                elementInputs.push(
+                    <div className="anycomment anycomment-form__inputs-item anycomment-form__inputs-name">
+                        <label form="anycomment-author-name">{translations.name} <span
+                            className="anycomment-label-import">*</span></label>
+                        <input type="text" name="author_name" id="anycomment-author-name"
+                               value={formik.values.author_name}
+                               required={true}
+                               onChange={formik.handleChange}
+                        />
+                    </div>);
+
+            } else if (el === 'email') {
+                elementInputs.push(
+                    <div className="anycomment anycomment-form__inputs-item anycomment-form__inputs-email">
+                        <label form="anycomment-author-email">{translations.email} <span
+                            className="anycomment-label-import">*</span></label>
+                        <input type="email" name="author_email" id="anycomment-author-email"
+                               value={formik.values.author_email}
+                               required={true}
+                               onChange={formik.handleChange}
+                        />
+                    </div>);
+            } else if (el === 'website') {
+                elementInputs.push(
+                    <div className="anycomment-form__inputs-item anycomment-form__inputs-website">
+                        <label form="anycomment-author-website">{translations.website}</label>
+                        <input type="text" name="author_website" id="anycomment-author-website"
+                               value={formik.values.author_website}
+                               onChange={formik.handleChange}
+                        />
+                    </div>);
+            }
+        });
+
+        return (
+            <div className={"anycomment anycomment-form__inputs anycomment-form__inputs-" + elementInputs.length}>
+                {elementInputs}
+            </div>
+        );
+    }
+
     const translations = settings.i18;
 
     let reCaptcha = '';
@@ -468,7 +504,7 @@ export default function SendComment({
 
     if (isReply()) {
         formClasses += ' anycomment-form-reply';
-        submitStatus = translations.reply_to + " " + reply_name;
+        submitStatus = translations.reply_to + " " + comment && comment.author_name;
     } else if (isUpdate()) {
         formClasses += ' anycomment-form-update';
         submitStatus = translations.editing;
@@ -485,11 +521,12 @@ export default function SendComment({
             <EditorColumn>
                 <form onSubmit={formik.handleSubmit}>
                     <SendCommentFormBody
-                        comment={comment}
+                        formik={formik}
                         attachments={attachments}
                         handleEditorChange={handleEditorChange}
                         editorRef={editorRef}
                         commentHTML={comment_html}
+                        comment={comment}
                         handleAttachmentChange={handleAttachmentChange} />
 
                     {isGuest() && (
@@ -504,8 +541,8 @@ export default function SendComment({
                                     </SocialListColumn>
                                 )}
                                 <GuestFieldsColumn>
-                                    {options.isFormTypeAll && <GuestHeader>{settings.i18.or_as_guest}</GuestHeader>}
-                                    <SendCommentGuest formik={formik} />
+                                    {showGuestFields() && <GuestHeader>{settings.i18.or_as_guest}</GuestHeader>}
+                                    {showGuestFields() && renderGuestFields()}
                                 </GuestFieldsColumn>
                             </GuestFieldsRoot>
 
@@ -529,18 +566,11 @@ export default function SendComment({
                             <input
                                 type="submit"
                                 className="anycomment-btn anycomment-send-comment-body__btn"
-                                value={button_text}
+                                value={buttonText}
                             />
                         </div>
                     </div>
 
-                    <input
-                        type="hidden"
-                        name="parent"
-                        value={reply_id}
-                        className="anycomment"
-                        onChange={formik.handleChange}
-                    />
                     {reCaptcha}
                 </form>
             </EditorColumn>

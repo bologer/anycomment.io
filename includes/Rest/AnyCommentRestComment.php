@@ -349,21 +349,15 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			$current_page = 1;
 		}
 
-		$envelope = [
-			'status'   => 'ok',
-			'response' => [
-				'items' => $comments,
-				'meta'  => [
-					'total_count'  => $total_comments,
-					'page_count'   => $max_pages,
-					'current_page' => $current_page,
-					'per_page'     => $request['per_page']
-				]
-			],
-			'error'    => null
-		];
-
-		$response = rest_ensure_response( $envelope );
+		$response = rest_ensure_response( [
+			'items' => $comments,
+			'meta'  => [
+				'total_count'  => $total_comments,
+				'page_count'   => $max_pages,
+				'current_page' => $current_page,
+				'per_page'     => $request['per_page']
+			]
+		] );
 
 		$base = add_query_arg( $request->get_query_params(), rest_url( sprintf( '%s/%s', $this->namespace, $this->rest_base ) ) );
 
@@ -678,7 +672,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			AnyCommentCommentMeta::add_attachments( $comment_id, $request['attachments'] );
 		}
 
-		$should_moderate    = ! current_user_can( 'moderate_comments' ) && AnyCommentGenericSettings::is_moderate_first();
+		$should_moderate    = current_user_can( 'moderate_comments' ) && AnyCommentGenericSettings::is_moderate_first();
 		$has_filtered_words = isset( $filter_comment ) && $filter_comment['match_count'] > 0;
 		$has_links          = ! current_user_can( 'moderate_comments' ) && AnyCommentGenericSettings::is_links_on_hold() && AnyCommentComments::has_links( $comment_id );
 
@@ -716,13 +710,8 @@ class AnyCommentRestComment extends AnyCommentRestController {
 
 		$request->set_param( 'context', $context );
 
-		$data = [
-			'status'   => 'ok',
-			'response' => $message,
-			'error'    => null
-		];
 
-		$response = rest_ensure_response( $data );
+		$response = rest_ensure_response( [ 'message' => $message ] );
 
 		$response->set_status( 201 );
 		$response->header( 'Location', rest_url( sprintf( '%s/%s/%d', $this->namespace, $this->rest_base, $comment_id ) ) );
@@ -983,6 +972,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 		}
 
 		$owner = [
+			'id'              => $comment->user_id,
 			'is_post_author'  => $is_post_author,
 			'is_social_login' => AnyCommentUserMeta::is_social_login( $comment->user_id ),
 			'social_type'     => AnyCommentUserMeta::get_social_type( $comment->user_id ),

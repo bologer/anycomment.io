@@ -1,8 +1,4 @@
-/**
- * Generic reducer envelope returned.
- */
-import {BasicEnvelope} from './BasicEnvelope';
-
-export interface ReducerEnvelope<Response> extends BasicEnvelope<Response> {
+export interface ReducerEnvelope<P> {
     isFetching?: boolean;
+    payload: P;
 }

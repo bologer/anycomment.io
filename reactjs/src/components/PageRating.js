@@ -1,7 +1,6 @@
 import React from 'react'
 import Icon from './Icon'
 import Rating from 'react-rating'
-import {toast} from 'react-toastify'
 import AnyCommentComponent from "./AnyCommentComponent";
 import {faStar} from '@fortawesome/free-solid-svg-icons'
 import {faStar as faStarEmpty} from '@fortawesome/free-regular-svg-icons'

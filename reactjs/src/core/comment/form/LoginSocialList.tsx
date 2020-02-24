@@ -1,7 +1,7 @@
 import React from 'react'
 import LoginSocial from './LoginSocial'
 import {useSettings} from "~/hooks/setting";
-import {SocialItemOption} from './AnyCommentProvider';
+import {SocialItemOption} from "~/components/AnyCommentProvider";
 
 /**
  * Display list of available social networks to login with.

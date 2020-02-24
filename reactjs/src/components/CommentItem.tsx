@@ -4,7 +4,7 @@ import CommentHeader from './CommentHeader';
 import CommentFooter from './CommentFooter';
 import CommentBody from './CommentBody';
 import CommentAttachments from "./CommentAttachments";
-import SendComment from './SendComment'
+import SendComment from '~/core/comment/form/SendComment'
 import {fetchDeleteComment, fetchComments} from '~/core/comment/CommentActions';
 import {CommentModel} from "~/typings/models/CommentModel";
 import {useSettings} from "~/hooks/setting";
@@ -14,18 +14,12 @@ import {CommentReducerProps} from "~/core/comment/commentReducers";
 
 export interface CommentItemProps {
     comment: CommentModel;
-    handleJustAdded: () => void;
-    handleUnsetAction: () => void;
 }
 
 /**
  * Comment is rendering single comment entry.
  */
-export default function CommentItem({
-    comment,
-    handleJustAdded,
-    handleUnsetAction,
-}: CommentItemProps) {
+export default function CommentItem({comment}: CommentItemProps) {
 
     const dispatch = useDispatch();
     const settings = useSettings();
@@ -80,27 +74,19 @@ export default function CommentItem({
 
     const commentId = 'comment-' + comment.id;
 
-    const childComments = comment.children ?
+    const childComments = comment.children && (
         <div className="anycomment comment-single-replies">
             <ul className="anycomment anycomment-list anycomment-list-child">
-                {comment.children.map(childrenComment => (
-                    <CommentItem
-                        handleUnsetAction={handleUnsetAction}
-                        handleJustAdded={handleJustAdded}
-                        key={childrenComment.id}
-                        comment={childrenComment} />
-                ))}
+                {comment.children.map(childrenComment => {
+                    return <CommentItem key={childrenComment.id} comment={childrenComment} />
+                })}
             </ul>
-        </div> : '';
+        </div>
+    );
 
     const commentForm = settings.post.comments_open && form && form[comment.id] && (
         <div className="comment-single-form-wrapper">
-            <SendComment
-                action={form[comment.id].type}
-                comment={form[comment.id].comment}
-                handleUnsetAction={handleUnsetAction}
-                handleJustAdded={handleJustAdded}
-            />
+            <SendComment action={form[comment.id].type} comment={form[comment.id].comment} />
         </div>
     );
 
@@ -116,11 +102,8 @@ export default function CommentItem({
 
             <div className="comment-single-body">
                 <CommentHeader comment={comment} onDelete={onDelete} />
-
                 <CommentBody comment={comment} />
-
                 <CommentAttachments attachments={comment.attachments} />
-
                 <CommentFooter
                     onLike={onLike}
                     comment={comment}

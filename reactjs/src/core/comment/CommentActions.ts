@@ -188,7 +188,6 @@ export function fetchCreateComment(postId: number, params) {
             pre: COMMENT_CREATE,
             success: COMMENT_CREATE_SUCCESS,
             failure: COMMENT_CREATE_FAILURE,
-            always: COMMENT_CREATE_INVALIDATE,
         },
     })
 }
@@ -223,31 +222,41 @@ export function fetchLoadMore({postId, offset = 0, perPage, order}: FetchComment
 export function fetchDeleteComment(id: number) {
     return fetch({
         method: 'post',
-        url: 'comment/delete' + id,
+        url: 'comment/delete/' + id,
         actions: {
             pre: COMMENT_DELETE,
             success: COMMENT_DELETE_SUCCESS,
             failure: COMMENT_DELETE_FAILURE,
-            always: COMMENT_DELETE_INVALIDATE,
         },
     })
 }
 
 /**
  * Update a comment.
+ * @param commentId
  * @param data
- * todo: proper implementation
  */
-export function fetchUpdateComment(data) {
+export function fetchUpdateComment(commentId: number, data: {}) {
     return fetch({
         method: 'post',
         data,
-        url: 'comments/update',
+        url: `comments/${commentId}`,
         actions: {
             pre: COMMENT_UPDATE,
             success: COMMENT_UPDATE_SUCCESS,
             failure: COMMENT_UPDATE_FAILURE,
-            always: COMMENT_UPDATE_INVALIDATE,
         },
     })
+}
+
+export function invalidateUpdateComment() {
+    return {type: COMMENT_UPDATE_INVALIDATE};
+}
+
+export function invalidateDeleteComment() {
+    return {type: COMMENT_DELETE_INVALIDATE};
+}
+
+export function invalidateCreateComment() {
+    return {type: COMMENT_CREATE_INVALIDATE};
 }

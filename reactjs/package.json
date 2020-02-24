@@ -32,13 +32,13 @@
     "react-select": "^2.4.4",
     "react-simple-dropdown": "^3.2.3",
     "react-timeago": "^4.4.0",
-    "react-toastify": "^4.5.2",
     "react-tweet-embed": "^1.2.2",
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
     "redux-promise": "^0.6.0",
     "redux-thunk": "^2.3.0",
-    "styled-components": "^5.0.1"
+    "styled-components": "^5.0.1",
+    "notistack": "^0.9.7"
   },
   "scripts": {
     "build-css": "cd src/foundation && gulp sass",

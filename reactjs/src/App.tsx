@@ -2,15 +2,15 @@ import React, {useEffect, useState} from 'react'
 import CommentContainer from './components/CommentContainer'
 import CommentCopyright from './components/CommentCopyright'
 import './css/app.css'
-import {ToastContainer} from 'react-toastify'
-import {toast} from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
 import GlobalHeader from "./components/GlobalHeader";
 import {hasCommentSectionAnchor, hasSpecificCommentAnchor} from './helpers/url'
 import {useConfig, useOptions, useSettings} from "~/hooks/setting";
-import {Provider} from "react-redux";
+import {Provider, useDispatch} from "react-redux";
 import {configureStore} from './store/configureStore'
-import { commentsVisible, handleScrollToComments } from './helpers/comment'
+import {commentsVisible, handleScrollToComments} from './helpers/comment';
+import {SnackbarProvider} from 'notistack';
+import NotificationList from "~/core/notifications/NotificationList";
+import {failureSnackbar} from "~/core/notifications/NotificationActions";
 
 const store = configureStore({});
 
@@ -22,6 +22,7 @@ export default function App() {
     const settings = useSettings();
     const options = useOptions();
     const config = useConfig();
+    const dispatch = useDispatch();
     const [shouldLoad, setShouldLoad] = useState<boolean>(false);
 
     useEffect(() => {
@@ -86,7 +87,7 @@ export default function App() {
         const errors = settings && settings.errors || undefined;
 
         if (errors) {
-            errors.map((message) => toast.error(message));
+            errors.map((message) => dispatch(failureSnackbar(message)));
         }
     }
 
@@ -96,12 +97,14 @@ export default function App() {
 
     return (
         <Provider store={store}>
-            <div id="anycomment-root-inner" className="anycomment">
-                <ToastContainer />
-                <GlobalHeader />
-                <CommentContainer />
-                <CommentCopyright />
-            </div>
+            <SnackbarProvider>
+                <div id="anycomment-root-inner" className="anycomment">
+                    <NotificationList/>
+                    <GlobalHeader />
+                    <CommentContainer />
+                    <CommentCopyright />
+                </div>
+            </SnackbarProvider>
         </Provider>
     );
 }

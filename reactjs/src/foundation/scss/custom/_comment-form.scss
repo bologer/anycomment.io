@@ -4,11 +4,6 @@
     width: 100%;
     margin-bottom: 20px;
 
-    form {
-      margin-top: 16px;
-      padding-top: 15px;
-    }
-
     // Terms
     &__terms {
       display: flex;
@@ -272,9 +267,6 @@
   .anycomment-form-authorized {
     .anycomment-form-body-outliner {
       &__avatar {
-        position: absolute;
-        top: 15px;
-        left: 27px;
         @include avatar();
         @include avatar_child();
         z-index: 1;

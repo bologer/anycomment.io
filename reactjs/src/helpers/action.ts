@@ -2,6 +2,7 @@ import axios from '../config/api';
 import qs from 'qs';
 import {AxiosPromise, AxiosError, AxiosResponse, AxiosRequestConfig} from "axios";
 import {getSettings} from "~/hooks/setting";
+import {failureSnackbar} from "~/core/notifications/NotificationActions";
 
 export interface FetchActions {
     pre?: string;
@@ -58,13 +59,30 @@ export function fetch({
             headers,
             ...axiosProps,
         }).then(function(response: AxiosResponse) {
+            const data = response.data;
+
             if (typeof success === 'string') {
-                dispatch({type: success, payload: response.data});
+                dispatch({type: success, payload: data});
             } else if (typeof success === 'function') {
-                dispatch(success(response.data));
+                dispatch(success(data));
+            }
+
+            if (data.code) {
+                dispatch(failureSnackbar(data.message || data.code));
             }
         }).catch(function(error: AxiosError) {
-            dispatch({type: failure, payload: error});
+
+            const data = error.response && error.response.data || {};
+
+            if (data.code) {
+                dispatch(failureSnackbar(data.message || data.code));
+            }
+
+            dispatch({
+                type: failure,
+                payload: data,
+            });
+
         }).finally(() => {
             if (typeof always === 'string') {
                 dispatch({type: always, payload: null});
@@ -77,7 +95,7 @@ export interface ManageResponseProps {
     reducer: any;
     dispatch?: any;
     onSuccess?: (response: any | null | undefined) => void;
-    onError?: (error: string | {}) => void,
+    onError?: (error: string, code: string) => void,
     displaySnackbarOnError?: boolean | false,
 }
 
@@ -113,16 +131,17 @@ export function manageReducer({
         return;
     }
 
-    if (reducer && reducer.error && typeof reducer.error !== null) {
+    if (!reducer.isFetching) {
+        const payload = reducer && reducer.payload || undefined;
 
-        const error = reducer && reducer.error;
-
-        if (typeof onError === 'function') {
-            onError(error);
-        }
-    } else if (!reducer.isFetching && reducer.status === 'ok') {
-        if (typeof onSuccess === 'function') {
-            onSuccess(reducer.response);
+        if (payload && typeof payload.code === 'string' && typeof payload.message === 'string') {
+            if (typeof onError === 'function') {
+                onError(payload.message, payload.code);
+            }
+        } else {
+            if (payload && typeof onSuccess === 'function') {
+                onSuccess(payload);
+            }
         }
     }
 }

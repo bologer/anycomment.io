@@ -57,10 +57,10 @@ export default function(state = {}, action) {
             return {...state, list: {isFetching: true}};
         case COMMENT_FETCH_SUCCESS:
         case COMMENT_FETCH_SALIENT_SUCCESS:
-            return {...state, list: {isFetching: false, ...action.payload}};
+            return {...state, list: {isFetching: false, payload: action.payload}};
         case COMMENT_FETCH_FAILURE:
         case COMMENT_FETCH_SALIENT_FAILURE:
-            return {...state, list: {isFetching: false, ...action.payload}};
+            return {...state, list: {isFetching: false, payload: action.payload}};
         case COMMENT_LOAD_MORE:
             return {...state, loadMore: {isFetching: true}};
         case COMMENT_LOAD_MORE_SUCCESS:
@@ -68,13 +68,12 @@ export default function(state = {}, action) {
                 ...state,
                 list: {
                     isFetching: false,
-                    response: {
+                    payload: {
                         items: [
-                            ...state.list.response.items,
-                            ...action.payload.response.items,
+                            ...state.list.payload.items,
+                            ...action.payload.items,
                         ],
-                        meta: action.payload.response.meta,
-                        error: null,
+                        meta: action.payload.meta,
                     },
                 },
                 loadMore: {
@@ -91,27 +90,27 @@ export default function(state = {}, action) {
         case COMMENT_DELETE:
             return {...state, delete: {isFetching: true}};
         case COMMENT_DELETE_SUCCESS:
-            return {...state, delete: {isFetching: false, ...action.payload}};
+            return {...state, delete: {isFetching: false, payload: action.payload}};
         case COMMENT_DELETE_FAILURE:
-            return {...state, delete: {isFetching: false, ...action.payload}};
+            return {...state, delete: {isFetching: false, payload: action.payload}};
         case COMMENT_DELETE_INVALIDATE:
             return {...state, delete: undefined};
 
         case COMMENT_UPDATE:
             return {...state, update: {isFetching: true}};
         case COMMENT_UPDATE_SUCCESS:
-            return {...state, update: {isFetching: false, ...action.payload}};
+            return {...state, update: {isFetching: false, payload: action.payload}};
         case COMMENT_UPDATE_FAILURE:
-            return {...state, update: {isFetching: false, ...action.payload}};
+            return {...state, update: {isFetching: false, payload: action.payload}};
         case COMMENT_UPDATE_INVALIDATE:
             return {...state, update: undefined};
 
         case COMMENT_CREATE:
             return {...state, create: {isFetching: true}};
         case COMMENT_CREATE_SUCCESS:
-            return {...state, create: {isFetching: false, ...action.payload}};
+            return {...state, create: {isFetching: false, payload: action.payload}};
         case COMMENT_CREATE_FAILURE:
-            return {...state, create: {isFetching: false, ...action.payload}};
+            return {...state, create: {isFetching: false, payload: action.payload}};
         case COMMENT_CREATE_INVALIDATE:
             return {...state, create: undefined};
 

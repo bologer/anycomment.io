@@ -397,7 +397,7 @@
   .ql-editor.ql-blank::before {
     color: $semi-hidden-color;
     content: attr(data-placeholder);
-    font-style: italic;
+    font-style: normal;
     pointer-events: none;
     position: absolute;
   }

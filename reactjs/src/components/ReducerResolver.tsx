@@ -1,9 +1,10 @@
 import React from "react";
 import Loader from "~/components/Loader";
 import {ReducerEnvelope} from "~/typings/ReducerEnvelope";
+import {ErrorEnvelope} from "~/typings/ErrorEnvelope";
 
 export interface ReducerResolverProps {
-    reducer: ReducerEnvelope<any> | undefined;
+    reducer: ReducerEnvelope<any | ErrorEnvelope> | undefined;
     fetched: (response: any) => void;
     loader?: React.ReactElement;
     showLoader?: boolean;
@@ -41,28 +42,10 @@ export interface ReducerResolverProps {
  * />
  * ```
  *
- * Collection of reducers:
- *
- * ```js
- * const {order, identity} = this.props;
- *
- * <ViewResponse
- *      reducerCollection: [
- *          {name: 'order', reducer: order},
- *          {name: 'identity', reducer: user},
- *      ],
- *      fetched: ({order, identity}) => {
- *          // so, order and identity are both {reducer}.response
- *      }
- * />
- * ```
- *
  * In collection of reducers, fetched callback should be carefully checked for null's as some of the reducers can be null,
  * when API requests was not finished or got corrupted.
  *
  * @param {object} reducer
- * @param {array} reducerCollection List of reducers specified as array. Each item should have the following form:
- * {name: 'someName', reducer: someReducer}. `name` would be mapped to fetched callback together with reducer response.
  * @param {func} fetched
  * @param {boolean} showLoader
  * @param {React.ElementType} loader
@@ -80,18 +63,19 @@ export default function ReducerResolver({reducer, fetched, showLoader = true, lo
         return null;
     }
 
-    const response = reducer && !reducer.isFetching && ('response' in reducer) ?
-        reducer.response :
-        null;
-
     if (!loader) {
         loader = <Loader />;
     }
 
-    return (
-        <>
-            {showLoader && reducer && reducer.isFetching ? loader : null}
-            {response !== null && response ? fetched(reducer.response) : null}
-        </>
-    );
+    if (showLoader && reducer && reducer.isFetching) {
+        return loader;
+    }
+
+    if (!reducer.isFetching && reducer.payload.code && reducer.payload.message) {
+        return null;
+    }
+
+    return reducer && reducer.payload ?
+        fetched(reducer.payload) :
+        null;
 }

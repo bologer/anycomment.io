@@ -40,9 +40,9 @@ function Toolbar({toolbarId}: { toolbarId: string }) {
 
 export interface EditorProps {
     onChange: (e: any) => void;
-    className: string;
-    theme: string;
     value: string | number;
+    className?: string;
+    theme?: string;
     placeholder?: string | null;
     modules?: {};
     formats?: string[];
@@ -50,7 +50,7 @@ export interface EditorProps {
     shouldFocus?: boolean;
     emptyContent?: boolean;
     entropy?: string | number;
-    refHandler?: (editorRef: any) => {};
+    refHandler?: (editorRef: any) => void;
 }
 
 /**
