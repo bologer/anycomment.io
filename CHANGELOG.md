@@ -1,11 +1,5 @@
 # Changelog
 
-## 0.0.99.1 - 14.03.2020
-- Fixed error when when flushing cache
-- Fixed issue when debug file was never created
-- Fixed deprecation notice: "Array and string offset access syntax with curly braces" in AnyCommentGenericSettings.php 
-- Dropping Email/chart support for plugin, now only Telegram, GitHub & WordPress Forum 
-
 ## 0.0.99 – 04.01.2020
 
 **Enhancements:**
@@ -21,6 +15,13 @@
 
 - Removed rating from SEO indexing
 - Removed long content column from "Email" page, #430
+
+**From: (14.03.2020)**
+
+- Fixed error when when flushing cache
+- Fixed issue when debug file was never created
+- Fixed deprecation notice: "Array and string offset access syntax with curly braces" in AnyCommentGenericSettings.php
+- Dropping Email/chart support for plugin, now only Telegram, GitHub & WordPress Forum
 
 ## 0.0.98 – 17.11.2019
 
