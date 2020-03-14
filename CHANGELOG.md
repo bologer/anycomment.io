@@ -1,7 +1,14 @@
 # Changelog
 
 ## 0.1.0 - xx.03.2020
-- Now only one form displayed on 'reply' or 'update' actions
+
+**Fixes:**
+- Fixed error when when flushing cache	
+- Fixed issue when debug file was never created	
+- Fixed deprecation notice: "Array and string offset access syntax with curly braces" in AnyCommentGenericSettings.php	
+
+**Enhancements:**
+- Now only one form displayed on 'Reply' or 'Update' actions
 - Comments: rewritten React Hooks
 - Comments: data management rewritten to Redux
 - Comments: rewritten to TypeScript
@@ -13,6 +20,9 @@
 - Comments: removed redundant "Guest" sign from guest users
 - Comments: comment form is now standardized with cloud version which proved to have better UI/UX
 - Comments: replaced Google+ icon with generic Google one, as it was deprecated
+
+**Others:**
+- Dropping Email/chart support for plugin, now only Telegram, GitHub & WordPress Forum
 
 ## 0.0.99 – 04.01.2020
 
