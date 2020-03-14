@@ -2,8 +2,8 @@
 
 namespace AnyComment\Helpers;
 
-if ( ! defined('ABSPATH')) {
-    exit; // Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
 }
 
 /**
@@ -14,169 +14,164 @@ if ( ! defined('ABSPATH')) {
  * @author Alexander Teshabaev <sasha.tesh@gmail.com>
  * @package AnyComment\Helpers
  */
-class AnyCommentLinkHelper
-{
+class AnyCommentLinkHelper {
 
-    /**
-     * Get Vkontakte group URI.
-     *
-     * @return string
-     */
-    public static function get_vkontakte()
-    {
-        return 'https://vk.com/anycomment';
-    }
+	/**
+	 * Get Vkontakte group URI.
+	 *
+	 * @return string
+	 */
+	public static function get_vkontakte() {
+		return 'https://vk.com/anycomment';
+	}
 
-    /**
-     * Get Telegram channel URI.
-     *
-     * @return string
-     */
-    public static function get_telegram()
-    {
-        return 'https://t.me/' . static::get_telegram_slug();
-    }
+	/**
+	 * Get Telegram channel URI.
+	 *
+	 * @return string
+	 */
+	public static function get_telegram() {
+		return 'https://t.me/' . static::get_telegram_slug();
+	}
 
-    /**
-     * Telegram group slug name.
-     *
-     * @param bool $pretty True if required to return camel case, false would return lowercase.
-     *
-     * @return string
-     */
-    public static function get_telegram_slug($pretty = false)
-    {
-        if ($pretty) {
-            return 'AnyComment';
-        }
+	/**
+	 * Get WordPress official support forum.
+	 *
+	 * @return string
+	 */
+	public static function get_wp_forum() {
+		return 'https://wordpress.org/support/plugin/anycomment/';
+	}
 
-        return 'anycomment';
-    }
+	/**
+	 * Telegram group slug name.
+	 *
+	 * @param bool $pretty True if required to return camel case, false would return lowercase.
+	 *
+	 * @return string
+	 */
+	public static function get_telegram_slug( $pretty = false ) {
+		if ( $pretty ) {
+			return 'AnyComment';
+		}
 
-    /**
-     * Get GitHub repository URL.
-     *
-     * @return string
-     */
-    public static function get_github()
-    {
-        return 'https://github.com/bologer/anycomment.io';
-    }
+		return 'anycomment';
+	}
 
-    /**
-     * Get all guides link.
-     *
-     * @return string
-     */
-    public static function get_guides()
-    {
-        return static::format_url("category/tutorials");
-    }
+	/**
+	 * Get GitHub repository URL.
+	 *
+	 * @return string
+	 */
+	public static function get_github() {
+		return 'https://github.com/bologer/anycomment.io';
+	}
 
-    /**
-     * Get link to the demo page.
-     *
-     * @return string
-     */
-    public static function get_demo()
-    {
-        return static::format_url('demo');
-    }
+	/**
+	 * Get all guides link.
+	 *
+	 * @return string
+	 */
+	public static function get_guides() {
+		return static::format_url( "category/tutorials" );
+	}
 
-    /**
-     * Get social guides link.
-     *
-     * @return string
-     */
-    public static function get_social_guides()
-    {
-        return static::format_url("category/tutorials/socials");
-    }
+	/**
+	 * Get link to the demo page.
+	 *
+	 * @return string
+	 */
+	public static function get_demo() {
+		return static::format_url( 'demo' );
+	}
 
-    /**
-     * Format URL with proper language.
-     *
-     * @param string $url URL to be formatted.
-     *
-     * @return string
-     */
-    public static function format_url($url)
-    {
-        $locale = static::get_language();
+	/**
+	 * Get social guides link.
+	 *
+	 * @return string
+	 */
+	public static function get_social_guides() {
+		return static::format_url( "category/tutorials/socials" );
+	}
 
-        if ($locale === 'ru') {
-            $locale = '';
-        } else {
-            $locale .= '/';
-        }
+	/**
+	 * Format URL with proper language.
+	 *
+	 * @param string $url URL to be formatted.
+	 *
+	 * @return string
+	 */
+	public static function format_url( $url ) {
+		$locale = static::get_language();
 
-        return static::get_official_website() . $locale . $url;
-    }
+		if ( $locale === 'ru' ) {
+			$locale = '';
+		} else {
+			$locale .= '/';
+		}
 
-    /**
-     * Get official website URL.
-     *
-     * @return string
-     */
-    public static function get_official_website()
-    {
-        return "https://plugin.anycomment.io/";
-    }
+		return static::get_official_website() . $locale . $url;
+	}
 
-    /**
-     * Get SaaS URL.
-     *
-     * @return string
-     */
-    public static function get_service_website()
-    {
-        return 'https://anycomment.io';
-    }
+	/**
+	 * Get official website URL.
+	 *
+	 * @return string
+	 */
+	public static function get_official_website() {
+		return "https://plugin.anycomment.io/";
+	}
 
-    /**
-     * Returns service URL prepared for documentation.
-     *
-     * @param string $language
-     *
-     * @return string
-     */
-    public static function get_service_documentation($language = null)
-    {
-        if($language === null) {
-            $language = static::get_language();
-        }
+	/**
+	 * Get SaaS URL.
+	 *
+	 * @return string
+	 */
+	public static function get_service_website() {
+		return 'https://anycomment.io';
+	}
 
-        return sprintf('%s/%s/docs', static::get_service_website(), $language);
-    }
+	/**
+	 * Returns service URL prepared for documentation.
+	 *
+	 * @param string $language
+	 *
+	 * @return string
+	 */
+	public static function get_service_documentation( $language = null ) {
+		if ( $language === null ) {
+			$language = static::get_language();
+		}
 
-    /**
-     * Get short version of the language.
-     *
-     * @return string
-     */
-    public static function get_language()
-    {
-        return substr(get_locale(), 0, 2);
-    }
+		return sprintf( '%s/%s/docs', static::get_service_website(), $language );
+	}
 
-    /**
-     * Returns SaaS language determined by app language.
-     *
-     * @return string
-     */
-    public static function get_saas_languages()
-    {
-        $language = static::get_language();
+	/**
+	 * Get short version of the language.
+	 *
+	 * @return string
+	 */
+	public static function get_language() {
+		return substr( get_locale(), 0, 2 );
+	}
 
-        switch ($language) {
-            case 'ru':
-            case 'en':
-                return $language;
-            case  'uk':
-            case  'bg':
-                return 'ru';
-            default:
-                return 'en';
-        }
-    }
+	/**
+	 * Returns SaaS language determined by app language.
+	 *
+	 * @return string
+	 */
+	public static function get_saas_languages() {
+		$language = static::get_language();
+
+		switch ( $language ) {
+			case 'ru':
+			case 'en':
+				return $language;
+			case  'uk':
+			case  'bg':
+				return 'ru';
+			default:
+				return 'en';
+		}
+	}
 }
