@@ -2,6 +2,7 @@
 
 namespace AnyComment\Cron;
 
+use AnyComment\AnyCommentCore;
 use AnyComment\AnyCommentServiceApi;
 use AnyComment\Admin\AnyCommentIntegrationSettings;
 use AnyComment\AnyCommentUserMeta;
@@ -87,8 +88,14 @@ class AnyCommentServiceSyncCron extends BaseObject
     {
         $comment_id = static::getSyncCommentId();
 
+        $log = AnyCommentCore::logger();
+
+        $log->info('Starting to sync comments with service from comment ID ' . $comment_id);
+
         if (empty($comment_id)) {
             $comment_id = 0;
+
+            $log->info('Reset comment ID to 0 as it was empty...');
         }
 
         global $wpdb;
@@ -109,8 +116,11 @@ SQL;
         $comments = $wpdb->get_results($prepare);
 
         if (empty($comments)) {
+        	AnyCommentCore::logger()->info('No comments to sync with service, skipping...');
             return false;
         }
+
+        $log->info('Have ' . count($comments) . ' to sync with service, ready to process');
 
         foreach ($comments as $key => $comment) {
             $comment = new \WP_Comment($comment);
@@ -126,113 +136,133 @@ SQL;
      */
     public function sync_comment(\WP_Comment $comment)
     {
-        $post = get_post($comment->comment_post_ID);
+    	$log = AnyCommentCore::logger();
 
-        if (empty($post)) {
-            // Skip this comment as we cannot save it without post URL
-            static::update_sync_comment_id($comment->comment_ID);
-            return false;
-        }
+    	try {
+		    $log->info( 'Now trying to sync comment #' . $comment->id );
 
-        $page_url = get_permalink($post);
+		    $post = get_post( $comment->comment_post_ID );
 
-        if ($page_url === false) {
-            // Skip this comment as we have to have URL in order to display comments
-            static::update_sync_comment_id($comment->comment_ID, true);
-            return false;
-        }
+		    if ( empty( $post ) ) {
+			    $log->error( 'Comment #' . $comment->id . ' does not have post, skipping it' );
+			    // Skip this comment as we cannot save it without post URL
+			    static::update_sync_comment_id( $comment->comment_ID );
 
-        $post_thumbnail_url = get_the_post_thumbnail_url($post);
-        $page_preview_url = $post_thumbnail_url !== false ? $post_thumbnail_url : null;
-        $page_author = get_the_author_meta('user_nicename', $post->post_author);
+			    return false;
+		    }
 
+		    $page_url = get_permalink( $post );
 
-        if (!empty($comment->user_id)) {
-            $user = get_userdata($comment->user_id);
+		    if ( $page_url === false ) {
+			    $log->error( 'Unable to get page url for comment #' . $comment->id . ', skipping it' );
+			    // Skip this comment as we have to have URL in order to display comments
+			    static::update_sync_comment_id( $comment->comment_ID, true );
 
-            if ($user === false) {
-                static::update_sync_comment_id($comment->comment_ID, true);
-                return false;
-            }
+			    return false;
+		    }
 
-            $profileUrl = null;
-
-            if (($socialUrl = AnyCommentUserMeta::get_social_profile_url($user->ID)) !== null) {
-                $profileUrl = $socialUrl;
-            } elseif (!empty($user->user_url)) {
-                $profileUrl = $user->user_url;
-            } elseif (!empty($comment->comment_author_url)) {
-                $profileUrl = $comment->comment_author_url;
-            }
-
-            $author = [
-                'name' => $user->user_nicename,
-                'username' => $user->user_login,
-                'email' => $user->user_email,
-                'avatar' => AnyCommentSocialAuth::get_user_avatar_url($user->ID),
-                'url' => $profileUrl
-            ];
-        } else {
-            $profileUrl = null;
-
-            if (!empty($comment->comment_author_url)) {
-                $profileUrl = $comment->comment_author_url;
-            }
-
-            $author = [
-                'name' => $comment->comment_author,
-                'email' => !empty($comment->comment_author_email) ?
-                    $comment->comment_author_email :
-                    null,
-                'avatar' => !empty($comment->comment_author_email) ?
-                    get_avatar_url($comment->comment_author_email) :
-                    null,
-                'url' => $profileUrl
-            ];
+		    $post_thumbnail_url = get_the_post_thumbnail_url( $post );
+		    $page_preview_url   = $post_thumbnail_url !== false ? $post_thumbnail_url : null;
+		    $page_author        = get_the_author_meta( 'user_nicename', $post->post_author );
 
 
-        }
+		    if ( ! empty( $comment->user_id ) ) {
+			    $user = get_userdata( $comment->user_id );
 
-        $body = [
-            'page_url' => $page_url,
-            'page_title' => $post->post_title,
-            'page_preview_url' => $page_preview_url,
-            'page_author' => $page_author,
-            'comment' => [
-                'id' => $comment->comment_ID,
-                'parent_id' => $comment->comment_parent > 0 ? $comment->comment_parent : null,
-                'status' => $this->getServiceStatus($comment),
-                'content' => $comment->comment_content,
-                'ip' => $comment->comment_author_IP,
-                'created_date' => $comment->comment_date
-            ],
-            'author' => $author
-        ];
+			    if ( $user === false ) {
+				    $log->error( 'Comment #' . $comment->id . ' has user ID, but not able to retrieve its data, skipping it' );
+				    static::update_sync_comment_id( $comment->comment_ID, true );
 
-        $resp = AnyCommentServiceApi::request()->post(
-            'client/comment/add',
-            $body,
-            ['token' => AnyCommentServiceApi::getSyncApiKey()]
-        );
+				    return false;
+			    }
 
-        if (is_wp_error($resp) || !isset($resp['response']['code'])) {
-            static::update_sync_comment_id($comment->comment_ID, true);
-            return false;
-        }
+			    $profileUrl = null;
 
-        $response_code = (int)$resp['response']['code'];
+			    if ( ( $socialUrl = AnyCommentUserMeta::get_social_profile_url( $user->ID ) ) !== null ) {
+				    $profileUrl = $socialUrl;
+			    } elseif ( ! empty( $user->user_url ) ) {
+				    $profileUrl = $user->user_url;
+			    } elseif ( ! empty( $comment->comment_author_url ) ) {
+				    $profileUrl = $comment->comment_author_url;
+			    }
 
-        if ($response_code === 200) {
-            $jsonString = wp_remote_retrieve_body($resp);
-            $data = json_decode($jsonString, true);
+			    $author = [
+				    'name'     => $user->user_nicename,
+				    'username' => $user->user_login,
+				    'email'    => $user->user_email,
+				    'avatar'   => AnyCommentSocialAuth::get_user_avatar_url( $user->ID ),
+				    'url'      => $profileUrl
+			    ];
+		    } else {
+			    $profileUrl = null;
 
-            if (isset($data['response']['id']) && is_int($data['response']['id'])) {
-                static::update_sync_comment_id($comment->comment_ID);
-                return true;
-            }
-        }
+			    if ( ! empty( $comment->comment_author_url ) ) {
+				    $profileUrl = $comment->comment_author_url;
+			    }
 
-        static::update_sync_comment_id($comment->comment_ID, true);
+			    $author = [
+				    'name'   => $comment->comment_author,
+				    'email'  => ! empty( $comment->comment_author_email ) ?
+					    $comment->comment_author_email :
+					    null,
+				    'avatar' => ! empty( $comment->comment_author_email ) ?
+					    get_avatar_url( $comment->comment_author_email ) :
+					    null,
+				    'url'    => $profileUrl
+			    ];
+		    }
+
+		    $body = [
+			    'page_url'         => $page_url,
+			    'page_title'       => $post->post_title,
+			    'page_preview_url' => $page_preview_url,
+			    'page_author'      => $page_author,
+			    'comment'          => [
+				    'id'           => $comment->comment_ID,
+				    'parent_id'    => $comment->comment_parent > 0 ? $comment->comment_parent : null,
+				    'status'       => $this->getServiceStatus( $comment ),
+				    'content'      => $comment->comment_content,
+				    'ip'           => $comment->comment_author_IP,
+				    'created_date' => $comment->comment_date
+			    ],
+			    'author'           => $author
+		    ];
+
+		    $resp = AnyCommentServiceApi::request()->post(
+			    'client/comment/add',
+			    $body,
+			    [ 'token' => AnyCommentServiceApi::getSyncApiKey() ]
+		    );
+
+		    if ( is_wp_error( $resp ) || ! isset( $resp['response']['code'] ) ) {
+			    $log->error( 'Failed to sync comment #' . $comment->id . ' with service, error returned' );
+			    static::update_sync_comment_id( $comment->comment_ID, true );
+
+			    return false;
+		    }
+
+		    $response_code = (int) $resp['response']['code'];
+
+		    if ( $response_code === 200 ) {
+			    $jsonString = wp_remote_retrieve_body( $resp );
+			    $data       = json_decode( $jsonString, true );
+
+			    if ( isset( $data['response']['id'] ) && is_int( $data['response']['id'] ) ) {
+				    static::update_sync_comment_id( $comment->comment_ID );
+
+				    return true;
+			    }
+		    }
+
+		    $log->error( 'Comment #' . $comment->id . ' failed to sync, ' . $response_code . ' HTTP code was returned, marking as failed' );
+
+		    static::update_sync_comment_id( $comment->comment_ID, true );
+
+	    } catch (\Throwable $exception){
+	        $log->error(
+	        	'Failed to sync comment #' . $comment->id . ' as exception happened: ' . $exception->getMessage() . ', trace: ' . $exception->getTraceAsString()
+	        );
+	    }
 
         return false;
     }
@@ -252,6 +282,7 @@ SQL;
 
         return update_option(self::getSyncCommentIdOptionName(), $comment_id);
     }
+
 
 
     /**
