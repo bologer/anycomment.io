@@ -61,6 +61,15 @@ HTML;
 
 		$root_id .= '-' . $post->ID;
 	}
+
+	$config = json_encode( [
+		'root'     => $root_id,
+		'app_id'   => $app_id,
+		'language' => AnyCommentLinkHelper::get_saas_languages(),
+		'preview'  => $preview,
+		'title'    => $title,
+		'author'   => $author,
+	] );
 	?>
     <div id="comments" class="comments-area">
         <div id="<?= $root_id ?>"></div>
@@ -68,14 +77,7 @@ HTML;
     <script>
         AnyComment = window.AnyComment || [];
         AnyComment.Comments = [];
-        AnyComment.Comments.push({
-            root: "<?= $root_id ?>",
-            app_id: <?php echo $app_id ?>,
-            language: "<?php echo AnyCommentLinkHelper::get_saas_languages() ?>",
-            preview: "<?php echo $preview ?>",
-            title: "<?php echo $title ?>",
-            author: "<?php echo $author ?>",
-        });
+        AnyComment.Comments.push(<?php echo $config ?>);
     </script>
     <script type="text/javascript" async src="https://cdn.anycomment.io/assets/js/launcher.js"></script>
 <?php else: ?>
