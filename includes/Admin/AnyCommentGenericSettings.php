@@ -218,12 +218,12 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 	 */
 	const OPTION_EDITOR_CSS = 'option_editor_css'; // Add custom CSS
 
-    const OPTION_SEO_TOGGLE = 'option_seo_toggle';
-    const OPTION_SEO_DISPLAY_LIMIT = 'option_seo_display_limit';
-    const OPTION_SEO_SORTING = 'option_seo_sorting';
+	const OPTION_SEO_TOGGLE = 'option_seo_toggle';
+	const OPTION_SEO_DISPLAY_LIMIT = 'option_seo_display_limit';
+	const OPTION_SEO_SORTING = 'option_seo_sorting';
 
-    const SEO_SORTING_NEW2OLD = 'newest_to_old';
-    const SEO_SORTING_OLD2NEW = 'old_to_new';
+	const SEO_SORTING_NEW2OLD = 'newest_to_old';
+	const SEO_SORTING_OLD2NEW = 'old_to_new';
 
 
 	/**
@@ -321,7 +321,7 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 	 *
 	 * @param bool $init if required to init the modle.
 	 */
-	public function __construct ( $init = true ) {
+	public function __construct( $init = true ) {
 		parent::__construct();
 		if ( $init ) {
 			$this->init_hooks();
@@ -331,7 +331,7 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 	/**
 	 * Initiate hooks.
 	 */
-	private function init_hooks () {
+	private function init_hooks() {
 		add_action( 'admin_init', [ $this, 'init_settings' ] );
 
 		// Create role
@@ -349,7 +349,7 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function init_settings () {
+	public function init_settings() {
 
 
 		$form = $this->form();
@@ -953,17 +953,17 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 				          ->set_title( __( 'File Upload By Guests', "anycomment" ) )
 				          ->set_description( esc_html( __( 'Guest users can upload documents. Please be careful about this setting as some users may potentially misuse this and periodically upload unwanted files.', "anycomment" ) ) ),
 
-                     $this->field_builder()
-                         ->text()
-                         ->set_id( self::OPTION_FILES_SAVE_PATH )
-                         ->set_title( __( 'Save directory', "anycomment" ) )
-                         ->set_description( esc_html( sprintf(__( 'Absolute path where all files would be stored, including social avatars. When empty, %s would be used. Notice folder must have correct permission & owner. Notice that AnyComment would add year and month automatically to the folder you specify to limit number of files per directory.', "anycomment" ), AnyCommentUploadHandler::get_default_save_dir()) ) ),
+				     $this->field_builder()
+				          ->text()
+				          ->set_id( self::OPTION_FILES_SAVE_PATH )
+				          ->set_title( __( 'Save directory', "anycomment" ) )
+				          ->set_description( esc_html( sprintf( __( 'Absolute path where all files would be stored, including social avatars. When empty, %s would be used. Notice folder must have correct permission & owner. Notice that AnyComment would add year and month automatically to the folder you specify to limit number of files per directory.', "anycomment" ), AnyCommentUploadHandler::get_default_save_dir() ) ) ),
 
-                     $this->field_builder()
-                         ->text()
-                         ->set_id( self::OPTION_FILES_SAVE_SERVE_URL )
-                         ->set_title( __( 'Save directory serve', "anycomment" ) )
-                         ->set_description( esc_html( sprintf(__( 'URL where file can served. For example, when directory specified, it is required to specify path where image would served. When empty, %s would be used. Notice that AnyComment would add year and month automatically to the URL.', "anycomment" ), AnyCommentUploadHandler::get_default_server_dir()) ) ),
+				     $this->field_builder()
+				          ->text()
+				          ->set_id( self::OPTION_FILES_SAVE_SERVE_URL )
+				          ->set_title( __( 'Save directory serve', "anycomment" ) )
+				          ->set_description( esc_html( sprintf( __( 'URL where file can served. For example, when directory specified, it is required to specify path where image would served. When empty, %s would be used. Notice that AnyComment would add year and month automatically to the URL.', "anycomment" ), AnyCommentUploadHandler::get_default_server_dir() ) ) ),
 
 				     $this->field_builder()
 				          ->text()
@@ -996,55 +996,55 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 		 */
 		$form->add_section(
 			$this->section_builder()
-                ->set_id( 'seo' )
-                ->set_title( __( 'SEO', "anycomment" ) )
+			     ->set_id( 'seo' )
+			     ->set_title( __( 'SEO', "anycomment" ) )
 			     ->set_fields( [
-                     $this->field_builder()
-                         ->checkbox()
-                         ->set_id( self::OPTION_SEO_TOGGLE )
-                         ->set_title( __( 'Search Engine Visibility', "anycomment" ) )
-                         ->set_description( esc_html( __( 'Allow search engines to discover comments.', "anycomment" ) ) ),
-                     $this->field_builder()
-                         ->number()
-                         ->set_id( self::OPTION_SEO_DISPLAY_LIMIT )
-                         ->set_title( __( 'Limit Comments', "anycomment" ) )
-                         ->set_description( esc_html( __( 'Number of comments to be seen by search engines. Lower the number - faster comments would load.', "anycomment" ) ) ),
-                     $this->field_builder()
-                         ->set_id( self::OPTION_SEO_SORTING )
-                         ->select()
-                         ->set_title( __( 'Sorting', "anycomment" ) )
-                         ->set_args( [
-                             'options' => [
-                                 self::SEO_SORTING_NEW2OLD => __( 'Newest to oldest', 'anycomment' ),
-                                 self::SEO_SORTING_OLD2NEW         => __( 'Oldest to newest', 'anycomment' ),
-                             ],
-                         ] )
-                         ->set_description( esc_html( __( 'Choose how comments would be sorted.', "anycomment" ) ) ),
+				     $this->field_builder()
+				          ->checkbox()
+				          ->set_id( self::OPTION_SEO_TOGGLE )
+				          ->set_title( __( 'Search Engine Visibility', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Allow search engines to discover comments.', "anycomment" ) ) ),
+				     $this->field_builder()
+				          ->number()
+				          ->set_id( self::OPTION_SEO_DISPLAY_LIMIT )
+				          ->set_title( __( 'Limit Comments', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Number of comments to be seen by search engines. Lower the number - faster comments would load.', "anycomment" ) ) ),
+				     $this->field_builder()
+				          ->set_id( self::OPTION_SEO_SORTING )
+				          ->select()
+				          ->set_title( __( 'Sorting', "anycomment" ) )
+				          ->set_args( [
+					          'options' => [
+						          self::SEO_SORTING_NEW2OLD => __( 'Newest to oldest', 'anycomment' ),
+						          self::SEO_SORTING_OLD2NEW => __( 'Oldest to newest', 'anycomment' ),
+					          ],
+				          ] )
+				          ->set_description( esc_html( __( 'Choose how comments would be sorted.', "anycomment" ) ) ),
 			     ] )
-            );
+		);
 
-        /**
-         * Section: Seo
-         */
+		/**
+		 * Section: Seo
+		 */
 		$form->add_section(
-            $this->section_builder()
-                ->set_id( 'editor' )
-                ->set_title( __( 'Editor', "anycomment" ) )
-                ->set_fields( [
-                    $this->field_builder()
-                        ->code()
-                        ->set_id( self::OPTION_EDITOR_CSS )
-                        ->set_args( [ 'mode' => 'css' ] )
-                        ->set_title( __( 'Custom CSS', "anycomment" ) )
-                        ->set_description( esc_html( __( 'Write custom CSS, it will be only related to AnyComment. Notice: you may require to drop the cache after your changes if you have any caching plugin installed.', "anycomment" ) ) ),
-                ] )
+			$this->section_builder()
+			     ->set_id( 'editor' )
+			     ->set_title( __( 'Editor', "anycomment" ) )
+			     ->set_fields( [
+				     $this->field_builder()
+				          ->code()
+				          ->set_id( self::OPTION_EDITOR_CSS )
+				          ->set_args( [ 'mode' => 'css' ] )
+				          ->set_title( __( 'Custom CSS', "anycomment" ) )
+				          ->set_description( esc_html( __( 'Write custom CSS, it will be only related to AnyComment. Notice: you may require to drop the cache after your changes if you have any caching plugin installed.', "anycomment" ) ) ),
+			     ] )
 		);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function run () {
+	public function run() {
 
 		$sections_html = '<form action="' . esc_url( admin_url( "admin-post.php" ) ) . '" id="' . $this->get_page_slug() . '" method="post" class="anycomment-form" novalidate>';
 
@@ -1092,7 +1092,7 @@ EOT;
 	/**
 	 * {@inheritdoc}
 	 */
-	protected function do_tab_menu () {
+	protected function do_tab_menu() {
 		$options = $this->get_options();
 
 		$html = '';
@@ -1148,7 +1148,7 @@ EOT;
 	 *
 	 * @return string String on success, false on failure.
 	 */
-	private static function combine_styles_and_process () {
+	private static function combine_styles_and_process() {
 		$scssPath = AnyComment()->plugin_path() . '/assets/theming/';
 
 		$variables = [
@@ -1203,7 +1203,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function apply_style_on_design_change () {
+	public static function apply_style_on_design_change() {
 		$hash        = static::get_design_hash();
 		$filePattern = 'main-custom-%s.min.css';
 		$path        = AnyComment()->plugin_path() . '/static/css/';
@@ -1241,7 +1241,7 @@ EOT;
 	 *
 	 * @return string
 	 */
-	public static function get_design_hash () {
+	public static function get_design_hash() {
 		$items = [];
 
 		$items[] = AnyComment()->version;
@@ -1266,7 +1266,7 @@ EOT;
 	 *
 	 * @return null|string NULL on failure (when nothing in the design specified yet.
 	 */
-	public static function get_custom_design_stylesheet_url ( $createOnNotFound = true ) {
+	public static function get_custom_design_stylesheet_url( $createOnNotFound = true ) {
 
 		$hash = static::get_design_hash();
 
@@ -1290,7 +1290,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_enabled () {
+	public static function is_enabled() {
 		return static::instance()->get_db_option( self::OPTION_PLUGIN_TOGGLE ) !== null;
 	}
 
@@ -1299,7 +1299,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_load_on_scroll () {
+	public static function is_load_on_scroll() {
 		return static::instance()->get_db_option( self::OPTION_LOAD_ON_SCROLL ) !== null;
 	}
 
@@ -1308,7 +1308,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_links_on_hold () {
+	public static function is_links_on_hold() {
 		return static::instance()->get_db_option( self::OPTION_LINKS_ON_HOLD ) !== null;
 	}
 
@@ -1317,7 +1317,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_moderate_first () {
+	public static function is_moderate_first() {
 		return static::instance()->get_db_option( self::OPTION_MODERATE_FIRST ) !== null;
 	}
 
@@ -1326,7 +1326,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_moderate_first_comment_only () {
+	public static function is_moderate_first_comment_only() {
 		return static::instance()->get_db_option( self::OPTION_MODERATE_FIRST_COMMENT_ONLY ) !== null;
 	}
 
@@ -1335,7 +1335,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_show_twitter_embeds () {
+	public static function is_show_twitter_embeds() {
 		return static::instance()->get_db_option( self::OPTION_SHOW_TWITTER_EMBEDS ) !== null;
 	}
 
@@ -1344,7 +1344,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_show_video_attachments () {
+	public static function is_show_video_attachments() {
 		return static::instance()->get_db_option( self::OPTION_SHOW_VIDEO_ATTACHMENTS ) !== null;
 	}
 
@@ -1353,7 +1353,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_show_image_attachments () {
+	public static function is_show_image_attachments() {
 		return static::instance()->get_db_option( self::OPTION_SHOW_IMAGE_ATTACHMENTS ) !== null;
 	}
 
@@ -1362,7 +1362,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_link_clickable () {
+	public static function is_link_clickable() {
 		return static::instance()->get_db_option( self::OPTION_MAKE_LINKS_CLICKABLE ) !== null;
 	}
 
@@ -1371,7 +1371,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_show_profile_url () {
+	public static function is_show_profile_url() {
 		return static::instance()->get_db_option( self::OPTION_SHOW_PROFILE_URL ) !== null;
 	}
 
@@ -1380,7 +1380,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_show_socials_in_login_page () {
+	public static function is_show_socials_in_login_page() {
 		return static::instance()->get_db_option( self::OPTION_SHOW_SOCIALS_IN_LOGIN_PAGE ) !== null;
 	}
 
@@ -1389,7 +1389,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_show_admin_bar () {
+	public static function is_show_admin_bar() {
 		return static::instance()->get_db_option( self::OPTION_SHOW_ADMIN_BAR ) !== null;
 	}
 
@@ -1398,7 +1398,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_notify_on_new_comment () {
+	public static function is_notify_on_new_comment() {
 		return static::instance()->get_db_option( self::OPTION_NOTIFY_ON_NEW_COMMENT ) !== null;
 	}
 
@@ -1407,7 +1407,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_notify_admin () {
+	public static function is_notify_admin() {
 		return static::instance()->get_db_option( self::OPTION_NOTIFY_ADMINISTRATOR ) !== null;
 	}
 
@@ -1416,7 +1416,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_notify_subscribers () {
+	public static function is_notify_subscribers() {
 		return static::instance()->get_db_option( self::OPTION_NOTIFY_SUBSCRIBERS ) !== null;
 	}
 
@@ -1424,7 +1424,7 @@ EOT;
 	 * Get sender name. When name is empty, `blogname` options will be returned.
 	 * @return string
 	 */
-	public static function get_notify_email_sender_name () {
+	public static function get_notify_email_sender_name() {
 		$value = static::instance()->get_db_option( self::OPTION_NOTIFY_SENDER_NAME );
 
 		if ( empty( $value ) ) {
@@ -1440,7 +1440,7 @@ EOT;
 	 *
 	 * @return string|null
 	 */
-	public static function get_notify_email_subscribers_template () {
+	public static function get_notify_email_subscribers_template() {
 		return static::instance()->get_db_option( self::OPTION_NOTIFY_SUBSCRIBERS_EMAIL_TEMPLATE );
 	}
 
@@ -1449,7 +1449,7 @@ EOT;
 	 *
 	 * @return string|null
 	 */
-	public static function get_notify_email_subscribers_confirmation_template () {
+	public static function get_notify_email_subscribers_confirmation_template() {
 		return static::instance()->get_db_option( self::OPTION_NOTIFY_SUBSCRIBERS_CONFIRMATION_EMAIL_TEMPLATE );
 	}
 
@@ -1458,7 +1458,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_notify_on_new_reply () {
+	public static function is_notify_on_new_reply() {
 		return static::instance()->get_db_option( self::OPTION_NOTIFY_ON_NEW_REPLY ) !== null;
 	}
 
@@ -1467,7 +1467,7 @@ EOT;
 	 *
 	 * @return string|null
 	 */
-	public static function get_moderate_words () {
+	public static function get_moderate_words() {
 		return static::instance()->get_db_option( self::OPTION_MODERATE_WORDS );
 	}
 
@@ -1476,7 +1476,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_file_upload_allowed () {
+	public static function is_file_upload_allowed() {
 		return static::instance()->get_db_option( self::OPTION_FILES_TOGGLE ) !== null;
 	}
 
@@ -1485,7 +1485,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_guest_can_upload () {
+	public static function is_guest_can_upload() {
 		return static::instance()->get_db_option( self::OPTION_FILES_GUEST_CAN_UPLOAD );
 	}
 
@@ -1494,57 +1494,57 @@ EOT;
 	 *
 	 * @return float|null
 	 */
-	public static function get_file_max_size () {
+	public static function get_file_max_size() {
 		return static::instance()->get_db_option( self::OPTION_FILES_MAX_SIZE );
 	}
 
-    /**
-     * Get files save path.
-     *
-     * @return string|null
-     */
-    public static function get_file_save_path () {
-        $path = static::instance()->get_db_option( self::OPTION_FILES_SAVE_PATH );
+	/**
+	 * Get files save path.
+	 *
+	 * @return string|null
+	 */
+	public static function get_file_save_path() {
+		$path = static::instance()->get_db_option( self::OPTION_FILES_SAVE_PATH );
 
-        if(empty($path)) {
-            return null;
-        }
+		if ( empty( $path ) ) {
+			return null;
+		}
 
-        $path = rtrim($path, '/\\');
+		$path = rtrim( $path, '/\\' );
 
-        $ds = DIRECTORY_SEPARATOR;
+		$ds = DIRECTORY_SEPARATOR;
 
-        $path .= $ds . date('Y') . $ds . date('m');
+		$path .= $ds . date( 'Y' ) . $ds . date( 'm' );
 
-        if(!is_dir($path)) {
-            @mkdir($path, 0755, true);
+		if ( ! is_dir( $path ) ) {
+			@mkdir( $path, 0755, true );
 
-            if(!is_dir($path)) {
-                return null;
-            }
-        }
+			if ( ! is_dir( $path ) ) {
+				return null;
+			}
+		}
 
-        return $path;
-    }
+		return $path;
+	}
 
-    /**
-     * Get files save URL.
-     *
-     * @return string|null
-     */
-    public static function get_file_save_serve_url () {
-        $url = static::instance()->get_db_option( self::OPTION_FILES_SAVE_SERVE_URL );
+	/**
+	 * Get files save URL.
+	 *
+	 * @return string|null
+	 */
+	public static function get_file_save_serve_url() {
+		$url = static::instance()->get_db_option( self::OPTION_FILES_SAVE_SERVE_URL );
 
-        if(empty($url)) {
-            return null;
-        }
+		if ( empty( $url ) ) {
+			return null;
+		}
 
-        $url = rtrim($url, '/');
+		$url = rtrim( $url, '/' );
 
-        $url .= '/' . date('Y') . '/' . date('m');
+		$url .= '/' . date( 'Y' ) . '/' . date( 'm' );
 
-        return $url;
-    }
+		return $url;
+	}
 
 
 	/**
@@ -1552,7 +1552,7 @@ EOT;
 	 *
 	 * @return float|null
 	 */
-	public static function get_file_limit () {
+	public static function get_file_limit() {
 		return static::instance()->get_db_option( self::OPTION_FILES_LIMIT );
 	}
 
@@ -1561,7 +1561,7 @@ EOT;
 	 *
 	 * @return int|null
 	 */
-	public static function get_file_upload_limit () {
+	public static function get_file_upload_limit() {
 		return static::instance()->get_db_option( self::OPTION_FILES_LIMIT_PERIOD );
 	}
 
@@ -1570,7 +1570,7 @@ EOT;
 	 *
 	 * @return string|null
 	 */
-	public static function get_file_mime_types () {
+	public static function get_file_mime_types() {
 		return static::instance()->get_db_option( self::OPTION_FILES_MIME_TYPES );
 	}
 
@@ -1584,7 +1584,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_allowed_mime_type ( $file ) {
+	public static function is_allowed_mime_type( $file ) {
 		$acceptedFilesArray = explode( ',', static::get_file_mime_types() );
 
 		if ( empty( $acceptedFilesArray ) ) {
@@ -1598,7 +1598,7 @@ EOT;
 
 		foreach ( $acceptedFilesArray as $key => $type ) {
 			$validType = trim( $type );
-			if ( $validType{0} === '.' ) {
+			if ( substr( $validType, 0, 1 ) === '.' ) {
 				if ( strpos( strtolower( $fileName ), strtolower( $validType ) ) !== false ) {
 					$successCount ++;
 				}
@@ -1622,7 +1622,7 @@ EOT;
 	 *
 	 * @return array
 	 */
-	public static function get_editor_toolbar_options () {
+	public static function get_editor_toolbar_options() {
 
 		$toolbar_option = [];
 		if ( static::is_editor_toolbar_bold() ) {
@@ -1665,7 +1665,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_editor_toolbar_on () {
+	public static function is_editor_toolbar_on() {
 		$is_toolbar_on                 = static::instance()->get_db_option( self::OPTION_EDITOR_TOOLBAR_TOGGLE ) !== null;
 		$has_at_least_one_toolbar_item = static::is_editor_toolbar_bold() ||
 		                                 static::is_editor_toolbar_italic() ||
@@ -1688,7 +1688,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_editor_toolbar_bold () {
+	public static function is_editor_toolbar_bold() {
 		return static::instance()->get_db_option( self::OPTION_EDITOR_TOOLBAR_BOLD ) !== null;
 	}
 
@@ -1697,7 +1697,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_editor_toolbar_italic () {
+	public static function is_editor_toolbar_italic() {
 		return static::instance()->get_db_option( self::OPTION_EDITOR_TOOLBAR_ITALIC ) !== null;
 	}
 
@@ -1706,7 +1706,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_editor_toolbar_underline () {
+	public static function is_editor_toolbar_underline() {
 		return static::instance()->get_db_option( self::OPTION_EDITOR_TOOLBAR_UNDERLINE ) !== null;
 	}
 
@@ -1715,7 +1715,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_editor_toolbar_blockquote () {
+	public static function is_editor_toolbar_blockquote() {
 		return static::instance()->get_db_option( self::OPTION_EDITOR_TOOLBAR_QUOTE ) !== null;
 	}
 
@@ -1724,7 +1724,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_editor_toolbar_ordered_list () {
+	public static function is_editor_toolbar_ordered_list() {
 		return static::instance()->get_db_option( self::OPTION_EDITOR_TOOLBAR_ORDERED ) !== null;
 	}
 
@@ -1733,7 +1733,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_editor_toolbar_bullet_list () {
+	public static function is_editor_toolbar_bullet_list() {
 		return static::instance()->get_db_option( self::OPTION_EDITOR_TOOLBAR_BULLET ) !== null;
 	}
 
@@ -1742,7 +1742,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_editor_toolbar_link () {
+	public static function is_editor_toolbar_link() {
 		return static::instance()->get_db_option( self::OPTION_EDITOR_TOOLBAR_LINK ) !== null;
 	}
 
@@ -1751,7 +1751,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_editor_toolbar_clean () {
+	public static function is_editor_toolbar_clean() {
 		return static::instance()->get_db_option( self::OPTION_EDITOR_TOOLBAR_CLEAN ) !== null;
 	}
 
@@ -1761,7 +1761,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_design_custom () {
+	public static function is_design_custom() {
 		return static::instance()->get_db_option( self::OPTION_DESIGN_CUSTOM_TOGGLE ) !== null;
 	}
 
@@ -1770,7 +1770,7 @@ EOT;
 	 *
 	 * @return string
 	 */
-	public static function get_global_background_color () {
+	public static function get_global_background_color() {
 		return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_db_option( self::OPTION_DESIGN_GLOBAL_BACKGROUND_COLOR ) );
 	}
 
@@ -1779,7 +1779,7 @@ EOT;
 	 *
 	 * @return string
 	 */
-	public static function get_global_background_border_radius () {
+	public static function get_global_background_border_radius() {
 		return AnyCommentInputHelper::normalize_css_size( static::instance()->get_db_option( self::OPTION_DESIGN_GLOBAL_BACKGROUND_BORDER_RADIUS ) );
 	}
 
@@ -1788,7 +1788,7 @@ EOT;
 	 *
 	 * @return string
 	 */
-	public static function get_global_margin () {
+	public static function get_global_margin() {
 		return AnyCommentInputHelper::normalize_css_size( static::instance()->get_db_option( self::OPTION_DESIGN_GLOBAL_MARGIN ) );
 	}
 
@@ -1797,7 +1797,7 @@ EOT;
 	 *
 	 * @return string
 	 */
-	public static function get_global_padding () {
+	public static function get_global_padding() {
 		return AnyCommentInputHelper::normalize_css_size( static::instance()->get_db_option( self::OPTION_DESIGN_GLOBAL_PADDING ) );
 	}
 
@@ -1806,7 +1806,7 @@ EOT;
 	 *
 	 * @return string|null
 	 */
-	public static function get_design_font_size () {
+	public static function get_design_font_size() {
 		return AnyCommentInputHelper::normalize_css_size( static::instance()->get_db_option( self::OPTION_DESIGN_FONT_SIZE ) );
 	}
 
@@ -1815,7 +1815,7 @@ EOT;
 	 *
 	 * @return string|null
 	 */
-	public static function get_design_font_family () {
+	public static function get_design_font_family() {
 		return static::instance()->get_db_option( self::OPTION_DESIGN_FONT_FAMILY );
 	}
 
@@ -1824,7 +1824,7 @@ EOT;
 	 *
 	 * @return string|null
 	 */
-	public static function get_design_semi_hidden_color () {
+	public static function get_design_semi_hidden_color() {
 		return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_db_option( self::OPTION_DESIGN_SEMI_HIDDEN_COLOR ) );
 	}
 
@@ -1834,7 +1834,7 @@ EOT;
 	 *
 	 * @return string|null
 	 */
-	public static function get_design_link_color () {
+	public static function get_design_link_color() {
 		return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_db_option( self::OPTION_DESIGN_LINK_COLOR ) );
 	}
 
@@ -1843,7 +1843,7 @@ EOT;
 	 *
 	 * @return string|null
 	 */
-	public static function get_design_text_color () {
+	public static function get_design_text_color() {
 		return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_db_option( self::OPTION_DESIGN_TEXT_COLOR ) );
 	}
 
@@ -1852,7 +1852,7 @@ EOT;
 	 *
 	 * @return string|null
 	 */
-	public static function get_design_form_field_background_color () {
+	public static function get_design_form_field_background_color() {
 		return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_db_option( self::OPTION_DESIGN_FORM_FIELD_BACKGROUND_COLOR ) );
 	}
 
@@ -1861,7 +1861,7 @@ EOT;
 	 *
 	 * @return string|null
 	 */
-	public static function get_design_attachment_color () {
+	public static function get_design_attachment_color() {
 		return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_db_option( self::OPTION_DESIGN_ATTACHMENT_COLOR ) );
 	}
 
@@ -1870,7 +1870,7 @@ EOT;
 	 *
 	 * @return string|null
 	 */
-	public static function get_design_attachment_background_color () {
+	public static function get_design_attachment_background_color() {
 		return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_db_option( self::OPTION_DESIGN_ATTACHMENT_BACKGROUND_COLOR ) );
 	}
 
@@ -1879,7 +1879,7 @@ EOT;
 	 *
 	 * @return string|null
 	 */
-	public static function get_design_avatar_radius () {
+	public static function get_design_avatar_radius() {
 		return AnyCommentInputHelper::normalize_css_size( static::instance()->get_db_option( self::OPTION_DESIGN_AVATAR_RADIUS ) );
 	}
 
@@ -1888,7 +1888,7 @@ EOT;
 	 *
 	 * @return string|null
 	 */
-	public static function get_design_parent_avatar_size () {
+	public static function get_design_parent_avatar_size() {
 		return AnyCommentInputHelper::normalize_css_size( static::instance()->get_db_option( self::OPTION_DESIGN_PARENT_AVATAR_SIZE ) );
 	}
 
@@ -1897,7 +1897,7 @@ EOT;
 	 *
 	 * @return string|null
 	 */
-	public static function get_design_child_avatar_size () {
+	public static function get_design_child_avatar_size() {
 		return AnyCommentInputHelper::normalize_css_size( static::instance()->get_db_option( self::OPTION_DESIGN_CHILD_AVATAR_SIZE ) );
 	}
 
@@ -1906,7 +1906,7 @@ EOT;
 	 *
 	 * @return string|null
 	 */
-	public static function get_design_button_color () {
+	public static function get_design_button_color() {
 		return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_db_option( self::OPTION_DESIGN_BUTTON_COLOR ) );
 	}
 
@@ -1915,7 +1915,7 @@ EOT;
 	 *
 	 * @return string|null
 	 */
-	public static function get_design_button_background_color () {
+	public static function get_design_button_background_color() {
 		return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_db_option( self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR ) );
 	}
 
@@ -1924,7 +1924,7 @@ EOT;
 	 *
 	 * @return string|null
 	 */
-	public static function get_design_button_background_color_active () {
+	public static function get_design_button_background_color_active() {
 		return AnyCommentInputHelper::normalize_hex_color( static::instance()->get_db_option( self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR_ACTIVE ) );
 	}
 
@@ -1933,7 +1933,7 @@ EOT;
 	 *
 	 * @return string|null
 	 */
-	public static function get_design_button_radius () {
+	public static function get_design_button_radius() {
 		return AnyCommentInputHelper::normalize_css_size( static::instance()->get_db_option( self::OPTION_DESIGN_BUTTON_RADIUS ) );
 	}
 
@@ -1942,18 +1942,18 @@ EOT;
 	 *
 	 * @return string|null
 	 */
-	public static function get_design_global_radius () {
+	public static function get_design_global_radius() {
 		return AnyCommentInputHelper::normalize_css_size( static::instance()->get_db_option( self::OPTION_DESIGN_GLOBAL_RADIUS ) );
 	}
 
 	/**
 	 * Get interval in seconds per each check for new comments.
 	 *
+	 * @return string
 	 * @see AnyCommentGenericSettings::is_notify_on_new_reply() for more information. Which option is ignored when notification disabled.
 	 *
-	 * @return string
 	 */
-	public static function get_interval_comments_check () {
+	public static function get_interval_comments_check() {
 		$intervalInSeconds = static::instance()->get_db_option( self::OPTION_INTERVAL_COMMENTS_CHECK );
 
 		if ( $intervalInSeconds < 5 ) {
@@ -1973,7 +1973,7 @@ EOT;
 	 *
 	 * @return mixed|null
 	 */
-	public static function get_datetime_format () {
+	public static function get_datetime_format() {
 		$value = static::instance()->get_db_option( self::OPTION_COMMENT_DATETIME_FORMAT );
 
 		if ( $value !== self::DATETIME_FORMAT_NATIVE && $value !== self::DATETIME_FORMAT_RELATIVE ) {
@@ -1988,7 +1988,7 @@ EOT;
 	 *
 	 * @return string
 	 */
-	public static function get_register_default_group () {
+	public static function get_register_default_group() {
 		return static::instance()->get_db_option( self::OPTION_REGISTER_DEFAULT_GROUP );
 	}
 
@@ -1997,7 +1997,7 @@ EOT;
 	 *
 	 * @return string|null
 	 */
-	public static function get_user_agreement_link () {
+	public static function get_user_agreement_link() {
 		return static::instance()->get_db_option( self::OPTION_USER_AGREEMENT_LINK );
 	}
 
@@ -2006,7 +2006,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_read_more_on () {
+	public static function is_read_more_on() {
 		return static::instance()->get_db_option( self::OPTION_READ_MORE_TOGGLE ) !== null;
 	}
 
@@ -2015,7 +2015,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_rating_on () {
+	public static function is_rating_on() {
 		return static::instance()->get_db_option( self::OPTION_RATING_TOGGLE ) !== null;
 	}
 
@@ -2024,7 +2024,7 @@ EOT;
 	 *
 	 * @return int
 	 */
-	public static function get_per_page () {
+	public static function get_per_page() {
 		$value = (int) static::instance()->get_db_option( self::OPTION_COUNT_PER_PAGE );
 
 		if ( $value < 5 ) {
@@ -2039,7 +2039,7 @@ EOT;
 	 *
 	 * @return int
 	 */
-	public static function get_comment_update_time () {
+	public static function get_comment_update_time() {
 		$value = (int) static::instance()->get_db_option( self::OPTION_COMMENT_UPDATE_TIME );
 
 		if ( empty( $value ) || (int) $value === 0 || $value < 1 ) {
@@ -2055,7 +2055,7 @@ EOT;
 	 *
 	 * @return string
 	 */
-	public static function get_sort_order () {
+	public static function get_sort_order() {
 		$value = static::instance()->get_db_option( self::OPTION_DEFAULT_SORT_BY );
 
 		if ( $value !== self::SORT_DESC && $value !== self::SORT_ASC ) {
@@ -2071,7 +2071,7 @@ EOT;
 	 *
 	 * @return string
 	 */
-	public static function get_comment_rating () {
+	public static function get_comment_rating() {
 		$value = static::instance()->get_db_option( self::OPTION_COMMENT_RATING );
 
 		if ( $value !== self::COMMENT_RATING_LIKES && $value !== self::COMMENT_RATING_LIKES_DISLIKES ) {
@@ -2086,7 +2086,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_default_avatar_anycomment () {
+	public static function is_default_avatar_anycomment() {
 		return static::get_default_avatar() === self::OPTION_DEFAULT_AVATAR_ANYCOMMENT;
 	}
 
@@ -2095,7 +2095,7 @@ EOT;
 	 *
 	 * @return null|string
 	 */
-	public static function get_default_avatar () {
+	public static function get_default_avatar() {
 		$value = static::instance()->get_db_option( self::OPTION_DEFAULT_AVATAR );
 
 		if ( $value !== self::OPTION_DEFAULT_AVATAR_ANYCOMMENT &&
@@ -2116,7 +2116,7 @@ EOT;
 	 *
 	 * @return string|null
 	 */
-	public static function get_form_type () {
+	public static function get_form_type() {
 		return static::instance()->get_db_option( self::OPTION_FORM_TYPE );
 	}
 
@@ -2132,7 +2132,7 @@ EOT;
 	 *
 	 * @return string|array|null
 	 */
-	public static function get_guest_fields ( $asArray = false ) {
+	public static function get_guest_fields( $asArray = false ) {
 		$instance = static::instance();
 		$value    = $instance->get_db_option( self::OPTION_GUEST_FIELDS );
 
@@ -2162,7 +2162,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_show_updated_info () {
+	public static function is_show_updated_info() {
 		return static::instance()->get_db_option( self::OPTION_SHOW_UPDATED_INFO ) !== null;
 	}
 
@@ -2171,7 +2171,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_guest_field_name_on () {
+	public static function is_guest_field_name_on() {
 		return in_array( 'name', static::get_guest_fields( true ), true );
 	}
 
@@ -2180,7 +2180,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_guest_field_email_on () {
+	public static function is_guest_field_email_on() {
 		return in_array( 'email', static::get_guest_fields( true ), true );
 	}
 
@@ -2189,7 +2189,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_guest_field_website_on () {
+	public static function is_guest_field_website_on() {
 		return in_array( 'website', static::get_guest_fields( true ), true );
 	}
 
@@ -2198,7 +2198,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_form_type_all () {
+	public static function is_form_type_all() {
 		return static::get_form_type() === self::FORM_OPTION_ALL;
 	}
 
@@ -2207,7 +2207,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_form_type_wordpress () {
+	public static function is_form_type_wordpress() {
 		return static::get_form_type() === self::FORM_OPTION_WORDPRESS_ONLY;
 	}
 
@@ -2216,7 +2216,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_form_type_socials () {
+	public static function is_form_type_socials() {
 		return static::get_form_type() === self::FORM_OPTION_SOCIALS_ONLY;
 	}
 
@@ -2225,7 +2225,7 @@ EOT;
 	 *
 	 * @return bool
 	 */
-	public static function is_form_type_guests () {
+	public static function is_form_type_guests() {
 		return static::get_form_type() === self::FORM_OPTION_GUEST_ONLY;
 	}
 
@@ -2234,55 +2234,55 @@ EOT;
 	 *
 	 * @return mixed|null
 	 */
-	public static function get_editor_css () {
+	public static function get_editor_css() {
 		return static::instance()->get_db_option( self::OPTION_EDITOR_CSS );
 	}
 
-    /**
-     * Check whether SEO option is on or not.
-     *
-     * @return bool
-     */
-    public static function is_seo_on () {
-        return static::instance()->get_db_option( self::OPTION_SEO_TOGGLE ) !== null;
-    }
+	/**
+	 * Check whether SEO option is on or not.
+	 *
+	 * @return bool
+	 */
+	public static function is_seo_on() {
+		return static::instance()->get_db_option( self::OPTION_SEO_TOGGLE ) !== null;
+	}
 
-    /**
-     * Get SEO limit.
-     *
-     * @return bool
-     */
-    public static function get_seo_limit () {
-        $limit = static::instance()->get_db_option( self::OPTION_SEO_DISPLAY_LIMIT );
+	/**
+	 * Get SEO limit.
+	 *
+	 * @return bool
+	 */
+	public static function get_seo_limit() {
+		$limit = static::instance()->get_db_option( self::OPTION_SEO_DISPLAY_LIMIT );
 
-        if(empty($limit)) {
-            $limit = 50;
-        }
+		if ( empty( $limit ) ) {
+			$limit = 50;
+		}
 
-        return $limit;
-    }
+		return $limit;
+	}
 
-    /**
-     * Get SEO sorting.
-     *
-     * @return bool
-     */
-    public static function get_seo_sorting () {
-        $sorting = static::instance()->get_db_option( self::OPTION_SEO_SORTING );
+	/**
+	 * Get SEO sorting.
+	 *
+	 * @return bool
+	 */
+	public static function get_seo_sorting() {
+		$sorting = static::instance()->get_db_option( self::OPTION_SEO_SORTING );
 
-        if(!empty($sorting) && $sorting !== self::SEO_SORTING_OLD2NEW && $sorting !== self::SEO_SORTING_NEW2OLD) {
-            $sorting = self::SEO_SORTING_NEW2OLD;
-        }
+		if ( ! empty( $sorting ) && $sorting !== self::SEO_SORTING_OLD2NEW && $sorting !== self::SEO_SORTING_NEW2OLD ) {
+			$sorting = self::SEO_SORTING_NEW2OLD;
+		}
 
-        return $sorting;
-    }
+		return $sorting;
+	}
 
 	/**
 	 * Check whether copyright should on or not.
 	 *
 	 * @return bool
 	 */
-	public static function is_copyright_on () {
+	public static function is_copyright_on() {
 		return static::instance()->get_db_option( self::OPTION_COPYRIGHT_TOGGLE ) !== null;
 	}
 }
