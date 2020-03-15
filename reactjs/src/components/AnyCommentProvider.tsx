@@ -182,6 +182,9 @@ export interface SettingContextProps {
 
 export interface ConfigProps {
     root: string;
+    events: {
+        [eventName: string]: any;
+    }
 }
 
 export interface ContextValueProps {

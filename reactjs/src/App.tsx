@@ -9,6 +9,7 @@ import {useDispatch} from 'react-redux';
 import {commentsVisible, handleScrollToComments} from './helpers/comment';
 import NotificationList from '~/core/notifications/NotificationList';
 import {failureSnackbar} from '~/core/notifications/NotificationActions';
+import {fireEvent} from '~/helpers/events';
 
 /**
  * App is main component of the application.
@@ -25,6 +26,8 @@ export default function App() {
         handleLoadOnScroll();
         handleErrors();
         maybeAddIEMeta();
+
+        fireEvent(config.events, 'init');
     }, []);
 
     /**

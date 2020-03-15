@@ -32,9 +32,9 @@ export default function CommentContainer() {
     useEffect(() => {
         let interval;
         if (options.notifyOnNewComment) {
-            const intervalInSeconds = (options.intervalCommentsCheck * 1000) || 5000;
+            const intervalInSeconds = options.intervalCommentsCheck * 1000 || 5000;
 
-            interval = setInterval(function() {
+            interval = setInterval(() => {
                 fetchCommentsSalient({postId: settings.postId});
             }, intervalInSeconds);
         }
@@ -53,7 +53,6 @@ export default function CommentContainer() {
 
         if (hasSpecificCommentAnchor()) {
             setInterval(() => {
-
                 const element = document.getElementById(hash.replace('#', ''));
 
                 if (!element) {
@@ -80,11 +79,10 @@ export default function CommentContainer() {
     }
 
     function onFetched(response: ListResponse<CommentModel>) {
-
         if (response.items.length === 0) {
             return (
-                <ul id="anycomment-load-container" className="anycomment anycomment-list">
-                    <li className="anycomment comment-single comment-no-comments">{settings.i18.no_comments}</li>
+                <ul id='anycomment-load-container' className='anycomment anycomment-list'>
+                    <li className='anycomment comment-single comment-no-comments'>{settings.i18.no_comments}</li>
                 </ul>
             );
         }
@@ -92,15 +90,16 @@ export default function CommentContainer() {
         if (response.items && response.items.length > 0) {
             return (
                 <>
-                    {response.items.map(comment => <CommentItem key={comment.id} comment={comment}/>}
-                    {
-                        response.meta.current_page !== response.meta.page_count && (
-                            <div className="anycomment comment-single-load-more">
-                                <span onClick={handleLoadMore}
-                                      className="anycomment anycomment-btn">{settings.i18.load_more}</span>
-                            </div>
-                        )
-                    }
+                    {response.items.map(comment => {
+                        return <CommentItem key={comment.id} comment={comment} />;
+                    })}
+                    {response.meta.current_page !== response.meta.page_count && (
+                        <div className='anycomment comment-single-load-more'>
+                            <span onClick={handleLoadMore} className='anycomment anycomment-btn'>
+                                {settings.i18.load_more}
+                            </span>
+                        </div>
+                    )}
                 </>
             );
         }
@@ -109,11 +108,11 @@ export default function CommentContainer() {
     }
 
     return (
-        <ul id="anycomment-load-container" className="anycomment anycomment-list">
-            <SendComment/>
-            <CommentSortHeader/>
-            <Subscribe/>
-            <ReducerResolver reducer={comments} fetched={onFetched}/>
+        <ul id='anycomment-load-container' className='anycomment anycomment-list'>
+            <SendComment />
+            <CommentSortHeader />
+            <Subscribe />
+            <ReducerResolver reducer={comments} fetched={onFetched} />
         </ul>
     );
 }
