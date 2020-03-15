@@ -1,4 +1,4 @@
-import {getSettings} from "~/hooks/setting";
+import {getSettings} from '~/hooks/setting';
 
 /**
  * Check whether user is guest or not.

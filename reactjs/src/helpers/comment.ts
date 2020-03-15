@@ -1,5 +1,5 @@
-import {moveToElement, scrollTop} from "./scroll";
-import {hasCommentSectionAnchor} from "./url";
+import {moveToElement, scrollTop} from './scroll';
+import {hasCommentSectionAnchor} from './url';
 
 /**
  * Move to comment and highlight it for some period.
@@ -10,7 +10,6 @@ import {hasCommentSectionAnchor} from "./url";
  * @returns {boolean}
  */
 export function moveToCommentAndHighlight(id, highlightTime = 2500) {
-
     if (!id) {
         return false;
     }
@@ -52,8 +51,13 @@ export function commentsVisible(selector) {
         body = document.body,
         html = document.documentElement;
 
-    const height = Math.max(body.scrollHeight, body.offsetHeight,
-        html.clientHeight, html.scrollHeight, html.offsetHeight);
+    const height = Math.max(
+        body.scrollHeight,
+        body.offsetHeight,
+        html.clientHeight,
+        html.scrollHeight,
+        html.offsetHeight
+    );
 
     if (height <= window.innerHeight) {
         return true;
@@ -64,7 +68,7 @@ export function commentsVisible(selector) {
 
     wH = wH * 0.9;
 
-    return (currentTop + wH) > tillTop;
+    return currentTop + wH > tillTop;
 }
 
 /**

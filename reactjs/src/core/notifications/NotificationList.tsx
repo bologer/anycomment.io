@@ -4,8 +4,8 @@ import {useSnackbar} from 'notistack';
 import {removeSnackbar} from './NotificationActions';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
-import {StoreProps} from "~/store/reducers";
-import {NotificationReducersProps} from "~/core/notifications/notificationReducers";
+import {StoreProps} from '~/store/reducers';
+import {NotificationReducersProps} from '~/core/notifications/notificationReducers';
 
 /**
  * Manages displaying alerts (snackbars) using the notistack library and manages notifications inside Redux state.

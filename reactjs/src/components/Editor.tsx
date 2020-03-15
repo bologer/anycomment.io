@@ -3,14 +3,14 @@ import ReactQuill from 'react-quill';
 import styled from 'styled-components';
 
 const QuillWrapper = styled.div`
-  width: 100%;
-  background-color: #fff;
-  border-radius: 5px;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 5px;
 `;
 
 const ToolbarWrapper = styled.div`
-  border-top: 1px solid #c9cbcc;
-  padding: 5px;
+    border-top: 1px solid #c9cbcc;
+    padding: 5px;
 `;
 
 let toolbarId: string = 'toolbar';
@@ -24,19 +24,17 @@ const ref: RefObject<any> = React.createRef();
  * @return {*}
  * @constructor
  */
-function Toolbar({toolbarId}: { toolbarId: string }) {
-
+function Toolbar({toolbarId}: {toolbarId: string}) {
     return (
-        <ToolbarWrapper id={toolbarId} className="ql-toolbar ql-snow">
-            <button type="button" className="ql-bold"/>
-            <button type="button" className="ql-italic"/>
-            <button type="button" className="ql-list" value="ordered"/>
-            <button type="button" className="ql-list" value="bullet"/>
-            <button type="button" className="ql-blockquote"/>
+        <ToolbarWrapper id={toolbarId} className='ql-toolbar ql-snow'>
+            <button type='button' className='ql-bold' />
+            <button type='button' className='ql-italic' />
+            <button type='button' className='ql-list' value='ordered' />
+            <button type='button' className='ql-list' value='bullet' />
+            <button type='button' className='ql-blockquote' />
         </ToolbarWrapper>
     );
 }
-
 
 export interface EditorProps {
     onChange: (e: any) => void;
@@ -73,23 +71,13 @@ export default function Editor({
     theme = 'snow',
     value = '',
     placeholder = '',
-    formats = [
-        "header",
-        "bold",
-        "italic",
-        "underline",
-        "blockquote",
-        "list",
-        "bullet",
-        "link",
-    ],
+    formats = ['header', 'bold', 'italic', 'underline', 'blockquote', 'list', 'bullet', 'link'],
     showToolbar = true,
     entropy = '',
-    refHandler
+    refHandler,
 }: EditorProps) {
-
     useEffect(() => {
-        if(ref && ref.current) {
+        if (ref && ref.current) {
             refHandler(ref.current);
         }
     }, [ref]);
@@ -106,19 +94,18 @@ export default function Editor({
     const id = toolbarId + ('-' + entropy);
 
     const memoModules = useMemo(() => {
-
         return {
             toolbar: {
                 container: `#${id}`,
                 handlers: {
                     // 'block-code': codeHandler
                     // insertStar: insertStar
-                }
+                },
             },
             clipboard: {
                 matchVisual: false,
-            }
-        }
+            },
+        };
     }, [id]);
 
     return (
@@ -131,8 +118,9 @@ export default function Editor({
                 ref={ref}
                 modules={memoModules}
                 formats={formats}
-                onChange={onChange}/>
-            {showToolbar && <Toolbar toolbarId={id}/>}
+                onChange={onChange}
+            />
+            {showToolbar && <Toolbar toolbarId={id} />}
         </QuillWrapper>
     );
 }

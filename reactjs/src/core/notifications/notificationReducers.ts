@@ -1,4 +1,4 @@
-import {ENQUEUE_SNACKBAR,  REMOVE_SNACKBAR, CLOSE_SNACKBAR} from './NotificationActions';
+import {ENQUEUE_SNACKBAR, REMOVE_SNACKBAR, CLOSE_SNACKBAR} from './NotificationActions';
 
 const DEFAULT_STATE = {notifications: []};
 
@@ -7,7 +7,6 @@ export interface NotificationReducersProps {
 }
 
 export default function reducer(state = DEFAULT_STATE, action) {
-
     switch (action.type) {
         case ENQUEUE_SNACKBAR:
             return {
@@ -32,11 +31,11 @@ export default function reducer(state = DEFAULT_STATE, action) {
                 notifications: state.notifications.map(notification =>
                     action.dismissAll || notification.key === action.key
                         ? {...notification, dismissed: true}
-                        : {...notification},
+                        : {...notification}
                 ),
             };
 
         default:
             return state;
     }
-};
+}

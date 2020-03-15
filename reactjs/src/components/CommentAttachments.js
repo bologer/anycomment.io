@@ -1,10 +1,12 @@
-import React from 'react'
-import Lightbox from 'react-images'
-import AnyCommentComponent from "./AnyCommentComponent";
-import Icon from "./Icon";
-import {faMusic, faFile} from '@fortawesome/free-solid-svg-icons'
+import React from 'react';
+import Lightbox from 'react-images';
+import AnyCommentComponent from './AnyCommentComponent';
+import Icon from './Icon';
+import {faMusic, faFile} from '@fortawesome/free-solid-svg-icons';
 
-
+/**
+ * Renders list of attachments for a single comment.
+ */
 class CommentAttachments extends AnyCommentComponent {
     constructor(props) {
         super(props);
@@ -72,9 +74,9 @@ class CommentAttachments extends AnyCommentComponent {
             return false;
         }
 
-        const settings = this.getSettings(),
-            url = '/documents/delete',
-            self = this;
+        const settings = this.getSettings();
+        const url = '/documents/delete';
+        const self = this;
 
         let headers = {};
 
@@ -87,9 +89,9 @@ class CommentAttachments extends AnyCommentComponent {
                 method: 'post',
                 url: url,
                 params: {id: obj.file_id},
-                headers: headers
+                headers: headers,
             })
-            .then(function (response) {
+            .then(function(response) {
                 if (response.data.success) {
                     const cleanDeletedAttachment = self.props.attachments.filter((obj, i) => {
                         return i !== index;
@@ -98,7 +100,7 @@ class CommentAttachments extends AnyCommentComponent {
                     self.props.handleAttachmentChange(cleanDeletedAttachment);
                 }
             })
-            .catch(function (error) {
+            .catch(function(error) {
                 self.showError(error);
             });
 
@@ -108,50 +110,64 @@ class CommentAttachments extends AnyCommentComponent {
     renderGallery() {
         const {attachments} = this.props;
 
-        if (!attachments || attachments.length <= 0)
-            return null;
+        if (!attachments || attachments.length <= 0) return null;
 
-        const renderedGallery = attachments.map((obj, i) => {
-            const type = (obj.file_type || ''),
-                isImage = type === 'image',
-                isAudio = type === 'audio';
+        return attachments.map((obj, i) => {
+            const type = obj.file_type || '';
+            const isImage = type === 'image';
+            const isAudio = type === 'audio';
 
             if (isImage) {
-                return <li
-                    key={i}
-                    onClick={(e) => this.openLightbox(i, e)}
-                    className="anycomment anycomment-uploads__item">
-                    {this.state.showDeleteAction ?
-                        <span className="anycomment anycomment-uploads__item-close"
-                              onClick={(e) => this.handleDelete(i, obj, e)}>&times;</span> : ''}
-                    <img className="anycomment anycomment-uploads__item-thumbnail" src={obj.file_thumbnail}/>
-                </li>;
+                return (
+                    <li key={i} onClick={e => this.openLightbox(i, e)} className='anycomment anycomment-uploads__item'>
+                        {this.state.showDeleteAction && (
+                            <span
+                                className='anycomment anycomment-uploads__item-close'
+                                onClick={e => this.handleDelete(i, obj, e)}
+                            >
+                                &times;
+                            </span>
+                        )}
+                        <img className='anycomment anycomment-uploads__item-thumbnail' src={obj.file_thumbnail} />
+                    </li>
+                );
             } else if (isAudio) {
-                return <li
-                    key={i}
-                    className="anycomment anycomment-uploads__item anycomment-uploads__item-audio">
-                    {this.state.showDeleteAction ?
-                        <span className="anycomment anycomment-uploads__item-close"
-                              onClick={(e) => this.handleDelete(i, obj, e)}>&times;</span> : ''}
-                    <a href={obj.file_url} target="_blank">
-                        <Icon icon={faMusic}/>
-                    </a>
-                </li>;
+                return (
+                    <li key={i} className='anycomment anycomment-uploads__item anycomment-uploads__item-audio'>
+                        {this.state.showDeleteAction && (
+                            <span
+                                className='anycomment anycomment-uploads__item-close'
+                                onClick={e => this.handleDelete(i, obj, e)}
+                            >
+                                &times;
+                            </span>
+                        )}
+                        <a href={obj.file_url} target='_blank' rel='noopener noreferrer'>
+                            <Icon icon={faMusic} />
+                        </a>
+                    </li>
+                );
             }
 
-            return <li
-                key={i}
-                className="anycomment anycomment-uploads__item anycomment-uploads__item anycomment-uploads__item-document">
-                {this.state.showDeleteAction ?
-                    <span className="anycomment anycomment-uploads__item-close"
-                          onClick={(e) => this.handleDelete(i, obj, e)}>&times;</span> : ''}
-                <a href={obj.file_url} target="_blank">
-                    <Icon icon={faFile}/>
-                </a>
-            </li>;
+            return (
+                <li
+                    key={i}
+                    className='anycomment anycomment-uploads__item anycomment-uploads__item anycomment-uploads__item-document'
+                >
+                    {this.state.showDeleteAction && (
+                        <span
+                            className='anycomment anycomment-uploads__item-close'
+                            onClick={e => this.handleDelete(i, obj, e)}
+                        >
+                            &times;
+                        </span>
+                    )}
+                    <a href={obj.file_url} target='_blank' rel='noopener noreferrer'>
+                        <Icon icon={faFile} />
+                    </a>
+                </li>
+            );
         });
-
-        return (renderedGallery);
     }
 
     /**
@@ -166,9 +182,9 @@ class CommentAttachments extends AnyCommentComponent {
             return [];
         }
 
-        attachments = attachments.filter(item => (item.file_type === 'image'));
+        attachments = attachments.filter(item => item.file_type === 'image');
 
-        return attachments.map((item) => {
+        return attachments.map(item => {
             item['src'] = item.file_url;
             item['thumbnail'] = item.file_thumbnail;
 
@@ -177,8 +193,8 @@ class CommentAttachments extends AnyCommentComponent {
     }
 
     render() {
-        const images = this.filterImages(),
-            {attachments, settings} = this.props;
+        const images = this.filterImages();
+        const {attachments, settings} = this.props;
 
         if (!attachments || attachments.length <= 0) {
             return null;
@@ -186,12 +202,12 @@ class CommentAttachments extends AnyCommentComponent {
 
         const theme = {
             container: {
-                zIndex: 99999
-            }
+                zIndex: 99999,
+            },
         };
 
         return (
-            <ul className="anycomment anycomment-uploads">
+            <ul className='anycomment anycomment-uploads'>
                 {this.renderGallery()}
                 <Lightbox
                     closeButtonTitle={settings.i18.lightbox_close}

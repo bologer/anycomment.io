@@ -1,6 +1,6 @@
-import {fetch, FetchActions} from "~/helpers/action";
-import {getSettings} from "~/hooks/setting";
-import {CommentModel} from "~/typings/models/CommentModel";
+import {fetch, FetchActions} from '~/helpers/action';
+import {getSettings} from '~/hooks/setting';
+import {CommentModel} from '~/typings/models/CommentModel';
 
 export const COMMENT_DELETE = '@comment/delete';
 export const COMMENT_DELETE_SUCCESS = '@comment/delete/success';
@@ -11,6 +11,10 @@ export const COMMENT_UPDATE = '@comment/update';
 export const COMMENT_UPDATE_SUCCESS = '@comment/update/success';
 export const COMMENT_UPDATE_FAILURE = '@comment/update/failure';
 export const COMMENT_UPDATE_INVALIDATE = '@comment/update/invalidate';
+
+export const COMMENT_LIKE = '@comment/like';
+export const COMMENT_LIKE_SUCCESS = '@comment/like/success';
+export const COMMENT_LIKE_FAILURE = '@comment/like/failure';
 
 export const COMMENT_FETCH = '@comment/fetch';
 export const COMMENT_FETCH_SUCCESS = '@comment/fetch/success';
@@ -48,7 +52,7 @@ export function activeCommentForm(type: CommentFormType, comment: CommentModel) 
             type,
             comment,
         },
-    }
+    };
 }
 
 /**
@@ -57,7 +61,7 @@ export function activeCommentForm(type: CommentFormType, comment: CommentModel) 
 export function invalidateCommentForm() {
     return {
         type: COMMENT_FORM_INVALIDATE,
-    }
+    };
 }
 
 interface FetchCommentProps {
@@ -88,12 +92,7 @@ export function fetchCommentsBase({
     offset = 0,
     perPage,
     order,
-    actions: {
-        pre,
-        success,
-        failure,
-        always,
-    },
+    actions: {pre, success, failure, always},
 }: FetchCommentProps & FetchCommentsBase) {
     const timestamp = new Date().getTime();
 
@@ -107,24 +106,25 @@ export function fetchCommentsBase({
         order = settings.options.sort_order;
     }
 
-    return (dispatch) => {
-
+    return dispatch => {
         dispatch({type: COMMENT_FETCH_FILTER, payload: {perPage, offset, order}});
 
-        return dispatch(fetch({
-            method: 'get',
-            url: 'comments',
-            params: {
-                post: postId,
-                parent: 0,
-                per_page: perPage,
-                order,
-                offset,
-                rnd: timestamp,
-            },
-            actions: {pre, success, failure, always},
-        }))
-    }
+        return dispatch(
+            fetch({
+                method: 'get',
+                url: 'comments',
+                params: {
+                    post: postId,
+                    parent: 0,
+                    per_page: perPage,
+                    order,
+                    offset,
+                    rnd: timestamp,
+                },
+                actions: {pre, success, failure, always},
+            })
+        );
+    };
 }
 
 /**
@@ -189,7 +189,7 @@ export function fetchCreateComment(postId: number, params) {
             success: COMMENT_CREATE_SUCCESS,
             failure: COMMENT_CREATE_FAILURE,
         },
-    })
+    });
 }
 
 /**
@@ -228,7 +228,7 @@ export function fetchDeleteComment(id: number) {
             success: COMMENT_DELETE_SUCCESS,
             failure: COMMENT_DELETE_FAILURE,
         },
-    })
+    });
 }
 
 /**
@@ -246,17 +246,48 @@ export function fetchUpdateComment(commentId: number, data: {}) {
             success: COMMENT_UPDATE_SUCCESS,
             failure: COMMENT_UPDATE_FAILURE,
         },
-    })
+    });
 }
 
+/**
+ * Set like on a comment.
+ * @param commentId
+ * @param postId
+ */
+export function fetchLike(commentId: number, postId: number, type: number = 1) {
+    return dispatch => {
+        return dispatch(
+            fetch({
+                method: 'post',
+                params: {
+                    comment: commentId,
+                    post: postId,
+                    type,
+                },
+                url: `likes`,
+                actions: {
+                    pre: {type: COMMENT_LIKE, commentId},
+                    success: response => {
+                        return {type: COMMENT_LIKE_SUCCESS, payload: response, commentId};
+                    },
+                    failure: {type: COMMENT_LIKE_FAILURE, commentId},
+                },
+            })
+        );
+    };
+}
+
+// eslint-disable-next-line require-jsdoc
 export function invalidateUpdateComment() {
     return {type: COMMENT_UPDATE_INVALIDATE};
 }
 
+// eslint-disable-next-line require-jsdoc
 export function invalidateDeleteComment() {
     return {type: COMMENT_DELETE_INVALIDATE};
 }
 
+// eslint-disable-next-line require-jsdoc
 export function invalidateCreateComment() {
     return {type: COMMENT_CREATE_INVALIDATE};
 }

@@ -1,28 +1,31 @@
 import React, {useEffect, useRef, useState} from 'react';
 import SendCommentFormBody from './SendCommentFormBody';
-import SendCommentFormBodyAvatar from './SendCommentFormBodyAvatar'
-import ReCAPTCHA from "react-google-recaptcha";
-import DataProcessing from './DataProcessing'
-import Icon from '~/components/Icon'
-import {faTimes} from '@fortawesome/free-solid-svg-icons'
-import {useOptions, useSettings} from "~/hooks/setting";
-import {useFormik} from "formik";
-import {useDispatch, useSelector} from "react-redux";
+import SendCommentFormBodyAvatar from './SendCommentFormBodyAvatar';
+import ReCAPTCHA from 'react-google-recaptcha';
+import DataProcessing from './DataProcessing';
+import Icon from '~/components/Icon';
+import {faTimes} from '@fortawesome/free-solid-svg-icons';
+import {useOptions, useSettings} from '~/hooks/setting';
+import {useFormik} from 'formik';
+import {useDispatch, useSelector} from 'react-redux';
 import {
     fetchCommentsSalient,
-    fetchCreateComment, fetchUpdateComment,
-    invalidateCommentForm, invalidateCreateComment, invalidateUpdateComment,
-} from "~/core/comment/CommentActions";
-import {StoreProps} from "~/store/reducers";
-import {CommentReducerProps} from "~/core/comment/commentReducers";
-import {manageReducer} from "~/helpers/action";
-import {isGuest} from "~/helpers/user";
-import ReactQuill from "react-quill";
-import {CommentModel} from "~/typings/models/CommentModel";
+    fetchCreateComment,
+    fetchUpdateComment,
+    invalidateCommentForm,
+    invalidateCreateComment,
+    invalidateUpdateComment,
+} from '~/core/comment/CommentActions';
+import {StoreProps} from '~/store/reducers';
+import {CommentReducerProps} from '~/core/comment/commentReducers';
+import {manageReducer} from '~/helpers/action';
+import {isGuest} from '~/helpers/user';
+import ReactQuill from 'react-quill';
+import {CommentModel} from '~/typings/models/CommentModel';
 import styled from 'styled-components';
-import LoginSocialList from "./LoginSocialList";
-import {SocialItemOption} from "~/components/AnyCommentProvider";
-import {successSnackbar} from "~/core/notifications/NotificationActions";
+import LoginSocialList from './LoginSocialList';
+import {GuestInputTypes, SocialsOption} from '~/components/AnyCommentProvider';
+import {successSnackbar, failureSnackbar} from '~/core/notifications/NotificationActions';
 
 const recapchaRef = React.createRef();
 
@@ -45,7 +48,7 @@ const Wrapper = styled.div`
 `;
 
 const AvatarColumn = styled.div`
-  padding: 0 10px 0 0;
+    padding: 0 10px 0 0;
 `;
 
 const EditorColumn = styled.div`
@@ -79,7 +82,6 @@ const GuestFieldsColumn = styled.div`
  * Class SendComment is used process comment before it will be sent.
  */
 export default function SendComment({action, comment}: SendCommentProps) {
-
     const dispatch = useDispatch();
     const {create, update} = useSelector<StoreProps, CommentReducerProps>(state => state.comments);
     const options = useOptions();
@@ -97,11 +99,10 @@ export default function SendComment({action, comment}: SendCommentProps) {
             is_agreement_accepted: false,
         },
         onSubmit: values => {
-
             // if (isCaptchaOn()) {
             //     recapchaRef.current.execute();
             //
-            //     let checkValueInterval = setInterval(function() {
+            //     let checkValueInterval = setInterval(() => {
             //         if (recapchaRef.current.getValue() !== '') {
             //             clearInterval(checkValueInterval);
             //
@@ -110,7 +111,7 @@ export default function SendComment({action, comment}: SendCommentProps) {
             //             }
             //
             //             return handleGuest(event);
-
+            //
             //         }
             //     }, 100);
             // }
@@ -153,15 +154,12 @@ export default function SendComment({action, comment}: SendCommentProps) {
             }
 
             if (isUpdate()) {
-                dispatch(fetchUpdateComment(comment && comment.id, data))
+                dispatch(fetchUpdateComment(comment && comment.id, data));
             }
         },
     });
 
-    const {
-        comment_html,
-        is_agreement_accepted,
-    } = formik.values;
+    const {comment_html, is_agreement_accepted} = formik.values;
 
     const editorRef = useRef<ReactQuill>(null);
 
@@ -173,7 +171,7 @@ export default function SendComment({action, comment}: SendCommentProps) {
     useEffect(() => {
         manageReducer({
             reducer: create,
-            onSuccess: (response) => {
+            onSuccess: response => {
                 prepareInitialForm();
                 dispatch(fetchCommentsSalient({postId: settings.postId, order: options.sort_order}));
 
@@ -189,7 +187,7 @@ export default function SendComment({action, comment}: SendCommentProps) {
     useEffect(() => {
         manageReducer({
             reducer: update,
-            onSuccess: (response) => {
+            onSuccess: response => {
                 prepareInitialForm();
                 dispatch(fetchCommentsSalient({postId: settings.postId, order: options.sort_order}));
 
@@ -256,7 +254,6 @@ export default function SendComment({action, comment}: SendCommentProps) {
      * Prepare comment form for comment reply state.
      */
     function prepareReplyForm() {
-
         formik.setFieldValue('comment_html', '', false);
         setButtonText(settings.i18.button_reply);
 
@@ -269,11 +266,9 @@ export default function SendComment({action, comment}: SendCommentProps) {
      * @param comment
      */
     function prepareUpdateForm(comment) {
-
         const commentHtml = comment.content.trim();
 
         if (commentHtml !== '') {
-
             formik.setFieldValue('comment_html', comment.content);
 
             setButtonText(settings.i18.button_save);
@@ -331,7 +326,12 @@ export default function SendComment({action, comment}: SendCommentProps) {
      * @returns {*|boolean}
      */
     function isCaptchaOn() {
-        return options.reCaptchaOn && (options.reCaptchaUserAll || (isGuest() && options.reCaptchaUserGuest) || (!isGuest() && options.reCaptchaUserAuth));
+        return (
+            options.reCaptchaOn &&
+            (options.reCaptchaUserAll ||
+                (isGuest() && options.reCaptchaUserGuest) ||
+                (!isGuest() && options.reCaptchaUserAuth))
+        );
     }
 
     /**
@@ -342,8 +342,12 @@ export default function SendComment({action, comment}: SendCommentProps) {
     function onCaptchaChange(value) {
     }
 
+    /**
+     * Display error message from reCAPTCHA component.
+     * @param error
+     */
     function onCaptchaError(error) {
-        toast.error(error);
+        dispatch(failureSnackbar(error));
     }
 
     /**
@@ -363,7 +367,7 @@ export default function SendComment({action, comment}: SendCommentProps) {
      * @returns {boolean}
      */
     function hasAtLeastOneSocial() {
-        const socials: SocialItemOption[] = settings.options.socials;
+        const socials: SocialsOption = settings.options.socials;
 
         if (!socials) {
             return false;
@@ -371,7 +375,7 @@ export default function SendComment({action, comment}: SendCommentProps) {
 
         let visibleCount = 0;
         for (let key in socials) {
-            if (socials.hasOwnProperty(key) && socials[key].visible) {
+            if (socials[key] && socials[key].visible) {
                 visibleCount++;
             }
         }
@@ -431,49 +435,65 @@ export default function SendComment({action, comment}: SendCommentProps) {
         return options.isFormTypeGuests || options.isFormTypeAll;
     }
 
+    /**
+     * Renders guest fields in order provided by options.
+     */
     function renderGuestFields() {
-        const inputs: string[] = settings.options.guestInputs;
+        const inputs: GuestInputTypes = settings.options.guestInputs;
 
         let elementInputs: React.ReactElement[] = [];
 
-        inputs.forEach(el => {
-            if (el === 'name') {
+        inputs.forEach(inputType => {
+            if (inputType === 'name') {
                 elementInputs.push(
-                    <div className="anycomment anycomment-form__inputs-item anycomment-form__inputs-name">
-                        <label form="anycomment-author-name">{translations.name} <span
-                            className="anycomment-label-import">*</span></label>
-                        <input type="text" name="author_name" id="anycomment-author-name"
-                               value={formik.values.author_name}
-                               required={true}
-                               onChange={formik.handleChange}
+                    <div className='anycomment anycomment-form__inputs-item anycomment-form__inputs-name'>
+                        <label form='anycomment-author-name'>
+                            {translations.name} <span className='anycomment-label-import'>*</span>
+                        </label>
+                        <input
+                            type='text'
+                            name='author_name'
+                            id='anycomment-author-name'
+                            value={formik.values.author_name}
+                            required
+                            onChange={formik.handleChange}
                         />
-                    </div>);
-
-            } else if (el === 'email') {
+                    </div>
+                );
+            } else if (inputType === 'email') {
                 elementInputs.push(
-                    <div className="anycomment anycomment-form__inputs-item anycomment-form__inputs-email">
-                        <label form="anycomment-author-email">{translations.email} <span
-                            className="anycomment-label-import">*</span></label>
-                        <input type="email" name="author_email" id="anycomment-author-email"
-                               value={formik.values.author_email}
-                               required={true}
-                               onChange={formik.handleChange}
+                    <div className='anycomment anycomment-form__inputs-item anycomment-form__inputs-email'>
+                        <label form='anycomment-author-email'>
+                            {translations.email} <span className='anycomment-label-import'>*</span>
+                        </label>
+                        <input
+                            type='email'
+                            name='author_email'
+                            id='anycomment-author-email'
+                            value={formik.values.author_email}
+                            required
+                            onChange={formik.handleChange}
                         />
-                    </div>);
-            } else if (el === 'website') {
+                    </div>
+                );
+            } else if (inputType === 'website') {
                 elementInputs.push(
-                    <div className="anycomment-form__inputs-item anycomment-form__inputs-website">
-                        <label form="anycomment-author-website">{translations.website}</label>
-                        <input type="text" name="author_website" id="anycomment-author-website"
-                               value={formik.values.author_website}
-                               onChange={formik.handleChange}
+                    <div className='anycomment-form__inputs-item anycomment-form__inputs-website'>
+                        <label form='anycomment-author-website'>{translations.website}</label>
+                        <input
+                            type='text'
+                            name='author_website'
+                            id='anycomment-author-website'
+                            value={formik.values.author_website}
+                            onChange={formik.handleChange}
                         />
-                    </div>);
+                    </div>
+                );
             }
         });
 
         return (
-            <div className={"anycomment anycomment-form__inputs anycomment-form__inputs-" + elementInputs.length}>
+            <div className={'anycomment anycomment-form__inputs anycomment-form__inputs-' + elementInputs.length}>
                 {elementInputs}
             </div>
         );
@@ -481,22 +501,24 @@ export default function SendComment({action, comment}: SendCommentProps) {
 
     const translations = settings.i18;
 
-    let reCaptcha = '';
+    let reCaptcha: null | React.ReactElement = null;
 
     if (isCaptchaOn() && options.reCaptchaSiteKey) {
-        // reCaptcha = <ReCAPTCHA
-        //     ref={recapchaRef}
-        //     theme={options.reCaptchaTheme}
-        //     sitekey={options.reCaptchaSiteKey}
-        //     badge={reCaptchaBadge}
-        //     onErrored={onCaptchaError}
-        //     onChange={onCaptchaChange}
-        //     size="invisible"
-        // />;
+        reCaptcha = (
+            <ReCAPTCHA
+                ref={recapchaRef}
+                theme={options.reCaptchaTheme}
+                sitekey={options.reCaptchaSiteKey}
+                badge={options.reCaptchaPosition}
+                onErrored={onCaptchaError}
+                onChange={onCaptchaChange}
+                size='invisible'
+            />
+        );
     }
 
-    let formClasses = '',
-        submitStatus = '';
+    let formClasses = '';
+    let submitStatus = '';
 
     if (!isGuest()) {
         formClasses = ' anycomment-form-authorized';
@@ -504,15 +526,14 @@ export default function SendComment({action, comment}: SendCommentProps) {
 
     if (isReply()) {
         formClasses += ' anycomment-form-reply';
-        submitStatus = translations.reply_to + " " + comment && comment.author_name;
+        submitStatus = translations.reply_to + ' ' + (comment && comment.author_name);
     } else if (isUpdate()) {
         formClasses += ' anycomment-form-update';
         submitStatus = translations.editing;
     }
 
     return (
-
-        <Wrapper className={"anycomment anycomment-form" + formClasses}>
+        <Wrapper className={'anycomment anycomment-form' + formClasses}>
             {!isGuest() && (
                 <AvatarColumn>
                     <SendCommentFormBodyAvatar />
@@ -527,7 +548,8 @@ export default function SendComment({action, comment}: SendCommentProps) {
                         editorRef={editorRef}
                         commentHTML={comment_html}
                         comment={comment}
-                        handleAttachmentChange={handleAttachmentChange} />
+                        handleAttachmentChange={handleAttachmentChange}
+                    />
 
                     {isGuest() && (
                         <>
@@ -535,7 +557,7 @@ export default function SendComment({action, comment}: SendCommentProps) {
                                 {showSocialIcons() && (
                                     <SocialListColumn>
                                         <GuestHeader>{settings.i18.login_with}</GuestHeader>
-                                        <div className="anycomment anycomment-form__guest-socials">
+                                        <div className='anycomment anycomment-form__guest-socials'>
                                             <LoginSocialList />
                                         </div>
                                     </SocialListColumn>
@@ -546,26 +568,31 @@ export default function SendComment({action, comment}: SendCommentProps) {
                                 </GuestFieldsColumn>
                             </GuestFieldsRoot>
 
-                            <div className="anycomment anycomment-form__terms">
+                            <div className='anycomment anycomment-form__terms'>
                                 <DataProcessing
                                     isAgreementAccepted={is_agreement_accepted}
-                                    onAccept={handleAgreement} />
+                                    onAccept={handleAgreement}
+                                />
                             </div>
                         </>
                     )}
 
-                    <div className="anycomment anycomment-form__submit">
-                        {isUpdate() || isReply() && (
-                            <div
-                                className="anycomment anycomment-form__submit-status">{submitStatus}
-                                <span className="anycomment anycomment-form__submit-status-action"
-                                      onClick={prepareInitialForm}><Icon icon={faTimes} /></span>
+                    <div className='anycomment anycomment-form__submit'>
+                        {(isUpdate() || isReply()) && (
+                            <div className='anycomment anycomment-form__submit-status'>
+                                {submitStatus}
+                                <span
+                                    className='anycomment anycomment-form__submit-status-action'
+                                    onClick={prepareInitialForm}
+                                >
+                                    <Icon icon={faTimes} />
+                                </span>
                             </div>
                         )}
-                        <div className="anycomment anycomment-form__submit-button">
+                        <div className='anycomment anycomment-form__submit-button'>
                             <input
-                                type="submit"
-                                className="anycomment-btn anycomment-send-comment-body__btn"
+                                type='submit'
+                                className='anycomment-btn anycomment-send-comment-body__btn'
                                 value={buttonText}
                             />
                         </div>
@@ -577,3 +604,5 @@ export default function SendComment({action, comment}: SendCommentProps) {
         </Wrapper>
     );
 }
+
+SendComment.displayName = 'SendComment';

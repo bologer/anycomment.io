@@ -184,6 +184,8 @@
     "array-bracket-spacing": [
       "error",
       "never"
-    ]
+    ],
+    "no-multi-spaces": ["error"],
+    "no-multiple-empty-lines": ["error"]
   }
 }

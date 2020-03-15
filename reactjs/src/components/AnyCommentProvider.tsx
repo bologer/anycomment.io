@@ -62,14 +62,18 @@ export interface SocialItemOption {
     visible: boolean;
 }
 
+export interface SocialsOption {
+    [social: SocialType]: SocialItemOption
+}
+
+export type GuestInputTypes = ['name' | 'email' | 'website'];
+
 export interface ConfigurationOption {
-    limit: 10
-    isCopyright: true
-    socials: {
-        [social: SocialType]: SocialItemOption
-    };
+    limit: number;
+    isCopyright: boolean;
+    socials: SocialsOption;
     sort_order: 'desc' | 'ask';
-    guestInputs: 'name' | 'email' | 'website'[];
+    guestInputs: GuestInputTypes;
     isShowUpdatedInfo: boolean;
     isNotifySubscribers: boolean;
     isShowProfileUrl: boolean;
@@ -86,14 +90,14 @@ export interface ConfigurationOption {
     isFormTypeSocials: boolean;
     isFormTypeWordpress: boolean;
     isFileUploadAllowed: boolean;
-    isGuestCanUpload: 'on';
+    isGuestCanUpload: 'on' | 'off';
     fileMimeTypes: string;
     fileLimit: number;;
     fileMaxSize: number;
     fileUploadLimit: number;
     isRatingOn: boolean;
     isReadMoreOn: boolean;
-    commentRating: 'likes';
+    commentRating: 'likes' | 'likes_dislikes';
     dateFormat: 'relative';
     isEditorOn: boolean;
     editorToolbarOptions: 'bold' | 'italic' | 'underline' | 'blockquote' | 'ordered' | 'bullet' | 'link' | 'clean'[];
@@ -190,7 +194,6 @@ export interface AnyCommentProviderProps {
 }
 
 export default function AnyCommentProvider({settings, config, children}: AnyCommentProviderProps & ContextValueProps) {
-
     const Context: Context<ContextValueProps | {}> = AnyCommentContext;
 
     const contextValue = {

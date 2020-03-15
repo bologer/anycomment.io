@@ -23,11 +23,13 @@ import {
     COMMENT_FORM_INVALIDATE,
     COMMENT_FETCH_SALIENT_SUCCESS,
     COMMENT_FETCH_SALIENT_FAILURE,
+    COMMENT_LIKE,
+    COMMENT_LIKE_SUCCESS,
+    COMMENT_LIKE_FAILURE,
 } from './CommentActions';
-import {ReducerEnvelope} from "~/typings/ReducerEnvelope";
-import {ListResponse} from "~/typings/ListResponse";
-import {CommentModel} from "~/typings/models/CommentModel";
-
+import {ReducerEnvelope} from '~/typings/ReducerEnvelope';
+import {ListResponse} from '~/typings/ListResponse';
+import {CommentModel} from '~/typings/models/CommentModel';
 
 export interface CommentListFilter {
     order: 'asc' | 'desc';
@@ -49,8 +51,10 @@ export interface CommentReducerProps {
     delete: {} | undefined;
     create: {} | undefined;
     form: CommentForm | undefined;
+    like: {} | undefined;
 }
 
+// eslint-disable-next-line require-jsdoc
 export default function(state = {}, action) {
     switch (action.type) {
         case COMMENT_FETCH:
@@ -69,10 +73,7 @@ export default function(state = {}, action) {
                 list: {
                     isFetching: false,
                     payload: {
-                        items: [
-                            ...state.list.payload.items,
-                            ...action.payload.items,
-                        ],
+                        items: [...state.list.payload.items, ...action.payload.items],
                         meta: action.payload.meta,
                     },
                 },
@@ -113,6 +114,13 @@ export default function(state = {}, action) {
             return {...state, create: {isFetching: false, payload: action.payload}};
         case COMMENT_CREATE_INVALIDATE:
             return {...state, create: undefined};
+
+        case COMMENT_LIKE:
+            return {...state, like: {[action.commentId]: {isFetching: true}}};
+        case COMMENT_LIKE_SUCCESS:
+            return {...state, like: {[action.commentId]: {isFetching: false, payload: action.payload}}};
+        case COMMENT_LIKE_FAILURE:
+            return {...state, like: {[action.commentId]: {isFetching: false, payload: action.payload}}};
 
         case COMMENT_FORM:
             return {...state, form: {[action.payload.comment.id]: action.payload}};

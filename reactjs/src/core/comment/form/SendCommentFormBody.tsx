@@ -1,15 +1,15 @@
 import React, {useState} from 'react';
 import Dropzone from 'react-dropzone';
 import CommentAttachments from '~/components/CommentAttachments';
-import Icon from "~/components/Icon";
+import Icon from '~/components/Icon';
 import {faPaperclip} from '@fortawesome/free-solid-svg-icons';
 import Editor from '~/components/Editor';
 import {useOptions, useSettings} from '~/hooks/setting';
-import {isGuest} from "~/helpers/user";
-import {CommentModel} from "~/typings/models/CommentModel";
-import {StoreProps} from "~/store/reducers";
-import {CommentReducerProps} from "~/core/comment/commentReducers";
-import {useSelector} from "react-redux";
+import {isGuest} from '~/helpers/user';
+import {CommentModel} from '~/typings/models/CommentModel';
+import {StoreProps} from '~/store/reducers';
+import {CommentReducerProps} from '~/core/comment/commentReducers';
+import {useSelector} from 'react-redux';
 
 export interface SendCommentFormBodyProps {
     attachments: [];
@@ -30,7 +30,6 @@ export default function SendCommentFormBody({
     handleEditorChange,
     commentHTML,
 }: SendCommentFormBodyProps) {
-
     const settings = useSettings();
     const options = useOptions();
     const [editorRef, setEditorRef] = useState(null);
@@ -98,14 +97,11 @@ export default function SendCommentFormBody({
         }
 
         self.props.axios
-            .post('/documents',
-                filesToUpload,
-                {
-                    headers: headers,
-                    timeout: 30000,
-                })
+            .post('/documents', filesToUpload, {
+                headers: headers,
+                timeout: 30000,
+            })
             .then(function(response) {
-
                 const files = response.data.files,
                     attachments = self.props.attachments;
 
@@ -113,7 +109,7 @@ export default function SendCommentFormBody({
                     handleAttachmentChange(files);
                 } else {
                     let newAttachments = attachments;
-                    response.data.files.forEach((item) => {
+                    response.data.files.forEach(item => {
                         newAttachments.push(item);
                     });
                     handleAttachmentChange(newAttachments);
@@ -127,9 +123,13 @@ export default function SendCommentFormBody({
                 });
             })
             .catch(function(error) {
-                self.showError(error, {
-                    autoClose: 1500,
-                }, toastId);
+                self.showError(
+                    error,
+                    {
+                        autoClose: 1500,
+                    },
+                    toastId
+                );
             });
     }
 
@@ -157,15 +157,19 @@ export default function SendCommentFormBody({
 
     const isCanUpload = canUpload();
 
-    const outlinerClassName = "anycomment anycomment-form-body-outliner" + (dropzoneActive ? ' anycomment-form-body-outliner-dropzone-active' : '');
+    const outlinerClassName =
+        'anycomment anycomment-form-body-outliner' +
+        (dropzoneActive ? ' anycomment-form-body-outliner-dropzone-active' : '');
     const outliner = (
         <div className={outlinerClassName}>
             {isCanUpload && (
-                <div className="anycomment anycomment-form-body-outliner__select-file"
-                     title={settings.i18.upload_file}
-                     onClick={() => {
-                         dropzoneRef.open();
-                     }}>
+                <div
+                    className='anycomment anycomment-form-body-outliner__select-file'
+                    title={settings.i18.upload_file}
+                    onClick={() => {
+                        dropzoneRef.open();
+                    }}
+                >
                     <Icon icon={faPaperclip} />
                 </div>
             )}
@@ -187,21 +191,23 @@ export default function SendCommentFormBody({
     return (
         <Dropzone
             disableClick
-            className="anycomment"
-            ref={(node) => {
+            className='anycomment'
+            ref={node => {
                 dropzoneRef = node;
             }}
-            style={{position: "relative"}}
+            style={{position: 'relative'}}
             maxSize={options.fileMaxSize * 1000000}
             accept={options.fileMimeTypes}
             onDrop={onDrop}
             onDragEnter={onDragEnter}
-            onDragLeave={onDragLeave}>
+            onDragLeave={onDragLeave}
+        >
             {outliner}
             <CommentAttachments
                 handleAttachmentChange={handleAttachmentChange}
                 attachments={attachments}
-                showDeleteAction={!isGuest()} />
+                showDeleteAction={!isGuest()}
+            />
         </Dropzone>
     );
 }

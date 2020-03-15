@@ -1,13 +1,11 @@
-import React from 'react'
-import AnyCommentComponent from "./AnyCommentComponent";
-import Icon from "./Icon";
-import {faEnvelope} from '@fortawesome/free-solid-svg-icons'
-
+import React from 'react';
+import AnyCommentComponent from './AnyCommentComponent';
+import Icon from './Icon';
+import {faEnvelope} from '@fortawesome/free-solid-svg-icons';
 
 const LOCALE_STORE_KEY = 'anycomment-subscrine-closed';
 
 class Subscribe extends AnyCommentComponent {
-
     constructor(props) {
         super(props);
 
@@ -21,7 +19,7 @@ class Subscribe extends AnyCommentComponent {
      * Handle email change.
      * @param event
      */
-    handleAuthorEmailChange = (event) => {
+    handleAuthorEmailChange = event => {
         this.setState({email: event.target.value});
     };
 
@@ -38,7 +36,7 @@ class Subscribe extends AnyCommentComponent {
      * @param e
      * @returns {boolean}
      */
-    handleSubmit = (e) => {
+    handleSubmit = e => {
         e.preventDefault();
 
         const self = this;
@@ -60,12 +58,12 @@ class Subscribe extends AnyCommentComponent {
                     email: email,
                     post: settings.postId,
                 },
-                headers: headers
+                headers: headers,
             })
-            .then(function (response) {
+            .then(function(response) {
                 self.showSuccess(settings.i18.subscribed);
             })
-            .catch(function (error) {
+            .catch(function(error) {
                 self.showError(error);
             });
     };
@@ -106,27 +104,29 @@ class Subscribe extends AnyCommentComponent {
         const settings = this.getSettings();
 
         return (
-            <div className="anycomment anycomment-component anycomment-subscribe">
-
+            <div className='anycomment anycomment-component anycomment-subscribe'>
                 <p>{settings.i18.subscribe_pre_paragraph}</p>
                 <form onSubmit={this.handleSubmit}>
-                    {this.isGuest() ? <div className="anycomment anycomment-subscribe__email">
-                        <div className="anycomment anycomment-subscribe__email--icon">
-                            <Icon icon={faEnvelope}/>
+                    {this.isGuest() && (
+                        <div className='anycomment anycomment-subscribe__email'>
+                            <div className='anycomment anycomment-subscribe__email--icon'>
+                                <Icon icon={faEnvelope} />
+                            </div>
+                            <input
+                                onChange={this.handleAuthorEmailChange}
+                                type='email'
+                                value={email}
+                                placeholder={settings.i18.email}
+                                required
+                            />
                         </div>
-                        <input onChange={this.handleAuthorEmailChange}
-                               type="email"
-                               value={email}
-                               placeholder={settings.i18.email}
-                               required={true}/>
-                    </div> : ''}
-                    <div className="anycomment anycomment-subscribe__submit">
-                        <input type="submit"
-                               className="anycomment-btn"
-                               value={settings.i18.subscribe}/>
+                    )}
+                    <div className='anycomment anycomment-subscribe__submit'>
+                        <input type='submit' className='anycomment-btn' value={settings.i18.subscribe} />
                     </div>
-                    <div className="anycomment anycomment-subscribe__close"
-                         onClick={this.handleClose}>{settings.i18.hide_this_message}</div>
+                    <div className='anycomment anycomment-subscribe__close' onClick={this.handleClose}>
+                        {settings.i18.hide_this_message}
+                    </div>
                 </form>
             </div>
         );

@@ -1,24 +1,23 @@
 import React, {useEffect, useState} from 'react';
-import CommentItem from './CommentItem'
-import SendComment from '~/core/comment/form/SendComment'
-import CommentSortHeader from "./CommentSortHeader";
-import Subscribe from './Subscribe'
+import CommentItem from './CommentItem';
+import SendComment from '~/core/comment/form/SendComment';
+import CommentSortHeader from './CommentSortHeader';
+import Subscribe from '../../components/Subscribe';
 import {useOptions, useSettings} from '~/hooks/setting';
-import {hasSpecificCommentAnchor} from "~/helpers/url";
-import {useDispatch, useSelector} from "react-redux";
-import {fetchComments, fetchCommentsSalient, fetchLoadMore} from "~/core/comment/CommentActions";
-import {StoreProps} from "~/store/reducers";
-import {CommentModel} from "~/typings/models/CommentModel";
-import {moveToCommentAndHighlight} from "~/helpers/comment";
-import {ListResponse} from "~/typings/ListResponse";
-import {CommentReducerProps} from "~/core/comment/commentReducers";
-import ReducerResolver from "~/components/ReducerResolver";
+import {hasSpecificCommentAnchor} from '~/helpers/url';
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchComments, fetchCommentsSalient, fetchLoadMore} from '~/core/comment/CommentActions';
+import {StoreProps} from '~/store/reducers';
+import {CommentModel} from '~/typings/models/CommentModel';
+import {moveToCommentAndHighlight} from '~/helpers/comment';
+import {ListResponse} from '~/typings/ListResponse';
+import {CommentReducerProps} from '~/core/comment/commentReducers';
+import ReducerResolver from '~/components/ReducerResolver';
 
 /**
  * CommentList displays list of comments.
  */
 export default function CommentContainer() {
-
     const dispatch = useDispatch();
     const settings = useSettings();
     const options = useOptions();
@@ -53,7 +52,7 @@ export default function CommentContainer() {
         const hash = window.location.hash;
 
         if (hasSpecificCommentAnchor()) {
-            setInterval(function() {
+            setInterval(() => {
 
                 const element = document.getElementById(hash.replace('#', ''));
 
@@ -93,7 +92,7 @@ export default function CommentContainer() {
         if (response.items && response.items.length > 0) {
             return (
                 <>
-                    {response.items.map(comment => <CommentItem key={comment.id} comment={comment} />}
+                    {response.items.map(comment => <CommentItem key={comment.id} comment={comment}/>}
                     {
                         response.meta.current_page !== response.meta.page_count && (
                             <div className="anycomment comment-single-load-more">
@@ -103,7 +102,7 @@ export default function CommentContainer() {
                         )
                     }
                 </>
-            )
+            );
         }
 
         return null;
@@ -111,10 +110,10 @@ export default function CommentContainer() {
 
     return (
         <ul id="anycomment-load-container" className="anycomment anycomment-list">
-            <SendComment />
-            <CommentSortHeader />
-            <Subscribe />
-            <ReducerResolver reducer={comments} fetched={onFetched} />
+            <SendComment/>
+            <CommentSortHeader/>
+            <Subscribe/>
+            <ReducerResolver reducer={comments} fetched={onFetched}/>
         </ul>
     );
 }

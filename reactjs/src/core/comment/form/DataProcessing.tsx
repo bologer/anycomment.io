@@ -14,14 +14,12 @@ export default function DataProcessing({isAgreementAccepted, onAccept}: DataProc
         return null;
     }
 
-    const agreementId = "accept-user-agreement-" + (new Date()).getTime();
+    const agreementId = 'accept-user-agreement-' + new Date().getTime();
 
     return (
-        <div className="anycomment anycomment-form__terms-agreement">
+        <div className='anycomment anycomment-form__terms-agreement'>
             <label htmlFor={agreementId}>
-                <input type="checkbox" required={true} checked={isAgreementAccepted}
-                       id={agreementId}
-                       onClick={onAccept} />
+                <input type='checkbox' required checked={isAgreementAccepted} id={agreementId} onClick={onAccept} />
                 <span dangerouslySetInnerHTML={{__html: i18.accept_user_agreement}} />
             </label>
         </div>

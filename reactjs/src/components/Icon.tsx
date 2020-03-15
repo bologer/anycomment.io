@@ -1,6 +1,6 @@
-import React, {CSSProperties} from 'react'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {IconProp, SizeProp} from "@fortawesome/fontawesome-svg-core";
+import React, {CSSProperties} from 'react';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {IconProp, SizeProp} from '@fortawesome/fontawesome-svg-core';
 
 export interface IconProps {
     icon: IconProp;
@@ -10,14 +10,7 @@ export interface IconProps {
     className?: string;
 }
 
-export default function Icon({
-    icon,
-    size = 'sm',
-    color,
-    style,
-    className,
-}: IconProps) {
-
+export default function Icon({icon, size = 'sm', color, style, className}: IconProps) {
     let classes = 'anycomment anycomment-icon';
     const customClass = className || '';
 
@@ -25,11 +18,5 @@ export default function Icon({
         classes += ' ' + customClass;
     }
 
-    return <FontAwesomeIcon
-        icon={icon}
-        className={classes}
-        size={size || 'sm'}
-        color={color}
-        style={style}
-    />
+    return <FontAwesomeIcon icon={icon} className={classes} size={size || 'sm'} color={color} style={style} />;
 }

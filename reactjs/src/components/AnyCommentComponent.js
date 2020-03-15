@@ -10,14 +10,15 @@ class AnyCommentComponent extends React.Component {
         settings: 'anyCommentApiSettings' in window ? window.anyCommentApiSettings : null,
         user: 'anyCommentApiSettings' in window ? window.anyCommentApiSettings.user : null,
         axios: axios.create({
-            baseURL: process.env.ENV === 'dev' ?
-                process.env.API_URL :
-                ('anyCommentApiSettings' in window ? window.anyCommentApiSettings.restUrl : ''),
+            baseURL:
+                process.env.ENV === 'dev'
+                    ? process.env.API_URL
+                    : 'anyCommentApiSettings' in window
+                        ? window.anyCommentApiSettings.restUrl
+                        : '',
             timeout: 10000,
         }),
     };
-
-
 
     /**
      * Check whether user is guest or not.
@@ -58,7 +59,6 @@ class AnyCommentComponent extends React.Component {
     getTranslations() {
         return this.props.settings.options.i18;
     }
-
 
     getComment() {
         return this.localGet('anycomment-content');

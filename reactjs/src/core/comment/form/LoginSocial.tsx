@@ -1,5 +1,5 @@
-import React from 'react'
-import SocialIcon from "~/components/SocialIcon";
+import React from 'react';
+import SocialIcon from '~/components/SocialIcon';
 import {SocialItemOption} from './AnyCommentProvider';
 
 export interface LoginSocialProps {
@@ -10,17 +10,18 @@ export interface LoginSocialProps {
  * Display single item of single network to login with.
  */
 export default function LoginSocial({social}: LoginSocialProps) {
-
     if (!social.visible) {
         return null;
     }
 
     return (
         <li>
-            <a href={social.url}
-               target="_parent"
-               title={social.label}
-               className={"anycomment-login-with-list-" + social.slug}>
+            <a
+                href={social.url}
+                target='_parent'
+                title={social.label}
+                className={'anycomment-login-with-list-' + social.slug}
+            >
                 <SocialIcon slug={social.slug} title={social.label} />
             </a>
         </li>

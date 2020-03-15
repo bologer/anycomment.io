@@ -1,5 +1,5 @@
-import React, {Context} from "react";
-import {ContextValueProps} from "./AnyCommentProvider";
+import React, {Context} from 'react';
+import {ContextValueProps} from './AnyCommentProvider';
 
 const AnyCommentContext: Context<ContextValueProps> = React.createContext<ContextValueProps>({});
 

@@ -6,7 +6,7 @@
 export function scrollTop(): number {
     // Firefox, Chrome, Opera, Safari
     if (window.pageYOffset) {
-        return window.pageYOffset
+        return window.pageYOffset;
     }
     // Internet Explorer 6 - standards mode
     if (document.documentElement && document.documentElement.scrollTop) {
@@ -14,7 +14,7 @@ export function scrollTop(): number {
     }
     // Internet Explorer 6, 7 and 8
     if (document.body.scrollTop) {
-        return document.body.scrollTop
+        return document.body.scrollTop;
     }
     return 0;
 }
@@ -43,7 +43,6 @@ export function scrollLeft(id): number {
  * @param callback
  */
 export function moveToElement(id: string, callback?: () => void) {
-
     let startY: number = scrollTop();
     let stopY: number = scrollLeft(id);
     let distance: number = stopY > startY ? stopY - startY : startY - stopY;
@@ -58,7 +57,7 @@ export function moveToElement(id: string, callback?: () => void) {
     let timer = 0;
     if (stopY > startY) {
         for (let i = startY; i < stopY; i += step) {
-            setTimeout("window.scrollTo(0, " + leapY + ")", timer * speed);
+            setTimeout('window.scrollTo(0, ' + leapY + ')', timer * speed);
             leapY += step;
             if (leapY > stopY) leapY = stopY;
             timer++;
@@ -66,7 +65,7 @@ export function moveToElement(id: string, callback?: () => void) {
         return;
     }
     for (let i = startY; i > stopY; i -= step) {
-        setTimeout("window.scrollTo(0, " + leapY + ")", timer * speed);
+        setTimeout('window.scrollTo(0, ' + leapY + ')', timer * speed);
         leapY -= step;
         if (leapY < stopY) leapY = stopY;
         timer++;

@@ -9,7 +9,7 @@ export interface CommentModel {
     id: number;
     post: number;
     parent: number;
-    parent_author_name: number;
+    parent_author_name: string;
     author: number;
     author_name: string;
     date: string; // e.g. "2020-02-14T17:38:14+03:00"
@@ -22,7 +22,7 @@ export interface CommentModel {
     attachments: [];
     permissions: {
         [permission: string]: boolean;
-    }
+    };
     can_edit_comment: boolean;
     meta: {
         has_like: boolean;
@@ -34,5 +34,5 @@ export interface CommentModel {
         likes: number;
         dislikes: number;
         rating: number;
-    }
+    };
 }

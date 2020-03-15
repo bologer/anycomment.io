@@ -17,5 +17,5 @@ export function hasCommentSectionAnchor(): boolean {
  */
 export function hasSpecificCommentAnchor(): boolean {
     const hash: string = window.location.hash;
-    return hash !== "" && /#comment-\d{1,20}$/.test(hash);
+    return hash !== '' && /#comment-\d{1,20}$/.test(hash);
 }
