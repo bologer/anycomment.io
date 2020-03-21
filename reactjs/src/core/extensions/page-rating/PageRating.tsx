@@ -55,11 +55,7 @@ export default function PageRating() {
 
     return (
         <div itemScope itemType='http://schema.org/Article' className='anycomment anycomment-rating'>
-            <div
-                className={
-                    'anycomment anycomment-rating__stars' + (hasRated && ' anycomment-rating__stars-readonly')
-                }
-            >
+            <div className={'anycomment anycomment-rating__stars' + (hasRated && ' anycomment-rating__stars-readonly')}>
                 <Rating
                     start={0}
                     stop={5}
