@@ -1,6 +1,6 @@
 import React from 'react';
 import SocialIcon from '../../components/SocialIcon';
-import CommentRating from '../../components/CommentRating';
+import CommentRating from './CommentRating';
 import {CommentModel} from '~/typings/models/CommentModel';
 
 export interface CommentAvatarProps {

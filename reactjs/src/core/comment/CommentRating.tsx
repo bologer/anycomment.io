@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import Icon from './Icon';
+import Icon from '../../components/Icon';
 import {faCaretUp, faCaretDown} from '@fortawesome/free-solid-svg-icons';
 import {CommentModel} from '~/typings/models/CommentModel';
 import {fetchLike} from '~/core/comment/CommentActions';
@@ -71,10 +71,10 @@ export default function CommentRating({comment}: CommentRatingProps) {
             </div>
             <div className='anycomment anycomment-comment-rating__actions'>
                 <div className='anycomment anycomment-comment-rating__actions--up' onClick={handleRateUp}>
-                    <Icon icon={faCaretUp} style={hasLike && {color: '#53AF4A'}} />
+                    <Icon icon={faCaretUp} style={hasLike ? {color: '#53AF4A'} : undefined} />
                 </div>
                 <div className='anycomment anycomment-comment-rating__actions--down' onClick={handleRateDown}>
-                    <Icon icon={faCaretDown} style={hasDislike && {color: '#DD4B39'}} />
+                    <Icon icon={faCaretDown} style={hasDislike ? {color: '#DD4B39'} : undefined} />
                 </div>
             </div>
         </div>

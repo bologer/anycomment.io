@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import CommentItem from './CommentItem';
 import SendComment from '~/core/comment/form/SendComment';
 import CommentSortHeader from './CommentSortHeader';
-import Subscribe from '../../components/Subscribe';
+import PageSubscription from '../extensions/post-subscription/PageSubscription';
 import {useOptions, useSettings} from '~/hooks/setting';
 import {hasSpecificCommentAnchor} from '~/helpers/url';
 import {useDispatch, useSelector} from 'react-redux';
@@ -111,7 +111,7 @@ export default function CommentContainer() {
         <ul id='anycomment-load-container' className='anycomment anycomment-list'>
             <SendComment />
             <CommentSortHeader />
-            <Subscribe />
+            <PageSubscription />
             <ReducerResolver reducer={comments} fetched={onFetched} />
         </ul>
     );
