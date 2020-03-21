@@ -40,7 +40,7 @@ export default function CommentSortHeader() {
                 <div className='anycomment anycomment-summary-sort'>
                     {settings.i18.sort_by}&nbsp;
                     <span className='anycomment-link' onClick={handleSorting}>
-                        onClick={handleSorting}>{sortString}
+                        {sortString}
                     </span>
                     &nbsp;
                     <Icon icon={faSort} />
