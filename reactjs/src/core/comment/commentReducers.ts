@@ -26,6 +26,14 @@ import {
     COMMENT_LIKE,
     COMMENT_LIKE_SUCCESS,
     COMMENT_LIKE_FAILURE,
+    COMMENT_ATTACHMENT_DELETE,
+    COMMENT_ATTACHMENT_DELETE_SUCCESS,
+    COMMENT_ATTACHMENT_DELETE_FAILURE,
+    COMMENT_ATTACHMENT_DELETE_INVALIDATE,
+    COMMENT_ATTACHMENT_UPLOAD,
+    COMMENT_ATTACHMENT_UPLOAD_SUCCESS,
+    COMMENT_ATTACHMENT_UPLOAD_FAILURE,
+    COMMENT_ATTACHMENT_UPLOAD_INVALIDATE,
 } from './CommentActions';
 import {ReducerEnvelope} from '~/typings/ReducerEnvelope';
 import {ListResponse} from '~/typings/ListResponse';
@@ -52,10 +60,16 @@ export interface CommentReducerProps {
     create: {} | undefined;
     form: CommentForm | undefined;
     like: {} | undefined;
+    attachmentDelete: {} | undefined;
+    attachmentUpload: {};
 }
 
+const DEFAULT_STATE = {
+    attachmentUpload: {},
+};
+
 // eslint-disable-next-line require-jsdoc
-export default function(state = {}, action) {
+export default function (state = DEFAULT_STATE, action) {
     switch (action.type) {
         case COMMENT_FETCH:
             return {...state, list: {isFetching: true}};
@@ -126,6 +140,49 @@ export default function(state = {}, action) {
             return {...state, form: {[action.payload.comment.id]: action.payload}};
         case COMMENT_FORM_INVALIDATE:
             return {...state, form: undefined};
+
+        case COMMENT_ATTACHMENT_DELETE:
+            return {...state, attachmentDelete: {isFetching: true}};
+        case COMMENT_ATTACHMENT_DELETE_SUCCESS:
+            return {...state, attachmentDelete: {isFetching: false, payload: action.payload}};
+        case COMMENT_ATTACHMENT_DELETE_FAILURE:
+            return {...state, attachmentDelete: {isFetching: false, payload: action.payload}};
+        case COMMENT_ATTACHMENT_DELETE_INVALIDATE:
+            return {...state, attachmentDelete: undefined};
+
+        case COMMENT_ATTACHMENT_UPLOAD:
+            return {
+                ...state,
+                attachmentUpload: {
+                    ...state.attachmentUpload,
+                    [action.payload.entropy]: {isFetching: true}
+                },
+            };
+        case COMMENT_ATTACHMENT_UPLOAD_SUCCESS:
+            return {
+                ...state,
+                attachmentUpload: {
+                    ...state.attachmentUpload,
+                    [action.payload.entropy]: {isFetching: false, payload: action.payload.response},
+                },
+            };
+        case COMMENT_ATTACHMENT_UPLOAD_FAILURE:
+            return {
+                ...state,
+                attachmentUpload: {
+                    ...state.attachmentUpload,
+                    [action.payload.entropy]: {isFetching: false, payload: action.payload},
+                },
+            };
+        case COMMENT_ATTACHMENT_UPLOAD_INVALIDATE:
+            return {
+                ...state,
+                attachmentUpload: {
+                    ...state.attachmentUpload,
+                    [action.payload.entropy]: undefined,
+                },
+            };
+
         default:
             return state;
     }

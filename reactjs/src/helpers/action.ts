@@ -8,7 +8,7 @@ export interface FetchActions {
     pre?: string | {};
     success: string | ((response: any) => void);
     failure: string | {};
-    always?: string;
+    always?: string | {};
 }
 
 export interface FetchProps {
@@ -67,7 +67,7 @@ export function fetch({
             headers,
             ...axiosProps,
         })
-            .then(function(response: AxiosResponse) {
+            .then(function (response: AxiosResponse) {
                 const data = response.data;
 
                 if (typeof success === 'string') {
@@ -80,7 +80,7 @@ export function fetch({
                     dispatch(failureSnackbar(data.message || data.code));
                 }
             })
-            .catch(function(error: AxiosError) {
+            .catch(function (error: AxiosError) {
                 const data = (error.response && error.response.data) || {};
 
                 if (data.code) {
@@ -96,6 +96,8 @@ export function fetch({
             .finally(() => {
                 if (typeof always === 'string') {
                     dispatch({type: always, payload: null});
+                } else if (typeof always === 'object') {
+                    dispatch(always);
                 }
             });
     };

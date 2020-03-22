@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Dropzone from 'react-dropzone';
 import CommentAttachments from '~/components/CommentAttachments';
 import Icon from '~/components/Icon';
@@ -7,9 +7,12 @@ import Editor from '~/components/Editor';
 import {useOptions, useSettings} from '~/hooks/setting';
 import {isGuest} from '~/helpers/user';
 import {CommentModel} from '~/typings/models/CommentModel';
+import {useDispatch, useSelector} from 'react-redux';
+import {failureSnackbar, successSnackbar} from '~/core/notifications/NotificationActions';
+import {uploadAttachment} from '~/core/comment/CommentActions';
+import {manageReducer} from '~/helpers/action';
 import {StoreProps} from '~/store/reducers';
 import {CommentReducerProps} from '~/core/comment/commentReducers';
-import {useSelector} from 'react-redux';
 
 export interface SendCommentFormBodyProps {
     attachments: [];
@@ -18,6 +21,7 @@ export interface SendCommentFormBodyProps {
     handleAttachmentChange: (attachments: []) => void;
     handleEditorChange: (text: string) => void;
     entropy?: string;
+    handleEditorRef: (editorRef: any) => void;
 }
 
 /**
@@ -29,17 +33,49 @@ export default function SendCommentFormBody({
     handleAttachmentChange,
     handleEditorChange,
     commentHTML,
+    handleEditorRef,
 }: SendCommentFormBodyProps) {
+    const dispatch = useDispatch();
     const settings = useSettings();
     const options = useOptions();
-    const [editorRef, setEditorRef] = useState(null);
     const [dropzoneActive, setDropzoneActive] = useState<boolean>(false);
-    const {form} = useSelector<StoreProps, CommentReducerProps>(state => state.comments);
+    const {attachmentUpload} = useSelector<StoreProps, CommentReducerProps>(state => state.comments);
 
+    const attachmentEntropy = comment && comment.id || 'default';
+
+    useEffect(() => {
+        manageReducer({
+            reducer: attachmentUpload[attachmentEntropy],
+            onSuccess: ({response}) => {
+                if (response) {
+                    const files = response.files;
+
+                    if (!attachments || !attachments.length) {
+                        handleAttachmentChange(files);
+                    } else {
+                        let newAttachments: [] = attachments;
+                        response.files.forEach(item => {
+                            newAttachments.push(item);
+                        });
+                        handleAttachmentChange(newAttachments);
+                    }
+
+                    dispatch(successSnackbar(settings.i18.file_uploaded));
+                }
+            },
+        });
+    }, [attachmentUpload[attachmentEntropy]]);
+
+    /**
+     * When user drags file over comment form.
+     */
     function onDragEnter() {
         setDropzoneActive(true);
     }
 
+    /**
+     * When user drags outside comment form.
+     */
     function onDragLeave() {
         setDropzoneActive(false);
     }
@@ -58,12 +94,12 @@ export default function SendCommentFormBody({
      */
     function processFiles(files) {
         if (!files || files.length === 0) {
-            toast.error(settings.i18.file_not_selected_or_extension);
+            dispatch(failureSnackbar(settings.i18.file_not_selected_or_extension));
             return false;
         }
 
         if (files.length > options.fileLimit) {
-            toast.error(settings.i18.file_limit);
+            dispatch(failureSnackbar(settings.i18.file_limit));
             setDropzoneActive(false);
             return false;
         }
@@ -75,62 +111,12 @@ export default function SendCommentFormBody({
         });
 
         filesToUpload.append('post', settings.postId);
-
         setDropzoneActive(false);
-        uploadFiles(filesToUpload);
-    }
 
-    /**
-     * Upload files to server.
-     *
-     * @param filesToUpload
-     */
-    function uploadFiles(filesToUpload) {
-        const toastId = toast(settings.i18.file_upload_in_progress, {autoClose: false});
+        dispatch(successSnackbar(settings.i18.file_upload_in_progress));
+        dispatch(uploadAttachment(filesToUpload, attachmentEntropy));
 
-        let headers = {};
-
-        headers['Content-Type'] = `multipart/form-data; boundary=${filesToUpload._boundary}`;
-
-        if (settings.nonce) {
-            headers['X-WP-Nonce'] = settings.nonce;
-        }
-
-        self.props.axios
-            .post('/documents', filesToUpload, {
-                headers: headers,
-                timeout: 30000,
-            })
-            .then(function(response) {
-                const files = response.data.files,
-                    attachments = self.props.attachments;
-
-                if (!attachments || !attachments.length) {
-                    handleAttachmentChange(files);
-                } else {
-                    let newAttachments = attachments;
-                    response.data.files.forEach(item => {
-                        newAttachments.push(item);
-                    });
-                    handleAttachmentChange(newAttachments);
-                }
-
-                toast.update(toastId, {
-                    render: settings.i18.file_uploaded,
-                    type: toast.TYPE.SUCCESS,
-                    autoClose: 1500,
-                    className: 'rotateY animated',
-                });
-            })
-            .catch(function(error) {
-                self.showError(
-                    error,
-                    {
-                        autoClose: 1500,
-                    },
-                    toastId
-                );
-            });
+        return true;
     }
 
     /**
@@ -148,11 +134,6 @@ export default function SendCommentFormBody({
         return false;
     }
 
-    function handleEditorRef(ref) {
-        setEditorRef(ref);
-        ref.focus();
-    }
-
     let dropzoneRef;
 
     const isCanUpload = canUpload();
@@ -160,6 +141,7 @@ export default function SendCommentFormBody({
     const outlinerClassName =
         'anycomment anycomment-form-body-outliner' +
         (dropzoneActive ? ' anycomment-form-body-outliner-dropzone-active' : '');
+
     const outliner = (
         <div className={outlinerClassName}>
             {isCanUpload && (

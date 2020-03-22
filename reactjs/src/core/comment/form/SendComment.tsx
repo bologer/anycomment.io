@@ -26,6 +26,7 @@ import styled from 'styled-components';
 import LoginSocialList from './LoginSocialList';
 import {GuestInputTypes, SocialsOption} from '~/components/AnyCommentProvider';
 import {successSnackbar, failureSnackbar} from '~/core/notifications/NotificationActions';
+import {add, get} from '~/helpers/storage';
 
 const recapchaRef = React.createRef();
 
@@ -77,6 +78,8 @@ const SocialListColumn = styled.div`
 const GuestFieldsColumn = styled.div`
     flex: 1 1 0;
 `;
+
+let editorRef: ReactQuill | null = null;
 
 /**
  * Class SendComment is used process comment before it will be sent.
@@ -161,8 +164,6 @@ export default function SendComment({action, comment}: SendCommentProps) {
 
     const {comment_html, is_agreement_accepted} = formik.values;
 
-    const editorRef = useRef<ReactQuill>(null);
-
     useEffect(() => {
         prepareRemembered();
         prepareForm();
@@ -243,8 +244,8 @@ export default function SendComment({action, comment}: SendCommentProps) {
      * Reinit comment form. Initial comment form state.
      */
     function prepareInitialForm() {
-        formik.setFieldValue('button_text', settings.i18.button_send);
-        formik.setFieldValue('comment_html', '');
+        formik.setFieldValue('button_text', settings.i18.button_send, false);
+        formik.setFieldValue('comment_html', '', false);
         setAttachments([]);
         // dropComment();
         dispatch(invalidateCommentForm());
@@ -269,7 +270,7 @@ export default function SendComment({action, comment}: SendCommentProps) {
         const commentHtml = comment.content.trim();
 
         if (commentHtml !== '') {
-            formik.setFieldValue('comment_html', comment.content);
+            formik.setFieldValue('comment_html', comment.content, false);
 
             setButtonText(settings.i18.button_save);
 
@@ -285,10 +286,8 @@ export default function SendComment({action, comment}: SendCommentProps) {
      * Focus on comment field.
      */
     function focusCommentField() {
-        const editor = editorRef && editorRef.current;
-
-        if (editor) {
-            editor.focus();
+        if (editorRef !== null) {
+            editorRef.focus();
         }
     }
 
@@ -299,7 +298,17 @@ export default function SendComment({action, comment}: SendCommentProps) {
      */
     function handleEditorChange(text) {
         formik.setFieldValue('comment_html', text, false);
-        // storeComment(text);
+        add('form-comment_html', text);
+    }
+
+    function handleFieldChange(e) {
+        formik.handleChange(e);
+
+        add('form-' + e.target.name, e.taget.value);
+    }
+
+    function handleEditorRef(ref) {
+        editorRef = ref;
     }
 
     /**
@@ -387,43 +396,32 @@ export default function SendComment({action, comment}: SendCommentProps) {
      * Prepare remembered fields.
      */
     function prepareRemembered() {
-        // const email = this.getAuthorEmail(),
-        //     name = this.getAuthorName(),
-        //     website = this.getAuthorWebsite(),
-        //     commentHtml = this.getComment(),
-        //     self = this;
-        //
-        // let state = {};
-        //
-        // let editorAvailabilityInterval = setInterval(function() {
-        //     if (editorRef.current) {
-        //         if (email !== '') {
-        //             state.author_email = email;
-        //         }
-        //
-        //         if (name !== '') {
-        //             state.author_name = name;
-        //         }
-        //
-        //         if (website !== '') {
-        //             state.author_website = website;
-        //         }
-        //
-        //         // if this is not update and comment is not empty
-        //         // should set remembered comment, otherwise remembered
-        //         // comment would overwrite what was pasted from editing
-        //         // comment content
-        //         if (!self.isUpdate() && commentHtml !== '') {
-        //             state.comment_html = commentHtml;
-        //         }
-        //
-        //         if (state !== {}) {
-        //             self.setState(state);
-        //         }
-        //
-        //         clearInterval(editorAvailabilityInterval);
-        //     }
-        // }, 300);
+        const email = get('form-email');
+        const name = get('form-author_name');
+        const website = get('form-author_website');
+        const commentHtml = get('form-comment_html');
+
+        let editorAvailabilityInterval = setInterval(function () {
+            if (editorRef) {
+                if (email !== null) {
+                    formik.setFieldValue('author_email', email, false);
+                }
+
+                if (name !== null) {
+                    formik.setFieldValue('author_name', name, false);
+                }
+
+                if (website !== null) {
+                    formik.setFieldValue('author_website', website, false);
+                }
+
+                if (!isUpdate() && commentHtml) {
+                    formik.setFieldValue('comment_html', commentHtml, false);
+                }
+
+                clearInterval(editorAvailabilityInterval);
+            }
+        }, 300);
     }
 
     /**
@@ -446,7 +444,7 @@ export default function SendComment({action, comment}: SendCommentProps) {
         inputs.forEach(inputType => {
             if (inputType === 'name') {
                 elementInputs.push(
-                    <div className='anycomment anycomment-form__inputs-item anycomment-form__inputs-name'>
+                    <div className='anycomment anycomment-form__inputs-item anycomment-form__inputs-name' key='name'>
                         <label form='anycomment-author-name'>
                             {translations.name} <span className='anycomment-label-import'>*</span>
                         </label>
@@ -456,13 +454,13 @@ export default function SendComment({action, comment}: SendCommentProps) {
                             id='anycomment-author-name'
                             value={formik.values.author_name}
                             required
-                            onChange={formik.handleChange}
+                            onChange={handleFieldChange}
                         />
                     </div>
                 );
             } else if (inputType === 'email') {
                 elementInputs.push(
-                    <div className='anycomment anycomment-form__inputs-item anycomment-form__inputs-email'>
+                    <div className='anycomment anycomment-form__inputs-item anycomment-form__inputs-email' key='email'>
                         <label form='anycomment-author-email'>
                             {translations.email} <span className='anycomment-label-import'>*</span>
                         </label>
@@ -472,20 +470,20 @@ export default function SendComment({action, comment}: SendCommentProps) {
                             id='anycomment-author-email'
                             value={formik.values.author_email}
                             required
-                            onChange={formik.handleChange}
+                            onChange={handleFieldChange}
                         />
                     </div>
                 );
             } else if (inputType === 'website') {
                 elementInputs.push(
-                    <div className='anycomment-form__inputs-item anycomment-form__inputs-website'>
+                    <div className='anycomment-form__inputs-item anycomment-form__inputs-website' key='website'>
                         <label form='anycomment-author-website'>{translations.website}</label>
                         <input
                             type='text'
                             name='author_website'
                             id='anycomment-author-website'
                             value={formik.values.author_website}
-                            onChange={formik.handleChange}
+                            onChange={handleFieldChange}
                         />
                     </div>
                 );
@@ -542,10 +540,9 @@ export default function SendComment({action, comment}: SendCommentProps) {
             <EditorColumn>
                 <form onSubmit={formik.handleSubmit}>
                     <SendCommentFormBody
-                        formik={formik}
                         attachments={attachments}
                         handleEditorChange={handleEditorChange}
-                        editorRef={editorRef}
+                        handleEditorRef={handleEditorRef}
                         commentHTML={comment_html}
                         comment={comment}
                         handleAttachmentChange={handleAttachmentChange}

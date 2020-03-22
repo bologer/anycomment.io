@@ -16,6 +16,16 @@ export const COMMENT_LIKE = '@comment/like';
 export const COMMENT_LIKE_SUCCESS = '@comment/like/success';
 export const COMMENT_LIKE_FAILURE = '@comment/like/failure';
 
+export const COMMENT_ATTACHMENT_DELETE = '@comment/attachment/delete';
+export const COMMENT_ATTACHMENT_DELETE_SUCCESS = '@comment/attachment/delete/success';
+export const COMMENT_ATTACHMENT_DELETE_FAILURE = '@comment/attachment/delete/failure';
+export const COMMENT_ATTACHMENT_DELETE_INVALIDATE = '@comment/attachment/delete/invalidate';
+
+export const COMMENT_ATTACHMENT_UPLOAD = '@comment/attachment/upload';
+export const COMMENT_ATTACHMENT_UPLOAD_SUCCESS = '@comment/attachment/upload/success';
+export const COMMENT_ATTACHMENT_UPLOAD_FAILURE = '@comment/attachment/upload/failure';
+export const COMMENT_ATTACHMENT_UPLOAD_INVALIDATE = '@comment/attachment/upload/invalidate';
+
 export const COMMENT_FETCH = '@comment/fetch';
 export const COMMENT_FETCH_SUCCESS = '@comment/fetch/success';
 export const COMMENT_FETCH_FAILURE = '@comment/fetch/failure';
@@ -255,26 +265,73 @@ export function fetchUpdateComment(commentId: number, data: {}) {
  * @param postId
  */
 export function fetchLike(commentId: number, postId: number, type: number = 1) {
-    return dispatch => {
-        return dispatch(
-            fetch({
-                method: 'post',
-                params: {
-                    comment: commentId,
-                    post: postId,
-                    type,
-                },
-                url: `likes`,
-                actions: {
-                    pre: {type: COMMENT_LIKE, commentId},
-                    success: response => {
-                        return {type: COMMENT_LIKE_SUCCESS, payload: response, commentId};
+    return fetch({
+        method: 'post',
+        params: {
+            comment: commentId,
+            post: postId,
+            type,
+        },
+        url: `likes`,
+        actions: {
+            pre: {type: COMMENT_LIKE, commentId},
+            success: response => {
+                return {type: COMMENT_LIKE_SUCCESS, payload: response, commentId};
+            },
+            failure: {type: COMMENT_LIKE_FAILURE, commentId},
+        },
+    })
+}
+
+/**
+ * Set like on a comment.
+ * @param {number} fileId
+ * @param {number} index Index of attachment to be removed on success.
+ */
+export function deleteAttachment(fileId: number, index: number) {
+    return fetch({
+        method: 'post',
+        params: {id: fileId},
+        url: 'documents/delete',
+        actions: {
+            pre: COMMENT_ATTACHMENT_DELETE,
+            success: response => {
+                return {
+                    type: COMMENT_ATTACHMENT_DELETE_SUCCESS,
+                    payload: {
+                        response,
+                        index,
                     },
-                    failure: {type: COMMENT_LIKE_FAILURE, commentId},
-                },
-            })
-        );
-    };
+                };
+            },
+            failure: COMMENT_ATTACHMENT_DELETE_FAILURE,
+            always: COMMENT_ATTACHMENT_DELETE_INVALIDATE,
+        },
+    });
+}
+
+/**
+ * Upload attachment.
+ * @param attachments
+ * @param entropy
+ */
+export function uploadAttachment(attachments, entropy) {
+    return fetch({
+        method: 'post',
+        data: attachments,
+        url: 'documents',
+        actions: {
+            pre: {type: COMMENT_ATTACHMENT_UPLOAD, payload: {entropy}},
+            success: (response) => {
+                return {
+                    type: COMMENT_ATTACHMENT_UPLOAD_SUCCESS,
+                    payload: {response, entropy}
+                };
+            },
+            failure: {type: COMMENT_ATTACHMENT_UPLOAD_FAILURE, payload: {entropy}},
+            always: {type: COMMENT_ATTACHMENT_UPLOAD_INVALIDATE, payload: {entropy}},
+        },
+    });
 }
 
 // eslint-disable-next-line require-jsdoc
