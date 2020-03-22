@@ -50,13 +50,13 @@ export function remove(key) {
  * @param key
  * @param value
  */
-export function add(key: string, value: string | {}) {
+export function add(key: string | number | {}, value: string | {}) {
     const s = getStorage();
 
     if (s) {
         let unmutatedValue: string | null = null;
 
-        if (typeof value === 'string') {
+        if (typeof value === 'string' || typeof value === 'number') {
             unmutatedValue = value;
         } else if (typeof value === 'object') {
             unmutatedValue = JSON.stringify(value);
