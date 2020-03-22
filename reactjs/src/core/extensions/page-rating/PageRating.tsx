@@ -55,19 +55,20 @@ export default function PageRating() {
 
     return (
         <div itemScope itemType='http://schema.org/Article' className='anycomment anycomment-rating'>
-            <div className={'anycomment anycomment-rating__stars' + (hasRated && ' anycomment-rating__stars-readonly')}>
+            <div
+                className={'anycomment anycomment-rating__stars' + (hasRated ? ' anycomment-rating__stars-readonly' : '')}>
                 <Rating
                     start={0}
                     stop={5}
                     step={1}
                     initialRating={value}
                     readonly={hasRated}
-                    emptySymbol={<Icon size='sm' icon={faStarEmpty} />}
+                    emptySymbol={<Icon size='lg' icon={faStarEmpty} />}
                     fullSymbol={
                         <Icon
                             className='anycomment anycomment-rating__stars-active'
                             color='#eeba64'
-                            size='sm'
+                            size='lg'
                             icon={faStar}
                         />
                     }
