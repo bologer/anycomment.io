@@ -4,7 +4,7 @@ import i18En from 'react-timeago/lib/language-strings/en';
 import i18Ru from 'react-timeago/lib/language-strings/ru';
 import TimeAgo from 'react-timeago';
 import Icon from '../../components/Icon';
-import Tooltip from '../../components/helpers/Tooltip';
+import Tooltip from '../../components/Tooltip';
 import {faEllipsisV, faTrashAlt, faGavel, faPen} from '@fortawesome/free-solid-svg-icons';
 import Dropdown from 'react-simple-dropdown';
 import DropdownTrigger from 'react-simple-dropdown/lib/components/dropdown-trigger';
