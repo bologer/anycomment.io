@@ -36,3 +36,62 @@ AnyComment source conforms to [PSR2](https://www.php-fig.org/psr/psr-2/).
 - Open WordPress admin panel and activate AnyComment in the list
 - Go to "Generic" settings tab & enable "Enable Comments" option
 - Open some page and you should see AnyComment's comments
+
+## API
+
+By default plugin starts with the following script: 
+
+```html
+<div id="anycomment-root"></div>
+<script type="text/javascript">
+    AnyComment = window.AnyComment || [];
+    AnyComment.WP = [];
+    AnyComment.WP.push({
+        root: 'anycomment-root',
+    });
+</script>
+```
+
+This renders root element with id and passed it as `root` to `AnyComment.WP`, later main script kick in and processing each item in this array. 
+
+
+Available properties: 
+
+| Property  |  Description  | Required  |
+|---|---|---|
+| root  | ID of the element to mount comments widget.  | yes |
+| events  | List of events associated with plugin. For full reference see details below. | no  |
+
+
+You may override default script on the page using `anycomment/client/embed-native-script` filter: 
+
+```
+add_filter( 'anycomment/client/embed-native-script', 'anycomment_override_native_script', 11, 1 );
+
+function anycomment_override_native_script( WP_Post $post ) {
+	return <<<HTML
+<script type="text/javascript">
+    AnyComment = window.AnyComment || [];
+    AnyComment.WP = [];
+    AnyComment.WP.push({
+        root: 'anycomment-root',
+        events: {
+            init: function() {
+                console.log('Some when comments loaded');
+            }
+        }
+    });
+</script>
+HTML;
+}
+```
+
+As you can see, we added `events` to it, so we can have our own logic using plugin events.
+
+
+### Events
+
+
+| Event | Description |
+|-----|---|
+| init | Triggered once plugin was loaded.  |

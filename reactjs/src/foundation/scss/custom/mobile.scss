@@ -1,5 +1,4 @@
-#{$root} {
-
+.anycomment-app {
   @import '../common/mobile_variables';
 
   @mixin avatar() {
@@ -307,7 +306,7 @@
       }
     }
 
-    &-inner > .anycomment-list {
+    & > .anycomment-list {
 
       ul.anycomment-list-child {
         .comment-single-body {

@@ -97,7 +97,7 @@ export default function App() {
     }
 
     return (
-        <div id='anycomment-root-inner' className='anycomment'>
+        <div className='anycomment-app anycomment'>
             <NotificationList />
             <GlobalHeader />
             <CommentContainer />

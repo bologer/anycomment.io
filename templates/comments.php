@@ -74,7 +74,7 @@ HTML;
     <div id="comments" class="comments-area">
         <div id="<?= $root_id ?>"></div>
     </div>
-    <script>
+    <script type="text/javascript">
         AnyComment = window.AnyComment || [];
         AnyComment.Comments = [];
         AnyComment.Comments.push(<?php echo $config ?>);
@@ -83,13 +83,19 @@ HTML;
 <?php else: ?>
     <div id="comments" class="comments-area">
         <div id="anycomment-root"></div>
-        <script>
-            AnyComment = window.AnyComment || [];
-            AnyComment.WP = [];
-            AnyComment.WP.push({
-                root: 'anycomment-root',
-            });
-        </script>
+		<?php
+
+		$emebed_script = <<<HTML
+<script type="text/javascript">
+    AnyComment = window.AnyComment || [];
+    AnyComment.WP = [];
+    AnyComment.WP.push({
+        root: 'anycomment-root',
+    });
+</script>
+HTML;
+		echo apply_filters( 'anycomment/client/embed-native-script', $emebed_script, $post )
+		?>
     </div>
 <?php endif; ?>
 

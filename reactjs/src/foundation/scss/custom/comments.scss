@@ -1,4 +1,4 @@
-#{$root} {
+.anycomment-app {
   display: flex;
   flex-grow: 1;
   flex-direction: column;
@@ -7,12 +7,6 @@
   position: relative;
   background-color: $global-background-color;
   border-radius: $global-background-border-radius;
-
-  &-inner {
-    display: flex;
-    flex-grow: 1;
-    flex-direction: column;
-  }
 
   // Footer
   .anycomment-copy-footer {
@@ -480,7 +474,7 @@
     }
   }
 
-  &-inner > .anycomment-list {
+  & > .anycomment-list {
 
     ul.anycomment-list-child {
       .comment-single-body {
