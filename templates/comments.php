@@ -82,10 +82,9 @@ HTML;
     <script type="text/javascript" async src="https://cdn.anycomment.io/assets/js/launcher.js"></script>
 <?php else: ?>
     <div id="comments" class="comments-area">
-        <div id="anycomment-root"></div>
 		<?php
-
-		$emebed_script = <<<HTML
+		$embed_script = <<<HTML
+<div id="anycomment-root"></div>
 <script type="text/javascript">
     AnyComment = window.AnyComment || [];
     AnyComment.WP = [];
@@ -94,7 +93,8 @@ HTML;
     });
 </script>
 HTML;
-		echo apply_filters( 'anycomment/client/embed-native-script', $emebed_script, $post )
+
+		echo apply_filters( 'anycomment/client/embed-native-script', $embed_script, $post);
 		?>
     </div>
 <?php endif; ?>

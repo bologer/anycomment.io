@@ -65,16 +65,18 @@ Available properties:
 
 You may override default script on the page using `anycomment/client/embed-native-script` filter: 
 
-```
-add_filter( 'anycomment/client/embed-native-script', 'anycomment_override_native_script', 11, 1 );
+```php
+add_filter( 'anycomment/client/embed-native-script', 'anycomment_override_native_script', 11, 2 );
 
-function anycomment_override_native_script( WP_Post $post ) {
+function anycomment_override_native_script( $script, WP_Post $post ) {
+    $id = 'anycomment-root-' . $post->ID;
 	return <<<HTML
+<div id="$id"></div>
 <script type="text/javascript">
     AnyComment = window.AnyComment || [];
     AnyComment.WP = [];
     AnyComment.WP.push({
-        root: 'anycomment-root',
+        root: '$id',
         events: {
             init: function() {
                 console.log('Some when comments loaded');
@@ -86,12 +88,15 @@ HTML;
 }
 ```
 
-As you can see, we added `events` to it, so we can have our own logic using plugin events.
+It accepts two argument, first for the script text and second is post object. Using these two values you can configure script to your needs.
+
+As you can see, we have added `events`, so now we can do something once plugin has loaded.
 
 
 ### Events
 
 
-| Event | Description |
+| Event name | Description |
 |-----|---|
-| init | Triggered once plugin was loaded.  |
+| `init` | Triggered once plugin was loaded.  | init: function() |
+|  | |
