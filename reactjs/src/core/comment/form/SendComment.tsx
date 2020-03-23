@@ -26,7 +26,7 @@ import styled from 'styled-components';
 import LoginSocialList from './LoginSocialList';
 import {GuestInputTypes, SocialsOption} from '~/components/AnyCommentProvider';
 import {successSnackbar, failureSnackbar} from '~/core/notifications/NotificationActions';
-import {add, get} from '~/helpers/storage';
+import {add, get, remove} from '~/helpers/storage';
 
 const recapchaRef = React.createRef();
 
@@ -176,6 +176,8 @@ export default function SendComment({action, comment}: SendCommentProps) {
                 prepareInitialForm();
                 dispatch(fetchCommentsSalient({postId: settings.postId, order: options.sort_order}));
 
+                removeRememberedComment();
+
                 if (response.message) {
                     dispatch(successSnackbar(response.message));
                 }
@@ -283,6 +285,13 @@ export default function SendComment({action, comment}: SendCommentProps) {
     }
 
     /**
+     * Removes comment text form localStorage.
+     */
+    function removeRememberedComment() {
+        remove('form-comment_html');
+    }
+
+    /**
      * Focus on comment field.
      */
     function focusCommentField() {
@@ -301,12 +310,20 @@ export default function SendComment({action, comment}: SendCommentProps) {
         add('form-comment_html', text);
     }
 
+    /**
+     * Handle field change by remembering value in localstorage & triggering formik handler.
+     * @param e
+     */
     function handleFieldChange(e) {
         formik.handleChange(e);
 
         add('form-' + e.target.name, e.taget.value);
     }
 
+    /**
+     * Handles to set editor's ref.
+     * @param ref
+     */
     function handleEditorRef(ref) {
         editorRef = ref;
     }
