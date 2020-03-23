@@ -74,7 +74,7 @@ function anycomment_override_native_script( $script, WP_Post $post ) {
 <div id="$id"></div>
 <script type="text/javascript">
     AnyComment = window.AnyComment || [];
-    AnyComment.WP = [];
+    AnyComment.WP = AnyComment.WP || [];
     AnyComment.WP.push({
         root: '$id',
         events: {

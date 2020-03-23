@@ -87,14 +87,14 @@ HTML;
 <div id="anycomment-root"></div>
 <script type="text/javascript">
     AnyComment = window.AnyComment || [];
-    AnyComment.WP = [];
+    AnyComment.WP = AnyComment.WP || [];
     AnyComment.WP.push({
         root: 'anycomment-root',
     });
 </script>
 HTML;
 
-		echo apply_filters( 'anycomment/client/embed-native-script', $embed_script, $post);
+		echo apply_filters( 'anycomment/client/embed-native-script', $embed_script, $post );
 		?>
     </div>
 <?php endif; ?>
