@@ -19,9 +19,9 @@ In order to start, you need:
 AnyComment source conforms to [PSR2](https://www.php-fig.org/psr/psr-2/).
 
 # Resources
-* [Official website](http://anycomment.io/en/)
-* [All guides](https://anycomment.io/en/category/tutorials/)
-* [Configure socials](https://anycomment.io/en/category/tutorials/socials/)
+* [Official website](http://plugin.anycomment.io/en/)
+* [All guides](https://plugin.anycomment.io/en/category/tutorials/)
+* [Configure socials](https://plugin.anycomment.io/en/category/tutorials/socials/)
 * [VK.com group](http://vk.com/anycomment)
 * [Telegram group](https://t.me/anycomment)
 
