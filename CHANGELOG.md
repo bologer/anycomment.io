@@ -6,8 +6,10 @@
 - Fixed error when when flushing cache	
 - Fixed issue when debug file was never created	
 - Fixed deprecation notice: "Array and string offset access syntax with curly braces" in AnyCommentGenericSettings.php	
+- Fixed problem when quotes in title was breaking cloud script launcher
 
 **Enhancements:**
+- Added `init` event, see repository Wiki for more information
 - Now only one form displayed on 'Reply' or 'Update' actions
 - Comments: rewritten React Hooks
 - Comments: data management rewritten to Redux

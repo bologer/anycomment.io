@@ -5,7 +5,7 @@ AnyComment is blazing-fast commenting plugin for WordPress based on React.
 
 It stands for simplicity & speed. We value feedback, so open new [issue](https://github.com/bologer/anycomment.io/issues) if you have any failures.
 
-Feel free to use [this demo page](https://anycomment.io/demo/).
+Feel free to use [this demo page](https://plugin.anycomment.io/demo/).
 
 # Installation 
 In order to start, you need:
@@ -25,13 +25,7 @@ AnyComment source conforms to [PSR2](https://www.php-fig.org/psr/psr-2/).
 * [VK.com group](http://vk.com/anycomment)
 * [Telegram group](https://t.me/anycomment)
 
-
 ## Contribution 
 - Clone project to `wp-content/plugins/anycomment` folder of your docker or local WordPress directory
 - Go to cloned directory
-- Set `ANYCOMMENT_DEBUG` to `true` in `anycomment.php`
-- Change directory to `reactjs`, run `npm install` to install required packages
-- Run `npm start` to start development server
-- Open WordPress admin panel and activate AnyComment in the list
-- Go to "Generic" settings tab & enable "Enable Comments" option
-- Open some page and you should see AnyComment's comments
+- Run `./scripts/init.sh` and follow instructions

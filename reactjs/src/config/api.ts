@@ -1,12 +1,6 @@
 import axios from 'axios';
 
-axios.defaults.baseURL =
-    process.env.ENV === 'dev'
-        ? process.env.API_URL
-        : // @ts-ignore
-        'anyCommentApiSettings' in window
-            ? window.anyCommentApiSettings.restUrl
-            : null;
+axios.defaults.baseURL = window.anyCommentApiSettings && window.anyCommentApiSettings.restUrl;
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
