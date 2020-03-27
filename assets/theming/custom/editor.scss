@@ -1,4 +1,4 @@
-#{$root} {
+.anycomment-app {
   .ql-container {
     box-sizing: border-box;
     font-family: $font-family;
@@ -6,6 +6,7 @@
     height: 100%;
     margin: 0;
     position: relative;
+    padding: 10px;
   }
   .ql-container.ql-disabled .ql-tooltip {
     visibility: hidden;
@@ -25,16 +26,15 @@
     padding: 0;
   }
   .ql-editor {
-    margin-left: $comment-parent-space;
-    min-height: $comment-field-default-height;
+    min-height: 120px;
     box-sizing: border-box;
     line-height: 1.42;
     height: 100%;
     outline: none;
     overflow-y: auto;
-    padding: 12px 15px;
     tab-size: 4;
     -moz-tab-size: 4;
+    font-size: $font-size;
     text-align: left;
     white-space: pre-wrap;
     word-wrap: break-word;
@@ -60,7 +60,7 @@
 
   .ql-editor {
     p {
-      line-height: 1.6;
+      line-height: 1.5;
       margin: 0 0 5px 0;
     }
   }
@@ -397,7 +397,7 @@
   .ql-editor.ql-blank::before {
     color: $semi-hidden-color;
     content: attr(data-placeholder);
-    font-style: italic;
+    font-style: normal;
     pointer-events: none;
     position: absolute;
   }
@@ -954,6 +954,7 @@
   }
   .ql-container.ql-snow {
     background-color: $form-field-background-color;
+    @include border-radius($global-radius);
   }
 
   .anycomment-lang-ru {

@@ -15,11 +15,11 @@ then
       exit 1
 fi
 
-cd $TRUNKFOLDERPATH
+cd $TRUNKFOLDERPATH || exit
 echo "Now removing all from here $TRUNKFOLDERPATH"
 rm -rf *
 echo "Going back to $PLUGINSOURCEPATH"
-cd $PLUGINSOURCEPATH
+cd $PLUGINSOURCEPATH || exit
 echo "Now in $PLUGINSOURCEPATH"
 echo "Ready to move files from $PLUGINSOURCEPATH to $TRUNKFOLDERPATH..."
 rsync -arv --cvs-exclude \
@@ -27,7 +27,7 @@ rsync -arv --cvs-exclude \
   --exclude='.git' \
   --exclude='assets/src/anycomment' \
   --exclude='README.md'\
-   --exclude=node_modules \
+  --exclude=node_modules \
   --exclude=reactjs \
   --exclude=scripts \
   --exclude=gulpfile.js \

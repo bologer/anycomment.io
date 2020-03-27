@@ -1,14 +1,8 @@
-#{$root} {
+.anycomment-app {
   // Send comment
   .anycomment-form {
     width: 100%;
     margin-bottom: 20px;
-
-    form {
-      border-top: 1px solid $semi-hidden-color;
-      margin-top: 16px;
-      padding-top: 15px;
-    }
 
     // Terms
     &__terms {
@@ -65,14 +59,13 @@
     // List of inputs: name, email, website
     &__inputs {
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       flex-grow: 2;
       justify-content: space-between;
       margin-bottom: 20px;
 
       &-item {
-        flex-grow: 1;
-        padding-right: 5px;
+        margin-bottom: 4px;
 
         &:last-of-type {
           padding-right: 0;
@@ -274,9 +267,6 @@
   .anycomment-form-authorized {
     .anycomment-form-body-outliner {
       &__avatar {
-        position: absolute;
-        top: 15px;
-        left: 27px;
         @include avatar();
         @include avatar_child();
         z-index: 1;
@@ -304,7 +294,6 @@
       }
 
       &__inputs {
-        flex-direction: column;
         margin-bottom: 10px;
 
         &-item {
