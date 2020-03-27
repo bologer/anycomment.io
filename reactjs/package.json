@@ -44,7 +44,7 @@
     "build-css": "cd src/foundation && gulp sass",
     "watch-css": "cd src/foundation && gulp watch",
     "start": "./node_modules/.bin/parcel watch src/index.tsx",
-    "build": "NODE_ENV=production ./node_modules/.bin/parcel build  src/index.tsx --no-source-maps --public-url /",
+    "build": "NODE_ENV=production ./node_modules/.bin/parcel build  src/index.tsx --no-source-maps --public-url / && cp -rf dist/index.js ../static/js/main.min.js",
     "build:foundation": "cd src/foundation && foundation build && cd ../.. && cp src/css/app.css ../static/css/main.min.css",
     "init-dev": "./scripts/init.sh dev",
     "init-prod": "./scripts/init.sh prod",
