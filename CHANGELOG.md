@@ -11,14 +11,14 @@
 **Enhancements:**
 - Added `init` event, see repository Wiki for more information
 - Now only one form displayed on 'Reply' or 'Update' actions
-- Comments: rewritten React Hooks
+- Comments: completely rewritten to React Hooks
 - Comments: data management rewritten to Redux
 - Comments: rewritten to TypeScript
 - Comments: changed bundle builder to ParcelJS
 - Comments: using Formik to manage forms
 - Comments: website settings now propagated using React Context
 - Comments: now send button is always active. Previously button was changed to active when user started typing.
-- Comments: moved back to classic editor, no more bubble style
+- Comments: moved back to classic editor, no more needed to highlight text to see bold, italic, etc
 - Comments: removed redundant "Guest" sign from guest users
 - Comments: comment form is now standardized with cloud version which proved to have better UI/UX
 - Comments: replaced Google+ icon with generic Google one, as it was deprecated
