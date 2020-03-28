@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.1 – 28.03.2020
+
+**Fixes:**
+
+- Fixed issue when anchor to specific comment was infinite
+
 ## 0.1.0 - 28.03.2020
 
 **Fixes:**

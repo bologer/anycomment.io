@@ -52,7 +52,7 @@ export default function CommentContainer() {
         const hash = window.location.hash;
 
         if (hasSpecificCommentAnchor()) {
-            setInterval(() => {
+            interval = setInterval(() => {
                 const element = document.getElementById(hash.replace('#', ''));
 
                 if (!element) {
