@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0 - xx.03.2020
+## 0.1.0 - 28.03.2020
 
 **Fixes:**
 - Fixed error when when flushing cache	
