@@ -1,6 +1,7 @@
 import {fetch, FetchActions} from '~/helpers/action';
 import {getSettings} from '~/hooks/setting';
 import {CommentModel} from '~/typings/models/CommentModel';
+import {batch} from 'react-redux';
 
 export const COMMENT_DELETE = '@comment/delete';
 export const COMMENT_DELETE_SUCCESS = '@comment/delete/success';
@@ -24,7 +25,7 @@ export const COMMENT_ATTACHMENT_DELETE_INVALIDATE = '@comment/attachment/delete/
 export const COMMENT_ATTACHMENT_UPLOAD = '@comment/attachment/upload';
 export const COMMENT_ATTACHMENT_UPLOAD_SUCCESS = '@comment/attachment/upload/success';
 export const COMMENT_ATTACHMENT_UPLOAD_FAILURE = '@comment/attachment/upload/failure';
-export const COMMENT_ATTACHMENT_UPLOAD_INVALIDATE = '@comment/attachment/upload/invalidate';
+export const COMMENT_ATTACHMENT_UPLOAD_INVALIDATE = '@comment/attachment/upload/failure';
 
 export const COMMENT_FETCH = '@comment/fetch';
 export const COMMENT_FETCH_SUCCESS = '@comment/fetch/success';
@@ -117,23 +118,25 @@ export function fetchCommentsBase({
     }
 
     return dispatch => {
-        dispatch({type: COMMENT_FETCH_FILTER, payload: {perPage, offset, order}});
+        batch(() => {
+            dispatch({type: COMMENT_FETCH_FILTER, payload: {perPage, offset, order}});
 
-        return dispatch(
-            fetch({
-                method: 'get',
-                url: 'comments',
-                params: {
-                    post: postId,
-                    parent: 0,
-                    per_page: perPage,
-                    order,
-                    offset,
-                    rnd: timestamp,
-                },
-                actions: {pre, success, failure, always},
-            })
-        );
+            return dispatch(
+                fetch({
+                    method: 'get',
+                    url: 'comments',
+                    params: {
+                        post: postId,
+                        parent: 0,
+                        per_page: perPage,
+                        order,
+                        offset,
+                        rnd: timestamp,
+                    },
+                    actions: {pre, success, failure, always},
+                })
+            );
+        });
     };
 }
 
@@ -232,11 +235,12 @@ export function fetchLoadMore({postId, offset = 0, perPage, order}: FetchComment
 export function fetchDeleteComment(id: number) {
     return fetch({
         method: 'post',
-        url: 'comment/delete/' + id,
+        url: 'comments/delete/' + id,
         actions: {
             pre: COMMENT_DELETE,
             success: COMMENT_DELETE_SUCCESS,
             failure: COMMENT_DELETE_FAILURE,
+            always: COMMENT_DELETE_INVALIDATE,
         },
     });
 }
@@ -329,7 +333,6 @@ export function uploadAttachment(attachments, entropy) {
                 };
             },
             failure: {type: COMMENT_ATTACHMENT_UPLOAD_FAILURE, payload: {entropy}},
-            always: {type: COMMENT_ATTACHMENT_UPLOAD_INVALIDATE, payload: {entropy}},
         },
     });
 }
@@ -347,4 +350,9 @@ export function invalidateDeleteComment() {
 // eslint-disable-next-line require-jsdoc
 export function invalidateCreateComment() {
     return {type: COMMENT_CREATE_INVALIDATE};
+}
+
+// eslint-disable-next-line require-jsdoc
+export function invalidateAttachmentUpload(entropy: string) {
+    return {type: COMMENT_ATTACHMENT_UPLOAD_INVALIDATE, payload: {entropy}};
 }

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const QuillWrapper = styled.div`
     width: 100%;
     background-color: #fff;
-    border-radius: 5px;
+    border-radius: 10px;
 `;
 
 const ToolbarWrapper = styled.div`

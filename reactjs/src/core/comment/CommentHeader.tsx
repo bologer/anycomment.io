@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import buildFormatter from 'react-timeago/lib/formatters/buildFormatter';
 import i18En from 'react-timeago/lib/language-strings/en';
 import i18Ru from 'react-timeago/lib/language-strings/ru';
@@ -13,12 +13,18 @@ import {CommentModel} from '~/typings/models/CommentModel';
 import {useSettings} from '~/hooks/setting';
 import {isGuest} from '~/helpers/user';
 import {moveToCommentAndHighlight} from '~/helpers/comment';
-import {fetchComments, fetchDeleteComment} from '~/core/comment/CommentActions';
-import {useDispatch} from 'react-redux';
+import {fetchDeleteComment, fetchCommentsSalient} from '~/core/comment/CommentActions';
+import {useDispatch, useSelector} from 'react-redux';
+import {StoreProps} from '~/store/reducers';
+import {CommentReducerProps} from '~/core/comment/commentReducers';
+import {manageReducer} from '~/helpers/action';
 
 export interface CommentHeaderProps {
     comment: CommentModel;
 }
+
+// todo: Quickfix, have no idea why useEffect() is called millions times with same reducer value :/
+let deleted = false;
 
 /**
  * Renders single comment header.
@@ -26,6 +32,20 @@ export interface CommentHeaderProps {
 export default function CommentHeader({comment}: CommentHeaderProps) {
     const settings = useSettings();
     const dispatch = useDispatch();
+
+    const {delete: deleteAction} = useSelector<StoreProps, CommentReducerProps>(state => state.comments);
+
+    useEffect(() => {
+        manageReducer({
+            reducer: deleteAction,
+            onSuccess: () => {
+                if (!deleted) {
+                    deleted = true;
+                    dispatch(fetchCommentsSalient({postId: settings.postId}));
+                }
+            },
+        });
+    }, [deleteAction]);
 
     /**
      * Check whether status of the comment is unapproved (being moderated).
@@ -59,9 +79,9 @@ export default function CommentHeader({comment}: CommentHeaderProps) {
     /**
      * Handles comment deletion.
      */
-    function handleDelete() {
+    function handleDelete(e) {
+        e.preventDefault();
         dispatch(fetchDeleteComment(comment.id));
-        dispatch(fetchComments({postId: settings.post}));
     }
 
     let languageStrings = i18En;

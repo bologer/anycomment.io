@@ -138,17 +138,15 @@ export function manageReducer({reducer, onSuccess, onError}: ManageResponseProps
         return;
     }
 
-    if (!reducer.isFetching) {
+    if ('isFetching' in reducer && !reducer.isFetching) {
         const payload = (reducer && reducer.payload) || undefined;
 
         if (payload && typeof payload.code === 'string' && typeof payload.message === 'string') {
             if (typeof onError === 'function') {
                 onError(payload.message, payload.code);
             }
-        } else {
-            if (payload && typeof onSuccess === 'function') {
-                onSuccess(payload);
-            }
+        } else if (payload && typeof onSuccess === 'function') {
+            onSuccess(payload);
         }
     }
 }

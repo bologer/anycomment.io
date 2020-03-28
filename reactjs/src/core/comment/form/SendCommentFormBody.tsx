@@ -7,9 +7,9 @@ import Editor from '~/components/Editor';
 import {useOptions, useSettings} from '~/hooks/setting';
 import {isGuest} from '~/helpers/user';
 import {CommentModel} from '~/typings/models/CommentModel';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch, useSelector, batch} from 'react-redux';
 import {failureSnackbar, successSnackbar} from '~/core/notifications/NotificationActions';
-import {uploadAttachment} from '~/core/comment/CommentActions';
+import {uploadAttachment, invalidateAttachmentUpload} from '~/core/comment/CommentActions';
 import {manageReducer} from '~/helpers/action';
 import {StoreProps} from '~/store/reducers';
 import {CommentReducerProps} from '~/core/comment/commentReducers';
@@ -46,7 +46,7 @@ export default function SendCommentFormBody({
     useEffect(() => {
         manageReducer({
             reducer: attachmentUpload[attachmentEntropy],
-            onSuccess: ({response}) => {
+            onSuccess: (response) => {
                 if (response) {
                     const files = response.files;
 
@@ -60,7 +60,10 @@ export default function SendCommentFormBody({
                         handleAttachmentChange(newAttachments);
                     }
 
-                    dispatch(successSnackbar(settings.i18.file_uploaded));
+                    batch(() => {
+                        dispatch(invalidateAttachmentUpload(attachmentEntropy))
+                        dispatch(successSnackbar(settings.i18.file_uploaded));
+                    });
                 }
             },
         });

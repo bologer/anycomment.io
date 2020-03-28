@@ -65,7 +65,9 @@ export interface CommentReducerProps {
 }
 
 const DEFAULT_STATE = {
+    list: undefined,
     attachmentUpload: {},
+    delete: undefined,
 };
 
 // eslint-disable-next-line require-jsdoc
@@ -78,7 +80,7 @@ export default function (state = DEFAULT_STATE, action) {
             return {...state, list: {isFetching: false, payload: action.payload}};
         case COMMENT_FETCH_FAILURE:
         case COMMENT_FETCH_SALIENT_FAILURE:
-            return {...state, list: {isFetching: false, payload: action.payload}};
+            return {...state, list: {...state.list, payload: action.payload}};
         case COMMENT_LOAD_MORE:
             return {...state, loadMore: {isFetching: true}};
         case COMMENT_LOAD_MORE_SUCCESS:
