@@ -333,6 +333,7 @@ export function uploadAttachment(attachments, entropy) {
                 };
             },
             failure: {type: COMMENT_ATTACHMENT_UPLOAD_FAILURE, payload: {entropy}},
+            always: {type: COMMENT_ATTACHMENT_UPLOAD_INVALIDATE, payload: {entropy}},
         },
     });
 }

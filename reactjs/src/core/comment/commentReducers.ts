@@ -157,7 +157,7 @@ export default function (state = DEFAULT_STATE, action) {
                 ...state,
                 attachmentUpload: {
                     ...state.attachmentUpload,
-                    [action.payload.entropy]: {isFetching: true}
+                    [action.payload.entropy]: {isFetching: true},
                 },
             };
         case COMMENT_ATTACHMENT_UPLOAD_SUCCESS:

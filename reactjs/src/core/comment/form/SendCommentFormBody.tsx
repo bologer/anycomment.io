@@ -44,29 +44,29 @@ export default function SendCommentFormBody({
     const attachmentEntropy = comment && comment.id || 'default';
 
     useEffect(() => {
-        manageReducer({
-            reducer: attachmentUpload[attachmentEntropy],
-            onSuccess: (response) => {
-                if (response) {
-                    const files = response.files;
 
+        const attachmentReducer = attachmentUpload[attachmentEntropy] || undefined;
+
+        if (attachmentReducer && !attachmentReducer.isFetching) {
+            const {payload: response} = attachmentReducer;
+            if (response) {
+                const files = response.files || undefined;
+
+                if (files) {
                     if (!attachments || !attachments.length) {
                         handleAttachmentChange(files);
                     } else {
                         let newAttachments: [] = attachments;
-                        response.files.forEach(item => {
+                        files.forEach(item => {
                             newAttachments.push(item);
                         });
                         handleAttachmentChange(newAttachments);
                     }
-
-                    batch(() => {
-                        dispatch(invalidateAttachmentUpload(attachmentEntropy))
-                        dispatch(successSnackbar(settings.i18.file_uploaded));
-                    });
                 }
-            },
-        });
+
+                dispatch(successSnackbar(settings.i18.file_uploaded));
+            }
+        }
     }, [attachmentUpload[attachmentEntropy]]);
 
     /**
