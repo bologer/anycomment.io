@@ -21,17 +21,24 @@ const ref: RefObject<any> = React.createRef();
  * Renders toolbar.
  *
  * @param toolbarId
+ * @param toolbarOptions
  * @return {*}
  * @constructor
  */
-function Toolbar({toolbarId}: {toolbarId: string}) {
+function Toolbar({toolbarId, toolbarOptions}: { toolbarId: string, toolbarOptions: string[] }) {
+    if (!toolbarOptions) {
+        return null;
+    }
+
     return (
         <ToolbarWrapper id={toolbarId} className='ql-toolbar ql-snow'>
-            <button type='button' className='ql-bold' />
-            <button type='button' className='ql-italic' />
-            <button type='button' className='ql-list' value='ordered' />
-            <button type='button' className='ql-list' value='bullet' />
-            <button type='button' className='ql-blockquote' />
+            {toolbarOptions.map(option => {
+                if (option === 'ordered' || option === 'bullet') {
+                    return <button type='button' className='ql-list' value={option} />;
+                } else {
+                    return <button type='button' className={`ql-${option}`} />;
+                }
+            })}
         </ToolbarWrapper>
     );
 }
@@ -71,7 +78,7 @@ export default function Editor({
     theme = 'snow',
     value = '',
     placeholder = '',
-    formats = ['header', 'bold', 'italic', 'underline', 'blockquote', 'list', 'bullet', 'link'],
+    formats = ['bold', 'italic', 'underline', 'blockquote', 'list', 'bullet', 'link'],
     showToolbar = true,
     entropy = '',
     refHandler,
@@ -95,16 +102,10 @@ export default function Editor({
 
     const memoModules = useMemo(() => {
         return {
-            toolbar: {
-                container: `#${id}`,
-                handlers: {
-                    // 'block-code': codeHandler
-                    // insertStar: insertStar
-                },
-            },
             clipboard: {
                 matchVisual: false,
             },
+            toolbar: showToolbar ? {container: `#${id}`} : false,
         };
     }, [id]);
 
@@ -120,7 +121,7 @@ export default function Editor({
                 formats={formats}
                 onChange={onChange}
             />
-            {showToolbar && <Toolbar toolbarId={id} />}
+            {showToolbar && <Toolbar toolbarId={id} toolbarOptions={formats} />}
         </QuillWrapper>
     );
 }

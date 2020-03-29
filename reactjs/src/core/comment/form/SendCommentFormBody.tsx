@@ -162,6 +162,8 @@ export default function SendCommentFormBody({
             <Editor
                 onChange={handleEditorChange}
                 value={commentHTML}
+                showToolbar={options.isEditorOn}
+                formats={options.editorToolbarOptions}
                 entropy={comment && comment.id}
                 refHandler={handleEditorRef}
                 placeholder={settings.i18.add_comment}

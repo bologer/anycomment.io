@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.2 – 29.03.2020
+
+**Fixes:**
+
+- Fixed issue when toolbar options were not treated
+
+
 ## 0.1.1 – 28.03.2020
 
 **Fixes:**
