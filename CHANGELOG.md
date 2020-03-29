@@ -4,6 +4,7 @@
 
 **Fixes:**
 
+- Fixed issue when relative time was always in English
 - Fixed issue when toolbar options were not treated
 
 

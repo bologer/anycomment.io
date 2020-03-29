@@ -192,6 +192,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Fixes:**
 
+- Fixed issue when relative time was always in English
 - Fixed issue when toolbar options were not treated
 
 = 0.1.1 – 28.03.2020 =

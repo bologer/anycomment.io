@@ -1,8 +1,4 @@
 import React, {useEffect} from 'react';
-import buildFormatter from 'react-timeago/lib/formatters/buildFormatter';
-import i18En from 'react-timeago/lib/language-strings/en';
-import i18Ru from 'react-timeago/lib/language-strings/ru';
-import TimeAgo from 'react-timeago';
 import Icon from '../../components/Icon';
 import Tooltip from '../../components/Tooltip';
 import {faEllipsisV, faTrashAlt, faGavel, faPen} from '@fortawesome/free-solid-svg-icons';
@@ -18,6 +14,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {StoreProps} from '~/store/reducers';
 import {CommentReducerProps} from '~/core/comment/commentReducers';
 import {manageReducer} from '~/helpers/action';
+import Timeago from '~/components/Timeago';
 
 export interface CommentHeaderProps {
     comment: CommentModel;
@@ -84,14 +81,6 @@ export default function CommentHeader({comment}: CommentHeaderProps) {
         dispatch(fetchDeleteComment(comment.id));
     }
 
-    let languageStrings = i18En;
-
-    if (settings.locale === 'ru') {
-        languageStrings = i18Ru;
-    }
-
-    const formatter = buildFormatter(languageStrings);
-
     const commentAuthorName = normalizeAuthorName(comment.author_name);
 
     const authorName =
@@ -135,11 +124,7 @@ export default function CommentHeader({comment}: CommentHeaderProps) {
 
     const datetime =
         settings.options.dateFormat === 'relative' ? (
-            <TimeAgo
-                className='anycomment comment-single-body-header__date'
-                date={comment.date_gmt}
-                formatter={formatter}
-            />
+            <Timeago className='anycomment comment-single-body-header__date' date={comment.date_gmt} />
         ) : (
             <time className='anycomment comment-single-body-header__date' dateTime={comment.date}>
                 {comment.date_native}
