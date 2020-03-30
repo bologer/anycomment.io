@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.22 – 30.03.2020
+
+**Fixes:**
+
+- Fixed invalid markup in anycomment_socials shortcode
+
 ## 0.1.21 – 29.03.2020
 
 **Fixes:**

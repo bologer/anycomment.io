@@ -57,12 +57,15 @@ class AnyCommentNativeLoginForm extends BaseObject {
 
 		if ( ! $params['only_socials'] ) {
 			$word_line = __( 'or use any social:', 'anycomment' );
-			$html      .= '<div style="margin: 0 0 10px;"><div class="anycomment-socials-preparagraph">' . $word_line . '</div>';
+			$html      .= <<<HTML
+<div style="margin: 0 0 10px;">
+	<div class="anycomment-socials-preparagraph">$word_line</div>
+</div>
+HTML
+;
 		}
 
 		$html .= $socials;
-
-		$html .= '</div>';
 
 		if ( false === $params['output'] ) {
 			return $html;
