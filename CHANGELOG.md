@@ -4,6 +4,7 @@
 
 **Fixes:**
 
+- Fixed issue when "Comment will be shown once reviewed by moderator." was shown to user with moderator permission
 - Fixed invalid markup in anycomment_socials shortcode
 
 ## 0.1.21 – 29.03.2020

@@ -672,10 +672,9 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			AnyCommentCommentMeta::add_attachments( $comment_id, $request['attachments'] );
 		}
 
-		$should_moderate    = current_user_can( 'moderate_comments' ) && AnyCommentGenericSettings::is_moderate_first();
+		$should_moderate    = ! current_user_can( 'moderate_comments' ) && AnyCommentGenericSettings::is_moderate_first();
 		$has_filtered_words = isset( $filter_comment ) && $filter_comment['match_count'] > 0;
 		$has_links          = ! current_user_can( 'moderate_comments' ) && AnyCommentGenericSettings::is_links_on_hold() && AnyCommentComments::has_links( $comment_id );
-
 
 		if ( AnyCommentGenericSettings::is_moderate_first_comment_only() && $comment_count < 1 ) {
 			$should_moderate = true;
