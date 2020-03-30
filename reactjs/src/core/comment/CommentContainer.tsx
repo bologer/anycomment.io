@@ -35,7 +35,7 @@ export default function CommentContainer() {
             const intervalInSeconds = options.intervalCommentsCheck * 1000 || 5000;
 
             interval = setInterval(() => {
-                fetchCommentsSalient({postId: settings.postId});
+                dispatch(fetchCommentsSalient({postId: settings.postId}));
             }, intervalInSeconds);
         }
 

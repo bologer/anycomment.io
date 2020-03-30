@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.23 – 30.03.2020
+
+**Fixes:**
+
+- Fixed problem when real-time reloading didn't work as expected
+
+
 ## 0.1.22 – 30.03.2020
 
 **Fixes:**
