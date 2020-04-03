@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.24 – 03.04.2020
+
+**Fixes:**
+
+- Fixed untranslated "comments" string
+
+
 ## 0.1.23 – 30.03.2020
 
 **Fixes:**

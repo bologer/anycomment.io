@@ -286,6 +286,7 @@ EOT;
 				'hide_this_message'              => __( 'Hide this message', 'anycomment' ),
 				'login_with'                     => __( 'Login with', 'anycomment' ),
 				'or_as_guest'                    => __( 'or as guest:', 'anycomment' ),
+				'comments_count'                    => __( 'Comments:', 'anycomment' ),
 
 				/**
 				 * Lightbox

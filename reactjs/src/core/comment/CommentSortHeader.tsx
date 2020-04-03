@@ -35,7 +35,7 @@ export default function CommentSortHeader() {
             <div className='anycomment anycomment-summary'>
                 <div
                     className='anycomment anycomment-summary-count'
-                    dangerouslySetInnerHTML={{__html: 'Комментариев: ' + response.meta.total_count}}
+                    dangerouslySetInnerHTML={{__html: `${settings.i18.comments_count}: ${response.meta.total_count}`}}
                 />
                 <div className='anycomment anycomment-summary-sort'>
                     {settings.i18.sort_by}&nbsp;
