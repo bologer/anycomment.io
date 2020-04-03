@@ -21,6 +21,7 @@ export default function LoginSocial({social}: LoginSocialProps) {
                 target='_parent'
                 title={social.label}
                 className={'anycomment-login-with-list-' + social.slug}
+                rel='disallow'
             >
                 <SocialIcon slug={social.slug} title={social.label} />
             </a>
