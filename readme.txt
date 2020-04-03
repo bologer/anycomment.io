@@ -195,6 +195,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 - Fixed untranslated "comments" string
 - Added rel="disallow" to social links to REST API, to avoid indexing, #452
+- Fixed issue when Mail.Ru icon was too big near user avatar, #451
 
 
 = 0.1.23 – 30.03.2020 =

@@ -210,6 +210,11 @@ const Wrapper = styled.span`
     vertical-align: middle;
     width: ${props => props.size || '25px'};
     height: ${props => props.size || '25px'};
+
+    svg {
+        width: ${props => props.size || '25px'};
+        height: ${props => props.size || '25px'};
+    }
 `;
 
 export interface SocialIconProps {
