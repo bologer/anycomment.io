@@ -174,7 +174,7 @@ export default function SendComment({action, comment}: SendCommentProps) {
             reducer: create,
             onSuccess: response => {
                 prepareInitialForm();
-                dispatch(fetchCommentsSalient({postId: settings.postId, order: options.sort_order}));
+                dispatch(fetchCommentsSalient({postId: settings.postId, refresh: true}));
 
                 removeRememberedComment();
 
@@ -192,7 +192,7 @@ export default function SendComment({action, comment}: SendCommentProps) {
             reducer: update,
             onSuccess: response => {
                 prepareInitialForm();
-                dispatch(fetchCommentsSalient({postId: settings.postId, order: options.sort_order}));
+                dispatch(fetchCommentsSalient({postId: settings.postId, refresh: true}));
 
                 if (response.message) {
                     dispatch(successSnackbar(response.message));

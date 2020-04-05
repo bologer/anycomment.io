@@ -43,6 +43,7 @@ export interface CommentListFilter {
     order: 'asc' | 'desc';
     perPage: number;
     orderBy: string;
+    offset: number;
 }
 
 export interface CommentForm {
@@ -184,7 +185,6 @@ export default function (state = DEFAULT_STATE, action) {
                     [action.payload.entropy]: undefined,
                 },
             };
-
         default:
             return state;
     }

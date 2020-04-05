@@ -67,7 +67,7 @@ export function fetch({
             headers,
             ...axiosProps,
         })
-            .then(function (response: AxiosResponse) {
+            .then(function(response: AxiosResponse) {
                 const data = response.data;
 
                 if (typeof success === 'string') {
@@ -80,7 +80,7 @@ export function fetch({
                     dispatch(failureSnackbar(data.message || data.code));
                 }
             })
-            .catch(function (error: AxiosError) {
+            .catch(function(error: AxiosError) {
                 const data = (error.response && error.response.data) || {};
 
                 if (data.code) {

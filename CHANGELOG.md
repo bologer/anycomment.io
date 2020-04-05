@@ -4,6 +4,7 @@
 
 **Fixes:**
 
+- Fixed problem with blinking load more when real-time feature was enabled, #450
 - Fixed untranslated "comments" string
 - Added rel="disallow" to social links to REST API, to avoid indexing, #452
 - Fixed issue when Mail.Ru icon was too big near user avatar, #451

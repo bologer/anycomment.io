@@ -140,6 +140,11 @@ export function fetchCommentsBase({
     };
 }
 
+interface FetchSalientInterface {
+    // Whether just to refresh with current filter
+    refresh?: boolean;
+}
+
 /**
  * This salient version of comment fetching.
  *
@@ -149,8 +154,40 @@ export function fetchCommentsBase({
  * @param offset
  * @param perPage
  * @param order
+ * @param refresh
  */
-export function fetchCommentsSalient({postId, offset = 0, perPage, order}: FetchCommentProps) {
+export function fetchCommentsSalient({
+    postId,
+    offset = 0,
+    perPage,
+    order,
+    refresh = false,
+}: FetchCommentProps & FetchSalientInterface) {
+    if (refresh) {
+        return (dispatch, getState) => {
+            const {comments} = getState();
+            const {listFilter} = comments;
+
+            if (comments.listFilter) {
+                offset = 0;
+                perPage = listFilter.perPage + listFilter.offset;
+            }
+
+            return dispatch(
+                fetchCommentsBase({
+                    postId,
+                    offset,
+                    perPage,
+                    order,
+                    actions: {
+                        success: COMMENT_FETCH_SALIENT_SUCCESS,
+                        failure: COMMENT_FETCH_SALIENT_FAILURE,
+                    },
+                })
+            );
+        };
+    }
+
     return fetchCommentsBase({
         postId,
         offset,
@@ -284,7 +321,7 @@ export function fetchLike(commentId: number, postId: number, type: number = 1) {
             },
             failure: {type: COMMENT_LIKE_FAILURE, commentId},
         },
-    })
+    });
 }
 
 /**
@@ -326,10 +363,10 @@ export function uploadAttachment(attachments, entropy) {
         url: 'documents',
         actions: {
             pre: {type: COMMENT_ATTACHMENT_UPLOAD, payload: {entropy}},
-            success: (response) => {
+            success: response => {
                 return {
                     type: COMMENT_ATTACHMENT_UPLOAD_SUCCESS,
-                    payload: {response, entropy}
+                    payload: {response, entropy},
                 };
             },
             failure: {type: COMMENT_ATTACHMENT_UPLOAD_FAILURE, payload: {entropy}},
