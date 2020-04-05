@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.25 – 05.04.2020
+
+- Bug fixes & improvements
+
 ## 0.1.24 – 03.04.2020
 
 **Fixes:**
