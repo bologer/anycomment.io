@@ -105,21 +105,26 @@ export function fetchCommentsBase({
     order,
     actions: {pre, success, failure, always},
 }: FetchCommentProps & FetchCommentsBase) {
-    const timestamp = new Date().getTime();
-
-    const settings = getSettings();
-
-    if (!perPage) {
-        perPage = settings.options.limit;
-    }
-
-    if (!order) {
-        order = settings.options.sort_order;
-    }
-
-    return dispatch => {
+    return (dispatch, getState) => {
         batch(() => {
-            dispatch({type: COMMENT_FETCH_FILTER, payload: {perPage, offset, order}});
+            const state = getState();
+            const listFilter = state?.comments?.listFilter;
+            const settings = getSettings();
+
+            if (listFilter) {
+                perPage = perPage ?? listFilter?.perPage;
+                order = order ?? listFilter?.order;
+            } else {
+                if (!perPage) {
+                    perPage = listFilter?.perPage ?? settings.options.limit;
+                }
+
+                if (!order) {
+                    order = listFilter?.order ?? settings.options.sort_order;
+                }
+            }
+
+            dispatch({type: COMMENT_FETCH_FILTER, payload: {perPage, order, offset}});
 
             return dispatch(
                 fetch({
@@ -131,7 +136,7 @@ export function fetchCommentsBase({
                         per_page: perPage,
                         order,
                         offset,
-                        rnd: timestamp,
+                        rnd: new Date().getTime(),
                     },
                     actions: {pre, success, failure, always},
                 })
