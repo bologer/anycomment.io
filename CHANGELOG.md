@@ -12,6 +12,7 @@
 - Fixed issue when remembered comment was for all pages/posts, not per specific one, #462
 - Now sorting is treated properly on real-time update feature, #460
 - Resolved issue with timezone when was writing "n hours ago" on a new comment, #464
+- Fixed small name synchronizing issue with SaaS, such as "-1", "-17"
 
 
 ## 0.1.25 – 05.04.2020
