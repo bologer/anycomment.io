@@ -25,7 +25,7 @@ const ref: RefObject<any> = React.createRef();
  * @return {*}
  * @constructor
  */
-function Toolbar({toolbarId, toolbarOptions}: { toolbarId: string, toolbarOptions: string[] }) {
+function Toolbar({toolbarId, toolbarOptions}: { toolbarId: string; toolbarOptions: string[] }) {
     if (!toolbarOptions) {
         return null;
     }
@@ -35,6 +35,7 @@ function Toolbar({toolbarId, toolbarOptions}: { toolbarId: string, toolbarOption
             {toolbarOptions.map(option => {
                 if (option === 'ordered' || option === 'bullet') {
                     return <button type='button' className='ql-list' value={option} />;
+                    // return <button type='button' className='ql-list' value={option} />;
                 } else {
                     return <button type='button' className={`ql-${option}`} />;
                 }
@@ -58,6 +59,8 @@ export interface EditorProps {
     refHandler?: (editorRef: any) => void;
 }
 
+const DEFAULT_FORMATS = ['header', 'bold', 'italic', 'underline', 'blockquote', 'list', 'link'];
+
 /**
  * Custom editor component wrapper around React Quill.
  * @param onChange
@@ -78,11 +81,25 @@ export default function Editor({
     theme = 'snow',
     value = '',
     placeholder = '',
-    formats = ['bold', 'italic', 'underline', 'blockquote', 'list', 'bullet', 'link'],
+    formats = DEFAULT_FORMATS,
     showToolbar = true,
     entropy = '',
     refHandler,
 }: EditorProps) {
+    formats = useMemo(() => {
+        let listFound = false;
+
+        formats?.forEach(item => {
+            if (item === 'list') listFound = true;
+        });
+
+        if (!listFound) {
+            formats.push('list');
+        }
+
+        return formats;
+    }, [formats]);
+
     useEffect(() => {
         if (ref && ref.current) {
             refHandler(ref.current);
