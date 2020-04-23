@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import SendCommentFormBody from './SendCommentFormBody';
 import SendCommentFormBodyAvatar from './SendCommentFormBodyAvatar';
 import ReCAPTCHA from 'react-google-recaptcha';
@@ -288,7 +288,7 @@ export default function SendComment({action, comment}: SendCommentProps) {
      * Removes comment text form localStorage.
      */
     function removeRememberedComment() {
-        remove('form-comment_html');
+        remove(getLocalStorageFormat('form-comment_html'));
     }
 
     /**
@@ -307,7 +307,7 @@ export default function SendComment({action, comment}: SendCommentProps) {
      */
     function handleEditorChange(text) {
         formik.setFieldValue('comment_html', text, false);
-        add('form-comment_html', text);
+        add(getLocalStorageFormat('form-comment_html'), text);
     }
 
     /**
@@ -317,7 +317,7 @@ export default function SendComment({action, comment}: SendCommentProps) {
     function handleFieldChange(e) {
         formik.handleChange(e);
 
-        add('form-' + e.target.name, e.taget.value);
+        add(getLocalStorageFormat('form-' + e.target.name), e.taget.value);
     }
 
     /**
@@ -410,14 +410,22 @@ export default function SendComment({action, comment}: SendCommentProps) {
     }
 
     /**
+     * Generate local storage key value specific to post.
+     *
+     * @param key
+     */
+    function getLocalStorageFormat(key) {
+        return key + settings.postId;
+    }
+
+    /**
      * Prepare remembered fields.
      */
     function prepareRemembered() {
-        const email = get('form-email');
-        const name = get('form-author_name');
-        const website = get('form-author_website');
-        const commentHtml = get('form-comment_html');
-
+        const email = get(getLocalStorageFormat('form-email'));
+        const name = get(getLocalStorageFormat('form-author_name'));
+        const website = get(getLocalStorageFormat('form-author_website'));
+        const commentHtml = get(getLocalStorageFormat('form-comment_html'));
         let editorAvailabilityInterval = setInterval(function () {
             if (editorRef) {
                 if (email !== null) {

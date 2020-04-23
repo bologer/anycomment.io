@@ -7,10 +7,9 @@ import Editor from '~/components/Editor';
 import {useOptions, useSettings} from '~/hooks/setting';
 import {isGuest} from '~/helpers/user';
 import {CommentModel} from '~/typings/models/CommentModel';
-import {useDispatch, useSelector, batch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {failureSnackbar, successSnackbar} from '~/core/notifications/NotificationActions';
-import {uploadAttachment, invalidateAttachmentUpload} from '~/core/comment/CommentActions';
-import {manageReducer} from '~/helpers/action';
+import {uploadAttachment} from '~/core/comment/CommentActions';
 import {StoreProps} from '~/store/reducers';
 import {CommentReducerProps} from '~/core/comment/commentReducers';
 
