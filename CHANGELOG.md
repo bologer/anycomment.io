@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.26 – 23.04.2020
+
+**Fixes:**
+
+- Resolved issue with timezone when was writing "n hours ago" on a new comment, #464
+
+
 ## 0.1.25 – 05.04.2020
 
 - Bug fixes & improvements

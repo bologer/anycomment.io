@@ -124,7 +124,7 @@ export default function CommentHeader({comment}: CommentHeaderProps) {
 
     const datetime =
         settings.options.dateFormat === 'relative' ? (
-            <Timeago className='anycomment comment-single-body-header__date' date={comment.date_gmt} />
+            <Timeago className='anycomment comment-single-body-header__date' date={comment.date} />
         ) : (
             <time className='anycomment comment-single-body-header__date' dateTime={comment.date}>
                 {comment.date_native}
