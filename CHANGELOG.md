@@ -2,6 +2,9 @@
 
 ## 0.1.26 – 23.04.2020
 
+***Enhancements**:
+- Added ability to enable/disable override of WooCommerce's default review form, #458
+
 **Fixes:**
 
 - Fixed issue when bullet/order list did not work, #467

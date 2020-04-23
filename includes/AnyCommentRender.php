@@ -286,7 +286,7 @@ EOT;
 				'hide_this_message'              => __( 'Hide this message', 'anycomment' ),
 				'login_with'                     => __( 'Login with', 'anycomment' ),
 				'or_as_guest'                    => __( 'or as guest:', 'anycomment' ),
-				'comments_count'                    => __( 'Comments:', 'anycomment' ),
+				'comments_count'                 => __( 'Comments:', 'anycomment' ),
 
 				/**
 				 * Lightbox
@@ -304,11 +304,17 @@ EOT;
 	/**
 	 * Make custom template for comments.
 	 *
+	 * @param string $original_template Original (theme's) template path.
+	 *
 	 * @return string
 	 */
-	public function override_comment() {
+	public function override_comment( $original_template ) {
 		if ( ! is_singular() || ! comments_open() || post_password_required() || AnyCommentIntegrationSettings::is_sass_comments_show() ) {
 			remove_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ], 11 );
+		}
+
+		if ( is_plugin_active( 'woocommerce/woocommerce.php' ) && is_product() && ! AnyCommentIntegrationSettings::is_replace_woocommerce_review_form() ) {
+			return $original_template;
 		}
 
 		return ANYCOMMENT_ABSPATH . str_replace( '/', DIRECTORY_SEPARATOR, '/templates/override-comments.php' );

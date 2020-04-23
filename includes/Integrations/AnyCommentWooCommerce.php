@@ -8,16 +8,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use WC_Product;
 use AnyComment\Base\BaseObject;
+use AnyComment\Admin\AnyCommentIntegrationSettings;
 
 /**
  * Class AnyCommentWooCommerce is used as integration for WooCommerce.
  */
 class AnyCommentWooCommerce extends BaseObject {
-    /**
+	/**
 	 * @inheritDoc
 	 */
 	public function init() {
-		add_filter( 'woocommerce_product_tabs', [ $this, 'woo_new_product_tab' ], 999 );
+		if ( AnyCommentIntegrationSettings::is_replace_woocommerce_review_form() ) {
+			add_filter( 'woocommerce_product_tabs', [ $this, 'woo_new_product_tab' ], 999 );
+		}
 	}
 
 	/**
