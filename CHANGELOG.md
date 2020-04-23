@@ -3,6 +3,7 @@
 ## 0.1.26 – 23.04.2020
 
 ***Enhancements**:
+- Added new roles to default role option: editor, author, contributor
 - Added ability to enable/disable override of WooCommerce's default review form, #458
 
 **Fixes:**

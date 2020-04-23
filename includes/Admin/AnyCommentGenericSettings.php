@@ -210,6 +210,9 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 	 * Roles
 	 */
 	const DEFAULT_ROLE_SUBSCRIBER = 'subscriber'; // Normal subscriber (from WordPress)
+	const DEFAULT_ROLE_EDITOR = 'editor'; // (from WordPress)
+	const DEFAULT_ROLE_AUTHOR = 'author'; // (from WordPress)
+	const DEFAULT_ROLE_CONTRIBUTOR = 'contributor'; // (from WordPress)
 	const DEFAULT_ROLE_SOCIAL_SUBSCRIBER = 'social_subscriber'; // Custom social subscriber. Role introduced via this plugin.
 
 
@@ -413,8 +416,11 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 				          ->set_title( __( 'Register User Group', "anycomment" ) )
 				          ->set_args( [
 					          'options' => [
-						          self::DEFAULT_ROLE_SUBSCRIBER        => __( 'Subscriber', 'anycomment' ),
 						          self::DEFAULT_ROLE_SOCIAL_SUBSCRIBER => __( 'Social Network Subscriber', 'anycomment' ),
+						          self::DEFAULT_ROLE_SUBSCRIBER        => __( 'Subscriber', 'anycomment' ),
+						          self::DEFAULT_ROLE_EDITOR            => __( 'Editor', 'anycomment' ),
+						          self::DEFAULT_ROLE_AUTHOR            => __( 'Author', 'anycomment' ),
+						          self::DEFAULT_ROLE_CONTRIBUTOR       => __( 'Contributor', 'anycomment' ),
 					          ],
 				          ] )
 				          ->set_description( esc_html( __( 'When users will authorize via plugin, they are being registered and be assigned with group selected above.', "anycomment" ) ) ),
