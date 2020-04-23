@@ -192,6 +192,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Fixes:**
 
+- Now sorting is treated properly on real-time update feature, #460
 - Resolved issue with timezone when was writing "n hours ago" on a new comment, #464
 
 = 0.1.25 – 05.04.2020 =
