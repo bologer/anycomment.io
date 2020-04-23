@@ -198,12 +198,11 @@ class AnyCommentSocialAuth {
 			$adapter = $this->authenticate( $social );
 		} catch ( \Exception $exception ) {
 			AnyCommentCore::logger()->error( sprintf(
-				'Failed to login user on %s via "%s" social as exception was thrown: "%s", in %s:%s',
+				'Failed to login user on %s via "%s" social, exception: "%s", trace %s',
 				$redirect,
 				$social,
 				$exception->getMessage(),
-				$exception->getFile(),
-				$exception->getLine()
+				$exception->getTraceAsString()
 			) );
 
 			wp_redirect( $redirect );

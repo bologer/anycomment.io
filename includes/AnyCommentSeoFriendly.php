@@ -107,7 +107,6 @@ class AnyCommentSeoFriendly
     </div>
 </div>
 HTML;
-
     }
 
     /**
