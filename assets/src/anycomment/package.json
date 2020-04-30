@@ -16,7 +16,7 @@
     "foundation-sites": "~6.4.1",
     "gulp-rename": "^1.4.0",
     "intro.js": "2.9.3",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "motion-ui": "^2.0.3",
     "select2": "^4.0.12",
     "slick-carousel": "^1.8.1",
