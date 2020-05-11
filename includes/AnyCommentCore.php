@@ -10,6 +10,7 @@ use AnyComment\Base\Request;
 use Stash\Driver\FileSystem;
 use AnyComment\Base\BaseObject;
 use Monolog\Handler\StreamHandler;
+use Monolog\Handler\RotatingFileHandler;
 use AnyComment\Controller\ControllerManager;
 use AnyComment\Admin\AnyCommentGenericSettings;
 use AnyComment\Migrations\AnyCommentMigrationManager;
@@ -22,7 +23,7 @@ class AnyCommentCore extends BaseObject {
 	/**
 	 * @var string AnyComment version.
 	 */
-	public $version = '0.1.26';
+	public $version = '0.1.27';
 
 	/**
 	 * @var Pool
@@ -48,7 +49,6 @@ class AnyCommentCore extends BaseObject {
 	 * @var AnyCommentCore Holds plugin instance.
 	 */
 	private static $_instance;
-
 
 	/**
 	 * Init method to invoke starting scripts.
@@ -218,11 +218,22 @@ class AnyCommentCore extends BaseObject {
 				@file_put_contents( $index_path, '' );
 			}
 
-			$log_file = $log_path . DIRECTORY_SEPARATOR . 'debug.log';
+			$date_format = 'Y-m-d';
+			$file_format = '{date}-debug';
+			$log_file    = $log_path . DIRECTORY_SEPARATOR;
+			$log_file    .= str_replace(
+				                '{date}',
+				                date( $date_format ),
+				                $file_format
+			                ) . '.log';
 
 			// create a log channel
-			$log = new Logger( 'anycomment' );
-			$log->pushHandler( new StreamHandler( $log_file, ANYCOMMENT_DEBUG ? Logger::DEBUG : Logger::INFO ) );
+			$log     = new Logger( 'anycomment' );
+			$level   = ANYCOMMENT_DEBUG ? Logger::DEBUG : Logger::INFO;
+			$rotator = new RotatingFileHandler( $log_file, 3, $level, true, 0664 );
+			$rotator->setFilenameFormat( $file_format, $date_format );
+			$log->pushHandler( $rotator );
+			$log->pushHandler( new StreamHandler( $log_file, $level ) );
 
 			static::$log = $log;
 		}

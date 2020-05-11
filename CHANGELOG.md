@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.1.27 – 11.05.2020
+
+**Enhancements:**
+
+
+
+**Fixes:**
+
+- Added rotation to logs
+
+
 ## 0.1.26 – 23.04.2020
 
 ***Enhancements**:

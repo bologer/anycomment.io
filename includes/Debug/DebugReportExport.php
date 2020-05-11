@@ -14,120 +14,139 @@ use ZipArchive;
  * @author Alexander Teshabaev <sasha.tesh@gmail.com>
  * @package AnyComment\Debug
  */
-class DebugReportExport
-{
-    /**
-     * @var ReportGeneratorImpl
-     */
-    private $_report;
+class DebugReportExport {
+	/**
+	 * @var ReportGeneratorImpl
+	 */
+	private $_report;
 
-    /**
-     * @var string Archive name.
-     */
-    private $_archive_name;
+	/**
+	 * @var string Archive name.
+	 */
+	private $_archive_name;
 
-    /**
-     * DebugReportExport constructor.
-     *
-     * @param ReportGeneratorImpl $report
-     */
-    public function __construct(ReportGeneratorImpl $report)
-    {
-        $this->_report = $report;
-    }
+	/**
+	 * DebugReportExport constructor.
+	 *
+	 * @param ReportGeneratorImpl $report
+	 */
+	public function __construct( ReportGeneratorImpl $report ) {
+		$this->_report = $report;
+	}
 
-    /**
-     * Exports archive without streaming.
-     *
-     * @return bool
-     */
-    public function export()
-    {
-        return $this->buildArchive() !== false;
-    }
+	/**
+	 * Exports archive without streaming.
+	 *
+	 * @return bool
+	 */
+	public function export() {
+		return $this->buildArchive() !== false;
+	}
 
-    /**
-     * Streams generated archive.
-     */
-    public function streamExport()
-    {
-        $archive_path = $this->buildArchive();
+	/**
+	 * Streams generated archive.
+	 */
+	public function streamExport() {
+		$archive_path = $this->buildArchive();
+		header( "Pragma: public" );
+		header( "Expires: 0" );
+		header( "Cache-Control: must-revalidate, post-check=0, pre-check=0" );
+		header( "Cache-Control: public" );
+		header( "Content-Description: File Transfer" );
+		header( "Content-type: application/octet-stream" );
+		header( "Content-Disposition: attachment; filename=\"" . $this->get_archive_name() . "\"" );
+		header( "Content-Transfer-Encoding: binary" );
+		header( "Content-Length: " . filesize( $archive_path ) );
+		ob_clean();
+		flush();
+		@readfile( $archive_path );
+		@unlink( $archive_path );
+		exit( 0 );
+	}
 
-        header("Pragma: public");
-        header("Expires: 0");
-        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-        header("Cache-Control: public");
-        header("Content-Description: File Transfer");
-        header("Content-type: application/octet-stream");
-        header("Content-Disposition: attachment; filename=\"" . $this->get_archive_name() . "\"");
-        header("Content-Transfer-Encoding: binary");
-        header("Content-Length: " . filesize($archive_path));
-        ob_clean();
-        flush();
-        @readfile($archive_path);
-        @unlink($archive_path);
-        exit;
-    }
+	/**
+	 * Builds archive & puts require debug information inside.
+	 *
+	 * @return bool|string Path to archive on success or false on failure.
+	 */
+	protected function buildArchive() {
+		$save_path = $this->get_save_path();
 
-    /**
-     * Builds archive & puts require debug information inside.
-     *
-     * @return bool|string Path to archive on success or false on failure.
-     */
-    protected function buildArchive()
-    {
-        $archive_path_with_name = $this->get_save_path() . DIRECTORY_SEPARATOR . $this->get_archive_name();
+		if ( ! file_exists( $save_path ) ) {
+			@mkdir( $save_path, 0755, true );
+		}
 
-        $zip = new ZipArchive;
-        if ($zip->open($archive_path_with_name, ZipArchive::CREATE) === true) {
-            // Add a file new.txt file to zip using the text specified
-            $zip->addFromString('report.txt', $this->_report->generate());
+		$archive_path_with_name = $save_path . DIRECTORY_SEPARATOR . $this->get_archive_name();
 
-            $handlers = AnyCommentCore::logger()->getHandlers();
+		$zip = new ZipArchive;
+		if ( $zip->open( $archive_path_with_name, ZipArchive::CREATE ) === true ) {
+			// Add a file new.txt file to zip using the text specified
+			$zip->addFromString( 'report.txt', $this->_report->generate() );
 
-            if (isset($handlers[0]) && ! empty($handlers[0]->getUrl())) {
-                $zip->addFromString('debug.log', @file_get_contents($handlers[0]->getUrl()));
-            }
+			$handlers = AnyCommentCore::logger()->getHandlers();
 
-            // All files are added, so close the zip file.
-            $zip->close();
+			$path = null;
+			if ( isset( $handlers[0] ) && ! empty( $handlers[0]->getUrl() ) ) {
+				$path = $handlers[0]->getUrl();
+			}
 
-            return $archive_path_with_name;
-        }
+			if ( $path !== null ) {
+				$dirname = pathinfo( $path );
+
+				if ( ! empty( $dirname['dirname'] ) ) {
+						$glob_pattern = rtrim( $dirname['dirname'], DIRECTORY_SEPARATOR ) . '/*.log';
+
+						$logs = glob( $glob_pattern );
+
+						foreach ( $logs as $logPath ) {
+							$path_info = pathinfo( $logPath );
+							if ( isset( $path_info['basename'] ) ) {
+								$zip->addFile( $logPath, $path_info['basename']);
+							}
+						}
+					$glob_pattern = rtrim( $dirname, DIRECTORY_SEPARATOR ) . '/*.log';
+					$zip->addGlob( $glob_pattern );
+				}
+			}
 
 
-        return false;
-    }
+			// All files are added, so close the zip file.
+			$zip->close();
 
-    /**
-     * Returns absolute save path.
-     *
-     * @return string|null
-     */
-    public function get_save_path()
-    {
-        $upload_dirs_meta = wp_get_upload_dir();
+			return $archive_path_with_name;
+		}
 
-        if (isset($upload_dirs_meta['path'])) {
-            return $upload_dirs_meta['path'];
-        }
 
-        return null;
-    }
+		return false;
+	}
 
-    /**
-     * Generates unique archive name.
-     *
-     * @return string
-     */
-    public function get_archive_name()
-    {
-        if ($this->_archive_name === null) {
-            $unique_hash = uniqid();
+	/**
+	 * Returns absolute save path.
+	 *
+	 * @return string|null
+	 */
+	public function get_save_path() {
+		$upload_dirs_meta = wp_get_upload_dir();
 
-            $this->_archive_name = sprintf('anycomment-debug_%s.zip', $unique_hash);
-        }
+		if ( isset( $upload_dirs_meta['path'] ) ) {
+			return $upload_dirs_meta['path'];
+		}
 
-        return $this->_archive_name;
-    }
+		return null;
+	}
+
+	/**
+	 * Generates unique archive name.
+	 *
+	 * @return string
+	 */
+	public function get_archive_name() {
+		if ( $this->_archive_name === null ) {
+			$unique_hash = uniqid();
+
+			$this->_archive_name = sprintf( 'anycomment-debug_%s.zip', $unique_hash );
+		}
+
+		return $this->_archive_name;
+	}
 }

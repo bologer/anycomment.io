@@ -134,12 +134,12 @@ SQL;
 		$log = AnyCommentCore::logger();
 
 		try {
-			$log->info( 'Now trying to sync comment #' . $comment->id );
+			$log->info( 'Now trying to sync comment #' . $comment->comment_ID );
 
 			$post = get_post( $comment->comment_post_ID );
 
 			if ( empty( $post ) ) {
-				$log->error( 'Comment #' . $comment->id . ' does not have post, skipping it' );
+				$log->error( 'Comment #' . $comment->comment_ID . ' does not have post, skipping it' );
 				// Skip this comment as we cannot save it without post URL
 				static::update_sync_comment_id( $comment->comment_ID );
 
@@ -149,7 +149,7 @@ SQL;
 			$page_url = get_permalink( $post );
 
 			if ( $page_url === false ) {
-				$log->error( 'Unable to get page url for comment #' . $comment->id . ', skipping it' );
+				$log->error( 'Unable to get page url for comment #' . $comment->comment_ID . ', skipping it' );
 				// Skip this comment as we have to have URL in order to display comments
 				static::update_sync_comment_id( $comment->comment_ID, true );
 
@@ -165,7 +165,7 @@ SQL;
 				$user = get_userdata( $comment->user_id );
 
 				if ( $user === false ) {
-					$log->error( 'Comment #' . $comment->id . ' has user ID, but not able to retrieve its data, skipping it' );
+					$log->error( 'Comment #' . $comment->comment_ID . ' has user ID, but not able to retrieve its data, skipping it' );
 					static::update_sync_comment_id( $comment->comment_ID, true );
 
 					return false;
@@ -230,7 +230,7 @@ SQL;
 			);
 
 			if ( is_wp_error( $resp ) || ! isset( $resp['response']['code'] ) ) {
-				$log->error( 'Failed to sync comment #' . $comment->id . ' with service, error returned' );
+				$log->error( 'Failed to sync comment #' . $comment->comment_ID . ' with service, error returned' );
 				static::update_sync_comment_id( $comment->comment_ID, true );
 
 				return false;
