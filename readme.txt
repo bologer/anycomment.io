@@ -193,6 +193,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 **Enhancements:**
 
 - Old cache is now going to be cleared automatically on daily bases, #468
+- SEO indexing is now enabled by default, #472
 
 **Fixes:**
 

@@ -311,6 +311,9 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 		self::OPTION_DESIGN_BUTTON_BACKGROUND_COLOR_ACTIVE          => '#4f9f49',
 		self::OPTION_DESIGN_BUTTON_RADIUS                           => '20px',
 		self::OPTION_DESIGN_GLOBAL_RADIUS                           => '10px',
+
+		// SEO
+		self::OPTION_SEO_TOGGLE => 'on'
 	];
 
 	/**

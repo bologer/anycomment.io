@@ -5,6 +5,7 @@
 **Enhancements:**
 
 - Old cache is now going to be cleared automatically on daily bases, #468
+- SEO indexing is now enabled by default, #472
 
 **Fixes:**
 
