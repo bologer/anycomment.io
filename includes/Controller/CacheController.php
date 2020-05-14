@@ -27,6 +27,9 @@ class CacheController extends BaseController {
 			default:
 		}
 
+		// Removes old cache
+		AnyCommentCore::cache()->getDriver()->purge();
+
 		AnyCommentCore::instance()->getNotice()->success( __( 'Cache was successfully flushed!', 'anycomment' ) );
 
 		return $this->redirect( [ 'tab' => 'tools' ] );

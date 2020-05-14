@@ -50,6 +50,7 @@ class AnyCommentLoader {
 
 		// Crontabs
 		'AnyComment\Cron\AnyCommentEmailQueueCron',
+		'AnyComment\Cron\AnyCommentToolsCron',
 		'AnyComment\Cron\AnyCommentServiceSyncCron',
 
 		// Emails
