@@ -4,7 +4,7 @@
 
 **Enhancements:**
 
-- Old cache is now going to be cleared automatically on daily bases
+- Old cache is now going to be cleared automatically on daily bases, #468
 
 **Fixes:**
 
