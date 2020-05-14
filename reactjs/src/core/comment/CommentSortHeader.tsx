@@ -18,38 +18,36 @@ import {CommentModel} from '~/typings/models/CommentModel';
 export default function CommentSortHeader() {
     const settings = useSettings();
     const dispatch = useDispatch();
-    const {list: comments, listFilter} = useSelector<StoreProps, CommentReducerProps>(state => state.comments);
+    const {listFilter} = useSelector<StoreProps, CommentReducerProps>(state => state.comments);
 
+    /**
+     * Handles sorting update.
+     */
     function handleSorting() {
         const newOrder = listFilter && listFilter.order === 'asc' ? 'desc' : 'asc';
         dispatch(fetchCommentsSalient({postId: settings.postId, order: newOrder}));
     }
 
-    function onFetched(response: ListResponse<CommentModel>) {
-        const faSort = listFilter && listFilter.order === 'asc' ? faSortAmountDown : faSortAmountUp;
+    const faSort = listFilter && listFilter.order === 'asc' ? faSortAmountDown : faSortAmountUp;
 
-        const sortString =
-            listFilter && listFilter.order === 'desc' ? settings.i18.sort_oldest : settings.i18.sort_newest;
+    const sortString = listFilter && listFilter.order === 'desc' ? settings.i18.sort_oldest : settings.i18.sort_newest;
 
-        return (
-            <div className='anycomment anycomment-summary'>
-                <div
-                    className='anycomment anycomment-summary-count'
-                    dangerouslySetInnerHTML={{__html: `${settings.i18.comments_count} ${response.meta.total_count}`}}
-                />
-                <div className='anycomment anycomment-summary-sort'>
-                    {settings.i18.sort_by}&nbsp;
-                    <span className='anycomment-link' onClick={handleSorting}>
-                        {sortString}
-                    </span>
-                    &nbsp;
-                    <Icon icon={faSort} />
-                </div>
+    return (
+        <div className='anycomment anycomment-summary'>
+            <div
+                className='anycomment anycomment-summary-count'
+                dangerouslySetInnerHTML={{__html: `${settings.i18.comments_count} ${settings.commentCount}`}}
+            />
+            <div className='anycomment anycomment-summary-sort'>
+                {settings.i18.sort_by}&nbsp;
+                <span className='anycomment-link' onClick={handleSorting}>
+                    {sortString}
+                </span>
+                &nbsp;
+                <Icon icon={faSort} />
             </div>
-        );
-    }
-
-    return <ReducerResolver reducer={comments} fetched={onFetched} showLoader={false} />;
+        </div>
+    );
 }
 
 CommentSortHeader.displayName = 'CommentSortHeader';

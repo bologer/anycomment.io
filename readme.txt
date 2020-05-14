@@ -198,6 +198,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 **Fixes:**
 
 - Added rotation to logs
+- Fixed issue when incorrect comment count, #473
 
 = 0.1.26 – 23.04.2020 =
 
