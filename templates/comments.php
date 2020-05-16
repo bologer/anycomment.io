@@ -89,7 +89,7 @@ HTML;
     AnyComment = window.AnyComment || [];
     AnyComment.WP = AnyComment.WP || [];
     AnyComment.WP.push({
-        root: 'anycomment-root',
+        root: 'anycomment-root',        
     });
 </script>
 HTML;

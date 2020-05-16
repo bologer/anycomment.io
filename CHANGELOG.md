@@ -11,6 +11,7 @@
 
 - Added rotation to logs
 - Fixed issue when incorrect comment count, #473
+- Fixed "TypeError: Cannot read property 'total_count' of undefined" error
 
 
 ## 0.1.26 – 23.04.2020
