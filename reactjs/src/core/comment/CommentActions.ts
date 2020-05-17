@@ -105,28 +105,11 @@ export function fetchCommentsBase({
     order,
     actions: {pre, success, failure, always},
 }: FetchCommentProps & FetchCommentsBase) {
-    return (dispatch, getState) => {
+    return dispatch => {
         batch(() => {
-            const state = getState();
-            const listFilter = state?.comments?.listFilter;
-            const settings = getSettings();
-
-            if (listFilter) {
-                perPage = perPage ?? listFilter?.perPage;
-                order = order ?? listFilter?.order;
-            } else {
-                if (!perPage) {
-                    perPage = listFilter?.perPage ?? settings.options.limit;
-                }
-
-                if (!order) {
-                    order = listFilter?.order ?? settings.options.sort_order;
-                }
-            }
-
             dispatch({type: COMMENT_FETCH_FILTER, payload: {perPage, order, offset}});
 
-            return dispatch(
+            dispatch(
                 fetch({
                     method: 'get',
                     url: 'comments',
@@ -159,40 +142,8 @@ interface FetchSalientInterface {
  * @param offset
  * @param perPage
  * @param order
- * @param refresh
  */
-export function fetchCommentsSalient({
-    postId,
-    offset = 0,
-    perPage,
-    order,
-    refresh = false,
-}: FetchCommentProps & FetchSalientInterface) {
-    if (refresh) {
-        return (dispatch, getState) => {
-            const {comments} = getState();
-            const {listFilter} = comments;
-
-            if (comments.listFilter) {
-                offset = 0;
-                perPage = listFilter.perPage + listFilter.offset;
-            }
-
-            return dispatch(
-                fetchCommentsBase({
-                    postId,
-                    offset,
-                    perPage,
-                    order,
-                    actions: {
-                        success: COMMENT_FETCH_SALIENT_SUCCESS,
-                        failure: COMMENT_FETCH_SALIENT_FAILURE,
-                    },
-                })
-            );
-        };
-    }
-
+export function fetchCommentsSalient({postId, offset = 0, perPage, order}: FetchCommentProps & FetchSalientInterface) {
     return fetchCommentsBase({
         postId,
         offset,

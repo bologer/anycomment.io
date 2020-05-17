@@ -28,7 +28,7 @@ export default function CommentItem({comment}: CommentItemProps) {
         <div className='anycomment comment-single-replies'>
             <ul className='anycomment anycomment-list anycomment-list-child'>
                 {comment.children.map(childrenComment => {
-                    return <CommentItem key={childrenComment.id} comment={childrenComment} />;
+                    return <CommentItem key={comment.id + childrenComment.id} comment={childrenComment} />;
                 })}
             </ul>
         </div>

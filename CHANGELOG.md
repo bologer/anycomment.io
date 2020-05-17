@@ -12,6 +12,7 @@
 - Added rotation to logs
 - Fixed issue when incorrect comment count, #473
 - Fixed "TypeError: Cannot read property 'total_count' of undefined" error
+- Fixed "Wrong parameter: per_page" error when clicking on load more with automatic updates feature, #469
 
 
 ## 0.1.26 – 23.04.2020

@@ -24,23 +24,34 @@ export default function CommentContainer() {
 
     const {list: comments} = useSelector<StoreProps, CommentReducerProps>(state => state.comments);
     const [offset, setOffset] = useState<number>(0);
+    const [isAnchorInProgress, setAnchorInProgress] = useState<boolean>(true);
 
     useEffect(() => {
-        dispatch(fetchComments({postId: settings.postId}));
+        dispatch(fetchComments({postId: settings.postId, offset: 0, perPage: options.limit}));
     }, []);
 
     useEffect(() => {
-        let interval;
-        if (options.notifyOnNewComment) {
+        let autoUpdateInterval;
+        if (options.notifyOnNewComment && !isAnchorInProgress) {
             const intervalInSeconds = options.intervalCommentsCheck * 1000 || 5000;
 
-            interval = setInterval(() => {
-                dispatch(fetchCommentsSalient({postId: settings.postId, refresh: true}));
-            }, intervalInSeconds);
+            const perPage = comments?.payload?.items?.length || options.limit;
+
+            if (perPage < 50) {
+                autoUpdateInterval = setInterval(() => {
+                    dispatch(
+                        fetchCommentsSalient({
+                            postId: settings.postId,
+                            offset: 0,
+                            perPage: perPage,
+                        })
+                    );
+                }, intervalInSeconds);
+            }
         }
 
-        return () => clearInterval(interval);
-    }, []);
+        return () => autoUpdateInterval && clearInterval(autoUpdateInterval);
+    }, [isAnchorInProgress, comments]);
 
     /**
      * Checks for anchors in the link.
@@ -52,6 +63,7 @@ export default function CommentContainer() {
         const hash = window.location.hash;
 
         if (hasSpecificCommentAnchor()) {
+            setAnchorInProgress(true);
             interval = setInterval(() => {
                 const element = document.getElementById(hash.replace('#', ''));
 
@@ -60,8 +72,11 @@ export default function CommentContainer() {
                 } else {
                     moveToCommentAndHighlight(hash);
                     clearInterval(interval);
+                    setAnchorInProgress(false);
                 }
             }, 1000);
+        } else {
+            setAnchorInProgress(false);
         }
 
         return () => clearInterval(interval);
@@ -73,11 +88,19 @@ export default function CommentContainer() {
      */
     function handleLoadMore() {
         const newOffset = offset + options.limit;
-
-        dispatch(fetchLoadMore({postId: settings.postId, offset: newOffset}));
+        dispatch(
+            fetchLoadMore({
+                postId: settings.postId,
+                offset: newOffset,
+                perPage: options.limit,
+            })
+        );
         setOffset(newOffset);
     }
 
+    /**
+     * @param response
+     */
     function onFetched(response: ListResponse<CommentModel>) {
         if (response.items.length === 0) {
             return (
