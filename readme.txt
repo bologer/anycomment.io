@@ -188,7 +188,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 == Changelog ==
 
-= 0.1.27 – 11.05.2020 =
+= 0.1.27 – 18.05.2020 =
 
 **Enhancements:**
 
