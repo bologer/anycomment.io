@@ -36,6 +36,7 @@ function anycomment() {
 
 	$enableDebug = getenv( 'ENV' ) === 'dev';
 
+	defined( 'ANYCOMMENT_ENV' ) or define( 'ANYCOMMENT_ENV', getenv( 'ENV' ) );
 	defined( 'ANYCOMMENT_DEBUG' ) or define( 'ANYCOMMENT_DEBUG', $enableDebug );
 
 	return \AnyComment\AnyCommentCore::instance();

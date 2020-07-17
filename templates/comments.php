@@ -74,12 +74,17 @@ HTML;
     <div id="comments" class="comments-area">
         <div id="<?= $root_id ?>"></div>
     </div>
-    <script type="text/javascript">
-        AnyComment = window.AnyComment || [];
-        AnyComment.Comments = [];
-        AnyComment.Comments.push(<?php echo $config ?>);
+    <div id="anycomment-app"></div>
+    <script>
+        AnyComment = window.AnyComment || []; AnyComment.Comments = [];
+        AnyComment.Comments.push(<?php echo $config; ?>);
+        var s = document.createElement("script"); s.type = "text/javascript"; s.async = true;
+        s.src = "<?php echo (ANYCOMMENT_ENV === 'prod'
+            ? "https://widget.anycomment.io/comment/embed.js"
+            : "http://localhost:1234/embed.js") ?>";
+        var sa = document.getElementsByTagName("script")[0];
+        sa.parentNode.insertBefore(s, s.nextSibling);
     </script>
-    <script type="text/javascript" async src="https://cdn.anycomment.io/assets/js/launcher.js"></script>
 <?php else: ?>
     <div id="comments" class="comments-area">
 		<?php
