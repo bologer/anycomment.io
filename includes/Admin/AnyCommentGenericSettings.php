@@ -1154,6 +1154,18 @@ EOT;
                     var cleanedHash = hash.replace('#tab-', '');
                     jQuery('[data-tab="' + cleanedHash + '"]').click();
                 }
+                
+                var forms = jQuery('.anycomment-form');
+	            forms.each(function() {
+	                var form = jQuery(this);
+	                form.find('[type="submit"]').on('click', function() {
+	                    var redirectElement = form.find('[name="redirect"]');
+	                    redirectElement.attr(
+	                        'value',
+	                        redirectElement.attr('value') + window.location.hash
+	                    );
+	                });
+	            });
             });
         </script>
 EOT;
