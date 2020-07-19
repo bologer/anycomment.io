@@ -30,7 +30,7 @@ class Manager {
      *
      * @param config
      */
-    static launchWith(config: ConfigProps) {
+    static start(config: ConfigProps) {
         const container = document.getElementById(config.root);
         const store = configureStore({});
 
@@ -55,12 +55,12 @@ class Manager {
 window.AnyComment.Manager = {};
 // @ts-ignore
 window.AnyComment.Manager.init = (config: ConfigProps) => {
-    Manager.launchWith(config);
+    Manager.start(config);
 };
 
 if (widgets && settings) {
     widgets.forEach(widgetConfig => {
-        Manager.launchWith(widgetConfig);
+        Manager.start(widgetConfig);
     });
 } else {
     // eslint-disable-next-line no-console
