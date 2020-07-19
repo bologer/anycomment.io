@@ -313,7 +313,7 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 		self::OPTION_DESIGN_GLOBAL_RADIUS                           => '10px',
 
 		// SEO
-		self::OPTION_SEO_TOGGLE => 'on'
+		self::OPTION_SEO_TOGGLE                                     => 'on'
 	];
 
 	/**
@@ -1126,12 +1126,18 @@ EOT;
 		$html .= <<<EOT
         <script>
             jQuery('.anycomment-tabs__menu li').on('click', function () {
+          
                 var data = jQuery(this).attr('data-tab') || '';
                 var tab_id = '#' + data;
 
                 if (!data) {
                     return false;
                 }
+               
+               	const node = jQuery(tab_id);
+                node.attr('id', '');
+               	document.location.hash = 'tab-' + data;
+               	node.attr('id', data);
 
                 jQuery('.anycomment-tabs__menu li').removeClass('current');
                 jQuery('.anycomment-tabs__container__tab').removeClass('current');
@@ -1140,7 +1146,15 @@ EOT;
                 jQuery(tab_id).addClass('current');
 
                 return false;
-            })
+            });
+            
+            jQuery(document).ready(function() {
+                var hash = window.location.hash.trim();
+                if (hash !== '') {
+                    var cleanedHash = hash.replace('#tab-', '');
+                    jQuery('[data-tab="' + cleanedHash + '"]').click();
+                }
+            });
         </script>
 EOT;
 
