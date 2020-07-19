@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.1.28 – 19.07.2020
+
+**Enhancements:**
+
+
+
+**Fixes:**
+
+- Fixed issue when 'or as guest' was showing when guest/wordpress only option was selected 
+
+
 ## 0.1.27 – 18.05.2020
 
 **Enhancements:**

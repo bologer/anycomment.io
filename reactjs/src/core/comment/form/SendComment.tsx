@@ -365,8 +365,7 @@ export default function SendComment({action, comment}: SendCommentProps) {
      *
      * @param value
      */
-    function onCaptchaChange(value) {
-    }
+    function onCaptchaChange(value) {}
 
     /**
      * Display error message from reCAPTCHA component.
@@ -426,7 +425,7 @@ export default function SendComment({action, comment}: SendCommentProps) {
         const name = get(getLocalStorageFormat('form-author_name'));
         const website = get(getLocalStorageFormat('form-author_website'));
         const commentHtml = get(getLocalStorageFormat('form-comment_html'));
-        let editorAvailabilityInterval = setInterval(function () {
+        let editorAvailabilityInterval = setInterval(function() {
             if (editorRef) {
                 if (email !== null) {
                     formik.setFieldValue('author_email', email, false);
@@ -456,6 +455,13 @@ export default function SendComment({action, comment}: SendCommentProps) {
      */
     function showGuestFields() {
         return options.isFormTypeGuests || options.isFormTypeAll;
+    }
+
+    /**
+     * Whether to show guest fields header.
+     */
+    function showGuestFieldsHeader() {
+        return options.isFormTypeAll || options.isFormTypeSocials || options.isFormTypeWordpress;
     }
 
     /**
@@ -585,7 +591,9 @@ export default function SendComment({action, comment}: SendCommentProps) {
                                     </SocialListColumn>
                                 )}
                                 <GuestFieldsColumn>
-                                    {showGuestFields() && <GuestHeader>{settings.i18.or_as_guest}</GuestHeader>}
+                                    {showGuestFields() && showGuestFieldsHeader() && (
+                                        <GuestHeader>{settings.i18.or_as_guest}</GuestHeader>
+                                    )}
                                     {showGuestFields() && renderGuestFields()}
                                 </GuestFieldsColumn>
                             </GuestFieldsRoot>
