@@ -9,18 +9,34 @@ import {Provider} from 'react-redux';
 import {configureStore} from '~/store/configureStore';
 
 // @ts-ignore
+if (!window.AnyComment) {
+    // @ts-ignore
+    window.AnyComment = {};
+}
+
+// @ts-ignore
 const settings = window.anyCommentApiSettings || undefined;
 // @ts-ignore
-const widgets: ConfigProps[] = (window.AnyComment && window.AnyComment.WP) || [];
+const widgets: ConfigProps[] = window.AnyComment.WP || [];
 
-if (widgets && settings) {
-    widgets.forEach(widgetConfig => {
-        const container = document.getElementById(widgetConfig.root);
+/**
+ * Core manager which helps to bootstrap application.
+ */
+class Manager {
+    /**
+     * Helps to bootstrap application with provided config.
+     * It prepares all required components and contexts and uses react DOM render() functions
+     * to render it inside provided root component (from config).
+     *
+     * @param config
+     */
+    static launchWith(config: ConfigProps) {
+        const container = document.getElementById(config.root);
         const store = configureStore({});
 
         if (container) {
             const app = (
-                <AnyCommentProvider config={widgetConfig} settings={settings}>
+                <AnyCommentProvider config={config} settings={settings}>
                     <Provider store={store}>
                         <SnackbarProvider>
                             <App />
@@ -31,6 +47,20 @@ if (widgets && settings) {
 
             render(app, container);
         }
+    }
+}
+
+// Ability to reinit after application already loaded
+// @ts-ignore
+window.AnyComment.Manager = {};
+// @ts-ignore
+window.AnyComment.Manager.init = (config: ConfigProps) => {
+    Manager.launchWith(config);
+};
+
+if (widgets && settings) {
+    widgets.forEach(widgetConfig => {
+        Manager.launchWith(widgetConfig);
     });
 } else {
     // eslint-disable-next-line no-console
