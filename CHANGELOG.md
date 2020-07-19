@@ -8,6 +8,7 @@
 
 **Fixes:**
 
+- Fixed issue when last social icon was above others in the list, #453
 - Fixed issue when 'or as guest' was showing when guest/wordpress only option was selected 
 
 
