@@ -71,5 +71,7 @@ export function moveToElement(id: string, callback?: () => void) {
         timer++;
     }
 
-    callback();
+    if (typeof callback === 'function') {
+        callback();
+    }
 }

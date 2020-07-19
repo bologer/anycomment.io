@@ -3,7 +3,7 @@ import CommentItem from './CommentItem';
 import SendComment from '~/core/comment/form/SendComment';
 import CommentSortHeader from './CommentSortHeader';
 import PageSubscription from '../extensions/post-subscription/PageSubscription';
-import {useOptions, useSettings} from '~/hooks/setting';
+import {useConfig, useOptions, useSettings} from '~/hooks/setting';
 import {hasSpecificCommentAnchor} from '~/helpers/url';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchComments, fetchCommentsSalient, fetchLoadMore} from '~/core/comment/CommentActions';
@@ -21,13 +21,14 @@ export default function CommentContainer() {
     const dispatch = useDispatch();
     const settings = useSettings();
     const options = useOptions();
+    const config = useConfig();
 
     const {list: comments} = useSelector<StoreProps, CommentReducerProps>(state => state.comments);
     const [offset, setOffset] = useState<number>(0);
     const [isAnchorInProgress, setAnchorInProgress] = useState<boolean>(true);
 
     useEffect(() => {
-        dispatch(fetchComments({postId: settings.postId, offset: 0, perPage: options.limit}));
+        dispatch(fetchComments({postId: config.postId, offset: 0, perPage: options.limit}));
     }, []);
 
     useEffect(() => {
@@ -41,7 +42,7 @@ export default function CommentContainer() {
                 autoUpdateInterval = setInterval(() => {
                     dispatch(
                         fetchCommentsSalient({
-                            postId: settings.postId,
+                            postId: config.postId,
                             offset: 0,
                             perPage: perPage,
                         })
@@ -90,7 +91,7 @@ export default function CommentContainer() {
         const newOffset = offset + options.limit;
         dispatch(
             fetchLoadMore({
-                postId: settings.postId,
+                postId: config.postId,
                 offset: newOffset,
                 perPage: options.limit,
             })

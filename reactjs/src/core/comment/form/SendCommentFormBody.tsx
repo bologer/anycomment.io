@@ -4,7 +4,7 @@ import CommentAttachments from '~/components/CommentAttachments';
 import Icon from '~/components/Icon';
 import {faPaperclip} from '@fortawesome/free-solid-svg-icons';
 import Editor from '~/components/Editor';
-import {useOptions, useSettings} from '~/hooks/setting';
+import {useConfig, useOptions, useSettings} from '~/hooks/setting';
 import {isGuest} from '~/helpers/user';
 import {CommentModel} from '~/typings/models/CommentModel';
 import {useDispatch, useSelector} from 'react-redux';
@@ -37,6 +37,7 @@ export default function SendCommentFormBody({
     const dispatch = useDispatch();
     const settings = useSettings();
     const options = useOptions();
+    const config = useConfig();
     const [dropzoneActive, setDropzoneActive] = useState<boolean>(false);
     const {attachmentUpload} = useSelector<StoreProps, CommentReducerProps>(state => state.comments);
 
@@ -112,7 +113,7 @@ export default function SendCommentFormBody({
             filesToUpload.append(i, file, file.name);
         });
 
-        filesToUpload.append('post', settings.postId);
+        filesToUpload.append('post', config.postId);
         setDropzoneActive(false);
 
         dispatch(successSnackbar(settings.i18.file_upload_in_progress));

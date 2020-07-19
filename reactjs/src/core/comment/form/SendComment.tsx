@@ -5,7 +5,7 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import DataProcessing from './DataProcessing';
 import Icon from '~/components/Icon';
 import {faTimes} from '@fortawesome/free-solid-svg-icons';
-import {useOptions, useSettings} from '~/hooks/setting';
+import {useConfig, useOptions, useSettings} from '~/hooks/setting';
 import {useFormik} from 'formik';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -89,6 +89,7 @@ export default function SendComment({action, comment}: SendCommentProps) {
     const {create, update} = useSelector<StoreProps, CommentReducerProps>(state => state.comments);
     const options = useOptions();
     const settings = useSettings();
+    const config = useConfig();
 
     const [attachments, setAttachments] = useState<[]>([]);
     const [buttonText, setButtonText] = useState(settings.i18.button_send);
@@ -121,7 +122,7 @@ export default function SendComment({action, comment}: SendCommentProps) {
 
             let data = {
                 content: values.comment_html,
-                post: settings.postId,
+                post: config.postId,
             };
 
             if (isReply()) {
@@ -153,7 +154,7 @@ export default function SendComment({action, comment}: SendCommentProps) {
             }
 
             if (!action || isReply()) {
-                dispatch(fetchCreateComment(settings.postId, data));
+                dispatch(fetchCreateComment(config.postId, data));
             }
 
             if (isUpdate()) {
@@ -174,7 +175,7 @@ export default function SendComment({action, comment}: SendCommentProps) {
             reducer: create,
             onSuccess: response => {
                 prepareInitialForm();
-                dispatch(fetchCommentsSalient({postId: settings.postId, refresh: true}));
+                dispatch(fetchCommentsSalient({postId: config.postId, refresh: true}));
 
                 removeRememberedComment();
 
@@ -192,7 +193,7 @@ export default function SendComment({action, comment}: SendCommentProps) {
             reducer: update,
             onSuccess: response => {
                 prepareInitialForm();
-                dispatch(fetchCommentsSalient({postId: settings.postId, refresh: true}));
+                dispatch(fetchCommentsSalient({postId: config.postId, refresh: true}));
 
                 if (response.message) {
                     dispatch(successSnackbar(response.message));
@@ -414,7 +415,7 @@ export default function SendComment({action, comment}: SendCommentProps) {
      * @param key
      */
     function getLocalStorageFormat(key) {
-        return key + settings.postId;
+        return key + config.postId;
     }
 
     /**

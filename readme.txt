@@ -192,7 +192,9 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Enhancements:**
 
-
+- Added new type of events: onLogout, onRated. See docs at [GitHub](https://github.com/bologer/anycomment.io/wiki/Client-side)
+- Changed signature of `init` event, it now has `postId` parameter. See docs at [GitHub](https://github.com/bologer/anycomment.io/wiki/Client-side)
+- It is now possible to renders comments for specific page by providing `pageId` parameter, #466
 
 **Fixes:**
 

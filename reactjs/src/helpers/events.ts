@@ -3,7 +3,7 @@
  * @param name
  * @param payload
  */
-export function fireEvent(events, name: string, payload = undefined) {
+export function fireEvent(events, name: string, payload = {}) {
     if (events && events[name]) {
         const eventFunc = events[name];
         if (typeof eventFunc === 'function') {

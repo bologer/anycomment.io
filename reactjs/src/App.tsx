@@ -19,7 +19,7 @@ export default function App() {
     const options = useOptions();
     const config = useConfig();
     const dispatch = useDispatch();
-    const [shouldLoad, setShouldLoad] = useState<boolean>(false);
+    const [shouldLoadApp, setShouldLoadApp] = useState<boolean>(false);
 
     useEffect(() => {
         handleScrollToComments(config.root);
@@ -27,14 +27,14 @@ export default function App() {
         handleErrors();
         maybeAddIEMeta();
 
-        fireEvent(config.events, 'init');
+        fireEvent(config.events, 'init', {postId: config.postId});
     }, []);
 
     /**
      * Handle situation when required to load comments on scroll to them.
      */
     function handleLoadOnScroll() {
-        if (!shouldLoad) {
+        if (!shouldLoadApp) {
             /**
              * When load on scroll is not enabled or
              * there is scroll to comments or specific comment in the url hash.
@@ -45,14 +45,14 @@ export default function App() {
                 hasCommentSectionAnchor() ||
                 hasSpecificCommentAnchor()
             ) {
-                setShouldLoad(true);
+                setShouldLoadApp(true);
             }
 
-            if (!shouldLoad) {
-                window.addEventListener('scroll', function() {
+            if (!shouldLoadApp) {
+                window.addEventListener('scroll', () => {
                     if (commentsVisible(config.root)) {
-                        window.removeEventListener('scroll', function() {});
-                        setShouldLoad(true);
+                        window.removeEventListener('scroll', () => {});
+                        setShouldLoadApp(true);
                     }
                 });
             }
@@ -65,16 +65,16 @@ export default function App() {
     function maybeAddIEMeta() {
         const metas = document.getElementsByTagName('meta');
 
-        let found = false;
+        let isMetaFound = false;
         for (let i = 0; i < metas.length; i++) {
             if (metas[i].getAttribute('http-equiv') === 'X-UA-Compatible') {
-                found = true;
+                isMetaFound = true;
                 break;
             }
         }
 
-        if (!found) {
-            var meta = document.createElement('meta');
+        if (!isMetaFound) {
+            const meta = document.createElement('meta');
             meta.httpEquiv = 'X-UA-Compatible';
             meta.content = 'IE=edge';
             document.getElementsByTagName('head')[0].appendChild(meta);
@@ -92,7 +92,7 @@ export default function App() {
         }
     }
 
-    if (!shouldLoad) {
+    if (!shouldLoadApp) {
         return null;
     }
 

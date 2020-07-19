@@ -6,7 +6,7 @@ import Dropdown from 'react-simple-dropdown';
 import DropdownTrigger from 'react-simple-dropdown/lib/components/dropdown-trigger';
 import DropdownContent from 'react-simple-dropdown/lib/components/dropdown-content';
 import {CommentModel} from '~/typings/models/CommentModel';
-import {useSettings} from '~/hooks/setting';
+import {useConfig, useSettings} from '~/hooks/setting';
 import {isGuest} from '~/helpers/user';
 import {moveToCommentAndHighlight} from '~/helpers/comment';
 import {fetchDeleteComment, fetchCommentsSalient} from '~/core/comment/CommentActions';
@@ -29,6 +29,7 @@ let deleted = false;
 export default function CommentHeader({comment}: CommentHeaderProps) {
     const settings = useSettings();
     const dispatch = useDispatch();
+    const config = useConfig();
 
     const {delete: deleteAction} = useSelector<StoreProps, CommentReducerProps>(state => state.comments);
 
@@ -38,7 +39,7 @@ export default function CommentHeader({comment}: CommentHeaderProps) {
             onSuccess: () => {
                 if (!deleted) {
                     deleted = true;
-                    dispatch(fetchCommentsSalient({postId: settings.postId}));
+                    dispatch(fetchCommentsSalient({postId: config.postId}));
                 }
             },
         });

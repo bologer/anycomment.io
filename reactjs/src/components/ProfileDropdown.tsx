@@ -4,18 +4,29 @@ import DropdownTrigger from 'react-simple-dropdown/lib/components/dropdown-trigg
 import DropdownContent from 'react-simple-dropdown/lib/components/dropdown-content';
 import Icon from './Icon';
 import {faAngleDown} from '@fortawesome/free-solid-svg-icons';
-import {useSettings} from '~/hooks/setting';
+import {useConfig, useSettings} from '~/hooks/setting';
 import {isGuest} from '~/helpers/user';
+import {fireEvent} from '~/helpers/events';
 
+/**
+ * Displays profile dropdown.
+ *
+ * @constructor
+ */
 export default function ProfileDropdown() {
+    const config = useConfig();
     const settings = useSettings();
 
     /**
      * Handle dropdown change.
      * @param e
      */
-    function handeLogout(e) {
+    function handleLogout(e) {
         e.preventDefault();
+
+        fireEvent(config.events, 'onLogout', {
+            userId: settings?.user?.data?.ID,
+        });
 
         window.location.href = settings.urls.logout.replace('&amp;', '&');
     }
@@ -27,7 +38,7 @@ export default function ProfileDropdown() {
     }
 
     let items = [
-        <li key={0} onClick={handeLogout}>
+        <li key={0} onClick={handleLogout}>
             <a href='#'>{settings.i18.logout}</a>
         </li>,
     ];

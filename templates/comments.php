@@ -13,7 +13,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-$post = get_post();
+$post    = get_post();
+$post_id = $post->ID;
 
 if ( AnyCommentIntegrationSettings::is_sass_comments_show() ):
 
@@ -59,7 +60,7 @@ HTML;
 			$author = get_the_author_meta( 'nickname', $post->post_author );
 		}
 
-		$root_id .= '-' . $post->ID;
+		$root_id .= '-' . $post_id;
 	}
 
 	$config = json_encode( [
@@ -76,12 +77,15 @@ HTML;
     </div>
     <div id="anycomment-app"></div>
     <script>
-        AnyComment = window.AnyComment || []; AnyComment.Comments = [];
+        AnyComment = window.AnyComment || [];
+        AnyComment.Comments = [];
         AnyComment.Comments.push(<?php echo $config; ?>);
-        var s = document.createElement("script"); s.type = "text/javascript"; s.async = true;
-        s.src = "<?php echo (ANYCOMMENT_ENV === 'prod'
-            ? "https://widget.anycomment.io/comment/embed.js"
-            : "http://localhost:1234/embed.js") ?>";
+        var s = document.createElement("script");
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "<?php echo( ANYCOMMENT_ENV === 'prod'
+			? "https://widget.anycomment.io/comment/embed.js"
+			: "http://localhost:1234/embed.js" ) ?>";
         var sa = document.getElementsByTagName("script")[0];
         sa.parentNode.insertBefore(s, s.nextSibling);
     </script>
@@ -94,8 +98,9 @@ HTML;
     AnyComment = window.AnyComment || [];
     AnyComment.WP = AnyComment.WP || [];
     AnyComment.WP.push({
-        root: 'anycomment-root',        
-    });
+        root: 'anycomment-root', 
+        postId: $post_id
+    })
 </script>
 HTML;
 
@@ -106,7 +111,7 @@ HTML;
 
 <?php if ( AnyCommentGenericSettings::is_seo_on() ) : ?>
     <noscript>
-		<?php echo ( new AnyCommentSeoFriendly( $post->ID ) )->render() ?>
+		<?php echo ( new AnyCommentSeoFriendly( $post_id ) )->render() ?>
     </noscript>
 <?php endif; ?>
 

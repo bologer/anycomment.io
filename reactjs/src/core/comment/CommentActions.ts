@@ -1,5 +1,4 @@
 import {fetch, FetchActions} from '~/helpers/action';
-import {getSettings} from '~/hooks/setting';
 import {CommentModel} from '~/typings/models/CommentModel';
 import {batch} from 'react-redux';
 

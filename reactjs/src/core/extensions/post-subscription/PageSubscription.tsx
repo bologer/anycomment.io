@@ -3,7 +3,7 @@ import Icon from '../../../components/Icon';
 import {faEnvelope} from '@fortawesome/free-solid-svg-icons';
 import {useFormik} from 'formik';
 import {isGuest} from '~/helpers/user';
-import {useSettings} from '~/hooks/setting';
+import {useConfig, useSettings} from '~/hooks/setting';
 import {subscribeToPage} from './PageSubscriptionActions';
 import {useDispatch, useSelector} from 'react-redux';
 import {add, get} from '~/helpers/storage';
@@ -25,6 +25,7 @@ interface SubscribeFormValues {
 export default function PageSubscription() {
     const dispatch = useDispatch();
     const settings = useSettings();
+    const config = useConfig();
     const [showForm, setShowForm] = useState(true);
 
     const {subscription} = useSelector<StoreProps, PageSubscriptionReducerProps>(
@@ -39,7 +40,7 @@ export default function PageSubscription() {
             const user = settings.user;
             const email = user !== null ? user.data.user_email : values.email;
 
-            dispatch(subscribeToPage(settings.postId, email));
+            dispatch(subscribeToPage(config.postId, email));
         },
     });
 
@@ -64,7 +65,7 @@ export default function PageSubscription() {
      * Get key used to store whether form was spreviously closed.
      */
     function getLocalStoargeKey() {
-        return LOCALE_STORE_KEY + settings.postId;
+        return LOCALE_STORE_KEY + config.postId;
     }
 
     /**

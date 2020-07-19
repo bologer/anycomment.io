@@ -1,7 +1,7 @@
 import React from 'react';
 import Icon from '../../components/Icon';
 import {faSortAmountDown, faSortAmountUp} from '@fortawesome/free-solid-svg-icons';
-import {useSettings} from '~/hooks/setting';
+import {useConfig, useSettings} from '~/hooks/setting';
 import {useDispatch, useSelector} from 'react-redux';
 import {StoreProps} from '~/store/reducers';
 import {CommentReducerProps} from '~/core/comment/commentReducers';
@@ -15,6 +15,7 @@ import {fetchCommentsSalient} from '~/core/comment/CommentActions';
 export default function CommentSortHeader() {
     const settings = useSettings();
     const dispatch = useDispatch();
+    const config = useConfig();
     const {listFilter, list: comments} = useSelector<StoreProps, CommentReducerProps>(state => state.comments);
 
     /**
@@ -22,10 +23,10 @@ export default function CommentSortHeader() {
      */
     function handleSorting() {
         const newOrder = listFilter && listFilter.order === 'asc' ? 'desc' : 'asc';
-        const perPage = comments?.payload?.items?.length || options.limit;
+        const perPage = comments?.payload?.items?.length || settings.options.limit;
         dispatch(
             fetchCommentsSalient({
-                postId: settings.postId,
+                postId: config.postId,
                 offset: 0,
                 perPage: perPage,
                 order: newOrder,

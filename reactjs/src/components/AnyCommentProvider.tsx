@@ -182,6 +182,7 @@ export interface SettingContextProps {
 
 export interface ConfigProps {
     root: string;
+    postId: number;
     events: {
         [eventName: string]: any;
     }
