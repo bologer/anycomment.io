@@ -47,6 +47,7 @@ class AnyCommentRender extends BaseObject {
 
 			add_filter( 'script_loader_tag', [ $this, 'add_async_to_bundle' ], 10, 2 );
 		}
+
 		add_action( 'wp_head', [ $this, 'enqueue_custom_css' ], 99 );
 
 		self::$errors = AnyCommentSocialAuth::getErrors( true, true );
@@ -112,6 +113,30 @@ EOT;
 	}
 
 	/**
+	 * Adds default font family in async manner.
+	 *
+	 * @since 0.1.28
+	 */
+	public function add_async_default_font() {
+		echo <<<HTML
+<script type="text/javascript">
+	WebFontConfig = {
+		google: {
+			families: [ 'Noto+Sans:400,700:cyrillic' ]
+		}
+	};
+	(function( d ) {
+		var wf = d.createElement('script'),
+			s = d.getElementsByTagName('script')[0];
+		wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js';
+		wf.async = true;
+		s.parentNode.insertBefore(wf, s);
+	})( document );
+</script>
+HTML;
+	}
+
+	/**
 	 * Enqueue required core assets and scripts.
 	 */
 	public function enqueue_scripts() {
@@ -136,9 +161,10 @@ EOT;
 		}
 
 
-		if ( strpos( AnyCommentGenericSettings::get_design_font_family(), 'Noto-Sans' ) !== false ) {
-			wp_enqueue_style( 'anycomment-google-font',
-				'https://fonts.googleapis.com/css?family=Noto+Sans:400,700&subset=cyrillic&display=swap' );
+		$shouldLoadDefaultFontFamily = strpos( AnyCommentGenericSettings::get_design_font_family(), 'Noto-Sans' ) !== false;
+
+		if ( $shouldLoadDefaultFontFamily ) {
+			add_action( 'wp_head', [ $this, 'add_async_default_font' ], 99 );
 		}
 
 		$post_id        = get_the_ID();

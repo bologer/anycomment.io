@@ -7,6 +7,7 @@
 - Added new type of events: onLogout, onRated. See docs at [GitHub](https://github.com/bologer/anycomment.io/wiki/Client-side)
 - Changed signature of `init` event, it now has `postId` parameter. See docs at [GitHub](https://github.com/bologer/anycomment.io/wiki/Client-side)
 - It is now possible to renders comments for specific page by providing `pageId` parameter, #466
+- Now loading default font Google font in async manner, #257
 
 **Fixes:**
 
