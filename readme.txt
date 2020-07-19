@@ -202,7 +202,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 - Fixed issue when last social icon was above others in the list, #453
 - Fixed issue when 'or as guest' was showing when guest/wordpress only option was selected
-
+- Other small fixes & improvements
 
 = 0.1.27 – 18.05.2020 =
 
