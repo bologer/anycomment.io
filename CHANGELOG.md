@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.29 – 21.07.2020
+- Small bugfixes
+
 ## 0.1.28 – 21.07.2020
 
 **Enhancements:**

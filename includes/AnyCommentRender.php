@@ -43,9 +43,11 @@ class AnyCommentRender extends BaseObject {
 
 			add_filter( 'logout_url', [ $this, 'logout_redirect' ], 10, 2 );
 
-			add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
+			if ( ! AnyCommentIntegrationSettings::is_sass_comments_show() ) {
+				add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 
-			add_filter( 'script_loader_tag', [ $this, 'add_async_to_bundle' ], 10, 2 );
+				add_filter( 'script_loader_tag', [ $this, 'add_async_to_bundle' ], 10, 2 );
+			}
 		}
 
 		add_action( 'wp_head', [ $this, 'enqueue_custom_css' ], 99 );
@@ -159,7 +161,6 @@ HTML;
 			wp_enqueue_style( 'anycomment-styles', AnyComment()->plugin_url() . '/static/css/main.min.css', [],
 				md5( AnyComment()->version ) );
 		}
-
 
 		$shouldLoadDefaultFontFamily = strpos( AnyCommentGenericSettings::get_design_font_family(), 'Noto-Sans' ) !== false;
 
