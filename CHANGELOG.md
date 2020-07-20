@@ -10,6 +10,7 @@
 - Now loading default font Google font in async manner, #257
 - Added ability to launch comments programmatically using new manager API, see docs at [GitHub](https://github.com/bologer/anycomment.io/wiki/Client-side#programmatically-initiate-comments), #476
 - Opened tab in generic settings would be kept open after page reload, #456
+- Now using new cloud embeddable code
 
 **Fixes:**
 
