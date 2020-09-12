@@ -350,7 +350,13 @@ SQL;
 
 		$info = [];
 
-		$global_total = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->comments}" );
+		$meta_key     = AnyCommentServiceSyncIn::getCommentImportedMetaKey();
+		$global_total = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->comments} AS c 
+WHERE NOT EXISTS (
+	SELECT * 
+	FROM {$wpdb->commentmeta} cm
+	WHERE c.comment_ID = cm.comment_id AND cm.meta_key = %s
+)", $meta_key ) );
 
 		$info['total'] = $global_total;
 
@@ -360,7 +366,14 @@ SQL;
 			$info['remaining']        = $global_total;
 		} else {
 			$remaining = $wpdb->get_var( $wpdb->prepare(
-				"SELECT COUNT(*) FROM {$wpdb->comments} WHERE comment_id > %d",
+				"SELECT COUNT(*) FROM {$wpdb->comments} AS c 
+WHERE NOT EXISTS (
+	SELECT * 
+	FROM {$wpdb->commentmeta} cm
+	WHERE c.comment_ID = cm.comment_id AND cm.meta_key = %s
+) AND c.comment_id > %d AND (c.comment_type IS NULL OR c.comment_type = '') LIMIT 10 comment_id > %d",
+				$meta_key,
+				$comment_id,
 				$comment_id
 			) );
 

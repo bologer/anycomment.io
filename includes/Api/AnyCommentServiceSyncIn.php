@@ -29,15 +29,15 @@ class AnyCommentServiceSyncIn {
 		$log->info( 'Trying to fetch comments from cloud from date ' . $comment_date );
 
 		if ( empty( $comment_date ) ) {
-			$log->error( 'Comment date is empty (value: ' . $comment_date . '), likely no comments in database, skipping sync...' );
-
-			return false;
+			// Since first date
+			$comment_date = '1970-01-01 00:59:59';
+			$log->info( 'Comment date is empty, using default value: ' . $comment_date . '. There are no comments in database' );
 		}
 
 		$response = $this->request_comments( $comment_date );
 
 		if ( empty( $response ) ) {
-			$log->info( 'Cloud returned empty comment response, skipping sync...' );
+			$log->info( 'Service returned empty response, skipping sync...' );
 
 			return false;
 		}
@@ -139,11 +139,18 @@ class AnyCommentServiceSyncIn {
 			return false;
 		}
 
+		$importMeta          = isset( $comment['import_meta'] ) ? $comment['import_meta'] : null;
+		$isOurSlugImportMeta = strpos( $importMeta, 'api:' ) === 0;
+		if ( $isOurSlugImportMeta ) {
+			$log->info( "Skipping comment #{$comment['id']} as it is already synced to service", $comment );
+			static::updateCommentDateOption( $comment_date );
+
+			return false;
+		}
+
 		$metaParentItem = static::findByImportedMeta( $comment['id'] );
-
-		if ( ! empty( $comment['import_meta'] ) || ! empty( $metaParentItem ) ) {
-			$log->info( "Skipping comment #{$comment['id']} as it is already imported or exported to service", $comment );
-
+		if ( ! empty( $metaParentItem ) ) {
+			$log->info( "Skipping comment #{$comment['id']} as it is already imported from service", $comment );
 			static::updateCommentDateOption( $comment_date );
 
 			return false;

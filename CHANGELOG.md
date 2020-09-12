@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.1.30 – 12.09.2020
+
+**Enhancements:**
+
+
+
+**Fixes:**
+
+- Fixed synchronization issue with service when local database did not have comments
+- Fixed issue with emails, when they did not send or add to the list to be sent
+- Fixed notice warning in dashboard.php
+- Fixed broken log rotation logic
+- Fixed issue with imprecised synced comments count
+
 ## 0.1.27 – 18.05.2020
 
 **Enhancements:**

@@ -3,9 +3,9 @@ Contributors: ateshabaev
 Donate link: https://anycomment.io/site/tariffs
 Tags: comments, ajax comments, comment, comment moderation, comments seo, anycomment, jetpack, wpdiscuz, cackle, disqus, hypercomments, vuukle
 Requires at least: 4.7
-Tested up to: 5.2
-Requires PHP: 5.4
-Stable tag: 0.1.27
+Tested up to: 5.5
+Requires PHP: 5.6
+Stable tag: 0.1.30
 License: GPLv2 or later
 License URI: http://www.gnu.org/
 
@@ -187,6 +187,21 @@ Most of the hosting providers support single button-like installation of SSL cer
 It could only be difficult for website who have HTTP only and hight traffic as transfer to HTTPs can cause some traffic lose.
 
 == Changelog ==
+
+= 0.1.30 – 12.09.2020 =
+
+**Enhancements:**
+
+
+
+**Fixes:**
+
+- Fixed synchronization issue with service when local database did not have comments
+- Fixed issue with emails, when they did not send or add to the list to be sent
+- Fixed notice warning in dashboard.php
+- Fixed broken log rotation logic
+- Fixed issue with imprecised synced comments count
+
 
 = 0.1.27 – 18.05.2020 =
 

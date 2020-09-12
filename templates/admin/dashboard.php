@@ -16,7 +16,7 @@ $current_tab = isset($_GET['tab']) ? $_GET['tab'] : 'dashboard';
         <h2><?php echo __('Dashboard', 'anycomment') ?></h2>
 
         <div id="anycomment-wrapper" data-intro-show="<?= AnyCommentUserTour::was_disabled($current_tab) ? '0' : '1' ?>"
-             data-current-tab="<?php echo(isset($_GET['page']) ? sanitize_text_field($_GET['tab']) : '') ?>">
+             data-current-tab="<?php echo(isset($_GET['page']) ? sanitize_text_field($current_tab) : '') ?>">
             <div class="anycomment-notice anycomment-success">
                 <?php echo sprintf(__('Please take a few seconds and <a href="%s" target="_blank">rate us on WordPress.org</a>. You are the one who can help to grow and make this plugin better!',
                     'anycomment'), 'https://wordpress.org/support/plugin/anycomment/reviews/?rate=5#new-post') ?>
