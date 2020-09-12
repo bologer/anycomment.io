@@ -190,10 +190,6 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 = 0.1.30 – 12.09.2020 =
 
-**Enhancements:**
-
-
-
 **Fixes:**
 
 - Fixed issue when table's bottom bulk actions did not work properly
