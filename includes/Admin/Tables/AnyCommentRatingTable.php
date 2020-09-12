@@ -46,10 +46,7 @@ class AnyCommentRatingTable extends WP_List_Table {
 	 * @global string $usersearch
 	 */
 	public function prepare_items() {
-		global $wpdb;
-
 		$table = AnyCommentRating::get_table_name();
-
 
 		global $wpdb;
 

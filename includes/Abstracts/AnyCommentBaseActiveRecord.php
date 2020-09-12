@@ -51,12 +51,13 @@ abstract class AnyCommentBaseActiveRecord {
 			return false;
 		}
 
-		$prepared_ids = '';
+		$prepared_ids = [];
 
 		if ( is_numeric( $search ) ) {
-			$prepared_ids = $search;
+			$prepared_ids = intval( $search );
 		} else if ( is_array( $search ) ) {
-			$prepared_ids = implode( ',', $search );
+			$prepared_ids = array_map( 'intval', $search );
+			$prepared_ids = implode( ',', $prepared_ids );
 		}
 
 		if ( empty( $prepared_ids ) ) {
@@ -65,7 +66,7 @@ abstract class AnyCommentBaseActiveRecord {
 
 		$table = static::get_table_name();
 
-		$prepared_sql = $wpdb->prepare( "DELETE FROM $table WHERE $column IN(%s)", [ $prepared_ids ] );
+		$prepared_sql = $wpdb->prepare( "DELETE FROM $table WHERE $column IN ($prepared_ids)" );
 
 		return $wpdb->query( $prepared_sql );
 	}

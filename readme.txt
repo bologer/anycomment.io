@@ -196,6 +196,8 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 **Fixes:**
 
+- Fixed issue when table's bottom bulk actions did not work properly
+- Fixed issue when buld action only deleted one selected item out of multiple selected
 - Fixed synchronization issue with service when local database did not have comments
 - Fixed issue with emails, when they did not send or add to the list to be sent
 - Fixed notice warning in dashboard.php

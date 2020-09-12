@@ -3,6 +3,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+use AnyComment\Helpers\AnyCommentRequest;
+
 ?>
 
 <div class="wrap">
@@ -13,8 +15,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php
 
 		$ids    = isset( $_POST['ratings'] ) && ! empty( $_POST['ratings'] ) ? $_POST['ratings'] : null;
-		$action = isset( $_POST['action'] ) && ! empty( $_POST['action'] ) ? $_POST['action'] : null;
-		if ( $action !== null && $ids !== null && $action === 'delete' ) {
+		$action = null;
+
+		if ( AnyCommentRequest::post( 'action' ) !== '-1' ) {
+			$action = sanitize_text_field( $_POST['action'] );
+		} elseif ( AnyCommentRequest::post( 'action2' ) !== '-1' ) {
+			$action = sanitize_text_field( $_POST['action2'] );
+		}
+		if ( $action === 'delete' && ! empty( $ids ) ) {
 			if ( \AnyComment\Models\AnyCommentRating::deleted_all( 'ID', $ids ) ) {
 				$messages = '<div id="message" class="updated notice is-dismissible"><p>' . __( 'Selected ratings were deleted.', 'anycomment' ) . '</p></div>';
 			} else {

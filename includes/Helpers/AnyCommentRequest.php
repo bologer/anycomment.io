@@ -43,4 +43,15 @@ class AnyCommentRequest {
 			trim( $_SERVER['HTTP_USER_AGENT'] ) :
 			null;
 	}
+
+	/**
+	 * Get post value for given name.
+	 *
+	 * @param $name
+	 *
+	 * @return mixed|null null when name is missing in POST, value otherwise.
+	 */
+	public static function post( $name ) {
+		return isset( $_POST[ $name ] ) ? $_POST[ $name ] : null;
+	}
 }
