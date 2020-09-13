@@ -102,7 +102,7 @@ WHERE NOT EXISTS (
 	SELECT * 
 	FROM {$wpdb->commentmeta} cm
 	WHERE c.comment_ID = cm.comment_id AND cm.meta_key = %s
-) AND c.comment_id > %d AND (c.comment_type IS NULL OR c.comment_type = '') LIMIT 10
+) AND c.comment_id > %d AND c.comment_type IN ('', 'comment') LIMIT 10
 SQL;
 
 		$prepare = $wpdb->prepare( $sql, $meta_key, $comment_id );
@@ -134,7 +134,7 @@ SQL;
 		$log = AnyCommentCore::logger();
 
 		try {
-			$log->info( 'Now trying to sync comment #' . $comment->comment_ID );
+			$log->info( 'Ready to sync comment #' . $comment->comment_ID );
 
 			$post = get_post( $comment->comment_post_ID );
 
@@ -371,7 +371,7 @@ WHERE NOT EXISTS (
 	SELECT * 
 	FROM {$wpdb->commentmeta} cm
 	WHERE c.comment_ID = cm.comment_id AND cm.meta_key = %s
-) AND c.comment_id > %d AND (c.comment_type IS NULL OR c.comment_type = '') LIMIT 10 comment_id > %d",
+) AND c.comment_id > %d AND c.comment_type IN ('', 'comment') LIMIT 10",
 				$meta_key,
 				$comment_id,
 				$comment_id
@@ -380,7 +380,7 @@ WHERE NOT EXISTS (
 			$remaining = intval( $remaining );
 
 			$info['complete_percent'] = $remaining > 0 ?
-				round( ( 1 - $remaining / $global_total ) * 100, 2 ) :
+				round( ( 1 - ($remaining / $global_total) ) * 100, 2 ) :
 				100;
 			$info['current']          = $global_total - $remaining;
 			$info['remaining']        = $remaining;
