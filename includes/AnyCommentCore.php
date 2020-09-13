@@ -23,7 +23,7 @@ class AnyCommentCore extends BaseObject {
 	/**
 	 * @var string AnyComment version.
 	 */
-	public $version = '0.1.31';
+	public $version = '0.1.32';
 
 	/**
 	 * @var Pool

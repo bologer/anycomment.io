@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.32 – 13.09.2020
+
+**Fixes:**
+
+- display local scripts only when SaaS is not enabled 
+
+
 ## 0.1.31 – 13.09.2020
 
 **Fixes:**

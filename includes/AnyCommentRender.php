@@ -43,7 +43,9 @@ class AnyCommentRender extends BaseObject {
 
 			add_filter( 'logout_url', [ $this, 'logout_redirect' ], 10, 2 );
 
-			add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
+			if ( ! AnyCommentIntegrationSettings::is_sass_comments_show() ) {
+				add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
+			}
 
 			add_filter( 'script_loader_tag', [ $this, 'add_async_to_bundle' ], 10, 2 );
 		}
@@ -126,6 +128,7 @@ EOT;
 			md5( AnyComment()->version ),
 			true
 		);
+
 
 		if ( AnyCommentGenericSettings::is_design_custom() ) {
 			wp_enqueue_style( 'anycomment-custom-styles', AnyCommentGenericSettings::get_custom_design_stylesheet_url(),
