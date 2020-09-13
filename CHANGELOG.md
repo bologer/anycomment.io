@@ -1,6 +1,12 @@
 # Changelog
 
-## 0.1.30 – 12.09.2020
+## 0.1.31 – 13.09.2020
+
+**Fixes:**
+
+- Fixed cloud embed script
+
+## 0.1.30 – 13.09.2020
 
 **Fixes:**
 
