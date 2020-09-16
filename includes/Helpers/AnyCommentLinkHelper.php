@@ -166,8 +166,8 @@ class AnyCommentLinkHelper {
 		switch ( $language ) {
 			case 'ru':
 			case 'en':
+			case 'uk':
 				return $language;
-			case  'uk':
 			case  'bg':
 				return 'ru';
 			default:
