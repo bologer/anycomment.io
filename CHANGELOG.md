@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.33 – 18.09.2020
+
+**Fixes:**
+
+- Fixed issue when cache wasn't cleaned-up on daily basis
+
 ## 0.1.32 – 13.09.2020
 
 **Fixes:**

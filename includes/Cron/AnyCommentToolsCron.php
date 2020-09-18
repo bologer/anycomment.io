@@ -6,8 +6,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use AnyComment\AnyCommentCore;
 use AnyComment\Base\BaseObject;
+use AnyComment\Helpers\AnyCommentFileHelper;
 
 /**
  * Class AnyCommentToolsCron handles common tools cron job logic.
@@ -33,6 +33,6 @@ class AnyCommentToolsCron extends BaseObject {
 	 * @return bool
 	 */
 	public function clear_cache() {
-		return AnyCommentCore::cache()->getDriver()->purge();
+		return AnyCommentFileHelper::unlinkDirectory( ANYCOMMENT_CACHE_DIR );
 	}
 }

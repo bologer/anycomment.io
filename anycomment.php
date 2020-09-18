@@ -3,7 +3,7 @@
  * Plugin Name: AnyComment
  * Plugin URI: https://anycomment.io
  * Description: AnyComment is an advanced commenting system for WordPress.
- * Version: 0.1.32
+ * Version: 0.1.33
  * Author: Bologer
  * Author URI: http://bologer.ru
  * Requires at least: 4.4
@@ -33,6 +33,7 @@ function anycomment() {
 	defined( 'ANYCOMMENT_LANG' ) or define( 'ANYCOMMENT_LANG', __FILE__ );
 	defined( 'ANYCOMMENT_ABSPATH' ) or define( 'ANYCOMMENT_ABSPATH', dirname( __FILE__ ) );
 	defined( 'ANYCOMMENT_PLUGIN_BASENAME' ) or define( 'ANYCOMMENT_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
+	defined( 'ANYCOMMENT_CACHE_DIR' ) or define( 'ANYCOMMENT_CACHE_DIR', ABSPATH . str_replace( '/', DIRECTORY_SEPARATOR, 'wp-content/cache/anycomment' ) );
 
 	$enableDebug = getenv( 'ENV' ) === 'dev';
 

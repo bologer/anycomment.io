@@ -9,7 +9,6 @@ use AnyComment\Base\Notice;
 use AnyComment\Base\Request;
 use Stash\Driver\FileSystem;
 use AnyComment\Base\BaseObject;
-use Monolog\Handler\StreamHandler;
 use Monolog\Handler\RotatingFileHandler;
 use AnyComment\Controller\ControllerManager;
 use AnyComment\Admin\AnyCommentGenericSettings;
@@ -23,7 +22,7 @@ class AnyCommentCore extends BaseObject {
 	/**
 	 * @var string AnyComment version.
 	 */
-	public $version = '0.1.32';
+	public $version = '0.1.33';
 
 	/**
 	 * @var Pool
@@ -169,14 +168,12 @@ class AnyCommentCore extends BaseObject {
 		if ( static::$cache == null ) {
 
 			try {
-				$cache_path = ABSPATH . str_replace( '/', DIRECTORY_SEPARATOR, 'wp-content/cache/anycomment' );
-
-				if ( ! @file_exists( $cache_path ) ) {
-					@mkdir( $cache_path, 0755, true );
+				if ( ! @file_exists( ANYCOMMENT_CACHE_DIR ) ) {
+					@mkdir( ANYCOMMENT_CACHE_DIR, 0755, true );
 				}
 
 				$cacheDriver = new FileSystem( [
-					'path' => $cache_path,
+					'path' => ANYCOMMENT_CACHE_DIR,
 				] );
 
 				static::$cache = new Pool( $cacheDriver );
