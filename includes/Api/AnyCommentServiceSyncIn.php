@@ -28,12 +28,6 @@ class AnyCommentServiceSyncIn {
 
 		$log->info( 'Trying to fetch comments from cloud from date ' . $comment_date );
 
-		if ( empty( $comment_date ) ) {
-			// Since first date
-			$comment_date = '1970-01-01 00:59:59';
-			$log->info( 'Comment date is empty, using default value: ' . $comment_date . '. There are no comments in database' );
-		}
-
 		$response = $this->request_comments( $comment_date );
 
 		if ( empty( $response ) ) {
@@ -334,22 +328,13 @@ class AnyCommentServiceSyncIn {
 
 		if ( empty( $option_value ) ) {
 
-			$log->debug( "Import comment date is empty, now trying to get one from database" );
+			$defaultDate = '1970-01-01 00:59:59';
 
-			global $wpdb;
-			$sql = "SELECT comment_date FROM {$wpdb->comments} WHERE comment_type = '' OR comment_type IS NULL ORDER BY comment_ID ASC LIMIT 1";
+			$log->debug( "Import comment date is empty, using default one $defaultDate" );
 
-			$date_time = $wpdb->get_var( $sql );
+			update_option( $option_name, $defaultDate );
 
-			if ( empty( $date_time ) ) {
-				$log->error( "Database returned to result for import comment date. SQL used: $sql" );
-
-				return null;
-			}
-
-			update_option( $option_name, $date_time );
-
-			return $date_time;
+			return $defaultDate;
 		}
 
 		$log->debug( "Option for import comment date was previously set, value is {$option_value}, using it now" );
