@@ -963,8 +963,9 @@ class AnyCommentSocialAuth {
 	public static function get_user_avatar_url( $id_or_email ) {
 
 		$avatar_cache = UserCache::getAvatar( $id_or_email );
+		$can_cache    = $avatar_cache !== null;
 
-		if ( $avatar_cache->isHit() ) {
+		if ( $can_cache && $avatar_cache->isHit() ) {
 			return $avatar_cache->get();
 		}
 
@@ -995,6 +996,8 @@ class AnyCommentSocialAuth {
 
 		$avatar_url = '';
 
+		$cache_time = 60;
+
 		/**
 		 * When WP User avatar is active, user has Gravatar and has user avatar within
 		 * the plugin itself, return the plugin's version.
@@ -1005,10 +1008,6 @@ class AnyCommentSocialAuth {
 		     function_exists( 'get_wp_user_avatar_src' ) ) {
 			if ( has_wp_user_avatar( $email ) ) {
 				$avatar_url = get_wp_user_avatar_src( $id_or_email );
-
-				if ( $avatar_url !== null ) {
-					$avatar_cache->expiresAfter( 60 );
-				}
 			}
 		}
 
@@ -1017,7 +1016,9 @@ class AnyCommentSocialAuth {
 
 			if ( ! empty( $social_avatar_url ) ) {
 				$avatar_url = $social_avatar_url;
-				$avatar_cache->expiresAfter( 24 * 60 * 60 ); // 1 day
+				if ( $can_cache ) {
+					$cache_time = 24 * 60 * 60; // 1 day
+				}
 			}
 		}
 
@@ -1028,12 +1029,14 @@ class AnyCommentSocialAuth {
 		 */
 		if ( empty( $avatar_url ) && static::has_gravatar( $email, true ) ) {
 			$avatar_url = get_avatar_url( $id_or_email, [ 'size' => AnyCommentAvatars::DEFAULT_AVATAR_WIDTH ] );
-			/**
-			 * Base on the header information from Gravatar, they put 5 mins cache on all avatars,
-			 * so why not using the same time.
-			 * @link https://meta.stackexchange.com/a/37994
-			 */
-			$avatar_cache->expiresAfter( 5 * 60 );
+			if ( $can_cache ) {
+				/**
+				 * Base on the header information from Gravatar, they put 5 mins cache on all avatars,
+				 * so why not using the same time.
+				 * @link https://meta.stackexchange.com/a/37994
+				 */
+				$cache_time = 5 * 60;
+			}
 		}
 
 		if ( empty( $avatar_url ) && ! AnyCommentGenericSettings::is_default_avatar_anycomment() ) {
@@ -1045,10 +1048,12 @@ class AnyCommentSocialAuth {
 
 		if ( empty( $avatar_url ) ) {
 			$avatar_url = apply_filters( 'anycomment/user/no_avatar', AnyComment()->plugin_url() . '/assets/img/no-avatar.png' );
-			$avatar_cache->expiresAfter( 60 );
 		}
 
-		$avatar_cache->set( $avatar_url )->save();
+		if ( $can_cache ) {
+			$avatar_cache->expiresAfter( $cache_time );
+			$avatar_cache->set( $avatar_url )->save();
+		}
 
 		return $avatar_url;
 	}

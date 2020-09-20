@@ -305,6 +305,8 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			$prepared_args['status'] = 'approve';
 		}
 
+		$prepared_args['type'] = [ 'comment', '', 'review' ];
+
 		$query        = new WP_Comment_Query;
 		$query_result = $query->query( $prepared_args );
 
@@ -987,8 +989,8 @@ class AnyCommentRestComment extends AnyCommentRestController {
 			'parent_author_name' => (int) $comment->comment_parent !== 0 ? get_comment_author( $comment->comment_parent ) : '',
 			'author'             => (int) $comment->user_id,
 			'author_name'        => $comment->comment_author,
-			'date'               => gmdate( 'c', strtotime($comment->comment_date_gmt)),
-			'date_gmt'           => mysql2date( 'c', $comment->comment_date_gmt),
+			'date'               => gmdate( 'c', strtotime( $comment->comment_date_gmt ) ),
+			'date_gmt'           => mysql2date( 'c', $comment->comment_date_gmt ),
 			'date_native'        => $native_date,
 			'content'            => $comment->comment_content,
 			'avatar_url'         => AnyCommentSocialAuth::get_user_avatar_url( (int) $comment->user_id !== 0 ? $comment->user_id : $comment->comment_author_email ),

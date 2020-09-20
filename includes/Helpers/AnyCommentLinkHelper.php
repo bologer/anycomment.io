@@ -156,6 +156,24 @@ class AnyCommentLinkHelper {
 	}
 
 	/**
+	 * Get service article language.
+	 * @return string
+	 */
+	public static function get_service_article_language() {
+		$language = static::get_language();
+
+		if ( in_array( $language, [ 'ru', 'en' ] ) ) {
+			return $language;
+		}
+
+		if ( in_array( $language, [ 'uk', 'bg' ] ) ) {
+			return 'ru';
+		}
+
+		return 'en';
+	}
+
+	/**
 	 * Returns SaaS language determined by app language.
 	 *
 	 * @return string

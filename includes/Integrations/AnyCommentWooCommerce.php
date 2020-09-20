@@ -35,9 +35,16 @@ class AnyCommentWooCommerce extends BaseObject {
 		 * @var $product WC_Product
 		 */
 		global $product;
+		global $wpdb;
+		$review_count = $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT COUNT(*) FROM $wpdb->comments WHERE comment_approved = '1' AND comment_post_ID = %d AND comment_type IN ('review', 'comment', '')",
+				$product->id
+			)
+		);
 
 		$tabs['reviews'] = array(
-			'title'    => sprintf( __( 'Reviews (%d)', 'woocommerce' ), $product->get_review_count() ),
+			'title'    => sprintf( __( 'Reviews (%d)', 'woocommerce' ), $review_count ),
 			'priority' => 30,
 			'callback' => function () {
 				echo do_shortcode( '[anycomment include="true"]' );

@@ -6,6 +6,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+use AnyComment\AnyCommentServiceApi;
+use AnyComment\Helpers\AnyCommentLinkHelper;
+use AnyComment\Helpers\AnyCommentTemplate;
 use AnyComment\Options\AnyCommentOptionManager;
 use AnyComment\Rest\AnyCommentSocialAuth;
 
@@ -629,8 +632,17 @@ class AnyCommentSocialSettings extends AnyCommentOptionManager {
 	 * {@inheritdoc}
 	 */
 	public function run() {
+		if ( AnyCommentServiceApi::is_ready() && AnyCommentIntegrationSettings::is_sass_comments_show() ) {
+			return AnyCommentTemplate::render( 'admin/saas-notice' );
+		}
 
-		$sections_html = '<form action="' . esc_url( admin_url( "admin-post.php" ) ) . '" id="' . $this->get_page_slug() . '" method="post" class="anycomment-form" novalidate>';
+		$sections_html = '<div class="anycomment-notice anycomment-success">';
+		$sections_html .= sprintf(
+			__( 'Try out our <a href="%s" target="_blank">AnyComment Cloud</a>. We already configured all of the socials for you, just choose what you need.', 'anycomment' ),
+			'https://anycomment.io/' . AnyCommentLinkHelper::get_service_article_language() . '/docs/connect-to-saas'
+		);
+		$sections_html .= '</div>';
+		$sections_html .= '<form action="' . esc_url( admin_url( "admin-post.php" ) ) . '" id="' . $this->get_page_slug() . '" method="post" class="anycomment-form" novalidate>';
 
 		$redirect_url = isset( $_SERVER['REQUEST_URI'] ) ? esc_url( $_SERVER['REQUEST_URI'] ) : '';
 

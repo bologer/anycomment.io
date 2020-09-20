@@ -31,13 +31,18 @@ class UserCache extends AnyCommentCacheManager {
 	 *
 	 * @return \Stash\Interfaces\ItemInterface
 	 */
-	public static function getAvatar ( $id_or_email ) {
+	public static function getAvatar( $id_or_email ) {
 		$id_or_email = md5( serialize( $id_or_email ) );
 
-		return AnyCommentCore::cache()->getItem( static::getUserNamespace() . sprintf( self::$avatars, $id_or_email ) );
+		$cache_component = AnyCommentCore::cache();
+		if ( $cache_component === null ) {
+			return null;
+		}
+
+		return $cache_component->getItem( static::getUserNamespace() . sprintf( self::$avatars, $id_or_email ) );
 	}
 
-	public static function flushAvatars () {
+	public static function flushAvatars() {
 
 	}
 
@@ -46,7 +51,7 @@ class UserCache extends AnyCommentCacheManager {
 	 *
 	 * @return string
 	 */
-	public static function getUserNamespace () {
+	public static function getUserNamespace() {
 		return static::getRootNamespace() . static::$namespace;
 	}
 
@@ -55,7 +60,7 @@ class UserCache extends AnyCommentCacheManager {
 	 *
 	 * @return bool
 	 */
-	public static function flushAll () {
+	public static function flushAll() {
 		return AnyCommentCore::cache()->deleteItem( static::getRootNamespace() . self::$namespace );
 	}
 }

@@ -2,6 +2,7 @@
 
 namespace AnyComment\Admin;
 
+use AnyComment\AnyCommentServiceApi;
 use AnyComment\Helpers\AnyCommentLinkHelper;
 use AnyComment\Helpers\AnyCommentTemplate;
 use AnyComment\Options\AnyCommentOptionManager;
@@ -164,6 +165,9 @@ class AnyCommentIntegrationSettings extends AnyCommentOptionManager {
 	 * @return bool False on failure.
 	 */
 	public function init_options() {
+
+		$isSaasEnabled = AnyCommentServiceApi::is_ready() && AnyCommentIntegrationSettings::is_sass_comments_show();
+
 		$form = $this->form();
 
 		$form->add_section(
@@ -194,6 +198,7 @@ class AnyCommentIntegrationSettings extends AnyCommentOptionManager {
 				$this->section_builder()
 				     ->set_id( 'akismet' )
 				     ->set_title( __( 'Akismet Anti-Spam', "anycomment" ) )
+				     ->set_visible( ! $isSaasEnabled )
 				     ->set_fields( [
 					     $this->field_builder()
 					          ->set_id( self::OPTION_AKISMET )
@@ -224,6 +229,7 @@ class AnyCommentIntegrationSettings extends AnyCommentOptionManager {
 				$this->section_builder()
 				     ->set_id( 'wp_user_avatar' )
 				     ->set_title( __( 'WP User Avatar', "anycomment" ) )
+				     ->set_visible( ! $isSaasEnabled )
 				     ->set_fields( [
 					     $this->field_builder()
 					          ->set_id( self::OPTION_WP_USER_AVATAR )
@@ -238,6 +244,7 @@ class AnyCommentIntegrationSettings extends AnyCommentOptionManager {
 			$this->section_builder()
 			     ->set_id( 'recaptcha' )
 			     ->set_title( __( 'reCAPTCHA', "anycomment" ) )
+			     ->set_visible( ! $isSaasEnabled )
 			     ->set_description( function () {
 				     $siteKey    = static::get_recaptcha_site_key();
 				     $siteSecret = static::get_recaptcha_site_secret();
@@ -540,6 +547,9 @@ EOT;
 			$sections = $option->get_sections();
 
 			foreach ( $sections as $key => $section ) {
+				if ( ! $section->is_visible() ) {
+					continue;
+				}
 				$section_id = $section->get_id();
 
 				$liClasses = ( $key == 0 ? 'current' : '' );

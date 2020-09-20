@@ -1,10 +1,17 @@
 # Changelog
 
-## 0.1.33 – 18.09.2020
+## 0.1.33 – 20.09.2020
+
+**Enhancements:**
+
+- Now plugin options would be hidden when SaaS version enabled
 
 **Fixes:**
 
 - Fixed issue when cache wasn't cleaned-up on daily basis
+- Fixed issue when WooCommerce reviews tab was showing incorrect comment count 
+- Fixed issue when WooCommerce reviews tab wasn't showing all reviews/comments
+- Fixed "Fatal error: Uncaught Error: Call to a member function getItem() on null"
 
 ## 0.1.32 – 13.09.2020
 

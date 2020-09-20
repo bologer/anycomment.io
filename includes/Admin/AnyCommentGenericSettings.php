@@ -6,9 +6,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+use AnyComment\AnyCommentServiceApi;
 use AnyComment\AnyCommentUploadHandler;
 use AnyComment\Base\ScssCompiler;
 use AnyComment\Helpers\AnyCommentInputHelper;
+use AnyComment\Helpers\AnyCommentTemplate;
 use AnyComment\Options\AnyCommentOptionManager;
 
 /**
@@ -313,7 +315,7 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 		self::OPTION_DESIGN_GLOBAL_RADIUS                           => '10px',
 
 		// SEO
-		self::OPTION_SEO_TOGGLE => 'on'
+		self::OPTION_SEO_TOGGLE                                     => 'on'
 	];
 
 	/**
@@ -358,13 +360,15 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 	public function init_settings() {
 
 
-		$form = $this->form();
+		$isSaaSEnabled = AnyCommentServiceApi::is_ready() && AnyCommentIntegrationSettings::is_sass_comments_show();
+		$form          = $this->form();
 
 		$form->add_section(
 			$this->section_builder()
 			     ->set_id( 'generic' )
 			     ->set_title( __( 'Generic', "anycomment" ) )
 			     ->set_wrapper( '<div class="grid-x anycomment-form-wrapper anycomment-tabs__container__tab current" id="{id}">{content}</div>' )
+			     ->set_visible( ! $isSaaSEnabled )
 			     ->set_fields( [
 				     $this->field_builder()
 				          ->checkbox()
@@ -544,6 +548,7 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 			$this->section_builder()
 			     ->set_id( 'elements' )
 			     ->set_title( __( 'Elements', "anycomment" ) )
+			     ->set_visible( ! $isSaaSEnabled )
 			     ->set_fields( [
 				     $this->field_builder()
 				          ->select()
@@ -646,6 +651,7 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 			$this->section_builder()
 			     ->set_id( 'design' )
 			     ->set_title( __( 'Design', "anycomment" ) )
+			     ->set_visible( ! $isSaaSEnabled )
 			     ->set_fields( [
 				     $this->field_builder()
 				          ->checkbox()
@@ -794,6 +800,7 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 			$this->section_builder()
 			     ->set_id( 'moderation' )
 			     ->set_title( __( 'Moderation', "anycomment" ) )
+			     ->set_visible( ! $isSaaSEnabled )
 			     ->set_fields( [
 				     $this->field_builder()
 				          ->checkbox()
@@ -828,6 +835,7 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 			$this->section_builder()
 			     ->set_id( 'notifications' )
 			     ->set_title( __( 'Notifications', "anycomment" ) )
+			     ->set_visible( ! $isSaaSEnabled )
 			     ->set_fields( [
 				     $this->field_builder()
 				          ->text()
@@ -949,6 +957,7 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 			$this->section_builder()
 			     ->set_id( 'files' )
 			     ->set_title( __( 'Files', "anycomment" ) )
+			     ->set_visible( ! $isSaaSEnabled )
 			     ->set_fields( [
 				     $this->field_builder()
 				          ->checkbox()
@@ -1033,7 +1042,7 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 		);
 
 		/**
-		 * Section: Seo
+		 * Section: Editor
 		 */
 		$form->add_section(
 			$this->section_builder()
@@ -1054,6 +1063,10 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 	 * {@inheritdoc}
 	 */
 	public function run() {
+
+		if ( AnyCommentServiceApi::is_ready() && AnyCommentIntegrationSettings::is_sass_comments_show() ) {
+			echo AnyCommentTemplate::render( 'admin/saas-notice' );
+		}
 
 		$sections_html = '<form action="' . esc_url( admin_url( "admin-post.php" ) ) . '" id="' . $this->get_page_slug() . '" method="post" class="anycomment-form" novalidate>';
 
@@ -1112,6 +1125,9 @@ EOT;
 			$sections = $option->get_sections();
 
 			foreach ( $sections as $key => $section ) {
+				if ( ! $section->is_visible() ) {
+					continue;
+				}
 				$section_id = $section->get_id();
 
 				$liClasses = ( $key == 0 ? 'current' : '' );
