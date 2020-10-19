@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Notice: "/" at the end of source path
+# Usage example: ./scripts/deploy.sh /path/to/wp-content/plugins/anycomment/ /path/to/anycomment/trunk
+
 PLUGINSOURCEPATH=$1
 TRUNKFOLDERPATH=$2
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.0 – 20.10.2020
+
+**Enhancements:**
+
+- Added support for SSO with cloud integration
+
+
 ## 0.1.33 – 20.09.2020
 
 **Enhancements:**

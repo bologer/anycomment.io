@@ -111,7 +111,7 @@ function changeVersion( $paths, $version ) {
  * @param string $message Message.
  */
 function o( $message ) {
-	echo sprintf( '[LOG]: %s', $message . PHP_EOL );
+	echo sprintf( $message, $message . PHP_EOL );
 }
 
 
