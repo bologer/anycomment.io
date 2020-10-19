@@ -5,6 +5,7 @@ use AnyComment\AnyCommentSeoFriendly;
 use AnyComment\AnyCommentServiceApi;
 use AnyComment\Admin\AnyCommentIntegrationSettings;
 use AnyComment\Helpers\AnyCommentLinkHelper;
+use AnyComment\Rest\AnyCommentSocialAuth;
 
 /**
  * This is a generic template which renders comments from local WordPress or SaaS (Cloud version).
@@ -62,14 +63,40 @@ HTML;
 		$root_id .= '-' . $post->ID;
 	}
 
-	$config = json_encode( [
+	$config_attributes = [
 		'root'     => $root_id,
 		'app_id'   => $app_id,
 		'language' => AnyCommentLinkHelper::get_saas_languages(),
 		'preview'  => $preview,
 		'title'    => $title,
 		'author'   => $author,
-	] );
+	];
+
+	if ( is_user_logged_in() ) {
+		$user                     = wp_get_current_user();
+		$user                     = [
+			'id'          => $user->ID,
+			'name'        => $user->display_name,
+			'email'       => $user->user_email,
+			'avatar_url'  => AnyCommentSocialAuth::get_user_avatar_url( $user->ID ),
+			'profile_url' => empty( $user->user_url ) ? null : $user->user_url,
+		];
+		$data                     = base64_encode( json_encode( $user ) );
+		$timestampMillis          = round( microtime( true ) * 1000 );
+		$signature                = md5( implode( '', [
+			$data,
+			AnyCommentServiceApi::getSyncApiKey(),
+			$timestampMillis
+		] ) );
+		$config_attributes['sso'] = [
+			'data'             => $data,
+			'signature'        => $signature,
+			'timestamp_millis' => $timestampMillis
+		];
+	}
+
+
+	$config = json_encode( $config_attributes );
 	?>
     <div id="comments" class="comments-area">
         <div id="<?= $root_id ?>"></div>
