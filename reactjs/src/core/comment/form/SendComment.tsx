@@ -585,7 +585,9 @@ export default function SendComment({action, comment}: SendCommentProps) {
                                     </SocialListColumn>
                                 )}
                                 <GuestFieldsColumn>
-                                    {showGuestFields() && <GuestHeader>{settings.i18.or_as_guest}</GuestHeader>}
+                                    {options.isFormTypeAll && (
+                                        <GuestHeader>{settings.i18.or_as_guest}</GuestHeader>
+                                    )}
                                     {showGuestFields() && renderGuestFields()}
                                 </GuestFieldsColumn>
                             </GuestFieldsRoot>

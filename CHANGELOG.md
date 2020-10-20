@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.1 – 20.10.2020
+
+**Fixes:**
+
+- Fixed wrong logic of showing "or as guest" before guest fields 
+
+
 ## 0.2.0 – 20.10.2020
 
 **Enhancements:**
