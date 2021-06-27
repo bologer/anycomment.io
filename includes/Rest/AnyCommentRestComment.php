@@ -2,6 +2,8 @@
 
 namespace AnyComment\Rest;
 
+use AnyComment\Action\Comment\ListComments;
+use AnyComment\AnyCommentCore;
 use AnyComment\AnyCommentUser;
 use AnyComment\Cache\AnyCommentRestCacheManager;
 use WP_Post;
@@ -40,7 +42,7 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	 */
 	public function __construct() {
 		$this->namespace = 'anycomment/v1';
-		$this->rest_base = 'comments';
+		$this->rest_base = 'comment';
 
 		$this->meta = new AnyCommentRestCommentMeta();
 
@@ -232,156 +234,14 @@ class AnyCommentRestComment extends AnyCommentRestController {
 	 *
 	 */
 	public function get_items( $request ) {
-
-		// Retrieve the list of registered collection query parameters.
-		$registered = $this->get_collection_params();
-
-		/*
-		 * This array defines mappings between public API query parameters whose
-		 * values are accepted as-passed, and their internal WP_Query parameter
-		 * name equivalents (some are the same). Only values which are also
-		 * present in $registered will be set.
-		 */
-		$parameter_mappings = array(
-			'author'         => 'author__in',
-			'author_email'   => 'author_email',
-			'author_exclude' => 'author__not_in',
-			'exclude'        => 'comment__not_in',
-			'include'        => 'comment__in',
-			'offset'         => 'offset',
-			'order'          => 'order',
-			'parent'         => 'parent__in',
-			'parent_exclude' => 'parent__not_in',
-			'per_page'       => 'number',
-			'post'           => 'post__in',
-			'search'         => 'search',
-			'type'           => 'type',
+		$action = AnyCommentCore::getContainer()->get( ListComments::class );
+		$data   = $action->action(
+			$request->get_param( 'url' ),
+			$request->get_param( 'page' ),
+			$request->get_param( 'per-page' )
 		);
 
-		$prepared_args = array();
-
-		/*
-		 * For each known parameter which is both registered and present in the request,
-		 * set the parameter's value on the query $prepared_args.
-		 */
-		foreach ( $parameter_mappings as $api_param => $wp_param ) {
-			if ( isset( $registered[ $api_param ], $request[ $api_param ] ) ) {
-				$prepared_args[ $wp_param ] = $request[ $api_param ];
-			}
-		}
-
-		// Ensure certain parameter values default to empty strings.
-		foreach ( array( 'author_email', 'search' ) as $param ) {
-			if ( ! isset( $prepared_args[ $param ] ) ) {
-				$prepared_args[ $param ] = '';
-			}
-		}
-
-		if ( isset( $registered['orderby'] ) ) {
-			$prepared_args['orderby'] = $this->normalize_query_param( $request['orderby'] );
-		}
-
-		$prepared_args['no_found_rows'] = false;
-
-		$prepared_args['date_query'] = array();
-
-		// Set before into date query. Date query must be specified as an array of an array.
-		if ( isset( $registered['before'], $request['before'] ) ) {
-			$prepared_args['date_query'][0]['before'] = $request['before'];
-		}
-
-		// Set after into date query. Date query must be specified as an array of an array.
-		if ( isset( $registered['after'], $request['after'] ) ) {
-			$prepared_args['date_query'][0]['after'] = $request['after'];
-		}
-
-		if ( isset( $registered['page'] ) && empty( $request['offset'] ) ) {
-			$prepared_args['offset'] = $prepared_args['number'] * ( absint( $request['page'] ) - 1 );
-		}
-
-		if ( current_user_can( 'moderate_comments' ) ) {
-			$prepared_args['status'] = 'all';
-		} else {
-			$prepared_args['status'] = 'approve';
-		}
-
-		$prepared_args['type'] = [ 'comment', '', 'review' ];
-
-		$query        = new WP_Comment_Query;
-		$query_result = $query->query( $prepared_args );
-
-		$comments = array();
-
-		foreach ( $query_result as $comment ) {
-			if ( ! $this->check_read_permission( $comment, $request ) ) {
-				continue;
-			}
-
-			$data = $this->prepare_item_for_response( $comment, $request );
-
-			$comments[] = $this->prepare_response_for_collection( $data );
-		}
-
-		$total_comments = (int) $query->found_comments;
-		$max_pages      = (int) $query->max_num_pages;
-
-		if ( $total_comments < 1 ) {
-			// Out-of-bounds, run the query again without LIMIT for total count.
-			unset( $prepared_args['number'], $prepared_args['offset'] );
-
-			$query                  = new WP_Comment_Query;
-			$prepared_args['count'] = true;
-
-			$total_comments = $query->query( $prepared_args );
-
-			try {
-				$max_pages = ceil( $total_comments / $request['per_page'] );
-			} catch ( \Exception $exception ) {
-				$max_pages = 0;
-			}
-		}
-
-		try {
-			$current_page = absint( $request['offset'] / $request['per_page'] ) + 1;
-
-			if ( $current_page > $max_pages ) {
-				$current_page = $max_pages;
-			}
-		} catch ( \Exception $exception ) {
-			$current_page = 1;
-		}
-
-		$response = rest_ensure_response( [
-			'items' => $comments,
-			'meta'  => [
-				'total_count'  => $total_comments,
-				'page_count'   => $max_pages,
-				'current_page' => $current_page,
-				'per_page'     => $request['per_page']
-			]
-		] );
-
-		$base = add_query_arg( $request->get_query_params(), rest_url( sprintf( '%s/%s', $this->namespace, $this->rest_base ) ) );
-
-		if ( $request['page'] > 1 ) {
-			$prev_page = $request['page'] - 1;
-
-			if ( $prev_page > $max_pages ) {
-				$prev_page = $max_pages;
-			}
-
-			$prev_link = add_query_arg( 'page', $prev_page, $base );
-			$response->link_header( 'prev', $prev_link );
-		}
-
-		if ( $max_pages > $request['page'] ) {
-			$next_page = $request['page'] + 1;
-			$next_link = add_query_arg( 'page', $next_page, $base );
-
-			$response->link_header( 'next', $next_link );
-		}
-
-		return $response;
+		return new WP_REST_Response( $data, 200, [] );
 	}
 
 	/**

@@ -15,7 +15,6 @@
     }
   },
   "scripts": {
-    "init": "./scripts/init.sh",
     "init-dev": "./scripts/init-env.sh dev",
     "init-prod": "./scripts/init-env.sh prod"
   },
@@ -25,6 +24,7 @@
     "leafo/scssphp": "^0.7.7",
     "hybridauth/hybridauth": "v3.0.0-rc.9",
     "monolog/monolog": "^1.0",
-    "vlucas/phpdotenv": "^4.1"
+    "vlucas/phpdotenv": "^4.1",
+    "php-di/php-di": "^6.3"
   }
 }

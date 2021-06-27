@@ -36,100 +36,83 @@ HTML;
 			return;
 		}
 	}
+endif;
 
-	$preview = null;
-	$title   = null;
-	$author  = null;
+$preview = null;
+$title   = null;
+$author  = null;
 
-	$root_id = 'anycomment-app';
+$root_id = 'anycomment-app';
 
-	if ( ! empty( $post ) ) {
-		$page_url = get_permalink( $post );
+if ( ! empty( $post ) ) {
+	$page_url = get_permalink( $post );
 
-		$post_thumbnail_url = get_the_post_thumbnail_url( $post );
+	$post_thumbnail_url = get_the_post_thumbnail_url( $post );
 
-		$title   = $post->post_title;
-		$preview = $post_thumbnail_url !== false ? $post_thumbnail_url : null;
+	$title   = $post->post_title;
+	$preview = $post_thumbnail_url !== false ? $post_thumbnail_url : null;
 
-		$first_name = get_the_author_meta( 'first_name', $post->post_author );
-		$last_name  = get_the_author_meta( 'last_name', $post->post_author );
+	$first_name = get_the_author_meta( 'first_name', $post->post_author );
+	$last_name  = get_the_author_meta( 'last_name', $post->post_author );
 
-		if ( ! empty( $first_name ) || ! empty( $last_name ) ) {
-			$author = trim( $first_name . ' ' . $last_name );
-		} else {
-			$author = get_the_author_meta( 'nickname', $post->post_author );
-		}
-
-		$root_id .= '-' . $post->ID;
+	if ( ! empty( $first_name ) || ! empty( $last_name ) ) {
+		$author = trim( $first_name . ' ' . $last_name );
+	} else {
+		$author = get_the_author_meta( 'nickname', $post->post_author );
 	}
 
-	$config_attributes = [
-		'root'     => $root_id,
-		'app_id'   => $app_id,
-		'language' => AnyCommentLinkHelper::get_saas_languages(),
-		'preview'  => $preview,
-		'title'    => $title,
-		'author'   => $author,
+	$root_id .= '-' . $post->ID;
+}
+
+$config_attributes = [
+	'root'     => $root_id,
+	'app_id'   => $app_id,
+	'language' => AnyCommentLinkHelper::get_saas_languages(),
+	'preview'  => $preview,
+	'title'    => $title,
+	'author'   => $author,
+];
+
+if ( is_user_logged_in() ) {
+	$user                     = wp_get_current_user();
+	$user                     = [
+		'id'          => $user->ID,
+		'name'        => $user->display_name,
+		'email'       => $user->user_email,
+		'avatar_url'  => AnyCommentSocialAuth::get_user_avatar_url( $user->ID ),
+		'profile_url' => empty( $user->user_url ) ? null : $user->user_url,
 	];
-
-	if ( is_user_logged_in() ) {
-		$user                     = wp_get_current_user();
-		$user                     = [
-			'id'          => $user->ID,
-			'name'        => $user->display_name,
-			'email'       => $user->user_email,
-			'avatar_url'  => AnyCommentSocialAuth::get_user_avatar_url( $user->ID ),
-			'profile_url' => empty( $user->user_url ) ? null : $user->user_url,
-		];
-		$data                     = base64_encode( json_encode( $user ) );
-		$timestampMillis          = round( microtime( true ) * 1000 );
-		$signature                = md5( implode( '', [
-			$data,
-			AnyCommentServiceApi::getSyncApiKey(),
-			$timestampMillis
-		] ) );
-		$config_attributes['sso'] = [
-			'data'             => $data,
-			'signature'        => $signature,
-			'timestamp_millis' => $timestampMillis
-		];
-	}
+	$data                     = base64_encode( json_encode( $user ) );
+	$timestampMillis          = round( microtime( true ) * 1000 );
+	$signature                = md5( implode( '', [
+		$data,
+		AnyCommentServiceApi::getSyncApiKey(),
+		$timestampMillis
+	] ) );
+	$config_attributes['sso'] = [
+		'data'             => $data,
+		'signature'        => $signature,
+		'timestamp_millis' => $timestampMillis
+	];
+}
 
 
-	$config = json_encode( $config_attributes );
-	?>
-    <div id="comments" class="comments-area">
-        <div id="<?= $root_id ?>"></div>
-    </div>
-    <script>
-        AnyComment = window.AnyComment || [];
-        AnyComment.Comments = [];
-        AnyComment.Comments.push(<?php echo $config ?>);
-        var s = document.createElement("script");
-        s.type = "text/javascript";
-        s.async = true;
-        s.src = "https://widget.anycomment.io/comment/embed.js";
-        var sa = document.getElementsByTagName("script")[0];
-        sa.parentNode.insertBefore(s, s.nextSibling);
-    </script>
-<?php else: ?>
-    <div id="comments" class="comments-area">
-		<?php
-		$embed_script = <<<HTML
-<div id="anycomment-root"></div>
-<script type="text/javascript">
+$config = json_encode( $config_attributes );
+?>
+<div id="comments" class="comments-area">
+    <div id="<?= $root_id ?>"></div>
+</div>
+<script>
     AnyComment = window.AnyComment || [];
-    AnyComment.WP = AnyComment.WP || [];
-    AnyComment.WP.push({
-        root: 'anycomment-root',        
-    });
+    AnyComment.Comments = [];
+    AnyComment.Comments.push(<?php echo $config ?>);
+    var s = document.createElement("script");
+    s.type = "text/javascript";
+    s.async = true;
+    s.src = "<?php echo ANYCOMMENT_DEBUG ? 'http://localhost:1234/embed.js' : 'https://widget.anycomment.io/comment/embed.js' ?>";
+    var sa = document.getElementsByTagName("script")[0];
+    sa.parentNode.insertBefore(s, s.nextSibling);
 </script>
-HTML;
-
-		echo apply_filters( 'anycomment/client/embed-native-script', $embed_script, $post );
-		?>
-    </div>
-<?php endif; ?>
 
 <?php if ( AnyCommentGenericSettings::is_seo_on() ) : ?>
     <noscript>

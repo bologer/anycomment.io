@@ -5,7 +5,7 @@ Tags: comments, ajax comments, comment, comment moderation, comments seo, anycom
 Requires at least: 4.7
 Tested up to: 5.5
 Requires PHP: 5.6
-Stable tag: 0.2.1
+Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/
 
@@ -187,6 +187,18 @@ Most of the hosting providers support single button-like installation of SSL cer
 It could only be difficult for website who have HTTP only and hight traffic as transfer to HTTPs can cause some traffic lose.
 
 == Changelog ==
+
+= 1.0.0 – 27.06.2021 =
+
+**Added:**
+
+- Added new `embed/settings` REST API endpoint
+
+**Changed:**
+
+**Removed:**
+
+- Hook `anycomment/client/embed-native-script` was deleted due to changes in architecture
 
 = 0.2.1 – 20.10.2020 =
 

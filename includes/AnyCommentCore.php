@@ -22,7 +22,7 @@ class AnyCommentCore extends BaseObject {
 	/**
 	 * @var string AnyComment version.
 	 */
-	public $version = '0.2.1';
+	public $version = '1.0.0';
 
 	/**
 	 * @var Pool
@@ -45,9 +45,14 @@ class AnyCommentCore extends BaseObject {
 	protected $notice;
 
 	/**
+	 * @var \DI\Container
+	 */
+	protected static $container;
+
+	/**
 	 * @var AnyCommentCore Holds plugin instance.
 	 */
-	private static $_instance;
+	private static $instance;
 
 	/**
 	 * Init method to invoke starting scripts.
@@ -76,8 +81,8 @@ class AnyCommentCore extends BaseObject {
 	 * @static
 	 */
 	public static function instance() {
-		if ( is_null( self::$_instance ) ) {
-			self::$_instance = new self();
+		if ( is_null( self::$instance ) ) {
+			self::$instance = new self();
 
 			/**
 			 * Fires after AnyComment was loaded.
@@ -87,7 +92,7 @@ class AnyCommentCore extends BaseObject {
 			do_action( 'anycomment/loaded' );
 		}
 
-		return self::$_instance;
+		return self::$instance;
 	}
 
 	/**
@@ -149,8 +154,9 @@ class AnyCommentCore extends BaseObject {
 	 * Include required core files used in admin and on the frontend.
 	 */
 	public function includes() {
-		AnyCommentLoader::load();
+		self::$container = ( new Container() )->build();
 
+		AnyCommentLoader::load();
 		$this->request = new Request();
 		$this->notice  = new Notice();
 
@@ -243,5 +249,12 @@ class AnyCommentCore extends BaseObject {
 	 */
 	public function getNotice() {
 		return $this->notice;
+	}
+
+	/**
+	 * @return \DI\Container
+	 */
+	public static function getContainer() {
+		return self::$container;
 	}
 }

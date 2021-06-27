@@ -32,13 +32,13 @@ $paths = [
 		[ 'regex' => '/Stable\stag:\s[0-9.]+/m', 'replacement' => 'Stable tag: %s' ],
 		[
 			'regex'       => '/==\sChangelog\s==/',
-			'replacement' => "== Changelog ==\n\n= $version – $date =\n\n**Enhancements:**\n\n\n\n**Fixes:**\n\n"
+			'replacement' => "== Changelog ==\n\n= $version – $date =\n\n**Added:**\n\n\n\n**Changed:**\n\n\n\n**Removed:**\n\n\n\n"
 		]
 	],
 	__DIR__ . '/../CHANGELOG.md'                => [
 		[
 			'regex'       => '/\#\sChangelog/',
-			'replacement' => "# Changelog\n\n## $version – $date\n\n**Enhancements:**\n\n\n\n**Fixes:**\n\n"
+			'replacement' => "# Changelog\n\n## $version – $date\n\n**Added:**\n\n\n\n**Changed:**\n\n\n\n**Removed:**\n\n\n\n"
 		]
 	]
 ];

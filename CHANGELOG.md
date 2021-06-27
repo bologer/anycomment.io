@@ -1,18 +1,28 @@
 # Changelog
 
+## 1.0.0 – 27.06.2021
+
+**Added:**
+
+- Added new `embed/settings` REST API endpoint
+
+**Changed:**
+
+**Removed:**
+
+- Hook `anycomment/client/embed-native-script` was deleted due to changes in architecture
+
 ## 0.2.1 – 20.10.2020
 
 **Fixes:**
 
-- Fixed wrong logic of showing "or as guest" before guest fields 
-
+- Fixed wrong logic of showing "or as guest" before guest fields
 
 ## 0.2.0 – 20.10.2020
 
 **Enhancements:**
 
 - Added support for SSO with cloud integration
-
 
 ## 0.1.33 – 20.09.2020
 
@@ -23,7 +33,7 @@
 **Fixes:**
 
 - Fixed issue when cache wasn't cleaned-up on daily basis
-- Fixed issue when WooCommerce reviews tab was showing incorrect comment count 
+- Fixed issue when WooCommerce reviews tab was showing incorrect comment count
 - Fixed issue when WooCommerce reviews tab wasn't showing all reviews/comments
 - Fixed "Fatal error: Uncaught Error: Call to a member function getItem() on null"
 
@@ -31,8 +41,7 @@
 
 **Fixes:**
 
-- display local scripts only when SaaS is not enabled 
-
+- display local scripts only when SaaS is not enabled
 
 ## 0.1.31 – 13.09.2020
 
@@ -66,10 +75,10 @@
 - Fixed "TypeError: Cannot read property 'total_count' of undefined" error
 - Fixed "Wrong parameter: per_page" error when clicking on load more with automatic updates feature, #469
 
-
 ## 0.1.26 – 23.04.2020
 
 ***Enhancements**:
+
 - Added new roles to default role option: editor, author, contributor
 - Added ability to enable/disable override of WooCommerce's default review form, #458
 
@@ -80,7 +89,6 @@
 - Now sorting is treated properly on real-time update feature, #460
 - Resolved issue with timezone when was writing "n hours ago" on a new comment, #464
 - Fixed small name synchronizing issue with SaaS, such as "-1", "-17"
-
 
 ## 0.1.25 – 05.04.2020
 
@@ -101,7 +109,6 @@
 
 - Fixed problem when real-time reloading didn't work as expected
 
-
 ## 0.1.22 – 30.03.2020
 
 **Fixes:**
@@ -116,7 +123,6 @@
 - Fixed issue when relative time was always in English
 - Fixed issue when toolbar options were not treated
 
-
 ## 0.1.1 – 28.03.2020
 
 **Fixes:**
@@ -126,12 +132,14 @@
 ## 0.1.0 - 28.03.2020
 
 **Fixes:**
-- Fixed error when when flushing cache	
-- Fixed issue when debug file was never created	
-- Fixed deprecation notice: "Array and string offset access syntax with curly braces" in AnyCommentGenericSettings.php	
+
+- Fixed error when when flushing cache
+- Fixed issue when debug file was never created
+- Fixed deprecation notice: "Array and string offset access syntax with curly braces" in AnyCommentGenericSettings.php
 - Fixed problem when quotes in title was breaking cloud script launcher
 
 **Enhancements:**
+
 - Added `init` event, see repository Wiki for more information
 - Now only one form displayed on 'Reply' or 'Update' actions
 - Comments: completely rewritten to React Hooks
@@ -147,6 +155,7 @@
 - Comments: replaced Google+ icon with generic Google one, as it was deprecated
 
 **Others:**
+
 - Dropping Email/chart support for plugin, now only Telegram, GitHub & WordPress Forum
 
 ## 0.0.99 – 04.01.2020
@@ -155,7 +164,7 @@
 
 - Removed Freemius. This removes problems for some websites + speeds-up plugin in admin side.
 - Added support for BuddyPress, when somebody sends "@" + username in comment. This user would be notified, #422
-- Moved AnyComment Cloud message to Integration tab, improved UI/UX of synchronization logic 
+- Moved AnyComment Cloud message to Integration tab, improved UI/UX of synchronization logic
 - Added helper tour around plugin to help new users to know how to configure plugin
 - It is now possible to download report ZIP archive to help AnyComment know about your environment, plugin version, #357
 - Added "Addons" tab which has list of available addons, controller via "anycomment/admin/addons" hook, #435
@@ -184,8 +193,7 @@
 
 **Fixes:**
 
-- Fixed issue when it wasn't possible to make initial sync service -> website 
-
+- Fixed issue when it wasn't possible to make initial sync service -> website
 
 ## 0.0.96 – 01.10.2019
 
@@ -209,7 +217,7 @@
 **Enhancements:**
 
 - Added option to make comments discoverable by search engines (SEO)
-- Added display=swap to default Google Font (better Google page speed results) 
+- Added display=swap to default Google Font (better Google page speed results)
 
 **Fixes:**
 
@@ -219,21 +227,22 @@
 
 **Enhancements:**
 
-- AnyComment Cloud can be now loaded in the infinite load scripts 
+- AnyComment Cloud can be now loaded in the infinite load scripts
 
 **Fixes:**
 
 - Fixed issue when file preview was missing, #414
-- Fixed authorization issue when "Plain" permalink was selected, #413 
+- Fixed authorization issue when "Plain" permalink was selected, #413
 
 ## 0.0.92 – 15.09.2019
 
 **Enhancements:**
 
 - Changed cache directory directory from `wp-content/uploads/cache/anycomment` to `wp-content/cache/anycomment`
-- Plugin interface is now translated to Ukrainian, more to come  
+- Plugin interface is now translated to Ukrainian, more to come
 - Main plugin character was updated in admin dashboard and for users without avatar
-- Added ability to replace spam words with custom character, e.g. "world:#" would make comment "Hello world" as "Hello #####", #340
+- Added ability to replace spam words with custom character, e.g. "world:#" would make comment "Hello world" as "Hello
+  ##### ", #340
 - Added ability to specify custom directory to save files with URL where they would served, #163
 
 **Fixes:**
@@ -254,7 +263,6 @@
 * [anycomment] shortcode does not require `include` param anymore, it is there by default
 * [anycomment] would not be shown even when post has closed comments or password protected
 
-
 **Fixes:**
 
 * Fixed issue when synchronization summary was showing wrong exported count
@@ -270,27 +278,25 @@
 
 **Other:**
 
-* Introducing AnyComment.Cloud, comments synchronization, new options in "Integrations". It is now possible to switch between SaaS and local AnyComment
+* Introducing AnyComment.Cloud, comments synchronization, new options in "Integrations". It is now possible to switch
+  between SaaS and local AnyComment
 
 **Fixes:**
 
 * Fixed issue when "Integration" tabs were glued together
 * Fixed issue when post subscription form was having bad layout on mobile, #396
 
-
 ## 0.0.88 – 07.04.2019
 
 **Enhancements:**
 
 * Improved instructions for Mail.Ru (added screenshots) and changed "Private key" to "Secret key" in option description
-which caused error `Incorrect signature` when incorrect key was specified, #388
-
+  which caused error `Incorrect signature` when incorrect key was specified, #388
 
 **Fixes:**
 
 * Fixed issue when strings in settings having quotes were escaped with "\"
 * Fixed issue when HyperComments import caused property of undefined notice on `comment_content`
-
 
 ## 0.0.87 – 18.03.2019
 
@@ -298,12 +304,12 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 
 * Fixed issue when settings were not saving in admin
 
-
 ## 0.0.86 – 18.03.2019
 
 **Enhancements:**
 
-* Added `target_url` property to `[anycomment_socials]` shortcode which allows to specify URL where to redirect user after authorization
+* Added `target_url` property to `[anycomment_socials]` shortcode which allows to specify URL where to redirect user
+  after authorization
 
 **Fixes:**
 
@@ -312,12 +318,12 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 * Email notifications now responsive and have crossbrowser support
 * Changed no avatar from SVG to PNG so it can be displayed normally in email clients
 
-
 ## 0.0.85 – 19.02.2019
 
 **Enhancements:**
 
-* Improved Email notifications UI, no more template, it is is now unified: has avatar, author name, reply comment data, etc
+* Improved Email notifications UI, no more template, it is is now unified: has avatar, author name, reply comment data,
+  etc
 * \#353, Added new option to hold only first comment and any further can pass without pre moderation
 * \#326, Added ability to import comments from HyperComments inside "Tools" tab by specifying URL to XML file
 * \#343, Migrated Google+ to Google People API
@@ -329,8 +335,7 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 * \#382, Fixed broken layout in screens < 1400 inside admin dashboard
 * \#384, Fixed issued when nested comments were not sorted properly
 * \#385, Fixed issue when shortcode was inserted on non-WordPress page, e.g. HTML caused notice error on comment count
-* \#383, Fixed issue when ArgumentCountError fatal was given on  execution of delete_comment hook by Akismet
-
+* \#383, Fixed issue when ArgumentCountError fatal was given on execution of delete_comment hook by Akismet
 
 ## 0.0.84 – 14.02.2019
 
@@ -338,7 +343,6 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 
 * Payment integration with Freemius to buy add-on directly from plugin
 * Cache basting mechanism on successful user authentication, #380
-
 
 **Fixes:**
 
@@ -349,7 +353,8 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 **Enhancements:**
 
 * Added ability to specify number of words before "..." in the recent comments widget, #374
-* Reverted close comments behaviour. Now when "Close discussion" is unchecked, comment box would be hidden completely and not styles and scripts would be loaded, #371
+* Reverted close comments behaviour. Now when "Close discussion" is unchecked, comment box would be hidden completely
+  and not styles and scripts would be loaded, #371
 * Added ability to hide whether comment was edited or not, #364
 
 **Fixes:**
@@ -366,7 +371,6 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 
 * Removed Freemius integration left by mistake, it should come a bit later
 
-
 ## 0.0.81 – 25.01.2019
 
 **Enhancements:**
@@ -374,24 +378,22 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 * New hook `anycomment/admin/options/update` with two arguments fired after some set of options being updated
 * Added support for Internet Explorer 9+ (need more testing)
 
-
 **Fixes:**
 
 * Fixed issue when user avatar did not change when settings were updated, #361
 * Fixed issue when moderators did not see admin bar while hide admin bar options was enabled, #359
-* Fixed issue when users/admins were notified about about new comment even thought it was not process by Akismet yet, #358
+* Fixed issue when users/admins were notified about about new comment even thought it was not process by Akismet yet,
+  # 358
 * Fixed issue when authorized users did not see alert about comment being moderated, #365
 * Fixed issue when alert message on the top right was not see as some themes have floating header
 * Fixed 200 when comments template did not exist on the page, #362
 * Fixed issue when stars were showing incorrect half of the rating, #355
-
 
 ## 0.0.80 – 08.01.2019
 
 **Fixes:**
 
 * Fixed issue when main js asset was loading in `<head>` instead of before `</body>`
-
 
 ## 0.0.79 – 07.01.2019
 
@@ -402,15 +404,17 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 * Steam is now showing proper username, avatar & profile URL, #346
 * Facebook username is now clickable, #344
 * Improved mobile layouts, #351
-* Now when comments are closed instead of comment form, it says "Comments closed.", replies and edits are not allowed, #347
-* Now possible to choose comment date between relative (e.g. 1 minute ago) and absolute (defined in WordPress's settings), #350
+* Now when comments are closed instead of comment form, it says "Comments closed.", replies and edits are not allowed,
+  # 347
+* Now possible to choose comment date between relative (e.g. 1 minute ago) and absolute (defined in WordPress's
+  settings), #350
 * Added ability to add custom CSS via "Editor" tab in "Settings", #341
 
 **Fixes:**
 
 * Possible fix of issue when error toast was shown about invalid nonce, #342
 * Fixed memory exhaustion caused by integration with WP Users Avatar, #348
-* Fixed issue when some of the websites had styles for bullet points and they were shown in the attachment list 
+* Fixed issue when some of the websites had styles for bullet points and they were shown in the attachment list
 * Fixed issue when core CSS style was loaded before `</body>` instead of `<head>`
 * Fixed issue when reCAPTCHA position did not cache no matter what was set in admin settings
 * Fixed issue when comments failed to load due to missing site key for reCAPTCHA
@@ -421,7 +425,7 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 
 **Fixes:**
 
-* Fixed issue when sending comment did not clear the field, but comment was actually added 
+* Fixed issue when sending comment did not clear the field, but comment was actually added
 * Fixed issue when real-time update did not work properly
 * Fixed issue with anchors in specific comment, e.g. domain.com/page.html/#comment-1
 
@@ -439,7 +443,6 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 * Fixed issue when new comment alert was shown when comment was deleted or on moderation, #335
 * Fixed issue when comment notification was sent for non-comment (related to WooCommerce)
 
-
 ## 0.0.76 – 09.12.2018
 
 **Enhancements:**
@@ -455,7 +458,8 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 * Fixed issue when Mail.Ru did not show as active when enabled
 * Fixed issue when some websites had problem with loading comments or widget in sidebar, #327
 * Fixed issue when user was not notified about new reply when sent from admin panel, #330
-* Possible fix of invalid nonce error when dealing with cache plugins (implemented for: WP Super Cache, WP Rocket, WP Fastest Cache and W3 Total Cache)
+* Possible fix of invalid nonce error when dealing with cache plugins (implemented for: WP Super Cache, WP Rocket, WP
+  Fastest Cache and W3 Total Cache)
 
 ## 0.0.75 – 05.12.2018
 
@@ -501,8 +505,10 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 * Fixed issue when it was not possible to copy long text as it was folding/unfolding on this action, #320
 * Fixed issue when newlines and some of the other issue when user was posing comment as non-admin user
 * Fixed issue when global border radius was not changing based on the settings value
-* Fixed issue when repeating error messages could have been shown in case user tried to use admin's email to login via social, #312
-* Possible fix to the issue when some of the users experienced problems with real time notification about new comments, #310
+* Fixed issue when repeating error messages could have been shown in case user tried to use admin's email to login via
+  social, #312
+* Possible fix to the issue when some of the users experienced problems with real time notification about new comments,
+  # 310
 
 **Other:**
 
@@ -525,14 +531,11 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 
 * Added missing translation for subscription form
 
-
 ## 0.0.71 – 13.11.2018
-
 
 **Fixes:**
 
 * Fixed 500 error on latest version
-
 
 ## 0.0.70 – 13.11.2018
 
@@ -541,7 +544,8 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 * Added ability to see list of ratings in "Rating" submenu
 * Added ability to see list of subscribers in "Subscribers" submenu
 * Added ability to see list of emails in "Emails" submenu
-* Added transliteration for username, now instead of having `{socialname}_{username}`, it would be prettier, e.g. john_doe. Current usernames would be converted accordingly, #298
+* Added transliteration for username, now instead of having `{socialname}_{username}`, it would be prettier, e.g.
+  john_doe. Current usernames would be converted accordingly, #298
 * Added "All In One WP Security" to the list of possible problems as it may cause failure to load comments, #284
 * Subscription form: Better visual design for subscription form, #294
 * Subscription form: guest users can now subscribe but need to confirm it by provided email, #294
@@ -571,9 +575,11 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 
 * WooCommerce support, #280 (credits to @artikus11)
 * Added new option to show/hide list of available social networks under WordPress' native login form, #150
-* Added new shortcode `[anycomment_socials]` to "Shortcodes" tab to display list of available social to login in custom place
+* Added new shortcode `[anycomment_socials]` to "Shortcodes" tab to display list of available social to login in custom
+  place
 * Added new option to show/hide admin bar for regular users and those who used social network, #290, #233
-* Added moderation icon besides comment owner name to point to the admin that this comment is waiting to be moderated, #291
+* Added moderation icon besides comment owner name to point to the admin that this comment is waiting to be moderated,
+  # 291
 * Added edited icon besides comment owner name to show users that comment was edited, #243 (credits @mihdan)
 * Subscription: Added ability to subscribe by email to comments for specific post, #71
 * Subscription: Added ability customize email template, #71
@@ -585,7 +591,6 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 * Fixed issue when user agreement checkbox was misaligned on some of the websites
 * Fixed issue when dropdown was too narrow and some options were not seen well, #289
 * Fixed issue when links and other tags were missing attributes (e.g. `<a>` was missing href)
-
 
 ## 0.0.67 – 01.11.2018
 
@@ -604,9 +609,9 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 * Fixed issue when plugin was conflicting with jQuery which caused problems for sticky headers, sliders, etc, #274
 * Fixed issue when facebook URL was longer then 100 chars. Now such URLs will be added to user meta, #285
 * Minor fixes to CSS for proper alignment of elements
-* Fixed issue when some websites had problems that they saved the post and some of the tags or attributes were not saved (kses issue)
+* Fixed issue when some websites had problems that they saved the post and some of the tags or attributes were not
+  saved (kses issue)
 * Fixed issue when comments were not put on hold when matched stop words
-
 
 ## 0.0.66 – 26.10.2018
 
@@ -616,19 +621,23 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 * JavaScript bundle is now having async to speed-up loading of comments, #256 (credits @mihdan)
 * Added ability to define comments background color, border radius, outside (margin) and inside (padding) space, #249
 * nofollow for link in plugin copyright, #249 (credits @artikus11)
-* User is not alerted when comment was added in case when "Moderate first" option is enabled, as not users thought that comment was not send and sent duplicates, #249 (credits @artikus11)
+* User is not alerted when comment was added in case when "Moderate first" option is enabled, as not users thought that
+  comment was not send and sent duplicates, #249 (credits @artikus11)
 * Added ability to add admin links to all moderated comments or to single one, #246
 
 **Fixes:**
 
 * Fixed issue when on update of the comment, previous text was recovered, #249
-* Fixed issue with comments which are not wrapped with `<p>` tag causing them to have different line height then other comments, #249
+* Fixed issue with comments which are not wrapped with `<p>` tag causing them to have different line height then other
+  comments, #249
 * Fixed issue when button border radius was also changing it for "Author" label, #249
 * Fixed AnyComment logo design in the footer of comments, #249 (credits @artikus11)
-* Fixed issue when social icons could be not well aligned when custom designed is used and global font size is bigger then usual, #250 (credits @artikus11)
+* Fixed issue when social icons could be not well aligned when custom designed is used and global font size is bigger
+  then usual, #250 (credits @artikus11)
 * Corrected description for reCAPTCHA integration about "Invisible" type, #264 (credits @LDSgent)
 * Fixed issue when email queue table was having incorrect structure which caused issue with email notifications, #266
-* Fixed issue when send/save comment button was disabled on error and user could submit form again,  #260 (credits @mihdan)
+* Fixed issue when send/save comment button was disabled on error and user could submit form again, #260 (credits
+  @mihdan)
 * Fixed issue when "or as guest" part was showing even when "Only social" option was chosen, #253
 
 ## 0.0.65 – 22.10.2018
@@ -658,7 +667,6 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 
 * Fixed issue with rating, some of the users said that they could not rate posts more then once, #235
 
-
 ## 0.0.63 – 17.10.2018
 
 **Fixes:**
@@ -675,12 +683,12 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 
 * Fixed issue when comment moderation was on, but they were still showing to the end user, #223
 * Changed Product to Article for rating as provides clearer idea about the content inside, #220
-* Fixed issue when scrolling to comments section or to specific comment was not working and was throwing console error, #219
+* Fixed issue when scrolling to comments section or to specific comment was not working and was throwing console error,
+  # 219
 * Fixed issue when users were unable to place rating as migration failed to create rating table from 0.0.61, #217
 * Fixed issue when user was able to send empty comment before even typing anything, #226
 * Fixed issue when user could click two times on send comment button and duplicate comment would be sent, #218
 * Fixed issue when on some websites REST API requests were cached, #216, #224
-
 
 ## 0.0.61 – 15.10.2018
 
@@ -696,7 +704,8 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 * Fixed issue with comment dates when they were displaying e.g. "2 hours ago" even though comment was just posted, #208
 * Fixed issue when non-admin user was unable to send some of the custom formatting from editor, #210
 * Fixed issue when some clients have new MySQL version and `utf8mb4_unicode_520_ci` is no longer support, #211
-* Fixed issue when close button of the gallery was not seen because of admin bar being over it (when user is logged in), #209
+* Fixed issue when close button of the gallery was not seen because of admin bar being over it (when user is logged in),
+  # 209
 * Added missing set-up instructions per social network, #215
 * Fixed issue when non-owner of the comment could see edit and delete actions (they did not work anyways), #203
 * Fixed issue when comment was liked and after refresh it was still showing no likes, #152
@@ -709,7 +718,6 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 * New fresh look of admin interface (new look for form fields, fixed font sizes, etc)
 * Added better color picker in admin, #168
 
-
 **Fixes:**
 
 * Fixed issue when update comment and then reply action still was on the update action when sending comment, #205
@@ -719,8 +727,10 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 
 **Enhancements:**
 
-* Now when option "show alert on new comment" is on, new comment will be show automatically, without a need to click on the alert message
-* Added "Tools" tab for having different helpers from plugin. Ability to drop cache, open comments for all posts, pages, any post type, WooCommerce and see debug information
+* Now when option "show alert on new comment" is on, new comment will be show automatically, without a need to click on
+  the alert message
+* Added "Tools" tab for having different helpers from plugin. Ability to drop cache, open comments for all posts, pages,
+  any post type, WooCommerce and see debug information
 
 **Fixes:**
 
@@ -730,10 +740,12 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 * Fixed issue when table for managing notification emails was not created, #196
 * All tables which come from plugin now prefixed as defined by config, #200
 * Now editor styles also adapt to custom styles defined in "Design" tag (e.g. font family, font size, etc), #195
-* Fixed issue when some themes have special styles for `<p>` or `<ul>` tag which caused comment text to be weirdly formatted, #202
+* Fixed issue when some themes have special styles for `<p>` or `<ul>` tag which caused comment text to be weirdly
+  formatted, #202
 * Fixed issue when user was not moved to the editor on reply/edit/update comment action, #191
 * Fixed issue when option "show alert on new comment" was shown to the user who sent the comment, #193
-* Fixed issue when user was able to send empty comment text because editor leaves some underlying `<p>` tag which is visually invisible and therefore looks like empty comment, #197
+* Fixed issue when user was able to send empty comment text because editor leaves some underlying `<p>` tag which is
+  visually invisible and therefore looks like empty comment, #197
 * Fixed issue when remembered comment did not recover after page refresh, #201
 * Fixed issue when admin did not receive email notification about new comment from guest users, #194
 
@@ -741,19 +753,19 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 
 * Corrected Russian translation for option to clean editor formatting, #192
 
-
 ## 0.0.58 – 04.10.2018
 
 **Enhancements:**
 
 * Added left side highlight of a comment when clicked on "replied to" link and when user comes from email, #170
-* [Comment editor] Enhanced editor, now possible to use: bold, italics, underline, quote, order/unordered list and link, #47
+* [Comment editor] Enhanced editor, now possible to use: bold, italics, underline, quote, order/unordered list and link,
+  # 47
 * [Comment editor] Ability to choose what editor options are available or disable toolbar completely, #47
-* Comment read more now considers content height instead of length as it includes HTML and website can be wide, which breaks logic of content length, #105
+* Comment read more now considers content height instead of length as it includes HTML and website can be wide, which
+  breaks logic of content length, #105
 * Added "*" for name and email fields to point that they are important to enter
 * Send comment button is toggled as disabled when agreement is not accepted (for guest and authorized users)
 * Added Russian translation for lightbox, #187
-
 
 **Fixes:**
 
@@ -761,7 +773,8 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 * Fixed issue when some websites had broken CSS styles after activating plugin, #177
 * Fixed issue when guest users were not able to submit uploaded documents, #175
 * Fixed issue when "Login with:" was displayed even thought none of the socials were enabled, #166
-* Now when comments is deleted, trashed/untrashed, marked as spam, status changed, its cache will be dropped and it will display on frontend accordingly, #162
+* Now when comments is deleted, trashed/untrashed, marked as spam, status changed, its cache will be dropped and it will
+  display on frontend accordingly, #162
 * Fixed broken header notice on installation (sorry guys, I know it sucks)
 * Fixed issue when comment attachment was not really deleted when comment was permanently deleted
 
@@ -771,12 +784,15 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 
 * Added ability to disable WordPress from login options in "Socials" -> "WordPress", #154
 
-* [Gallery] Ability to preview image in the gallery (can use LEFT-RIGHT arrow keys to iterate through images, ESC to close gallery), #147
+* [Gallery] Ability to preview image in the gallery (can use LEFT-RIGHT arrow keys to iterate through images, ESC to
+  close gallery), #147
 * [Gallery] After image or file is uploaded, they will be added as small block below the comment box, #147
-* [Gallery] Images are now handled smarter: original source is kept as it is and small thumbnail is cropped from original source as a preview, #147
+* [Gallery] Images are now handled smarter: original source is kept as it is and small thumbnail is cropped from
+  original source as a preview, #147
 * [Gallery] Ability to delete file when adding/updating comment (file will be erased from DB and filesystem), #147
 
-* Removed ability to choose predefined themes and no more support for dark theme in favor of customizer. However, white theme is kept as the default one, #155
+* Removed ability to choose predefined themes and no more support for dark theme in favor of customizer. However, white
+  theme is kept as the default one, #155
 
 > The support of dark theme was a bit pain in the ass. So we sat and thought it would be better if give control over the theme to you.
 > Give ability to drag & drop some of the elements, change colors, sized, etc. However it will come a bit further, for now a few new design options will be added.
@@ -787,24 +803,31 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 **Fixes:**
 
 * Added missing Russian translation for "Sorting"
-* Fixed situation when one user with two social networks and same email address was always logged in with the first recorded social
-
+* Fixed situation when one user with two social networks and same email address was always logged in with the first
+  recorded social
 
 ## 0.0.56 – 17.09.2018
 
 **Enhancements:**
 
-* Comments are now nested up to 3 levels, any further replies will be added without further nesting. Two benefits: easier to maintain mobile view + easier to follow conversation
+* Comments are now nested up to 3 levels, any further replies will be added without further nesting. Two benefits:
+  easier to maintain mobile view + easier to follow conversation
 * Child comments are now having "reply to {name}" where {name} is the name of the person to whom reply is made
-* Comments are now cached. This will help to limit number of requests to the database, load comments faster & help people who have limited resource environments
-* From now on, plugin will crop original avatar from social into smaller version, which will increase loading speed of comment and take less disc space (existing avatar will be enhanced automatically for you), #149
-* Converted sorting dropdown to multi dropdown. Now it has sorting option & logout link. When user is guest, it only has sorting options, #145
-* When user registered via default WordPress form, and the same user is trying to authenticate using via social (using same email), he will see error message that he needs to use regular login form in this case, #143
-* Integration tab now has option to add reCAPTCHA to comment form (for all, guests or authenticated users only, choose theme, etc), #146
+* Comments are now cached. This will help to limit number of requests to the database, load comments faster & help
+  people who have limited resource environments
+* From now on, plugin will crop original avatar from social into smaller version, which will increase loading speed of
+  comment and take less disc space (existing avatar will be enhanced automatically for you), #149
+* Converted sorting dropdown to multi dropdown. Now it has sorting option & logout link. When user is guest, it only has
+  sorting options, #145
+* When user registered via default WordPress form, and the same user is trying to authenticate using via social (using
+  same email), he will see error message that he needs to use regular login form in this case, #143
+* Integration tab now has option to add reCAPTCHA to comment form (for all, guests or authenticated users only, choose
+  theme, etc), #146
 * Added guides in Russian & English on how to set-up reCAPTCHA, #146
 * Added ability to change border radius of avatars, #148
 * Added WordPress icon as authorization option in social list, #131
-* Added ability to choose default avatar (when user does not have any avatar). Currently possible to choose default from AnyComment or ones available from [Gravatar](https://en.gravatar.com/site/implement/images/), #138
+* Added ability to choose default avatar (when user does not have any avatar). Currently possible to choose default from
+  AnyComment or ones available from [Gravatar](https://en.gravatar.com/site/implement/images/), #138
 * Small cosmetic style changes
 
 **Fixes:**
@@ -822,20 +845,22 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 * Improved mobile layout, #106
 * Improved speed of theming, now x1.5 faster to generate custom styles
 * Added logout link to logged in client, #133
-* Added ability to customize generated notification email (only for  admin and reply for now), #97
+* Added ability to customize generated notification email (only for admin and reply for now), #97
 * Added "Shortcodes" tab. It will have list of available shortcodes, #139
-* Added a helper notice to admins & moderators about closed comments per post, globally or if post is password protected (comments did not show in this case), #142
+* Added a helper notice to admins & moderators about closed comments per post, globally or if post is password
+  protected (comments did not show in this case), #142
 * Added ability to rearrange guest form fields or remove unwanted, #125
 * Added ability to define default sorting (ascending or descending order), #85
 
 **Fixes:**
 
 * Fixed notice message in admin, #132
-* Fixed issue when "load on scroll" option was active and comments did not load on short pages because it was not possible to scroll, #135
+* Fixed issue when "load on scroll" option was active and comments did not load on short pages because it was not
+  possible to scroll, #135
 * Fixed issue when custom styles were ignored as dark theme was selected
 * JavaScript & Css assets are not loaded on the page, when comments are disabled or post is password protected
-* Fixed issue when user was trying to login using the social network with same email as one of the existing account. It caused no problem, but redirect to page and user was not logged in, #29
-
+* Fixed issue when user was trying to login using the social network with same email as one of the existing account. It
+  caused no problem, but redirect to page and user was not logged in, #29
 
 ## 0.0.54 – 06.09.2018
 
@@ -858,24 +883,32 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 **Fixes:**
 
 * Small fixes to translations regarding options to show/hide user URL
-* Fix for main plugin shortcode, now use `[anycomment include="true"]` to include comments on custom place (reported by Ivan)
+* Fix for main plugin shortcode, now use `[anycomment include="true"]` to include comments on custom place (reported by
+  Ivan)
 
 ## 0.0.52 – 03.09.2018
 
 **Enhancements:**
 
-* Ability to customize styles of the plugin in the frontend (e.g. color of button, text size, color, avatar sizes, etc). Check out "Settings" -> "Design" tab , #113
+* Ability to customize styles of the plugin in the frontend (e.g. color of button, text size, color, avatar sizes, etc).
+  Check out "Settings" -> "Design" tab , #113
 * Files: attach files by dragging into the comment area, #68
 * Files: attach files via by clicking on small photo icon in the top right of the comment text field, #68
 * Files: ability to allow/disallow file upload by guest users, #68
-* Files: plugin will add URL of the uploaded file to the comment field (when there is already some comment text, URL will be appended), #68
-* Files: option to define comma-separated list of allowed MIME types (e.g. .jpg, .png) or even as image/* for all images and audio/* for audios, #68
+* Files: plugin will add URL of the uploaded file to the comment field (when there is already some comment text, URL
+  will be appended), #68
+* Files: option to define comma-separated list of allowed MIME types (e.g. .jpg, .png) or even as image/* for all images
+  and audio/* for audios, #68
 * Files: added list of uploaded files in the admin (possible to delete, paginate, etc), #68
-* When user logs out from admin top bar or somewhere else, he is going to be redirected back to post comment section instead of a login page, #122
-* Added some text above list social icons as some of the users were confused and thought these were sharing buttons, #123
-* Added "Possible Problems" to dashboard to help admin to figure out about possible problems or conflicts with other plugins, #117
+* When user logs out from admin top bar or somewhere else, he is going to be redirected back to post comment section
+  instead of a login page, #122
+* Added some text above list social icons as some of the users were confused and thought these were sharing buttons,
+  # 123
+* Added "Possible Problems" to dashboard to help admin to figure out about possible problems or conflicts with other
+  plugins, #117
 * When some comment is remembered the comment field will expand automatically after the page has loaded
-* Now "Read more", "Show less" link below long comment as some users were a bit confused that it is possible to expand comment by clicking on its text, #118
+* Now "Read more", "Show less" link below long comment as some users were a bit confused that it is possible to expand
+  comment by clicking on its text, #118
 * Ability to attach Tweets from Twitter directly in the comment by adding link to it, #96
 
 **Fixes:**
@@ -899,26 +932,36 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 
 **Enhancements**
 
-* News of plugin in the right sidebar inside console are display per your blog language. For now English and Russian supported
-* Likes are now shown to guest users, however they do not have ability to like. When liked by guest, plugin will show alert about requirement to login, #108
+* News of plugin in the right sidebar inside console are display per your blog language. For now English and Russian
+  supported
+* Likes are now shown to guest users, however they do not have ability to like. When liked by guest, plugin will show
+  alert about requirement to login, #108
 * Removed submenu from main menu in admin. Now all of the submenus can be found as tabs inside the dashboard
 * "Settings" tab in admin is now split into specific configuration tabs: General, Design, Moderation & Notifications
-* Now possible to specify #comments, #to-comments or #load-comments (e.g. https://yourwebsite.com/cool-post/#comments) to move users screen to comment section
+* Now possible to specify #comments, #to-comments or #load-comments (e.g. https://yourwebsite.com/cool-post/#comments)
+  to move users screen to comment section
 * Added proper subject to each type of email (e.g. sent to admin and to user as reply)
 * Added option to make video or image link as attachment, #87
 * Added option to make links in comment clickable or not, #83
 
 **Fixes:**
 
-* Added [Facebook guide](https://anycomment.io/en/api-facebook/) details regarding "Status" & HTTPs requirement & fixed other guides, also added instruction on how and where to find "Callback URI", #102
+* Added [Facebook guide](https://anycomment.io/en/api-facebook/) details regarding "Status" & HTTPs requirement & fixed
+  other guides, also added instruction on how and where to find "Callback URI", #102
 * Cosmetic style corrections (fixed height/alignment/decoration of button, make inline guest inputs 100%), #104
-* Fixed issue when link in news sidebar lead to 404 page,  #109
-* Plugin was not showing comment box until option to show comment was enabled and at least one social was configured. Now this logic is a bit different (plugin allows guest users), so now only required to enable option to show comment box, #112
-* Some users were confused with dropdowns in the admin, as they did not have any visuals, such as triangle to see that there is a list of options
+* Fixed issue when link in news sidebar lead to 404 page, #109
+* Plugin was not showing comment box until option to show comment was enabled and at least one social was configured.
+  Now this logic is a bit different (plugin allows guest users), so now only required to enable option to show comment
+  box, #112
+* Some users were confused with dropdowns in the admin, as they did not have any visuals, such as triangle to see that
+  there is a list of options
 * When load on scroll is enabled and user comes from email his screen was not moved directly to the comment, #103
-* When user was logged in via social network, he was redirected back to the top of the post. Now he is being moved to comment section
-* Fixed issue with `trim()` warning (only some users experienced such problem) near avatars in Dashboard & Comments page in admin
-* Fixed issue when emails about comment reply were not send to guest users (as it was not planned to have guest form). Now we have, so should support it
+* When user was logged in via social network, he was redirected back to the top of the post. Now he is being moved to
+  comment section
+* Fixed issue with `trim()` warning (only some users experienced such problem) near avatars in Dashboard & Comments page
+  in admin
+* Fixed issue when emails about comment reply were not send to guest users (as it was not planned to have guest form).
+  Now we have, so should support it
 * Fixed dark theme CSS styles as after recent update of styles they got broken
 
 **Other:**
@@ -928,7 +971,6 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 ## 0.0.49 – 24.08.2018
 
 * Cosmetic fixes of form: avatar was not shown for logged in user & button was not properly aligned
-
 
 ## 0.0.48 – 23.08.2018
 
@@ -955,8 +997,8 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 * Leave comment as guest, via social or both. Ability to define this from admin, #94
 * New comment form layout for guest users, social icons, #94
 * When guest user entered name, email and/or website, it will be remembered - no need to type every time
-* Added warning about [Clearfy](https://wordpress.org/plugins/clearfy/) (only when activated) in the dashboard as some users reported to have problems with it, #95
-
+* Added warning about [Clearfy](https://wordpress.org/plugins/clearfy/) (only when activated) in the dashboard as some
+  users reported to have problems with it, #95
 
 **Fixes:**
 
@@ -984,7 +1026,8 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 * Better layout for plugin news in admin, `New` label is shown for articles which are not older then 2 weeks, #62
 * Added caching for news in dashboard (no need to load them every time) and limited to 3
 * New design for setting up social networks, now tabbed, #64
-* Added guides English & Russian guides for Vkontakte, Facebook, Twitter, Google, GitHub, Odnoklassniki, Instagram, Twitch, Dribbble to help you with configurations, #66
+* Added guides English & Russian guides for Vkontakte, Facebook, Twitter, Google, GitHub, Odnoklassniki, Instagram,
+  Twitch, Dribbble to help you with configurations, #66
 * Added base plugin shortcode - `[anycomment]` to displays comment box, #67
 * Now links, images or videos (e.g. YouTube, Rutube) displayed as attachments under comment text, #69
 * Long comment text will be limited in height, by clicking on text will allow to expand it, #73
@@ -994,7 +1037,8 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 * Clicking on the "Reply" button in the email, will redirect user directly to the reply in the comments section, #81
 * Removed iframe, now comments rendered directly on the page = comments can be searched by crawlers = better SEO, #80
 * Option to define interval to check for new comments, #82
-* Option to define list of comma-separated words. If one of them match comment text, it will be marked for moderation, #86
+* Option to define list of comma-separated words. If one of them match comment text, it will be marked for moderation,
+  # 86
 * Comment text field is now expanding automatically when you start typing new comment/edit existing/replying to someone
 * Option to notify administrator by email about new comment, #77
 
@@ -1016,7 +1060,8 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 **Enhancements:**
 
 * Comment send button is now changing text based on action (edit/reply/send)
-* Ability to specify User Agreement URL (used to collect consents from users to moderate personal information), text & URL is shown to guest users below list of available authorization options, #56
+* Ability to specify User Agreement URL (used to collect consents from users to moderate personal information), text &
+  URL is shown to guest users below list of available authorization options, #56
 * Ability to delete personal or any comment if user has moderate permission, #59
 * Moved social URL to the name of the user, better user experience (when enabled to show URLs)
 
@@ -1028,6 +1073,7 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 * Options to enable/disabled show user social profile URL was ignored
 
 ## 0.0.35 – 20.07.2018
+
 > **Important note:**
 > Plugin was completely rewritten to React. It was required as on the very early stage it had a lot of JavaScript, partly merged with HTML).
 > Logic behind plugin stays the same, we even added a few improvements and fixes, hope you like the change.
@@ -1040,7 +1086,8 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 * Now possible to see number of likes per comment (`/wp-admin/edit-comments.php`) & user (`/wp-admin/users.php`), #43
 * All settings moved to dashboard tabs (pages are still available, no worries), #38
 * Mark new comment to be moderated first or be approved immediately, #50
-* Ability to choose whether to show social profile URL in comments (when show is chosen, mini social icon in the bottom right corner will be clickable), #51
+* Ability to choose whether to show social profile URL in comments (when show is chosen, mini social icon in the bottom
+  right corner will be clickable), #51
 * Added new column "Social URL" in `users.php` which displays user's social profile URL
 
 **Fixes:**
@@ -1050,10 +1097,12 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 * Fixed issue when first & last name was not recorded in user profile
 
 ## 0.0.33 – 16.07.2018
+
 * Fixed problem with array syntax support on PHP version 5.5, #49
 * Fixed possible XSS in the comment
 
 ## 0.0.32 – 10.07.2018
+
 * introducing comment likes, #35
 * minified CSS, to save some loading time
 * ability to define default user role on creation (registration via plugin), #37
@@ -1063,9 +1112,12 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 * and other small bug fixes & improvements
 
 ## 0.0.2 – 01.07.2018
+
 * admin OR moderator was unable to edit comment as it was too old
-* ability to specify number of default comments to load. The same settings applies to number of comment loaded per page, when there are more comments on post/page then specified in settings
-* plugin is not enabled until you specify at least one social network, even thought you set plugin to be ON in general settings, #11
+* ability to specify number of default comments to load. The same settings applies to number of comment loaded per page,
+  when there are more comments on post/page then specified in settings
+* plugin is not enabled until you specify at least one social network, even thought you set plugin to be ON in general
+  settings, #11
 * refactoring of comments logic towards native WordPress REST
 * ability to update any comment if user has `moderate_comments` or `edit_comment` capability (no time limit)
 * ability to update personal comment within 5 minutes
@@ -1073,17 +1125,20 @@ which caused error `Incorrect signature` when incorrect key was specified, #388
 * added two new authorization methods: GitHub & Odnoklassniki
 * comment text box was overflowing on long texts, #22
 * better responsiveness of dashboard layout, #32
-* avatars uploaded locally to escape problem when some social medias were blocking access to avatar after token expiration, #14
+* avatars uploaded locally to escape problem when some social medias were blocking access to avatar after token
+  expiration, #14
 * display most recent news from plugin, #31
 * other small bug fixes and improvements
 * moved completely towards REST architecture
 
 ## 0.0.1 - 24.06.2018
+
 * First Release
 * Options to specify API details (secrets, etc) for social authorization: Vk, Twitter, Facebook, Google
 * Integrated with [WP User Avatar](https://wordpress.org/plugins/wp-user-avatar/)
 * Authorize via VK, Twitter, Facebook, Google
-* date when comment is left is based on website's language. List of supported languages can be seen [here](https://github.com/hustcc/timeago.js/tree/master/src/lang)
+* date when comment is left is based on website's language. List of supported languages can be
+  seen [here](https://github.com/hustcc/timeago.js/tree/master/src/lang)
 * comment count at the top updated automatically when new comment added
 * add comments with AJAX, no need to refresh the page
 * ability to reply to nested comments up to 2 levels
