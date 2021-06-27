@@ -1,11 +1,13 @@
 <?php
 
-namespace AnyComment\Web;
+namespace AnyComment\Controller;
 
 use AnyComment\Helpers\Url;
 use AnyComment\AnyCommentCore;
 use AnyComment\Base\BaseObject;
 use AnyComment\Helpers\AnyCommentInflector;
+use function is_user_logged_in;
+use function wp_redirect;
 
 /**
  * Class BaseController is a base controller which handles web requests.

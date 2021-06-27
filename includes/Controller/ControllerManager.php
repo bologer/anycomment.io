@@ -4,7 +4,7 @@ namespace AnyComment\Controller;
 
 use AnyComment\AnyCommentCore;
 use AnyComment\Base\BaseObject;
-use AnyComment\Web\BaseController;
+use AnyComment\Controller\BaseController;
 use AnyComment\Helpers\AnyCommentInflector;
 
 /**
