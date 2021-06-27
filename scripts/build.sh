@@ -20,7 +20,6 @@ rsync -arv --cvs-exclude \
     --exclude='.gitignore' \
     --exclude='assets/src' \
     --exclude='scripts' \
-    --exclude='reactjs' \
     --exclude='test' \
     --exclude='CHANGELOG.md' \
     --exclude='README.md' \
