@@ -67,4 +67,27 @@ class Url
 
         return $admin_url . '&' . $normalized_url;
     }
+
+	/**
+	 * Ensures URL safe to redirect back to source page of requests by
+	 * creating relative path from given URL, query and fragment if needed.
+	 *
+	 * @param string $redirectUrl Redirect URL to be processed.
+	 *
+	 * @return string
+	 */
+	public static function ensureRelativePath( $redirectUrl ) {
+		$urlFragments = parse_url( $redirectUrl );
+
+		$safeUrl = $urlFragments['path'];
+		if ( array_key_exists( 'query', $urlFragments ) ) {
+			$safeUrl .= '?' . $urlFragments['query'];
+		}
+
+		if ( array_key_exists( 'fragment', $urlFragments ) ) {
+			$safeUrl .= '#' . $urlFragments['fragment'];
+		}
+
+		return $safeUrl;
+	}
 }

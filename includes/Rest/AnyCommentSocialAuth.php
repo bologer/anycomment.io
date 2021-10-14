@@ -7,6 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use AnyComment\AnyCommentCore;
+use AnyComment\Helpers\Url;
 use WP_REST_Request;
 use WP_Error;
 use WP_User;
@@ -159,7 +160,7 @@ class AnyCommentSocialAuth {
 	 * @return mixed
 	 */
 	public function process_socials( WP_REST_Request $request ) {
-		$redirect        = $request->get_param( 'redirect' );
+		$redirect        = Url::ensureRelativePath($request->get_param( 'redirect' ) );
 		$social          = $request->get_param( 'social' );
 		$cookie_redirect = self::COOKIE_REDIRECT;
 
@@ -233,6 +234,7 @@ class AnyCommentSocialAuth {
 		wp_redirect( $redirect );
 		exit();
 	}
+
 
 	/**
 	 * Get provider name based on provided social key.

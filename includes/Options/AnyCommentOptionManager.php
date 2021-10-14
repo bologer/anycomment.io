@@ -3,6 +3,8 @@
 namespace AnyComment\Options;
 
 
+use AnyComment\Helpers\Url;
+
 class AnyCommentOptionManager
 {
     /**
@@ -102,7 +104,7 @@ class AnyCommentOptionManager
                 ], 60);
             }
 
-            wp_redirect(isset($_POST['redirect']) ? $_POST['redirect'] : '/');
+            wp_redirect(isset($_POST['redirect']) ? Url::ensureRelativePath($_POST['redirect']) : '/');
             exit();
         });
     }
