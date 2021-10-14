@@ -16,7 +16,7 @@ class AnyCommentLoader {
 	 */
 	public static $load = [
 		// Rest
-		'AnyComment\Rest\AnyCommentRestComment',
+		'AnyComment\Rest\CommentController',
 		'AnyComment\Rest\AnyCommentRestEmbed',
 		'AnyComment\Rest\AnyCommentRestServiceSync',
 		'AnyComment\Rest\AnyCommentRestLikes',

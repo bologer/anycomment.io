@@ -7,8 +7,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use AnyComment\AnyCommentCore;
+use AnyComment\Domain\User\CreateUserLogin;
+use AnyComment\Domain\User\UserLoginService;
+use Hybridauth\Hybridauth;
 use WP_REST_Request;
 use WP_Error;
+use WP_REST_Server;
 use WP_User;
 use WP_Comment;
 
@@ -27,7 +31,7 @@ use Hybridauth\User\Profile;
 /**
  * AC_SocialAuth helps to process website authentication.
  */
-class AnyCommentSocialAuth {
+class AnyCommentSocialAuth extends AnyCommentRestController {
 	/**
 	 * Different social types.
 	 * Used for routing, images, etc.
@@ -125,113 +129,86 @@ class AnyCommentSocialAuth {
 	public function __construct() {
 		// When only guests allowed, social should not be allowed
 		if ( ! AnyCommentGenericSettings::is_form_type_guests() ) {
-			$this->init_rest_route();
+			$this->namespace = 'anycomment/v1';
+			$this->rest_base = 'user';
+
+
+			add_action( 'rest_api_init', [ $this, 'register_routes' ] );
+			remove_filter( 'comment_text', 'wpautop', 30 );
 		}
 	}
 
-	/**
-	 * Get REST namespace.
-	 * @return string
-	 */
-	private static function get_rest_namespace() {
-		return sprintf( '%s/%s', static::$rest_prefix, static::$rest_version );
+	public function register_routes() {
+		register_rest_route( $this->namespace, '/' . $this->rest_base . '/login', [
+			[
+				'methods'  => WP_REST_Server::READABLE,
+				'callback' => [ $this, 'login' ],
+				'args'     => $this->get_collection_params(),
+			],
+		] );
+	}
+
+	public function close_window() {
+		echo <<<JS
+window.close();
+JS;
+		exit();
 	}
 
 	/**
-	 * Used to initiate REST routes to log in client, etc.
-	 */
-	private function init_rest_route() {
-		add_action( 'rest_api_init', function () {
-			$namespace = static::get_rest_namespace();
-			$route     = '/auth/(?P<social>\w[\w\s]*)/';
-			register_rest_route( $namespace, $route, [
-				'methods'  => 'GET',
-				'callback' => [ $this, 'process_socials' ],
-			] );
-		} );
-	}
-
-	/**
-	 * Main method to process social-like request to authentication, etc.
-	 *
 	 * @param WP_REST_Request $request
-	 *
-	 * @return mixed
 	 */
-	public function process_socials( WP_REST_Request $request ) {
-		$redirect        = $request->get_param( 'redirect' );
-		$social          = $request->get_param( 'social' );
-		$cookie_redirect = self::COOKIE_REDIRECT;
+	public function login( $request ) {
+		$social = $request->get_param( 'social' );
+		$token  = $request->get_param( 'token' );
 
 		if ( ! $this->social_exists( $social ) || is_user_logged_in() ) {
-			wp_redirect( $redirect );
-			exit();
+			$this->close_window();
 		}
 
-
-		if ( $redirect !== null ) {
-			setcookie( $cookie_redirect, $redirect, time() + 3600 );
-		} else {
-			$redirectCookie = isset( $_COOKIE[ $cookie_redirect ] ) ?
-				$_COOKIE[ $cookie_redirect ] :
-				null;
-
-			if ( false !== strpos( $redirectCookie, 'wp-login.php' ) ) {
-				$redirectCookie = home_url( '/wp-admin/' );
-			} else {
-				// Add GET param to bast cache on redirect back to post
-				$get_params     = parse_url( $redirectCookie, PHP_URL_QUERY );
-				$redirectCookie .= ( ! empty( $get_params ) ? '&' : '?' ) . 'ac=' . uniqid();
-
-				// Add anchor
-				$anchor = parse_url( $redirectCookie, PHP_URL_FRAGMENT );
-				if ( $redirectCookie !== null && empty( $anchor ) ) {
-					$redirectCookie .= '#comments';
-				}
-			}
-
-			$redirect = $redirectCookie !== null ? $redirectCookie : '/';
+		$cookieName = 'token';
+		if ( $token !== null ) {
+			setcookie( $cookieName, $token, strtotime( '+5 minutes' ), '/', '', false, false );
 		}
 
 		try {
-			$this->prepare_auth();
 			$adapter = $this->authenticate( $social );
+			$token   = isset( $_COOKIE[ $cookieName ] ) ? $_COOKIE[ $cookieName ] : null;
+			setcookie( $cookieName, '', - 1 );
+
+			$userProfile = $adapter->getUserProfile();
+			if ( ! $userProfile instanceof Profile ) {
+				$this->close_window();
+			}
+
+			/** @var UserLoginService $service */
+			$service = AnyCommentCore::getContainer()->get( UserLoginService::class );
+
+			$user = $service->login( new CreateUserLogin(
+				$social,
+				$userProfile->identifier,
+				isset( $userProfile->email ) ? $userProfile->email : null,
+				$userProfile->displayName,
+				$userProfile->firstName,
+				$userProfile->lastName,
+				$userProfile->profileURL,
+				$userProfile->photoURL
+			) );
+			$this->process_authentication( $userProfile, $social );
+
+			$cache = AnyCommentCore::cache()->getItem( $token );
+			$cache->set( $user->ID );
+			$cache->save();
+			$this->close_window();
 		} catch ( \Exception $exception ) {
 			AnyCommentCore::logger()->error( sprintf(
-				'Failed to login user on %s via "%s" social, exception: "%s", trace %s',
-				$redirect,
+				'Failed to login user via "%s" social, exception: "%s", trace %s',
 				$social,
 				$exception->getMessage(),
 				$exception->getTraceAsString()
 			) );
-
-			wp_redirect( $redirect );
-			exit();
+			$this->close_window();
 		}
-
-		$user = $adapter->getUserProfile();
-
-		if ( ! $user instanceof Profile ) {
-			wp_redirect( $redirect );
-			exit();
-		}
-
-		if ( session_status() == PHP_SESSION_NONE ) {
-			session_start();
-		}
-
-		$auth_result = $this->process_authentication( $user, $social );
-
-		if ( $auth_result instanceof WP_Error ) {
-			static::addError( $auth_result->get_error_message() );
-		}
-
-		if ( session_status() == PHP_SESSION_ACTIVE ) {
-			session_destroy();
-		}
-
-		wp_redirect( $redirect );
-		exit();
 	}
 
 	/**
@@ -291,10 +268,15 @@ class AnyCommentSocialAuth {
 	}
 
 	/**
-	 * Prepare authentication.
-	 * @throws \Hybridauth\Exception\InvalidArgumentException on failure.
+	 * Authenticate a user.
+	 *
+	 * @param string $social Social network name.
+	 *
+	 * @return bool|\Hybridauth\Adapter\AdapterInterface
+	 * @throws \Hybridauth\Exception\InvalidArgumentException
+	 * @throws \Hybridauth\Exception\UnexpectedValueException
 	 */
-	private function prepare_auth() {
+	private function authenticate( $social ) {
 		$config = [
 			'providers' => [
 				self::$providers[ self::SOCIAL_VKONTAKTE ]     => [
@@ -410,26 +392,10 @@ class AnyCommentSocialAuth {
 			],
 		];
 
-		$this->_auth = new \Hybridauth\Hybridauth( $config );
-	}
-
-	/**
-	 * Authenticate a user.
-	 *
-	 * @param string $social Social network name.
-	 *
-	 * @return bool|\Hybridauth\Adapter\AdapterInterface
-	 * @throws \Hybridauth\Exception\InvalidArgumentException
-	 * @throws \Hybridauth\Exception\UnexpectedValueException
-	 */
-	private function authenticate( $social ) {
-		if ( $this->_auth === null ) {
-			return false;
-		}
-
+		$hybridAuth   = new Hybridauth( $config );
 		$providerName = $this->get_provider_name( $social );
 
-		return $this->_auth->authenticate( $providerName );
+		return $hybridAuth->authenticate( $providerName );
 	}
 
 	/**
@@ -714,12 +680,7 @@ class AnyCommentSocialAuth {
 			$user_meta[ self::META_SOCIAL_TYPE ] = $social;
 		}
 
-		$user = $this->get_user_by( $field, $value );
-
-		if ( $user !== false && ! AnyCommentUserMeta::is_social_login( $user ) ) {
-			return new WP_Error( 'use_wordpress_to_login', __( "Please use normal login form, as this email is associated with a WordPress user.", "anycomment" ) );
-		}
-
+		$user              = $this->get_user_by( $field, $value );
 		$found_user_social = AnyCommentUserMeta::get_social_type( $user );
 
 		if ( $found_user_social !== null && $field === 'email' && $found_user_social !== $social ) {
@@ -746,25 +707,6 @@ class AnyCommentSocialAuth {
 			$userId = $user->ID;
 			$this->update_user_meta( $user->ID, $user_meta );
 		}
-
-		wp_clear_auth_cookie();
-		wp_set_current_user( $userId );
-		wp_set_auth_cookie( $userId, true );
-
-		/**
-		 * Fires after user successfully logged in.
-		 *
-		 * @param WP_User $user Instance of user being logged in.
-		 * @param string $cookie_post_url URL to post retrieved from cookie. NULL when unable to get post URL.
-		 *
-		 * @since 0.0.76
-		 *
-		 * @package
-		 */
-		$cookie_post_url = isset( $_COOKIE[ self::COOKIE_REDIRECT ] ) ? $_COOKIE[ self::COOKIE_REDIRECT ] : null;
-		do_action( 'anycomment/user/logged_in', $user, $cookie_post_url );
-
-		return true;
 	}
 
 	/**
@@ -1183,5 +1125,13 @@ class AnyCommentSocialAuth {
 		if ( static::getErrors( false ) !== null ) {
 			setcookie( self::COOKIE_ERROR_STORAGE, null, - 1, '/' );
 		}
+	}
+
+	/**
+	 * Get REST namespace.
+	 * @return string
+	 */
+	private static function get_rest_namespace() {
+		return sprintf( '%s/%s', static::$rest_prefix, static::$rest_version );
 	}
 }

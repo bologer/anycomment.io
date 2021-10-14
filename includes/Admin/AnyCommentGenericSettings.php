@@ -1176,34 +1176,7 @@ EOT;
 	private static function combine_styles_and_process() {
 		$scssPath = AnyComment()->plugin_path() . '/assets/theming/';
 
-		$variables = [
-			'global-margin'                   => AnyCommentGenericSettings::get_global_margin(),
-			'global-padding'                  => AnyCommentGenericSettings::get_global_padding(),
-			'global-background-color'         => AnyCommentGenericSettings::get_global_background_color(),
-			'global-background-border-radius' => AnyCommentGenericSettings::get_global_background_border_radius(),
-			'global-radius'                   => AnyCommentGenericSettings::get_design_global_radius(),
 
-			'font-size'   => AnyCommentGenericSettings::get_design_font_size(),
-			'font-family' => AnyCommentGenericSettings::get_design_font_family(),
-			'link-color'  => AnyCommentGenericSettings::get_design_link_color(),
-			'text-color'  => AnyCommentGenericSettings::get_design_text_color(),
-
-			'semi-hidden-color' => AnyCommentGenericSettings::get_design_semi_hidden_color(),
-
-			'form-field-background-color' => AnyCommentGenericSettings::get_design_form_field_background_color(),
-
-			'attachment-color'            => AnyCommentGenericSettings::get_design_attachment_color(),
-			'attachment-background-color' => AnyCommentGenericSettings::get_design_attachment_background_color(),
-
-			'avatar-border-radius' => AnyCommentGenericSettings::get_design_avatar_radius(),
-			'parent-avatar-size'   => AnyCommentGenericSettings::get_design_parent_avatar_size(),
-			'child-avatar-size'    => AnyCommentGenericSettings::get_design_child_avatar_size(),
-
-			'btn-radius'                  => AnyCommentGenericSettings::get_design_button_radius(),
-			'btn-color'                   => AnyCommentGenericSettings::get_design_button_color(),
-			'btn-background-color'        => AnyCommentGenericSettings::get_design_button_background_color(),
-			'btn-background-color-active' => AnyCommentGenericSettings::get_design_button_background_color_active(),
-		];
 
 		$compiler = new ScssCompiler();
 

@@ -12,7 +12,7 @@ interface CommentRepositoryInterface {
 	 *
 	 * @return array
 	 */
-	public function findByPostAndConditions( int $postId, int $limit = 30, $offset = 0 );
+	public function findByPostAndConditions( $postId, $limit = 30, $offset = 0 );
 
 	/**
 	 * Get number of posts.
@@ -21,5 +21,5 @@ interface CommentRepositoryInterface {
 	 *
 	 * @return int
 	 */
-	public function countByPostId( int $postId );
+	public function countByPostId( $postId );
 }

@@ -3,7 +3,7 @@
 namespace AnyComment\Repository;
 
 class CommentRepository implements CommentRepositoryInterface {
-	public function findByPostAndConditions( int $postId, int $limit = 30, $offset = 0 ) {
+	public function findByPostAndConditions( $postId, $limit = 30, $offset = 0 ) {
 		global $wpdb;
 
 		return $wpdb->get_results(
@@ -12,7 +12,7 @@ class CommentRepository implements CommentRepositoryInterface {
 		);
 	}
 
-	public function countByPostId( int $postId ) {
+	public function countByPostId( $postId ) {
 		global $wpdb;
 		$count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $wpdb->comments WHERE comment_post_ID = %d", $postId ) );
 

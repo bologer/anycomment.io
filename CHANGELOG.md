@@ -8,6 +8,8 @@
 
 **Changed:**
 
+- Main bundle size is now under 1mb, also it imitates anycomment.io script
+
 **Removed:**
 
 - Hook `anycomment/client/embed-native-script` was deleted due to changes in architecture

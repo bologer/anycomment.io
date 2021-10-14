@@ -20,7 +20,7 @@ class AnyCommentSocials {
 	 *
 	 * @return array|null List of socials or NULL in case when no socials defined or so.
 	 */
-	public static function get_all ( $redirectUrl = null ) {
+	public static function get_all( $redirectUrl = null ) {
 		$socials = [
 			AnyCommentSocialAuth::SOCIAL_VKONTAKTE     => [
 				'slug'    => AnyCommentSocialAuth::SOCIAL_VKONTAKTE,
@@ -137,5 +137,21 @@ class AnyCommentSocials {
 		}
 
 		return $socials;
+	}
+
+	/**
+	 * Get list of active social slugs.
+	 * @return array<string>
+	 */
+	public static function get_all_slugs_only() {
+		$socials   = self::get_all();
+		$slugsOnly = [];
+		foreach ( $socials as $social ) {
+			if ( $social['visible'] ) {
+				$slugsOnly[] = $social['slug'];
+			}
+		}
+
+		return $slugsOnly;
 	}
 }
