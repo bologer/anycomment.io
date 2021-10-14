@@ -256,7 +256,7 @@ class AnyCommentSocialSettings extends AnyCommentOptionManager {
 				               ->text()
 				               ->set_id( self::OPTION_FACEBOOK_APP_SECRET )
 				               ->set_title( __( 'App Secret', "anycomment" ) )
-				               ->set_description( sprintf( __( 'Enter app secret. Can be found in the list of <a href="%" target="_blank">apps</a>', "anycomment" ), 'https://developers.facebook.com/apps/' ) )
+				               ->set_description( sprintf( __( 'Enter app secret. Can be found in the list of <a href="%s" target="_blank">apps</a>', "anycomment" ), 'https://developers.facebook.com/apps/' ) )
 				               ->set_after( function () {
 					               $callback_label = __( 'Callback URL', 'anycomment' );
 					               $callback_url   = AnyCommentSocialAuth::get_facebook_callback();

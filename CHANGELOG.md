@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.2 – 14.10.2021
+
+**Fixes:**
+
+- Security fix regarding safe redirect
+- WordPress version bump
+- Fixed errors occurred in PHP8
+
+
 ## 0.2.1 – 20.10.2020
 
 **Fixes:**
