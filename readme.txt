@@ -5,7 +5,7 @@ Tags: comments, ajax comments, comment, comment moderation, comments seo, anycom
 Requires at least: 4.7
 Tested up to: 5.5
 Requires PHP: 5.6
-Stable tag: 0.2.3
+Stable tag: 0.2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/
 
@@ -188,7 +188,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 
 == Changelog ==
 
-= 0.2.3 – 24.10.2021 =
+= 0.2.4 – 24.10.2021 =
 
 **Fixes:**
 
