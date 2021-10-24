@@ -6,21 +6,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-if ( ! class_exists( 'WP_List_Table', false ) ) {
-	require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
-}
 
-use WP_List_Table;
 use WP_User;
-
 use AnyComment\Models\AnyCommentRating;
-
-use AnyComment\Models\AnyCommentUploadedFiles;
 
 /**
  * Class AnyCommentUploadedFilesTable is used to display list of files in the admin.
  */
-class AnyCommentRatingTable extends WP_List_Table {
+class AnyCommentRatingTable extends AnyCommentTable {
 	/**
 	 * Site ID to generate the Users list table for.
 	 *
@@ -54,15 +47,10 @@ class AnyCommentRatingTable extends WP_List_Table {
 		$count      = $wpdb->get_var( $countQuery );
 
 
-		$orderby = ( ! empty( $_GET['orderby'] ) ) ? $_GET['orderby'] : 'created_at';
+		$orderby = $this->getOrderByParam( 'created_at' );
+		$order   = $this->getOrderParam();
 
-		$order = isset( $_GET['order'] ) ? strtoupper( trim( $_GET['order'] ) ) : 'DESC';
-
-		if ( $order !== null && $order !== 'ASC' && $order !== 'DESC' ) {
-			$order = null;
-		}
-
-		$query = "SELECT * FROM $table ORDER BY $orderby $order";
+		$query = "SELECT * FROM {$table} ORDER BY {$orderby} {$order}";
 
 		$per_page     = 10;
 		$current_page = $this->get_pagenum();
@@ -120,13 +108,13 @@ class AnyCommentRatingTable extends WP_List_Table {
 				}
 
 				$super_admin = '';
-				$user_html    = get_avatar( $user_object->ID, 25 );
+				$user_html   = get_avatar( $user_object->ID, 25 );
 
 				// Set up the user editing link
 				$edit_link = esc_url( add_query_arg( 'wp_http_referer', urlencode( wp_unslash( $_SERVER['REQUEST_URI'] ) ), get_edit_user_link( $user_object->ID ) ) );
 
 				if ( current_user_can( 'edit_user', $user_object->ID ) ) {
-					$user_html        .= " <strong><a href=\"{$edit_link}\">{$user_object->user_login}</a>{$super_admin}</strong><br />";
+					$user_html       .= " <strong><a href=\"{$edit_link}\">{$user_object->user_login}</a>{$super_admin}</strong><br />";
 					$actions['edit'] = '<a href="' . $edit_link . '">' . __( 'Edit' ) . '</a>';
 				} else {
 					$user_html .= " <strong>{$user_object->user_login}{$super_admin}</strong><br />";
@@ -192,5 +180,12 @@ class AnyCommentRatingTable extends WP_List_Table {
 		);
 
 		return $c;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	protected function orderByColumns() {
+		return [ 'created_at' ];
 	}
 }

@@ -6,19 +6,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-if ( ! class_exists( 'WP_List_Table', false ) ) {
-	require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
-}
 
-use WP_List_Table;
 use WP_User;
-
 use AnyComment\Models\AnyCommentUploadedFiles;
 
 /**
  * Class AnyCommentUploadedFilesTable is used to display list of files in the admin.
  */
-class AnyCommentUploadedFilesTable extends WP_List_Table {
+class AnyCommentUploadedFilesTable extends AnyCommentTable {
 	/**
 	 * Site ID to generate the Users list table for.
 	 *
@@ -46,22 +41,13 @@ class AnyCommentUploadedFilesTable extends WP_List_Table {
 	public function prepare_items() {
 		global $wpdb;
 
-		$table = AnyCommentUploadedFiles::get_table_name();
-
-
+		$table      = AnyCommentUploadedFiles::get_table_name();
 		$countQuery = "SELECT COUNT(*) FROM $table";
 		$count      = $wpdb->get_var( $countQuery );
 
-
-		$orderby = ( ! empty( $_GET['orderby'] ) ) ? $_GET['orderby'] : 'created_at';
-
-		$order = isset( $_GET['order'] ) ? strtoupper( trim( $_GET['order'] ) ) : 'DESC';
-
-		if ( $order !== null && $order !== 'ASC' && $order !== 'DESC' ) {
-			$order = null;
-		}
-
-		$query = "SELECT * FROM $table ORDER BY $orderby $order";
+		$orderby = $this->getOrderByParam( 'created_at' );
+		$order   = $this->getOrderParam();
+		$query   = "SELECT * FROM {$table} ORDER BY {$orderby} {$order}";
 
 		$per_page     = 10;
 		$current_page = $this->get_pagenum();
@@ -190,5 +176,12 @@ class AnyCommentUploadedFilesTable extends WP_List_Table {
 		);
 
 		return $c;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	protected function orderByColumns() {
+		return [ 'created_at' ];
 	}
 }

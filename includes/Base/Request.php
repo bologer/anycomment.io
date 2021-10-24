@@ -8,39 +8,44 @@ namespace AnyComment\Base;
  * @author Alexander Teshabaev <sasha.tesh@gmail.com>
  * @package AnyComment\Base
  */
-class Request extends BaseObject
-{
-    /**
-     * Get specific get param value or the whole array.
-     *
-     * @param null $name Get parameter name.
-     *
-     * @return array|string|null Array GET param is in array format or $name is null. String when GET parameter
-     * is not empty.
-     */
-    public function get($name = null)
-    {
-        if ($name === null) {
-            return $_GET;
-        }
+class Request extends BaseObject {
+	/**
+	 * Get specific get param value or the whole array.
+	 *
+	 * @param null $name Get parameter name.
+	 *
+	 * @return array|string|null Array GET param is in array format or $name is null. String when GET parameter
+	 * is not empty.
+	 */
+	public function get( $name = null ) {
+		if ( $name === null ) {
+			return $_GET;
+		}
 
-        return isset($_GET[$name]) ? $_GET['name'] : null;
-    }
+		if ( ! array_key_exists( $name, $_GET ) ) {
+			return null;
+		}
 
-    /**
-     * Get specific get param value or the whole array.
-     *
-     * @param null $name POST parameter name.
-     *
-     * @return array|string|null Array POST param is in array format or $name is null. String when POST parameter
-     * is not empty.
-     */
-    public function post($name = null)
-    {
-        if ($name === null) {
-            return $_POST;
-        }
+		return $_GET[ $name ];
+	}
 
-        return isset($_POST[$name]) ? $_POST['name'] : null;
-    }
+	/**
+	 * Get specific get param value or the whole array.
+	 *
+	 * @param null $name POST parameter name.
+	 *
+	 * @return array|string|null Array POST param is in array format or $name is null. String when POST parameter
+	 * is not empty.
+	 */
+	public function post( $name = null ) {
+		if ( $name === null ) {
+			return $_POST;
+		}
+
+		if ( ! array_key_exists( $name, $_POST ) ) {
+			return null;
+		}
+
+		return $_POST[ $name ];
+	}
 }

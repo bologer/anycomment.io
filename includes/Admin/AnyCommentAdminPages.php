@@ -93,7 +93,7 @@ class AnyCommentAdminPages extends BaseObject {
 	 */
 	public function enqueue_dashboard_scripts() {
 
-		$page = isset( $_GET['page'] ) ? trim( $_GET['page'] ) : null;
+		$page = isset( $_GET['page'] ) ? trim( sanitize_text_field( $_GET['page'] ) ) : null;
 
 		if ( $page === null ) {
 			return null;
@@ -113,12 +113,12 @@ class AnyCommentAdminPages extends BaseObject {
 		wp_enqueue_style( 'anycomment-admin-roboto-font', 'https://fonts.googleapis.com/css?family=Roboto:300,400,700&amp;subset=cyrillic' );
 
 
-		wp_localize_script('anycomment-main-admin', 'anycomment', [
+		wp_localize_script( 'anycomment-main-admin', 'anycomment', [
 			'tourNextLabel'     => esc_html__( 'Next', 'anycomment' ),
 			'tourPreviousLabel' => esc_html__( 'Back', 'anycomment' ),
 			'tourSkipLabel'     => esc_html__( 'Skip', 'anycomment' ),
 			'tourDoneLabel'     => esc_html__( 'Hide', 'anycomment' ),
-		]);
+		] );
 	}
 
 	/**

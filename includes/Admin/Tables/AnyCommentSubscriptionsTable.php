@@ -6,12 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-if ( ! class_exists( 'WP_List_Table', false ) ) {
-	require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
-}
-
 use AnyComment\Models\AnyCommentSubscriptions;
-use WP_List_Table;
 use WP_User;
 
 
@@ -20,7 +15,7 @@ use WP_User;
  *
  * @since 0.0.70
  */
-class AnyCommentSubscriptionsTable extends WP_List_Table {
+class AnyCommentSubscriptionsTable extends AnyCommentTable {
 	/**
 	 * Site ID to generate the Users list table for.
 	 *
@@ -46,24 +41,14 @@ class AnyCommentSubscriptionsTable extends WP_List_Table {
 	 * @global string $usersearch
 	 */
 	public function prepare_items() {
-		global $wpdb;
-
 		$table = AnyCommentSubscriptions::get_table_name();
 
-
 		global $wpdb;
-
 		$countQuery = "SELECT COUNT(*) FROM $table";
 		$count      = $wpdb->get_var( $countQuery );
 
-
-		$orderby = ( ! empty( $_GET['orderby'] ) ) ? $_GET['orderby'] : 'created_at';
-
-		$order = isset( $_GET['order'] ) ? strtoupper( trim( $_GET['order'] ) ) : 'DESC';
-
-		if ( $order !== null && $order !== 'ASC' && $order !== 'DESC' ) {
-			$order = null;
-		}
+		$orderby = $this->getOrderByParam('created_at');
+		$order = $this->getOrderParam();
 
 		$query = "SELECT * FROM $table ORDER BY $orderby $order";
 
@@ -198,5 +183,12 @@ class AnyCommentSubscriptionsTable extends WP_List_Table {
 		);
 
 		return $c;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	protected function orderByColumns() {
+		return [ 'created_at' ];
 	}
 }

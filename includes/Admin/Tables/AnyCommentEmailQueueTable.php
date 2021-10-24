@@ -6,17 +6,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-if ( ! class_exists( 'WP_List_Table', false ) ) {
-	require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
-}
-
 use AnyComment\Models\AnyCommentEmailQueue;
-use WP_List_Table;
 
 /**
  * Class AnyCommentEmailQueueTable is used to display list of emails in the queue in the admin.
  */
-class AnyCommentEmailQueueTable extends WP_List_Table {
+class AnyCommentEmailQueueTable extends AnyCommentTable {
 	/**
 	 * Site ID to generate the Users list table for.
 	 *
@@ -41,25 +36,17 @@ class AnyCommentEmailQueueTable extends WP_List_Table {
 	 * @global string $role
 	 * @global string $usersearch
 	 */
-	public function prepare_items () {
+	public function prepare_items() {
 		global $wpdb;
 
 		$table = AnyCommentEmailQueue::get_table_name();
 
-
 		$countQuery = "SELECT COUNT(*) FROM $table";
 		$count      = $wpdb->get_var( $countQuery );
 
-
-		$orderby = ( ! empty( $_GET['orderby'] ) ) ? $_GET['orderby'] : 'created_at';
-
-		$order = isset( $_GET['order'] ) ? strtoupper( trim( $_GET['order'] ) ) : 'DESC';
-
-		if ( $order !== null && $order !== 'ASC' && $order !== 'DESC' ) {
-			$order = null;
-		}
-
-		$query = "SELECT * FROM $table ORDER BY $orderby $order";
+		$orderby = $this->getOrderByParam( 'created_at' );
+		$order   = $this->getOrderParam();
+		$query   = "SELECT * FROM {$table} ORDER BY {$orderby} {$order}";
 
 		$per_page     = 10;
 		$current_page = $this->get_pagenum();
@@ -87,14 +74,14 @@ class AnyCommentEmailQueueTable extends WP_List_Table {
 	/**
 	 * {@inheritdoc}
 	 */
-	function no_items () {
-		_e( 'No emails uploaded yet.', 'anycomment' );
+	function no_items() {
+		_e( 'No emails yet.', 'anycomment' );
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	function column_default ( $item, $column_name ) {
+	function column_default( $item, $column_name ) {
 		switch ( $column_name ) {
 			case 'post_ID':
 				$post = get_post( $item[ $column_name ] );
@@ -175,7 +162,7 @@ class AnyCommentEmailQueueTable extends WP_List_Table {
 	/**
 	 * {@inheritdoc}
 	 */
-	function column_cb ( $item ) {
+	function column_cb( $item ) {
 		return sprintf(
 			'<input type="checkbox" name="emails[]" value="%s" />', $item['ID']
 		);
@@ -184,7 +171,7 @@ class AnyCommentEmailQueueTable extends WP_List_Table {
 	/**
 	 * {@inheritdoc}
 	 */
-	function get_bulk_actions () {
+	function get_bulk_actions() {
 		$actions = array(
 			'delete' => __( 'Delete', 'anycomment' ),
 		);
@@ -195,7 +182,7 @@ class AnyCommentEmailQueueTable extends WP_List_Table {
 	/**
 	 * {@inheritdoc}
 	 */
-	function get_sortable_columns () {
+	function get_sortable_columns() {
 		$sortable_columns = [
 			'post_ID'    => [ 'post_ID', false ],
 			'comment_ID' => [ 'comment_ID', false ],
@@ -210,7 +197,7 @@ class AnyCommentEmailQueueTable extends WP_List_Table {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function get_columns () {
+	public function get_columns() {
 		$c = array(
 			'cb'         => '<input type="checkbox" />',
 			'post_ID'    => __( 'Post', 'anycomment' ),
@@ -223,5 +210,12 @@ class AnyCommentEmailQueueTable extends WP_List_Table {
 		);
 
 		return $c;
+	}
+
+	protected function orderByColumns() {
+		return [
+			'created_at',
+			'is_sent'
+		];
 	}
 }
