@@ -321,7 +321,6 @@ class AnyCommentSocialAuth {
 						'id'     => AnyCommentSocialSettings::get_facebook_app_id(),
 						'secret' => AnyCommentSocialSettings::get_facebook_app_secret(),
 					],
-					'adapter'  => '\AnyComment\Providers\Facebook',
 					'callback' => static::get_facebook_callback(),
 				],
 				self::$providers[ self::SOCIAL_TWITTER ]       => [
@@ -379,7 +378,6 @@ class AnyCommentSocialAuth {
 					'keys'     => [
 						'secret' => AnyCommentSocialSettings::get_steam_secret(),
 					],
-					'adapter'  => '\AnyComment\Providers\Steam',
 					'callback' => static::get_steam_callback(),
 				],
 				self::$providers[ self::SOCIAL_YANDEX ] => [
@@ -388,7 +386,6 @@ class AnyCommentSocialAuth {
 						'id'     => AnyCommentSocialSettings::get_yandex_client_id(),
 						'secret' => AnyCommentSocialSettings::get_yandex_client_secret(),
 					],
-					'adapter'  => '\AnyComment\Providers\Yandex',
 					'callback' => static::get_yandex_callback(),
 				],
 				self::$providers[ self::SOCIAL_MAILRU ] => [
