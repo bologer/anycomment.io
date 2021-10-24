@@ -15,15 +15,14 @@
     }
   },
   "scripts": {
-    "init": "./scripts/init.sh",
     "init-dev": "./scripts/init-env.sh dev",
     "init-prod": "./scripts/init-env.sh prod"
   },
   "minimum-stability": "stable",
   "require": {
-    "tedivm/stash": "0.14.*",
+    "tedivm/stash": "^0.16.0",
     "leafo/scssphp": "^0.7.7",
-    "hybridauth/hybridauth": "v3.0.0-rc.9",
+    "hybridauth/hybridauth": "v3.7.1",
     "monolog/monolog": "^1.0",
     "vlucas/phpdotenv": "^4.1"
   }
