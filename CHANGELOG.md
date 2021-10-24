@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.3 – 24.10.2021
+
+**Fixes:**
+
+- Security related fixes 
+- Fixed "Invalid request: versions below 5.81 are deprecated." error
+
 ## 0.2.1 – 20.10.2020
 
 **Fixes:**
