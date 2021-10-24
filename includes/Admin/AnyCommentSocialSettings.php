@@ -256,7 +256,7 @@ class AnyCommentSocialSettings extends AnyCommentOptionManager {
 				               ->text()
 				               ->set_id( self::OPTION_FACEBOOK_APP_SECRET )
 				               ->set_title( __( 'App Secret', "anycomment" ) )
-				               ->set_description( sprintf( __( 'Enter app secret. Can be found in the list of <a href="%" target="_blank">apps</a>', "anycomment" ), 'https://developers.facebook.com/apps/' ) )
+				               ->set_description( sprintf( __( 'Enter app secret. Can be found in the list of <a href="%s" target="_blank">apps</a>', "anycomment" ), 'https://developers.facebook.com/apps/' ) )
 				               ->set_after( function () {
 					               $callback_label = __( 'Callback URL', 'anycomment' );
 					               $callback_url   = AnyCommentSocialAuth::get_facebook_callback();
@@ -1220,6 +1220,67 @@ EOT;
 				AnyCommentSocialAuth::SOCIAL_DRIBBBLE      => 'https://plugin.anycomment.io/en/api-dribbble/',
 				AnyCommentSocialAuth::SOCIAL_STEAM         => 'https://plugin.anycomment.io/en/api-steam/',
 			]
+		];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	protected function save_option_keys() {
+		return [
+			self::OPTION_VK_TOGGLE,
+			self::OPTION_VK_APP_ID,
+			self::OPTION_VK_SECRET,
+
+			self::OPTION_TWITTER_TOGGLE,
+			self::OPTION_TWITTER_CONSUMER_KEY,
+			self::OPTION_TWITTER_CONSUMER_SECRET,
+
+			self::OPTION_FACEBOOK_TOGGLE,
+			self::OPTION_FACEBOOK_APP_ID,
+			self::OPTION_FACEBOOK_APP_SECRET,
+
+			self::OPTION_GOOGLE_TOGGLE,
+			self::OPTION_GOOGLE_CLIENT_ID,
+			self::OPTION_GOOGLE_SECRET,
+
+			self::OPTION_GITHUB_TOGGLE,
+			self::OPTION_GITHUB_CLIENT_ID,
+			self::OPTION_GITHUB_SECRET,
+
+			self::OPTION_OK_TOGGLE,
+			self::OPTION_OK_APP_ID,
+			self::OPTION_OK_APP_KEY,
+			self::OPTION_OK_APP_SECRET,
+
+			self::OPTION_INSTAGRAM_TOGGLE,
+			self::OPTION_INSTAGRAM_CLIENT_ID,
+			self::OPTION_INSTAGRAM_CLIENT_SECRET,
+
+			self::OPTION_TWITCH_TOGGLE,
+			self::OPTION_TWITCH_CLIENT_ID,
+			self::OPTION_TWITCH_CLIENT_SECRET,
+
+			self::OPTION_STEAM_TOGGLE,
+			self::OPTION_STEAM_SECRET,
+
+			self::OPTION_YANDEX_TOGGLE,
+			self::OPTION_YANDEX_CLIENT_ID,
+			self::OPTION_YANDEX_CLIENT_SECRET,
+
+			self::OPTION_MAILRU_TOGGLE,
+			self::OPTION_MAILRU_CLIENT_ID,
+			self::OPTION_MAILRU_CLIENT_SECRET,
+
+			self::OPTION_DRIBBBLE_TOGGLE,
+			self::OPTION_DRIBBBLE_CLIENT_ID,
+			self::OPTION_DRIBBBLE_CLIENT_SECRET,
+
+			self::OPTION_YAHOO_TOGGLE,
+			self::OPTION_YAHOO_APP_ID,
+			self::OPTION_YAHOO_CLIENT_SECRET,
+
+			self::OPTION_WORDPRESS_NATIVE_TOGGLE,
 		];
 	}
 }

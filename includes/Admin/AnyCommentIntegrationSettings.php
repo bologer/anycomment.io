@@ -584,4 +584,28 @@ EOT;
 
 		return $html;
 	}
+
+	/**
+	 * @inheritDoc
+	 */
+	protected function save_option_keys() {
+		return [
+			self::OPTION_ANYCOMMENT_SAAS_COMMENTS_SHOW,
+			self::OPTION_ANYCOMMENT_SAAS_COMMENTS_SYNC,
+			self::OPTION_AKISMET,
+			self::WOOCOMMERCE_REPLACE_FOR_REVIEW,
+			self::OPTION_WP_USER_AVATAR,
+			self::OPTION_RECAPTCHA_TOGGLE,
+			self::OPTION_RECAPTCHA_USER,
+			self::OPTION_RECAPTCHA_USER_ALL,
+			self::OPTION_RECAPTCHA_USER_GUEST,
+			self::OPTION_RECAPTCHA_USER_AUTH,
+			self::OPTION_RECAPTCHA_SITE_KEY,
+			self::OPTION_RECAPTCHA_SITE_SECRET,
+			self::OPTION_RECAPTCHA_THEME,
+			self::OPTION_RECAPTCHA_BADGE,
+		];
+	}
+
+
 }

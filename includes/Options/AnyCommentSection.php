@@ -103,7 +103,7 @@ class AnyCommentSection {
 	}
 
 	/**
-	 * @param string $description
+	 * @param string|\Closure $description
 	 *
 	 * @return $this
 	 */
