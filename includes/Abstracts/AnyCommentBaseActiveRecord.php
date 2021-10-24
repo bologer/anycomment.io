@@ -44,7 +44,7 @@ abstract class AnyCommentBaseActiveRecord {
 	 *
 	 * @return bool|false|int
 	 */
-	public static function deleted_all( $column = 'ID', $search ) {
+	public static function deleted_all( $column, $search ) {
 		global $wpdb;
 
 		if ( empty( $search ) ) {
