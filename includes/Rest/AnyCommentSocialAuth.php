@@ -172,8 +172,8 @@ class AnyCommentSocialAuth {
 		if ( $redirect !== null ) {
 			setcookie( $cookie_redirect, $redirect, time() + 3600 );
 		} else {
-			$redirectCookie = isset( $_COOKIE[ $cookie_redirect ] ) ?
-				$_COOKIE[ $cookie_redirect ] :
+			$redirectCookie = array_key_exists( $cookie_redirect, $_COOKIE ) ?
+				sanitize_text_field( $_COOKIE[ $cookie_redirect ] ) :
 				null;
 
 			if ( false !== strpos( $redirectCookie, 'wp-login.php' ) ) {
@@ -758,7 +758,7 @@ class AnyCommentSocialAuth {
 		 *
 		 * @package
 		 */
-		$cookie_post_url = isset( $_COOKIE[ self::COOKIE_REDIRECT ] ) ? $_COOKIE[ self::COOKIE_REDIRECT ] : null;
+		$cookie_post_url = array_key_exists( self::COOKIE_REDIRECT, $_COOKIE ) ? sanitize_text_field( $_COOKIE[ self::COOKIE_REDIRECT ] ) : null;
 		do_action( 'anycomment/user/logged_in', $user, $cookie_post_url );
 
 		return true;
@@ -1133,7 +1133,7 @@ class AnyCommentSocialAuth {
 	 * @return string|array|null
 	 */
 	public static function getErrors( $decode = true, $andClean = false ) {
-		$errors = isset( $_COOKIE[ self::COOKIE_ERROR_STORAGE ] ) ? $_COOKIE[ self::COOKIE_ERROR_STORAGE ] : null;
+		$errors = array_key_exists( self::COOKIE_ERROR_STORAGE, $_COOKIE ) ? sanitize_text_field( $_COOKIE[ self::COOKIE_ERROR_STORAGE ] ) : null;
 
 		if ( $errors === null ) {
 			return null;

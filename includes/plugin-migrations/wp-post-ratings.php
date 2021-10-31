@@ -1,5 +1,7 @@
 <?php
 
+use AnyComment\Models\AnyCommentRating;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -26,14 +28,14 @@ if ( ! empty( $rating ) ) {
 
 		$tableName = AnyCommentRating::table_name();
 
-		$isSuccess = $wpdb->query( "INSERT INTO $tableName (post_ID, user_ID, rating, ip, user_agent, created_at) VALUES ($postId, $userId, $rating, '$ip', NULL, $timestamp)" );
+		$prepared_sql = $wpdb->prepare( "INSERT INTO $tableName (post_ID, user_ID, rating, ip, user_agent, created_at) VALUES (%d, %d, %f, %s, NULL, %d)", $postId, $userId, $rating, $ip, $timestamp );
+		$isSuccess    = $wpdb->query( $prepared_sql );
 
 		if ( $isSuccess ) {
-			echo "<p>OK: {$rate->rating_id}</p>";
+			echo "<p>OK: " . esc_html( $rate->rating_id ) . "</p>";
 		} else {
-			echo "<p style='color: red;'>FAILED: {$rate->rating_id}</p>";
+			echo "<p style='color: red;'>FAILED: " . esc_html( $rate->rating_id ) . "</p>";
 		}
 
 	}
 }
-?>

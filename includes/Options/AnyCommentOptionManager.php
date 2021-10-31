@@ -78,7 +78,7 @@ abstract class AnyCommentOptionManager {
 
 			add_action( 'admin_notices', function () use ( $type, $message ) {
 				?>
-                <div class="notice notice-<?php echo $type ?> is-dismissible">
+                <div class="notice notice-<?php echo esc_attr( $type ) ?> is-dismissible">
                     <p><?php esc_html_e( $message ) ?></p>
                 </div>
 				<?php
@@ -140,7 +140,7 @@ abstract class AnyCommentOptionManager {
 		$options_to_save = [];
 		$optionKeys      = $this->save_option_keys();
 		foreach ( $optionKeys as $option_key ) {
-			$options_to_save[ $option_key ] = array_key_exists( $option_key, $_POST ) ? $_POST[ $option_key ] : null;
+			$options_to_save[ $option_key ] = array_key_exists( $option_key, $_POST ) ? sanitize_text_field( $_POST[ $option_key ] ) : null;
 		}
 
 		// Removes issue when e.g. ' were changed to \' and after a few saves it was already \\ and so on
@@ -279,8 +279,8 @@ abstract class AnyCommentOptionManager {
 		$i = 0;
 		foreach ( (array) $wp_settings_sections[ $page ] as $section ) {
 			$activeClass = $i === 0 ? 'class="current"' : '';
-			echo '<li ' . $activeClass . ' data-tab="' . esc_attr($section['id']) . '">
-				<a href="#tab-' . esc_attr($section['id']) . '">' . esc_html($section['title']) . '</a>
+			echo '<li ' . $activeClass . ' data-tab="' . esc_attr( $section['id'] ) . '">
+				<a href="#tab-' . esc_attr( $section['id'] ) . '">' . esc_html( $section['title'] ) . '</a>
 				</li>';
 			$i ++;
 		}

@@ -54,9 +54,11 @@ abstract class AnyCommentBaseActiveRecord {
 		$prepared_ids = [];
 
 		if ( is_numeric( $search ) ) {
-			$prepared_ids = intval( $search );
+			$prepared_ids = $wpdb->prepare( '%d', $search );
 		} else if ( is_array( $search ) ) {
-			$prepared_ids = array_map( 'intval', $search );
+			$prepared_ids = array_map( function ( $id ) use ( $wpdb ) {
+				return $wpdb->prepare( '%d', $id );
+			}, $search );
 			$prepared_ids = implode( ',', $prepared_ids );
 		}
 
