@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.5 – 31.10.2021
+
+**Fixes:**
+
+- Security fixes
+
 ## 0.2.4 – 24.10.2021
 
 **Fixes:**
