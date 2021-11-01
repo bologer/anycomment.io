@@ -16,6 +16,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php
 
 		$ids    = isset( $_POST['emails'] ) && ! empty( $_POST['emails'] ) ? $_POST['emails'] : null;
+		if ( is_array( $ids ) ) {
+			$ids = array_map( 'sanitize_text_field', $ids );
+		} else {
+			$ids = sanitize_text_field( $ids );
+		}
+
 		if ( AnyCommentRequest::post( 'action' ) !== '-1' ) {
 			$action = sanitize_text_field( $_POST['action'] );
 		} elseif ( AnyCommentRequest::post( 'action2' ) !== '-1' ) {

@@ -278,8 +278,8 @@ abstract class AnyCommentOptionManager {
 
 		$i = 0;
 		foreach ( (array) $wp_settings_sections[ $page ] as $section ) {
-			$activeClass = $i === 0 ? 'class="current"' : '';
-			echo '<li ' . $activeClass . ' data-tab="' . esc_attr( $section['id'] ) . '">
+			$currentClass = $i === 0 ? esc_attr( 'current' ) : '';
+			echo '<li class="' . $currentClass . '" data-tab="' . esc_attr( $section['id'] ) . '">
 				<a href="#tab-' . esc_attr( $section['id'] ) . '">' . esc_html( $section['title'] ) . '</a>
 				</li>';
 			$i ++;

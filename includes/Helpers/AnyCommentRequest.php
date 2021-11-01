@@ -52,6 +52,6 @@ class AnyCommentRequest {
 	 * @return mixed|null null when name is missing in POST, value otherwise.
 	 */
 	public static function post( $name ) {
-		return isset( $_POST[ $name ] ) ? $_POST[ $name ] : null;
+		return isset( $_POST[ $name ] ) ? sanitize_text_field( $_POST[ $name ] ) : null;
 	}
 }

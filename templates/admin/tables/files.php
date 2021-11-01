@@ -15,7 +15,13 @@ if ( ! defined( 'ABSPATH' ) ) {
         <input type="hidden" name="page" value="anycomment-files">
 		<?php
 
-		$ids    = isset( $_POST['files'] ) && ! empty( $_POST['files'] ) ? $_POST['files'] : null;
+		$ids = isset( $_POST['files'] ) && ! empty( $_POST['files'] ) ? $_POST['files'] : null;
+		if ( is_array( $ids ) ) {
+			$ids = array_map( 'sanitize_text_field', $ids );
+		} else {
+			$ids = sanitize_text_field( $ids );
+		}
+
 		if ( AnyCommentRequest::post( 'action' ) !== '-1' ) {
 			$action = sanitize_text_field( $_POST['action'] );
 		} elseif ( AnyCommentRequest::post( 'action2' ) !== '-1' ) {
