@@ -127,7 +127,7 @@ abstract class AnyCommentOptionManager {
 	 */
 	public function save_form() {
 
-		$nonce = array_key_exists( 'nonce', $_POST ) ? $_POST['nonce'] : null;
+		$nonce = array_key_exists( 'nonce', $_POST ) ? sanitize_text_field( $_POST['nonce'] ) : null;
 		if ( $nonce === null || ! wp_verify_nonce( $nonce, $this->option_name ) ) {
 			return new \WP_Error( '', __( 'Invalid nonce', 'anycomment' ) );
 		}
@@ -278,7 +278,7 @@ abstract class AnyCommentOptionManager {
 
 		$i = 0;
 		foreach ( (array) $wp_settings_sections[ $page ] as $section ) {
-			$currentClass = $i === 0 ? esc_attr( 'current' ) : '';
+			$currentClass = $i === 0 ? sanitize_text_field( esc_attr( 'current' ) ) : '';
 			echo '<li class="' . $currentClass . '" data-tab="' . esc_attr( $section['id'] ) . '">
 				<a href="#tab-' . esc_attr( $section['id'] ) . '">' . esc_html( $section['title'] ) . '</a>
 				</li>';

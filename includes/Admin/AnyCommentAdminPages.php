@@ -93,7 +93,7 @@ class AnyCommentAdminPages extends BaseObject {
 	 */
 	public function enqueue_dashboard_scripts() {
 
-		$page = isset( $_GET['page'] ) ? trim( sanitize_text_field( $_GET['page'] ) ) : null;
+		$page = isset( $_GET['page'] ) ? sanitize_text_field( trim( $_GET['page'] ) ) : null;
 
 		if ( $page === null ) {
 			return null;

@@ -69,7 +69,7 @@ class EmailEndpoints extends BaseObject {
 				// Generate post permalink to redirect user back to the post where he was subscribed
 				$permalink = get_permalink( $token_model->post_ID );
 				$redirect  = false === $permalink ? '/' : $permalink . '#comments';
-				echo '<p>' . $message . '</p>';
+				echo '<p>' . esc_html( $message ) . '</p>';
 				header( "refresh:2;url=$redirect" );
 				exit;
 			}

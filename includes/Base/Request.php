@@ -26,7 +26,7 @@ class Request extends BaseObject {
 			return null;
 		}
 
-		return $_GET[ $name ];
+		return sanitize_text_field( $_GET[ $name ] );
 	}
 
 	/**
@@ -46,6 +46,6 @@ class Request extends BaseObject {
 			return null;
 		}
 
-		return $_POST[ $name ];
+		return sanitize_text_field( $_POST[ $name ] );
 	}
 }

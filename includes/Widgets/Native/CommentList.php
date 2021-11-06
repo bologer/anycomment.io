@@ -20,7 +20,7 @@ class CommentList extends \WP_Widget {
 	 *
 	 * @since 2.8.0
 	 */
-	public function __construct () {
+	public function __construct() {
 		$widget_ops = array(
 			'classname'                   => 'CommentList',
 			'description'                 => __( 'Your site&#8217;s most recent comments displayed using AnyComment.' ),
@@ -33,11 +33,11 @@ class CommentList extends \WP_Widget {
 	/**
 	 * Outputs the default styles for the Recent Comments widget.
 	 *
-	 * @param  array $instance
+	 * @param array $instance
 	 *
 	 * @return string
 	 */
-	public function compile_styles ( $instance ) {
+	public function compile_styles( $instance ) {
 		$mtime = filemtime( AnyComment()->plugin_path() . '/assets/widgets/comment-list/comment-list.scss' );
 
 		$array_hash   = [];
@@ -80,13 +80,14 @@ class CommentList extends \WP_Widget {
 	/**
 	 * Outputs the content for the current Recent Comments widget instance.
 	 *
-	 * @since 2.8.0
-	 *
 	 * @param array $args Display arguments including 'before_title', 'after_title',
 	 *                        'before_widget', and 'after_widget'.
 	 * @param array $instance Settings for the current Recent Comments widget instance.
+	 *
+	 * @since 2.8.0
+	 *
 	 */
-	public function widget ( $args, $instance ) {
+	public function widget( $args, $instance ) {
 		$output = $this->compile_styles( $instance );
 
 		if ( ! isset( $args['widget_id'] ) ) {
@@ -105,10 +106,11 @@ class CommentList extends \WP_Widget {
 		/**
 		 * Filters the arguments for the Recent Comments widget.
 		 *
-		 * @see WP_Comment_Query::query() for information on accepted arguments.
-		 *
 		 * @param array $comment_args An array of arguments used to retrieve the recent comments.
 		 * @param array $instance Array of settings for the current widget.
+		 *
+		 * @see WP_Comment_Query::query() for information on accepted arguments.
+		 *
 		 */
 		$comments = get_comments( apply_filters( 'widget_comments_args', array(
 			'number'      => $number,
@@ -175,15 +177,15 @@ EOT;
 	/**
 	 * Handles updating settings for the current Recent Comments widget instance.
 	 *
-	 * @since 2.8.0
-	 *
 	 * @param array $new_instance New settings for this instance as input by the user via
 	 *                            WP_Widget::form().
 	 * @param array $old_instance Old settings for this instance.
 	 *
 	 * @return array Updated settings to save.
+	 * @since 2.8.0
+	 *
 	 */
-	public function update ( $new_instance, $old_instance ) {
+	public function update( $new_instance, $old_instance ) {
 		$instance                          = $old_instance;
 		$instance['title']                 = sanitize_text_field( $new_instance['title'] );
 		$instance['number']                = absint( $new_instance['number'] );
@@ -200,11 +202,12 @@ EOT;
 	/**
 	 * Outputs the settings form for the Recent Comments widget.
 	 *
+	 * @param array $instance Current settings.
+	 *
 	 * @since 2.8.0
 	 *
-	 * @param array $instance Current settings.
 	 */
-	public function form ( $instance ) {
+	public function form( $instance ) {
 		$title           = isset( $instance['title'] ) ? $instance['title'] : '';
 		$number          = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
 		$read_more_limit = isset( $instance['read_more_limit'] ) ? absint( $instance['read_more_limit'] ) : 10;
@@ -218,50 +221,50 @@ EOT;
         <p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'anycomment' ); ?></label>
             <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>"
                    name="<?php echo $this->get_field_name( 'title' ); ?>" type="text"
-                   value="<?php echo esc_attr( $title ); ?>"/></p>
+                   value="<?php echo esc_attr( sanitize_text_field( $title ) ); ?>" /></p>
 
         <p>
             <label for="<?php echo $this->get_field_id( 'read_more_limit' ); ?>"><?php _e( 'Number words before "...":', 'anycomment' ); ?></label>
             <input class="tiny-text" id="<?php echo $this->get_field_id( 'read_more_limit' ); ?>"
                    name="<?php echo $this->get_field_name( 'read_more_limit' ); ?>" type="number" step="1" min="1"
-                   value="<?php echo $read_more_limit; ?>" size="3"/></p>
+                   value="<?php echo esc_attr( sanitize_text_field( $read_more_limit ) ); ?>" size="3" /></p>
 
         <p>
             <label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of comments to show:', 'anycomment' ); ?></label>
             <input class="tiny-text" id="<?php echo $this->get_field_id( 'number' ); ?>"
                    name="<?php echo $this->get_field_name( 'number' ); ?>" type="number" step="1" min="1"
-                   value="<?php echo $number; ?>" size="3"/></p>
+                   value="<?php echo esc_attr( sanitize_text_field( $number ) ); ?>" size="3" /></p>
 
         <p>
             <label for="<?php echo $this->get_field_id( 'scss_font_size' ); ?>"><?php _e( 'Font size:', 'anycomment' ); ?></label>
             <input class="widefat" id="<?php echo $this->get_field_id( 'scss_font_size' ); ?>"
                    name="<?php echo $this->get_field_name( 'scss_font_size' ); ?>" type="text"
-                   value="<?php echo $font_size; ?>"/></p>
+                   value="<?php echo esc_attr( sanitize_text_field( $font_size ) ); ?>" /></p>
 
         <p>
             <label for="<?php echo $this->get_field_id( 'scss_background_color' ); ?>"><?php _e( 'Background color:', 'anycomment' ); ?></label>
             <input class="widefat" id="<?php echo $this->get_field_id( 'scss_background_color' ); ?>"
                    name="<?php echo $this->get_field_name( 'scss_background_color' ); ?>" type="text"
-                   value="<?php echo $background_color; ?>"/></p>
+                   value="<?php echo esc_attr( sanitize_text_field( $background_color ) ); ?>" /></p>
 
         <p>
             <label for="<?php echo $this->get_field_id( 'scss_comment_color' ); ?>"><?php _e( 'Comment text color:', 'anycomment' ); ?></label>
             <input class="widefat" id="<?php echo $this->get_field_id( 'scss_comment_color' ); ?>"
                    name="<?php echo $this->get_field_name( 'scss_comment_color' ); ?>" type="text"
-                   value="<?php echo $comment_color; ?>"/></p>
+                   value="<?php echo esc_attr( sanitize_text_field( $comment_color ) ); ?>" /></p>
 
         <p>
             <label for="<?php echo $this->get_field_id( 'scss_author_color' ); ?>"><?php _e( 'Author name color:', 'anycomment' ); ?></label>
             <input class="widefat" id="<?php echo $this->get_field_id( 'scss_author_color' ); ?>"
                    name="<?php echo $this->get_field_name( 'scss_author_color' ); ?>" type="text"
-                   value="<?php echo $author_color; ?>"/></p>
+                   value="<?php echo esc_attr( sanitize_text_field( $author_color ) ); ?>" /></p>
 
 
         <p>
             <label for="<?php echo $this->get_field_id( 'scss_avatar_size' ); ?>"><?php _e( 'Author avatar size:', 'anycomment' ); ?></label>
             <input class="widefat" id="<?php echo $this->get_field_id( 'scss_avatar_size' ); ?>"
                    name="<?php echo $this->get_field_name( 'scss_avatar_size' ); ?>" type="text"
-                   value="<?php echo $avatar_size; ?>"/></p>
+                   value="<?php echo esc_attr( sanitize_text_field( $avatar_size ) ); ?>" /></p>
 		<?php
 	}
 }

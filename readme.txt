@@ -3,7 +3,7 @@ Contributors: ateshabaev
 Donate link: https://anycomment.io/site/tariffs
 Tags: comments, ajax comments, comment, comment moderation, comments seo, anycomment, jetpack, wpdiscuz, cackle, disqus, hypercomments, vuukle
 Requires at least: 4.7
-Tested up to: 5.5
+Tested up to: 5.8
 Requires PHP: 5.6
 Stable tag: 0.2.6
 License: GPLv2 or later

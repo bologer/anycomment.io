@@ -64,7 +64,7 @@ HTML;
 	}
 
 	$config_attributes = [
-		'root'     => $root_id,
+		'root'     => sanitize_text_field( $root_id ),
 		'app_id'   => $app_id,
 		'language' => AnyCommentLinkHelper::get_saas_languages(),
 		'preview'  => $preview,
@@ -99,7 +99,7 @@ HTML;
 	$config = json_encode( $config_attributes );
 	?>
     <div id="comments" class="comments-area">
-        <div id="<?= $root_id ?>"></div>
+        <div id="<?= esc_attr( sanitize_text_field( $root_id ) ) ?>"></div>
     </div>
     <script>
         AnyComment = window.AnyComment || [];
