@@ -34,9 +34,8 @@
 
 						if ( $content !== null ) {
 							$content = wp_strip_all_tags( $content, true );
-
 							$content = wp_trim_words( $content, 10, '...' );
-
+							$content = esc_html( $content );
 							echo $content;
 						}
 						?>

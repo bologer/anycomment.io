@@ -29,9 +29,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 		}
 		if ( $action !== null && $ids !== null && $action === 'delete' ) {
 			if ( \AnyComment\Models\AnyCommentEmailQueue::deleted_all( 'ID', $ids ) ) {
-				$messages = '<div id="message" class="updated notice is-dismissible"><p>' . __( 'Selected emails were deleted.', 'anycomment' ) . '</p></div>';
+				$messages = '<div id="message" class="updated notice is-dismissible"><p>' . esc_html__( 'Selected emails were deleted.', 'anycomment' ) . '</p></div>';
 			} else {
-				$messages = '<div id="message" class="error notice is-dismissible"><p>' . __( 'Failed to delete selected emails.', 'anycomment' ) . '</p></div>';
+				$messages = '<div id="message" class="error notice is-dismissible"><p>' . esc_html__( 'Failed to delete selected emails.', 'anycomment' ) . '</p></div>';
 			}
 			echo $messages;
 		}

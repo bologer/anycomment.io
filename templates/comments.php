@@ -99,7 +99,7 @@ HTML;
 	$config = json_encode( $config_attributes );
 	?>
     <div id="comments" class="comments-area">
-        <div id="<?= esc_attr( sanitize_text_field( $root_id ) ) ?>"></div>
+        <div id="<?php echo esc_attr( sanitize_text_field( $root_id ) ) ?>"></div>
     </div>
     <script>
         AnyComment = window.AnyComment || [];

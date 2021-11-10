@@ -16,7 +16,7 @@ $current_tab = array_key_exists( 'tab', $_GET ) ? sanitize_text_field( $_GET['ta
     <h2><?php echo __( 'Dashboard', 'anycomment' ) ?></h2>
 
     <div id="anycomment-wrapper"
-         data-intro-show="<?= AnyCommentUserTour::was_disabled( $current_tab ) ? '0' : '1' ?>"
+         data-intro-show="<?php echo AnyCommentUserTour::was_disabled( $current_tab ) ? '0' : '1' ?>"
          data-current-tab="<?php echo( isset( $_GET['page'] ) ? sanitize_text_field( $current_tab ) : '' ) ?>">
         <div class="anycomment-notice anycomment-success">
 			<?php echo sprintf( __( 'Please take a few seconds and <a href="%s" target="_blank">rate us on WordPress.org</a>. You are the one who can help to grow and make this plugin better!',
@@ -57,7 +57,7 @@ $current_tab = array_key_exists( 'tab', $_GET ) ? sanitize_text_field( $_GET['ta
 						$i = 0;
 						foreach ( $links as $link ) {
 							$separator = $i !== 0 ? ' · ' : '';
-							echo $separator . '<a href="' . $link["url"] . '" target="_blank">' . $link['text'] . '</a>';
+							echo $separator . '<a href="' . esc_attr( $link["url"] ) . '" target="_blank">' . esc_html( $link['text'] ) . '</a>';
 							$i ++;
 						}
 						?>

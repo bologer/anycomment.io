@@ -138,8 +138,8 @@ ORDER BY day ASC";
 		$data   = [];
 
 		foreach ( $queryResult as $result ) {
-			$labels[] = date_i18n( 'd F', $result->unix_timestamp );
-			$data[]   = $result->count;
+			$labels[] = date_i18n( 'd F', sanitize_text_field( $result->unix_timestamp ) );
+			$data[]   = sanitize_text_field( $result->count );
 		}
 
 		// Default get number of days in a month

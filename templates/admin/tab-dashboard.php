@@ -14,11 +14,11 @@ use AnyComment\Admin\AnyCommentStatistics;
             <div class="grid-x align-center">
                 <div class="cell shrink">
                     <img src="<?php echo AnyComment()->plugin_url() . '/assets/img/main-character.svg' ?>"
-                         alt="<?php echo __('Commentators', 'anycomment') ?>"><br><br>
+                         alt="<?php echo __( 'Commentators', 'anycomment' ) ?>"><br><br>
 
                     <div class="anycomment-dashboard__splitter-half-description">
                         <span><?php echo AnyCommentStatistics::get_commentor_count() ?></span>
-                        <span><?php echo __('Commentators', 'anycomment') ?></span>
+                        <span><?php echo __( 'Commentators', 'anycomment' ) ?></span>
                     </div>
                 </div>
             </div>
@@ -27,10 +27,10 @@ use AnyComment\Admin\AnyCommentStatistics;
             <div class="grid-x align-center">
                 <div class="cell shrink">
                     <img src="<?php echo AnyComment()->plugin_url() . '/assets/img/dashboard-comments.svg' ?>"
-                         alt="<?php echo __('All Comments', 'anycomment') ?>">
+                         alt="<?php echo __( 'All Comments', 'anycomment' ) ?>">
                     <div class="anycomment-dashboard__splitter-half-description">
                         <span><?php echo AnyCommentStatistics::get_approved_comment_count() ?></span>
-                        <span><?php echo __('All Comments', 'anycomment') ?></span>
+                        <span><?php echo __( 'All Comments', 'anycomment' ) ?></span>
                     </div>
                 </div>
             </div>
@@ -39,16 +39,16 @@ use AnyComment\Admin\AnyCommentStatistics;
 
     <div class="grid-x grid-margin-x anycomment-dashboard__statistics">
         <div class="cell auto anycomment-dashboard__statistics-graph">
-            <h2><?php echo __('Overal Statistics', 'anycomment') ?></h2>
-            <?php
+            <h2><?php echo __( 'Overal Statistics', 'anycomment' ) ?></h2>
+			<?php
 
-            $comments = AnyCommentStatistics::get_comment_data();
-            $users    = AnyCommentStatistics::get_commentor_data();
-            ?>
+			$comments = AnyCommentStatistics::get_comment_data();
+			$users    = AnyCommentStatistics::get_commentor_data();
+			?>
             <canvas id="anycomment-dashboard-chart"></canvas>
 
             <script>
-                let chart = setInterval(function () {
+                let chart = setInterval(function() {
 
                     if ('Chart' in window) {
                         Chart.defaults.global.defaultFontColor = '#c8c8c8';
@@ -56,14 +56,14 @@ use AnyComment\Admin\AnyCommentStatistics;
                         Chart.defaults.global.defaultFontSize = 18;
 
                         // legend
-                        Chart.defaults.global.legend.position = 'bottom'
+                        Chart.defaults.global.legend.position = 'bottom';
                         let c = new Chart(document.getElementById("anycomment-dashboard-chart").getContext('2d'), {
                             type: 'line',
                             data: {
-                                labels: <?php echo $comments['label'] ?>,
+                                labels: <?php echo esc_html( $comments['label'] ) ?>,
                                 datasets: [
                                     {
-                                        label: '<?php echo __('Comments', 'anycomment') ?>',
+                                        label: '<?php echo __( 'Comments', 'anycomment' ) ?>',
                                         data: <?php echo $comments['data'] ?>,
                                         fill: false,
                                         borderColor: '#f1b927',
@@ -74,7 +74,7 @@ use AnyComment\Admin\AnyCommentStatistics;
                                         pointHitRadius: 30,
                                     },
                                     {
-                                        label: '<?php echo __('Users', 'anycomment') ?>',
+                                        label: '<?php echo __( 'Users', 'anycomment' ) ?>',
                                         data: <?php echo $users['data'] ?>,
                                         fill: false,
                                         borderColor: '#ec4568',
@@ -115,23 +115,23 @@ use AnyComment\Admin\AnyCommentStatistics;
             </script>
         </div>
         <div class="large-4 medium-4 small-12 anycomment-dashboard__statistics-userlist">
-            <h2><?php echo __('Most Active Users', 'anycomment') ?></h2>
-            <?php
-            $users = AnyCommentStatistics::get_most_active_users();
+            <h2><?php echo __( 'Most Active Users', 'anycomment' ) ?></h2>
+			<?php
+			$users = AnyCommentStatistics::get_most_active_users();
 
-            if ( ! empty($users)): ?>
+			if ( ! empty( $users ) ): ?>
                 <ul>
-                    <?php foreach ($users as $user): ?>
+					<?php foreach ( $users as $user ): ?>
                         <li> <span class="anycomment-dashboard__statistics-userlist-avatar"
-                                   style="background-image:url('<?php echo \AnyComment\Rest\AnyCommentSocialAuth::get_user_avatar_url($user->user_id) ?>')"></span>
-                            <?php echo $user->name ?>
+                                   style="background-image:url('<?php echo \AnyComment\Rest\AnyCommentSocialAuth::get_user_avatar_url( $user->user_id ) ?>')"></span>
+							<?php echo $user->name ?>
                             <span class="anycomment-dashboard__statistics-userlist-counter"><?php echo $user->comment_count ?></span>
                         </li>
-                    <?php endforeach; ?>
+					<?php endforeach; ?>
                 </ul>
-            <?php else: ?>
-                <p><?php echo __('No users yet', 'anycomment') ?></p>
-            <?php endif; ?>
+			<?php else: ?>
+                <p><?php echo __( 'No users yet', 'anycomment' ) ?></p>
+			<?php endif; ?>
         </div>
     </div>
 </div>

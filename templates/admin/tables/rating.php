@@ -30,9 +30,9 @@ use AnyComment\Helpers\AnyCommentRequest;
 		}
 		if ( $action === 'delete' && ! empty( $ids ) ) {
 			if ( \AnyComment\Models\AnyCommentRating::deleted_all( 'ID', $ids ) ) {
-				$messages = '<div id="message" class="updated notice is-dismissible"><p>' . __( 'Selected ratings were deleted.', 'anycomment' ) . '</p></div>';
+				$messages = '<div id="message" class="updated notice is-dismissible"><p>' . esc_html__( 'Selected ratings were deleted.', 'anycomment' ) . '</p></div>';
 			} else {
-				$messages = '<div id="message" class="error notice is-dismissible"><p>' . __( 'Failed to delete selected ratings.', 'anycomment' ) . '</p></div>';
+				$messages = '<div id="message" class="error notice is-dismissible"><p>' . esc_html__( 'Failed to delete selected ratings.', 'anycomment' ) . '</p></div>';
 			}
 			echo $messages;
 		}

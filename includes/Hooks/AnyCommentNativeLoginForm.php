@@ -19,7 +19,7 @@ class AnyCommentNativeLoginForm extends BaseObject {
 	/**
 	 * @inheritDoc
 	 */
-	public function init () {
+	public function init() {
 		if ( AnyCommentGenericSettings::is_show_socials_in_login_page() ) {
 			add_action( 'login_form', [ $this, 'social_list_login_form' ], 11 );
 		}
@@ -31,7 +31,7 @@ class AnyCommentNativeLoginForm extends BaseObject {
 	 * Used to display list available socials to login as alternative to
 	 * regular login details.
 	 */
-	public function social_list_login_form () {
+	public function social_list_login_form() {
 		$this->social_list( [ 'output' => true ] );
 	}
 
@@ -45,7 +45,7 @@ class AnyCommentNativeLoginForm extends BaseObject {
 	 * - output (default: true) true would `echo` the result HTML, false would `return` it.
 	 * - target_url: (default: current URI) URL where to redirect user after authorization
 	 */
-	public function social_list ( $atts ) {
+	public function social_list( $atts ) {
 		$params = shortcode_atts( array(
 			'only_socials' => false,
 			'output'       => false,
@@ -56,13 +56,12 @@ class AnyCommentNativeLoginForm extends BaseObject {
 		$html    = '';
 
 		if ( ! $params['only_socials'] ) {
-			$word_line = __( 'or use any social:', 'anycomment' );
+			$word_line = esc_html( __( 'or use any social:', 'anycomment' ) );
 			$html      .= <<<HTML
 <div style="margin: 0 0 10px;">
 	<div class="anycomment-socials-preparagraph">$word_line</div>
 </div>
-HTML
-;
+HTML;
 		}
 
 		$html .= $socials;
@@ -81,7 +80,7 @@ HTML
 	 *
 	 * @return string
 	 */
-	public function login_with ( $redirectUrl = null ) {
+	public function login_with( $redirectUrl = null ) {
 
 		$socials = AnyCommentSocials::get_all( $redirectUrl );
 
@@ -90,8 +89,8 @@ HTML
 			if ( ! $social['visible'] ) {
 				continue;
 			}
-			$url          = $social['url'];
-			$label        = $social['label'];
+			$url          = sanitize_text_field( esc_attr( $social['url'] ) );
+			$label        = sanitize_text_field( esc_attr( $social['label'] ) );
 			$src          = AnyComment()->plugin_url() . "/assets/img/socials/$key.svg";
 			$socials_html .= <<<EOT
 <li>

@@ -29,9 +29,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 		}
 		if ( $action !== null && $ids !== null && $action === 'delete' ) {
 			if ( \AnyComment\Models\AnyCommentUploadedFiles::deleted_all( 'ID', $ids ) ) {
-				$messages = '<div id="message" class="updated notice is-dismissible"><p>' . __( 'Files were deleted.', 'anycomment' ) . '</p></div>';
+				$messages = '<div id="message" class="updated notice is-dismissible"><p>' . esc_html__( 'Files were deleted.', 'anycomment' ) . '</p></div>';
 			} else {
-				$messages = '<div id="message" class="error notice is-dismissible"><p>' . __( 'Failed to delete selected files.', 'anycomment' ) . '</p></div>';
+				$messages = '<div id="message" class="error notice is-dismissible"><p>' . esc_html__( 'Failed to delete selected files.', 'anycomment' ) . '</p></div>';
 			}
 			echo $messages;
 		}

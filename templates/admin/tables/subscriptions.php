@@ -29,9 +29,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 		}
 		if ( $action !== null && $ids !== null && $action === 'delete' ) {
 			if ( \AnyComment\Models\AnyCommentSubscriptions::deleted_all( 'ID', $ids ) ) {
-				$messages = '<div id="message" class="updated notice is-dismissible"><p>' . esc_html( __( 'Selected subscribers were deleted.', 'anycomment' ) ) . '</p></div>';
+				$messages = '<div id="message" class="updated notice is-dismissible"><p>' . esc_html__( 'Selected subscribers were deleted.', 'anycomment' ) . '</p></div>';
 			} else {
-				$messages = '<div id="message" class="error notice is-dismissible"><p>' . esc_html( __( 'Failed to delete selected subscribers.', 'anycomment' ) ) . '</p></div>';
+				$messages = '<div id="message" class="error notice is-dismissible"><p>' . esc_html__( 'Failed to delete selected subscribers.', 'anycomment' )  . '</p></div>';
 			}
 			echo $messages;
 		}

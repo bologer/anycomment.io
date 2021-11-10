@@ -137,7 +137,7 @@ class CommentList extends \WP_Widget {
 				$comment_human_time = human_time_diff( current_time( 'timestamp' ), strtotime( $comment->comment_date ) ) . ' ' . __( 'ago', 'anycomment' );
 				$comment_link       = rtrim( get_permalink( $comment->comment_post_ID ), '/' ) . '#comment-' . $comment->comment_ID;
 				$post_title         = get_the_title( $comment->comment_post_ID );
-				$author_name        = $comment->comment_author;
+				$author_name        = esc_html( $comment->comment_author );
 				$author_avatar_url  = AnyCommentSocialAuth::get_user_avatar_url( $comment->comment_author_email );
 				$author_social_type = AnyCommentUserMeta::get_social_type( $comment->user_id );
 				$social_icon        = ! empty( $author_social_type ) ?
@@ -145,7 +145,7 @@ class CommentList extends \WP_Widget {
 					'';
 
 				$social_logo = ! empty( $author_social_type ) ?
-					'<img src="' . $social_icon . '" class="anycomment-avatar-icon" alt="' . esc_html( $author_name ) . '"/>' :
+					'<img src="' . $social_icon . '" class="anycomment-avatar-icon" alt="' . esc_attr( sanitize_text_field( $author_name ) ) . '"/>' :
 					'';
 
 				$output .= <<<EOT
