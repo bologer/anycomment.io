@@ -48,24 +48,24 @@ HTML;
 
 		$post_thumbnail_url = get_the_post_thumbnail_url( $post );
 
-		$title   = $post->post_title;
-		$preview = $post_thumbnail_url !== false ? $post_thumbnail_url : null;
+		$title   = esc_html( $post->post_title );
+		$preview = $post_thumbnail_url !== false ? esc_url( $post_thumbnail_url ) : null;
 
 		$first_name = get_the_author_meta( 'first_name', $post->post_author );
 		$last_name  = get_the_author_meta( 'last_name', $post->post_author );
 
 		if ( ! empty( $first_name ) || ! empty( $last_name ) ) {
-			$author = trim( $first_name . ' ' . $last_name );
+			$author = esc_html( trim( $first_name . ' ' . $last_name ) );
 		} else {
-			$author = get_the_author_meta( 'nickname', $post->post_author );
+			$author = esc_html( get_the_author_meta( 'nickname', $post->post_author ) );
 		}
 
 		$root_id .= '-' . $post->ID;
 	}
 
 	$config_attributes = [
-		'root'     => sanitize_text_field( $root_id ),
-		'app_id'   => $app_id,
+		'root'     => esc_html( $root_id ),
+		'app_id'   => esc_html( $app_id ),
 		'language' => AnyCommentLinkHelper::get_saas_languages(),
 		'preview'  => $preview,
 		'title'    => $title,
@@ -76,10 +76,10 @@ HTML;
 		$user                     = wp_get_current_user();
 		$user                     = [
 			'id'          => $user->ID,
-			'name'        => $user->display_name,
-			'email'       => $user->user_email,
-			'avatar_url'  => AnyCommentSocialAuth::get_user_avatar_url( $user->ID ),
-			'profile_url' => empty( $user->user_url ) ? null : $user->user_url,
+			'name'        => esc_html( $user->display_name ),
+			'email'       => esc_html( $user->user_email ),
+			'avatar_url'  => esc_url( AnyCommentSocialAuth::get_user_avatar_url( $user->ID ) ),
+			'profile_url' => empty( $user->user_url ) ? null : esc_url( $user->user_url ),
 		];
 		$data                     = base64_encode( json_encode( $user ) );
 		$timestampMillis          = round( microtime( true ) * 1000 );
@@ -99,7 +99,7 @@ HTML;
 	$config = json_encode( $config_attributes );
 	?>
     <div id="comments" class="comments-area">
-        <div id="<?php echo esc_attr( sanitize_text_field( $root_id ) ) ?>"></div>
+        <div id="<?php echo esc_attr( esc_html( $root_id ) ) ?>"></div>
     </div>
     <script>
         AnyComment = window.AnyComment || [];

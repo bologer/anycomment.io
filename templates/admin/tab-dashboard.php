@@ -41,9 +41,13 @@ use AnyComment\Admin\AnyCommentStatistics;
         <div class="cell auto anycomment-dashboard__statistics-graph">
             <h2><?php echo __( 'Overal Statistics', 'anycomment' ) ?></h2>
 			<?php
+			$comments          = AnyCommentStatistics::get_comment_data();
+			$comments['label'] = array_map( 'esc_html', $comments['label'] );
+			$comments['data']  = array_map( 'esc_html', $comments['label'] );
 
-			$comments = AnyCommentStatistics::get_comment_data();
-			$users    = AnyCommentStatistics::get_commentor_data();
+			$users          = AnyCommentStatistics::get_commentor_data();
+			$users['label'] = array_map( 'esc_html', $users['label'] );
+			$users['data']  = array_map( 'esc_html', $users['label'] );
 			?>
             <canvas id="anycomment-dashboard-chart"></canvas>
 
@@ -51,20 +55,14 @@ use AnyComment\Admin\AnyCommentStatistics;
                 let chart = setInterval(function() {
 
                     if ('Chart' in window) {
-                        Chart.defaults.global.defaultFontColor = '#c8c8c8';
-                        Chart.defaults.global.defaultFontFamily = 'Roboto, Verdana, sans-serif';
-                        Chart.defaults.global.defaultFontSize = 18;
-
-                        // legend
-                        Chart.defaults.global.legend.position = 'bottom';
-                        let c = new Chart(document.getElementById("anycomment-dashboard-chart").getContext('2d'), {
+                        new Chart(document.getElementById("anycomment-dashboard-chart").getContext('2d'), {
                             type: 'line',
                             data: {
-                                labels: <?php echo esc_html( $comments['label'] ) ?>,
+                                labels: <?php echo json_encode( $comments['label'] ) ?>,
                                 datasets: [
                                     {
                                         label: '<?php echo __( 'Comments', 'anycomment' ) ?>',
-                                        data: <?php echo $comments['data'] ?>,
+                                        data: <?php echo json_encode( $comments['data'] ) ?>,
                                         fill: false,
                                         borderColor: '#f1b927',
                                         borderWidth: 5,
@@ -75,7 +73,7 @@ use AnyComment\Admin\AnyCommentStatistics;
                                     },
                                     {
                                         label: '<?php echo __( 'Users', 'anycomment' ) ?>',
-                                        data: <?php echo $users['data'] ?>,
+                                        data: <?php echo json_encode( $users['data'] ) ?>,
                                         fill: false,
                                         borderColor: '#ec4568',
                                         borderWidth: 5,

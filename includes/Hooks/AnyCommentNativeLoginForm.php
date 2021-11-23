@@ -89,8 +89,8 @@ HTML;
 			if ( ! $social['visible'] ) {
 				continue;
 			}
-			$url          = sanitize_text_field( esc_attr( $social['url'] ) );
-			$label        = sanitize_text_field( esc_attr( $social['label'] ) );
+			$url          = esc_html( esc_attr( $social['url'] ) );
+			$label        = esc_html( esc_attr( $social['label'] ) );
 			$src          = AnyComment()->plugin_url() . "/assets/img/socials/$key.svg";
 			$socials_html .= <<<EOT
 <li>

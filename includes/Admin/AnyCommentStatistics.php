@@ -138,8 +138,8 @@ ORDER BY day ASC";
 		$data   = [];
 
 		foreach ( $queryResult as $result ) {
-			$labels[] = date_i18n( 'd F', sanitize_text_field( $result->unix_timestamp ) );
-			$data[]   = sanitize_text_field( $result->count );
+			$labels[] = date_i18n( 'd F', esc_html( $result->unix_timestamp ) );
+			$data[]   = $result->count;
 		}
 
 		// Default get number of days in a month
@@ -165,8 +165,8 @@ ORDER BY day ASC";
 
 		// Return prepared for graph
 		return [
-			'label' => json_encode( $labels ),
-			'data'  => json_encode( $data )
+			'label' => $labels,
+			'data'  => $data
 		];
 	}
 }

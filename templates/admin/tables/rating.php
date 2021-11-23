@@ -29,12 +29,15 @@ use AnyComment\Helpers\AnyCommentRequest;
 			$action = sanitize_text_field( $_POST['action2'] );
 		}
 		if ( $action === 'delete' && ! empty( $ids ) ) {
-			if ( \AnyComment\Models\AnyCommentRating::deleted_all( 'ID', $ids ) ) {
-				$messages = '<div id="message" class="updated notice is-dismissible"><p>' . esc_html__( 'Selected ratings were deleted.', 'anycomment' ) . '</p></div>';
-			} else {
-				$messages = '<div id="message" class="error notice is-dismissible"><p>' . esc_html__( 'Failed to delete selected ratings.', 'anycomment' ) . '</p></div>';
-			}
-			echo $messages;
+			if ( \AnyComment\Models\AnyCommentRating::deleted_all( 'ID', $ids ) ): ?>
+                <div id="message" class="updated notice is-dismissible">
+                    <p><?php esc_html_e( 'Selected ratings were deleted.', 'anycomment' ) ?></p>
+                </div>
+			<?php else: ?>
+                <div id="message" class="error notice is-dismissible">
+                    <p><?php esc_html_e( 'Failed to delete selected ratings.', 'anycomment' ) ?></p>
+                </div>
+			<?php endif;
 		}
 
 		$filesTable = new \AnyComment\Admin\Tables\AnyCommentRatingTable();

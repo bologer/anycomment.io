@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         <input type="hidden" name="page" value="anycomment-files">
 		<?php
 
-		$ids    = isset( $_POST['emails'] ) && ! empty( $_POST['emails'] ) ? $_POST['emails'] : null;
+		$ids = isset( $_POST['emails'] ) && ! empty( $_POST['emails'] ) ? $_POST['emails'] : null;
 		if ( is_array( $ids ) ) {
 			$ids = array_map( 'sanitize_text_field', $ids );
 		} else {
@@ -28,12 +28,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 			$action = sanitize_text_field( $_POST['action2'] );
 		}
 		if ( $action !== null && $ids !== null && $action === 'delete' ) {
-			if ( \AnyComment\Models\AnyCommentEmailQueue::deleted_all( 'ID', $ids ) ) {
-				$messages = '<div id="message" class="updated notice is-dismissible"><p>' . esc_html__( 'Selected emails were deleted.', 'anycomment' ) . '</p></div>';
-			} else {
-				$messages = '<div id="message" class="error notice is-dismissible"><p>' . esc_html__( 'Failed to delete selected emails.', 'anycomment' ) . '</p></div>';
-			}
-			echo $messages;
+			if ( \AnyComment\Models\AnyCommentEmailQueue::deleted_all( 'ID', $ids ) ):?>
+                <div id="message" class="updated notice is-dismissible">
+                    <p><?php esc_html_e( 'Selected emails were deleted.', 'anycomment' ) ?></p>
+                </div>
+			<?php else: ?>
+                <div id="message" class="error notice is-dismissible">
+                    <p><?php esc_html_e( 'Failed to delete selected emails.', 'anycomment' ) ?></p>
+                </div>
+			<?php endif;
 		}
 
 		$filesTable = new \AnyComment\Admin\Tables\AnyCommentEmailQueueTable();

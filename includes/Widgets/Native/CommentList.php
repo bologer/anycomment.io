@@ -94,7 +94,7 @@ class CommentList extends \WP_Widget {
 			$args['widget_id'] = $this->id;
 		}
 
-		$title = ! empty( $instance['title'] ) ? $instance['title'] : '';
+		$title = ! empty( $instance['title'] ) ? esc_html( $instance['title'] ) : '';
 
 		$number          = ( ! empty( $instance['number'] ) ) ? absint( $instance['number'] ) : 5;
 		$read_more_limit = ( ! empty( $instance['read_more_limit'] ) ) ? absint( $instance['read_more_limit'] ) : 10;
@@ -134,7 +134,7 @@ class CommentList extends \WP_Widget {
 
 				$comment_text       = wp_trim_words( $comment->comment_content, $read_more_limit );
 				$comment_datetime   = date( 'c', strtotime( $comment->comment_date ) );
-				$comment_human_time = human_time_diff( current_time( 'timestamp' ), strtotime( $comment->comment_date ) ) . ' ' . __( 'ago', 'anycomment' );
+				$comment_human_time = human_time_diff( current_time( 'timestamp' ), strtotime( $comment->comment_date ) ) . ' ' . esc_html( __( 'ago', 'anycomment' ) );
 				$comment_link       = rtrim( get_permalink( $comment->comment_post_ID ), '/' ) . '#comment-' . $comment->comment_ID;
 				$post_title         = get_the_title( $comment->comment_post_ID );
 				$author_name        = esc_html( $comment->comment_author );
@@ -145,7 +145,7 @@ class CommentList extends \WP_Widget {
 					'';
 
 				$social_logo = ! empty( $author_social_type ) ?
-					'<img src="' . $social_icon . '" class="anycomment-avatar-icon" alt="' . esc_attr( sanitize_text_field( $author_name ) ) . '"/>' :
+					'<img src="' . esc_attr( esc_url( $social_icon ) ) . '" class="anycomment-avatar-icon" alt="' . esc_attr( esc_html( $author_name ) ) . '"/>' :
 					'';
 
 				$output .= <<<EOT

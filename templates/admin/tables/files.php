@@ -28,12 +28,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 			$action = sanitize_text_field( $_POST['action2'] );
 		}
 		if ( $action !== null && $ids !== null && $action === 'delete' ) {
-			if ( \AnyComment\Models\AnyCommentUploadedFiles::deleted_all( 'ID', $ids ) ) {
-				$messages = '<div id="message" class="updated notice is-dismissible"><p>' . esc_html__( 'Files were deleted.', 'anycomment' ) . '</p></div>';
-			} else {
-				$messages = '<div id="message" class="error notice is-dismissible"><p>' . esc_html__( 'Failed to delete selected files.', 'anycomment' ) . '</p></div>';
-			}
-			echo $messages;
+			if ( \AnyComment\Models\AnyCommentUploadedFiles::deleted_all( 'ID', $ids ) ): ?>
+                <div id="message" class="updated notice is-dismissible">
+                    <p><?php esc_html_e( 'Files were deleted.', 'anycomment' ) ?> </p>
+                </div>
+			<?php else: ?>
+                <div id="message" class="error notice is-dismissible">
+                    <p><?php esc_html_e( 'Failed to delete selected files.', 'anycomment' ) ?> </p>
+                </div>
+			<?php endif;
 		}
 
 		$filesTable = new \AnyComment\Admin\Tables\AnyCommentUploadedFilesTable();
