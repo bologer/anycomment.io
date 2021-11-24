@@ -171,7 +171,17 @@ EOT;
 		$output .= '</div>';
 		$output .= $args['after_widget'];
 
-		echo $output;
+		echo wp_kses(
+			$output,
+			[
+				'div'  => [ 'class' => [], 'style' => [] ],
+				'ul'   => [ 'class' => [] ],
+				'li'   => [ 'class' => [] ],
+				'p'    => [],
+				'a'    => [ 'href' => [] ],
+				'time' => [ 'class' => [], 'datetime' => [] ],
+			]
+		);
 	}
 
 	/**

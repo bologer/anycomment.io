@@ -106,11 +106,13 @@ class AnyCommentRender extends BaseObject {
 		}
 
 		$css_styles = AnyCommentGenericSettings::get_editor_css();
-		echo <<<EOT
+		$html       = <<<EOT
 <style>
 $css_styles
 </style>
 EOT;
+
+		return wp_kses( $html, [ 'style' => [] ] );
 	}
 
 	/**

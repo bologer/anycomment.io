@@ -49,7 +49,7 @@ $tabs = apply_filters( 'anycomment/admin/tabs', $tabs, $active_tab );
     <div class="grid-x grid-margin-x anycomment-dashboard__tabs">
         <ul class="cell">
 			<?php foreach ( $tabs as $key => $tab ): ?>
-                <li<?php echo $active_tab === $key ? ' class="active"' : '' ?>
+                <li<?php echo esc_attr( esc_html( $active_tab === $key ? ' class="active"' : '' ) ) ?>
                         id="anycomment-tab-<?php echo esc_attr( esc_html( $key ) ) ?>">
                     <a href="<?php echo esc_attr( esc_html( $tab['url'] ) ) ?>"><?php echo esc_html( $tab['text'] ) ?></a>
                 </li>

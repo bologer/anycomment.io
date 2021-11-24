@@ -25,7 +25,7 @@
                             <span class="anycomment-dashboard__sidebar-news-date-new"><?php echo __( 'New', 'anycomment' ) ?></span>
 						<?php endif; ?>
                     </div>
-                    <a href="<?php echo $post['link'] ?>"
+                    <a href="<?php echo esc_attr( $post['link'] ) ?>"
                        target="_blank"
                        class="anycomment-dashboard__sidebar-news-title"><?php echo esc_html( $post['title']['rendered'] ) ?></a>
                     <div class="anycomment-dashboard__sidebar-news-content">
@@ -48,7 +48,7 @@
 
 	<?php if ( $post !== null ) : ?>
         <div class="anycomment-dashboard__sidebar-all-news">
-            <a href="<?php echo $categoryLink ?>"
+            <a href="<?php echo esc_attr( $categoryLink ) ?>"
                target="_blank"><?php echo __( "All News", 'anycomment' ) ?></a>
         </div>
 	<?php endif; ?>

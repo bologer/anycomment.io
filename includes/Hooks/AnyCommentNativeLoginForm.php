@@ -70,7 +70,19 @@ HTML;
 			return $html;
 		}
 
-		echo $html;
+		echo wp_kses( $html, [
+			'div'   => [
+				'class' => [],
+				'style' => []
+			],
+			'ul'    => [
+				'class' => [],
+			],
+			'li'    => [],
+			'a'     => [ 'href' => [], 'title' => [] ],
+			'img'   => [ 'src' => [], 'alt' => [] ],
+			'style' => [],
+		] );
 	}
 
 	/**

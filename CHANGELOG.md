@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.14 – 24.11.2021
+
+**Fixes:**
+
+- Minor security fixes
+
 ## 0.2.13 – 24.11.2021
 
 **Fixes:**

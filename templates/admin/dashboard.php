@@ -17,7 +17,7 @@ $current_tab = array_key_exists( 'tab', $_GET ) ? esc_html( $_GET['tab'] ) : esc
 
     <div id="anycomment-wrapper"
          data-intro-show="<?php echo AnyCommentUserTour::was_disabled( $current_tab ) ? '0' : '1' ?>"
-         data-current-tab="<?php echo( isset( $_GET['page'] ) ? esc_attr( $current_tab ) : '' ) ?>">
+         data-current-tab="<?php echo esc_attr( esc_html( isset( $_GET['page'] ) ? $current_tab : '' ) ) ?>">
         <div class="anycomment-notice anycomment-success">
 			<?php echo sprintf( __( 'Please take a few seconds and <a href="%s" target="_blank">rate us on WordPress.org</a>. You are the one who can help to grow and make this plugin better!',
 				'anycomment' ), 'https://wordpress.org/support/plugin/anycomment/reviews/?rate=5#new-post' ) ?>
@@ -30,7 +30,7 @@ $current_tab = array_key_exists( 'tab', $_GET ) ? esc_html( $_GET['tab'] ) : esc
                         <img src="<?php echo AnyComment()->plugin_url() . '/assets/img/mini-logo.svg' ?>"
                              alt="<?php echo __( 'AnyComment', 'anycomment' ) ?>">
                         <h2><?php echo __( 'AnyComment', 'anycomment' ) ?>
-                            &nbsp;<sup><?php echo AnyComment()->version ?></sup></h2>
+                            &nbsp;<sup><?php echo esc_html( AnyComment()->version ) ?></sup></h2>
                     </div>
                     <div class="cell auto anycomment-dashboard__header-official">
 						<?php

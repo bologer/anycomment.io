@@ -95,8 +95,6 @@ HTML;
 		];
 	}
 
-
-	$config = json_encode( $config_attributes );
 	?>
     <div id="comments" class="comments-area">
         <div id="<?php echo esc_attr( esc_html( $root_id ) ) ?>"></div>
@@ -104,7 +102,7 @@ HTML;
     <script>
         AnyComment = window.AnyComment || [];
         AnyComment.Comments = [];
-        AnyComment.Comments.push(<?php echo $config ?>);
+        AnyComment.Comments.push(<?php echo json_encode( $config_attributes ) ?>);
         var s = document.createElement("script");
         s.type = "text/javascript";
         s.async = true;

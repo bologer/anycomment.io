@@ -78,7 +78,7 @@ abstract class AnyCommentOptionManager {
 
 			add_action( 'admin_notices', function () use ( $type, $message ) {
 				?>
-                <div class="notice notice-<?php echo esc_attr( $type ) ?> is-dismissible">
+                <div class="notice notice-<?php echo esc_attr( esc_html( $type ) ) ?> is-dismissible">
                     <p><?php esc_html_e( $message ) ?></p>
                 </div>
 				<?php
@@ -278,10 +278,10 @@ abstract class AnyCommentOptionManager {
 
 		$i = 0;
 		foreach ( (array) $wp_settings_sections[ $page ] as $section ) {
-			$section_id    = esc_attr( esc_html( $section['id'] ) );
-			$current_class = $i === 0 ? esc_attr( esc_html( 'current' ) ) : '';
-			echo '<li class="' . $current_class . '" data-tab="' . $section_id . '">
-				<a href="#tab-' . $section_id . '">' . esc_html( $section['title'] ) . '</a>
+			$section_id    = $section['id'];
+			$current_class = $i === 0 ? 'current' : '';
+			echo '<li class="' . esc_attr( esc_html( $current_class ) ) . '" data-tab="' . esc_attr( esc_html( $section_id ) ) . '">
+				<a href="#tab-' . esc_attr( esc_html( $section_id ) ) . '">' . esc_html( $section['title'] ) . '</a>
 				</li>';
 			$i ++;
 		}
