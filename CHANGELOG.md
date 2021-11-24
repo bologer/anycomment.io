@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.12 – 24.11.2021
+
+**Fixes:**
+
+- Version fixes
+
 ## 0.2.11 – 24.11.2021
 
 **Fixes:**
