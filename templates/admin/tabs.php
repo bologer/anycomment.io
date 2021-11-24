@@ -1,6 +1,6 @@
 <?php
-$active_tab = isset( $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : 'dashboard';
-$page       = sanitize_text_field( $_GET['page'] );
+$active_tab = isset( $_GET['tab'] ) ? esc_html( $_GET['tab'] ) : 'dashboard';
+$page       = esc_html( $_GET['page'] );
 $tabs       = [
 	'dashboard'   => [ 'url' => menu_page_url( $page, false ), 'text' => __( 'Dashboard', 'anycomment' ) ],
 	'social'      => [

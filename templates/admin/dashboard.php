@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-$current_tab = array_key_exists( 'tab', $_GET ) ? sanitize_text_field( $_GET['tab'] ) : sanitize_text_field( 'dashboard' );
+$current_tab = array_key_exists( 'tab', $_GET ) ? esc_html( $_GET['tab'] ) : esc_html( 'dashboard' );
 ?>
 
 <div class="wrap">
@@ -17,7 +17,7 @@ $current_tab = array_key_exists( 'tab', $_GET ) ? sanitize_text_field( $_GET['ta
 
     <div id="anycomment-wrapper"
          data-intro-show="<?php echo AnyCommentUserTour::was_disabled( $current_tab ) ? '0' : '1' ?>"
-         data-current-tab="<?php echo( isset( $_GET['page'] ) ? sanitize_text_field( $current_tab ) : '' ) ?>">
+         data-current-tab="<?php echo( isset( $_GET['page'] ) ? esc_attr( $current_tab ) : '' ) ?>">
         <div class="anycomment-notice anycomment-success">
 			<?php echo sprintf( __( 'Please take a few seconds and <a href="%s" target="_blank">rate us on WordPress.org</a>. You are the one who can help to grow and make this plugin better!',
 				'anycomment' ), 'https://wordpress.org/support/plugin/anycomment/reviews/?rate=5#new-post' ) ?>

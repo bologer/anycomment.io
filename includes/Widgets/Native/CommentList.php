@@ -218,53 +218,63 @@ EOT;
 		$author_color     = isset( $instance['scss_author_color'] ) ? $instance['scss_author_color'] : '#1DA1F2';
 		$avatar_size      = isset( $instance['scss_avatar_size'] ) ? $instance['scss_avatar_size'] : '30px';
 		?>
-        <p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'anycomment' ); ?></label>
-            <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>"
-                   name="<?php echo $this->get_field_name( 'title' ); ?>" type="text"
-                   value="<?php echo esc_attr( sanitize_text_field( $title ) ); ?>" /></p>
+        <p>
+            <label for="<?php echo esc_attr( esc_html( $this->get_field_id( 'title' ) ) ); ?>"><?php _e( 'Title:', 'anycomment' ); ?></label>
+            <input class="widefat" id="<?php echo esc_attr( esc_html( $this->get_field_id( 'title' ) ) ); ?>"
+                   name="<?php echo esc_attr( esc_html( $this->get_field_name( 'title' ) ) ); ?>" type="text"
+                   value="<?php echo esc_attr( esc_html( $title ) ); ?>" /></p>
 
         <p>
-            <label for="<?php echo $this->get_field_id( 'read_more_limit' ); ?>"><?php _e( 'Number words before "...":', 'anycomment' ); ?></label>
-            <input class="tiny-text" id="<?php echo $this->get_field_id( 'read_more_limit' ); ?>"
-                   name="<?php echo $this->get_field_name( 'read_more_limit' ); ?>" type="number" step="1" min="1"
-                   value="<?php echo esc_attr( sanitize_text_field( $read_more_limit ) ); ?>" size="3" /></p>
+            <label for="<?php echo esc_attr( esc_html( $this->get_field_id( 'read_more_limit' ) ) ); ?>"><?php _e( 'Number words before "...":', 'anycomment' ); ?></label>
+            <input class="tiny-text"
+                   id="<?php echo esc_attr( esc_html( $this->get_field_id( 'read_more_limit' ) ) ); ?>"
+                   name="<?php echo esc_attr( esc_html( $this->get_field_name( 'read_more_limit' ) ) ); ?>"
+                   type="number" step="1" min="1"
+                   value="<?php echo esc_attr( esc_html( $read_more_limit ) ); ?>" size="3" /></p>
 
         <p>
-            <label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of comments to show:', 'anycomment' ); ?></label>
-            <input class="tiny-text" id="<?php echo $this->get_field_id( 'number' ); ?>"
-                   name="<?php echo $this->get_field_name( 'number' ); ?>" type="number" step="1" min="1"
-                   value="<?php echo esc_attr( sanitize_text_field( $number ) ); ?>" size="3" /></p>
+            <label for="<?php echo esc_attr( esc_html( $this->get_field_id( 'number' ) ) ); ?>"><?php _e( 'Number of comments to show:', 'anycomment' ); ?></label>
+            <input class="tiny-text" id="<?php echo esc_attr( esc_html( $this->get_field_id( 'number' ) ) ); ?>"
+                   name="<?php echo esc_attr( esc_html( $this->get_field_name( 'number' ) ) ); ?>" type="number"
+                   step="1" min="1"
+                   value="<?php echo esc_attr( esc_html( $number ) ); ?>" size="3" /></p>
 
         <p>
-            <label for="<?php echo $this->get_field_id( 'scss_font_size' ); ?>"><?php _e( 'Font size:', 'anycomment' ); ?></label>
-            <input class="widefat" id="<?php echo $this->get_field_id( 'scss_font_size' ); ?>"
-                   name="<?php echo $this->get_field_name( 'scss_font_size' ); ?>" type="text"
-                   value="<?php echo esc_attr( sanitize_text_field( $font_size ) ); ?>" /></p>
+            <label for="<?php echo esc_attr( esc_html( $this->get_field_id( 'scss_font_size' ) ) ); ?>"><?php _e( 'Font size:', 'anycomment' ); ?></label>
+            <input class="widefat" id="<?php echo esc_attr( esc_html( $this->get_field_id( 'scss_font_size' ) ) ); ?>"
+                   name="<?php echo esc_attr( esc_html( $this->get_field_name( 'scss_font_size' ) ) ); ?>" type="text"
+                   value="<?php echo esc_attr( esc_html( $font_size ) ); ?>" /></p>
 
         <p>
-            <label for="<?php echo $this->get_field_id( 'scss_background_color' ); ?>"><?php _e( 'Background color:', 'anycomment' ); ?></label>
-            <input class="widefat" id="<?php echo $this->get_field_id( 'scss_background_color' ); ?>"
-                   name="<?php echo $this->get_field_name( 'scss_background_color' ); ?>" type="text"
-                   value="<?php echo esc_attr( sanitize_text_field( $background_color ) ); ?>" /></p>
+            <label for="<?php echo esc_attr( esc_html( $this->get_field_id( 'scss_background_color' ) ) ); ?>"><?php _e( 'Background color:', 'anycomment' ); ?></label>
+            <input class="widefat"
+                   id="<?php echo esc_attr( esc_html( $this->get_field_id( 'scss_background_color' ) ) ); ?>"
+                   name="<?php echo esc_attr( esc_html( $this->get_field_name( 'scss_background_color' ) ) ); ?>"
+                   type="text"
+                   value="<?php echo esc_attr( esc_html( $background_color ) ); ?>" /></p>
 
         <p>
-            <label for="<?php echo $this->get_field_id( 'scss_comment_color' ); ?>"><?php _e( 'Comment text color:', 'anycomment' ); ?></label>
-            <input class="widefat" id="<?php echo $this->get_field_id( 'scss_comment_color' ); ?>"
-                   name="<?php echo $this->get_field_name( 'scss_comment_color' ); ?>" type="text"
-                   value="<?php echo esc_attr( sanitize_text_field( $comment_color ) ); ?>" /></p>
+            <label for="<?php echo esc_attr( esc_html( $this->get_field_id( 'scss_comment_color' ) ) ); ?>"><?php _e( 'Comment text color:', 'anycomment' ); ?></label>
+            <input class="widefat"
+                   id="<?php echo esc_attr( esc_html( $this->get_field_id( 'scss_comment_color' ) ) ); ?>"
+                   name="<?php echo esc_attr( esc_html( $this->get_field_name( 'scss_comment_color' ) ) ); ?>"
+                   type="text"
+                   value="<?php echo esc_attr( esc_html( $comment_color ) ); ?>" /></p>
 
         <p>
-            <label for="<?php echo $this->get_field_id( 'scss_author_color' ); ?>"><?php _e( 'Author name color:', 'anycomment' ); ?></label>
-            <input class="widefat" id="<?php echo $this->get_field_id( 'scss_author_color' ); ?>"
-                   name="<?php echo $this->get_field_name( 'scss_author_color' ); ?>" type="text"
-                   value="<?php echo esc_attr( sanitize_text_field( $author_color ) ); ?>" /></p>
+            <label for="<?php echo esc_attr( esc_html( $this->get_field_id( 'scss_author_color' ) ) ); ?>"><?php _e( 'Author name color:', 'anycomment' ); ?></label>
+            <input class="widefat"
+                   id="<?php echo esc_attr( esc_html( $this->get_field_id( 'scss_author_color' ) ) ); ?>"
+                   name="<?php echo esc_attr( esc_html( $this->get_field_name( 'scss_author_color' ) ) ); ?>"
+                   type="text"
+                   value="<?php echo esc_attr( esc_html( $author_color ) ); ?>" /></p>
 
 
         <p>
-            <label for="<?php echo $this->get_field_id( 'scss_avatar_size' ); ?>"><?php _e( 'Author avatar size:', 'anycomment' ); ?></label>
-            <input class="widefat" id="<?php echo $this->get_field_id( 'scss_avatar_size' ); ?>"
-                   name="<?php echo $this->get_field_name( 'scss_avatar_size' ); ?>" type="text"
-                   value="<?php echo esc_attr( sanitize_text_field( $avatar_size ) ); ?>" /></p>
+            <label for="<?php echo esc_attr( esc_html( $this->get_field_id( 'scss_avatar_size' ) ) ); ?>"><?php _e( 'Author avatar size:', 'anycomment' ); ?></label>
+            <input class="widefat" id="<?php echo esc_attr( esc_html( $this->get_field_id( 'scss_avatar_size' ) ) ); ?>"
+                   name="<?php echo esc_attr( esc_html( $this->get_field_name( 'scss_avatar_size' ) ) ); ?>" type="text"
+                   value="<?php echo esc_attr( esc_html( $avatar_size ) ); ?>" /></p>
 		<?php
 	}
 }
