@@ -10,7 +10,9 @@ if ( ! empty( $items ) ): ?>
 			$class = 'anycomment-notice';
 			$class .= isset( $item['level'] ) && $item['level'] === \AnyComment\Admin\AnyCommentProblemNotifier::LEVEL_CRITICAL ? ' anycomment-error' : '';
 			?>
-            <li><p class="<?php echo esc_attr( esc_html( $class ) ) ?>"><?php echo $item['message'] ?></p></li>
+            <li>
+                <p class="<?php echo esc_attr( esc_html( $class ) ) ?>"><?php echo wp_kses( $item['message'], [ 'a' => [ 'href' => [] ] ] ) ?></p>
+            </li>
 		<?php endforeach; ?>
     </ul>
 <?php else: ?>
