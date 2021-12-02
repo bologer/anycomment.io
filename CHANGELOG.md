@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.15 – 02.12.2021
+
+**Fixes:**
+
+- Fixed compatibility issue with AnyComment Analytics
+
+
 ## 0.2.14 – 24.11.2021
 
 **Fixes:**

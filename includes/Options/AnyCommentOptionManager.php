@@ -3,7 +3,7 @@
 namespace AnyComment\Options;
 
 
-abstract class AnyCommentOptionManager {
+class AnyCommentOptionManager {
 	/**
 	 * @var string Options group.
 	 */
@@ -424,5 +424,7 @@ abstract class AnyCommentOptionManager {
 	/**
 	 * @return array<string> List of option keys be saved from save request.
 	 */
-	abstract protected function save_option_keys();
+	protected function save_option_keys() {
+        return [];
+	}
 }
