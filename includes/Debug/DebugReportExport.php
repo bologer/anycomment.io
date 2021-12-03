@@ -57,8 +57,6 @@ class DebugReportExport {
 		header( "Content-Disposition: attachment; filename=\"" . $this->get_archive_name() . "\"" );
 		header( "Content-Transfer-Encoding: binary" );
 		header( "Content-Length: " . filesize( $archive_path ) );
-		ob_clean();
-		flush();
 		@readfile( $archive_path );
 		@unlink( $archive_path );
 		exit( 0 );
@@ -91,21 +89,19 @@ class DebugReportExport {
 			}
 
 			if ( $path !== null ) {
-				$dirname = pathinfo( $path );
+				$path_information = pathinfo( $path );
 
-				if ( ! empty( $dirname['dirname'] ) ) {
-						$glob_pattern = rtrim( $dirname['dirname'], DIRECTORY_SEPARATOR ) . '/*.log';
+				if ( ! empty( $path_information['dirname'] ) ) {
+					$glob_pattern = rtrim( $path_information['dirname'], DIRECTORY_SEPARATOR ) . '/*.log';
 
-						$logs = glob( $glob_pattern );
+					$logs = glob( $glob_pattern );
 
-						foreach ( $logs as $logPath ) {
-							$path_info = pathinfo( $logPath );
-							if ( isset( $path_info['basename'] ) ) {
-								$zip->addFile( $logPath, $path_info['basename']);
-							}
+					foreach ( $logs as $logPath ) {
+						$path_info = pathinfo( $logPath );
+						if ( isset( $path_info['basename'] ) ) {
+							$zip->addFile( $logPath, $path_info['basename'] );
 						}
-					$glob_pattern = rtrim( $dirname, DIRECTORY_SEPARATOR ) . '/*.log';
-					$zip->addGlob( $glob_pattern );
+					}
 				}
 			}
 

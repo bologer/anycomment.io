@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.16 – 02.12.2021
+
+**Fixes:**
+
+- Fixed error when downloading debug information
+- Added extra debugging information when synchronizing SaaS API keys 
+
 ## 0.2.15 – 02.12.2021
 
 **Fixes:**

@@ -4,7 +4,6 @@ namespace AnyComment\Web;
 
 use AnyComment\Helpers\Url;
 use AnyComment\AnyCommentCore;
-use AnyComment\Base\BaseObject;
 use AnyComment\Helpers\AnyCommentInflector;
 
 /**
@@ -13,25 +12,13 @@ use AnyComment\Helpers\AnyCommentInflector;
  * @author Alexander Teshabaev <sasha.tesh@gmail.com>
  * @package AnyComment\Web
  */
-class BaseController extends BaseObject
+class BaseController
 {
     /**
      * @var string Action name which would be transformed into method name in form of 'actionActionName'.
      */
     public $action;
 
-    /**
-     * List of behaviours on the controller.
-     *
-     * @return array List of behaviours.
-     */
-    public function behaviours()
-    {
-        return [
-            // * - all actions require authentication
-            'auth' => ['*']
-        ];
-    }
 
     /**
      * BaseController constructor.
@@ -40,8 +27,6 @@ class BaseController extends BaseObject
      */
     public function __construct($action)
     {
-        parent::__construct();
-
         $this->action = $action;
     }
 
@@ -86,36 +71,7 @@ class BaseController extends BaseObject
      */
     protected function callAction($action_function)
     {
-        $this->process_behaviours();
-
         return call_user_func_array([$this, $action_function], $this->get_action_parameters($action_function));
-    }
-
-    /**
-     * Processing controller behaviours.
-     *
-     * @return bool
-     */
-    protected function process_behaviours()
-    {
-        $behaviours = $this->behaviours();
-
-        // Handles authentication.
-        if (isset($behaviours['auth']) && is_array($behaviours['auth'])) {
-            $auth_actions = array_values($behaviours['auth']);
-
-            if (count($auth_actions) === 1 && trim($auth_actions[0]) === '*' && ! is_user_logged_in()) {
-                return $this->redirect(['/']);
-            }
-
-            foreach ($auth_actions as $action_id) {
-                if (trim($action_id) === $this->action && ! is_user_logged_in()) {
-                    return $this->redirect(['/']);
-                }
-            }
-        }
-
-        return true;
     }
 
     /**

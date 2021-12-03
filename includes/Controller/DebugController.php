@@ -14,26 +14,22 @@ use AnyComment\Debug\DebugReportGenerator;
  * @author Alexander Teshabaev <sasha.tesh@gmail.com>
  * @package AnyComment\Controller
  */
-class DebugController extends BaseController
-{
-    /**
-     * Handles download of debug report.
-     *
-     * Use by AnyComment developers to investigate plugin bugs.
-     */
-    public function actionDownload()
-    {
-        try {
-            $debug_generator = new DebugReportGenerator();
-
-            $debug_export = new DebugReportExport($debug_generator);
-
-            $debug_export->streamExport();
-        } catch (\Exception $exception) {
-            AnyCommentCore::logger()->error(sprintf(
-                'Failed to execute debug/download, exception: %s',
-                $exception->getMessage()
-            ));
-        }
-    }
+class DebugController extends BaseController {
+	/**
+	 * Handles download of debug report.
+	 *
+	 * Use by AnyComment developers to investigate plugin bugs.
+	 */
+	public function actionDownload() {
+		try {
+			$debug_generator = new DebugReportGenerator();
+			$debug_export    = new DebugReportExport( $debug_generator );
+			$debug_export->streamExport();
+		} catch ( \Exception $exception ) {
+			AnyCommentCore::logger()->error( sprintf(
+				'Failed to execute debug/download, exception: %s',
+				$exception->getMessage()
+			) );
+		}
+	}
 }

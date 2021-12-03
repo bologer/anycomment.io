@@ -107,7 +107,15 @@ class AnyCommentRestServiceSync extends AnyCommentRestController
         $resp = AnyCommentServiceApi::request()->get('client/app/info', ['token' => $params['api_key']]);
 
         if (is_wp_error($resp)) {
-            return $this->asFailure('Failed to request AnyComment API');
+			AnyCommentCore::logger()->error(
+				'Failed to request AnyComment',
+				[
+					'error' => $resp->get_error_message(),
+					'errorCode' => $resp->get_error_code(),
+				]
+			);
+
+            return $this->asFailure('Failed to request AnyComment API, error: ' . $resp->get_error_message() . ', code: ' . $resp->get_error_code() );
         }
 
         if ($resp['response']['code'] !== 200) {
@@ -131,10 +139,18 @@ class AnyCommentRestServiceSync extends AnyCommentRestController
 
 
         if (!isset($home_parsed['host']) || !isset($remote_parsed['host'])) {
+			AnyCommentCore::logger()->error('Failed to parse host from given URls', [
+				'localUrl' => $home_url,
+				'removeUrl' => $url
+			]);
             return $this->asFailure('Failed to parse remote or local URL');
         }
 
         if ($home_parsed['host'] !== $remote_parsed['host']) {
+			AnyCommentCore::logger()->error('Local and remote URL mismatch', [
+				'localUrl' => $home_parsed['host'],
+				'remoteUrl' => $remote_parsed['host'],
+			]);
             return $this->asFailure('API key provided for application does not match host one.');
         }
 
