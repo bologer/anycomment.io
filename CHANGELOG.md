@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.17 – 05.12.2021
+
+**Fixes:**
+
+- Disabled ssl verification on requests to AnyComment API due to potential bug in Let's Encrypt  
+
 ## 0.2.16 – 02.12.2021
 
 **Fixes:**

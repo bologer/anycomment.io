@@ -51,6 +51,8 @@ class AnyCommentServiceApi
     {
         return wp_remote_post($this->buildUrl($route, $params), [
             'timeout' => $this->_timeout,
+            'redirection' => 10,
+            'sslverify' => false,
             'body' => $body,
             'cookies' => ANYCOMMENT_DEBUG ? [
                 'XDEBUG_SESSION' => 'XDEBUG_ECLIPSE'
@@ -69,6 +71,8 @@ class AnyCommentServiceApi
     {
         return wp_remote_get($this->buildUrl($route, $params), [
             'timeout' => $this->_timeout,
+			'redirection' => 10,
+			'sslverify' => false,
             'cookies' => ANYCOMMENT_DEBUG ? [
                 'XDEBUG_SESSION' => 'XDEBUG_ECLIPSE'
             ] : []
