@@ -2,6 +2,7 @@
 
 namespace AnyComment\Rest;
 
+use AnyComment\AnyCommentMutex;
 use WP_Error;
 use WP_User;
 use WP_REST_Server;
@@ -127,48 +128,54 @@ class AnyCommentRestLikes extends AnyCommentRestController {
 			return new WP_Error( 'rest_comment_like_exists', __( 'Cannot create existing like.', 'anycomment' ), array( 'status' => 400 ) );
 		}
 
-		$model = new AnyCommentLikes();
 
-		$model->comment_ID = $request['comment'];
+		try {
+			$lockName = sprintf( 'like-dislike-lock-%s-%s-%d', $request['post'], $request['type'], get_current_user_id() );
+			if ( ! AnyCommentMutex::acquire( $lockName ) ) {
+				return new WP_Error( 'rest_like_fail', __( 'Failed to like', 'anycomment' ), [ 'status' => 400 ] );
+			}
 
-		$user_id = (int) get_current_user_id();
+			$model             = new AnyCommentLikes();
+			$model->comment_ID = $request['comment'];
+			$user_id           = (int) get_current_user_id();
+			$model->user_ID    = $user_id !== 0 ? $user_id : null;
+			$model->post_ID    = $request['post'];
+			$model->type       = $request['type'];
 
-		$model->user_ID = $user_id !== 0 ? $user_id : null;
+			if ( ! AnyCommentLikes::is_user_has( $model->type, $model->comment_ID ) ) {
 
-		$model->post_ID = $request['post'];
+				// Should delete opposite of type to make sure user does not
+				// set like and dislike at the same time
+				if ( $model->type === AnyCommentLikes::TYPE_LIKE ) {
+					AnyCommentLikes::delete_dislike( $model->comment_ID );
+				} else {
+					AnyCommentLikes::delete_like( $model->comment_ID );
+				}
 
-		$model->type = $request['type'];
-
-		if ( ! AnyCommentLikes::is_user_has( $model->type, $model->comment_ID ) ) {
-
-			// Should delete opposite of type to make sure user does not
-			// set like and dislike at the same time
-			if ( $model->type === AnyCommentLikes::TYPE_LIKE ) {
-				AnyCommentLikes::delete_dislike( $model->comment_ID );
+				if ( ! $model->save() ) {
+					return new WP_Error(
+						'rest_like_fail',
+						sprintf(
+							__( 'Failed to %s', 'anycomment' ),
+							( $model->type === AnyCommentLikes::TYPE_LIKE ? __( 'like', 'anycomment' ) : __( 'dislike', 'anycomment' ) )
+						),
+						[ 'status' => 400 ]
+					);
+				}
 			} else {
-				AnyCommentLikes::delete_like( $model->comment_ID );
+				AnyCommentLikes::delete_by_type( $model->type, $model->comment_ID );
 			}
 
-			if ( ! $model->save() ) {
-				return new WP_Error(
-					'rest_like_fail',
-					sprintf(
-						__( 'Failed to %s', 'anycomment' ),
-						( $model->type === AnyCommentLikes::TYPE_LIKE ? __( 'like', 'anycomment' ) : __( 'dislike', 'anycomment' ) )
-					),
-					[ 'status' => 400 ]
-				);
-			}
-		} else {
-			AnyCommentLikes::delete_by_type( $model->type, $model->comment_ID );
+			$response = $this->prepare_item_for_response( $model, $request );
+			$response = rest_ensure_response( $response );
+
+			$response->set_status( 201 );
+			$response->header( 'Location', rest_url( sprintf( '%s/%s/%d', $this->namespace, $this->rest_base, $model->ID ) ) );
+		} catch ( \Exception $e ) {
+			$response->set_status( 400 );
+		} finally {
+			AnyCommentMutex::release( $lockName );
 		}
-
-		$response = $this->prepare_item_for_response( $model, $request );
-		$response = rest_ensure_response( $response );
-
-		$response->set_status( 201 );
-		$response->header( 'Location', rest_url( sprintf( '%s/%s/%d', $this->namespace, $this->rest_base, $model->ID ) ) );
-
 
 		return $response;
 	}

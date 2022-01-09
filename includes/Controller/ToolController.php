@@ -23,6 +23,7 @@ class ToolController extends BaseController
      */
     public function actionOpenComments($type)
     {
+		$this->verifyNonce();
         $notice = AnyCommentCore::instance()->getNotice();
 
         switch ($type) {

@@ -24,6 +24,8 @@ class ImportController extends BaseController
      */
     public function actionHypercomments($url, $revert = false)
     {
+		$this->verifyNonce();
+
         $notice = AnyCommentCore::instance()->getNotice();
 
         if ($revert !== null && boolval($revert)) {

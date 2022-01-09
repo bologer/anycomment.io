@@ -21,6 +21,7 @@ class DebugController extends BaseController {
 	 * Use by AnyComment developers to investigate plugin bugs.
 	 */
 	public function actionDownload() {
+		$this->verifyNonce();
 		try {
 			$debug_generator = new DebugReportGenerator();
 			$debug_export    = new DebugReportExport( $debug_generator );

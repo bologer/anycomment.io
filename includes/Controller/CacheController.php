@@ -17,6 +17,8 @@ class CacheController extends BaseController {
 	 * Handles download of debug report.
 	 */
 	public function actionFlush( $type ) {
+		$this->verifyNonce();
+
 		switch ( $type ) {
 			case 'all':
 				AnyCommentCacheManager::flushAll();

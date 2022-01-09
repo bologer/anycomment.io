@@ -11,20 +11,20 @@ use AnyComment\Helpers\Url;
 
     <hr>
     <h3><?php echo __('Cache Manager', 'anycomment') ?></h3>
-    <a href="<?php echo Url::to(['cache/flush', 'type' => 'all']) ?>"
+    <a href="<?php echo Url::to(['cache/flush', 'type' => 'all', '_wpnonce' => wp_create_nonce()]) ?>"
        class="button button-primary"><?php echo __("Flush All", 'anycomment') ?></a>
-    <a href="<?php echo Url::to(['cache/flush', 'type' => 'rest']) ?>"
+    <a href="<?php echo Url::to(['cache/flush', 'type' => 'rest', '_wpnonce' => wp_create_nonce()]) ?>"
        class="button button-primary"><?php echo __("Flush Comments", 'anycomment') ?></a>
 
     <hr>
     <h3><?php echo __('Other Helpers', 'anycomment') ?></h3>
-    <a href="<?php echo Url::to(['tool/open-comments', 'type' => 'all']) ?>"
+    <a href="<?php echo Url::to(['tool/open-comments', 'type' => 'all', '_wpnonce' => wp_create_nonce()]) ?>"
        class="button button-primary"><?php echo __("Open All Comments", 'anycomment') ?></a>
-    <a href="<?php echo Url::to(['tool/open-comments', 'type' => 'posts']) ?>"
+    <a href="<?php echo Url::to(['tool/open-comments', 'type' => 'posts', '_wpnonce' => wp_create_nonce()]) ?>"
        class="button button-primary"><?php echo __("Open Posts Comments", 'anycomment') ?></a>
-    <a href="<?php echo Url::to(['tool/open-comments', 'type' => 'pages']) ?>"
+    <a href="<?php echo Url::to(['tool/open-comments', 'type' => 'pages', '_wpnonce' => wp_create_nonce()]) ?>"
        class="button button-primary"><?php echo __("Open Pages Comments", 'anycomment') ?></a>
-    <a href="<?php echo Url::to(['tool/open-comments', 'type' => 'wc-products']) ?>"
+    <a href="<?php echo Url::to(['tool/open-comments', 'type' => 'wc-products', '_wpnonce' => wp_create_nonce()]) ?>"
        class="button button-primary"><?php echo __("Open WooCommerce Product Comments", 'anycomment') ?></a>
 
     <hr>
@@ -34,6 +34,7 @@ use AnyComment\Helpers\Url;
 
     <form action="" method="GET">
         <input type="hidden" name="r" value="import/hypercomments">
+	    <?php wp_nonce_field(); ?>
         <div class="grid-x">
             <div class="cell auto">
                 <input
@@ -51,6 +52,7 @@ use AnyComment\Helpers\Url;
     <form action="" method="GET">
         <input type="hidden" name="r" value="import/hypercomments">
         <input type="hidden" name="revert" value="1">
+	    <?php wp_nonce_field(); ?>
         <input type="submit" value="<?php echo __('Revert', 'anycomment') ?>" class="button button-danger">
         <p><?php echo __('This action would delete all imported comments from HyperComment that were improted via this tool.',
                 'anycomment') ?></p>
