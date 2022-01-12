@@ -61,7 +61,7 @@ $steps = apply_filters( 'anycomment/admin/tour-steps', $steps );
 
 if ( ! empty( $steps ) ) {
 	$steps_in_json    = json_encode( $steps );
-	$current_tab      = array_key_exists( 'tab', $_GET ) ? esc_html( $_GET['tab'] ) : esc_html( 'dashboard' );
+	$current_tab      = array_key_exists( 'tab', $_GET ) ? sanitize_text_field( $_GET['tab'] ) : sanitize_text_field( 'dashboard' );
 	$disable_tour_url = menu_page_url( $_GET['page'], false );
 	$disable_tour_url .= '&' . http_build_query( array_merge( $_GET, [ 'disable-tour' => $current_tab ] ) );
 

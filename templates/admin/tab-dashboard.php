@@ -122,8 +122,8 @@ use AnyComment\Admin\AnyCommentStatistics;
 					<?php foreach ( $users as $user ): ?>
                         <li> <span class="anycomment-dashboard__statistics-userlist-avatar"
                                    style="background-image:url('<?php echo \AnyComment\Rest\AnyCommentSocialAuth::get_user_avatar_url( $user->user_id ) ?>')"></span>
-							<?php echo $user->name ?>
-                            <span class="anycomment-dashboard__statistics-userlist-counter"><?php echo $user->comment_count ?></span>
+							<?php echo esc_html($user->name) ?>
+                            <span class="anycomment-dashboard__statistics-userlist-counter"><?php echo esc_html($user->comment_count) ?></span>
                         </li>
 					<?php endforeach; ?>
                 </ul>

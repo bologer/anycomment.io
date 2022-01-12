@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-$current_tab = array_key_exists( 'tab', $_GET ) ? esc_html( $_GET['tab'] ) : esc_html( 'dashboard' );
+$current_tab = array_key_exists( 'tab', $_GET ) ? sanitize_text_field( $_GET['tab'] ) : sanitize_text_field( 'dashboard' );
 ?>
 
 <div class="wrap">
