@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.20 – 17.01.2022
+
+**Fixes:**
+
+- Security fixes
+
 ## 0.2.19 – 12.01.2022
 
 **Fixes:**

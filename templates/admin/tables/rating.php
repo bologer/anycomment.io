@@ -14,11 +14,11 @@ use AnyComment\Helpers\AnyCommentRequest;
         <input type="hidden" name="page" value="anycomment-files">
 		<?php
 
-		$ids = isset( $_POST['ratings'] ) && ! empty( $_POST['ratings'] ) ? $_POST['ratings'] : null;
-		if ( is_array( $ids ) ) {
-			$ids = array_map( 'sanitize_text_field', $ids );
-		} else {
-			$ids = sanitize_text_field( $ids );
+		$ids = null;
+		if ( ! empty( $_POST['ratings'] ) ) {
+			$ids = isset( $_POST['ratings'] ) && ! array( $_POST['ratings'] )
+				? sanitize_text_field( $_POST['ratings'] )
+				: array_map( 'sanitize_text_field', $_POST['ratings'] );
 		}
 
 		$action = null;

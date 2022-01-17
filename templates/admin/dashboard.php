@@ -57,7 +57,7 @@ $current_tab = array_key_exists( 'tab', $_GET ) ? sanitize_text_field( $_GET['ta
 						$i = 0;
 						foreach ( $links as $link ) {
 							$separator = $i !== 0 ? ' · ' : '';
-							echo $separator . '<a href="' . esc_attr( esc_url( $link["url"] ) ) . '" target="_blank">' . esc_html( $link['text'] ) . '</a>';
+							echo esc_html($separator) . '<a href="' . esc_attr( esc_url( $link["url"] ) ) . '" target="_blank">' . esc_html( $link['text'] ) . '</a>';
 							$i ++;
 						}
 						?>

@@ -15,11 +15,11 @@ if ( ! defined( 'ABSPATH' ) ) {
         <input type="hidden" name="page" value="anycomment-files">
 		<?php
 
-		$ids = isset( $_POST['subscriptions'] ) && ! empty( $_POST['subscriptions'] ) ? $_POST['subscriptions'] : null;
-		if ( is_array( $ids ) ) {
-			$ids = array_map( 'sanitize_text_field', $ids );
-		} else {
-			$ids = sanitize_text_field( $ids );
+		$ids = null;
+		if ( ! empty( $_POST['subscriptions'] ) ) {
+			$ids = isset( $_POST['subscriptions'] ) && ! array( $_POST['subscriptions'] )
+				? sanitize_text_field( $_POST['subscriptions'] )
+				: array_map( 'sanitize_text_field', $_POST['subscriptions'] );
 		}
 
 		if ( AnyCommentRequest::post( 'action' ) !== '-1' ) {
