@@ -18,8 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 		$ids = null;
 		if ( ! empty( $_POST['subscriptions'] ) ) {
 			$ids = isset( $_POST['subscriptions'] ) && ! array( $_POST['subscriptions'] )
-				? sanitize_text_field( $_POST['subscriptions'] )
-				: array_map( 'sanitize_text_field', $_POST['subscriptions'] );
+				? intval( $_POST['subscriptions'] )
+				: array_map( 'intval', $_POST['subscriptions'] );
 		}
 
 		if ( AnyCommentRequest::post( 'action' ) !== '-1' ) {

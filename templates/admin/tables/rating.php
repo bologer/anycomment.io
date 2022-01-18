@@ -17,8 +17,8 @@ use AnyComment\Helpers\AnyCommentRequest;
 		$ids = null;
 		if ( ! empty( $_POST['ratings'] ) ) {
 			$ids = isset( $_POST['ratings'] ) && ! array( $_POST['ratings'] )
-				? sanitize_text_field( $_POST['ratings'] )
-				: array_map( 'sanitize_text_field', $_POST['ratings'] );
+				? intval( $_POST['ratings'] )
+				: array_map( 'intval', $_POST['ratings'] );
 		}
 
 		$action = null;
