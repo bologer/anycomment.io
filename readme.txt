@@ -49,7 +49,7 @@ And good new is AnyComment is free & no dependency on third party services, all 
 
 = Features =
 * All comments stored in your own database. We reuse native comment's table, so all of the default WordPress functionality comes out of the box.
-* Social network authorization via Facebook, VK, Twitter, Google, Odnoklassniki, GitHub, Instagram, Twitch or Dribbble
+* Social network authorization via Facebook, VK, Twitter, Google, Odnoklassniki, GitHub, Twitch or Dribbble
 * SEO Indexing
 * Ability to switch to cloud version
 * Ability to define who can leave comment: guests only, with social authorization or both
@@ -136,7 +136,6 @@ So far we support the following:
 * Vkontakte
 * Odnoklassniki
 * GitHub
-* Instagram
 * Twitch
 * Dribbble
 * Yandex
@@ -195,6 +194,7 @@ It could only be difficult for website who have HTTP only and hight traffic as t
 - Now synchronization enables comments automatically
 - Now synchronization works for WooCommerce reviews as well
 - Fixed comment count when enabling WooCommerce
+- Removed Instagram as not more supported
 
 = 0.2.21 – 18.01.2022 =
 

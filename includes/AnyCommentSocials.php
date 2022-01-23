@@ -64,13 +64,6 @@ class AnyCommentSocials {
 				'color'   => '#ee8208',
 				'visible' => AnyCommentSocialSettings::is_odnoklassniki_on(),
 			],
-			AnyCommentSocialAuth::SOCIAL_INSTAGRAM     => [
-				'slug'    => AnyCommentSocialAuth::SOCIAL_INSTAGRAM,
-				'url'     => AnyCommentSocialAuth::get_instagram_callback( $redirectUrl ),
-				'label'   => __( 'Instagram', "anycomment" ),
-				'color'   => '#c32aa3',
-				'visible' => AnyCommentSocialSettings::is_instagram_active(),
-			],
 			AnyCommentSocialAuth::SOCIAL_TWITCH        => [
 				'slug'    => AnyCommentSocialAuth::SOCIAL_TWITCH,
 				'url'     => AnyCommentSocialAuth::get_twitch_callback( $redirectUrl ),

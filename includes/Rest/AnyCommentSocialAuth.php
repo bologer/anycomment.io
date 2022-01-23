@@ -38,7 +38,6 @@ class AnyCommentSocialAuth {
 	const SOCIAL_GOOGLE = 'google';
 	const SOCIAL_GITHUB = 'github';
 	const SOCIAL_ODNOKLASSNIKI = 'odnoklassniki';
-	const SOCIAL_INSTAGRAM = 'instagram';
 	const SOCIAL_TWITCH = 'twitch';
 	const SOCIAL_DRIBBBLE = 'dribbble';
 	const SOCIAL_STEAM = 'steam';
@@ -101,7 +100,6 @@ class AnyCommentSocialAuth {
 		self::SOCIAL_GOOGLE        => 'Google',
 		self::SOCIAL_GITHUB        => 'GitHub',
 		self::SOCIAL_ODNOKLASSNIKI => 'Odnoklassniki',
-		self::SOCIAL_INSTAGRAM     => 'Instagram',
 		self::SOCIAL_TWITCH        => 'TwitchTV',
 		self::SOCIAL_DRIBBBLE      => 'Dribbble',
 		self::SOCIAL_STEAM         => 'Steam',
@@ -275,7 +273,6 @@ class AnyCommentSocialAuth {
 			self::SOCIAL_GOOGLE        => __( 'Google', 'anycomment' ),
 			self::SOCIAL_GITHUB        => __( 'GitHub', 'anycomment' ),
 			self::SOCIAL_ODNOKLASSNIKI => __( 'Odnoklassniki', 'anycomment' ),
-			self::SOCIAL_INSTAGRAM     => __( 'Instagram', 'anycomment' ),
 			self::SOCIAL_TWITCH        => __( 'Twitch', 'anycomment' ),
 			self::SOCIAL_DRIBBBLE      => __( 'Dribbble', 'anycomment' ),
 			self::SOCIAL_YAHOO         => __( 'Yahoo', 'anycomment' ),
@@ -347,14 +344,6 @@ class AnyCommentSocialAuth {
 						'secret' => AnyCommentSocialSettings::get_odnoklassniki_app_secret(),
 					],
 					'callback' => static::get_ok_callback(),
-				],
-				self::$providers[ self::SOCIAL_INSTAGRAM ]     => [
-					'enabled'  => AnyCommentSocialSettings::is_instagram_active(),
-					'keys'     => [
-						'id'     => AnyCommentSocialSettings::get_instagram_client_id(),
-						'secret' => AnyCommentSocialSettings::get_instagram_client_secret(),
-					],
-					'callback' => static::get_instagram_callback(),
 				],
 				self::$providers[ self::SOCIAL_TWITCH ]        => [
 					'enabled'  => AnyCommentSocialSettings::is_twitch_active(),
@@ -449,17 +438,6 @@ class AnyCommentSocialAuth {
 	 */
 	public static function get_ok_callback( $redirect = null ) {
 		return static::get_callback_url( self::SOCIAL_ODNOKLASSNIKI, $redirect );
-	}
-
-	/**
-	 * Get Odnoklassniki callback URL.
-	 *
-	 * @param null|string $redirect Redirect URL added to the link.
-	 *
-	 * @return string
-	 */
-	public static function get_instagram_callback( $redirect = null ) {
-		return static::get_callback_url( self::SOCIAL_INSTAGRAM, $redirect );
 	}
 
 	/**

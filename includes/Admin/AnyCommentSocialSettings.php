@@ -86,14 +86,6 @@ class AnyCommentSocialSettings extends AnyCommentOptionManager {
 	const OPTION_OK_APP_KEY = 'social_odnoklassniki_app_key_field';
 	const OPTION_OK_APP_SECRET = 'social_odnoklassniki_app_secret_field';
 
-
-	/**
-	 * Instagram
-	 */
-	const OPTION_INSTAGRAM_TOGGLE = 'social_instagram_toggle_field';
-	const OPTION_INSTAGRAM_CLIENT_ID = 'social_instagram_client_id_field';
-	const OPTION_INSTAGRAM_CLIENT_SECRET = 'social_instagram_client_secret_field';
-
 	/**
 	 * Twitch
 	 */
@@ -373,43 +365,6 @@ class AnyCommentSocialSettings extends AnyCommentOptionManager {
 					               return '<div class="cell anycomment-form-wrapper__field">
 									    <label for="ok-callback">' . $callback_label . '</label>
 									    <input type="text" id="ok-callback" onclick="this.select()" readonly="readonly"
-									           value="' . $callback_url . '">
-									</div>';
-				               } ),
-			          ] )
-		     )
-		     ->add_section(
-			     $this->section_builder()
-			          ->set_id( 'instagram' )
-			          ->set_title( __( 'Instagram', "anycomment" ) )
-			          ->set_callback( function () {
-				          return '<div class="anycomment-notice anycomment-error">' . __( 'It is very hard to get approve by Instagram. Read guide below to know more about why it is so.', 'anycomment' ) . '</div>';
-			          } )
-			          ->set_fields( [
-				          $this->field_builder()
-				               ->checkbox()
-				               ->set_id( self::OPTION_INSTAGRAM_TOGGLE )
-				               ->set_title( __( 'Enable', "anycomment" ) )
-				               ->set_description( __( 'Allow Instagram authorization', "anycomment" ) ),
-
-				          $this->field_builder()
-				               ->text()
-				               ->set_id( self::OPTION_INSTAGRAM_CLIENT_ID )
-				               ->set_title( __( 'Client ID', "anycomment" ) )
-				               ->set_description( sprintf( __( 'Enter client id. Can be found in <a href="%s" target="_blank">Manage Clients</a>', "anycomment" ), 'https://www.instagram.com/developer/clients/manage/' ) ),
-
-				          $this->field_builder()
-				               ->text()
-				               ->set_id( self::OPTION_INSTAGRAM_CLIENT_SECRET )
-				               ->set_title( __( 'Client Secret', "anycomment" ) )
-				               ->set_description( sprintf( __( 'Enter client secret. Can be found in <a href="%s" target="_blank">Manage Clients</a>', "anycomment" ), 'https://www.instagram.com/developer/clients/manage/' ) )
-				               ->set_after( function () {
-					               $callback_label = __( 'Callback URL', 'anycomment' );
-					               $callback_url   = AnyCommentSocialAuth::get_instagram_callback();
-
-					               return '<div class="cell anycomment-form-wrapper__field">
-									    <label for="instagram-callback">' . $callback_label . '</label>
-									    <input type="text" id="instagram-callback" onclick="this.select()" readonly="readonly"
 									           value="' . $callback_url . '">
 									</div>';
 				               } ),
@@ -916,33 +871,6 @@ EOT;
 	}
 
 	/**
-	 * Check whether Instagram social is on.
-	 *
-	 * @return bool
-	 */
-	public static function is_instagram_active() {
-		return static::instance()->get_db_option( self::OPTION_INSTAGRAM_TOGGLE ) !== null;
-	}
-
-	/**
-	 * Get Instagram client ID.
-	 *
-	 * @return int|null
-	 */
-	public static function get_instagram_client_id() {
-		return static::instance()->get_db_option( self::OPTION_INSTAGRAM_CLIENT_ID );
-	}
-
-	/**
-	 * Get Instagram secret key.
-	 *
-	 * @return string|null
-	 */
-	public static function get_instagram_client_secret() {
-		return static::instance()->get_db_option( self::OPTION_INSTAGRAM_CLIENT_SECRET );
-	}
-
-	/**
 	 * Check whether Twitch social is on.
 	 *
 	 * @return bool
@@ -1198,7 +1126,6 @@ EOT;
 				AnyCommentSocialAuth::SOCIAL_GOOGLE        => 'https://plugin.anycomment.io/api-google/',
 				AnyCommentSocialAuth::SOCIAL_ODNOKLASSNIKI => 'https://plugin.anycomment.io/api-odnoklassniki/',
 				AnyCommentSocialAuth::SOCIAL_GITHUB        => 'https://plugin.anycomment.io/api-github/',
-				AnyCommentSocialAuth::SOCIAL_INSTAGRAM     => 'https://plugin.anycomment.io/api-instagram/',
 				AnyCommentSocialAuth::SOCIAL_TWITCH        => 'https://plugin.anycomment.io/api-twitch/',
 				AnyCommentSocialAuth::SOCIAL_STEAM         => 'https://plugin.anycomment.io/api-steam/',
 				AnyCommentSocialAuth::SOCIAL_YANDEX        => 'https://plugin.anycomment.io/api-yandex/',
@@ -1211,7 +1138,6 @@ EOT;
 				AnyCommentSocialAuth::SOCIAL_GOOGLE        => 'https://plugin.anycomment.io/en/api-google/',
 				AnyCommentSocialAuth::SOCIAL_ODNOKLASSNIKI => 'https://plugin.anycomment.io/ru/api-odnoklassniki/',
 				AnyCommentSocialAuth::SOCIAL_GITHUB        => 'https://plugin.anycomment.io/en/api-github/',
-				AnyCommentSocialAuth::SOCIAL_INSTAGRAM     => 'https://plugin.anycomment.io/en/api-instagram/',
 				AnyCommentSocialAuth::SOCIAL_TWITCH        => 'https://plugin.anycomment.io/en/api-twitch/',
 				AnyCommentSocialAuth::SOCIAL_DRIBBBLE      => 'https://plugin.anycomment.io/en/api-dribbble/',
 				AnyCommentSocialAuth::SOCIAL_STEAM         => 'https://plugin.anycomment.io/en/api-steam/',
@@ -1248,10 +1174,6 @@ EOT;
 			self::OPTION_OK_APP_ID,
 			self::OPTION_OK_APP_KEY,
 			self::OPTION_OK_APP_SECRET,
-
-			self::OPTION_INSTAGRAM_TOGGLE,
-			self::OPTION_INSTAGRAM_CLIENT_ID,
-			self::OPTION_INSTAGRAM_CLIENT_SECRET,
 
 			self::OPTION_TWITCH_TOGGLE,
 			self::OPTION_TWITCH_CLIENT_ID,
