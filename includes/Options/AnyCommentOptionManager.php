@@ -137,11 +137,59 @@ class AnyCommentOptionManager {
 			return new \WP_Error( '', __( 'No page slug provided', 'anycomment' ) );
 		}
 
-		$options_to_save = [];
-		$optionKeys      = $this->save_option_keys();
-		foreach ( $optionKeys as $option_key ) {
-			$options_to_save[ $option_key ] = array_key_exists( $option_key, $_POST ) ? sanitize_text_field( $_POST[ $option_key ] ) : null;
+		$options_to_save           = [];
+		$options_allowed_to_update = $this->save_option_keys();
+
+		foreach ( $options_allowed_to_update as $option_key ) {
+			$options_to_save[ $option_key ] = array_key_exists( $option_key, $_POST )
+				? sanitize_text_field( $_POST[ $option_key ] )
+				: null;
 		}
+
+		// Removes issue when e.g. ' were changed to \' and after a few saves it was already \\ and so on
+		$options_to_save = array_map( 'stripslashes_deep', $options_to_save );
+
+		/**
+		 * Fires before settings were updated.
+		 *
+		 * @param string $option_name Name of the option which is being updated.
+		 * @param array $options List of options to update without option name.
+		 *
+		 * @since 0.0.81
+		 *
+		 */
+		do_action( 'anycomment/admin/options/update', $option_name, $options_to_save );
+
+		$this->update_db_option( $options_to_save, $option_name );
+
+		return true;
+	}
+
+	/**
+	 * Updates options value.
+	 *
+	 * @param $option_name
+	 * @param $option_values
+	 *
+	 * @return bool
+	 */
+	public function update_specific_options( $option_name, $option_values ) {
+		$options_to_save           = [];
+		$options_allowed_to_update = $this->save_option_keys();
+		$current_options_value     = get_option( $option_name, [] );
+
+		foreach ( $options_allowed_to_update as $option_key ) {
+			$current_option_value           = array_key_exists( $option_key, $current_options_value )
+				? $current_options_value[ $option_key ]
+				: null;
+			$options_to_save[ $option_key ] = array_key_exists( $option_key, $option_values )
+				? sanitize_text_field( $option_values[ $option_key ] )
+				: $current_option_value;
+		}
+
+//        var_dump($options_to_save);
+////        var_dump($option_values);
+//        die();
 
 		// Removes issue when e.g. ' were changed to \' and after a few saves it was already \\ and so on
 		$options_to_save = array_map( 'stripslashes_deep', $options_to_save );
@@ -425,6 +473,6 @@ class AnyCommentOptionManager {
 	 * @return array<string> List of option keys be saved from save request.
 	 */
 	protected function save_option_keys() {
-        return [];
+		return [];
 	}
 }

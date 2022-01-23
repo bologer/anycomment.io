@@ -34,7 +34,7 @@ HAVING count >= 1" );
 	public static function get_approved_comment_count() {
 		global $wpdb;
 
-		return $wpdb->get_var( "SELECT COUNT(*) FROM $wpdb->comments WHERE `comment_approved`=1" );
+		return $wpdb->get_var( "SELECT COUNT(*) FROM $wpdb->comments WHERE `comment_approved` = 1 AND `comment_type` IN ('', 'comment', 'review')" );
 	}
 
 	/**

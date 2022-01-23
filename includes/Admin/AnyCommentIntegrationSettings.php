@@ -102,6 +102,8 @@ class AnyCommentIntegrationSettings extends AnyCommentOptionManager {
 	const OPTION_RECAPTCHA_BADGE_BOTTOM_LEFT = 'bottomleft';
 	const OPTION_RECAPTCHA_BADGE_BOTTOM_INLINE = 'inline';
 
+	const INTEGRATION_OPTION_NAME = 'anycomment-integration';
+
 	/**
 	 * @inheritdoc
 	 */
@@ -109,7 +111,7 @@ class AnyCommentIntegrationSettings extends AnyCommentOptionManager {
 	/**
 	 * @inheritdoc
 	 */
-	protected $option_name = 'anycomment-integration';
+	protected $option_name = self::INTEGRATION_OPTION_NAME;
 
 	/**
 	 * @inheritdoc
@@ -547,14 +549,11 @@ EOT;
 			$sections = $option->get_sections();
 
 			foreach ( $sections as $key => $section ) {
-				if ( ! $section->is_visible() ) {
-					continue;
-				}
 				$section_id = $section->get_id();
 
 				$liClasses = ( $key == 0 ? 'current' : '' );
 
-				$html .= '<li class="' . $liClasses . '" data-tab="' . $section_id . '">
+				$html .= '<li class="' . $liClasses . '" style="display: ' . esc_attr( $section->is_visible() ? 'block' : 'none' ) . '" data-tab="' . $section_id . '">
 				<a href="#tab-' . $section_id . '">' . $section->get_title() . '</a>
 				</li>';
 			}
@@ -596,12 +595,9 @@ EOT;
 			self::WOOCOMMERCE_REPLACE_FOR_REVIEW,
 			self::OPTION_WP_USER_AVATAR,
 			self::OPTION_RECAPTCHA_TOGGLE,
-			self::OPTION_RECAPTCHA_USER,
-			self::OPTION_RECAPTCHA_USER_ALL,
-			self::OPTION_RECAPTCHA_USER_GUEST,
-			self::OPTION_RECAPTCHA_USER_AUTH,
 			self::OPTION_RECAPTCHA_SITE_KEY,
 			self::OPTION_RECAPTCHA_SITE_SECRET,
+			self::OPTION_RECAPTCHA_USER,
 			self::OPTION_RECAPTCHA_THEME,
 			self::OPTION_RECAPTCHA_BADGE,
 		];

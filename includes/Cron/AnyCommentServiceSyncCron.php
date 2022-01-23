@@ -102,7 +102,7 @@ WHERE NOT EXISTS (
 	SELECT * 
 	FROM {$wpdb->commentmeta} cm
 	WHERE c.comment_ID = cm.comment_id AND cm.meta_key = %s
-) AND c.comment_id > %d AND c.comment_type IN ('', 'comment') LIMIT 10
+) AND c.comment_id > %d AND c.comment_type IN ('', 'comment', 'review') LIMIT 10
 SQL;
 
 		$prepare = $wpdb->prepare( $sql, $meta_key, $comment_id );

@@ -721,10 +721,6 @@ EOT;
 			$sections = $option->get_sections();
 
 			foreach ( $sections as $key => $section ) {
-				if ( ! $section->is_visible() ) {
-					continue;
-				}
-
 				$section_id = $section->get_id();
 
 				$liClasses = ( $key == 0 ? 'current' : '' );
@@ -733,7 +729,7 @@ EOT;
 
 				$path = sprintf( AnyComment()->plugin_url() . '/assets/img/socials/%s.svg', $section_id );
 
-				$html .= '<li class="' . $liClasses . '" data-tab="' . $section_id . '">
+				$html .= '<li class="' . $liClasses . '" style="display: ' . esc_attr( $section->is_visible() ? 'block' : 'none' ) . '" data-tab="' . $section_id . '">
 				<a href="#tab-' . $section_id . '"><img src="' . $path . '" />' . $section->get_title() . '</a>
 				</li>';
 			}

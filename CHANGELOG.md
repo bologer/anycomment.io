@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.0 – 23.01.2022
+
+**Fixes:**
+
+- Now synchronization enables comments automatically 
+- Now synchronization works for WooCommerce reviews as well
+- Fixed comment count when enabling WooCommerce
+
+
 ## 0.2.21 – 18.01.2022
 
 **Fixes:**

@@ -210,11 +210,6 @@ class AnyCommentSection {
 	 * @return string
 	 */
 	public function run() {
-
-		if ( ! $this->is_visible() ) {
-			return '';
-		}
-
 		$html = '';
 
 		$title       = $this->get_title();
@@ -235,6 +230,8 @@ class AnyCommentSection {
 				$html .= $field;
 			}
 		}
+
+		$html = '<div style="display: ' . ($this->is_visible() ? 'block' : 'none') . ';">' . $html . '</div>';
 
 		return str_replace( [ '{id}', '{content}' ], [ $this->get_id(), $html ], $this->wrapper );
 	}

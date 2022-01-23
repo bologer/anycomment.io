@@ -230,6 +230,8 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 	const SEO_SORTING_NEW2OLD = 'newest_to_old';
 	const SEO_SORTING_OLD2NEW = 'old_to_new';
 
+	const GENERIC_OPTION_NAME = 'anycomment-generic';
+
 
 	/**
 	 * @inheritdoc
@@ -238,7 +240,7 @@ class AnyCommentGenericSettings extends AnyCommentOptionManager {
 	/**
 	 * @inheritdoc
 	 */
-	protected $option_name = 'anycomment-generic';
+	protected $option_name = self::GENERIC_OPTION_NAME;
 
 	/**
 	 * @inheritdoc
@@ -1125,14 +1127,11 @@ EOT;
 			$sections = $option->get_sections();
 
 			foreach ( $sections as $key => $section ) {
-				if ( ! $section->is_visible() ) {
-					continue;
-				}
 				$section_id = $section->get_id();
 
 				$liClasses = ( $key == 0 ? 'current' : '' );
 
-				$html .= '<li class="' . $liClasses . '" data-tab="' . $section_id . '">
+				$html .= '<li class="' . $liClasses . '" style="display: ' . esc_attr( $section->is_visible() ? 'block' : 'none' ) . '" data-tab="' . $section_id . '">
 				<a href="#tab-' . $section_id . '">' . $section->get_title() . '</a>
 				</li>';
 			}
