@@ -5,7 +5,7 @@ Tags: comments, ajax comments, comment, comment moderation, comments seo, anycom
 Requires at least: 4.7
 Tested up to: 5.8
 Requires PHP: 5.6
-Stable tag: 0.3.0
+Stable tag: 0.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/
 
@@ -186,6 +186,12 @@ Most of the hosting providers support single button-like installation of SSL cer
 It could only be difficult for website who have HTTP only and hight traffic as transfer to HTTPs can cause some traffic lose.
 
 == Changelog ==
+
+= 0.3.1 – 04.04.2022 =
+
+**Fixes:**
+
+- Fixed incompatibility with PHP 5.6
 
 = 0.3.0 – 23.01.2022 =
 

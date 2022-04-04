@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.1 – 04.04.2022
+
+**Fixes:**
+
+- Fixed incompatibility with PHP 5.6
+
 ## 0.3.0 – 23.01.2022
 
 **Fixes:**

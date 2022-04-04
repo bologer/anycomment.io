@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8c652dd4920f6b2609d6c3e76cb2ba3c",
+    "content-hash": "2dbc3f71df7b4f78270eb8e24be12b49",
     "packages": [
         {
             "name": "hybridauth/hybridauth",
@@ -407,28 +407,28 @@
         },
         {
             "name": "tedivm/stash",
-            "version": "v0.16.0",
+            "version": "v0.14.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tedious/Stash.git",
-                "reference": "7d42f58e4f395397d7c76d4eff55eb56aacadc34"
+                "reference": "7ea9749784152dcd2dab72c4bbf2bef18c326e41"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tedious/Stash/zipball/7d42f58e4f395397d7c76d4eff55eb56aacadc34",
-                "reference": "7d42f58e4f395397d7c76d4eff55eb56aacadc34",
+                "url": "https://api.github.com/repos/tedious/Stash/zipball/7ea9749784152dcd2dab72c4bbf2bef18c326e41",
+                "reference": "7ea9749784152dcd2dab72c4bbf2bef18c326e41",
                 "shasum": ""
             },
             "require": {
-                "php": ">7.0",
+                "php": "^5.4|^7.0",
                 "psr/cache": "~1.0"
             },
             "provide": {
                 "psr/cache-implementation": "1.0.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.8",
-                "phpunit/phpunit": "^6",
+                "friendsofphp/php-cs-fixer": "^1.9",
+                "phpunit/phpunit": "4.8.*",
                 "satooshi/php-coveralls": "1.0.*"
             },
             "type": "library",
@@ -465,15 +465,9 @@
             ],
             "support": {
                 "issues": "https://github.com/tedious/Stash/issues",
-                "source": "https://github.com/tedious/Stash/tree/v0.16.0"
+                "source": "https://github.com/tedious/Stash/tree/master"
             },
-            "funding": [
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/tedivm/stash",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2021-01-18T04:06:48+00:00"
+            "time": "2017-04-23T17:16:57+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -562,5 +556,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.2.0"
 }
