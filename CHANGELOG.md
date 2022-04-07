@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.2 – 07.04.2022
+
+**Fixes:**
+
+- Minimal WordPress version now 4.7 instead of 4.4
+
 ## 0.3.1 – 04.04.2022
 
 **Fixes:**
