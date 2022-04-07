@@ -6,9 +6,9 @@
  * Version: 0.3.1
  * Author: Bologer
  * Author URI: http://bologer.ru
- * Requires at least: 4.4
+ * Requires at least: 4.7
  * Requires PHP: 5.4
- * Tested up to: 5.8
+ * Tested up to: 5.9
  * Text Domain: anycomment
  * Domain Path: /languages
  *
@@ -41,5 +41,6 @@ function anycomment() {
 
 	return \AnyComment\AnyCommentCore::instance();
 }
+
 
 anycomment();
