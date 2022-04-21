@@ -81,7 +81,7 @@ ORDER BY day ASC";
 		$prepared_data = static::prepare_data( $query );
 
 		$item->set( $prepared_data )
-		     ->expiresAfter( 5 * 60 )
+		     ->expiresAfter( 60 )
 		     ->save();
 
 		return $prepared_data;
@@ -113,7 +113,7 @@ ORDER BY day ASC";
 		$prepared_data = static::prepare_data( $query );
 
 		$item->set( $prepared_data )
-		     ->expiresAfter( 5 * 60 )
+		     ->expiresAfter( 60 )
 		     ->save();
 
 		return $prepared_data;

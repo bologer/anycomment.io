@@ -43,11 +43,11 @@ use AnyComment\Admin\AnyCommentStatistics;
 			<?php
 			$comments          = AnyCommentStatistics::get_comment_data();
 			$comments['label'] = array_map( 'esc_html', $comments['label'] );
-			$comments['data']  = array_map( 'esc_html', $comments['label'] );
+			$comments['data']  = array_map( 'esc_html', $comments['data'] );
 
 			$users          = AnyCommentStatistics::get_commentor_data();
 			$users['label'] = array_map( 'esc_html', $users['label'] );
-			$users['data']  = array_map( 'esc_html', $users['label'] );
+			$users['data']  = array_map( 'esc_html', $users['data'] );
 			?>
             <canvas id="anycomment-dashboard-chart"></canvas>
 
@@ -94,10 +94,6 @@ use AnyComment\Admin\AnyCommentStatistics;
                                     }
                                 },
                                 scales: {
-                                    xAxes: [{
-                                        display: false,
-                                        gridLines: '#f1f1f1'
-                                    }],
                                     yAxes: [{
                                         ticks: {
                                             beginAtZero: true

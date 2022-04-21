@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.3 – 21.04.2022
+
+**Fixes:**
+
+- Fixed dashboard graph when data wasn't displaying
+
 ## 0.3.2 – 07.04.2022
 
 **Fixes:**
