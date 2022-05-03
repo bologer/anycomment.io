@@ -157,7 +157,7 @@ class AnyCommentSocialAuth {
 	 * @return mixed
 	 */
 	public function process_socials( WP_REST_Request $request ) {
-		$redirect        = $request->get_param( 'redirect' );
+		$redirect        = $this->ensureSafeRedirect( $request->get_param( 'redirect' ) );
 		$social          = $request->get_param( 'social' );
 		$cookie_redirect = self::COOKIE_REDIRECT;
 
@@ -188,7 +188,7 @@ class AnyCommentSocialAuth {
 				}
 			}
 
-			$redirect = $redirectCookie !== null ? $redirectCookie : '/';
+			$redirect = $this->ensureSafeRedirect( $redirectCookie !== null ? $redirectCookie : '/' );
 		}
 
 		try {
@@ -285,6 +285,20 @@ class AnyCommentSocialAuth {
 		return isset( $verbals[ $social ] ) ?
 			$verbals[ $social ] :
 			$social;
+	}
+
+	private function ensureSafeRedirect( $redirectUrl ) {
+		$homeUrl     = home_url();
+		$redirectUrl = trim( $redirectUrl );
+
+		$homeUrlNormalized = $homeUrl;
+		$homeUrlNormalized = preg_replace('#^(http|https)://#', '', $homeUrlNormalized);
+		$regex = '#(http|https)://' . $homeUrlNormalized . '#';
+		if ( ! preg_match( $regex, $redirectUrl ) ) {
+			return '/';
+		}
+
+		return $redirectUrl;
 	}
 
 	/**

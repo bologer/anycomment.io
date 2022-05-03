@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.4 – 03.05.2022
+
+**Fixes:**
+
+- Fixed open redirect issue reported in CVE-2021-24838
+
 ## 0.3.3 – 21.04.2022
 
 **Fixes:**
