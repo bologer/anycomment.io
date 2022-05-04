@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.5 – 04.05.2022
+
+**Fixes:**
+
+- Fix improvements for CVE-2021-24838
+
 ## 0.3.4 – 03.05.2022
 
 **Fixes:**
