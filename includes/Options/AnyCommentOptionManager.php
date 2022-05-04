@@ -100,17 +100,9 @@ class AnyCommentOptionManager {
 				], 60 );
 			}
 
-			wp_redirect( isset( $_POST['redirect'] ) ? $this->ensureSafeRedirect( $_POST['redirect'] ) : '/' );
+			wp_redirect( isset( $_POST['redirect'] ) ? wp_safe_redirect( $_POST['redirect'] ) : '/' );
 			exit();
 		} );
-	}
-
-	private function ensureSafeRedirect( $redirectUrl ) {
-		if ( preg_match( '/\s*(http|https)/i', $redirectUrl ) ) {
-			return '/';
-		}
-
-		return $redirectUrl;
 	}
 
 	/**
