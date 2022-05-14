@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.6 – 14.05.2022
+
+**Fixes:**
+
+- Fixed infinite redirect on social login
+
 ## 0.3.5 – 04.05.2022
 
 **Fixes:**

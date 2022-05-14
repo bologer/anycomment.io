@@ -157,12 +157,12 @@ class AnyCommentSocialAuth {
 	 * @return mixed
 	 */
 	public function process_socials( WP_REST_Request $request ) {
-		$redirect        = wp_safe_redirect( $request->get_param( 'redirect' ) );
+		$redirect        = $request->get_param( 'redirect' );
 		$social          = $request->get_param( 'social' );
 		$cookie_redirect = self::COOKIE_REDIRECT;
 
 		if ( ! $this->social_exists( $social ) || is_user_logged_in() ) {
-			wp_redirect( $redirect );
+			wp_safe_redirect( $redirect );
 			exit();
 		}
 
@@ -188,7 +188,7 @@ class AnyCommentSocialAuth {
 				}
 			}
 
-			$redirect = wp_safe_redirect( $redirectCookie !== null ? $redirectCookie : '/' );
+			$redirect = $redirectCookie !== null ? $redirectCookie : '/' ;
 		}
 
 		try {
@@ -203,14 +203,14 @@ class AnyCommentSocialAuth {
 				$exception->getTraceAsString()
 			) );
 
-			wp_redirect( $redirect );
+			wp_safe_redirect( $redirect );
 			exit();
 		}
 
 		$user = $adapter->getUserProfile();
 
 		if ( ! $user instanceof Profile ) {
-			wp_redirect( $redirect );
+			wp_safe_redirect( $redirect );
 			exit();
 		}
 
@@ -228,7 +228,7 @@ class AnyCommentSocialAuth {
 			session_destroy();
 		}
 
-		wp_redirect( $redirect );
+		wp_safe_redirect( $redirect );
 		exit();
 	}
 
