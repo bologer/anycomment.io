@@ -19,7 +19,7 @@
     "immutable": "^3.8.2",
     "node-sass-chokidar": "^1.4.0",
     "notistack": "^0.9.11",
-    "qs": "^6.9.3",
+    "qs": "^6.9.7",
     "react": "^16.13.1",
     "react-app-polyfill": "^0.2.2",
     "react-dom": "^16.13.1",
