@@ -25,6 +25,15 @@ class AnyCommentTemplate {
 	public static function render ( $name ) {
 		ob_start();
 
+		// Reject directory traversal and null bytes before $name is used to build
+		// an include path below. Callers may pass request data: for example
+		// templates/admin/tabs.php renders 'admin/tab-' . $_GET['tab'], and
+		// sanitize_text_field() does not strip '../'.
+		if ( ! is_callable( $name ) && ( ! is_string( $name ) || strpos( $name, "\0" ) !== false || strpos( $name, '..' ) !== false ) ) {
+			ob_end_clean();
+
+			return '';
+		}
 
 		if ( is_callable( $name ) ) {
 			echo call_user_func( $name );
@@ -39,6 +48,18 @@ class AnyCommentTemplate {
 		}
 
 		if ( ! is_file( $path ) ) {
+			return '';
+		}
+
+		// Make sure the resolved template really lives inside the plugin
+		// directory. This also covers the branch above, which accepts an
+		// absolute path as-is.
+		$real_path = realpath( $path );
+		$base_path = realpath( ANYCOMMENT_ABSPATH );
+
+		if ( $real_path === false || $base_path === false || strpos( $real_path, $base_path ) !== 0 ) {
+			ob_end_clean();
+
 			return '';
 		}
 
